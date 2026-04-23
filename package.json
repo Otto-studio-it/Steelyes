@@ -1,0 +1,26 @@
+{
+  "name": "steelyes",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Steelyes - A modern web application",
+  "license": "Proprietary",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "type-check": "turbo run type-check"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.0.0",
+  "devDependencies": {
+    "turbo": "^2.9.6"
+  }
+}

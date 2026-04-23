@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: npm install -g pnpm@9
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+
+  Typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: npm install -g pnpm@9
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm type-check
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: npm install -g pnpm@9
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: npm install -g pnpm@9
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+  Wait-For-Vercel:
+    name: Wait for Vercel Preview
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    outputs:
+      url: ${{ steps.vercel.outputs.url }}
+    steps:
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: vercel
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300
+
+  Lighthouse-CI:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    needs: [Wait-For-Vercel, Build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Running Lighthouse CI against ${{ needs.Wait-For-Vercel.outputs.url }}"
+
+  E2E-Smoke:
+    name: E2E Playwright
+    runs-on: ubuntu-latest
+    needs: [Wait-For-Vercel, Build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Running E2E Playwright against ${{ needs.Wait-For-Vercel.outputs.url }}"

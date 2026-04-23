@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-canvas: #F5F3F0;
+    --color-ink: #1A1A1A;
+    --color-primary: #9E000C;
+    --color-primary-container: #C41E1E;
+    --color-foundry-gold: #795916;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+}

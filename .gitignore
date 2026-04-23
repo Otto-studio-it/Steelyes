@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build & output
+.next/
+dist/
+out/
+build/
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE & OS
+.DS_Store
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Raw/unprocessed assets (commit processed assets only)
+assets-raw/**
+!assets-raw/.gitkeep
+
+# Heavy design files (never commit)
+*.psd
+*.ai
+*.sketch
+*.fig
+*.zip
+*.mov
+*.mp4
+
+# Misc
+.turbo/

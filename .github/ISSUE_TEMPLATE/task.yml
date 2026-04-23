@@ -1,0 +1,29 @@
+name: "Project Task"
+description: "Standard task adhering to Steelyes DoD"
+title: "[Task]: "
+labels: ["task"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What is the goal of this task?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What must be true for this task to be considered done?
+    validations:
+      required: true
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Task-Level Definition of Done
+      options:
+        - label: No console.log, debugger, or any types left in code
+        - label: Tested on both iPhone 12 (Safari) and Galaxy A54 (Chrome)
+        - label: Lighthouse Performance unchanged or improved
+        - label: Keyboard navigation works (if interactive)
+        - label: No new npm packages without approval
