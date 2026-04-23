@@ -17,6 +17,9 @@
     },
     "typecheck": {
       "outputs": []
+    },
+    "e2e": {
+      "outputs": []
     }
   }
 }

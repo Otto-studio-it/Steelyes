@@ -9,7 +9,8 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "e2e": "turbo run e2e"
   },
   "workspaces": [
     "apps/*",
