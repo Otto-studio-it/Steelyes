@@ -32,6 +32,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Supabase types
+        run: supabase gen types typescript --linked > apps/web/src/types/database.types.ts
+        env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
       - name: Typecheck
         run: pnpm typecheck
 

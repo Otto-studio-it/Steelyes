@@ -1,8 +1,10 @@
-# Steelyes
+# Steelyes Ltd — Bespoke Steel Gates Platform
 
-> The Architectural Forge.
+> **British engineering excellence.** Precision-built, hand-finished bespoke steel gates. Designed and installed across the UK.
 
-Questo repository contiene il codice per la piattaforma digitale **Steelyes**: una moderna applicazione Next.js 14 (`apps/web`) e una libreria logica condivisa in TypeScript puro (`packages/gate-engine`).
+**Phase 0 — Setup (Week 1, April 2026)**
+
+This repository contains the digital platform for **Steelyes Ltd**: a Next.js 14 application (`apps/web`) + shared TypeScript logic (`packages/gate-engine`).
 
 ## 🚀 Stato Attuale: Phase 0 (Scaffold)
 Il progetto è attualmente in **Phase 0**. L'infrastruttura di base (monorepo, CI base) è presente. 
