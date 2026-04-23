@@ -1,7 +1,7 @@
 import { getServerClient } from '@/lib/supabase/server'
 
 export default async function HomePage() {
-  let dbStatus = { connected: false, gatesCount: 0, error: null as string | null }
+  const dbStatus = { connected: false, gatesCount: 0, error: null as string | null }
 
   try {
     const supabase = await getServerClient()

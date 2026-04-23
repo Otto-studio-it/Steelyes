@@ -38,13 +38,13 @@ jobs:
           fi
 
           if [ -f "apps/web/package.json" ]; then
-            if grep -q '"playwright"' apps/web/package.json; then
+            if grep -qE '"@playwright/test"|"e2e":\s*"playwright' apps/web/package.json; then
               SCRIPT_OK=true
             fi
           fi
 
           if [ -f "package.json" ]; then
-            if grep -q '"playwright"' package.json; then
+            if grep -qE '"@playwright/test"|"e2e":' package.json; then
               SCRIPT_OK=true
             fi
           fi
