@@ -20,7 +20,7 @@
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.0.0",
+  "packageManager": "pnpm@8.15.6",
   "devDependencies": {
     "turbo": "^2.9.6"
   }
