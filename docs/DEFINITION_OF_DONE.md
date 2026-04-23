@@ -275,6 +275,8 @@ Each `git push` triggers:
 - ✅ Auto-merge enabled (merges when all checks pass + approval)
 - ✅ No force push allowed
 
+> **Nota Operativa (Solo dev)**: se per ora stai lavorando completamente da solo, abbassa temporaneamente la branch protection togliendo "Require approvals", lascia però attivi i required status checks, e più avanti riattiva la review obbligatoria quando il flusso repo sarà completo.
+
 ---
 
 **Locked document.** No exceptions, no shortcuts.
