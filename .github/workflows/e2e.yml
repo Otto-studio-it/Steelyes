@@ -1,0 +1,64 @@
+name: E2E Smoke (Playwright)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify Playwright setup exists
+        run: |
+          CONFIG_OK=false
+          SCRIPT_OK=false
+
+          if [ -f "apps/web/playwright.config.ts" ] || [ -f "playwright.config.ts" ]; then
+            CONFIG_OK=true
+          fi
+
+          if [ -f "apps/web/package.json" ]; then
+            if grep -q '"playwright"' apps/web/package.json; then
+              SCRIPT_OK=true
+            fi
+          fi
+
+          if [ -f "package.json" ]; then
+            if grep -q '"playwright"' package.json; then
+              SCRIPT_OK=true
+            fi
+          fi
+
+          if [ "$CONFIG_OK" != true ] || [ "$SCRIPT_OK" != true ]; then
+            echo "Playwright non è ancora configurato correttamente."
+            echo "Serve almeno:"
+            echo "- playwright.config.ts"
+            echo "- script/test command Playwright nel package.json"
+            exit 1
+          fi
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run E2E Smoke Tests
+        run: pnpm exec playwright test
