@@ -1,9 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "NEXT_PUBLIC_SITE_URL",
+    "POSTHOG_API_KEY",
+    "POSTHOG_HOST"
+  ],
   "tasks": {
     "dev": {
       "cache": false,
-      "interactive": true
+      "persistent": true
     },
     "build": {
       "outputs": ["dist/**", ".next/**", "out/**"],
@@ -16,6 +24,9 @@
       "outputs": ["coverage/**"]
     },
     "typecheck": {
+      "outputs": []
+    },
+    "e2e": {
       "outputs": []
     }
   }

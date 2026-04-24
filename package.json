@@ -9,7 +9,8 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "e2e": "turbo run e2e"
   },
   "workspaces": [
     "apps/*",
@@ -17,9 +18,9 @@
   ],
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "pnpm": ">=9.0.0"
   },
-  "packageManager": "pnpm@8.0.0",
+  "packageManager": "pnpm@10.15.0",
   "devDependencies": {
     "turbo": "^2.9.6"
   }

@@ -1,6 +1,8 @@
 name: E2E Smoke (Playwright)
 
 on:
+  push:
+    branches: ["main", "chore/github-bootstrap"]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -15,9 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,13 +38,13 @@ jobs:
           fi
 
           if [ -f "apps/web/package.json" ]; then
-            if grep -q '"playwright"' apps/web/package.json; then
+            if grep -qE '"@playwright/test"|"e2e":\s*"playwright' apps/web/package.json; then
               SCRIPT_OK=true
             fi
           fi
 
           if [ -f "package.json" ]; then
-            if grep -q '"playwright"' package.json; then
+            if grep -qE '"@playwright/test"|"e2e":' package.json; then
               SCRIPT_OK=true
             fi
           fi
@@ -58,7 +58,13 @@ jobs:
           fi
 
       - name: Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm --filter web exec playwright install --with-deps
 
       - name: Run E2E Smoke Tests
-        run: pnpm exec playwright test
+        env:
+          NEXT_PUBLIC_POSTHOG_API_KEY: phc_ci_test_key
+          POSTHOG_API_KEY: phc_ci_test_key
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: pnpm e2e
