@@ -33,7 +33,7 @@ jobs:
       - name: Setup Supabase CLI
         uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.90.0
 
       - name: Generate Supabase types
         run: supabase gen types typescript --project-id "${{ secrets.SUPABASE_PROJECT_ID }}" > apps/web/src/types/database.types.ts
