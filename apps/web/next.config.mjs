@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  // Disable font optimization during CI build to avoid network-related crashes
+  optimizeFonts: process.env.CI !== 'true',
+};
 
 export default nextConfig;
