@@ -9,7 +9,7 @@ test('homepage responde e mostra il wordmark', async ({ page }) => {
   const title = await page.title();
   expect(title).toBeDefined();
 
-  // "Preview URL shows branded 'STEELYES' wordmark" (oppure il motto)
-  // La homepage attuale renderizza il motto "The Architectural Forge"
-  await expect(page.locator('body')).toContainText(/The Architectural Forge/i);
+  // Requisito Phase 0: la preview deve mostrare il wordmark STEELYES.
+  // Il copy hero puo' cambiare, il brand "Steelyes" deve restare stabile.
+  await expect(page.getByRole('link', { name: /Steelyes/i })).toBeVisible();
 });
