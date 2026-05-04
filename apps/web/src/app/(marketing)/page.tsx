@@ -7,30 +7,33 @@ import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 export default function HomePage() {
   return (
     <MarketingShell pathname="/">
-      <section className="relative min-h-[780px] overflow-hidden bg-[#1B1C1A] md:min-h-[870px]">
+      <section className="relative min-h-[640px] overflow-hidden bg-[#1B1C1A] md:min-h-[870px]">
         <MediaPlaceholder
           label="Homepage hero image"
           aspectClassName="absolute inset-0 h-full w-full"
           className="bg-[#2B2B2B] [&>span]:text-white/35"
         />
         <div className="absolute inset-0 bg-black/40" />
-        <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-          <h1 className="max-w-3xl font-heading text-5xl font-black uppercase leading-[0.9] tracking-tight text-white md:text-8xl">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-28">
+          <h1 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.9] tracking-tight text-white sm:text-5xl md:text-8xl">
             Your gate,
             <br />
             built by hand.
           </h1>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+          <p className="mt-5 max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
+            Built for UK homes, engineered in our Sheffield workshop, and installed by specialists.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/configurator"
-              className="group inline-flex min-h-[44px] items-center justify-center gap-2 bg-[#9E000C] px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515] md:text-lg"
+              className="group inline-flex min-h-[48px] items-center justify-center gap-2 bg-[#9E000C] px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515] md:text-lg"
             >
               Configure your gate
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
             <Link
               href="/gallery"
-              className="inline-flex min-h-[44px] items-center justify-center border border-white px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-white hover:text-[#1B1C1A] md:text-lg"
+              className="inline-flex min-h-[48px] items-center justify-center border border-white px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-white hover:text-[#1B1C1A] md:text-lg"
             >
               View our work
             </Link>
@@ -55,7 +58,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
-        <div className="mb-10 flex items-end justify-between gap-4">
+        <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-[#795916]">Precision engineering</p>
             <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">The steel standards</h2>
@@ -123,21 +126,21 @@ export default function HomePage() {
             </p>
             <Link
               href="/configurator"
-              className="mt-8 inline-flex min-h-[44px] items-center justify-center bg-white px-9 py-4 font-heading text-lg font-bold uppercase tracking-tight text-[#9E000C]"
+              className="mt-8 inline-flex min-h-[48px] items-center justify-center bg-white px-9 py-4 font-heading text-lg font-bold uppercase tracking-tight text-[#9E000C]"
             >
               Start configuring
             </Link>
           </div>
-          <div className="w-full max-w-lg border border-white/20 bg-white/10 p-6 backdrop-blur-sm">
+          <div className="w-full max-w-lg border border-white/20 bg-white/10 p-5 backdrop-blur-sm sm:p-6">
             <div className="space-y-4">
               {[
                 ['Material_selector', 'Galvanised Steel'],
                 ['Finish_type', 'Anthracite Grey'],
                 ['Automation', 'Hydraulic Swing'],
               ].map(([k, v]) => (
-                <div key={k} className="flex items-center justify-between border-b border-white/25 pb-3">
-                  <span className="font-mono text-xs uppercase">{k}</span>
-                  <span className="font-mono text-xs uppercase">{v}</span>
+                <div key={k} className="flex items-center justify-between gap-3 border-b border-white/25 pb-3">
+                  <span className="font-mono text-[11px] uppercase">{k}</span>
+                  <span className="text-right font-mono text-[11px] uppercase">{v}</span>
                 </div>
               ))}
             </div>
