@@ -127,9 +127,9 @@ Decision outcome:
 
 - `admin_audit` has RLS enabled with zero policies.
 - DML grants for `admin_audit` are limited to `service_role`: `SELECT`, `INSERT`.
-- `anon` and `authenticated` have no DML grants on `admin_audit`.
 - App code does not read `admin_audit` today outside generated database types.
 - Future audit-log UI should read through server-side `getServiceRoleClient()`.
+- Note: Phase 5 verification later detected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`) present for `anon` and `authenticated` on `admin_audit`. This does not enable reads due to RLS/no SELECT, but it violates the stricter “no grants at all” expectation and should be cleaned up.
 
 ---
 
@@ -170,6 +170,14 @@ Verify service-role:
 - [ ] Can read/update quote requests if the admin dashboard requires it.
 
 **Closure condition:** all expected role checks pass against staging.
+
+**Status (2026-05-05):** NOT COMPLETE — Phase 5 inventory checks found mismatches that need follow-up documentation and fixes:
+
+- `admin_audit`: `anon` and `authenticated` have unexpected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`).
+- `gates`: `anon` has `UPDATE` table grant (RLS blocks without an UPDATE policy, but the grant is broader than intended).
+- `gate_options`: `anon` has `INSERT` and `UPDATE` table grants (RLS blocks these writes, but the grants are broader than intended).
+- `fencing_panels`: `anon` has `INSERT` and `UPDATE` table grants (RLS blocks these writes, but the grants are broader than intended).
+- `service_zones`: docs/expected sample query used a non-existent `zone_name` column; the table currently has `postcode_prefix` + `surcharge` only.
 
 ---
 

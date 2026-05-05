@@ -40,7 +40,7 @@ Nessun mismatch. Nessuna migration "applied" senza SQL locale.
 | `gates` | ✅ | 16 | Seeded da Marius |
 | `gate_options` | ✅ | 8 | Seeded |
 | `fencing_panels` | ✅ | 1 | ⚠️ Seed incompleto — TBD Marius |
-| `service_zones` | ✅ | 20 | Seeded |
+| `service_zones` | ✅ | 20 | Seeded (columns: `postcode_prefix`, `surcharge`) |
 | `configurations` | ✅ | 0 | Atteso vuoto su staging |
 | `quote_requests` | ✅ | 0 | Atteso vuoto su staging |
 | `admin_audit` | ✅ | 0 | Atteso vuoto |
@@ -191,13 +191,57 @@ DROP POLICY "service.
 _zones_anon_select" ON public.service_zones;
 ```
 
+**BUG-5: `admin_audit` ha grant non-DML per anon/authenticated**
+Detected during Phase 5 verification on 2026-05-05.
+
+Evidence:
+- Query:
+```sql
+SELECT grantee, privilege_type
+FROM information_schema.role_table_grants
+WHERE table_schema = 'public'
+  AND table_name = 'admin_audit'
+  AND grantee IN ('anon', 'authenticated', 'service_role')
+ORDER BY grantee, privilege_type;
+```
+- Expected: only `service_role` appears (no privileges at all for `anon`/`authenticated`).
+- Actual: `anon` and `authenticated` have `TRIGGER`, `TRUNCATE`, `REFERENCES` privileges.
+
+Required follow-up:
+- Decide whether to explicitly `REVOKE TRIGGER, TRUNCATE, REFERENCES` on `public.admin_audit` from `anon` and `authenticated` to match the strict “service-role only” surface.
+
+**BUG-6: grants anon troppo ampi su tabelle catalogo (mitigati da RLS)**
+Detected during Phase 5 verification on 2026-05-05.
+
+Evidence:
+- Query:
+```sql
+SELECT table_name, grantee, privilege_type
+FROM information_schema.role_table_grants
+WHERE table_schema = 'public'
+  AND grantee IN ('anon','authenticated','service_role')
+  AND privilege_type IN ('SELECT','INSERT','UPDATE','DELETE')
+  AND table_name <> 'admin_audit'
+ORDER BY table_name, grantee, privilege_type;
+```
+- Actual highlights:
+  - `gates`: `anon` has `UPDATE` in addition to `SELECT`.
+  - `gate_options`: `anon` has `INSERT` and `UPDATE` in addition to `SELECT`.
+  - `fencing_panels`: `anon` has `INSERT` and `UPDATE` in addition to `SELECT`.
+
+Impact:
+- RLS currently blocks anon writes because there are no anon UPDATE/DELETE policies on these tables, but the table-level grants are broader than intended and make the security posture harder to reason about.
+
+Required follow-up:
+- Consider tightening table grants to align with intended access (e.g. `REVOKE INSERT, UPDATE` from `anon` on catalogue tables), keeping RLS as the primary control.
+
 **RISCHIO-1: RESOLVED — `admin_audit` service-role only**
 Decisione 2026-05-05: Option A selected. `admin_audit` remains readable only through server-side service-role code. No authenticated-admin RLS policy added, no migration required.
 
 Verified on staging:
 - RLS enabled with zero policies.
 - DML grants limited to `service_role`: `SELECT`, `INSERT`.
-- `anon` and `authenticated` have no DML grants.
+- `anon` and `authenticated` have no DML grants (but see BUG-5 for non-DML privileges that should be cleaned up).
 
 **RISCHIO-2: `quote_requests` grant service_role solo INSERT**
 RESOLVED ✅ (verified + migration applied on 2026-05-05).
