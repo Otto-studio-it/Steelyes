@@ -19,6 +19,7 @@ Questa è la nostra checklist. Spunteremo ogni voce man mano che la completiamo 
 - [ ] **1.3 RLS (Row Level Security):** Abilitare RLS su tutte le 5 tabelle nel file SQL (policy vuote).
 - [ ] **1.4 Seed Minimo (`seed.sql`):** Inserire uno script con 1 record "cancello finto" per fare i test.
 - [ ] **1.5 Push su Supabase:** Eseguire (da parte tua) il comando CLI per lanciare la migrazione sul progetto di Staging.
+- [ ] **1.6 Documentazione semantica DB/pricing:** Tenere allineati `docs/db/PRICING_SEMANTICS.md` e `docs/db/RAILHEADS_TBD.md` con le conferme cliente (non sostituisce audit RLS né verifiche schema Agente 1).
 
 ---
 
