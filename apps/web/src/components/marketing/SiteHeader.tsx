@@ -43,15 +43,15 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
   })
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:rounded focus:bg-[#1A1A1A] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to main content
       </a>
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-4 md:px-8">
-        <Link href="/" className="font-heading text-xl font-black uppercase tracking-tight">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-3 px-4 md:px-8">
+        <Link href="/" className="inline-flex min-h-[44px] items-center font-heading text-lg font-black uppercase tracking-tight sm:text-xl">
           Steelyes Ltd
         </Link>
 
@@ -135,7 +135,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                     <Link
                       href={item.href ?? '#'}
                       onClick={() => setIsOpen(false)}
-                      className="flex min-h-[48px] items-center border-b border-zinc-100 font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
+                      className="flex min-h-[50px] items-center border-b border-zinc-100 font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
                     >
                       {item.label}
                     </Link>
@@ -150,7 +150,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                     type="button"
                     onClick={() => setOpenSubmenu((prev) => ({ ...prev, [item.label]: !prev[item.label] }))}
                     aria-expanded={open}
-                    className="flex min-h-[48px] w-full items-center justify-between font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
+                  className="flex min-h-[50px] w-full items-center justify-between font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
                   >
                     {item.label}
                     <ChevronDown className={cn('h-4 w-4 transition-transform', open && 'rotate-180')} aria-hidden />
@@ -162,7 +162,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                           <Link
                             href={child.href}
                             onClick={() => setIsOpen(false)}
-                            className="flex min-h-[44px] items-center rounded px-3 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
+                            className="flex min-h-[46px] items-center rounded px-3 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
                           >
                             {child.label}
                           </Link>

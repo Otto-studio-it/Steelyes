@@ -12,19 +12,19 @@ export function SiteFooter() {
         </div>
         <div>
           <h4 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-red-600">Resources</h4>
-          <ul className="space-y-3 text-zinc-400">
+          <ul className="space-y-2 text-zinc-400">
             <li>
-              <Link href="/gates" className="transition-colors hover:text-white">
+              <Link href="/gates" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Our Gates
               </Link>
             </li>
             <li>
-              <Link href="/installation" className="transition-colors hover:text-white">
+              <Link href="/installation" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Installation
               </Link>
             </li>
             <li>
-              <Link href="/gallery" className="transition-colors hover:text-white">
+              <Link href="/gallery" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Case Studies
               </Link>
             </li>
@@ -32,19 +32,19 @@ export function SiteFooter() {
         </div>
         <div>
           <h4 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-red-600">Legal</h4>
-          <ul className="space-y-3 text-zinc-400">
+          <ul className="space-y-2 text-zinc-400">
             <li>
-              <Link href="/legal/privacy-policy" className="transition-colors hover:text-white">
+              <Link href="/legal/privacy-policy" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Privacy policy
               </Link>
             </li>
             <li>
-              <Link href="/legal/cookie-policy" className="transition-colors hover:text-white">
+              <Link href="/legal/cookie-policy" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Cookie policy
               </Link>
             </li>
             <li>
-              <Link href="/legal/terms" className="transition-colors hover:text-white">
+              <Link href="/legal/terms" className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
                 Terms
               </Link>
             </li>

@@ -99,38 +99,113 @@ export type Database = {
         }
         Relationships: []
       }
-      gates: {
+      fencing_panels: {
         Row: {
-          base_price_per_m2: number
-          created_at: string
-          finish_multipliers: Json
           id: string
-          motor_surcharge: number | null
           style: Database["public"]["Enums"]["gate_style"]
-          tube_multipliers: Json
-          type: Database["public"]["Enums"]["gate_type"]
+          finish: string
+          base_price_gbp: number
+          price_per_m2_gbp: number
+          notes: string | null
+          created_at: string
           updated_at: string
         }
         Insert: {
-          base_price_per_m2: number
-          created_at?: string
-          finish_multipliers?: Json
           id?: string
-          motor_surcharge?: number | null
           style: Database["public"]["Enums"]["gate_style"]
-          tube_multipliers?: Json
-          type: Database["public"]["Enums"]["gate_type"]
+          finish?: string
+          base_price_gbp?: number
+          price_per_m2_gbp?: number
+          notes?: string | null
+          created_at?: string
           updated_at?: string
         }
         Update: {
-          base_price_per_m2?: number
-          created_at?: string
-          finish_multipliers?: Json
           id?: string
-          motor_surcharge?: number | null
           style?: Database["public"]["Enums"]["gate_style"]
-          tube_multipliers?: Json
+          finish?: string
+          base_price_gbp?: number
+          price_per_m2_gbp?: number
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gate_options: {
+        Row: {
+          id: string
+          slug: string
+          name: string
+          flat_price_gbp: number
+          per_unit_price_gbp: number | null
+          unit_type: string | null
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          name: string
+          flat_price_gbp?: number
+          per_unit_price_gbp?: number | null
+          unit_type?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          name?: string
+          flat_price_gbp?: number
+          per_unit_price_gbp?: number | null
+          unit_type?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gates: {
+        Row: {
+          id: string
+          name: string
+          type: Database["public"]["Enums"]["gate_type"]
+          style: Database["public"]["Enums"]["gate_style"]
+          finish: string
+          min_width_mm: number
+          min_height_mm: number
+          base_price_manual_gbp: number
+          base_price_auto_gbp: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          type: Database["public"]["Enums"]["gate_type"]
+          style: Database["public"]["Enums"]["gate_style"]
+          finish?: string
+          min_width_mm?: number
+          min_height_mm?: number
+          base_price_manual_gbp?: number
+          base_price_auto_gbp?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
           type?: Database["public"]["Enums"]["gate_type"]
+          style?: Database["public"]["Enums"]["gate_style"]
+          finish?: string
+          min_width_mm?: number
+          min_height_mm?: number
+          base_price_manual_gbp?: number
+          base_price_auto_gbp?: number | null
+          created_at?: string
           updated_at?: string
         }
         Relationships: []
@@ -217,7 +292,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      gate_style: "modern" | "classic" | "privacy"
+      gate_style: "modern" | "classic" | "privacy" | "victorian"
       gate_type:
         | "double-swing"
         | "sliding"
@@ -225,6 +300,8 @@ export type Database = {
         | "cantilevered"
         | "sliding-radius"
         | "telescopic"
+        | "single-swing"
+        | "bifolding-single"
       quote_status: "new" | "contacted" | "quote_sent" | "won" | "lost"
     }
     CompositeTypes: {
@@ -356,7 +433,7 @@ export const Constants = {
   },
   public: {
     Enums: {
-      gate_style: ["modern", "classic", "privacy"],
+      gate_style: ["modern", "classic", "privacy", "victorian"],
       gate_type: [
         "double-swing",
         "sliding",
@@ -364,6 +441,8 @@ export const Constants = {
         "cantilevered",
         "sliding-radius",
         "telescopic",
+        "single-swing",
+        "bifolding-single",
       ],
       quote_status: ["new", "contacted", "quote_sent", "won", "lost"],
     },

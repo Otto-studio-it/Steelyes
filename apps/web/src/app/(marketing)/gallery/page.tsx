@@ -4,13 +4,13 @@ import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 export default function GalleryPage() {
   return (
     <MarketingShell pathname="/gallery">
-      <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-6 py-12 md:px-8 md:py-16">
-        <h1 className="font-heading text-5xl font-black uppercase leading-[0.9] md:text-8xl">
+      <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-4 py-10 md:px-8 md:py-16">
+        <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
           The installation
           <br />
           <span className="text-[#9E000C]">Archive</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-lg font-light text-[#5C403D]">
+        <p className="mt-5 max-w-2xl text-base font-light text-[#5C403D] md:text-lg">
           A definitive collection of Steelyes commissions. Each project is presented with the approved editorial tone.
         </p>
       </section>
@@ -35,7 +35,7 @@ export default function GalleryPage() {
           </div>
           <label className="w-full md:w-auto">
             <span className="mb-3 block font-mono text-[10px] uppercase tracking-widest text-[#795916]">Region selection</span>
-            <select className="w-full border-0 border-b border-zinc-300 bg-transparent px-0 py-1 font-heading text-base font-bold uppercase tracking-tight focus:border-[#9E000C] focus:ring-0 md:w-64">
+            <select className="min-h-[44px] w-full border-0 border-b border-zinc-300 bg-transparent px-0 py-1 font-heading text-base font-bold uppercase tracking-tight focus:border-[#9E000C] focus:ring-0 md:w-64">
               <option>United Kingdom (All)</option>
               <option>South East & London</option>
               <option>The Midlands</option>
@@ -72,7 +72,7 @@ export default function GalleryPage() {
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <button
           type="button"
-          className="mx-auto flex min-h-[44px] items-center justify-center border border-[#9E000C] bg-white px-8 font-heading text-sm font-bold uppercase tracking-tight text-[#9E000C]"
+          className="mx-auto flex min-h-[48px] items-center justify-center border border-[#9E000C] bg-white px-8 font-heading text-sm font-bold uppercase tracking-tight text-[#9E000C]"
         >
           Load more projects
         </button>

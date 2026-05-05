@@ -4,11 +4,11 @@ import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 export default function GatesPage() {
   return (
     <MarketingShell pathname="/gates">
-      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+      <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
         <div className="mb-10">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Our gates</p>
-          <h1 className="font-heading text-5xl font-black uppercase leading-[0.9] md:text-8xl">Bespoke steel</h1>
-          <p className="mt-5 max-w-2xl text-lg font-light text-[#5C403D]">
+          <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">Bespoke steel</h1>
+          <p className="mt-5 max-w-2xl text-base font-light text-[#5C403D] md:text-lg">
             Engineered for permanence. Hand-finished in our British workshop using premium-grade structural steel and
             architectural coatings.
           </p>
@@ -22,12 +22,12 @@ export default function GatesPage() {
               <label className="mb-2 block font-mono text-[10px] uppercase tracking-widest text-[#5C403D]">
                 0{index + 1}. {label}
               </label>
-              <div className="min-h-[44px] border border-zinc-300 bg-white px-3 py-3 font-heading text-sm font-bold uppercase">
+              <div className="min-h-[48px] border border-zinc-300 bg-white px-3 py-3 font-heading text-sm font-bold uppercase">
                 Modern Industrial
               </div>
             </div>
           ))}
-          <button className="min-h-[44px] self-end bg-[#1B1C1A] px-8 py-3 font-heading text-sm font-bold uppercase text-white">
+          <button className="min-h-[48px] self-end bg-[#1B1C1A] px-8 py-3 font-heading text-sm font-bold uppercase text-white">
             Apply specs
           </button>
         </div>
@@ -75,7 +75,7 @@ export default function GatesPage() {
           ))}
         </div>
         <div className="mt-16 flex justify-center">
-          <button className="min-h-[44px] border border-zinc-300 px-10 py-3 font-heading text-sm font-bold uppercase tracking-widest">
+          <button className="min-h-[48px] border border-zinc-300 px-10 py-3 font-heading text-sm font-bold uppercase tracking-widest">
             Load engineering catalogue
           </button>
         </div>

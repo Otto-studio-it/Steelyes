@@ -21,9 +21,9 @@ export default function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   return (
     <MarketingShell pathname={`/case-study/${params.slug}`}>
-      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+      <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
         <p className="font-mono text-xs uppercase tracking-widest text-[#9E000C]">Case study</p>
-        <h1 className="mt-3 font-heading text-5xl font-black uppercase md:text-7xl">{title}</h1>
+        <h1 className="mt-3 font-heading text-4xl font-black uppercase sm:text-5xl md:text-7xl">{title}</h1>
       </section>
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <MediaPlaceholder label="Case study hero" aspectClassName="aspect-[4/3] w-full" />

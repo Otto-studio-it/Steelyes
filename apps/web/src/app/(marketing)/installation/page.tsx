@@ -4,7 +4,7 @@ import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 export default function InstallationPage() {
   return (
     <MarketingShell pathname="/installation">
-      <section className="relative overflow-hidden bg-[#111111] py-16 md:py-24">
+      <section className="relative overflow-hidden bg-[#111111] py-14 md:py-24">
         <MediaPlaceholder
           label="Installation hero image"
           aspectClassName="absolute inset-0 h-full w-full"
@@ -12,7 +12,7 @@ export default function InstallationPage() {
         />
         <div className="absolute inset-0 bg-black/55" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-          <h1 className="max-w-3xl font-heading text-5xl font-black uppercase leading-[0.9] text-white md:text-8xl">
+          <h1 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.9] text-white sm:text-5xl md:text-8xl">
             Precision built.
             <br />
             <span className="text-[#9E000C]">Master installed.</span>
@@ -41,10 +41,10 @@ export default function InstallationPage() {
             From pre-install checks to final commissioning, the approved layout combines logistics copy and operational
             steps.
           </p>
-          <ul className="mt-6 space-y-2 font-mono text-xs uppercase tracking-widest text-zinc-700">
-            <li>Site visit + laser survey</li>
-            <li>Final set-out review</li>
-            <li>Commissioning + handover</li>
+          <ul className="mt-6 space-y-3 font-mono text-xs uppercase tracking-widest text-zinc-700">
+            <li className="min-h-[44px] border border-zinc-200 bg-white px-3 py-3">Site visit + laser survey</li>
+            <li className="min-h-[44px] border border-zinc-200 bg-white px-3 py-3">Final set-out review</li>
+            <li className="min-h-[44px] border border-zinc-200 bg-white px-3 py-3">Commissioning + handover</li>
           </ul>
         </article>
         <div className="relative overflow-hidden border border-zinc-200">
@@ -122,7 +122,7 @@ export default function InstallationPage() {
           <p className="mt-5 max-w-2xl text-sm font-light text-white/85 md:text-base">
             Book your survey and we will outline gate geometry, set-out, and installation sequence for your project.
           </p>
-          <button className="mt-8 min-h-[44px] bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white">
+          <button className="mt-8 min-h-[48px] bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white">
             Book free survey
           </button>
         </div>

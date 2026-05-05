@@ -1,5 +1,22 @@
 import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
+import fs from 'fs';
+
+function loadEnvFromLocalFile() {
+  const envPath = path.resolve(__dirname, '.env.local');
+  if (!fs.existsSync(envPath)) return;
+
+  const content = fs.readFileSync(envPath, 'utf8');
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
+    const [key, ...rest] = trimmed.split('=');
+    if (!key || process.env[key] !== undefined) continue;
+    process.env[key] = rest.join('=').trim().replace(/^['"]|['"]$/g, '');
+  }
+}
+
+loadEnvFromLocalFile();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -24,11 +41,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  // Attiviamo il webServer locale per far funzionare i test in CI e in locale senza avviare il server manualmente
-  webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // Se baseURL e' fornito dall'esterno, usiamo quel server senza avviarne uno nuovo.
+  webServer: process.env.PLAYWRIGHT_TEST_BASE_URL
+    ? undefined
+    : {
+        command: 'pnpm dev',
+        url: 'http://localhost:3000',
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000,
+      },
 });

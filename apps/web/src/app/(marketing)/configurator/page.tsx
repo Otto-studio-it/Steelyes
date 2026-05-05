@@ -6,7 +6,7 @@ export default function ConfiguratorPage() {
     <MarketingShell pathname="/configurator">
       <section className="grid min-h-[calc(100vh-64px)] grid-cols-1 md:grid-cols-[42%_58%]">
         <aside className="order-2 border-t border-zinc-200 bg-white p-4 md:order-1 md:border-r md:border-t-0 md:p-8">
-          <h1 className="font-heading text-4xl font-black uppercase">Gate configurator</h1>
+          <h1 className="font-heading text-3xl font-black uppercase sm:text-4xl">Gate configurator</h1>
           <p className="mt-2 text-sm font-light text-[#5C403D]">
             Configure style, dimensions, and finish. UI replica based on approved preview.
           </p>
@@ -26,17 +26,17 @@ export default function ConfiguratorPage() {
                 </div>
                 <div className="rounded border border-zinc-200 bg-[#F5F3F0] p-4 text-sm text-[#5C403D]">
                   <div className="grid grid-cols-2 gap-2">
-                    <button type="button" className="min-h-[40px] border border-zinc-300 bg-white px-2 text-xs uppercase">
+                    <button type="button" className="min-h-[44px] border border-zinc-300 bg-white px-2 text-xs uppercase">
                       Option A
                     </button>
-                    <button type="button" className="min-h-[40px] border border-zinc-300 bg-white px-2 text-xs uppercase">
+                    <button type="button" className="min-h-[44px] border border-zinc-300 bg-white px-2 text-xs uppercase">
                       Option B
                     </button>
                   </div>
                 </div>
               </section>
             ))}
-            <button className="min-h-[44px] w-full bg-[#9E000C] px-6 py-3 font-heading text-lg font-bold uppercase text-white">
+            <button className="min-h-[48px] w-full bg-[#9E000C] px-6 py-3 font-heading text-lg font-bold uppercase text-white">
               Generate technical quote
             </button>
           </div>

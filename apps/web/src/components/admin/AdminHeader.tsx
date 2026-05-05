@@ -1,0 +1,76 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { supabase } from '@/lib/supabase/client'
+import { cn } from '@/lib/utils'
+
+const NAV = [
+  { label: 'Prezzi Cancelli', href: '/admin/gates' },
+  { label: 'Addon', href: '/admin/gate-options' },
+  { label: 'Recinzioni', href: '/admin/fencing' },
+]
+
+export function AdminHeader() {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    router.push('/admin/login')
+  }
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-3 px-4 md:px-8">
+        <Link
+          href="/admin/dashboard"
+          className="font-heading text-base font-black uppercase tracking-tight text-[#1b1c1a]"
+        >
+          Steelyes <span className="text-[#9e000c]">Admin</span>
+        </Link>
+
+        <nav className="hidden items-center gap-6 md:flex">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                'font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors hover:text-[#9e000c]',
+                pathname.startsWith(item.href) && 'border-b-2 border-[#9e000c] pb-0.5 text-[#9e000c]'
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="font-mono text-xs uppercase tracking-widest text-zinc-500 transition-colors hover:text-[#ba1a1a]"
+        >
+          Esci
+        </button>
+      </div>
+
+      {/* Mobile nav */}
+      <nav className="flex gap-1 overflow-x-auto border-t border-zinc-100 px-4 pb-2 pt-1 md:hidden">
+        {NAV.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              'shrink-0 rounded px-3 py-1.5 font-heading text-xs font-bold uppercase tracking-tight text-zinc-600',
+              pathname.startsWith(item.href)
+                ? 'bg-[#9e000c] text-white'
+                : 'bg-zinc-100 text-zinc-700'
+            )}
+          >
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+    </header>
+  )
+}

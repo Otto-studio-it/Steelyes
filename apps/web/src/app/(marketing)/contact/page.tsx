@@ -4,12 +4,12 @@ import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 export default function ContactPage() {
   return (
     <MarketingShell pathname="/contact">
-      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+      <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
         <p className="mb-3 inline-block border-l-2 border-[#9E000C] bg-[#EFEEEB] px-3 py-1 font-mono text-xs uppercase tracking-widest text-[#9E000C]">
           Start your project
         </p>
-        <h1 className="font-heading text-5xl font-black uppercase leading-[0.9] md:text-7xl">Contact the workshop</h1>
-        <p className="mt-3 font-mono text-sm text-[#5C403D]">Direct line to our fabrication team.</p>
+        <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-7xl">Contact the workshop</h1>
+        <p className="mt-3 max-w-xl font-mono text-sm text-[#5C403D]">Direct line to our fabrication team.</p>
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16 md:px-8 lg:grid-cols-2">
@@ -24,11 +24,19 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <label className="text-sm font-medium">
               Full name
-              <input className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0" />
+              <input
+                autoComplete="name"
+                className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
+              />
             </label>
             <label className="text-sm font-medium">
               Email
-              <input className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0" type="email" />
+              <input
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
+              />
             </label>
           </div>
           <label className="block text-sm font-medium">
@@ -41,13 +49,16 @@ export default function ContactPage() {
           </label>
           <label className="block text-sm font-medium">
             Postcode
-            <input className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0" />
+            <input
+              autoComplete="postal-code"
+              className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
+            />
           </label>
           <label className="block text-sm font-medium">
             Project details
             <textarea
               rows={5}
-              className="mt-2 w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
+              className="mt-2 min-h-[120px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
             />
           </label>
           <button
