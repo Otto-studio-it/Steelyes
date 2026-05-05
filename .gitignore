@@ -16,7 +16,9 @@ coverage/
 
 # IDE & OS
 .DS_Store
+# AppleDouble / resource fork noise (any depth)
 ._*
+**/._*
 .vscode/settings.json
 .idea/
 *.swp
@@ -43,3 +45,9 @@ assets-raw/**
 
 # Misc
 .turbo/
+
+# Local tooling / Supabase CLI cache (never commit)
+playwright-report/
+test-results/
+supabase/.temp/
+apps/web/supabase/.temp/
