@@ -191,8 +191,13 @@ DROP POLICY "service.
 _zones_anon_select" ON public.service_zones;
 ```
 
-**RISCHIO-1: `admin_audit` nessuna policy SELECT per admin authenticated**
-Se la dashboard admin deve mostrare log audit, è bloccata. Oggi solo service_role legge. Decidere: audit read-only via Server Action con service_role (OK) oppure aggiungere policy per admin.
+**RISCHIO-1: RESOLVED — `admin_audit` service-role only**
+Decisione 2026-05-05: Option A selected. `admin_audit` remains readable only through server-side service-role code. No authenticated-admin RLS policy added, no migration required.
+
+Verified on staging:
+- RLS enabled with zero policies.
+- DML grants limited to `service_role`: `SELECT`, `INSERT`.
+- `anon` and `authenticated` have no DML grants.
 
 **RISCHIO-2: `quote_requests` grant service_role solo INSERT**
 RESOLVED ✅ (verified + migration applied on 2026-05-05).

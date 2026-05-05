@@ -109,18 +109,27 @@ GRANT SELECT, UPDATE ON public.quote_requests TO service_role;
 
 ## Phase 4 — Decide admin audit access model
 
+**Status:** Closed — Option A selected.
+
 **Goal:** choose the intended access path for `admin_audit`.
 
-Decision required:
+**Decision:** keep `admin_audit` readable only through server-side service-role code. No RLS policy added. No change to existing grants.
 
-- [ ] Option A: keep `admin_audit` readable only through server-side service-role code.
+Decision outcome:
+
+- [x] Option A: keep `admin_audit` readable only through server-side service-role code.
 - [ ] Option B: add read-only RLS policy for authenticated admins.
-
-Recommended default:
-
-- [ ] Use Option A unless the UI needs direct Supabase client reads from authenticated admin sessions.
+  - Rejected for now: unnecessary client-side surface, no current app use case.
 
 **Reason:** `admin_audit` is sensitive. Server-side service-role access keeps the public client surface smaller.
+
+**Evidence (verified on staging 2026-05-05):**
+
+- `admin_audit` has RLS enabled with zero policies.
+- DML grants for `admin_audit` are limited to `service_role`: `SELECT`, `INSERT`.
+- `anon` and `authenticated` have no DML grants on `admin_audit`.
+- App code does not read `admin_audit` today outside generated database types.
+- Future audit-log UI should read through server-side `getServiceRoleClient()`.
 
 ---
 
