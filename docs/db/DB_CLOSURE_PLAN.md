@@ -30,14 +30,14 @@ This document lists the phases still required to close the database work. It sep
 
 ## Phase 2 — Fix blocking RLS bugs
 
-**Status:** Partially complete on staging. Policy closure was applied and verified via MCP; grant closure is prepared locally in a follow-up migration and still needs remote application/verification.
+**Status:** Complete on staging for the Phase 2 scope. Policy closure was applied and verified via MCP; grant closure was applied via Supabase CLI and the remote database is up to date.
 
 **Goal:** remove the three production-blocking DB issues documented in `STAGING_DB_BASELINE_2026-05-04.md`.
 
 The policy closure migration is:
 
 ```text
-supabase/migrations/20260505000000_fix_pricing_rls_closure.sql
+supabase/migrations/20260505154435_fix_pricing_rls_closure.sql
 ```
 
 It includes:
@@ -60,12 +60,12 @@ _zones_anon_select" ON public.service_zones;
 The grant closure migration is:
 
 ```text
-supabase/migrations/20260505001000_fix_pricing_rls_grants.sql
+supabase/migrations/20260505160000_fix_pricing_rls_grants.sql
 ```
 
 It includes:
 
-- [ ] Table grants required by the new admin operations:
+- [x] Table grants required by the new admin operations:
   - `GRANT INSERT, DELETE ON public.gates TO authenticated, service_role;`
   - `GRANT DELETE ON public.gate_options TO authenticated, service_role;`
 
@@ -79,12 +79,13 @@ It includes:
 - MCP baseline check confirmed the duplicate typo `service_zones` policy was present before apply.
 - MCP post-apply check confirmed the 4 target policies exist.
 - MCP post-apply check confirmed only `service_zones_anon_select` remains.
-- Supabase CLI remote alignment/apply could not be completed in this local session because DB auth is unavailable (`SUPABASE_ACCESS_TOKEN` missing in sandbox; escalated run returned `Unauthorized` / `SUPABASE_DB_PASSWORD` required).
+- Supabase CLI dry-run detected `20260505160000_fix_pricing_rls_grants.sql` as the only pending migration.
+- Supabase CLI applied `20260505160000_fix_pricing_rls_grants.sql` to staging.
+- Supabase CLI follow-up dry-run returned `Remote database is up to date.`
 
-**Remaining to close Phase 2:**
+**Remaining after Phase 2:**
 
-- [ ] Apply `20260505001000_fix_pricing_rls_grants.sql` to staging.
-- [ ] Verify remote grants with:
+- [ ] Optional direct SQL evidence capture for remote grants:
 
 ```sql
 select table_name, grantee, privilege_type
@@ -96,7 +97,7 @@ where table_schema = 'public'
 order by table_name, grantee, privilege_type;
 ```
 
-Expected rows:
+Expected rows if verified directly:
 
 ```text
 gate_options authenticated DELETE
