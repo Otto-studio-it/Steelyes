@@ -30,37 +30,82 @@ This document lists the phases still required to close the database work. It sep
 
 ## Phase 2 — Fix blocking RLS bugs
 
+**Status:** Partially complete on staging. Policy closure was applied and verified via MCP; grant closure is prepared locally in a follow-up migration and still needs remote application/verification.
+
 **Goal:** remove the three production-blocking DB issues documented in `STAGING_DB_BASELINE_2026-05-04.md`.
 
-Create one dedicated migration for BUG-1, BUG-2, BUG-3, and BUG-4, for example:
+The policy closure migration is:
 
 ```text
 supabase/migrations/20260505000000_fix_pricing_rls_closure.sql
 ```
 
-The migration must include:
+It includes:
 
-- [ ] Table grants required by the new admin operations:
-  - `GRANT INSERT, DELETE ON public.gates TO authenticated, service_role;`
-  - `GRANT DELETE ON public.gate_options TO authenticated, service_role;`
-- [ ] `gates_admin_insert`
+- [x] `gates_admin_insert`
   - Admin users must be able to create gate catalogue rows.
-- [ ] `gates_admin_delete`
+- [x] `gates_admin_delete`
   - Admin users must be able to remove gate catalogue rows when needed.
-- [ ] `gate_options_admin_delete`
+- [x] `gate_options_admin_delete`
   - Admin users must be able to remove option rows.
-- [ ] `configurations_anon_select`
+- [x] `configurations_anon_select`
   - Public share links must be able to read saved configurations after anonymous insert.
-- [ ] Drop the duplicate typo policy on `service_zones`:
+- [x] Drop the duplicate typo policy on `service_zones`:
 
 ```sql
 DROP POLICY "service.
 _zones_anon_select" ON public.service_zones;
 ```
 
-**Closure condition:** BUG-1, BUG-2, BUG-3, and BUG-4 from the staging baseline are fixed in one migration.
+The grant closure migration is:
+
+```text
+supabase/migrations/20260505001000_fix_pricing_rls_grants.sql
+```
+
+It includes:
+
+- [ ] Table grants required by the new admin operations:
+  - `GRANT INSERT, DELETE ON public.gates TO authenticated, service_role;`
+  - `GRANT DELETE ON public.gate_options TO authenticated, service_role;`
+
+**Closure condition:** BUG-1, BUG-2, BUG-3, and BUG-4 from the staging baseline are fixed, and the required `gates` / `gate_options` grants are present on staging.
 
 **Reason:** RLS policies are not enough on their own when table privileges are missing. `service_role` bypasses RLS, but it still needs the relevant table grants.
+
+**Evidence so far:**
+
+- MCP baseline check confirmed the 4 target policies were absent before apply.
+- MCP baseline check confirmed the duplicate typo `service_zones` policy was present before apply.
+- MCP post-apply check confirmed the 4 target policies exist.
+- MCP post-apply check confirmed only `service_zones_anon_select` remains.
+- Supabase CLI remote alignment/apply could not be completed in this local session because DB auth is unavailable (`SUPABASE_ACCESS_TOKEN` missing in sandbox; escalated run returned `Unauthorized` / `SUPABASE_DB_PASSWORD` required).
+
+**Remaining to close Phase 2:**
+
+- [ ] Apply `20260505001000_fix_pricing_rls_grants.sql` to staging.
+- [ ] Verify remote grants with:
+
+```sql
+select table_name, grantee, privilege_type
+from information_schema.role_table_grants
+where table_schema = 'public'
+  and table_name in ('gates', 'gate_options')
+  and grantee in ('authenticated', 'service_role')
+  and privilege_type in ('INSERT', 'DELETE')
+order by table_name, grantee, privilege_type;
+```
+
+Expected rows:
+
+```text
+gate_options authenticated DELETE
+gate_options service_role  DELETE
+gates        authenticated DELETE
+gates        authenticated INSERT
+gates        service_role  DELETE
+gates        service_role  INSERT
+```
 
 ---
 
@@ -213,6 +258,7 @@ The DB can be considered technically closed when:
 - [ ] Local and remote migrations are aligned.
 - [ ] BUG-1, BUG-2, and BUG-3 are fixed.
 - [ ] BUG-4 is removed or explicitly accepted.
+- [ ] Required `gates` and `gate_options` admin grants are present on staging.
 - [ ] RLS behavior is verified for anon, non-admin, admin, and service-role.
 - [ ] Admin CRUD workflows pass against staging.
 - [ ] Share-link configuration read works.
@@ -232,13 +278,8 @@ The DB can be considered business/pricing complete when:
 
 ## Immediate next step
 
-Create the RLS closure migration with:
+Apply the follow-up grant migration:
 
 - table grants for `gates` insert/delete and `gate_options` delete
-- `gates_admin_insert`
-- `gates_admin_delete`
-- `gate_options_admin_delete`
-- `configurations_anon_select`
-- drop duplicate `service_zones` typo policy
 
-Before that, remove already-tracked generated/macOS files from the Git index so the DB migration can be reviewed without unrelated noise. Then run direct RLS checks before changing any pricing schema or adding client-dependent catalogue tables.
+Then verify the grant rows on staging. After Phase 2 grants are confirmed, proceed to Phase 3 (`quote_requests` grants) and Phase 5 direct RLS behavior checks.

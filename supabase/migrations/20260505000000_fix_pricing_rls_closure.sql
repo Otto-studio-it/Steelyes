@@ -1,11 +1,6 @@
 -- Migration: fix_pricing_rls_closure
 -- Closes BUG-1, BUG-2, BUG-3, BUG-4 from STAGING_DB_BASELINE_2026-05-04.md
--- No table/column schema changes. Grant + policy DDL only.
-
--- Table grants are required in addition to RLS policies:
--- service_role bypasses RLS, but it still needs table privileges.
-GRANT INSERT, DELETE ON public.gates TO authenticated, service_role;
-GRANT DELETE ON public.gate_options TO authenticated, service_role;
+-- No schema changes. Policy DDL only.
 
 DO $$
 BEGIN
