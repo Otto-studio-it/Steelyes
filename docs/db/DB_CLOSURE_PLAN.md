@@ -40,6 +40,9 @@ supabase/migrations/20260505000000_fix_pricing_rls_closure.sql
 
 The migration must include:
 
+- [ ] Table grants required by the new admin operations:
+  - `GRANT INSERT, DELETE ON public.gates TO authenticated, service_role;`
+  - `GRANT DELETE ON public.gate_options TO authenticated, service_role;`
 - [ ] `gates_admin_insert`
   - Admin users must be able to create gate catalogue rows.
 - [ ] `gates_admin_delete`
@@ -56,6 +59,8 @@ _zones_anon_select" ON public.service_zones;
 ```
 
 **Closure condition:** BUG-1, BUG-2, BUG-3, and BUG-4 from the staging baseline are fixed in one migration.
+
+**Reason:** RLS policies are not enough on their own when table privileges are missing. `service_role` bypasses RLS, but it still needs the relevant table grants.
 
 ---
 
@@ -229,6 +234,7 @@ The DB can be considered business/pricing complete when:
 
 Create the RLS closure migration with:
 
+- table grants for `gates` insert/delete and `gate_options` delete
 - `gates_admin_insert`
 - `gates_admin_delete`
 - `gate_options_admin_delete`
