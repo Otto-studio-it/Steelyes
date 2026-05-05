@@ -187,12 +187,22 @@ Verify service-role:
 
 **Method:** use Playwright and normal app commands. These tests prove the user/admin workflows, not the individual SQL policies.
 
-- [ ] Run typecheck.
-- [ ] Run lint.
-- [ ] Run build.
-- [ ] Run admin CRUD E2E.
-- [ ] Add or update an E2E test for saved configuration share-link read if the flow exists.
-- [ ] Manually verify `/admin` login and catalogue pages against staging credentials.
+**Status:** Complete — 2026-05-05
+
+**Evidence:**
+- Typecheck: passed (zero errors).
+- Lint: passed (zero errors).
+- Build: passed (21 pages, zero errors).
+- Playwright: 6/6 passed, zero skip (24.1s).
+- Manual admin smoke: `/admin` → 307, `/admin/login` → 200, `/admin/gates` → 307 (protected). All routing correct.
+- Share-link E2E: pending — no public `/configurator/[id]` route exists yet. `configurations` table not referenced outside admin or types. Will be added when route is implemented.
+
+- [x] Run typecheck.
+- [x] Run lint.
+- [x] Run build.
+- [x] Run admin CRUD E2E (6/6, zero skip).
+- [x] Manually verify `/admin` routing against staging-backed local app.
+- [ ] Share-link E2E: pending — public configuration share route not yet implemented.
 
 **Reason:** RLS fixes are only complete when both SQL behavior and app workflows pass.
 

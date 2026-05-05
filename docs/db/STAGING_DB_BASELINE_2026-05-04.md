@@ -274,9 +274,22 @@ Aggiornato il 2026-05-04 dal DB staging reale.
 
 ## 8. Decisione Finale
 
-**Staging DB: NON CHIUSO**
+**Staging DB: TECNICAMENTE CHIUSO (layer RLS + app)** ✅
 
-Motivazione: 3 bug bloccanti per prod (BUG-1, BUG-2, BUG-3). In particolare BUG-3 (configurations SELECT mancante) rompe il funnel pubblico del configuratore. BUG-1 e BUG-2 rendono il pannello admin incompleto per gates.
+Data chiusura tecnica: 2026-05-05
 
-Schema stabile, migrations allineate, tipi aggiornati.
-Chiude dopo: fix BUG-1 + BUG-2 + BUG-3 in una migration, verifica RISCHIO-2, seed fencing_panels da Marius.
+Migration: 17 locali = 17 remote, tutte applicate in ordine.
+BUG-1, BUG-2, BUG-3, BUG-4 risolti (Phase 2).
+quote_requests service_role grants verificati (Phase 3).
+admin_audit: Option A confermata — service_role only (Phase 4).
+RLS SQL verificato per tutti i ruoli (Phase 5 — con note su grant broadness documentate).
+App regression: typecheck, lint, build, Playwright 6/6 zero skip, manual admin smoke (Phase 6).
+
+**Phase 6 app regression:** PASSED on 2026-05-05.
+Typecheck, lint, build e Playwright admin CRUD 6/6 passati contro app local con staging DB.
+Manual admin smoke: routing protetto corretto, nessun 401/403.
+
+Aperto (non bloccante per chiusura tecnica):
+- anon/authenticated hanno grant DML più ampi del necessario su alcune tabelle (RLS li blocca correttamente, ma i grant sono più larghi dell'intento — da restringere in una migration futura dedicata).
+- Share-link E2E: pending — `/configurator/[id]` route non ancora implementata.
+- Business data (Phase 9): bloccato su Marius (prezzi finali, railheads, fencing panels, finish palette).
