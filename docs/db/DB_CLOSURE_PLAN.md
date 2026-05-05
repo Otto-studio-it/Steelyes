@@ -1,8 +1,8 @@
 # DB Closure Plan
 
-**Project:** Steelyes  
-**Scope:** Supabase staging DB and pricing catalogue readiness  
-**Created:** 2026-05-05  
+**Project:** Steelyes
+**Scope:** Supabase staging DB and pricing catalogue readiness
+**Created:** 2026-05-05
 **Status:** Open
 
 This document lists the phases still required to close the database work. It separates technical DB closure from business/pricing closure because the schema can become production-ready before all client-confirmed catalogue data arrives.
@@ -27,6 +27,7 @@ This document lists the phases still required to close the database work. It sep
 **Reason:** `.gitignore` only prevents new ignored files from being tracked. It does not stop Git from showing changes to files that are already tracked. The repository currently contains tracked AppleDouble files, Playwright output, and Supabase CLI cache files, so these need to be removed from the index before DB work continues.
 
 ---
+
 
 ## Phase 2 — Fix blocking RLS bugs
 
@@ -73,7 +74,7 @@ It includes:
 
 **Reason:** RLS policies are not enough on their own when table privileges are missing. `service_role` bypasses RLS, but it still needs the relevant table grants.
 
-**Evidence so far:**
+**Evidence:**
 
 - MCP baseline check confirmed the 4 target policies were absent before apply.
 - MCP baseline check confirmed the duplicate typo `service_zones` policy was present before apply.
@@ -83,41 +84,16 @@ It includes:
 - Supabase CLI applied `20260505160000_fix_pricing_rls_grants.sql` to staging.
 - Supabase CLI follow-up dry-run returned `Remote database is up to date.`
 
-**Remaining after Phase 2:**
-
-- [ ] Optional direct SQL evidence capture for remote grants:
-
-```sql
-select table_name, grantee, privilege_type
-from information_schema.role_table_grants
-where table_schema = 'public'
-  and table_name in ('gates', 'gate_options')
-  and grantee in ('authenticated', 'service_role')
-  and privilege_type in ('INSERT', 'DELETE')
-order by table_name, grantee, privilege_type;
-```
-
-Expected rows if verified directly:
-
-```text
-gate_options authenticated DELETE
-gate_options service_role  DELETE
-gates        authenticated DELETE
-gates        authenticated INSERT
-gates        service_role  DELETE
-gates        service_role  INSERT
-```
-
 ---
 
 ## Phase 3 — Verify quote request grants
 
 **Goal:** confirm the admin quote workflow can read and update quote requests.
 
-- [ ] Run a direct SQL/API check against staging before adding any grant.
-- [ ] Test whether service-role admin code can `SELECT` from `quote_requests`.
-- [ ] Test whether service-role admin code can `UPDATE` quote request status/admin notes.
-- [ ] If either operation fails, add:
+- [x] Run a direct SQL/API check against staging before adding any grant.
+- [x] Test whether service-role admin code can `SELECT` from `quote_requests`.
+- [x] Test whether service-role admin code can `UPDATE` quote request status/admin notes.
+- [x] If either operation fails, add:
 
 ```sql
 GRANT SELECT, UPDATE ON public.quote_requests TO service_role;
@@ -126,6 +102,8 @@ GRANT SELECT, UPDATE ON public.quote_requests TO service_role;
 **Method:** use a direct Supabase SQL check or equivalent DB/API verification first. Playwright should verify the app workflow later, but it is not the fastest way to isolate grant behavior.
 
 **Reason:** the baseline notes `quote_requests` currently has only `INSERT` grant for `service_role`. That may block the future admin requests dashboard, but grants should not be added speculatively if the current service-role path already works.
+
+**Verified on staging (2026-05-05):** service_role was missing `SELECT` and `UPDATE` on `public.quote_requests`, so migration `20260505161000_quote_requests_service_role_grants.sql` was applied. Post-apply check confirmed `anon` and `authenticated` still have no read/update grants, while `service_role` has `SELECT` + `UPDATE`.
 
 ---
 
@@ -279,8 +257,4 @@ The DB can be considered business/pricing complete when:
 
 ## Immediate next step
 
-Apply the follow-up grant migration:
-
-- table grants for `gates` insert/delete and `gate_options` delete
-
-Then verify the grant rows on staging. After Phase 2 grants are confirmed, proceed to Phase 3 (`quote_requests` grants) and Phase 5 direct RLS behavior checks.
+Proceed to Phase 4 (`admin_audit` access model) or Phase 5 (direct RLS behavior verification). Phase 4 is expected to be a documentation decision unless the project chooses to expose `admin_audit` through authenticated admin clients.

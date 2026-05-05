@@ -1,7 +1,7 @@
 # Staging DB Baseline — 2026-05-04
 
-**Progetto:** steelyes-staging (`hgeksaulzomkgqnfuriu`)  
-**Data audit:** 2026-05-04  
+**Progetto:** steelyes-staging (`hgeksaulzomkgqnfuriu`)
+**Data audit:** 2026-05-04
 **Agente:** Agent 1 — DB audit scope
 
 ---
@@ -99,7 +99,7 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 | `gate_options` | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE |
 | `fencing_panels` | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
 | `configurations` | SELECT, INSERT | SELECT, INSERT | SELECT, INSERT |
-| `quote_requests` | INSERT | INSERT | INSERT |
+| `quote_requests` | INSERT | INSERT | INSERT *(updated 2026-05-05: service_role now also has SELECT, UPDATE via `20260505161000_quote_requests_service_role_grants.sql`)* |
 | `service_zones` | SELECT | SELECT | SELECT |
 | `admin_audit` | — | — | SELECT, INSERT |
 
@@ -152,8 +152,8 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 
 ### BUG BLOCCANTI per prod
 
-**BUG-1: `gates` mancano policy admin INSERT e DELETE**  
-Admin può solo aggiornare gate esistenti, non aggiungerne o rimuoverli via app.  
+**BUG-1: `gates` mancano policy admin INSERT e DELETE**
+Admin può solo aggiornare gate esistenti, non aggiungerne o rimuoverli via app.
 SQL correttivo (NON applicato — da fare in migration dedicata):
 ```sql
 CREATE POLICY gates_admin_insert ON public.gates
@@ -165,7 +165,7 @@ CREATE POLICY gates_admin_delete ON public.gates
   USING (((auth.jwt() -> 'app_metadata' ->> 'is_admin'))::boolean = true);
 ```
 
-**BUG-2: `gate_options` manca policy admin DELETE**  
+**BUG-2: `gate_options` manca policy admin DELETE**
 SQL correttivo:
 ```sql
 CREATE POLICY gate_options_admin_delete ON public.gate_options
@@ -173,8 +173,8 @@ CREATE POLICY gate_options_admin_delete ON public.gate_options
   USING (((auth.jwt() -> 'app_metadata' ->> 'is_admin'))::boolean = true);
 ```
 
-**BUG-3: `configurations` — anon può INSERT ma non SELECT**  
-Dopo salvataggio configurazione, utente non può leggere il proprio record (share link rotto).  
+**BUG-3: `configurations` — anon può INSERT ma non SELECT**
+Dopo salvataggio configurazione, utente non può leggere il proprio record (share link rotto).
 SQL correttivo:
 ```sql
 CREATE POLICY configurations_anon_select ON public.configurations
@@ -184,33 +184,36 @@ CREATE POLICY configurations_anon_select ON public.configurations
 
 ### NON BLOCCANTI ma da chiudere
 
-**BUG-4: `service_zones` policy duplicata con typo**  
+**BUG-4: `service_zones` policy duplicata con typo**
 `service.\n_zones_anon_select` (ha newline nel nome) coesiste con `service_zones_anon_select`. Funzionalmente innocuo. Da rimuovere:
 ```sql
 DROP POLICY "service.
 _zones_anon_select" ON public.service_zones;
 ```
 
-**RISCHIO-1: `admin_audit` nessuna policy SELECT per admin authenticated**  
+**RISCHIO-1: `admin_audit` nessuna policy SELECT per admin authenticated**
 Se la dashboard admin deve mostrare log audit, è bloccata. Oggi solo service_role legge. Decidere: audit read-only via Server Action con service_role (OK) oppure aggiungere policy per admin.
 
-**RISCHIO-2: `quote_requests` grant service_role solo INSERT**  
-Se admin dashboard legge quote_requests tramite service_role, potrebbe essere bloccato. Da verificare con test reale. Se fallisce:
+**RISCHIO-2: `quote_requests` grant service_role solo INSERT**
+RESOLVED ✅ (verified + migration applied on 2026-05-05).
+service_role now has the required read/update grants for future server-side admin workflows.
 ```sql
 GRANT SELECT, UPDATE ON public.quote_requests TO service_role;
 ```
 
-**APERTO: `fencing_panels` 1 sola riga**  
+Migration: `20260505161000_quote_requests_service_role_grants.sql`
+
+**APERTO: `fencing_panels` 1 sola riga**
 Seed incompleto. TBD da Marius. Non bloccante per schema, bloccante per test configuratore pannelli.
 
-**APERTO: railheads**  
+**APERTO: railheads**
 Nessuna tabella `railheads`. TBD da Marius. Non creare migration vuote.
 
 ---
 
 ## 7. Tipi TypeScript
 
-File: `apps/web/src/types/database.types.ts`  
+File: `apps/web/src/types/database.types.ts`
 Aggiornato il 2026-05-04 dal DB staging reale.
 
 **Diff rispetto alla versione precedente:**
@@ -226,5 +229,5 @@ Aggiornato il 2026-05-04 dal DB staging reale.
 
 Motivazione: 3 bug bloccanti per prod (BUG-1, BUG-2, BUG-3). In particolare BUG-3 (configurations SELECT mancante) rompe il funnel pubblico del configuratore. BUG-1 e BUG-2 rendono il pannello admin incompleto per gates.
 
-Schema stabile, migrations allineate, tipi aggiornati.  
+Schema stabile, migrations allineate, tipi aggiornati.
 Chiude dopo: fix BUG-1 + BUG-2 + BUG-3 in una migration, verifica RISCHIO-2, seed fencing_panels da Marius.
