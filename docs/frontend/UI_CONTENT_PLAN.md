@@ -84,6 +84,10 @@ Parallel work split:
 
 - [`FRONTEND_PARALLEL_WORK_PLAN.md`](./FRONTEND_PARALLEL_WORK_PLAN.md)
 
+Homepage copy draft:
+
+- [`HOMEPAGE_COPY_DRAFT_2026-05-06.md`](./HOMEPAGE_COPY_DRAFT_2026-05-06.md)
+
 ---
 
 ## Priority order
