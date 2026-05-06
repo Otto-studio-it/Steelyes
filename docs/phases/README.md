@@ -3,13 +3,19 @@ title: Phase Documentation Index
 description: Quick reference for phase gates, deliverables, and success criteria
 owner: Ruben (project lead)
 status: Active
-last_updated: 2026-04-20
+last_updated: 2026-05-06
 ---
 
 # Phase Documentation
 
 > Quick-reference guides for each project phase. Locked gates, milestones, and success criteria.
 > Extracted from PROJECT_BRIEF.md, DEFINITION_OF_DONE.md, and weekly roadmap.
+
+Current execution note:
+
+- For the live project snapshot, start with `docs/PROJECT_STATUS.md`.
+- For the current operating plan, use `docs/NEXT_ACTION_PLAN.md`.
+- Older phase files may be historical and should not override the current status docs.
 
 **Master timeline:** 13 weeks from Week 1 (20 April 2026) to Week 13 (launch)
 

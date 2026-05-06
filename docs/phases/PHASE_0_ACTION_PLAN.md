@@ -1,4 +1,8 @@
-# 🗺️ Road Map: Chiusura Phase 0
+# Historical Road Map: Chiusura Phase 0
+
+> **Status 2026-05-06:** historical reference only. This checklist no longer represents current project status.
+> Current status lives in `docs/PROJECT_STATUS.md`; current execution plan lives in `docs/NEXT_ACTION_PLAN.md`.
+> DB/RLS hardening is closed on staging and the project is moving into documentation alignment and UI/content stabilization.
 
 > **Obiettivo Finale:** Superare il Gate della Phase 0 ("Preview URL shows styled 'Hello Steelyes'") e avere un ambiente di sviluppo 100% operativo con Supabase.
 

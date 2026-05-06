@@ -3,13 +3,20 @@ title: Client Blockers
 description: Asset tracker, impact, fallback strategies, weekly check-ins
 owner: Ruben (project manager)
 status: ACTIVE
-last_updated: 2026-05-04
+last_updated: 2026-05-06
 ---
 
 # Steelyes — Client Blockers
 
 > Weekly tracker for client-provided assets that block or enhance the product.
 > Updates every Monday. Escalate on Friday if overdue.
+
+Current execution note:
+
+- DB/RLS hardening is closed on staging.
+- UI/content work can continue with fallbacks.
+- Business/pricing completion remains blocked by Marius.
+- Do not create speculative pricing schema or railhead tables while these inputs are pending.
 
 ---
 
@@ -18,9 +25,9 @@ last_updated: 2026-05-04
 | Asset | Needed by | Phase blocked | Impact | Status | Fallback | Owner |
 |-------|-----------|---------------|--------|--------|----------|-------|
 | **Logo SVG (vector)** | Week 2 | Phase 1 | Nav/footer look incomplete | ⏳ pending | Wordmark text only | Marius |
-| **Price list (`public.gates`: `base_price_manual_gbp` + `base_price_auto_gbp` per row, plus option multipliers)** | Week 6 | Phase 2 | Configurator shows placeholder or NULL auto prices | ⏳ pending | "Indicative, subject to survey"; show manual vs motorised clearly | Marius |
-| **Railhead variants + unit prices** | Week 6 | Phase 2 | Railheads only as `gate_options` / `per_railhead`; prices non-final until variants confirmed | ⏳ pending | Keep wide placeholder range + copy "subject to survey"; no dedicated table until data arrives | Marius |
-| **Finish palette + multipliers** | Week 6 | Phase 2 | Configurator missing finishes | ⏳ pending | 4 generic: matte-black, zinc, bronze, pearl | Marius |
+| **Price list (`public.gates`: `base_price_manual_gbp` + `base_price_auto_gbp` per row, plus option multipliers)** | Week 6 | Phase 2 / Phase 9 DB business closure | Configurator shows placeholder or NULL auto prices | ⏳ pending | "Indicative, subject to survey"; show manual vs motorised clearly | Marius |
+| **Railhead variants + unit prices** | Week 6 | Phase 2 / Phase 9 DB business closure | Railheads only as `gate_options` / `per_railhead`; prices non-final until variants confirmed | ⏳ pending | Keep wide placeholder range + copy "subject to survey"; no dedicated table until data arrives | Marius |
+| **Finish palette + multipliers** | Week 6 | Phase 2 / Phase 9 DB business closure | Configurator missing finishes | ⏳ pending | 4 generic: matte-black, zinc-grey, bronze, pearl-white | Marius |
 | **Installation zones (postcode prefixes)** | Week 4 | Phase 1 | Postcode check widget hidden | ⏳ pending | "UK-wide coverage" | Marius |
 | **Case Study content ("the dream gate")** | Week 3 | Phase 1 | Case study page not published | ⏳ pending | Page hidden from nav, redirect to `/` | Marius |
 | **Telescopic install video** | Week 12 | Phase 4 | Gallery missing showcase video | ⏳ pending | Video slot empty, add post-launch | Marius |
@@ -53,6 +60,8 @@ last_updated: 2026-05-04
 - Finish palette with multipliers — product personalization
 
 **If missing**: launch with 4 generic finishes (matte-black, zinc-grey, bronze, pearl-white) and visibly marked "Indicative pricing, subject to survey"
+
+**Current DB implication**: these items block business/pricing completion, not the DB/RLS hardening state. Engineering should keep current provisional representations and wait for real client data before adding new catalogue schema.
 
 ### Phase 3 — AR (Weeks 10–11)
 
@@ -89,6 +98,13 @@ last_updated: 2026-05-04
 - Finish palette (configurator feature)
 - Company legal details (compliance)
 - Installation zones (service area validation)
+
+### "Blocks final business-data closure, but not UI/content progress"
+- Railhead final variant/pricing model
+- Real `fencing_panels` catalogue data
+- Final option multipliers
+
+Use documented fallbacks in `docs/frontend/CONTENT_FALLBACKS.md` until Marius responds.
 
 ---
 
@@ -231,6 +247,6 @@ Ruben
 
 ---
 
-**Active document.** Update every Monday. Last update: 2026-05-04 · Next update: next Monday (rolling)
+**Active document.** Update every Monday. Last update: 2026-05-06 · Next update: next Monday (rolling)
 
 _Remember: a missing asset never blocks an internal phase. We always have a fallback._
