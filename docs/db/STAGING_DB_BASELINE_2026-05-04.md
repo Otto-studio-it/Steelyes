@@ -10,7 +10,7 @@
 
 **Stato: ALLINEATO ✅**
 
-17 migration locali = 17 remote, tutte applicate in ordine.
+19 migration locali = 19 remote, tutte applicate in ordine.
 
 | Version | Name |
 |---|---|
@@ -31,9 +31,11 @@
 | 20260505154435 | fix_pricing_rls_closure |
 | 20260505160000 | fix_pricing_rls_grants |
 | 20260505161000 | quote_requests_service_role_grants |
+| 20260506120000 | harden_phase5_grants |
+| 20260506121000 | harden_public_non_dml_grants |
 
 Nessun mismatch. Nessuna migration "applied" senza SQL locale.
-Phase 8 verification note: `supabase db push --linked --dry-run` returned `Remote database is up to date` on 2026-05-06. macOS `._*` AppleDouble files are ignored by Supabase CLI and are not real migrations.
+Phase 5 hardening verification note: `supabase db push --linked --dry-run` returned `Remote database is up to date` on 2026-05-06 after applying `20260506120000_harden_phase5_grants.sql` and `20260506121000_harden_public_non_dml_grants.sql`. macOS `._*` AppleDouble files are ignored by Supabase CLI and are not real migrations.
 
 ---
 
@@ -102,15 +104,15 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 
 | Tabella | anon | authenticated | service_role |
 |---|---|---|---|
-| `gates` | SELECT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
-| `gate_options` | SELECT, INSERT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
-| `fencing_panels` | SELECT, INSERT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `gates` | SELECT | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `gate_options` | SELECT | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `fencing_panels` | SELECT | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
 | `configurations` | SELECT, INSERT | SELECT, INSERT | SELECT, INSERT |
 | `quote_requests` | INSERT | INSERT | INSERT, SELECT, UPDATE |
 | `service_zones` | SELECT | SELECT | SELECT |
 | `admin_audit` | — | — | SELECT, INSERT |
 
-> **Nota:** tabella limitata ai grant DML rilevanti. `service_role` bypassa RLS ma è comunque vincolato ai grant di tabella. Phase 5 ha trovato grant non-DML (`TRIGGER`, `TRUNCATE`, `REFERENCES`) su `admin_audit` per `anon`/`authenticated`; non abilitano read/write via app, ma restano follow-up di hardening.
+> **Nota:** tabella limitata ai grant DML rilevanti. `service_role` bypassa RLS ma è comunque vincolato ai grant di tabella. Phase 5 hardening del 2026-05-06 ha rimosso i grant non-DML (`TRIGGER`, `TRUNCATE`, `REFERENCES`) da `anon`/`authenticated` sulle tabelle app pubbliche dove non fanno parte del modello di accesso.
 
 ---
 
@@ -174,9 +176,9 @@ Share-link E2E app resta pending perché non esiste ancora una route pubblica `/
 **BUG-4: RESOLVED — `service_zones` typo policy removed**
 Risolto da `20260505154435_fix_pricing_rls_closure.sql`. Resta solo `service_zones_anon_select`.
 
-### ANCORA APERTI
+### RISOLTI DA PHASE 5 HARDENING
 
-**BUG-5: `admin_audit` ha grant non-DML per anon/authenticated**
+**BUG-5: RESOLVED — `admin_audit` aveva grant non-DML per anon/authenticated**
 Detected during Phase 5 verification on 2026-05-05.
 
 Evidence:
@@ -192,10 +194,11 @@ ORDER BY grantee, privilege_type;
 - Expected: only `service_role` appears (no privileges at all for `anon`/`authenticated`).
 - Actual: `anon` and `authenticated` have `TRIGGER`, `TRUNCATE`, `REFERENCES` privileges.
 
-Required follow-up:
-- Decide whether to explicitly `REVOKE TRIGGER, TRUNCATE, REFERENCES` on `public.admin_audit` from `anon` and `authenticated` to match the strict “service-role only” surface.
+Resolution:
+- `20260506120000_harden_phase5_grants.sql` revoked `TRIGGER`, `TRUNCATE`, and `REFERENCES` on `public.admin_audit` from `anon` and `authenticated`.
+- Post-apply direct grant query confirmed only `service_role` appears for `admin_audit`.
 
-**BUG-6: grants anon troppo ampi su tabelle catalogo (mitigati da RLS)**
+**BUG-6: RESOLVED — grants anon troppo ampi su tabelle catalogo**
 Detected during Phase 5 verification on 2026-05-05.
 
 Evidence:
@@ -214,11 +217,18 @@ ORDER BY table_name, grantee, privilege_type;
   - `gate_options`: `anon` has `INSERT` and `UPDATE` in addition to `SELECT`.
   - `fencing_panels`: `anon` has `INSERT` and `UPDATE` in addition to `SELECT`.
 
-Impact:
-- RLS currently blocks anon writes because there are no anon UPDATE/DELETE policies on these tables, but the table-level grants are broader than intended and make the security posture harder to reason about.
+Resolution:
+- `20260506120000_harden_phase5_grants.sql` revoked anon write grants found during inventory:
+  - `REVOKE UPDATE ON public.gates FROM anon;`
+  - `REVOKE INSERT, UPDATE ON public.gate_options FROM anon;`
+  - `REVOKE INSERT, UPDATE ON public.fencing_panels FROM anon;`
+- Post-apply direct grant query found additional non-DML grants on public app tables, so `20260506121000_harden_public_non_dml_grants.sql` revoked `TRIGGER`, `TRUNCATE`, and `REFERENCES` from `anon` and `authenticated` on `configurations`, `fencing_panels`, `gate_options`, `gates`, `quote_requests`, and `service_zones`.
+- Final direct grant query confirmed `anon` has only:
+  - `SELECT` on `gates`, `gate_options`, `fencing_panels`, and `service_zones`;
+  - `SELECT`, `INSERT` on `configurations`;
+  - `INSERT` on `quote_requests`.
 
-Required follow-up:
-- Consider tightening table grants to align with intended access (e.g. `REVOKE INSERT, UPDATE` from `anon` on catalogue tables), keeping RLS as the primary control.
+### ANCORA APERTI
 
 **RISCHIO-1: RESOLVED — `admin_audit` service-role only**
 Decisione 2026-05-05: Option A selected. `admin_audit` remains readable only through server-side service-role code. No authenticated-admin RLS policy added, no migration required.
@@ -226,7 +236,7 @@ Decisione 2026-05-05: Option A selected. `admin_audit` remains readable only thr
 Verified on staging:
 - RLS enabled with zero policies.
 - DML grants limited to `service_role`: `SELECT`, `INSERT`.
-- `anon` and `authenticated` have no DML grants (but see BUG-5 for non-DML privileges that should be cleaned up).
+- `anon` and `authenticated` have no DML or non-DML grants after Phase 5 hardening.
 
 **RISCHIO-2: RESOLVED — `quote_requests` service_role SELECT/UPDATE**
 RESOLVED ✅ (verified + migration applied on 2026-05-05).
@@ -263,16 +273,16 @@ Commit: `f2474e5 chore(types): regenerate database types for Phase 7`.
 
 ## 8. Decisione Finale
 
-**Staging DB: NON ANCORA TECNICAMENTE CHIUSO**
+**Staging DB: DB/RLS HARDENING CHIUSO; FINAL TECHNICAL CLOSURE ANCORA PARZIALE**
 
 Phase 6 app regression chiusa: 2026-05-05.
 La chiusura tecnica finale resta aperta finché i criteri del `DB_CLOSURE_PLAN.md` §10 non sono tutti verificati o esplicitamente aggiornati.
 
-Migration: 17 locali = 17 remote, tutte applicate in ordine.
+Migration: 19 locali = 19 remote, tutte applicate in ordine.
 BUG-1, BUG-2, BUG-3, BUG-4 risolti (Phase 2).
 quote_requests service_role grants verificati (Phase 3).
 admin_audit: Option A confermata — service_role only (Phase 4).
-RLS SQL verificato per tutti i ruoli (Phase 5 — con note su grant broadness documentate; Phase 5 resta NOT COMPLETE nel closure plan).
+RLS SQL verificato per tutti i ruoli e grant broadness risolta con Phase 5 hardening (Phase 5).
 App regression: typecheck, lint, build, Playwright 6/6 zero skip, manual routing smoke (Phase 6).
 Generated types: rigenerati e typecheck passati (Phase 7).
 DB documentation: baseline aggiornata fino a Phase 8.
@@ -282,7 +292,5 @@ Typecheck, lint, build e Playwright admin CRUD 6/6 passati contro app local con 
 Manual routing smoke: route protection verified via HTTP status checks. Post-login catalogue rendering and DevTools 401/403 inspection were not part of this recorded smoke.
 
 Aperto prima della chiusura tecnica finale:
-- Phase 5 resta NOT COMPLETE nel closure plan per grant non-DML su `admin_audit`, grant anon troppo ampi su alcune tabelle catalogo, e sample query `service_zones` da correggere.
-- anon/authenticated hanno grant DML più ampi del necessario su alcune tabelle (RLS li blocca correttamente, ma i grant sono più larghi dell'intento — da restringere in una migration futura dedicata).
 - Share-link E2E: pending — `/configurator/[id]` route non ancora implementata; il criterio §10 "Share-link configuration read works" non è ancora verificabile.
 - Business data (Phase 9): separato dalla chiusura tecnica, bloccato su Marius (prezzi finali, railheads, fencing panels, finish palette).

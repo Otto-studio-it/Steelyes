@@ -129,7 +129,7 @@ Decision outcome:
 - DML grants for `admin_audit` are limited to `service_role`: `SELECT`, `INSERT`.
 - App code does not read `admin_audit` today outside generated database types.
 - Future audit-log UI should read through server-side `getServiceRoleClient()`.
-- Note: Phase 5 verification later detected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`) present for `anon` and `authenticated` on `admin_audit`. This does not enable reads due to RLS/no SELECT, but it violates the stricter “no grants at all” expectation and should be cleaned up.
+- Note: Phase 5 verification later detected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`) present for `anon` and `authenticated` on `admin_audit`. This did not enable reads due to RLS/no SELECT, but it violated the stricter “no grants at all” expectation and was cleaned up by `20260506120000_harden_phase5_grants.sql`.
 
 ---
 
@@ -141,43 +141,66 @@ Decision outcome:
 
 Verify `anon`:
 
-- [ ] Can `SELECT` public catalogue tables:
+- [x] Can `SELECT` public catalogue tables:
   - `gates`
   - `gate_options`
   - `fencing_panels`
   - `service_zones`
-- [ ] Can `INSERT` `configurations`.
-- [ ] Can `SELECT` saved `configurations` required by share links.
-- [ ] Can `INSERT` `quote_requests`.
-- [ ] Cannot update/delete catalogue or admin tables.
-- [ ] Cannot read `quote_requests`.
+- [x] Can `INSERT` `configurations`.
+- [x] Can `SELECT` saved `configurations` required by share links.
+- [x] Can `INSERT` `quote_requests`.
+- [x] Cannot update/delete catalogue or admin tables.
+- [x] Cannot read `quote_requests`.
 
 Verify authenticated non-admin:
 
-- [ ] Can read public catalogue data.
-- [ ] Cannot perform admin writes.
+- [x] Can read public catalogue data.
+- [x] Cannot perform admin writes.
 
 Verify authenticated admin:
 
-- [ ] Can `INSERT`, `UPDATE`, and `DELETE` `gates`.
-- [ ] Can `INSERT`, `UPDATE`, and `DELETE` `gate_options`.
-- [ ] Can `INSERT`, `UPDATE`, and `DELETE` `fencing_panels`.
+- [x] Can `INSERT`, `UPDATE`, and `DELETE` `gates`.
+- [x] Can `INSERT`, `UPDATE`, and `DELETE` `gate_options`.
+- [x] Can `INSERT`, `UPDATE`, and `DELETE` `fencing_panels`.
 
 Verify service-role:
 
-- [ ] Can perform required server-side admin operations.
-- [ ] Can insert audit rows.
-- [ ] Can read/update quote requests if the admin dashboard requires it.
+- [x] Can perform required server-side admin operations.
+- [x] Can insert audit rows.
+- [x] Can read/update quote requests if the admin dashboard requires it.
 
 **Closure condition:** all expected role checks pass against staging.
 
-**Status (2026-05-05):** NOT COMPLETE — Phase 5 inventory checks found mismatches that need follow-up documentation and fixes:
+**Status (2026-05-06):** Complete for DB/RLS and grant-hardening scope on staging.
 
-- `admin_audit`: `anon` and `authenticated` have unexpected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`).
-- `gates`: `anon` has `UPDATE` table grant (RLS blocks without an UPDATE policy, but the grant is broader than intended).
-- `gate_options`: `anon` has `INSERT` and `UPDATE` table grants (RLS blocks these writes, but the grants are broader than intended).
-- `fencing_panels`: `anon` has `INSERT` and `UPDATE` table grants (RLS blocks these writes, but the grants are broader than intended).
-- `service_zones`: docs/expected sample query used a non-existent `zone_name` column; the table currently has `postcode_prefix` + `surcharge` only.
+Phase 5 follow-up migrations:
+
+```text
+supabase/migrations/20260506120000_harden_phase5_grants.sql
+supabase/migrations/20260506121000_harden_public_non_dml_grants.sql
+```
+
+They fixed the grant mismatches found on 2026-05-05:
+
+- `admin_audit`: removed unexpected non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`) from `anon` and `authenticated`.
+- `gates`: removed `UPDATE` grant from `anon`.
+- `gate_options`: removed `INSERT` and `UPDATE` grants from `anon`.
+- `fencing_panels`: removed `INSERT` and `UPDATE` grants from `anon`.
+- Public app tables: removed non-DML privileges (`TRIGGER`, `TRUNCATE`, `REFERENCES`) from `anon` and `authenticated` where they are not part of the application access model.
+- `service_zones`: documentation now treats the table as `postcode_prefix` + `surcharge`; there is no `zone_name` column.
+
+**Evidence (2026-05-06):**
+
+- `supabase db push --linked --dry-run` detected `20260506120000_harden_phase5_grants.sql` as pending.
+- `supabase db push --linked` applied `20260506120000_harden_phase5_grants.sql` to staging.
+- Direct grant query showed non-DML privileges still present on other public app tables, so a second hardening migration was added.
+- `supabase db push --linked --dry-run` detected `20260506121000_harden_public_non_dml_grants.sql` as pending.
+- `supabase db push --linked --yes` applied `20260506121000_harden_public_non_dml_grants.sql` to staging.
+- Final `supabase db push --linked --dry-run` returned `Remote database is up to date.`
+- Final direct grant query confirmed:
+  - `anon`: `SELECT` only on `gates`, `gate_options`, `fencing_panels`, `service_zones`; `SELECT` + `INSERT` on `configurations`; `INSERT` only on `quote_requests`; no `admin_audit` privileges.
+  - `authenticated`: admin-capable DML grants remain on catalogue tables for RLS-gated admin workflows; no non-DML privileges on public app tables.
+  - `service_role`: required server-side grants remain present.
 
 ---
 
@@ -240,12 +263,13 @@ Verify service-role:
 **Status:** Complete — 2026-05-06
 
 **Evidence:**
-- `docs/db/STAGING_DB_BASELINE_2026-05-04.md` updated to reflect 17 aligned migrations.
+- `docs/db/STAGING_DB_BASELINE_2026-05-04.md` updated to reflect 19 aligned migrations after Phase 5 hardening.
 - BUG-1, BUG-2, BUG-3, and BUG-4 marked resolved at DB/RLS layer.
 - `quote_requests` service-role SELECT/UPDATE grant decision recorded.
 - `admin_audit` Option A service-role-only decision recorded.
 - Phase 6 app regression and Phase 7 generated-types regeneration recorded.
-- Remaining open items preserved: Phase 5 grant hardening, share-link E2E pending, Phase 9 business data.
+- Phase 5 grant hardening marked closed after staging apply and direct grant verification.
+- Remaining open items preserved: share-link E2E pending, Phase 9 business data.
 
 - [x] Update `docs/db/STAGING_DB_BASELINE_2026-05-04.md` after verification.
 - [x] Mark BUG-1, BUG-2, BUG-3 as resolved.
@@ -290,14 +314,14 @@ The DB can be considered technically closed when:
 - [x] BUG-1, BUG-2, and BUG-3 are fixed.
 - [x] BUG-4 is removed or explicitly accepted.
 - [x] Required `gates` and `gate_options` admin grants are present on staging.
-- [ ] RLS behavior is verified for anon, non-admin, admin, and service-role.
+- [x] RLS behavior is verified for anon, non-admin, admin, and service-role.
 - [x] Admin CRUD workflows pass against staging.
 - [ ] Share-link configuration read works.
 - [x] `quote_requests` service-role behavior is verified.
 - [x] `admin_audit` access model is decided and documented.
 - [x] DB docs are updated after verification.
 
-**Partial status after Phase 8:** most original DB/RLS closure bugs are resolved and documented, but final technical closure is still blocked by the open Phase 5 verification/hardening follow-ups and by the unimplemented share-link app route.
+**Partial status after Phase 5 hardening on 2026-05-06:** original DB/RLS closure bugs and grant-hardening follow-ups are resolved and documented. Final technical closure is still blocked by the unimplemented share-link app route unless that criterion is explicitly moved out of DB technical closure.
 
 The DB can be considered business/pricing complete when:
 
@@ -315,6 +339,6 @@ Proceed to Phase 9 business-data closure when Marius provides final catalogue in
 
 Do not proceed to final DB technical closure until §10 criteria are either satisfied or explicitly revised. In particular:
 
-- Phase 5 grant-broadness follow-ups remain open.
+- Phase 5 grant-broadness follow-ups are closed on staging.
 - Share-link E2E remains pending until a public configuration share route exists.
 - Business/pricing completion remains blocked on Marius.
