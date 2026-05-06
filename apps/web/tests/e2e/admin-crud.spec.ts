@@ -142,7 +142,7 @@ test.describe('admin staging CRUD', () => {
 async function loginAsAdmin(page: Page) {
   await page.goto('/admin/login');
   await page.getByLabel('Email').fill(ADMIN_EMAIL!);
-  await page.getByLabel('Password').fill(ADMIN_PASSWORD!);
+  await page.locator('#password').fill(ADMIN_PASSWORD!);
   await page.getByRole('button', { name: /^Accedi$/i }).click();
   await expect(page).toHaveURL(/\/admin\/dashboard/);
 }

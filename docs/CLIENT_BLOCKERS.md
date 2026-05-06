@@ -3,13 +3,20 @@ title: Client Blockers
 description: Asset tracker, impact, fallback strategies, weekly check-ins
 owner: Ruben (project manager)
 status: ACTIVE
-last_updated: 2026-04-20
+last_updated: 2026-05-06
 ---
 
 # Steelyes — Client Blockers
 
 > Weekly tracker for client-provided assets that block or enhance the product.
 > Updates every Monday. Escalate on Friday if overdue.
+
+Current execution note:
+
+- DB/RLS hardening is closed on staging.
+- UI/content work can continue with fallbacks.
+- Business/pricing completion remains blocked by Marius.
+- Do not create speculative pricing schema or railhead tables while these inputs are pending.
 
 ---
 
@@ -18,8 +25,9 @@ last_updated: 2026-04-20
 | Asset | Needed by | Phase blocked | Impact | Status | Fallback | Owner |
 |-------|-----------|---------------|--------|--------|----------|-------|
 | **Logo SVG (vector)** | Week 2 | Phase 1 | Nav/footer look incomplete | ⏳ pending | Wordmark text only | Marius |
-| **Price list (6 gates × £/m² + multipliers)** | Week 6 | Phase 2 | Configurator shows placeholder pricing | ⏳ pending | "Indicative, subject to survey" | Marius |
-| **Finish palette + multipliers** | Week 6 | Phase 2 | Configurator missing finishes | ⏳ pending | 4 generic: matte-black, zinc, bronze, pearl | Marius |
+| **Price list (`public.gates`: `base_price_manual_gbp` + `base_price_auto_gbp` per row, plus option multipliers)** | Week 6 | Phase 2 / Phase 9 DB business closure | Configurator shows placeholder or NULL auto prices | ⏳ pending | "Indicative, subject to survey"; show manual vs motorised clearly | Marius |
+| **Railhead variants + unit prices** | Week 6 | Phase 2 / Phase 9 DB business closure | Railheads only as `gate_options` / `per_railhead`; prices non-final until variants confirmed | ⏳ pending | Keep wide placeholder range + copy "subject to survey"; no dedicated table until data arrives | Marius |
+| **Finish palette + multipliers** | Week 6 | Phase 2 / Phase 9 DB business closure | Configurator missing finishes | ⏳ pending | 4 generic: matte-black, zinc-grey, bronze, pearl-white | Marius |
 | **Installation zones (postcode prefixes)** | Week 4 | Phase 1 | Postcode check widget hidden | ⏳ pending | "UK-wide coverage" | Marius |
 | **Case Study content ("the dream gate")** | Week 3 | Phase 1 | Case study page not published | ⏳ pending | Page hidden from nav, redirect to `/` | Marius |
 | **Telescopic install video** | Week 12 | Phase 4 | Gallery missing showcase video | ⏳ pending | Video slot empty, add post-launch | Marius |
@@ -47,10 +55,13 @@ last_updated: 2026-04-20
 ### Phase 2 — Configurator (Weeks 6–9)
 
 **Critical**:
-- Price list (6 gates × base £/m² + multipliers for tube size, finish, options) — configurator core feature
+- Confirmed gate base prices (manual **and** motorised columns on each catalogue row) plus multipliers for tube size, finish, options — configurator core feature
+- Railhead variant list with real **per-railhead** GBP (today stored only as provisional `gate_options` rows; see `docs/db/RAILHEADS_TBD.md`)
 - Finish palette with multipliers — product personalization
 
 **If missing**: launch with 4 generic finishes (matte-black, zinc-grey, bronze, pearl-white) and visibly marked "Indicative pricing, subject to survey"
+
+**Current DB implication**: these items block business/pricing completion, not the DB/RLS hardening state. Engineering should keep current provisional representations and wait for real client data before adding new catalogue schema.
 
 ### Phase 3 — AR (Weeks 10–11)
 
@@ -88,6 +99,13 @@ last_updated: 2026-04-20
 - Company legal details (compliance)
 - Installation zones (service area validation)
 
+### "Blocks final business-data closure, but not UI/content progress"
+- Railhead final variant/pricing model
+- Real `fencing_panels` catalogue data
+- Final option multipliers
+
+Use documented fallbacks in `docs/frontend/CONTENT_FALLBACKS.md` until Marius responds.
+
 ---
 
 ## Weekly check-in cadence
@@ -122,8 +140,10 @@ Phase 1 (Weeks 2–5)
    └─ Case study page (Week 3, can hide if missing)
 
 Phase 2 (Weeks 6–9)
-├─ Price list
+├─ Price list (gates manual/auto GBP + multipliers)
 │  └─ Configurator pricing (CRITICAL — Week 6)
+├─ Railhead variants + prices
+│  └─ Replace placeholder `per_railhead` option pricing (CRITICAL — Week 6)
 └─ Finish palette
    └─ Configurator finishes (CRITICAL — Week 6)
 
@@ -176,6 +196,7 @@ Before DNS cutover, verify:
 - [ ] Logo either SVG or wordmark text
 - [ ] Company details either complete or marked "TBD" with disclaimer
 - [ ] Price list either real or marked "Indicative" visibly on configurator
+- [ ] Railheads either priced per confirmed variant list or still clearly marked non-final / survey-required
 - [ ] Photo consent either obtained or using workshop photos only
 - [ ] DNS registrar access confirmed, TTL lowered for fast propagation
 - [ ] Email DNS records ready for deployment
@@ -226,6 +247,6 @@ Ruben
 
 ---
 
-**Active document.** Update every Monday. Last update: 2026-04-20 · Next update: 2026-04-28 (Monday, Week 2)
+**Active document.** Update every Monday. Last update: 2026-05-06 · Next update: next Monday (rolling)
 
 _Remember: a missing asset never blocks an internal phase. We always have a fallback._

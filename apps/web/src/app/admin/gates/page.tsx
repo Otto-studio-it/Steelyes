@@ -2,8 +2,8 @@ import { redirect } from 'next/navigation'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
+import { GatesBoard } from './GatesBoard'
 import type { Database } from '@/types/database.types'
-import { GatePriceCard } from './GatePriceCard'
 
 export const dynamic = 'force-dynamic'
 
@@ -48,13 +48,6 @@ export default async function GatesAdminPage() {
     error = retry.error
   }
 
-  const byStyle = (gates ?? []).reduce<Record<string, typeof gates>>((acc, g) => {
-    const key = g!.style
-    if (!acc[key]) acc[key] = []
-    acc[key]!.push(g)
-    return acc
-  }, {})
-
   return (
     <>
       <AdminHeader />
@@ -73,24 +66,15 @@ export default async function GatesAdminPage() {
           <p className="mt-4 font-mono text-xs text-[#ba1a1a]">Errore caricamento: {error.message}</p>
         )}
 
-        <div className="mt-6 space-y-8">
-          {Object.entries(byStyle).map(([style, items]) => (
-            <div key={style}>
-              <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-[#906f6b]">
-                Stile: {style}
-              </p>
-              <div className="flex flex-col gap-2">
-                {(items ?? []).map((gate) => (gate ? <GatePriceCard key={gate.id} gate={gate} /> : null))}
-              </div>
-            </div>
-          ))}
-
-          {!error && (!gates || gates.length === 0) && (
-            <p className="font-mono text-sm text-zinc-400">
+        {!error && gates && gates.length > 0 ? (
+          <GatesBoard gates={gates} />
+        ) : (
+          !error && (
+            <p className="mt-6 font-mono text-sm text-zinc-400">
               Nessun cancello trovato. Le migrations devono essere applicate.
             </p>
-          )}
-        </div>
+          )
+        )}
       </main>
     </>
   )

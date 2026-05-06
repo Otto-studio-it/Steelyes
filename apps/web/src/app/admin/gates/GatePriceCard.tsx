@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import { isAdminActionError } from '@/lib/admin/admin-action-result'
+import { formatFinishLabel, humanizeSlug } from '@/lib/admin/format'
 import type { Database } from '@/types/database.types'
 import { updateGatePrice } from './actions'
 
-type Gate = Pick<
+export type Gate = Pick<
   Database['public']['Tables']['gates']['Row'],
   | 'id'
   | 'name'
@@ -46,7 +47,8 @@ export function GatePriceCard({ gate }: { gate: Gate }) {
     setSaving(false)
   }
 
-  const finishLabel = gate.finish === 'metal' ? 'Metallo' : 'Composito'
+  const finishLabel = formatFinishLabel(gate.finish)
+  const gateLabel = gate.name || `${humanizeSlug(gate.type)} — ${finishLabel}`
 
   return (
     <div className="border border-zinc-200 bg-white">
@@ -57,10 +59,10 @@ export function GatePriceCard({ gate }: { gate: Gate }) {
       >
         <div>
           <p className="font-mono text-[10px] uppercase tracking-widest text-[#906f6b]">
-            {gate.style} · {finishLabel}
+            {humanizeSlug(gate.style)} · {finishLabel}
           </p>
           <p className="mt-0.5 font-heading text-sm font-bold uppercase tracking-tight text-[#1b1c1a]">
-            {gate.name ?? `${gate.type} — ${finishLabel}`}
+            {gateLabel}
           </p>
           <div className="mt-1.5 flex gap-4">
             <span className="font-mono text-xs text-zinc-500">
@@ -73,7 +75,7 @@ export function GatePriceCard({ gate }: { gate: Gate }) {
             )}
           </div>
         </div>
-        <span className="ml-4 mt-1 font-mono text-xs text-[#9e000c]">{open ? '▲' : '▼'} Modifica</span>
+        <span className="ml-4 mt-1 font-mono text-xs text-[#9e000c]">{open ? '−' : '+'} Modifica</span>
       </button>
 
       {open && (
@@ -128,7 +130,10 @@ export function GatePriceCard({ gate }: { gate: Gate }) {
             </button>
             <button
               type="button"
-              onClick={() => { setOpen(false); setMsg(null) }}
+              onClick={() => {
+                setOpen(false)
+                setMsg(null)
+              }}
               className="inline-flex min-h-[40px] items-center border border-zinc-200 px-4 font-heading text-xs font-bold uppercase tracking-tight text-zinc-600"
             >
               Annulla

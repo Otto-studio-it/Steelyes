@@ -2,6 +2,17 @@ import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 import fs from 'fs';
 
+/** Strip wrapping quotes only when the same delimiter wraps both ends; otherwise leave value unchanged. */
+function stripMatchingQuotes(raw: string): string {
+  const v = raw.trim();
+  if (v.length < 2) return v;
+  const q = v[0];
+  if ((q === '"' || q === "'") && v[v.length - 1] === q) {
+    return v.slice(1, -1);
+  }
+  return v;
+}
+
 function loadEnvFromLocalFile() {
   const envPath = path.resolve(__dirname, '.env.local');
   if (!fs.existsSync(envPath)) return;
@@ -10,9 +21,10 @@ function loadEnvFromLocalFile() {
   for (const line of content.split('\n')) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#') || !trimmed.includes('=')) continue;
-    const [key, ...rest] = trimmed.split('=');
+    const [rawKey, ...rest] = trimmed.split('=');
+    const key = rawKey.trim();
     if (!key || process.env[key] !== undefined) continue;
-    process.env[key] = rest.join('=').trim().replace(/^['"]|['"]$/g, '');
+    process.env[key] = stripMatchingQuotes(rest.join('='));
   }
 }
 
