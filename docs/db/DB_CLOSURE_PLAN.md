@@ -194,7 +194,7 @@ Verify service-role:
 - Lint: passed (zero errors).
 - Build: passed (21 pages, zero errors).
 - Playwright: 6/6 passed, zero skip (24.1s).
-- Manual admin smoke: `/admin` → 307, `/admin/login` → 200, `/admin/gates` → 307 (protected). All routing correct.
+- Manual routing smoke: `/admin` → 307, `/admin/login` → 200, `/admin/gates` → 307 (protected). This verifies route protection, not post-login catalogue rendering.
 - Share-link E2E: pending — no public `/configurator/[id]` route exists yet. `configurations` table not referenced outside admin or types. Will be added when route is implemented.
 
 - [x] Run typecheck.
@@ -284,4 +284,6 @@ The DB can be considered business/pricing complete when:
 
 ## Immediate next step
 
-Proceed to Phase 4 (`admin_audit` access model) or Phase 5 (direct RLS behavior verification). Phase 4 is expected to be a documentation decision unless the project chooses to expose `admin_audit` through authenticated admin clients.
+Proceed to Phase 7 (`database.types.ts` alignment check). Since the completed work changed policies and grants only, no generated type diff is expected unless a fresh Supabase type generation proves otherwise.
+
+Keep the Phase 5 grant-broadness follow-ups separate from Phase 7 so type alignment stays a read-only verification step.

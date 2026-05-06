@@ -274,22 +274,24 @@ Aggiornato il 2026-05-04 dal DB staging reale.
 
 ## 8. Decisione Finale
 
-**Staging DB: TECNICAMENTE CHIUSO (layer RLS + app)** ✅
+**Staging DB: NON ANCORA TECNICAMENTE CHIUSO**
 
-Data chiusura tecnica: 2026-05-05
+Phase 6 app regression chiusa: 2026-05-05.
+La chiusura tecnica finale resta aperta finché i criteri del `DB_CLOSURE_PLAN.md` §10 non sono tutti verificati o esplicitamente aggiornati.
 
 Migration: 17 locali = 17 remote, tutte applicate in ordine.
 BUG-1, BUG-2, BUG-3, BUG-4 risolti (Phase 2).
 quote_requests service_role grants verificati (Phase 3).
 admin_audit: Option A confermata — service_role only (Phase 4).
-RLS SQL verificato per tutti i ruoli (Phase 5 — con note su grant broadness documentate).
-App regression: typecheck, lint, build, Playwright 6/6 zero skip, manual admin smoke (Phase 6).
+RLS SQL verificato per tutti i ruoli (Phase 5 — con note su grant broadness documentate; Phase 5 resta NOT COMPLETE nel closure plan).
+App regression: typecheck, lint, build, Playwright 6/6 zero skip, manual routing smoke (Phase 6).
 
 **Phase 6 app regression:** PASSED on 2026-05-05.
 Typecheck, lint, build e Playwright admin CRUD 6/6 passati contro app local con staging DB.
-Manual admin smoke: routing protetto corretto, nessun 401/403.
+Manual routing smoke: route protection verified via HTTP status checks. Post-login catalogue rendering and DevTools 401/403 inspection were not part of this recorded smoke.
 
-Aperto (non bloccante per chiusura tecnica):
+Aperto prima della chiusura tecnica finale:
+- Phase 5 resta NOT COMPLETE nel closure plan per grant non-DML su `admin_audit`, grant anon troppo ampi su alcune tabelle catalogo, e sample query `service_zones` da correggere.
 - anon/authenticated hanno grant DML più ampi del necessario su alcune tabelle (RLS li blocca correttamente, ma i grant sono più larghi dell'intento — da restringere in una migration futura dedicata).
-- Share-link E2E: pending — `/configurator/[id]` route non ancora implementata.
-- Business data (Phase 9): bloccato su Marius (prezzi finali, railheads, fencing panels, finish palette).
+- Share-link E2E: pending — `/configurator/[id]` route non ancora implementata; il criterio §10 "Share-link configuration read works" non è ancora verificabile.
+- Business data (Phase 9): separato dalla chiusura tecnica, bloccato su Marius (prezzi finali, railheads, fencing panels, finish palette).
