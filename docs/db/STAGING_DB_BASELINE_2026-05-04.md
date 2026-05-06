@@ -10,7 +10,7 @@
 
 **Stato: ALLINEATO ✅**
 
-14 migration locali = 14 remote, tutte applicate in ordine.
+17 migration locali = 17 remote, tutte applicate in ordine.
 
 | Version | Name |
 |---|---|
@@ -28,8 +28,12 @@
 | 20260502130000 | ensure_gates_name_column |
 | 20260504150000 | cleanup_client_pricing_seed |
 | 20260504160000 | fencing_delete_grant |
+| 20260505154435 | fix_pricing_rls_closure |
+| 20260505160000 | fix_pricing_rls_grants |
+| 20260505161000 | quote_requests_service_role_grants |
 
 Nessun mismatch. Nessuna migration "applied" senza SQL locale.
+Phase 8 verification note: `supabase db push --linked --dry-run` returned `Remote database is up to date` on 2026-05-06. macOS `._*` AppleDouble files are ignored by Supabase CLI and are not real migrations.
 
 ---
 
@@ -54,6 +58,8 @@ Nessun mismatch. Nessuna migration "applied" senza SQL locale.
 |---|---|---|---|
 | `gates_anon_select` | anon | SELECT | `true` |
 | `gates_admin_update` | authenticated | UPDATE | `app_metadata.is_admin = true` |
+| `gates_admin_insert` | authenticated | INSERT | `app_metadata.is_admin = true` |
+| `gates_admin_delete` | authenticated | DELETE | `app_metadata.is_admin = true` |
 
 ### `gate_options`
 | Policy | Role | Cmd | Condition |
@@ -61,6 +67,7 @@ Nessun mismatch. Nessuna migration "applied" senza SQL locale.
 | `gate_options_anon_select` | anon | SELECT | `true` |
 | `gate_options_admin_insert` | authenticated | INSERT | `app_metadata.is_admin = true` |
 | `gate_options_admin_update` | authenticated | UPDATE | `app_metadata.is_admin = true` |
+| `gate_options_admin_delete` | authenticated | DELETE | `app_metadata.is_admin = true` |
 
 ### `fencing_panels`
 | Policy | Role | Cmd | Condition |
@@ -74,6 +81,7 @@ Nessun mismatch. Nessuna migration "applied" senza SQL locale.
 | Policy | Role | Cmd | Condition |
 |---|---|---|---|
 | `configurations_anon_insert` | anon | INSERT | `true` |
+| `configurations_anon_select` | anon | SELECT | `true` |
 
 ### `quote_requests`
 | Policy | Role | Cmd | Condition |
@@ -84,7 +92,6 @@ Nessun mismatch. Nessuna migration "applied" senza SQL locale.
 | Policy | Role | Cmd | Condition |
 |---|---|---|---|
 | `service_zones_anon_select` | anon | SELECT | `true` |
-| `service.\n_zones_anon_select` | anon | SELECT | `true` ← ⚠️ TYPO + duplicato |
 
 ### `admin_audit`
 _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli tranne service_role (bypass)._
@@ -95,15 +102,15 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 
 | Tabella | anon | authenticated | service_role |
 |---|---|---|---|
-| `gates` | SELECT | SELECT, UPDATE | SELECT, UPDATE |
-| `gate_options` | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE |
-| `fencing_panels` | SELECT, INSERT, UPDATE | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `gates` | SELECT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `gate_options` | SELECT, INSERT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
+| `fencing_panels` | SELECT, INSERT, UPDATE *(broad; RLS blocks anon writes)* | SELECT, INSERT, UPDATE, DELETE | SELECT, INSERT, UPDATE, DELETE |
 | `configurations` | SELECT, INSERT | SELECT, INSERT | SELECT, INSERT |
-| `quote_requests` | INSERT | INSERT | INSERT *(updated 2026-05-05: service_role now also has SELECT, UPDATE via `20260505161000_quote_requests_service_role_grants.sql`)* |
+| `quote_requests` | INSERT | INSERT | INSERT, SELECT, UPDATE |
 | `service_zones` | SELECT | SELECT | SELECT |
 | `admin_audit` | — | — | SELECT, INSERT |
 
-> **Nota:** `information_schema.role_table_grants` non include TRIGGER/REFERENCES/TRUNCATE nell'elenco utile. Solo DML rilevante mostrato. `service_role` bypassa RLS ma è comunque vincolato ai grant di tabella.
+> **Nota:** tabella limitata ai grant DML rilevanti. `service_role` bypassa RLS ma è comunque vincolato ai grant di tabella. Phase 5 ha trovato grant non-DML (`TRIGGER`, `TRUNCATE`, `REFERENCES`) su `admin_audit` per `anon`/`authenticated`; non abilitano read/write via app, ma restano follow-up di hardening.
 
 ---
 
@@ -116,7 +123,7 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 | SELECT | `gate_options` | ✅ OK | policy + grant |
 | SELECT | `fencing_panels` | ✅ OK | policy + grant |
 | SELECT | `service_zones` | ✅ OK | policy + grant |
-| SELECT | `configurations` | ❌ BLOCCATO | grant presente, **policy mancante** |
+| SELECT | `configurations` | ✅ OK | policy + grant; share-link E2E app pending perché manca route pubblica |
 | SELECT | `quote_requests` | ✅ BLOCCATO | corretto, nessuna policy SELECT |
 | INSERT | `configurations` | ✅ OK | policy + grant |
 | INSERT | `quote_requests` | ✅ OK | policy + grant |
@@ -132,10 +139,10 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 | Operazione | Tabella | Esito | Note |
 |---|---|---|---|
 | UPDATE | `gates` | ✅ OK | |
-| INSERT | `gates` | ❌ **MANCA POLICY** | bug — vedi Problemi Aperti |
-| DELETE | `gates` | ❌ **MANCA POLICY** | bug |
+| INSERT | `gates` | ✅ OK | policy + grant |
+| DELETE | `gates` | ✅ OK | policy + grant |
 | INSERT/UPDATE | `gate_options` | ✅ OK | |
-| DELETE | `gate_options` | ❌ **MANCA POLICY** | bug |
+| DELETE | `gate_options` | ✅ OK | policy + grant |
 | INSERT/UPDATE/DELETE | `fencing_panels` | ✅ OK | |
 | SELECT | `admin_audit` | ❌ BLOCCATO | nessuna policy, solo service_role legge |
 
@@ -144,52 +151,30 @@ _Nessuna policy. RLS abilitato = blocco totale via PostgREST per tutti i ruoli t
 |---|---|---|
 | Tutto su tutte le tabelle | ✅ OK | bypass RLS + grant completo su tabelle admin |
 | `admin_audit` INSERT | ✅ OK | grant presente |
-| `quote_requests` SELECT/UPDATE/DELETE | ⚠️ VERIFICARE | grant INSERT only — admin dashboard legge quote_requests via service_role? |
+| `quote_requests` SELECT/UPDATE | ✅ OK | grants added via `20260505161000_quote_requests_service_role_grants.sql` |
+| `quote_requests` DELETE | — | non richiesto e non aggiunto |
 
 ---
 
-## 6. Problemi Aperti
+## 6. Problemi e rischi
 
-### BUG BLOCCANTI per prod
+### RISOLTI
 
-**BUG-1: `gates` mancano policy admin INSERT e DELETE**
-Admin può solo aggiornare gate esistenti, non aggiungerne o rimuoverli via app.
-SQL correttivo (NON applicato — da fare in migration dedicata):
-```sql
-CREATE POLICY gates_admin_insert ON public.gates
-  FOR INSERT TO authenticated
-  WITH CHECK (((auth.jwt() -> 'app_metadata' ->> 'is_admin'))::boolean = true);
+**BUG-1: RESOLVED — `gates` admin INSERT e DELETE**
+Risolto da `20260505154435_fix_pricing_rls_closure.sql` e relativo grant da `20260505160000_fix_pricing_rls_grants.sql`.
+Playwright admin CRUD Phase 6 ha confermato i workflow admin contro staging.
 
-CREATE POLICY gates_admin_delete ON public.gates
-  FOR DELETE TO authenticated
-  USING (((auth.jwt() -> 'app_metadata' ->> 'is_admin'))::boolean = true);
-```
+**BUG-2: RESOLVED — `gate_options` admin DELETE**
+Risolto da `20260505154435_fix_pricing_rls_closure.sql` e relativo grant da `20260505160000_fix_pricing_rls_grants.sql`.
 
-**BUG-2: `gate_options` manca policy admin DELETE**
-SQL correttivo:
-```sql
-CREATE POLICY gate_options_admin_delete ON public.gate_options
-  FOR DELETE TO authenticated
-  USING (((auth.jwt() -> 'app_metadata' ->> 'is_admin'))::boolean = true);
-```
+**BUG-3: RESOLVED at DB layer — `configurations` anon SELECT**
+Risolto da `20260505154435_fix_pricing_rls_closure.sql`. A livello DB/RLS anon può leggere configurazioni salvate.
+Share-link E2E app resta pending perché non esiste ancora una route pubblica `/configurator/[id]`.
 
-**BUG-3: `configurations` — anon può INSERT ma non SELECT**
-Dopo salvataggio configurazione, utente non può leggere il proprio record (share link rotto).
-SQL correttivo:
-```sql
-CREATE POLICY configurations_anon_select ON public.configurations
-  FOR SELECT TO anon
-  USING (true);
-```
+**BUG-4: RESOLVED — `service_zones` typo policy removed**
+Risolto da `20260505154435_fix_pricing_rls_closure.sql`. Resta solo `service_zones_anon_select`.
 
-### NON BLOCCANTI ma da chiudere
-
-**BUG-4: `service_zones` policy duplicata con typo**
-`service.\n_zones_anon_select` (ha newline nel nome) coesiste con `service_zones_anon_select`. Funzionalmente innocuo. Da rimuovere:
-```sql
-DROP POLICY "service.
-_zones_anon_select" ON public.service_zones;
-```
+### ANCORA APERTI
 
 **BUG-5: `admin_audit` ha grant non-DML per anon/authenticated**
 Detected during Phase 5 verification on 2026-05-05.
@@ -243,7 +228,7 @@ Verified on staging:
 - DML grants limited to `service_role`: `SELECT`, `INSERT`.
 - `anon` and `authenticated` have no DML grants (but see BUG-5 for non-DML privileges that should be cleaned up).
 
-**RISCHIO-2: `quote_requests` grant service_role solo INSERT**
+**RISCHIO-2: RESOLVED — `quote_requests` service_role SELECT/UPDATE**
 RESOLVED ✅ (verified + migration applied on 2026-05-05).
 service_role now has the required read/update grants for future server-side admin workflows.
 ```sql
@@ -263,12 +248,16 @@ Nessuna tabella `railheads`. TBD da Marius. Non creare migration vuote.
 ## 7. Tipi TypeScript
 
 File: `apps/web/src/types/database.types.ts`
-Aggiornato il 2026-05-04 dal DB staging reale.
+Aggiornato il 2026-05-06 dal DB staging reale.
+Commit: `f2474e5 chore(types): regenerate database types for Phase 7`.
 
 **Diff rispetto alla versione precedente:**
 - Rimosso blocco `graphql_public` (schema vuoto, non usato nel progetto)
 - Rimosso `graphql_public: { Enums: {} }` da `Constants`
-- Tutte le 7 tabelle: **identiche** — nessuna rottura frontend
+- Phase 7: `apps/web/src/types/database.types.ts` rigenerato da staging via Supabase CLI.
+- Differenza semantica rilevata: `gates.Insert.name` ora è opzionale perché `public.gates.name` ha un default DB.
+- Molte altre differenze erano riordinamento proprietà prodotto dalla CLI.
+- Typecheck dopo rigenerazione: passed.
 
 ---
 
@@ -285,6 +274,8 @@ quote_requests service_role grants verificati (Phase 3).
 admin_audit: Option A confermata — service_role only (Phase 4).
 RLS SQL verificato per tutti i ruoli (Phase 5 — con note su grant broadness documentate; Phase 5 resta NOT COMPLETE nel closure plan).
 App regression: typecheck, lint, build, Playwright 6/6 zero skip, manual routing smoke (Phase 6).
+Generated types: rigenerati e typecheck passati (Phase 7).
+DB documentation: baseline aggiornata fino a Phase 8.
 
 **Phase 6 app regression:** PASSED on 2026-05-05.
 Typecheck, lint, build e Playwright admin CRUD 6/6 passati contro app local con staging DB.

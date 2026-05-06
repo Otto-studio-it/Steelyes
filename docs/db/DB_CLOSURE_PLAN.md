@@ -237,13 +237,25 @@ Verify service-role:
 
 **Goal:** make the docs match the verified DB state.
 
-- [ ] Update `docs/db/STAGING_DB_BASELINE_2026-05-04.md` or create a new dated baseline after verification.
-- [ ] Mark BUG-1, BUG-2, BUG-3 as resolved.
-- [ ] Mark BUG-4 as resolved if the typo policy is dropped.
-- [ ] Record the final `quote_requests` grant decision.
-- [ ] Record the final `admin_audit` access decision.
+**Status:** Complete — 2026-05-06
 
-**Reason:** the current baseline explicitly says `Staging DB: NON CHIUSO`. That statement must not remain stale after closure.
+**Evidence:**
+- `docs/db/STAGING_DB_BASELINE_2026-05-04.md` updated to reflect 17 aligned migrations.
+- BUG-1, BUG-2, BUG-3, and BUG-4 marked resolved at DB/RLS layer.
+- `quote_requests` service-role SELECT/UPDATE grant decision recorded.
+- `admin_audit` Option A service-role-only decision recorded.
+- Phase 6 app regression and Phase 7 generated-types regeneration recorded.
+- Remaining open items preserved: Phase 5 grant hardening, share-link E2E pending, Phase 9 business data.
+
+- [x] Update `docs/db/STAGING_DB_BASELINE_2026-05-04.md` after verification.
+- [x] Mark BUG-1, BUG-2, BUG-3 as resolved.
+- [x] Mark BUG-4 as resolved.
+- [x] Record the final `quote_requests` grant decision.
+- [x] Record the final `admin_audit` access decision.
+
+**Decision:** documentation is current through Phase 8, but final technical DB closure remains open until §10 criteria are satisfied or explicitly revised.
+
+**Reason:** the baseline must distinguish resolved DB/RLS bugs from remaining closure blockers. Phase 8 prevents stale "open bug" sections from contradicting later verified phases.
 
 ---
 
@@ -274,16 +286,18 @@ Do not create speculative railhead tables until the required data is received.
 
 The DB can be considered technically closed when:
 
-- [ ] Local and remote migrations are aligned.
-- [ ] BUG-1, BUG-2, and BUG-3 are fixed.
-- [ ] BUG-4 is removed or explicitly accepted.
-- [ ] Required `gates` and `gate_options` admin grants are present on staging.
+- [x] Local and remote migrations are aligned.
+- [x] BUG-1, BUG-2, and BUG-3 are fixed.
+- [x] BUG-4 is removed or explicitly accepted.
+- [x] Required `gates` and `gate_options` admin grants are present on staging.
 - [ ] RLS behavior is verified for anon, non-admin, admin, and service-role.
-- [ ] Admin CRUD workflows pass against staging.
+- [x] Admin CRUD workflows pass against staging.
 - [ ] Share-link configuration read works.
-- [ ] `quote_requests` service-role behavior is verified.
-- [ ] `admin_audit` access model is decided and documented.
-- [ ] DB docs are updated after verification.
+- [x] `quote_requests` service-role behavior is verified.
+- [x] `admin_audit` access model is decided and documented.
+- [x] DB docs are updated after verification.
+
+**Partial status after Phase 8:** most original DB/RLS closure bugs are resolved and documented, but final technical closure is still blocked by the open Phase 5 verification/hardening follow-ups and by the unimplemented share-link app route.
 
 The DB can be considered business/pricing complete when:
 
@@ -297,6 +311,10 @@ The DB can be considered business/pricing complete when:
 
 ## Immediate next step
 
-Proceed to Phase 7 (`database.types.ts` alignment check). Since the completed work changed policies and grants only, no generated type diff is expected unless a fresh Supabase type generation proves otherwise.
+Proceed to Phase 9 business-data closure when Marius provides final catalogue inputs, or open a dedicated Phase 5 hardening follow-up for grant tightening if technical security hardening should be completed first.
 
-Keep the Phase 5 grant-broadness follow-ups separate from Phase 7 so type alignment stays a read-only verification step.
+Do not proceed to final DB technical closure until §10 criteria are either satisfied or explicitly revised. In particular:
+
+- Phase 5 grant-broadness follow-ups remain open.
+- Share-link E2E remains pending until a public configuration share route exists.
+- Business/pricing completion remains blocked on Marius.
