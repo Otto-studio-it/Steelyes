@@ -76,111 +76,111 @@ export type Database = {
       }
       fencing_panels: {
         Row: {
-          id: string
-          style: Database["public"]["Enums"]["gate_style"]
-          finish: string
           base_price_gbp: number
-          price_per_m2_gbp: number
-          notes: string | null
           created_at: string
+          finish: string
+          id: string
+          notes: string | null
+          price_per_m2_gbp: number
+          style: Database["public"]["Enums"]["gate_style"]
           updated_at: string
         }
         Insert: {
-          id?: string
-          style: Database["public"]["Enums"]["gate_style"]
-          finish?: string
           base_price_gbp?: number
-          price_per_m2_gbp?: number
-          notes?: string | null
           created_at?: string
+          finish?: string
+          id?: string
+          notes?: string | null
+          price_per_m2_gbp?: number
+          style: Database["public"]["Enums"]["gate_style"]
           updated_at?: string
         }
         Update: {
-          id?: string
-          style?: Database["public"]["Enums"]["gate_style"]
-          finish?: string
           base_price_gbp?: number
-          price_per_m2_gbp?: number
-          notes?: string | null
           created_at?: string
+          finish?: string
+          id?: string
+          notes?: string | null
+          price_per_m2_gbp?: number
+          style?: Database["public"]["Enums"]["gate_style"]
           updated_at?: string
         }
         Relationships: []
       }
       gate_options: {
         Row: {
-          id: string
-          slug: string
-          name: string
-          flat_price_gbp: number
-          per_unit_price_gbp: number | null
-          unit_type: string | null
-          notes: string | null
           created_at: string
+          flat_price_gbp: number
+          id: string
+          name: string
+          notes: string | null
+          per_unit_price_gbp: number | null
+          slug: string
+          unit_type: string | null
           updated_at: string
         }
         Insert: {
-          id?: string
-          slug: string
-          name: string
-          flat_price_gbp?: number
-          per_unit_price_gbp?: number | null
-          unit_type?: string | null
-          notes?: string | null
           created_at?: string
+          flat_price_gbp?: number
+          id?: string
+          name: string
+          notes?: string | null
+          per_unit_price_gbp?: number | null
+          slug: string
+          unit_type?: string | null
           updated_at?: string
         }
         Update: {
-          id?: string
-          slug?: string
-          name?: string
-          flat_price_gbp?: number
-          per_unit_price_gbp?: number | null
-          unit_type?: string | null
-          notes?: string | null
           created_at?: string
+          flat_price_gbp?: number
+          id?: string
+          name?: string
+          notes?: string | null
+          per_unit_price_gbp?: number | null
+          slug?: string
+          unit_type?: string | null
           updated_at?: string
         }
         Relationships: []
       }
       gates: {
         Row: {
-          id: string
-          name: string
-          type: Database["public"]["Enums"]["gate_type"]
-          style: Database["public"]["Enums"]["gate_style"]
-          finish: string
-          min_width_mm: number
-          min_height_mm: number
-          base_price_manual_gbp: number
           base_price_auto_gbp: number | null
+          base_price_manual_gbp: number
           created_at: string
+          finish: string
+          id: string
+          min_height_mm: number
+          min_width_mm: number
+          name: string
+          style: Database["public"]["Enums"]["gate_style"]
+          type: Database["public"]["Enums"]["gate_type"]
           updated_at: string
         }
         Insert: {
-          id?: string
-          name: string
-          type: Database["public"]["Enums"]["gate_type"]
-          style: Database["public"]["Enums"]["gate_style"]
-          finish?: string
-          min_width_mm?: number
-          min_height_mm?: number
-          base_price_manual_gbp?: number
           base_price_auto_gbp?: number | null
+          base_price_manual_gbp?: number
           created_at?: string
+          finish?: string
+          id?: string
+          min_height_mm?: number
+          min_width_mm?: number
+          name?: string
+          style: Database["public"]["Enums"]["gate_style"]
+          type: Database["public"]["Enums"]["gate_type"]
           updated_at?: string
         }
         Update: {
-          id?: string
-          name?: string
-          type?: Database["public"]["Enums"]["gate_type"]
-          style?: Database["public"]["Enums"]["gate_style"]
-          finish?: string
-          min_width_mm?: number
-          min_height_mm?: number
-          base_price_manual_gbp?: number
           base_price_auto_gbp?: number | null
+          base_price_manual_gbp?: number
           created_at?: string
+          finish?: string
+          id?: string
+          min_height_mm?: number
+          min_width_mm?: number
+          name?: string
+          style?: Database["public"]["Enums"]["gate_style"]
+          type?: Database["public"]["Enums"]["gate_type"]
           updated_at?: string
         }
         Relationships: []

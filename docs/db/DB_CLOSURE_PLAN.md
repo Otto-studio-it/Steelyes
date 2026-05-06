@@ -212,11 +212,24 @@ Verify service-role:
 
 **Goal:** keep TypeScript DB types aligned with Supabase.
 
-- [ ] Check whether the migration changes schema shape.
-- [ ] If only policies/grants changed, no type regeneration should be needed.
-- [ ] If any table/column/enum changes are introduced, regenerate `apps/web/src/types/database.types.ts`.
+- [x] Check whether the migration changes schema shape.
+- [x] If only policies/grants changed, no type regeneration should be needed.
+- [x] Regenerate `apps/web/src/types/database.types.ts` if generated type shape differs from staging.
 
 **Reason:** RLS policies do not usually affect generated types. Avoid noisy type diffs unless schema changed.
+
+**Status:** Complete — 2026-05-06
+
+**Decision:** types regenerated.
+
+**Evidence:**
+- Phase 2+3 migrations contain only POLICY and GRANT DDL. No tables, columns, enums, relationships, or functions were changed by those phases.
+- `supabase gen types typescript --linked --schema public` output was generated to `/tmp/steelyes-database.types.ts`.
+- `diff -u apps/web/src/types/database.types.ts /tmp/steelyes-database.types.ts`: non-empty.
+- Most differences were property ordering/formatting from the current Supabase CLI output.
+- One semantic generated-type difference was found: `gates.Insert.name` is optional in staging-generated types because `public.gates.name` has a database default.
+- `apps/web/src/types/database.types.ts` was regenerated from staging via Supabase CLI.
+- Typecheck after regeneration: `cd apps/web && pnpm typecheck` passed (zero errors).
 
 ---
 
