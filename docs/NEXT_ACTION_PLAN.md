@@ -47,22 +47,24 @@ Closure condition:
 
 ## Phase B — UI/Content Inventory
 
-**Status:** next
+**Status:** in progress
 
 Goal: understand the visible product surface before editing design/content.
 
 Work:
 
-- [ ] Inventory actual app routes under `apps/web/src/app`.
-- [ ] Compare existing routes against intended marketing/configurator/admin pages.
-- [ ] Identify pages with missing, placeholder, weak, or stale content.
-- [ ] Identify visual issues on mobile and desktop.
-- [ ] Identify where missing client assets need fallback states.
-- [ ] Record findings in `docs/frontend/PAGE_INVENTORY.md`.
+- [x] Inventory actual app routes under `apps/web/src/app`.
+- [x] Compare existing routes against intended marketing/configurator/admin pages.
+- [x] Identify pages with missing, placeholder, weak, or stale content.
+- [ ] Identify visual issues on mobile and desktop with browser screenshots.
+- [x] Identify where missing client assets need fallback states.
+- [x] Record findings in `docs/frontend/PAGE_INVENTORY.md`.
+- [x] Record detailed audit in `docs/frontend/MARKETING_SITE_AUDIT_2026-05-06.md`.
+- [x] Record multi-agent work split in `docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md`.
 
 Closure condition:
 
-- We have a route-by-route list of what to polish, hide, rewrite, or leave alone.
+- We have a route-by-route list of what to polish, hide, rewrite, or leave alone. Browser visual review remains a separate implementation QA step.
 
 ---
 

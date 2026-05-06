@@ -14,6 +14,32 @@ It is not a public product changelog.
 
 ---
 
+## 2026-05-06 — Marketing site audit and parallel frontend plan
+
+Commit: `docs: document marketing frontend work split`
+
+Changed:
+
+- Added `docs/frontend/MARKETING_SITE_AUDIT_2026-05-06.md`.
+- Added `docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md`.
+- Updated `docs/frontend/PAGE_INVENTORY.md` with current route status.
+- Updated `docs/frontend/UI_CONTENT_PLAN.md` with missing Phase 1 route targets.
+- Updated project docs to point to the new frontend coordination files.
+
+Why:
+
+- The project is ready to shift from DB/RLS closure to finishing the approved storefront.
+- Multiple AI agents can work in parallel only if ownership boundaries are explicit.
+- The current site has approved visual patterns, but several route directories are missing pages.
+
+Result:
+
+- Claude Code/Sonnet can own gate-detail pages.
+- Cursor/Opus can own services and case-study index pages.
+- Codex can supervise, review, run checks, and integrate shared navigation/footer changes.
+
+---
+
 ## 2026-05-06 — Documentation operating layer
 
 Commit: `docs: organize project documentation`

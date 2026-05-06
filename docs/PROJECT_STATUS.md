@@ -61,6 +61,7 @@ Canonical DB references:
 - Decide whether to implement `/configurator/[id]` now or move share-link E2E out of DB technical closure.
 - Audit UI/content routes and bring the visible product experience up to a client-ready staging baseline.
 - Prepare fallback copy for missing catalogue data.
+- Coordinate parallel frontend work across Claude Code, Cursor, and Codex using `docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md`.
 - Re-run frontend checks after UI/content changes.
 
 ### Blocked by Marius

@@ -35,6 +35,13 @@ Work that can proceed immediately:
 - Admin catalogue UI clarity and empty/error states.
 - Fallback copy for missing assets and non-final prices.
 - Route inventory and content status tracking.
+- Missing marketing route implementation:
+  - `/gates/[style]`;
+  - `/services`;
+  - `/services/railings`;
+  - `/services/balconies`;
+  - `/services/security`;
+  - `/case-study`.
 
 Work that should not proceed yet:
 
@@ -68,6 +75,14 @@ Observed app routes/files:
 | Admin | `/admin/login` | Audit mobile usability and auth error copy. |
 
 Full route findings should be recorded in `docs/frontend/PAGE_INVENTORY.md` after visual/code audit.
+
+Detailed current audit:
+
+- [`MARKETING_SITE_AUDIT_2026-05-06.md`](./MARKETING_SITE_AUDIT_2026-05-06.md)
+
+Parallel work split:
+
+- [`FRONTEND_PARALLEL_WORK_PLAN.md`](./FRONTEND_PARALLEL_WORK_PLAN.md)
 
 ---
 
