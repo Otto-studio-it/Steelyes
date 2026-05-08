@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { MobileQuoteCTA } from '@/components/marketing/MobileQuoteCTA'
 import { SiteFooter } from '@/components/marketing/SiteFooter'
 import { SiteHeader } from '@/components/marketing/SiteHeader'
 
@@ -12,8 +13,11 @@ export function MarketingShell({ pathname, children }: MarketingShellProps) {
   return (
     <div className="min-h-screen bg-[#FBF9F6] text-[#1B1C1A]">
       <SiteHeader pathname={pathname} />
-      <main id="main-content">{children}</main>
+      <main id="main-content" className="pb-20 lg:pb-0">
+        {children}
+      </main>
       <SiteFooter />
+      <MobileQuoteCTA />
     </div>
   )
 }
