@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
 
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
 import { GATE_DATA, GATE_SLUGS, type GateSlug } from '../gate-marketing-data'
@@ -64,12 +64,17 @@ export default function GateDetailPage({ params }: { params: { style: string } }
             </div>
           </div>
 
-          <div className="relative overflow-hidden bg-[#EFEEEB]">
-            <MediaPlaceholder
-              label={`${gate.title} gate hero image`}
-              aspectClassName="aspect-[4/3] w-full"
+          <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB]">
+            <Image
+              src={gate.heroImage}
+              alt={`${gate.title} gate`}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              priority
+              unoptimized
             />
-            <span className="absolute right-3 top-3 bg-white px-2 py-1 font-mono text-[10px] uppercase">
+            <span className="absolute right-3 top-3 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase">
               Ref: {gate.ref}
             </span>
           </div>
@@ -110,11 +115,15 @@ export default function GateDetailPage({ params }: { params: { style: string } }
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {[1, 2, 3, 4].map((n) => (
-              <div key={n} className="overflow-hidden bg-[#EFEEEB]">
-                <MediaPlaceholder
-                  label={`${gate.title} gate detail ${n}`}
-                  aspectClassName="aspect-square w-full"
+            {gate.detailImages.map((src, n) => (
+              <div key={n} className="relative aspect-square overflow-hidden bg-[#EFEEEB]">
+                <Image
+                  src={src}
+                  alt={`${gate.title} gate detail ${n + 1}`}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 25vw"
+                  className="object-cover"
+                  unoptimized
                 />
               </div>
             ))}

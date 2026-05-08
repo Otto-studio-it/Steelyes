@@ -1,7 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 
 const CAPABILITIES = [
   { title: 'Balustrades', detail: 'Internal + external, built around real fixing conditions.' },
@@ -34,11 +34,18 @@ export default function RailingsServicePage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <div className="relative overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
-          <MediaPlaceholder label="Railings service hero" aspectClassName="aspect-[4/3] w-full" />
-          <div className="absolute inset-x-0 bottom-0 bg-black/70 p-4 text-white">
-            <p className="font-mono text-[10px] uppercase text-white/80">Media placeholder</p>
-            <p className="font-heading text-xl font-bold uppercase">Approved imagery pending</p>
+        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
+          <Image
+            src="/images/railings/railings-black-cross-london.jpg"
+            alt="Steel railings installed in London"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+            priority
+            unoptimized
+          />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
+            <p className="font-heading text-xl font-bold uppercase">Bespoke steel railings</p>
           </div>
         </div>
         <article className="border border-zinc-200 bg-white p-6 md:p-8">
@@ -113,11 +120,15 @@ export default function RailingsServicePage() {
       </section>
 
       <section className="relative overflow-hidden bg-[#101010] py-16 text-white md:py-20">
-        <div className="absolute inset-0 opacity-20">
-          <MediaPlaceholder
-            label="Technical texture pattern"
-            aspectClassName="absolute inset-0 h-full w-full"
-            className="bg-black [&>span]:text-white/40"
+        <div className="absolute inset-0 opacity-25">
+          <Image
+            src="/images/railings/railings-ornate-copper-scroll.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+            aria-hidden
+            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">

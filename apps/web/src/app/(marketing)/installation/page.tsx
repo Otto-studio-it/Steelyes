@@ -1,16 +1,20 @@
+import Image from 'next/image'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 
 export default function InstallationPage() {
   return (
     <MarketingShell pathname="/installation">
       <section className="relative overflow-hidden bg-[#111111] py-14 md:py-24">
-        <MediaPlaceholder
-          label="Installation hero image"
-          aspectClassName="absolute inset-0 h-full w-full"
-          className="bg-[#2A2A2A] [&>span]:text-white/35"
+        <Image
+          src="/images/gates/sliding-gate-automated-open.jpg"
+          alt="Steelyes gate installation"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+          unoptimized
         />
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h1 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.9] text-white sm:text-5xl md:text-8xl">
             Precision built.
@@ -48,7 +52,16 @@ export default function InstallationPage() {
           </ul>
         </article>
         <div className="relative overflow-hidden border border-zinc-200">
-          <MediaPlaceholder label="UK map installation coverage" aspectClassName="h-full min-h-[340px] w-full" />
+          <div className="relative h-full min-h-[340px] w-full">
+            <Image
+              src="/images/gates/sliding-gate-anthracite-residential.jpg"
+              alt="Steelyes gate installation on site"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              unoptimized
+            />
+          </div>
           <div className="absolute bottom-4 left-4 bg-black/70 px-4 py-3 text-white">
             <p className="font-heading text-xs font-bold uppercase tracking-widest">Zones</p>
             <p className="font-mono text-[10px] uppercase text-white/80">UK-wide install team</p>
@@ -108,11 +121,15 @@ export default function InstallationPage() {
       </section>
 
       <section className="relative overflow-hidden bg-[#101010] py-16 text-white md:py-20">
-        <div className="absolute inset-0 opacity-20">
-          <MediaPlaceholder
-            label="Technical texture pattern"
-            aspectClassName="absolute inset-0 h-full w-full"
-            className="bg-black [&>span]:text-white/40"
+        <div className="absolute inset-0 opacity-25">
+          <Image
+            src="/images/gates/privacy-diagonal-gate-dusk.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+            aria-hidden
+            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">

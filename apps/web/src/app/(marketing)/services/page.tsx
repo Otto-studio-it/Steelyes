@@ -72,6 +72,30 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-7xl px-4 pb-10 md:px-8">
+        <div className="flex flex-col items-start gap-4 border border-zinc-200 bg-[#F5F3F0] p-6 sm:flex-row sm:items-center sm:justify-between md:p-8">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-[#9E000C]">Service catalogue 2026</p>
+            <h3 className="mt-2 font-heading text-xl font-black uppercase">Download our full service catalogue</h3>
+            <p className="mt-2 max-w-xl text-sm font-light leading-relaxed text-[#5C403D]">
+              All gate types, services, finishes, and options in one document. Indicative pricing — confirmed by free site survey.
+            </p>
+          </div>
+          <a
+            href="/downloads/steelyes-listino-2026.pdf"
+            download
+            className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download PDF
+          </a>
+        </div>
+      </section>
+
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <article className="border border-zinc-200 bg-[#F8F8F8] p-6 md:p-8">
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Approach</p>
