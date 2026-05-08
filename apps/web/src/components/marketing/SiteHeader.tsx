@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -10,102 +10,154 @@ type SiteHeaderProps = {
   pathname: string
 }
 
-type NavItem = {
+type NavLink = {
   label: string
-  href?: string
-  children?: { label: string; href: string }[]
+  href: string
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { label: 'Our Gates', href: '/gates' },
-  { label: 'Case Studies', href: '/gallery' },
-  { label: 'The Process', href: '/installation' },
-  {
-    label: 'Bespoke Forge',
-    children: [
-      { label: 'About', href: '/about' },
-      { label: 'Configurator', href: '/configurator' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
+type NavGroup = {
+  label: string
+  href: string
+  links: NavLink[]
+}
+
+const GATE_LINKS: NavLink[] = [
+  { label: 'All Gates', href: '/gates' },
+  { label: 'Sliding Gates', href: '/gates/sliding' },
+  { label: 'Cantilever Gates', href: '/gates/cantilever' },
+  { label: 'Bifold Gates', href: '/gates/bifold' },
+  { label: 'Pedestrian Gates', href: '/gates/pedestrian' },
+  { label: 'Telescopic Gates', href: '/gates/telescopic' },
+  { label: 'Architectural Gates', href: '/gates/architectural' },
 ]
 
-function isActive(pathname: string, href?: string) {
-  if (!href) return false
+const SERVICE_LINKS: NavLink[] = [
+  { label: 'Services Overview', href: '/services' },
+  { label: 'Railings', href: '/services/railings' },
+]
+
+const NAV_GROUPS: NavGroup[] = [
+  { label: 'Gates', href: '/gates', links: GATE_LINKS },
+  { label: 'Services', href: '/services', links: SERVICE_LINKS },
+]
+
+const PRIMARY_LINKS: NavLink[] = [
+  { label: 'Process', href: '/installation' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'About', href: '/about' },
+]
+
+function isActive(pathname: string, href: string) {
   if (href === '/') return pathname === '/'
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
+function groupIsActive(pathname: string, group: NavGroup) {
+  return isActive(pathname, group.href) || group.links.some((link) => isActive(pathname, link.href))
+}
+
 export function SiteHeader({ pathname }: SiteHeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [openSubmenu, setOpenSubmenu] = useState<Record<string, boolean>>({
-    'Bespoke Forge': false,
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    Gates: true,
+    Services: isActive(pathname, '/services'),
   })
+
+  useEffect(() => {
+    if (!isOpen) return
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false)
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  const closeMenu = () => setIsOpen(false)
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:rounded focus:bg-[#1A1A1A] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:bg-[#1A1A1A] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to main content
       </a>
+
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-3 px-4 md:px-8">
-        <Link href="/" className="inline-flex min-h-[44px] items-center font-heading text-lg font-black uppercase tracking-tight sm:text-xl">
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] shrink-0 items-center font-heading text-lg font-black uppercase tracking-tight sm:text-xl"
+        >
           Steelyes Ltd
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
-          {NAV_ITEMS.map((item) => {
-            if (!item.children) {
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href ?? '#'}
-                  className={cn(
-                    'font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C]',
-                    isActive(pathname, item.href) && 'border-b-2 border-[#9E000C] pb-1 text-[#9E000C]',
-                  )}
-                >
-                  {item.label}
-                </Link>
-              )
-            }
+        <nav aria-label="Primary navigation" className="hidden items-center gap-6 lg:flex">
+          {NAV_GROUPS.map((group) => {
+            const active = groupIsActive(pathname, group)
 
-            const anyActive = item.children.some((child) => isActive(pathname, child.href))
             return (
-              <div key={item.label} className="group relative">
-                <button
-                  type="button"
+              <div key={group.label} className="group relative">
+                <Link
+                  href={group.href}
+                  aria-haspopup="true"
+                  aria-expanded="false"
                   className={cn(
-                    'inline-flex items-center gap-1 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C]',
-                    anyActive && 'border-b-2 border-[#9E000C] pb-1 text-[#9E000C]',
+                    'inline-flex min-h-[44px] items-center gap-1 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]',
+                    active && 'text-[#9E000C]',
                   )}
                 >
-                  {item.label}
-                  <ChevronDown className="h-4 w-4" aria-hidden />
-                </button>
-                <ul className="invisible absolute right-0 top-full mt-3 min-w-[220px] rounded border border-zinc-200 bg-white p-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
-                  {item.children.map((child) => (
-                    <li key={child.href}>
-                      <Link
-                        href={child.href}
-                        className={cn(
-                          'block rounded px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100',
-                          isActive(pathname, child.href) && 'bg-zinc-100 text-[#9E000C]',
-                        )}
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                  {group.label}
+                  <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden />
+                </Link>
+                <div className="invisible absolute left-0 top-full min-w-[260px] pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <ul className="border border-zinc-200 bg-white p-2 shadow-lg">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className={cn(
+                            'flex min-h-[42px] items-center px-3 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 transition-colors hover:bg-[#F5F3F0] hover:text-[#9E000C] focus-visible:bg-[#F5F3F0] focus-visible:outline-none',
+                            isActive(pathname, link.href) && 'bg-[#F5F3F0] text-[#9E000C]',
+                          )}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             )
           })}
+
+          {PRIMARY_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]',
+                isActive(pathname, link.href) && 'text-[#9E000C]',
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/configurator"
+            className="inline-flex min-h-[44px] items-center justify-center border border-zinc-300 px-4 py-2 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A] transition-colors duration-100 hover:border-[#9E000C] hover:text-[#9E000C]"
+          >
+            Configure
+          </Link>
           <Link
             href="/contact"
             className="inline-flex min-h-[44px] items-center justify-center bg-[#9E000C] px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-[#9B1515]"
@@ -118,53 +170,69 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
           type="button"
           aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-zinc-300 md:hidden"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-zinc-300 text-[#1B1C1A] transition-colors hover:border-[#9E000C] hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C] lg:hidden"
         >
           {isOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
         </button>
       </div>
 
       {isOpen ? (
-        <nav aria-label="Mobile primary navigation" className="border-t border-zinc-200 bg-white md:hidden">
-          <ul className="px-4 py-3">
-            {NAV_ITEMS.map((item) => {
-              if (!item.children) {
-                return (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href ?? '#'}
-                      onClick={() => setIsOpen(false)}
-                      className="flex min-h-[50px] items-center border-b border-zinc-100 font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                )
-              }
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile primary navigation"
+          className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-zinc-200 bg-white lg:hidden"
+        >
+          <div className="space-y-3 px-4 py-4">
+            <Link
+              href="/contact"
+              onClick={closeMenu}
+              className="inline-flex min-h-[52px] w-full items-center justify-center bg-[#9E000C] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white"
+            >
+              Request a Quote
+            </Link>
+            <Link
+              href="/configurator"
+              onClick={closeMenu}
+              className="inline-flex min-h-[52px] w-full items-center justify-center border border-[#1B1C1A] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]"
+            >
+              Configure Your Gate
+            </Link>
+          </div>
 
-              const open = Boolean(openSubmenu[item.label])
+          <ul className="border-t border-zinc-200 px-4 pb-4">
+            {NAV_GROUPS.map((group) => {
+              const open = Boolean(openSections[group.label])
+              const active = groupIsActive(pathname, group)
+
               return (
-                <li key={item.label} className="border-b border-zinc-100 py-1">
+                <li key={group.label} className="border-b border-zinc-100 py-1">
                   <button
                     type="button"
-                    onClick={() => setOpenSubmenu((prev) => ({ ...prev, [item.label]: !prev[item.label] }))}
+                    onClick={() => setOpenSections((prev) => ({ ...prev, [group.label]: !prev[group.label] }))}
                     aria-expanded={open}
-                  className="flex min-h-[50px] w-full items-center justify-between font-heading text-sm font-bold uppercase tracking-tight text-zinc-700"
+                    className={cn(
+                      'flex min-h-[54px] w-full items-center justify-between font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
+                      active && 'text-[#9E000C]',
+                    )}
                   >
-                    {item.label}
+                    {group.label}
                     <ChevronDown className={cn('h-4 w-4 transition-transform', open && 'rotate-180')} aria-hidden />
                   </button>
                   {open ? (
-                    <ul className="space-y-1 pb-2 pl-3">
-                      {item.children.map((child) => (
-                        <li key={child.href}>
+                    <ul className="space-y-1 pb-3">
+                      {group.links.map((link) => (
+                        <li key={link.href}>
                           <Link
-                            href={child.href}
-                            onClick={() => setIsOpen(false)}
-                            className="flex min-h-[46px] items-center rounded px-3 text-sm font-medium text-zinc-700 hover:bg-zinc-100"
+                            href={link.href}
+                            onClick={closeMenu}
+                            className={cn(
+                              'flex min-h-[46px] items-center border-l-2 border-zinc-200 px-4 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 hover:border-[#9E000C] hover:bg-[#F5F3F0]',
+                              isActive(pathname, link.href) && 'border-[#9E000C] bg-[#F5F3F0] text-[#9E000C]',
+                            )}
                           >
-                            {child.label}
+                            {link.label}
                           </Link>
                         </li>
                       ))}
@@ -173,16 +241,35 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                 </li>
               )
             })}
+
+            {PRIMARY_LINKS.map((link) => (
+              <li key={link.href} className="border-b border-zinc-100">
+                <Link
+                  href={link.href}
+                  onClick={closeMenu}
+                  className={cn(
+                    'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
+                    isActive(pathname, link.href) && 'text-[#9E000C]',
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+
+            <li className="border-b border-zinc-100">
+              <Link
+                href="/contact"
+                onClick={closeMenu}
+                className={cn(
+                  'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
+                  isActive(pathname, '/contact') && 'text-[#9E000C]',
+                )}
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
-          <div className="px-4 pb-4">
-            <Link
-              href="/contact"
-              onClick={() => setIsOpen(false)}
-              className="inline-flex min-h-[44px] w-full items-center justify-center bg-[#9E000C] px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white"
-            >
-              Request Quote
-            </Link>
-          </div>
         </nav>
       ) : null}
     </header>
