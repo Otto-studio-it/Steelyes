@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { ArrowRight } from 'lucide-react'
 
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
@@ -73,17 +74,41 @@ export default function HomePage() {
     <MarketingShell pathname="/">
       <HomeWeldingHero />
 
+      {/* ── Capability strip ── */}
       <section className="border-b border-zinc-200 bg-[#F5F3F0] py-8">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-8">
           {capabilityItems.map(([value, label]) => (
             <div key={label}>
-              <p className="font-mono text-lg font-bold text-[#9E000C]">{value}</p>
-              <p className="font-heading text-sm font-bold uppercase text-[#5C403D]">{label}</p>
+              {/* heading per valore forte, mono per descrizione tecnica */}
+              <p className="font-heading text-lg font-black uppercase text-[#9E000C] sm:text-xl">{value}</p>
+              <p className="font-mono text-xs uppercase tracking-widest text-[#5C403D]">{label}</p>
             </div>
           ))}
         </div>
       </section>
 
+      {/* ── Trust / Proof section — FASE 4 ── */}
+      <section className="border-b border-zinc-200 bg-white py-10 md:py-12">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <div className="grid grid-cols-1 divide-y divide-zinc-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+            {[
+              ['Survey-led', 'Every gate specified before fabrication'],
+              ['Made to order', 'No stock — built around your entrance'],
+              ['Supply & install', 'One route from brief to handover'],
+            ].map(([stat, desc]) => (
+              <div
+                key={stat}
+                className="py-6 text-center first:pt-0 last:pb-0 md:px-8 md:py-0 md:first:pl-0 md:last:pr-0"
+              >
+                <p className="font-heading text-2xl font-black uppercase text-[#9E000C] md:text-3xl">{stat}</p>
+                <p className="mt-1 font-mono text-xs uppercase tracking-widest text-[#5C403D]">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Steel Standards ── */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -101,37 +126,48 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {gateStandardItems.map(({ title, body, detailA, detailB, image, imageAlt }) => (
             <article key={title} className="overflow-hidden rounded border border-zinc-200 bg-[#F5F3F0]">
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#E4E2DF]">
-                <Image
-                  src={image}
-                  alt={imageAlt}
-                  fill
-                  unoptimized
-                  loading="eager"
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-500 hover:scale-[1.03]"
-                />
-              </div>
+              {/* Immagine cliccabile → /gates */}
+              <Link href="/gates" className="group block">
+                <div className="relative aspect-[3/2] w-full overflow-hidden bg-[#E4E2DF] sm:aspect-[4/5]">
+                  <Image
+                    src={image}
+                    alt={imageAlt}
+                    fill
+                    unoptimized
+                    loading="eager"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+              </Link>
               <div className="p-6">
                 <h3 className="font-heading text-3xl font-bold uppercase">{title}</h3>
                 <p className="mt-2 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
                 <div className="mt-5 flex items-center gap-4">
                   <div>
-                    <p className="font-mono text-[10px] uppercase text-zinc-400">{detailA[0]}</p>
+                    {/* label portato da text-[10px] a text-xs (12px) */}
+                    <p className="font-mono text-xs uppercase text-zinc-400">{detailA[0]}</p>
                     <p className="font-mono text-sm font-bold">{detailA[1]}</p>
                   </div>
                   <div className="h-8 w-px bg-zinc-200" aria-hidden />
                   <div>
-                    <p className="font-mono text-[10px] uppercase text-zinc-400">{detailB[0]}</p>
+                    <p className="font-mono text-xs uppercase text-zinc-400">{detailB[0]}</p>
                     <p className="font-mono text-sm font-bold">{detailB[1]}</p>
                   </div>
                 </div>
+                <Link
+                  href="/gates"
+                  className="mt-5 inline-flex items-center gap-1 font-mono text-xs font-bold uppercase text-[#9E000C] transition-colors hover:text-[#9B1515]"
+                >
+                  Browse {title.toLowerCase()} gates <ArrowRight className="h-3 w-3" aria-hidden />
+                </Link>
               </div>
             </article>
           ))}
         </div>
       </section>
 
+      {/* ── The Process ── */}
       <section className="bg-white py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="mx-auto mb-14 max-w-2xl text-center">
@@ -140,10 +176,16 @@ export default function HomePage() {
               From first photos to final handover, every gate starts with the opening it needs to serve.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-12">
+          {/* Posizione relativa per il connettore visivo desktop */}
+          <div className="relative grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-12">
+            <div
+              className="absolute top-[2.5rem] left-0 right-0 hidden h-px bg-zinc-200 md:block"
+              aria-hidden
+            />
             {processItems.map(([n, label, body]) => (
               <article key={label} className="relative">
-                <p className="mb-3 font-heading text-7xl font-black text-[#EFEEEB] md:text-8xl">{n}</p>
+                {/* text-5xl mobile → text-8xl desktop */}
+                <p className="mb-3 font-heading text-5xl font-black text-[#EFEEEB] md:text-8xl">{n}</p>
                 <h3 className="font-heading text-2xl font-bold uppercase">{label}</h3>
                 <p className="mt-2 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
               </article>
@@ -152,10 +194,12 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Configurator CTA ── */}
       <section className="bg-[#C41E1E] py-16 text-white md:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 md:flex-row md:items-center md:justify-between md:px-8">
           <div className="max-w-2xl">
-            <h2 className="font-heading text-5xl font-black uppercase leading-[0.92] md:text-6xl">
+            {/* H2 ridotto su mobile: text-4xl → sm:text-5xl → md:text-6xl */}
+            <h2 className="font-heading text-4xl font-black uppercase leading-[0.92] sm:text-5xl md:text-6xl">
               Design your gate
               <br />
               in minutes.
@@ -163,12 +207,17 @@ export default function HomePage() {
             <p className="mt-5 text-lg font-light opacity-90">
               Explore gate type, finish, automation and options before requesting a survey-led quote.
             </p>
+            {/* CTA full-width su mobile */}
             <Link
               href="/configurator"
-              className="mt-8 inline-flex min-h-[48px] items-center justify-center bg-white px-9 py-4 font-heading text-lg font-bold uppercase tracking-tight text-[#9E000C]"
+              className="mt-8 inline-flex w-full min-h-[48px] items-center justify-center bg-white px-9 py-4 font-heading text-lg font-bold uppercase tracking-tight text-[#9E000C] sm:w-auto"
             >
               Start configuring
             </Link>
+            {/* Disclaimer — gestisce aspettative sul configurator */}
+            <p className="mt-3 font-mono text-xs uppercase opacity-60">
+              Specification confirmed after survey
+            </p>
           </div>
           <div className="w-full max-w-lg border border-white/20 bg-white/10 p-5 backdrop-blur-sm sm:p-6">
             <div className="space-y-4">
@@ -179,19 +228,22 @@ export default function HomePage() {
                 ['Automation', 'Optional'],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-center justify-between gap-3 border-b border-white/25 pb-3">
-                  <span className="font-mono text-[11px] uppercase">{k}</span>
-                  <span className="text-right font-mono text-[11px] uppercase">{v}</span>
+                  {/* text-[11px] → text-xs (12px) */}
+                  <span className="font-mono text-xs uppercase">{k}</span>
+                  <span className="text-right font-mono text-xs uppercase">{v}</span>
                 </div>
               ))}
             </div>
             <div className="pt-8 text-right">
-              <p className="font-mono text-3xl font-bold uppercase sm:text-4xl">Survey-led quote</p>
+              {/* text-3xl → text-4xl per contrasto WCAG large text ≥3:1 */}
+              <p className="font-mono text-4xl font-bold uppercase sm:text-5xl">Survey-led quote</p>
               <p className="font-mono text-xs uppercase opacity-70">Indicative pricing confirmed after specification</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ── Gallery ── */}
       <section className="bg-[#FBF9F6] py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="flex flex-col gap-10 md:flex-row md:gap-16">
@@ -215,23 +267,23 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            <div className="grid flex-1 grid-cols-2 gap-4">
-              <div className="relative col-span-2 h-72 overflow-hidden">
+            {/* Grid: cols-1 su mobile, cols-2 da md — evita cramped a 375px */}
+            <div className="grid flex-1 grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="relative col-span-1 h-64 overflow-hidden md:col-span-2 md:h-72">
                 <Image
                   src="/images/home/installed-classic-frontage-gate.jpg"
                   alt="Installed black steel frontage gate at a residential entrance"
                   fill
                   unoptimized
                   loading="eager"
-                  sizes="(min-width: 768px) 66vw, 100vw"
+                  sizes="(max-width: 768px) 100vw, 66vw"
                   className="object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-black/35" />
-                <div className="absolute inset-0 flex items-center justify-center text-center text-white">
-                  <div>
-                    <p className="font-heading text-4xl font-bold uppercase">Installed gates</p>
-                    <p className="font-mono text-sm uppercase text-white/80">Real entrances, real specifications</p>
-                  </div>
+                {/* Overlay spostato bottom-left — non compete con il soggetto della foto */}
+                <div className="absolute bottom-4 left-4 text-white">
+                  <p className="font-heading text-2xl font-bold uppercase">Installed gates</p>
+                  <p className="font-mono text-xs uppercase text-white/70">Real entrances</p>
                 </div>
               </div>
               <article className="bg-[#E4E2DF] p-6">
@@ -240,14 +292,15 @@ export default function HomePage() {
                   Close-up steelwork, joints, hinges, finishes and hardware prepared around the agreed specification.
                 </p>
               </article>
-              <div className="relative aspect-square w-full overflow-hidden bg-[#E4E2DF]">
+              {/* aspect-[16/9] su mobile invece di aspect-square — non spezza il layout */}
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#E4E2DF] md:aspect-square">
                 <Image
                   src="/images/home/steelwork-finial-detail.jpg"
                   alt="Close-up detail of black steel railings with decorative finials"
                   fill
                   unoptimized
                   loading="eager"
-                  sizes="(min-width: 768px) 33vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover"
                 />
               </div>
@@ -256,6 +309,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Final CTA ── */}
       <section className="border-t border-zinc-200 bg-[#1B1C1A] py-16 text-white md:py-20">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:flex-row md:items-end md:justify-between md:px-8">
           <div className="max-w-2xl">

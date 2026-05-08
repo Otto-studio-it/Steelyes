@@ -58,6 +58,7 @@ function groupIsActive(pathname: string, group: NavGroup) {
 
 export function SiteHeader({ pathname }: SiteHeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Gates: true,
     Services: isActive(pathname, '/services'),
@@ -103,20 +104,37 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
             const active = groupIsActive(pathname, group)
 
             return (
-              <div key={group.label} className="group relative">
+              <div
+                key={group.label}
+                className="group relative"
+                onMouseEnter={() => setOpenGroup(group.label)}
+                onMouseLeave={() => setOpenGroup(null)}
+                onFocus={() => setOpenGroup(group.label)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) setOpenGroup(null)
+                }}
+              >
                 <Link
                   href={group.href}
-                  aria-haspopup="true"
-                  aria-expanded="false"
+                  aria-haspopup="menu"
+                  aria-expanded={openGroup === group.label}
                   className={cn(
                     'inline-flex min-h-[44px] items-center gap-1 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]',
                     active && 'text-[#9E000C]',
                   )}
                 >
                   {group.label}
-                  <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden />
+                  <ChevronDown
+                    className={cn('h-4 w-4 transition-transform', openGroup === group.label && 'rotate-180')}
+                    aria-hidden
+                  />
                 </Link>
-                <div className="invisible absolute left-0 top-full min-w-[260px] pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div
+                  className={cn(
+                    'absolute left-0 top-full min-w-[260px] pt-3 transition-all',
+                    openGroup === group.label ? 'visible opacity-100' : 'invisible opacity-0',
+                  )}
+                >
                   <ul className="border border-zinc-200 bg-white p-2 shadow-lg">
                     {group.links.map((link) => (
                       <li key={link.href}>
@@ -182,7 +200,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
         <nav
           id="mobile-navigation"
           aria-label="Mobile primary navigation"
-          className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-zinc-200 bg-white lg:hidden"
+          className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-zinc-200 bg-white lg:hidden"
         >
           <div className="space-y-3 px-4 py-4">
             <Link

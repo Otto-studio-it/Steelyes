@@ -41,6 +41,26 @@ apps/web/src/app/globals.css                      — stili globali
 apps/web/public/images/                           — asset immagini
 ```
 
+## Stato Implementazione — 2026-05-08
+
+La roadmap e' ora il riferimento operativo per il prossimo pass UI/UX, ma non tutte le fasi sono ancora state implementate.
+
+Gia' completato prima dell'esecuzione della roadmap:
+
+- homepage aggiornata con fotografie reali selezionate dalla cartella client `/Volumes/SSDRubb/foto steelyes`;
+- hero sostituito con un cancello moderno installato, non piu' con immagine workshop/welding;
+- card `Modern`, `Classic`, `Privacy` collegate a foto reali;
+- blocco proof/gallery aggiornato con immagine di cancello installato e dettaglio steelwork;
+- selezione asset documentata in [`HOMEPAGE_IMAGE_SELECTION_2026-05-08.md`](./HOMEPAGE_IMAGE_SELECTION_2026-05-08.md).
+
+Ancora da fare:
+
+- Fase 1: accessibilita' header/drawer e touch base;
+- Fase 2: riduzione attrito mobile;
+- Fase 3: conversion path e microcopy;
+- Fase 4/5: proof/sticky CTA solo dopo aver completato il pass mobile;
+- Fase 6: polish process/gallery.
+
 ---
 
 ## Breakpoint Reference
@@ -173,7 +193,7 @@ Il hero è la prima cosa che ogni visitatore vede. Su mobile (che è la maggiora
 
 1. **Altezza fissa** — 640px fissi non comunicano con il browser iOS. Con la barra degli indirizzi aperta, il contenuto sotto la fold è visibile prima del previsto, rompendo l'effetto "full screen".
 2. **Scala tipografica brutale** — il testo salta da 36px a 96px senza step intermedi. Su tablet il testo è o troppo piccolo o enorme a seconda del breakpoint.
-3. **Overlay troppo scuro** — il prodotto reale (cancello in acciaio, scintille di saldatura) è nascosto sotto quasi il 75% di nero combinato. Se il cliente ha pagato per un'immagine forte, deve potersi vedere.
+3. **Overlay troppo scuro** — il prodotto reale (cancello in acciaio installato) è nascosto sotto quasi il 75% di nero combinato. Ora che il hero usa una foto di progetto reale, il cancello deve restare visibile senza sacrificare la leggibilita' del testo.
 4. **Overline duplica H1** — dice "Bespoke steel gates" nell'overline e poi la H1 inizia con "Bespoke steel gates". L'overline dovrebbe aggiungere informazione, non ripetere il titolo.
 
 ---

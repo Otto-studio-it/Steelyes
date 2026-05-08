@@ -20,7 +20,7 @@ const SERVICE_LINKS = [
 const START_LINKS = [
   { label: 'Request a Quote', href: '/contact', primary: true },
   { label: 'Configure Your Gate', href: '/configurator', primary: false },
-  { label: 'Contact', href: '/contact', primary: false },
+  { label: 'About', href: '/about', primary: false },
 ] as const
 
 const LEGAL_LINKS = [
@@ -96,9 +96,9 @@ export function SiteFooter() {
 
       <div className="border-t border-zinc-800 px-4 py-6 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">(c) 2026 Steelyes Ltd</p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">(c) 2026 Steelyes Ltd</p>
           <nav aria-label="Footer legal navigation">
-            <ul className="flex flex-col gap-2 text-sm text-zinc-500 sm:flex-row sm:gap-5">
+            <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">
               {LEGAL_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">

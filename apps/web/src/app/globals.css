@@ -15,4 +15,11 @@
     background-color: var(--color-canvas);
     color: var(--color-ink);
   }
+
+  /* Eliminate 300ms tap delay on Android WebView */
+  a,
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+  }
 }
