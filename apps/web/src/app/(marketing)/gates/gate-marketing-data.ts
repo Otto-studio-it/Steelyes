@@ -7,8 +7,10 @@ export type GateData = {
   ref: string
   tagline: string
   description: string
+  heroImage: string
   specs: { label: string; value: string }[]
   features: string[]
+  detailImages: string[]
 }
 
 export const GATE_DATA: Record<GateSlug, GateData> = {
@@ -18,6 +20,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Counter-balanced slide',
     ref: 'ST-101',
     tagline: 'Sliding access where a ground track may not suit.',
+    heroImage: '/images/gates/sliding-gate-anthracite-residential.jpg',
+    detailImages: [
+      '/images/gates/sliding-gate-automated-open.jpg',
+      '/images/components/component-finial-spear.jpg',
+      '/images/gates/privacy-diagonal-gate-dusk.jpg',
+      '/images/components/component-finial-ball.jpg',
+    ],
     description:
       'A cantilever gate is designed to slide without relying on a full ground track across the entrance. It is a useful route for driveways where levels, drainage, or surface finish need to be considered during specification.',
     specs: [
@@ -41,6 +50,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Folding dual-leaf',
     ref: 'ST-102',
     tagline: 'Maximum aperture. Minimal footprint.',
+    heroImage: '/images/gates/classic-ornate-driveway-gate-arch.jpg',
+    detailImages: [
+      '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
+      '/images/components/component-finial-acorn.jpg',
+      '/images/gates/sliding-gate-spear-finials.jpg',
+      '/images/components/component-finial-diamond.jpg',
+    ],
     description:
       'Bi-fold gates reduce the swing space needed by folding the leaves as they open. They are useful for tighter entrances, short driveways, or sites where a full swing gate would interrupt parking or access.',
     specs: [
@@ -64,6 +80,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Personnel-access gate',
     ref: 'ST-103',
     tagline: 'Controlled access at human scale.',
+    heroImage: '/images/gates/pedestrian-gate-ornate-brick.jpg',
+    detailImages: [
+      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
+      '/images/components/component-finial-star.jpg',
+      '/images/railings/railings-ornate-bronze-driveway.jpg',
+      '/images/components/component-finial-ball.jpg',
+    ],
     description:
       'Single-leaf pedestrian gates create a controlled access point for side entrances, gardens, service paths, and property boundaries. The design can be matched to the wider gate style for a consistent frontage.',
     specs: [
@@ -87,6 +110,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Multi-panel slide',
     ref: 'ST-104',
     tagline: 'Wide openings. Shorter stack.',
+    heroImage: '/images/gates/sliding-gate-spear-finials.jpg',
+    detailImages: [
+      '/images/gates/sliding-gate-anthracite-residential.jpg',
+      '/images/components/component-finial-spear.jpg',
+      '/images/gates/privacy-diagonal-gate-dusk.jpg',
+      '/images/components/component-finial-acorn.jpg',
+    ],
     description:
       'Telescopic sliding gates split the opening across multiple moving panels, reducing the side space normally needed by a single long sliding leaf. They are best reviewed early because track, drainage, and run-back space all matter.',
     specs: [
@@ -110,6 +140,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Single-panel slide',
     ref: 'ST-105',
     tagline: 'Clean travel. Reliable every cycle.',
+    heroImage: '/images/gates/sliding-gate-automated-open.jpg',
+    detailImages: [
+      '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
+      '/images/gates/sliding-gate-anthracite-residential.jpg',
+      '/images/components/component-finial-diamond.jpg',
+      '/images/components/component-finial-spear.jpg',
+    ],
     description:
       'Sliding gates are a practical choice where the entrance has usable side space but limited swing clearance. The final system is specified around opening width, driveway levels, finish, and automation requirements.',
     specs: [
@@ -133,6 +170,13 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Statement fabrication',
     ref: 'ST-106',
     tagline: 'When specification meets design intent.',
+    heroImage: '/images/gates/privacy-diagonal-gate-dusk.jpg',
+    detailImages: [
+      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
+      '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
+      '/images/components/component-finial-star.jpg',
+      '/images/components/component-finial-acorn.jpg',
+    ],
     description:
       'Architectural gates are fully bespoke projects where the entrance, property style, privacy needs, and design intent shape the specification. They are the right route when a standard catalogue style is not enough.',
     specs: [

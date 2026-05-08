@@ -1,43 +1,50 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
+export const metadata: Metadata = {
+  title: 'Steel Balconies | Bespoke Structural Steelwork | Steelyes',
+  description:
+    'Balcony frames, infill panels, and fixings designed around access, load paths, and the realities of retrofit installation.',
+}
+
 const CAPABILITIES = [
-  { title: 'Balustrades', detail: 'Internal + external, built around real fixing conditions.' },
-  { title: 'Handrails', detail: 'Clean geometry with repeatable sections and junctions.' },
-  { title: 'Landings + stairs', detail: 'Edge protection, returns, and transitions where needed.' },
-  { title: 'Gates integration', detail: 'Consistent finish, spacing, and perimeter language.' },
+  { title: 'Balcony frames', detail: 'Structural steel frames designed to suit the building and fixing substrate.' },
+  { title: 'Infill panels', detail: 'Glass, steel mesh, or solid panel options reviewed during specification.' },
+  { title: 'Fixings & brackets', detail: 'Fixing methods confirmed by survey before fabrication is committed.' },
+  { title: 'Gates integration', detail: 'Consistent finish language where balconies sit alongside gate and railing work.' },
 ] as const
 
 const SPEC_ITEMS = [
-  { label: 'Material', value: 'Steel (section choice per survey + loads)' },
+  { label: 'Material', value: 'Steel (section and grade per structural review)' },
   { label: 'Finish', value: 'Powder coat / paint system (palette pending)' },
   { label: 'Fixings', value: 'Verified on site before fabrication sign-off' },
   { label: 'Compliance', value: 'Confirmed during specification; no public claims pre-approval' },
 ] as const
 
-export default function RailingsServicePage() {
+export default function BalconiesServicePage() {
   return (
-    <MarketingShell pathname="/services/railings">
+    <MarketingShell pathname="/services/balconies">
       <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-4 py-10 md:px-8 md:py-16">
         <p className="font-mono text-xs uppercase tracking-widest text-[#9E000C]">Service</p>
         <h1 className="mt-3 font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
-          Railings &
+          Steel
           <br />
-          <span className="text-[#9E000C]">Balustrades</span>
+          <span className="text-[#9E000C]">Balconies</span>
         </h1>
         <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
-          Steel railings engineered from the site outward, with fixing points, edge conditions, and access verified before we
-          commit to fabrication. Where client specification is pending, the page intentionally stays conservative.
+          Balcony frames and infill panels fabricated around the building, the load paths, and the real conditions of
+          retrofit installation. Where client specification is pending, the page intentionally stays conservative.
         </p>
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
           <Image
-            src="/images/railings/railings-black-cross-london.jpg"
-            alt="Steel railings installed in London"
+            src="/images/balconies/balcony-juliet-glass-london.jpg"
+            alt="Steel balcony fabricated and installed in London"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
@@ -45,20 +52,19 @@ export default function RailingsServicePage() {
             unoptimized
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
-            <p className="font-heading text-xl font-bold uppercase">Bespoke steel railings</p>
+            <p className="font-heading text-xl font-bold uppercase">Bespoke steel balcony</p>
           </div>
         </div>
         <article className="border border-zinc-200 bg-white p-6 md:p-8">
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
-            Safe edges.
+            Structural.
             <br />
-            Clean <span className="text-[#9E000C]">lines.</span>
+            Built <span className="text-[#9E000C]">to last.</span>
           </h2>
           <p className="mt-4 text-sm font-light leading-relaxed text-[#5C403D]">
-            We fabricate railing systems for residential and commercial settings. The work is defined by repeatable sections,
-            tight junctions, and durability at touch points. Final compliance approach depends on project specification and is
-            confirmed before production.
+            We fabricate balcony structures for residential retrofit and new-build settings. The work starts from the
+            fixing substrate outward, with load paths and access confirmed before production is committed.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {SPEC_ITEMS.map((item) => (
@@ -88,24 +94,24 @@ export default function RailingsServicePage() {
       <section className="bg-[#F6F6F6] py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Workflow</p>
-          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From set-out to handover</h2>
+          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From brief to handover</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
             {[
               {
                 step: 'Site survey',
-                body: 'We confirm fixing substrates, edge conditions, and the dimensions that drive the build.',
+                body: 'Fixing substrates, floor levels, and structural constraints are confirmed before design is locked.',
               },
               {
                 step: 'Drawings',
-                body: 'Fabrication drawings are prepared for review; changes are locked before production.',
+                body: 'Fabrication drawings reviewed and signed off before production starts.',
               },
               {
                 step: 'Fabrication',
-                body: 'Sections are cut, welded, dressed, and prepared for finishing with consistent junction details.',
+                body: 'Frame sections cut, welded, and prepared for finishing with consistent edge and corner details.',
               },
               {
                 step: 'Install',
-                body: 'On-site install and alignment are coordinated around access and protection of finished surfaces.',
+                body: 'On-site fixing and alignment coordinated around access windows and building protection.',
               },
             ].map((item, index) => (
               <article key={item.step} className="border border-zinc-200 bg-white p-6">
@@ -122,7 +128,7 @@ export default function RailingsServicePage() {
       <section className="relative overflow-hidden bg-[#101010] py-16 text-white md:py-20">
         <div className="absolute inset-0 opacity-25">
           <Image
-            src="/images/railings/railings-ornate-copper-scroll.jpg"
+            src="/images/balconies/balcony-rooftop-glass-london.jpg"
             alt=""
             fill
             sizes="100vw"
@@ -133,13 +139,13 @@ export default function RailingsServicePage() {
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
-            Provide drawings.
+            Send drawings.
             <br />
             We will <span className="text-[#9E000C]">confirm fit.</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light text-white/85 md:text-base">
-            Send plans, photos, or a rough sketch. We will outline what is feasible and what needs a survey before pricing or
-            compliance statements are finalised.
+            Share plans, photos, or a rough brief. We will outline what is feasible and what needs a survey before
+            structural or compliance details are finalised.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
