@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
-import { ArrowRight } from 'lucide-react'
 
+import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates | Steelyes',
@@ -24,18 +24,24 @@ const gateStandardItems = [
     body: 'Clean horizontal lines, strong geometry and a sharp architectural finish for contemporary homes and new entrances.',
     detailA: ['Profile', 'Architectural'],
     detailB: ['Finish', 'Powder coated'],
+    image: '/images/home/modern-diagonal-steel-gate.jpg',
+    imageAlt: 'Modern diagonal black steel driveway gate installed between brick pillars',
   },
   {
     title: 'Classic',
     body: 'Traditional proportions, heavier steel presence and timeless detailing for period homes, estates and formal driveways.',
     detailA: ['Style', 'Traditional'],
     detailB: ['Build', 'Steel framed'],
+    image: '/images/home/classic-ornate-driveway-gate.jpg',
+    imageAlt: 'Classic ornate black steel driveway gate with decorative finials',
   },
   {
     title: 'Privacy',
     body: 'Closed and semi-closed gate designs for entrances that need screening, security and a quieter street-facing profile.',
     detailA: ['Coverage', 'Screened'],
     detailB: ['Use', 'Driveway privacy'],
+    image: '/images/home/privacy-horizontal-steel-gate.jpg',
+    imageAlt: 'Privacy steel gate with horizontal infill and matching frontage panels',
   },
 ]
 
@@ -65,41 +71,7 @@ const processItems = [
 export default function HomePage() {
   return (
     <MarketingShell pathname="/">
-      <section className="relative min-h-[640px] overflow-hidden bg-[#1B1C1A] md:min-h-[870px]">
-        <MediaPlaceholder
-          label="Homepage hero image"
-          aspectClassName="absolute inset-0 h-full w-full"
-          className="bg-[#2B2B2B] [&>span]:text-white/35"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-28">
-          <p className="mb-4 font-mono text-xs font-bold uppercase tracking-widest text-white/75">Bespoke steel gates</p>
-          <h1 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.9] tracking-tight text-white sm:text-5xl md:text-8xl">
-            Bespoke steel gates,
-            <br />
-            built to define your property.
-          </h1>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
-            Made-to-measure driveway, pedestrian, sliding and automated gates, designed around your entrance and fabricated
-            for long-term strength.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className="group inline-flex min-h-[48px] items-center justify-center gap-2 bg-[#9E000C] px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515] md:text-lg"
-            >
-              Request a quote
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-            </Link>
-            <Link
-              href="/configurator"
-              className="inline-flex min-h-[48px] items-center justify-center border border-white px-7 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-white hover:text-[#1B1C1A] md:text-lg"
-            >
-              Configure your gate
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HomeWeldingHero />
 
       <section className="border-b border-zinc-200 bg-[#F5F3F0] py-8">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 md:grid-cols-4 md:px-8">
@@ -127,9 +99,19 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {gateStandardItems.map(({ title, body, detailA, detailB }) => (
+          {gateStandardItems.map(({ title, body, detailA, detailB, image, imageAlt }) => (
             <article key={title} className="overflow-hidden rounded border border-zinc-200 bg-[#F5F3F0]">
-              <MediaPlaceholder label={`${title} gate image`} aspectClassName="aspect-[4/5] w-full" />
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#E4E2DF]">
+                <Image
+                  src={image}
+                  alt={imageAlt}
+                  fill
+                  unoptimized
+                  loading="eager"
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover transition-transform duration-500 hover:scale-[1.03]"
+                />
+              </div>
               <div className="p-6">
                 <h3 className="font-heading text-3xl font-bold uppercase">{title}</h3>
                 <p className="mt-2 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
@@ -235,8 +217,16 @@ export default function HomePage() {
             </div>
             <div className="grid flex-1 grid-cols-2 gap-4">
               <div className="relative col-span-2 h-72 overflow-hidden">
-                <MediaPlaceholder label="Installed steel gate project image" aspectClassName="absolute inset-0 h-full w-full" />
-                <div className="absolute inset-0 bg-black/40" />
+                <Image
+                  src="/images/home/installed-classic-frontage-gate.jpg"
+                  alt="Installed black steel frontage gate at a residential entrance"
+                  fill
+                  unoptimized
+                  loading="eager"
+                  sizes="(min-width: 768px) 66vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-black/35" />
                 <div className="absolute inset-0 flex items-center justify-center text-center text-white">
                   <div>
                     <p className="font-heading text-4xl font-bold uppercase">Installed gates</p>
@@ -250,7 +240,17 @@ export default function HomePage() {
                   Close-up steelwork, joints, hinges, finishes and hardware prepared around the agreed specification.
                 </p>
               </article>
-              <MediaPlaceholder label="Technical detail image" aspectClassName="aspect-square w-full" />
+              <div className="relative aspect-square w-full overflow-hidden bg-[#E4E2DF]">
+                <Image
+                  src="/images/home/steelwork-finial-detail.jpg"
+                  alt="Close-up detail of black steel railings with decorative finials"
+                  fill
+                  unoptimized
+                  loading="eager"
+                  sizes="(min-width: 768px) 33vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
