@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { LogOut } from 'lucide-react'
-import { supabase } from '@/lib/supabase/client'
+import { logoutAdmin } from '@/app/admin/auth-actions'
 import { cn } from '@/lib/utils'
 
 const NAV = [
@@ -14,13 +14,7 @@ const NAV = [
 
 export function AdminHeader() {
   const pathname = usePathname()
-  const router = useRouter()
   const onDashboard = pathname === '/admin/dashboard'
-
-  async function handleLogout() {
-    await supabase.auth.signOut()
-    router.push('/admin/login')
-  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md">
@@ -54,15 +48,16 @@ export function AdminHeader() {
           ))}
         </nav>
 
-        <button
-          type="button"
-          onClick={handleLogout}
-          aria-label="Esci dall'admin"
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 font-mono text-xs uppercase tracking-widest text-zinc-500 transition-colors hover:text-[#ba1a1a]"
-        >
-          <LogOut size={14} strokeWidth={2} />
-          <span className="hidden sm:inline">Esci</span>
-        </button>
+        <form action={logoutAdmin}>
+          <button
+            type="submit"
+            aria-label="Esci dall'admin"
+            className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 font-mono text-xs uppercase tracking-widest text-zinc-500 transition-colors hover:text-[#ba1a1a]"
+          >
+            <LogOut size={14} strokeWidth={2} />
+            <span className="hidden sm:inline">Esci</span>
+          </button>
+        </form>
       </div>
 
       {/* Mobile nav — sempre visibile, include Dashboard come ancora */}
