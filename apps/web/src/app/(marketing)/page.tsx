@@ -124,7 +124,6 @@ export default function HomePage() {
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 className="object-cover"
                 loading="eager"
-                unoptimized
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-5 md:p-6">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Installed project</p>
@@ -218,7 +217,6 @@ export default function HomePage() {
                       fill
                       sizes="(max-width: 768px) 288px, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      unoptimized
                     />
                     <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
@@ -270,6 +268,18 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
+
+              {/* Mobile-only visual break */}
+              <div className="relative mt-6 aspect-[4/3] overflow-hidden lg:hidden">
+                <Image
+                  src="/images/home/modern-perforated-gate-detail.jpg"
+                  alt="Close-up of modern perforated steel gate detail"
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+
               <Link
                 href="/installation"
                 className="mt-8 inline-flex min-h-[48px] items-center gap-2 font-heading text-sm font-bold uppercase text-[#9E000C] hover:underline"
@@ -287,7 +297,6 @@ export default function HomePage() {
                   fill
                   sizes="50vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -298,7 +307,6 @@ export default function HomePage() {
                     fill
                     sizes="25vw"
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
                 <div className="flex flex-col justify-center bg-[#1B1C1A] p-6 text-white">
@@ -357,7 +365,6 @@ export default function HomePage() {
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25" />
                 </div>
@@ -391,7 +398,6 @@ export default function HomePage() {
           sizes="100vw"
           className="object-cover opacity-25"
           aria-hidden
-          unoptimized
         />
         {/* strong vertical overlay on mobile so text stays legible across full width */}
         <div className="absolute inset-0 bg-black/60" />
@@ -443,6 +449,42 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': ['LocalBusiness', 'GeneralContractor'],
+            name: 'Steelyes',
+            url: 'https://www.steelyes.co.uk',
+            telephone: '+44 7803 002145',
+            email: 'steelyes@yahoo.com',
+            description:
+              'Bespoke steel driveway gates, electric gates, railings, balconies and security doors. Survey-led specification, supply and install across the UK.',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Unit 7, Meridian Industrial Estate',
+              addressLocality: 'Enfield',
+              addressRegion: 'London',
+              postalCode: 'EN3 7TW',
+              addressCountry: 'GB',
+            },
+            areaServed: { '@type': 'Country', name: 'United Kingdom' },
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: 'Steel Fabrication Services',
+              itemListElement: [
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Bespoke Steel Driveway Gates' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Electric & Automatic Gates' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Railings & Balustrades' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Balconies' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Security Gates & Steel Doors' } },
+              ],
+            },
+          }),
+        }}
+      />
     </MarketingShell>
   )
 }
