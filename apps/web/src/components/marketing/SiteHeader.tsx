@@ -34,6 +34,8 @@ const GATE_LINKS: NavLink[] = [
 const SERVICE_LINKS: NavLink[] = [
   { label: 'Services Overview', href: '/services' },
   { label: 'Railings', href: '/services/railings' },
+  { label: 'Balconies', href: '/services/balconies' },
+  { label: 'Security', href: '/services/security' },
 ]
 
 const NAV_GROUPS: NavGroup[] = [

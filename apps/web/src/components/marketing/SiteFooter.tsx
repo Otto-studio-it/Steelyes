@@ -13,8 +13,9 @@ const GATE_LINKS = [
 const SERVICE_LINKS = [
   { label: 'Services Overview', href: '/services' },
   { label: 'Railings', href: '/services/railings' },
+  { label: 'Balconies', href: '/services/balconies' },
+  { label: 'Security', href: '/services/security' },
   { label: 'Installation Process', href: '/installation' },
-  { label: 'Gallery', href: '/gallery' },
 ] as const
 
 const START_LINKS = [
