@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
+import { ContactForm } from './ContactForm'
+
+export const metadata: Metadata = {
+  title: 'Request a Steel Gate Quote | Contact Steelyes',
+  description:
+    'Get a quote for bespoke steel gates, electric gates, railings or security steelwork. Share your brief, measurements or photos to start a survey-led specification.',
+}
 
 export default function ContactPage() {
   return (
@@ -13,73 +21,39 @@ export default function ContactPage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <form className="space-y-6 border border-zinc-200 bg-white p-5 md:p-8">
-          <h2 className="font-heading text-2xl font-black uppercase">Project brief</h2>
-          <div className="inline-flex items-center gap-3 border border-[#9E000C]/20 bg-[#9E000C]/5 px-4 py-2">
-            <span className="h-2 w-2 animate-pulse bg-[#9E000C]" />
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#9E000C]">
-              We respond within 1 business day
-            </span>
-          </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <label className="text-sm font-medium">
-              Full name
-              <input
-                autoComplete="name"
-                className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
-              />
-            </label>
-            <label className="text-sm font-medium">
-              Email
-              <input
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
-              />
-            </label>
-          </div>
-          <label className="block text-sm font-medium">
-            Project type
-            <select className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0">
-              <option>Automated Swing Gates</option>
-              <option>Pedestrian Entry</option>
-              <option>Cantilever Sliding</option>
-            </select>
-          </label>
-          <label className="block text-sm font-medium">
-            Postcode
-            <input
-              autoComplete="postal-code"
-              className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
-            />
-          </label>
-          <label className="block text-sm font-medium">
-            Project details
-            <textarea
-              rows={5}
-              className="mt-2 min-h-[120px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:ring-0"
-            />
-          </label>
-          <button
-            type="button"
-            className="inline-flex min-h-[44px] w-full items-center justify-center bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white"
-          >
-            Send specification
-          </button>
-        </form>
+        <ContactForm />
 
         <div className="space-y-8">
-          <MediaPlaceholder label="Location map placeholder" aspectClassName="aspect-video w-full border border-zinc-200" />
+          <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-[#1B1C1A] p-8">
+            <div className="text-center">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Coverage</p>
+              <p className="mt-3 font-heading text-4xl font-black uppercase text-white">UK-wide</p>
+              <p className="mt-3 font-mono text-xs uppercase tracking-wide text-white/60">
+                Site survey available across England,<br />Wales &amp; Scotland
+              </p>
+            </div>
+          </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-[#9E000C]">The Forge</h2>
-              <p className="text-sm text-[#5C403D]">Unit 4, Vulcan Works, Sheffield, S1 4ST, United Kingdom</p>
+              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-[#9E000C]">The Workshop</h2>
+              <p className="text-sm text-[#5C403D]">Unit 7, Meridian Industrial Estate</p>
+              <p className="text-sm text-[#5C403D]">Enfield, London, EN3 7TW</p>
+              <p className="text-sm text-[#5C403D]">United Kingdom</p>
             </div>
             <div>
               <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-[#9E000C]">Direct contact</h2>
-              <p className="text-sm text-[#5C403D]">T: +44 (0) 114 234 5678</p>
-              <p className="text-sm text-[#5C403D]">E: forge@steelyes.co.uk</p>
+              <a
+                href="tel:+447803002145"
+                className="block text-sm text-[#5C403D] transition-colors hover:text-[#9E000C]"
+              >
+                T: +44 7803 002145
+              </a>
+              <a
+                href="mailto:steelyes@yahoo.com"
+                className="block text-sm text-[#5C403D] transition-colors hover:text-[#9E000C]"
+              >
+                E: steelyes@yahoo.com
+              </a>
             </div>
           </div>
           <div className="border border-zinc-200 bg-[#F6F6F6] p-6">
@@ -89,6 +63,37 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': ['LocalBusiness', 'GeneralContractor'],
+            name: 'Steelyes',
+            url: 'https://www.steelyes.co.uk',
+            telephone: '+44 7803 002145',
+            email: 'steelyes@yahoo.com',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Unit 7, Meridian Industrial Estate',
+              addressLocality: 'Enfield',
+              addressRegion: 'London',
+              postalCode: 'EN3 7TW',
+              addressCountry: 'GB',
+            },
+            areaServed: { '@type': 'Country', name: 'United Kingdom' },
+            contactPoint: {
+              '@type': 'ContactPoint',
+              telephone: '+44 7803 002145',
+              email: 'steelyes@yahoo.com',
+              contactType: 'customer service',
+              areaServed: 'GB',
+              availableLanguage: 'English',
+            },
+          }),
+        }}
+      />
     </MarketingShell>
   )
 }
