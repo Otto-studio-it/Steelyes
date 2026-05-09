@@ -5,9 +5,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 
 export const metadata: Metadata = {
-  title: 'Case Studies | Steelyes Gate Projects',
+  title: 'Case Studies | Bespoke Steel Gate Projects',
   description:
-    'Completed Steelyes gate and fabrication projects. Specifications, installation notes, and process records from real site commissions.',
+    'In-depth project case studies from the Steelyes workshop. Real driveway gate and fabrication installations with process notes and finished results.',
 }
 
 const CASE_STUDIES = [

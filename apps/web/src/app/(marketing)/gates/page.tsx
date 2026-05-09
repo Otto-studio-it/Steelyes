@@ -1,16 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 import { GATE_SLUGS } from './gate-marketing-data'
 
+export const metadata: Metadata = {
+  title: 'Bespoke Steel Gates | Driveway, Electric & Automatic Gates',
+  description:
+    'Made-to-measure steel driveway gates — sliding, electric, bifold, pedestrian and cantilever. Surveyed, fabricated and installed across the UK.',
+}
+
 const GATE_DISPLAY = [
-  { title: 'Sliding Gates', slug: GATE_SLUGS[4] },
-  { title: 'Bifold Gates', slug: GATE_SLUGS[1] },
-  { title: 'Cantilever Gates', slug: GATE_SLUGS[0] },
-  { title: 'Pedestrian Gates', slug: GATE_SLUGS[2] },
-  { title: 'Telescopic Gates', slug: GATE_SLUGS[3] },
-  { title: 'Architectural Gates', slug: GATE_SLUGS[5] },
+  { title: 'Sliding Gates', slug: GATE_SLUGS[4], photo: '/images/gates/sliding-gate-anthracite-residential.jpg', alt: 'Anthracite sliding steel driveway gate' },
+  { title: 'Bifold Gates', slug: GATE_SLUGS[1], photo: '/images/gates/sliding-gate-classic-ornate-tudor.jpg', alt: 'Classic ornate bifold steel gate, Tudor style' },
+  { title: 'Cantilever Gates', slug: GATE_SLUGS[0], photo: '/images/gates/sliding-gate-spear-finials.jpg', alt: 'Cantilever steel gate with spear finials' },
+  { title: 'Pedestrian Gates', slug: GATE_SLUGS[2], photo: '/images/gates/pedestrian-gate-ornate-brick.jpg', alt: 'Ornate pedestrian steel gate set in brick pillars' },
+  { title: 'Telescopic Gates', slug: GATE_SLUGS[3], photo: '/images/gates/sliding-gate-automated-open.jpg', alt: 'Automated sliding steel gate open position' },
+  { title: 'Architectural Gates', slug: GATE_SLUGS[5], photo: '/images/gates/classic-ornate-driveway-gate-arch.jpg', alt: 'Classic ornate architectural steel driveway gate with arch' },
 ] as const
 
 export default function GatesPage() {
@@ -52,11 +59,17 @@ export default function GatesPage() {
 
       <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {GATE_DISPLAY.map(({ title, slug }, index) => (
+          {GATE_DISPLAY.map(({ title, slug, photo, alt }, index) => (
             <article key={slug} className="group">
               <Link href={`/gates/${slug}`} className="block">
-                <div className="relative overflow-hidden bg-[#EFEEEB]">
-                  <MediaPlaceholder label={`Gate card image ${index + 1}`} aspectClassName="aspect-[4/5] w-full" />
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#EFEEEB]">
+                  <Image
+                    src={photo}
+                    alt={alt}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                   <span className="absolute right-3 top-3 bg-white px-2 py-1 font-mono text-[10px] uppercase">
                     Ref: ST-{index + 1}0{index + 1}
                   </span>

@@ -1,7 +1,14 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
+
+export const metadata: Metadata = {
+  title: 'Steel Fabrication Services | Gates, Railings, Balconies & Security',
+  description:
+    'Steel fabrication beyond gates — bespoke railings, balustrades, structural balconies and security doors. Fabricated and installed to survey-led specification across the UK.',
+}
 
 const SERVICES = [
   {
@@ -31,12 +38,15 @@ export default function ServicesPage() {
   return (
     <MarketingShell pathname="/services">
       <section className="relative overflow-hidden bg-[#111111] py-14 md:py-24">
-        <MediaPlaceholder
-          label="Services hero image"
-          aspectClassName="absolute inset-0 h-full w-full"
-          className="bg-[#2A2A2A] [&>span]:text-white/35"
+        <Image
+          src="/images/home-welding.jpg"
+          alt="Steel fabrication in the Steelyes workshop"
+          fill
+          className="object-cover opacity-50"
+          sizes="100vw"
+          priority
         />
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <p className="font-mono text-xs uppercase tracking-widest text-white/75">Bespoke forge</p>
           <h1 className="mt-4 max-w-3xl font-heading text-4xl font-black uppercase leading-[0.9] text-white sm:text-5xl md:text-8xl">
@@ -113,23 +123,18 @@ export default function ServicesPage() {
             <li className="min-h-[44px] border border-zinc-200 bg-white px-3 py-3">Finish + install coordination</li>
           </ul>
         </article>
-        <div className="relative overflow-hidden border border-zinc-200">
-          <MediaPlaceholder label="Workshop steel fabrication" aspectClassName="h-full min-h-[340px] w-full" />
-          <div className="absolute bottom-4 left-4 bg-black/70 px-4 py-3 text-white">
-            <p className="font-heading text-xs font-bold uppercase tracking-widest">Process note</p>
-            <p className="font-mono text-[10px] uppercase text-white/80">Imagery pending approval</p>
-          </div>
+        <div className="relative min-h-[340px] overflow-hidden border border-zinc-200">
+          <Image
+            src="/images/home-welding.jpg"
+            alt="Steelyes workshop — steel fabrication in progress"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
         </div>
       </section>
 
       <section className="relative overflow-hidden bg-[#101010] py-16 text-white md:py-20">
-        <div className="absolute inset-0 opacity-20">
-          <MediaPlaceholder
-            label="Technical texture pattern"
-            aspectClassName="absolute inset-0 h-full w-full"
-            className="bg-black [&>span]:text-white/40"
-          />
-        </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
             Need steelwork

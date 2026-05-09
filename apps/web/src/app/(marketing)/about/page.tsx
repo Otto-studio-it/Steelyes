@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
+import Image from 'next/image'
+
 import { MarketingShell } from '@/components/marketing/MarketingShell'
-import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
+
+export const metadata: Metadata = {
+  title: 'About Steelyes | UK Steel Gate Manufacturer & Fabricator',
+  description:
+    'Steelyes is a UK steel fabrication specialist. Bespoke driveway gates, railings and structural steelwork designed and built around each site and brief.',
+}
 
 export default function AboutPage() {
   return (
@@ -19,8 +27,10 @@ export default function AboutPage() {
         <div className="space-y-6">
           <h2 className="font-heading text-3xl font-black uppercase sm:text-4xl">The workshop ethos</h2>
           <p className="text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
-            Our workshop is where raw steel meets digital accuracy. Placeholder copy until final client content is
-            inserted.
+            Every gate we build starts with the same question: what does this entrance actually need? Not a catalogue
+            answer — a measured one. We survey the site, understand the substrate, the access requirements, the finish
+            direction, and we fabricate around that reality. No approximations shipped to site and adjusted in the
+            field. Steel cut to drawing, delivered ready to install.
           </p>
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div>
@@ -34,8 +44,24 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <MediaPlaceholder label="Workshop image one" aspectClassName="aspect-[4/5] w-full" />
-          <MediaPlaceholder label="Workshop image two" aspectClassName="aspect-[4/5] w-full md:translate-y-10" />
+          <div className="relative aspect-[4/5] w-full overflow-hidden">
+            <Image
+              src="/images/home-welding.jpg"
+              alt="Steelyes workshop — steel fabrication in progress"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+            />
+          </div>
+          <div className="relative aspect-[4/5] w-full overflow-hidden md:translate-y-10">
+            <Image
+              src="/images/home/steelwork-finial-detail.jpg"
+              alt="Steel finial detail — Steelyes fabrication quality"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+            />
+          </div>
         </div>
       </section>
 
@@ -44,14 +70,26 @@ export default function AboutPage() {
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What defines our craft</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {[
-              ['01', 'No catalogue compromises'],
-              ['02', 'Engineering-first detailing'],
-              ['03', 'Clean geometric language'],
-            ].map(([step, title]) => (
+              [
+                '01',
+                'No catalogue compromises',
+                'Every gate is drawn from scratch. Dimensions, fixing centres, leaf weights and clearances are resolved on paper before a single cut is made. Nothing is adapted from stock.',
+              ],
+              [
+                '02',
+                'Engineering-first detailing',
+                'We resolve structural details — hinge loads, post embedment, motor torque requirements — before specifying aesthetics. The geometry follows the engineering, not the other way around.',
+              ],
+              [
+                '03',
+                'Clean geometric language',
+                'Our work avoids decoration for its own sake. Lines are sharp, proportions are deliberate, finishes are consistent. The result reads as considered rather than assembled.',
+              ],
+            ].map(([step, title, body]) => (
               <article key={step} className="border border-white/20 bg-white/5 p-6">
                 <p className="font-mono text-xs uppercase tracking-widest text-[#FFB4AB]">{step}</p>
                 <h3 className="mt-3 font-heading text-2xl font-bold uppercase">{title}</h3>
-                <p className="mt-3 text-sm text-white/80">Placeholder copy until client finalizes the approved story text.</p>
+                <p className="mt-3 text-sm leading-relaxed text-white/80">{body}</p>
               </article>
             ))}
           </div>
@@ -66,11 +104,20 @@ export default function AboutPage() {
             <span className="text-[#9E000C]">designed to endure</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#5C403D] md:text-base">
-            This block mirrors the approved split-layout style used across the page: statement copy on the left,
-            supporting visual on the right.
+            We work across the UK, with a concentration of commissions in London and the South East. Projects range from
+            single residential entrances to multi-gate commercial perimeters — each surveyed, drawn, fabricated and
+            installed by the same team. No subcontracted site work. No handoffs between supplier and installer.
           </p>
         </div>
-        <MediaPlaceholder label="Fabrication close-up" aspectClassName="aspect-[4/3] w-full border border-zinc-200" />
+        <div className="relative aspect-[4/3] w-full overflow-hidden border border-zinc-200">
+          <Image
+            src="/images/home/modern-perforated-gate-detail.jpg"
+            alt="Perforated steel gate detail — Steelyes fabrication"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
+        </div>
       </section>
     </MarketingShell>
   )

@@ -1,5 +1,13 @@
 import Image from 'next/image'
+import type { Metadata } from 'next'
+
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+
+export const metadata: Metadata = {
+  title: 'Gate Installation | Supply & Install Steel Gates UK',
+  description:
+    'Steelyes handles the full installation path — site survey, fabrication, electric gate wiring, delivery and fitting across the UK.',
+}
 
 export default function InstallationPage() {
   return (
@@ -12,7 +20,6 @@ export default function InstallationPage() {
           sizes="100vw"
           className="object-cover"
           priority
-          unoptimized
         />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
@@ -28,10 +35,23 @@ export default function InstallationPage() {
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Site services</p>
         <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">The supply & install benefit</h2>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {['On-site measurement', 'Structural alignment', 'Full handover'].map((title) => (
+          {[
+            {
+              title: 'On-site measurement',
+              body: 'We visit before fabrication begins. Laser measurement of post positions, gate opening, and ground clearances. Site conditions — substrate, drainage, sight lines — recorded and fed directly into the fabrication drawing.',
+            },
+            {
+              title: 'Structural alignment',
+              body: 'Gate leaves set to drawing tolerance on-site. Fixing positions verified against the survey record. Where conditions differ from survey, we resolve on-site rather than fabricate adjustments afterwards.',
+            },
+            {
+              title: 'Full handover',
+              body: 'Every installation ends with a full commissioning check: automation cycle testing, manual override verification, and a complete handover to the client. Documentation provided for all motorised systems.',
+            },
+          ].map(({ title, body }) => (
             <article key={title} className="border border-zinc-200 bg-white p-6">
               <h3 className="font-heading text-2xl font-bold uppercase">{title}</h3>
-              <p className="mt-3 text-sm font-light text-[#5C403D]">Approved section structure with placeholder copy.</p>
+              <p className="mt-3 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
             </article>
           ))}
         </div>
@@ -42,8 +62,9 @@ export default function InstallationPage() {
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Logistics</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">Nationwide engineering</h2>
           <p className="mt-4 text-sm font-light leading-relaxed text-[#5C403D]">
-            From pre-install checks to final commissioning, the approved layout combines logistics copy and operational
-            steps.
+            We carry out installations across the UK — single-gate residential commissions to multi-gate commercial
+            perimeters. One team from survey to sign-off, no third-party installers and no handoff between fabricator
+            and site.
           </p>
           <ul className="mt-6 space-y-3 font-mono text-xs uppercase tracking-widest text-zinc-700">
             <li className="min-h-[44px] border border-zinc-200 bg-white px-3 py-3">Site visit + laser survey</li>
@@ -59,7 +80,6 @@ export default function InstallationPage() {
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
-              unoptimized
             />
           </div>
           <div className="absolute bottom-4 left-4 bg-black/70 px-4 py-3 text-white">
@@ -77,11 +97,28 @@ export default function InstallationPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-10 text-center font-heading text-4xl font-black uppercase md:text-5xl">The installation blueprint</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
-            {['Technical Survey', 'Frame Setting', 'On-site Wiring', 'Final Tuning'].map((step, index) => (
+            {[
+              {
+                step: 'Technical Survey',
+                body: 'Free site visit — laser measure, substrate check, access and drainage assessment. Survey report and indicative drawing delivered within 48 hours.',
+              },
+              {
+                step: 'Frame Setting',
+                body: 'Gate posts set and packed to tolerance. Leaf hanging verified against the fabrication drawing. Set-out confirmed before any fixings are committed.',
+              },
+              {
+                step: 'On-site Wiring',
+                body: 'For automated gates, supply cable routing, control board installation and safety device wiring handled by our own team. No subcontracted electricians.',
+              },
+              {
+                step: 'Final Tuning',
+                body: 'Closing force, speed settings, obstacle detection and manual override tested to manufacturer specification before handover. Documentation left on-site.',
+              },
+            ].map(({ step, body }, index) => (
               <article key={step} className="border border-zinc-200 bg-white p-6">
                 <p className="mb-4 font-heading text-5xl font-black text-zinc-200">0{index + 1}</p>
                 <h3 className="mb-2 font-heading text-xl font-bold uppercase">{step}</h3>
-                <p className="text-sm font-light text-[#5C403D]">Placeholder content for approved installation page flow.</p>
+                <p className="text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
                 <div className="mt-5 h-0.5 w-14 bg-[#9E000C]" />
               </article>
             ))}
@@ -129,7 +166,6 @@ export default function InstallationPage() {
             sizes="100vw"
             className="object-cover"
             aria-hidden
-            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
