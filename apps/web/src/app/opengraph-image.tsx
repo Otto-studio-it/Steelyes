@@ -22,7 +22,8 @@ export default async function Image() {
           overflow: 'hidden',
         }}
       >
-        {/* Gate photo — right half */}
+        {/* Gate photo — right half; next/image cannot be used inside ImageResponse */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageBase64}
           style={{

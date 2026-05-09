@@ -1,12 +1,35 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
 import { submitContactForm, type ContactFormState } from '@/app/actions'
 
 const initialState: ContactFormState = { status: 'idle' }
 
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white disabled:opacity-60"
+    >
+      {pending ? (
+        <>
+          <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          Sending…
+        </>
+      ) : (
+        'Send specification'
+      )}
+    </button>
+  )
+}
+
 export function ContactForm() {
-  const [state, action, pending] = useActionState(submitContactForm, initialState)
+  const [state, action] = useFormState(submitContactForm, initialState)
 
   if (state.status === 'success') {
     return (
@@ -18,7 +41,7 @@ export function ContactForm() {
         </div>
         <h2 className="font-heading text-2xl font-black uppercase">Enquiry received</h2>
         <p className="max-w-sm text-sm font-light leading-relaxed text-[#5C403D]">
-          We'll review your brief and come back to you within 24–48 hours to discuss next steps and arrange a site survey if relevant.
+          We&apos;ll review your brief and come back to you within 24–48 hours to discuss next steps and arrange a site survey if relevant.
         </p>
         <p className="font-mono text-xs uppercase tracking-widest text-zinc-400">
           T: +44 7803 002145 · steelyes@yahoo.com
@@ -116,23 +139,7 @@ export function ContactForm() {
         />
       </label>
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white disabled:opacity-60"
-      >
-        {pending ? (
-          <>
-            <svg className="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-            Sending…
-          </>
-        ) : (
-          'Send specification'
-        )}
-      </button>
+      <SubmitButton />
     </form>
   )
 }

@@ -18,7 +18,7 @@ export default function TermsPage() {
 
           <h2>1. About us</h2>
           <p>
-            Steelyes ("we", "us", "our") is a steel fabrication and installation business operating across the
+            Steelyes (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) is a steel fabrication and installation business operating across the
             United Kingdom. Our registered workshop is at Unit 7, Meridian Industrial Estate, Enfield, London EN3 7TW.
           </p>
           <p>

@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
 
           <h2>1. Who we are</h2>
           <p>
-            Steelyes ("we", "us", "our") is the data controller for the personal data collected through this website.
+            Steelyes (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) is the data controller for the personal data collected through this website.
             We are a steel fabrication and gate installation business operating across the United Kingdom.
           </p>
           <p>
@@ -94,7 +94,7 @@ export default function PrivacyPolicyPage() {
           <h2>7. Complaints</h2>
           <p>
             If you are unhappy with how we handle your data, you have the right to lodge a complaint with the
-            Information Commissioner's Office (ICO), the UK supervisory authority for data protection.
+            Information Commissioner&apos;s Office (ICO), the UK supervisory authority for data protection.
           </p>
           <p>
             ICO website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-[#9E000C] hover:underline">ico.org.uk</a><br />
