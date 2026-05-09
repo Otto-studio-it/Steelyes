@@ -1,47 +1,35 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useFormState, useFormStatus } from 'react-dom'
+import { useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
-import { userIsAdmin } from '@/lib/admin/user-is-admin'
-import { supabase } from '@/lib/supabase/client'
+import { loginAdmin } from '../auth-actions'
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-[#9e000c] px-6 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9b1515] disabled:opacity-60"
+    >
+      {pending && <Loader2 size={14} className="animate-spin" />}
+      {pending ? 'Accesso...' : 'Accedi'}
+    </button>
+  )
+}
 
 export function LoginForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') ?? '/admin/dashboard'
   const error = searchParams.get('error')
+  const [state, formAction] = useFormState(loginAdmin, {
+    error: error === 'unauthorized' ? 'Account non autorizzato come admin.' : null,
+  })
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [showPwd, setShowPwd] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState<string | null>(
-    error === 'unauthorized' ? 'Account non autorizzato come admin.' : null
-  )
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setErr(null)
-
-    const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (authError) {
-      setErr('Email o password errati.')
-      setLoading(false)
-      return
-    }
-
-    if (!userIsAdmin(data.user)) {
-      await supabase.auth.signOut()
-      setErr('Account non autorizzato come admin.')
-      setLoading(false)
-      return
-    }
-
-    router.push(redirectTo)
-  }
 
   return (
     <div className="w-full max-w-sm">
@@ -54,7 +42,9 @@ export function LoginForm() {
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form action={formAction} className="space-y-6">
+        <input type="hidden" name="redirectTo" value={redirectTo} />
+
         <div>
           <label
             htmlFor="email"
@@ -64,12 +54,11 @@ export function LoginForm() {
           </label>
           <input
             id="email"
+            name="email"
             type="email"
             required
             autoFocus
             autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className="mt-2 w-full border-b border-zinc-300 bg-transparent py-2 text-sm text-[#1b1c1a] outline-none transition-colors focus:border-[#9e000c]"
           />
         </div>
@@ -84,11 +73,10 @@ export function LoginForm() {
           <div className="relative">
             <input
               id="password"
+              name="password"
               type={showPwd ? 'text' : 'password'}
               required
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="mt-2 w-full border-b border-zinc-300 bg-transparent py-2 pr-10 text-sm text-[#1b1c1a] outline-none transition-colors focus:border-[#9e000c]"
             />
             <button
@@ -102,18 +90,11 @@ export function LoginForm() {
           </div>
         </div>
 
-        {err ? (
-          <p className="font-mono text-xs text-[#ba1a1a]">{err}</p>
+        {state.error ? (
+          <p className="font-mono text-xs text-[#ba1a1a]">{state.error}</p>
         ) : null}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-[#9e000c] px-6 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9b1515] disabled:opacity-60"
-        >
-          {loading && <Loader2 size={14} className="animate-spin" />}
-          {loading ? 'Accesso...' : 'Accedi'}
-        </button>
+        <SubmitButton />
       </form>
     </div>
   )
