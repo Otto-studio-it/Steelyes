@@ -49,7 +49,6 @@ export default function BalconiesServicePage() {
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority
-            unoptimized
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
             <p className="font-heading text-xl font-bold uppercase">Bespoke steel balcony</p>
@@ -75,6 +74,25 @@ export default function BalconiesServicePage() {
             ))}
           </div>
         </article>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 pb-10 md:px-8">
+        <div className="relative aspect-[21/6] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
+          <Image
+            src="/images/balconies/balcony-steel-structure.jpg"
+            alt="Raw steel balcony frame structure mid-fabrication"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+          <div className="absolute inset-0 flex items-end p-6 md:p-10">
+            <p className="font-heading text-2xl font-black uppercase text-white md:text-3xl">
+              Structure first.<br />
+              <span className="text-[#9E000C]">Finish second.</span>
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
@@ -134,7 +152,6 @@ export default function BalconiesServicePage() {
             sizes="100vw"
             className="object-cover"
             aria-hidden
-            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
