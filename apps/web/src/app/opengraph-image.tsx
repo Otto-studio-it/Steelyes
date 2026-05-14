@@ -120,7 +120,8 @@ export default async function Image() {
               marginTop: '36px',
               backgroundColor: '#9E000C',
               padding: '12px 28px',
-              width: 'fit-content',
+              width: 240,
+              justifyContent: 'center',
             }}
           >
             <span
