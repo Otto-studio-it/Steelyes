@@ -12,25 +12,39 @@ export const metadata: Metadata = {
 
 const SERVICES = [
   {
-    title: 'Railings',
+    title: 'Glass Balustrades & Terraces',
     href: '/services/railings',
     label: 'Residential + commercial',
     description:
-      'Guardrails, balustrades, handrails, and perimeter details fabricated to suit your architecture and site constraints.',
+      'Frameless and semi-framed glass balustrade systems and terrace enclosures fabricated to survey-led specification.',
   },
   {
-    title: 'Balconies',
+    title: 'Metal & Glass Balconies',
     href: '/services/balconies',
     label: 'Structural steelwork',
     description:
-      'Balcony frames, infill panels, and fixings designed around access, load paths, and the realities of retrofit installation.',
+      'Metal and glass balcony frames, infill panels, and fixings designed around access, load paths, and retrofit installation.',
   },
   {
-    title: 'Security',
+    title: 'Steel Structures',
+    href: '/services/structures',
+    label: 'Bespoke fabrication',
+    description:
+      'Structural steel frames, support columns, and bespoke sections designed around real site conditions and load requirements.',
+  },
+  {
+    title: 'Platforms & Staircases',
+    href: '/services/staircases',
+    label: 'Precision fabrication',
+    description:
+      'Steel staircases, raised platforms, and mezzanine structures engineered around confirmed tread geometry and fixing substrates.',
+  },
+  {
+    title: 'Security Grills',
     href: '/services/security',
     label: 'Perimeter hardening',
     description:
-      'Steel security doors, grilles, access enclosures, and protective screens, built for high-wear use and serviceability.',
+      'Steel security grills, doors, access enclosures, and protective screens built for high-wear use and serviceability.',
   },
 ] as const
 
@@ -65,7 +79,7 @@ export default function ServicesPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Service index</p>
         <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">Fabrication disciplines</h2>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service) => (
             <article key={service.href} className="border border-zinc-200 bg-white p-6">
               <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{service.label}</p>

@@ -5,9 +5,9 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
 export const metadata: Metadata = {
-  title: 'Steel Balconies | Bespoke Structural Steelwork | Steelyes',
+  title: 'Metal & Glass Balconies | Bespoke Structural Steelwork | Steelyes',
   description:
-    'Balcony frames, infill panels, and fixings designed around access, load paths, and the realities of retrofit installation.',
+    'Bespoke metal and glass balconies — frames, infill panels, and fixings designed around access, load paths, and the realities of retrofit installation.',
 }
 
 const CAPABILITIES = [
@@ -30,13 +30,14 @@ export default function BalconiesServicePage() {
       <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-4 py-10 md:px-8 md:py-16">
         <p className="font-mono text-xs uppercase tracking-widest text-[#9E000C]">Service</p>
         <h1 className="mt-3 font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
-          Steel
+          Metal &amp; Glass
           <br />
           <span className="text-[#9E000C]">Balconies</span>
         </h1>
         <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
-          Balcony frames and infill panels fabricated around the building, the load paths, and the real conditions of
-          retrofit installation. Where client specification is pending, the page intentionally stays conservative.
+          Metal and glass balcony frames and infill panels fabricated around the building, the load paths, and the
+          real conditions of retrofit installation. Where client specification is pending, the page intentionally
+          stays conservative.
         </p>
       </section>
 

@@ -16,7 +16,6 @@ export default function ConfiguratorPage() {
               ['01', 'Select foundation style'],
               ['02', 'Dimensions (mm)'],
               ['03', 'Steel profile'],
-              ['04', 'Architectural finish'],
               ['05', 'Additional upgrades'],
             ].map(([step, title]) => (
               <section key={step}>
@@ -36,6 +35,37 @@ export default function ConfiguratorPage() {
                 </div>
               </section>
             ))}
+
+            {/* Step 04 — Architectural finish with real colour options */}
+            <section>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="bg-[#9E000C] px-2 py-1 font-mono text-xs text-white">04</span>
+                <h2 className="font-heading text-xl font-bold uppercase">Architectural finish</h2>
+              </div>
+              <div className="rounded border border-zinc-200 bg-[#F5F3F0] p-4">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {[
+                    'Satin Black',
+                    'Matt Black',
+                    'Gloss Black',
+                    'RAL7016 Anthracite',
+                    'White',
+                  ].map((finish) => (
+                    <button
+                      key={finish}
+                      type="button"
+                      className="min-h-[44px] border border-zinc-300 bg-white px-2 text-xs font-bold uppercase hover:border-[#9E000C] hover:text-[#9E000C]"
+                    >
+                      {finish}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-wide text-zinc-500">
+                  Custom RAL colour available — extra charge from £175 + VAT
+                </p>
+              </div>
+            </section>
+
             <button className="min-h-[48px] w-full bg-[#9E000C] px-6 py-3 font-heading text-lg font-bold uppercase text-white">
               Generate technical quote
             </button>
@@ -82,19 +112,6 @@ export default function ConfiguratorPage() {
                   Height: 1800mm
                 </p>
               </div>
-            </div>
-            <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-              {[
-                ['Material specification', 'S235JR Grade Steel'],
-                ['Coat integrity', 'Double Powder-Coated'],
-                ['Build origin', 'Sheffield, UK'],
-              ].map(([k, v]) => (
-                <div key={k}>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{k}</p>
-                  <p className="mt-1 font-heading text-sm font-bold uppercase">{v}</p>
-                  <div className="mt-2 h-0.5 w-8 bg-[#9E000C]" />
-                </div>
-              ))}
             </div>
           </div>
         </section>

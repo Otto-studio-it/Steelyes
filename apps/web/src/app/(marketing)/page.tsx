@@ -143,22 +143,24 @@ export default function HomePage() {
           <div className="flex flex-col justify-center lg:col-span-7 lg:pl-16">
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Steel fabrication</p>
             <h2 className="font-heading text-3xl font-black uppercase leading-[0.9] sm:text-4xl md:text-5xl lg:text-6xl">
-              Everything your entrance needs —
+              Everything your property needs —
               <br />
-              <span className="text-[#9E000C]">nothing it doesn&apos;t.</span>
+              <span className="text-[#9E000C]">from structural steel to front driveway or back garden.</span>
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#5C403D] md:text-base">
-              Every gate starts with the opening it needs to serve. We survey, specify, fabricate and install around
-              the real site — not a catalogue assumption.
+              Every project starts with the site. We survey, specify, fabricate and install across driveway gates,
+              glass balustrades, metal balconies, steel structures, staircases and security — all made to measure.
             </p>
 
             {/* Services list */}
             <ul className="mt-8 divide-y divide-zinc-200 border-t border-zinc-200">
               {[
-                { label: 'Driveway & automated gates', href: '/gates' },
-                { label: 'Railings & balustrades', href: '/services/railings' },
-                { label: 'Steel balconies', href: '/services/balconies' },
-                { label: 'Security doors & grilles', href: '/services/security' },
+                { label: 'Driveway automated gates & railings', href: '/gates' },
+                { label: 'Glass balustrades & terraces', href: '/services/railings' },
+                { label: 'Metal & glass balconies', href: '/services/balconies' },
+                { label: 'Steel structures', href: '/services/structures' },
+                { label: 'Platforms & staircases', href: '/services/staircases' },
+                { label: 'Security grills', href: '/services/security' },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
