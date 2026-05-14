@@ -1,0 +1,3730 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Steelyes Client Photo Browser</title>
+  <style>
+    :root {
+      --bg: #fbf9f6;
+      --panel: #ffffff;
+      --ink: #1b1c1a;
+      --muted: #5c403d;
+      --accent: #9e000c;
+      --border: #d7d1cb;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(251,249,246,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      z-index: 10;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; text-transform: uppercase; letter-spacing: .04em; }
+    .summary { display: flex; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+    .bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      padding: 14px 24px 0;
+    }
+    .pill {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .sheet {
+      margin: 24px auto 0;
+      max-width: 1500px;
+      padding: 0 24px 24px;
+    }
+    .sheet img { width: 100%; border: 1px solid var(--border); display: block; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 16px;
+      padding: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.04);
+    }
+    .card img { width: 100%; display: block; background: #efeeeb; }
+    .meta { padding: 14px; }
+    .top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .top h2 { margin: 0; font-size: 14px; line-height: 1.3; word-break: break-word; }
+    .top span { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .meta p { margin: 10px 0 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 16px 24px 0;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+    }
+    button.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Steelyes Client Photo Browser</h1>
+    <div class="summary">
+      <span>300 images scanned</span>
+      <span>contact-sheet.jpg</span>
+    </div>
+  </header>
+  <div class="controls" id="controls">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="fabrication / workshop">Fabrication</button>
+    <button data-filter="gate hero / gate card">Gates</button>
+    <button data-filter="railings / balustrades">Railings</button>
+    <button data-filter="balconies / terraces">Balconies</button>
+    <button data-filter="detail / finish proof">Detail</button>
+    <button data-filter="hero / wide feature">Wide</button>
+    <button data-filter="portrait / detail">Portrait</button>
+  </div>
+  <section class="sheet">
+    <img src="contact-sheet.jpg" alt="Contact sheet">
+  </section>
+  <section class="grid" id="grid">
+    
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043807.JPG.jpg" alt="1000043807.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043807.JPG</h2>
+                  <span>77,123 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043810.JPG.jpg" alt="1000043810.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043810.JPG</h2>
+                  <span>58,370 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043813.JPG.jpg" alt="1000043813.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043813.JPG</h2>
+                  <span>58,523 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043816.JPG.jpg" alt="1000043816.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043816.JPG</h2>
+                  <span>59,875 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043819.JPG.jpg" alt="1000043819.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043819.JPG</h2>
+                  <span>48,865 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043822.JPG.jpg" alt="1000043822.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043822.JPG</h2>
+                  <span>52,823 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043825.JPG.jpg" alt="1000043825.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043825.JPG</h2>
+                  <span>48,878 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043828.JPG.jpg" alt="1000043828.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043828.JPG</h2>
+                  <span>57,315 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043831.JPG.jpg" alt="1000043831.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043831.JPG</h2>
+                  <span>42,610 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043834.JPG.jpg" alt="1000043834.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043834.JPG</h2>
+                  <span>51,220 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043837.JPG.jpg" alt="1000043837.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043837.JPG</h2>
+                  <span>32,815 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043840.JPG.jpg" alt="1000043840.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043840.JPG</h2>
+                  <span>48,854 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043843.JPG.jpg" alt="1000043843.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043843.JPG</h2>
+                  <span>54,047 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043845.JPG.jpg" alt="1000043845.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043845.JPG</h2>
+                  <span>35,991 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043847.JPG.jpg" alt="1000043847.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043847.JPG</h2>
+                  <span>71,370 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043849.JPG.jpg" alt="1000043849.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043849.JPG</h2>
+                  <span>30,242 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043851.JPG.jpg" alt="1000043851.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043851.JPG</h2>
+                  <span>48,778 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043853.JPG.jpg" alt="1000043853.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043853.JPG</h2>
+                  <span>24,419 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043856.JPG.jpg" alt="1000043856.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043856.JPG</h2>
+                  <span>49,687 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043859.JPG.jpg" alt="1000043859.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043859.JPG</h2>
+                  <span>61,935 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043862.JPG.jpg" alt="1000043862.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043862.JPG</h2>
+                  <span>43,986 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043865.JPG.jpg" alt="1000043865.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043865.JPG</h2>
+                  <span>61,338 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043868.JPG.jpg" alt="1000043868.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043868.JPG</h2>
+                  <span>58,195 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043871.JPG.jpg" alt="1000043871.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043871.JPG</h2>
+                  <span>41,183 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043874.JPG.jpg" alt="1000043874.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043874.JPG</h2>
+                  <span>46,721 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043877.JPG.jpg" alt="1000043877.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043877.JPG</h2>
+                  <span>22,156 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043880.JPG.jpg" alt="1000043880.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043880.JPG</h2>
+                  <span>45,237 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043883.JPG.jpg" alt="1000043883.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043883.JPG</h2>
+                  <span>55,931 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043886.JPG.jpg" alt="1000043886.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043886.JPG</h2>
+                  <span>52,642 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043889.JPG.jpg" alt="1000043889.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043889.JPG</h2>
+                  <span>46,012 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043892.JPG.jpg" alt="1000043892.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043892.JPG</h2>
+                  <span>40,982 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043895.JPG.jpg" alt="1000043895.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043895.JPG</h2>
+                  <span>42,916 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043898.JPG.jpg" alt="1000043898.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043898.JPG</h2>
+                  <span>23,770 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043906.JPG.jpg" alt="1000043906.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043906.JPG</h2>
+                  <span>61,130 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043909.JPG.jpg" alt="1000043909.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043909.JPG</h2>
+                  <span>48,214 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043912.JPG.jpg" alt="1000043912.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043912.JPG</h2>
+                  <span>72,848 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043914.JPG.jpg" alt="1000043914.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043914.JPG</h2>
+                  <span>52,280 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043916.JPG.jpg" alt="1000043916.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043916.JPG</h2>
+                  <span>25,424 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043918.JPG.jpg" alt="1000043918.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043918.JPG</h2>
+                  <span>59,646 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043920.JPG.jpg" alt="1000043920.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043920.JPG</h2>
+                  <span>46,597 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043922.JPG.jpg" alt="1000043922.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043922.JPG</h2>
+                  <span>43,264 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043924.JPG.jpg" alt="1000043924.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043924.JPG</h2>
+                  <span>48,193 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043926.JPG.jpg" alt="1000043926.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043926.JPG</h2>
+                  <span>26,960 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043928.JPG.jpg" alt="1000043928.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043928.JPG</h2>
+                  <span>42,528 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043930.JPG.jpg" alt="1000043930.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043930.JPG</h2>
+                  <span>51,424 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043932.JPG.jpg" alt="1000043932.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043932.JPG</h2>
+                  <span>61,263 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043934.JPG.jpg" alt="1000043934.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043934.JPG</h2>
+                  <span>45,220 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043936.JPG.jpg" alt="1000043936.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043936.JPG</h2>
+                  <span>54,995 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043938.JPG.jpg" alt="1000043938.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043938.JPG</h2>
+                  <span>31,867 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043940.JPG.jpg" alt="1000043940.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043940.JPG</h2>
+                  <span>52,180 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043942.JPG.jpg" alt="1000043942.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043942.JPG</h2>
+                  <span>65,722 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043944.JPG.jpg" alt="1000043944.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043944.JPG</h2>
+                  <span>52,810 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043946.JPG.jpg" alt="1000043946.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043946.JPG</h2>
+                  <span>37,039 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043948.JPG.jpg" alt="1000043948.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043948.JPG</h2>
+                  <span>43,830 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043950.JPG.jpg" alt="1000043950.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043950.JPG</h2>
+                  <span>47,272 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043952.JPG.jpg" alt="1000043952.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043952.JPG</h2>
+                  <span>51,160 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043954.JPG.jpg" alt="1000043954.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043954.JPG</h2>
+                  <span>60,164 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043956.JPG.jpg" alt="1000043956.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043956.JPG</h2>
+                  <span>43,717 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043958.JPG.jpg" alt="1000043958.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043958.JPG</h2>
+                  <span>51,905 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043960.JPG.jpg" alt="1000043960.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043960.JPG</h2>
+                  <span>60,221 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043962.JPG.jpg" alt="1000043962.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043962.JPG</h2>
+                  <span>81,066 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043964.JPG.jpg" alt="1000043964.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043964.JPG</h2>
+                  <span>54,102 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043966.JPG.jpg" alt="1000043966.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043966.JPG</h2>
+                  <span>51,195 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043968.JPG.jpg" alt="1000043968.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043968.JPG</h2>
+                  <span>48,868 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043971.JPG.jpg" alt="1000043971.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043971.JPG</h2>
+                  <span>61,390 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043974.JPG.jpg" alt="1000043974.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043974.JPG</h2>
+                  <span>63,618 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043977.JPG.jpg" alt="1000043977.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043977.JPG</h2>
+                  <span>13,455 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043980.JPG.jpg" alt="1000043980.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043980.JPG</h2>
+                  <span>49,601 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043983.JPG.jpg" alt="1000043983.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043983.JPG</h2>
+                  <span>48,616 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043986.JPG.jpg" alt="1000043986.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043986.JPG</h2>
+                  <span>73,112 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043989.JPG.jpg" alt="1000043989.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043989.JPG</h2>
+                  <span>46,388 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043992.JPG.jpg" alt="1000043992.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043992.JPG</h2>
+                  <span>45,296 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043995.JPG.jpg" alt="1000043995.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043995.JPG</h2>
+                  <span>47,506 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000043998.JPG.jpg" alt="1000043998.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000043998.JPG</h2>
+                  <span>24,450 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044001.JPG.jpg" alt="1000044001.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044001.JPG</h2>
+                  <span>49,618 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044004.JPG.jpg" alt="1000044004.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044004.JPG</h2>
+                  <span>43,471 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044007.JPG.jpg" alt="1000044007.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044007.JPG</h2>
+                  <span>50,500 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044010.JPG.jpg" alt="1000044010.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044010.JPG</h2>
+                  <span>58,801 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044012.JPG.jpg" alt="1000044012.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044012.JPG</h2>
+                  <span>44,738 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044014.JPG.jpg" alt="1000044014.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044014.JPG</h2>
+                  <span>63,626 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044016.JPG.jpg" alt="1000044016.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044016.JPG</h2>
+                  <span>28,787 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044018.JPG.jpg" alt="1000044018.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044018.JPG</h2>
+                  <span>47,461 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044020.JPG.jpg" alt="1000044020.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044020.JPG</h2>
+                  <span>24,963 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044022.JPG.jpg" alt="1000044022.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044022.JPG</h2>
+                  <span>49,063 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044024.JPG.jpg" alt="1000044024.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044024.JPG</h2>
+                  <span>56,990 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044026.JPG.jpg" alt="1000044026.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044026.JPG</h2>
+                  <span>53,314 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044028.JPG.jpg" alt="1000044028.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044028.JPG</h2>
+                  <span>71,333 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044030.JPG.jpg" alt="1000044030.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044030.JPG</h2>
+                  <span>50,398 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044032.JPG.jpg" alt="1000044032.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044032.JPG</h2>
+                  <span>44,167 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044034.JPG.jpg" alt="1000044034.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044034.JPG</h2>
+                  <span>52,084 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044036.JPG.jpg" alt="1000044036.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044036.JPG</h2>
+                  <span>81,477 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044038.JPG.jpg" alt="1000044038.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044038.JPG</h2>
+                  <span>51,546 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044040.JPG.jpg" alt="1000044040.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044040.JPG</h2>
+                  <span>53,114 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044042.JPG.jpg" alt="1000044042.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044042.JPG</h2>
+                  <span>26,357 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044044.JPG.jpg" alt="1000044044.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044044.JPG</h2>
+                  <span>26,164 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044046.JPG.jpg" alt="1000044046.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044046.JPG</h2>
+                  <span>60,741 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044048.JPG.jpg" alt="1000044048.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044048.JPG</h2>
+                  <span>69,344 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044050.JPG.jpg" alt="1000044050.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044050.JPG</h2>
+                  <span>17,889 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044052.JPG.jpg" alt="1000044052.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044052.JPG</h2>
+                  <span>61,394 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044087.JPG.jpg" alt="1000044087.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044087.JPG</h2>
+                  <span>72,966 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044097.JPG.jpg" alt="1000044097.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044097.JPG</h2>
+                  <span>42,947 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044100.JPG.jpg" alt="1000044100.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044100.JPG</h2>
+                  <span>40,074 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044113.JPG.jpg" alt="1000044113.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044113.JPG</h2>
+                  <span>44,646 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044116.JPG.jpg" alt="1000044116.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044116.JPG</h2>
+                  <span>57,248 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044119.JPG.jpg" alt="1000044119.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044119.JPG</h2>
+                  <span>42,550 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044121.JPG.jpg" alt="1000044121.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044121.JPG</h2>
+                  <span>60,098 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044123.JPG.jpg" alt="1000044123.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044123.JPG</h2>
+                  <span>46,104 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044125.JPG.jpg" alt="1000044125.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044125.JPG</h2>
+                  <span>50,305 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044127.JPG.jpg" alt="1000044127.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044127.JPG</h2>
+                  <span>52,036 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044129.JPG.jpg" alt="1000044129.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044129.JPG</h2>
+                  <span>53,844 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044131.JPG.jpg" alt="1000044131.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044131.JPG</h2>
+                  <span>56,475 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044133.JPG.jpg" alt="1000044133.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044133.JPG</h2>
+                  <span>47,247 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044135.JPG.jpg" alt="1000044135.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044135.JPG</h2>
+                  <span>40,701 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044137.JPG.jpg" alt="1000044137.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044137.JPG</h2>
+                  <span>61,688 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044139.JPG.jpg" alt="1000044139.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044139.JPG</h2>
+                  <span>79,066 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044141.JPG.jpg" alt="1000044141.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044141.JPG</h2>
+                  <span>43,581 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044143.JPG.jpg" alt="1000044143.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044143.JPG</h2>
+                  <span>50,266 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044145.JPG.jpg" alt="1000044145.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044145.JPG</h2>
+                  <span>53,714 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044147.JPG.jpg" alt="1000044147.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044147.JPG</h2>
+                  <span>64,124 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044149.JPG.jpg" alt="1000044149.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044149.JPG</h2>
+                  <span>50,164 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044151.JPG.jpg" alt="1000044151.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044151.JPG</h2>
+                  <span>50,140 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044153.JPG.jpg" alt="1000044153.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044153.JPG</h2>
+                  <span>33,553 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044155.JPG.jpg" alt="1000044155.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044155.JPG</h2>
+                  <span>69,934 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044157.JPG.jpg" alt="1000044157.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044157.JPG</h2>
+                  <span>53,402 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044159.JPG.jpg" alt="1000044159.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044159.JPG</h2>
+                  <span>34,003 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044161.JPG.jpg" alt="1000044161.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044161.JPG</h2>
+                  <span>65,975 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044163.JPG.jpg" alt="1000044163.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044163.JPG</h2>
+                  <span>46,893 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044165.JPG.jpg" alt="1000044165.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044165.JPG</h2>
+                  <span>64,263 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044167.JPG.jpg" alt="1000044167.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044167.JPG</h2>
+                  <span>47,011 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044169.JPG.jpg" alt="1000044169.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044169.JPG</h2>
+                  <span>44,680 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044171.JPG.jpg" alt="1000044171.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044171.JPG</h2>
+                  <span>41,671 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000044174.JPG.jpg" alt="1000044174.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000044174.JPG</h2>
+                  <span>46,958 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048810.JPG.jpg" alt="1000048810.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048810.JPG</h2>
+                  <span>53,594 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x1000 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048835.JPG.jpg" alt="1000048835.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048835.JPG</h2>
+                  <span>71,056 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1440x1440 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048837.JPG.jpg" alt="1000048837.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048837.JPG</h2>
+                  <span>370,624 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048842.JPG.jpg" alt="1000048842.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048842.JPG</h2>
+                  <span>338,641 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048844.JPG.jpg" alt="1000048844.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048844.JPG</h2>
+                  <span>282,760 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048846.JPG.jpg" alt="1000048846.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048846.JPG</h2>
+                  <span>60,518 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 500x480 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048847.JPG.jpg" alt="1000048847.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048847.JPG</h2>
+                  <span>372,632 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048848.JPG.jpg" alt="1000048848.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048848.JPG</h2>
+                  <span>468,366 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048850.JPG.jpg" alt="1000048850.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048850.JPG</h2>
+                  <span>456,463 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048851.JPG.jpg" alt="1000048851.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048851.JPG</h2>
+                  <span>293,904 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048853.JPG.jpg" alt="1000048853.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048853.JPG</h2>
+                  <span>396,474 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048854.JPG.jpg" alt="1000048854.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048854.JPG</h2>
+                  <span>448,341 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048855.JPG.jpg" alt="1000048855.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048855.JPG</h2>
+                  <span>473,669 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048856.JPG.jpg" alt="1000048856.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048856.JPG</h2>
+                  <span>262,229 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048857.JPG.jpg" alt="1000048857.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048857.JPG</h2>
+                  <span>240,944 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048858.JPG.jpg" alt="1000048858.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048858.JPG</h2>
+                  <span>404,942 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048859.JPG.jpg" alt="1000048859.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048859.JPG</h2>
+                  <span>259,575 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1286x965 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048866.JPG.jpg" alt="1000048866.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048866.JPG</h2>
+                  <span>491,336 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048867.JPG.jpg" alt="1000048867.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048867.JPG</h2>
+                  <span>421,787 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048868.JPG.jpg" alt="1000048868.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048868.JPG</h2>
+                  <span>402,409 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048869.JPG.jpg" alt="1000048869.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048869.JPG</h2>
+                  <span>476,110 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048873.JPG.jpg" alt="1000048873.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048873.JPG</h2>
+                  <span>326,487 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048874.JPG.jpg" alt="1000048874.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048874.JPG</h2>
+                  <span>345,559 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048875.JPG.jpg" alt="1000048875.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048875.JPG</h2>
+                  <span>390,644 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048877.JPG.jpg" alt="1000048877.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048877.JPG</h2>
+                  <span>359,978 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048878.JPG.jpg" alt="1000048878.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048878.JPG</h2>
+                  <span>178,253 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x750 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048879.JPG.jpg" alt="1000048879.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048879.JPG</h2>
+                  <span>408,316 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048880.JPG.jpg" alt="1000048880.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048880.JPG</h2>
+                  <span>456,837 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048881.JPG.jpg" alt="1000048881.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048881.JPG</h2>
+                  <span>373,471 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048885.JPG.jpg" alt="1000048885.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048885.JPG</h2>
+                  <span>191,839 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1064x800 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048886.JPG.jpg" alt="1000048886.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048886.JPG</h2>
+                  <span>435,629 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048888.JPG.jpg" alt="1000048888.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048888.JPG</h2>
+                  <span>352,783 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048890.JPG.jpg" alt="1000048890.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048890.JPG</h2>
+                  <span>225,080 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1440x1080 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048891.JPG.jpg" alt="1000048891.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048891.JPG</h2>
+                  <span>247,222 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048892.JPG.jpg" alt="1000048892.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048892.JPG</h2>
+                  <span>54,279 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1024x1024 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048893.JPG.jpg" alt="1000048893.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048893.JPG</h2>
+                  <span>466,204 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1286x1286 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048894.JPG.jpg" alt="1000048894.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048894.JPG</h2>
+                  <span>341,410 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048896.JPG.jpg" alt="1000048896.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048896.JPG</h2>
+                  <span>204,491 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000048898.JPG.jpg" alt="1000048898.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048898.JPG</h2>
+                  <span>424,155 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051911.JPG.jpg" alt="1000051911.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051911.JPG</h2>
+                  <span>322,820 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1647 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051912.JPG.jpg" alt="1000051912.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051912.JPG</h2>
+                  <span>455,574 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051914.JPG.jpg" alt="1000051914.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051914.JPG</h2>
+                  <span>117,910 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1063x840 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051915.JPG.jpg" alt="1000051915.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051915.JPG</h2>
+                  <span>674,686 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051916.JPG.jpg" alt="1000051916.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051916.JPG</h2>
+                  <span>63,318 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1143x859 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051917.JPG.jpg" alt="1000051917.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051917.JPG</h2>
+                  <span>73,508 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1199x1040 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051967.JPG.jpg" alt="1000051967.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051967.JPG</h2>
+                  <span>428,856 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051971.JPG.jpg" alt="1000051971.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051971.JPG</h2>
+                  <span>900,554 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051974.JPG.jpg" alt="1000051974.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051974.JPG</h2>
+                  <span>912,947 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051977.JPG.jpg" alt="1000051977.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051977.JPG</h2>
+                  <span>51,538 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 640x640 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051980.JPG.jpg" alt="1000051980.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051980.JPG</h2>
+                  <span>707,737 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051982.JPG.jpg" alt="1000051982.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051982.JPG</h2>
+                  <span>29,889 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 427x459 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051983.JPG.jpg" alt="1000051983.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051983.JPG</h2>
+                  <span>167,044 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1000x750 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051984.JPG.jpg" alt="1000051984.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051984.JPG</h2>
+                  <span>687,014 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051985.JPG.jpg" alt="1000051985.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051985.JPG</h2>
+                  <span>303,046 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051989.JPG.jpg" alt="1000051989.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051989.JPG</h2>
+                  <span>327,231 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051995.JPG.jpg" alt="1000051995.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051995.JPG</h2>
+                  <span>327,311 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051997.JPG.jpg" alt="1000051997.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051997.JPG</h2>
+                  <span>512,109 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051998.JPG.jpg" alt="1000051998.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051998.JPG</h2>
+                  <span>820,556 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000051999.JPG.jpg" alt="1000051999.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051999.JPG</h2>
+                  <span>494,328 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052002.JPG.jpg" alt="1000052002.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052002.JPG</h2>
+                  <span>287,103 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052004.JPG.jpg" alt="1000052004.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052004.JPG</h2>
+                  <span>458,201 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052005.JPG.jpg" alt="1000052005.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052005.JPG</h2>
+                  <span>344,519 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052009.JPG.jpg" alt="1000052009.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052009.JPG</h2>
+                  <span>219,963 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052010.JPG.jpg" alt="1000052010.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052010.JPG</h2>
+                  <span>242,441 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052011.JPG.jpg" alt="1000052011.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052011.JPG</h2>
+                  <span>157,727 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052012.JPG.jpg" alt="1000052012.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052012.JPG</h2>
+                  <span>153,859 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052014.JPG.jpg" alt="1000052014.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052014.JPG</h2>
+                  <span>450,695 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052015.JPG.jpg" alt="1000052015.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052015.JPG</h2>
+                  <span>434,639 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x1200 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052148.JPG.jpg" alt="1000052148.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052148.JPG</h2>
+                  <span>548,890 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052155.JPG.jpg" alt="1000052155.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052155.JPG</h2>
+                  <span>611,813 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052161.JPG.jpg" alt="1000052161.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052161.JPG</h2>
+                  <span>610,471 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052164.JPG.jpg" alt="1000052164.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052164.JPG</h2>
+                  <span>613,099 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052170.JPG.jpg" alt="1000052170.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052170.JPG</h2>
+                  <span>593,555 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052173.JPG.jpg" alt="1000052173.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052173.JPG</h2>
+                  <span>617,744 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052185.JPG.jpg" alt="1000052185.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052185.JPG</h2>
+                  <span>400,149 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052186.JPG.jpg" alt="1000052186.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052186.JPG</h2>
+                  <span>28,220 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 500x500 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052188.JPG.jpg" alt="1000052188.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052188.JPG</h2>
+                  <span>85,254 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1024x768 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052194.JPG.jpg" alt="1000052194.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052194.JPG</h2>
+                  <span>257,486 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052197.JPG.jpg" alt="1000052197.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052197.JPG</h2>
+                  <span>242,401 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052200.JPG.jpg" alt="1000052200.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052200.JPG</h2>
+                  <span>437,245 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052218.JPG.jpg" alt="1000052218.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052218.JPG</h2>
+                  <span>245,577 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052247.JPG.jpg" alt="1000052247.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052247.JPG</h2>
+                  <span>232,049 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052248.JPG.jpg" alt="1000052248.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052248.JPG</h2>
+                  <span>194,352 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="gallery / versatile" data-bucket="square-ish">
+              <img src="thumbs/1000052259.JPG.jpg" alt="1000052259.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052259.JPG</h2>
+                  <span>713,713 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 2048x1536 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> gallery / versatile</p>
+                <p><strong>Pages:</strong> gallery, service card, case study</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="square-ish">
+              <img src="thumbs/1000048839.JPG.jpg" alt="1000048839.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048839.JPG</h2>
+                  <span>156,408 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 881x597 | <strong>Aspect:</strong> square-ish | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000048860.JPG.jpg" alt="1000048860.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048860.JPG</h2>
+                  <span>270,989 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x900 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000048883.JPG.jpg" alt="1000048883.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048883.JPG</h2>
+                  <span>264,888 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x795 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000048897.JPG.jpg" alt="1000048897.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048897.JPG</h2>
+                  <span>200,669 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x900 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000048899.JPG.jpg" alt="1000048899.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048899.JPG</h2>
+                  <span>246,556 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x735 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000051897.JPG.jpg" alt="1000051897.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051897.JPG</h2>
+                  <span>55,585 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1280x719 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000051902.JPG.jpg" alt="1000051902.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051902.JPG</h2>
+                  <span>103,125 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1050x600 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000051905.JPG.jpg" alt="1000051905.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051905.JPG</h2>
+                  <span>117,127 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1080x617 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000051908.JPG.jpg" alt="1000051908.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051908.JPG</h2>
+                  <span>191,175 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1571x513 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000052008.JPG.jpg" alt="1000052008.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052008.JPG</h2>
+                  <span>222,246 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x900 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="hero / wide feature" data-bucket="wide">
+              <img src="thumbs/1000052013.JPG.jpg" alt="1000052013.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052013.JPG</h2>
+                  <span>305,888 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1600x900 | <strong>Aspect:</strong> wide | <strong>Use:</strong> hero / wide feature</p>
+                <p><strong>Pages:</strong> home hero, service hero, gallery wide</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048813.JPG.jpg" alt="1000048813.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048813.JPG</h2>
+                  <span>388,496 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048834.JPG.jpg" alt="1000048834.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048834.JPG</h2>
+                  <span>332,303 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048840.JPG.jpg" alt="1000048840.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048840.JPG</h2>
+                  <span>74,855 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 737x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048843.JPG.jpg" alt="1000048843.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048843.JPG</h2>
+                  <span>315,056 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048845.JPG.jpg" alt="1000048845.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048845.JPG</h2>
+                  <span>406,158 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048849.JPG.jpg" alt="1000048849.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048849.JPG</h2>
+                  <span>367,932 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048861.JPG.jpg" alt="1000048861.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048861.JPG</h2>
+                  <span>323,175 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048862.JPG.jpg" alt="1000048862.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048862.JPG</h2>
+                  <span>393,006 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048863.JPG.jpg" alt="1000048863.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048863.JPG</h2>
+                  <span>367,304 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048864.JPG.jpg" alt="1000048864.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048864.JPG</h2>
+                  <span>451,938 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048865.JPG.jpg" alt="1000048865.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048865.JPG</h2>
+                  <span>383,604 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048870.JPG.jpg" alt="1000048870.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048870.JPG</h2>
+                  <span>427,759 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048876.JPG.jpg" alt="1000048876.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048876.JPG</h2>
+                  <span>426,059 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048882.JPG.jpg" alt="1000048882.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048882.JPG</h2>
+                  <span>407,093 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048884.JPG.jpg" alt="1000048884.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048884.JPG</h2>
+                  <span>251,571 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048887.JPG.jpg" alt="1000048887.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048887.JPG</h2>
+                  <span>340,171 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048889.JPG.jpg" alt="1000048889.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048889.JPG</h2>
+                  <span>326,154 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048895.JPG.jpg" alt="1000048895.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048895.JPG</h2>
+                  <span>412,887 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048900.JPG.jpg" alt="1000048900.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048900.JPG</h2>
+                  <span>358,603 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048901.JPG.jpg" alt="1000048901.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048901.JPG</h2>
+                  <span>375,628 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000048902.JPG.jpg" alt="1000048902.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000048902.JPG</h2>
+                  <span>373,058 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051913.JPG.jpg" alt="1000051913.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051913.JPG</h2>
+                  <span>125,864 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 946x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051932.JPG.jpg" alt="1000051932.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051932.JPG</h2>
+                  <span>204,853 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 920x2040 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051961.JPG.jpg" alt="1000051961.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051961.JPG</h2>
+                  <span>427,025 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051964.JPG.jpg" alt="1000051964.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051964.JPG</h2>
+                  <span>655,885 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051968.JPG.jpg" alt="1000051968.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051968.JPG</h2>
+                  <span>614,801 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051969.JPG.jpg" alt="1000051969.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051969.JPG</h2>
+                  <span>390,644 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051970.JPG.jpg" alt="1000051970.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051970.JPG</h2>
+                  <span>312,265 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051981.JPG.jpg" alt="1000051981.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051981.JPG</h2>
+                  <span>567,777 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051986.JPG.jpg" alt="1000051986.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051986.JPG</h2>
+                  <span>451,453 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051992.JPG.jpg" alt="1000051992.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051992.JPG</h2>
+                  <span>314,047 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051994.JPG.jpg" alt="1000051994.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051994.JPG</h2>
+                  <span>217,775 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000051996.JPG.jpg" alt="1000051996.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000051996.JPG</h2>
+                  <span>479,378 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052000.JPG.jpg" alt="1000052000.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052000.JPG</h2>
+                  <span>210,112 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052001.JPG.jpg" alt="1000052001.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052001.JPG</h2>
+                  <span>339,150 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052003.JPG.jpg" alt="1000052003.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052003.JPG</h2>
+                  <span>183,497 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052006.JPG.jpg" alt="1000052006.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052006.JPG</h2>
+                  <span>525,252 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052007.JPG.jpg" alt="1000052007.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052007.JPG</h2>
+                  <span>428,926 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 900x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052017.JPG.jpg" alt="1000052017.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052017.JPG</h2>
+                  <span>386,934 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052018.JPG.jpg" alt="1000052018.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052018.JPG</h2>
+                  <span>508,640 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052019.JPG.jpg" alt="1000052019.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052019.JPG</h2>
+                  <span>524,042 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052020.JPG.jpg" alt="1000052020.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052020.JPG</h2>
+                  <span>309,272 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 900x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052021.JPG.jpg" alt="1000052021.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052021.JPG</h2>
+                  <span>207,676 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052022.JPG.jpg" alt="1000052022.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052022.JPG</h2>
+                  <span>294,921 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052023.JPG.jpg" alt="1000052023.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052023.JPG</h2>
+                  <span>364,492 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052024.JPG.jpg" alt="1000052024.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052024.JPG</h2>
+                  <span>338,007 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052025.JPG.jpg" alt="1000052025.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052025.JPG</h2>
+                  <span>316,902 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052026.JPG.jpg" alt="1000052026.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052026.JPG</h2>
+                  <span>493,902 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052027.JPG.jpg" alt="1000052027.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052027.JPG</h2>
+                  <span>354,428 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052028.JPG.jpg" alt="1000052028.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052028.JPG</h2>
+                  <span>171,810 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052029.JPG.jpg" alt="1000052029.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052029.JPG</h2>
+                  <span>333,191 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052031.JPG.jpg" alt="1000052031.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052031.JPG</h2>
+                  <span>303,881 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 942x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052032.JPG.jpg" alt="1000052032.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052032.JPG</h2>
+                  <span>501,882 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1152x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052033.JPG.jpg" alt="1000052033.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052033.JPG</h2>
+                  <span>314,884 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052145.JPG.jpg" alt="1000052145.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052145.JPG</h2>
+                  <span>615,499 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052158.JPG.jpg" alt="1000052158.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052158.JPG</h2>
+                  <span>413,408 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052167.JPG.jpg" alt="1000052167.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052167.JPG</h2>
+                  <span>443,767 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052176 2.JPG.jpg" alt="1000052176 2.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052176 2.JPG</h2>
+                  <span>162,469 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1200x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052181.JPG.jpg" alt="1000052181.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052181.JPG</h2>
+                  <span>318,887 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1538x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052182.JPG.jpg" alt="1000052182.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052182.JPG</h2>
+                  <span>648,708 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052183.JPG.jpg" alt="1000052183.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052183.JPG</h2>
+                  <span>664,278 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052184.JPG.jpg" alt="1000052184.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052184.JPG</h2>
+                  <span>343,212 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052187.JPG.jpg" alt="1000052187.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052187.JPG</h2>
+                  <span>159,730 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 985x1360 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052190.JPG.jpg" alt="1000052190.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052190.JPG</h2>
+                  <span>163,394 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1440x2015 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052193.JPG.jpg" alt="1000052193.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052193.JPG</h2>
+                  <span>166,352 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 747x1600 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052203.JPG.jpg" alt="1000052203.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052203.JPG</h2>
+                  <span>720,050 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052206.JPG.jpg" alt="1000052206.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052206.JPG</h2>
+                  <span>669,678 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052209.JPG.jpg" alt="1000052209.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052209.JPG</h2>
+                  <span>520,068 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052212.JPG.jpg" alt="1000052212.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052212.JPG</h2>
+                  <span>272,362 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052215.JPG.jpg" alt="1000052215.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052215.JPG</h2>
+                  <span>290,327 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052249.JPG.jpg" alt="1000052249.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052249.JPG</h2>
+                  <span>619,416 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052250.JPG.jpg" alt="1000052250.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052250.JPG</h2>
+                  <span>445,106 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+            <article class="card" data-use="portrait / detail" data-bucket="portrait">
+              <img src="thumbs/1000052251.JPG.jpg" alt="1000052251.JPG">
+              <div class="meta">
+                <div class="top">
+                  <h2>1000052251.JPG</h2>
+                  <span>326,490 bytes</span>
+                </div>
+                <p><strong>Size:</strong> 1536x2048 | <strong>Aspect:</strong> portrait | <strong>Use:</strong> portrait / detail</p>
+                <p><strong>Pages:</strong> gallery, detail stack, service detail</p>
+              </div>
+            </article>
+            
+  </section>
+  <script>
+    const buttons = [...document.querySelectorAll('#controls button')];
+    const cards = [...document.querySelectorAll('.card')];
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const ok = filter === 'all' || card.dataset.use === filter || card.dataset.bucket === filter;
+        card.style.display = ok ? '' : 'none';
+      });
+    }));
+  </script>
+</body>
+</html>

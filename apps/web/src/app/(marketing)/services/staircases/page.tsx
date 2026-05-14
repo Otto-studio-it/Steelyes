@@ -44,8 +44,8 @@ export default function StaircasesServicePage() {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
           <Image
-            src="/images/balconies/balcony-juliet-glass-london.jpg"
-            alt="Steel staircase and platform installed"
+            src="/images/client-uploads/selected/1000051984.JPG"
+            alt="Steel staircase and landing installation in a residential interior"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"

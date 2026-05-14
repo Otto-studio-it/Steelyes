@@ -4,9 +4,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { GalleryClient } from './GalleryClient'
 
 export const metadata: Metadata = {
-  title: 'Project Gallery | Installed Bespoke Steel Gates & Steelwork',
+  title: 'Project Gallery | Bespoke Steel Gates, Fabrication & Steelwork',
   description:
-    'A collection of completed Steelyes commissions — driveway gates, electric gates, railings, balconies and security installations across the UK.',
+    'A collection of completed Steelyes commissions — driveway gates, railings, balconies, structural steel and fabrication detail across the UK.',
 }
 
 export default function GalleryPage() {
@@ -19,21 +19,12 @@ export default function GalleryPage() {
           <span className="text-[#9E000C]">Archive</span>
         </h1>
         <p className="mt-5 max-w-2xl text-base font-light text-[#5C403D] md:text-lg">
-          A definitive collection of Steelyes commissions — gates, railings and balconies surveyed, fabricated and
-          installed across the UK.
+          A definitive collection of Steelyes commissions — gates, railings, balconies and workshop fabrication,
+          surveyed, fabricated and installed across the UK.
         </p>
       </section>
 
       <GalleryClient />
-
-      <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
-        <button
-          type="button"
-          className="mx-auto flex min-h-[48px] items-center justify-center border border-[#9E000C] bg-white px-8 font-heading text-sm font-bold uppercase tracking-tight text-[#9E000C]"
-        >
-          Load more projects
-        </button>
-      </section>
     </MarketingShell>
   )
 }

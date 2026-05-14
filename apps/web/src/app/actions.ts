@@ -49,14 +49,15 @@ export async function submitContactForm(
     return { status: 'error', message: 'Something went wrong. Please try again or email us directly.' }
   }
 
-  // Notify admin via Resend
+  // Notify admin via Resend — lead is already persisted; never fail the user UX if email fails
   const resend = new Resend(env.RESEND_API_KEY)
 
-  await resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: 'steelyes755@gmail.com',
-    subject: `New enquiry — ${name} (${projectType || 'Steel project'})`,
-    html: `
+  try {
+    const { error: resendError } = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'steelyes755@gmail.com',
+      subject: `New enquiry — ${name} (${projectType || 'Steel project'})`,
+      html: `
       <h2 style="font-family:sans-serif">New project enquiry</h2>
       <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
         <tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Name</td><td style="padding:8px 12px">${name}</td></tr>
@@ -67,7 +68,13 @@ export async function submitContactForm(
       </table>
       <p style="color:#999;font-size:11px;margin-top:24px;font-family:sans-serif">Submitted via steelyes.co.uk contact form</p>
     `,
-  })
+    })
+    if (resendError) {
+      console.error('Resend notify error (lead still saved):', resendError)
+    }
+  } catch (err) {
+    console.error('Resend notify threw (lead still saved):', err)
+  }
 
   return { status: 'success' }
 }

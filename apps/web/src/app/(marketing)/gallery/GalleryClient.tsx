@@ -8,20 +8,122 @@ type GalleryItem = {
   label: string
   ref: string
   span: 'wide' | 'narrow'
-  category: 'gates' | 'railings' | 'balconies'
+  category: 'gates' | 'railings' | 'balconies' | 'fabrication'
 }
 
 const GALLERY_ITEMS: GalleryItem[] = [
-  { src: '/images/gates/sliding-gate-anthracite-residential.jpg', label: 'Anthracite sliding gate', ref: 'ST-2001', span: 'wide', category: 'gates' },
-  { src: '/images/railings/railings-black-cross-london.jpg', label: 'Black cross railings, London', ref: 'ST-2002', span: 'narrow', category: 'railings' },
-  { src: '/images/balconies/balcony-juliet-glass-london.jpg', label: 'Juliet glass balcony, London', ref: 'ST-2003', span: 'narrow', category: 'balconies' },
-  { src: '/images/gates/classic-ornate-driveway-gate-arch.jpg', label: 'Classic ornate driveway gate', ref: 'ST-2004', span: 'narrow', category: 'gates' },
-  { src: '/images/railings/railings-ornate-copper-scroll.jpg', label: 'Ornate copper scroll railings', ref: 'ST-2005', span: 'narrow', category: 'railings' },
-  { src: '/images/gates/privacy-diagonal-gate-dusk.jpg', label: 'Privacy diagonal gate at dusk', ref: 'ST-2006', span: 'wide', category: 'gates' },
-  { src: '/images/balconies/balcony-rooftop-glass-london.jpg', label: 'Rooftop glass balcony, London', ref: 'ST-2007', span: 'narrow', category: 'balconies' },
-  { src: '/images/railings/railings-victorian-spear-london.jpg', label: 'Victorian spear railings, London', ref: 'ST-2008', span: 'narrow', category: 'railings' },
-  { src: '/images/gates/sliding-gate-classic-ornate-tudor.jpg', label: 'Classic ornate Tudor sliding gate', ref: 'ST-2009', span: 'narrow', category: 'gates' },
-  { src: '/images/railings/railings-curved-black-steps.jpg', label: 'Curved black step railings', ref: 'ST-2010', span: 'narrow', category: 'railings' },
+  {
+    src: '/images/client-uploads/selected/1000048883.JPG',
+    label: 'Wide black steel frontage',
+    ref: 'ST-3001',
+    span: 'wide',
+    category: 'gates',
+  },
+  {
+    src: '/images/client-uploads/selected/1000048866.JPG',
+    label: 'Residential gate with clean geometry',
+    ref: 'ST-3002',
+    span: 'narrow',
+    category: 'gates',
+  },
+  {
+    src: '/images/client-uploads/selected/1000051998.JPG',
+    label: 'Decorative driveway gate arch',
+    ref: 'ST-3003',
+    span: 'narrow',
+    category: 'gates',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052251.JPG',
+    label: 'Privacy gate with horizontal infill',
+    ref: 'ST-3004',
+    span: 'narrow',
+    category: 'gates',
+  },
+  {
+    src: '/images/client-uploads/selected/1000051985.JPG',
+    label: 'Steel railings and stair landing',
+    ref: 'ST-3005',
+    span: 'narrow',
+    category: 'railings',
+  },
+  {
+    src: '/images/client-uploads/selected/1000051989.JPG',
+    label: 'Stair railing installation',
+    ref: 'ST-3006',
+    span: 'narrow',
+    category: 'railings',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052203.JPG',
+    label: 'Balcony rail detail on townhouse frontage',
+    ref: 'ST-3007',
+    span: 'narrow',
+    category: 'railings',
+  },
+  {
+    src: '/images/client-uploads/selected/1000048813.JPG',
+    label: 'Ornamental railing detail',
+    ref: 'ST-3008',
+    span: 'narrow',
+    category: 'railings',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052004.JPG',
+    label: 'Terrace and balcony structure',
+    ref: 'ST-3009',
+    span: 'wide',
+    category: 'balconies',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052209.JPG',
+    label: 'Glass balcony edge detail',
+    ref: 'ST-3010',
+    span: 'narrow',
+    category: 'balconies',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052212.JPG',
+    label: 'Glass balcony under install',
+    ref: 'ST-3011',
+    span: 'narrow',
+    category: 'balconies',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052013.JPG',
+    label: 'Structural frame during fabrication',
+    ref: 'ST-3012',
+    span: 'wide',
+    category: 'fabrication',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052007.JPG',
+    label: 'Workshop fit-up and frame build',
+    ref: 'ST-3013',
+    span: 'narrow',
+    category: 'fabrication',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052032.JPG',
+    label: 'Fabrication detail in progress',
+    ref: 'ST-3014',
+    span: 'narrow',
+    category: 'fabrication',
+  },
+  {
+    src: '/images/client-uploads/selected/1000052181.JPG',
+    label: 'Detail of panel and edge finish',
+    ref: 'ST-3015',
+    span: 'narrow',
+    category: 'fabrication',
+  },
+  {
+    src: '/images/client-uploads/selected/1000048834.JPG',
+    label: 'Ornamental finish detail',
+    ref: 'ST-3016',
+    span: 'narrow',
+    category: 'fabrication',
+  },
 ]
 
 const FILTERS = [
@@ -29,6 +131,7 @@ const FILTERS = [
   { label: 'Gates', value: 'gates' },
   { label: 'Railings', value: 'railings' },
   { label: 'Balconies', value: 'balconies' },
+  { label: 'Fabrication', value: 'fabrication' },
 ] as const
 
 type FilterValue = (typeof FILTERS)[number]['value']
