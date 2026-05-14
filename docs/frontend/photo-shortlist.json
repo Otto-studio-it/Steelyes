@@ -1,0 +1,155 @@
+{
+  "source": "/Volumes/SSDRubb/foto steelyes",
+  "focus": [
+    "gates",
+    "railings",
+    "balconies",
+    "staircases",
+    "fabrication",
+    "detail"
+  ],
+  "priority": {
+    "p0": [
+      {
+        "file": "1000048883.JPG",
+        "use": ["home hero", "gallery hero"],
+        "reason": "Strong wide gate shot with good presence."
+      },
+      {
+        "file": "1000048866.JPG",
+        "use": ["home hero", "gates"],
+        "reason": "Clear installed gate visual."
+      },
+      {
+        "file": "1000048886.JPG",
+        "use": ["gates", "gallery feature"],
+        "reason": "Premium gate image with vehicle context."
+      },
+      {
+        "file": "1000051998.JPG",
+        "use": ["home hero", "gates", "gallery"],
+        "reason": "Decorative arched gate, very strong showcase piece."
+      },
+      {
+        "file": "1000052013.JPG",
+        "use": ["fabrication", "structures"],
+        "reason": "Excellent frame / structure under build."
+      },
+      {
+        "file": "1000052007.JPG",
+        "use": ["fabrication", "staircases"],
+        "reason": "Strong fabrication-in-progress image."
+      },
+      {
+        "file": "1000051985.JPG",
+        "use": ["staircases", "railings"],
+        "reason": "Clear interior railing / stair context."
+      },
+      {
+        "file": "1000051989.JPG",
+        "use": ["staircases", "railings"],
+        "reason": "Another strong staircase installation."
+      },
+      {
+        "file": "1000052004.JPG",
+        "use": ["balconies", "terraces"],
+        "reason": "Good terrace / balcony system shot."
+      },
+      {
+        "file": "1000052209.JPG",
+        "use": ["balconies", "terraces"],
+        "reason": "Glass balustrade / terrace work."
+      },
+      {
+        "file": "1000052212.JPG",
+        "use": ["balconies", "terraces"],
+        "reason": "Another terrace system with clear product reading."
+      },
+      {
+        "file": "1000048813.JPG",
+        "use": ["detail proof", "gallery detail"],
+        "reason": "Vertical detail shot, good for craftsmanship."
+      },
+      {
+        "file": "1000048834.JPG",
+        "use": ["detail proof"],
+        "reason": "Ornament / finish detail, strong close-up."
+      },
+      {
+        "file": "1000052181.JPG",
+        "use": ["detail proof"],
+        "reason": "Modern detail useful for finish and fabrication quality."
+      },
+      {
+        "file": "1000052184.JPG",
+        "use": ["security", "utility detail"],
+        "reason": "Serviceable detail image for secondary pages."
+      }
+    ],
+    "p1": [
+      { "file": "1000048847.JPG", "use": ["gates", "gallery card"], "reason": "Clean standard gate image." },
+      { "file": "1000048850.JPG", "use": ["gates", "gallery card"], "reason": "Another strong installed gate." },
+      { "file": "1000048853.JPG", "use": ["gates", "gallery card"], "reason": "Decorative gate with premium feel." },
+      { "file": "1000048854.JPG", "use": ["gates", "gallery card"], "reason": "Solid residential gate shot." },
+      { "file": "1000048880.JPG", "use": ["gates", "gallery feature"], "reason": "Ornate gate, useful for premium gallery." },
+      { "file": "1000048884.JPG", "use": ["gates", "detail"], "reason": "Good installed gate context." },
+      { "file": "1000048885.JPG", "use": ["gates", "detail"], "reason": "Useful close installed gate shot." },
+      { "file": "1000048888.JPG", "use": ["gates", "detail"], "reason": "Strong ornamental gate detail." },
+      { "file": "1000048898.JPG", "use": ["gates", "hero"], "reason": "Clean gate image with clear geometry." },
+      { "file": "1000051915.JPG", "use": ["brand", "about"], "reason": "Van branding or identity support." },
+      { "file": "1000051914.JPG", "use": ["brand", "contact"], "reason": "Business card / branding support." },
+      { "file": "1000051911.JPG", "use": ["brand", "about"], "reason": "Secondary brand asset." },
+      { "file": "1000051971.JPG", "use": ["balconies", "terraces"], "reason": "Balcony/terrace system with scale." },
+      { "file": "1000051974.JPG", "use": ["balconies", "terraces"], "reason": "Another strong terrace visual." },
+      { "file": "1000051980.JPG", "use": ["balconies", "structural steel"], "reason": "Good proof of construction depth." },
+      { "file": "1000051984.JPG", "use": ["staircases", "railings"], "reason": "Stair installation, useful portfolio item." },
+      { "file": "1000051995.JPG", "use": ["staircases", "structures"], "reason": "Internal staircase / landing context." },
+      { "file": "1000052002.JPG", "use": ["staircases", "structures"], "reason": "Double stair / courtyard use case." },
+      { "file": "1000052026.JPG", "use": ["balconies", "terraces"], "reason": "Balcony platform with glazed edge." },
+      { "file": "1000052028.JPG", "use": ["balconies", "terraces"], "reason": "Vertical detail, useful support image." },
+      { "file": "1000052032.JPG", "use": ["fabrication", "workshop detail"], "reason": "In-workshop / fitting proof." },
+      { "file": "1000052194.JPG", "use": ["detail", "service page"], "reason": "Good vertical detail crop." },
+      { "file": "1000052197.JPG", "use": ["detail", "service page"], "reason": "Good secondary detail shot." },
+      { "file": "1000052200.JPG", "use": ["detail", "service page"], "reason": "Good broad proof image." },
+      { "file": "1000052218.JPG", "use": ["detail", "service page"], "reason": "Support image for fabrication quality." },
+      { "file": "1000052247.JPG", "use": ["detail", "service page"], "reason": "Secondary supporting image." },
+      { "file": "1000052248.JPG", "use": ["detail", "service page"], "reason": "Secondary supporting image." },
+      { "file": "1000052250.JPG", "use": ["gates", "gallery"], "reason": "Strong alternative gate image." },
+      { "file": "1000052251.JPG", "use": ["gates", "gallery"], "reason": "Another clean gate variant." }
+    ],
+    "p2": [
+      { "file": "1000051916.JPG", "note": "Branding / shirt mockup, not core portfolio." },
+      { "file": "1000051917.JPG", "note": "Branding / shirt mockup, not core portfolio." },
+      { "file": "1000052182.JPG", "note": "Good detail, but visually close to other items." },
+      { "file": "1000052183.JPG", "note": "Good detail, but use only if more volume is needed." },
+      { "file": "1000052190.JPG", "note": "Fine as detail, lower priority." },
+      { "file": "1000052193.JPG", "note": "Fine as detail, lower priority." },
+      { "file": "1000052203.JPG", "note": "Good stair / terrace shot, but similar to stronger picks." },
+      { "file": "1000052215.JPG", "note": "Good detail, secondary only." },
+      { "file": "1000052216.JPG", "note": "Good detail, secondary only." }
+    ]
+  },
+  "page_recommendations": {
+    "home": [
+      "1000048883.JPG",
+      "1000052013.JPG",
+      "1000052004.JPG",
+      "1000048813.JPG"
+    ],
+    "gallery": [
+      "1000048866.JPG",
+      "1000048886.JPG",
+      "1000051998.JPG",
+      "1000051985.JPG",
+      "1000052209.JPG",
+      "1000052212.JPG"
+    ],
+    "services": {
+      "gates": ["1000048866.JPG", "1000048886.JPG", "1000051998.JPG"],
+      "railings": ["1000051985.JPG", "1000051989.JPG", "1000052203.JPG"],
+      "balconies": ["1000052004.JPG", "1000052209.JPG", "1000052212.JPG"],
+      "staircases": ["1000052007.JPG", "1000051984.JPG", "1000052002.JPG"],
+      "fabrication": ["1000052013.JPG", "1000052032.JPG", "1000052181.JPG"]
+    }
+  }
+}

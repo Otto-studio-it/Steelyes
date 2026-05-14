@@ -72,7 +72,6 @@ export default function GateDetailPage({ params }: { params: { style: string } }
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
               priority
-              unoptimized
             />
             <span className="absolute right-3 top-3 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase">
               Ref: {gate.ref}
@@ -123,7 +122,6 @@ export default function GateDetailPage({ params }: { params: { style: string } }
                   fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
             ))}

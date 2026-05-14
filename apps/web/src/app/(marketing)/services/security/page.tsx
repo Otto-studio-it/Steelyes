@@ -49,7 +49,6 @@ export default function SecurityServicePage() {
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority
-            unoptimized
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
             <p className="font-heading text-xl font-bold uppercase">Steel security fabrication</p>
@@ -135,7 +134,6 @@ export default function SecurityServicePage() {
             sizes="100vw"
             className="object-cover"
             aria-hidden
-            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">

@@ -3,7 +3,7 @@ title: Client Blockers
 description: Asset tracker, impact, fallback strategies, weekly check-ins
 owner: Ruben (project manager)
 status: ACTIVE
-last_updated: 2026-05-06
+last_updated: 2026-05-09
 ---
 
 # Steelyes — Client Blockers
@@ -14,6 +14,7 @@ last_updated: 2026-05-06
 Current execution note:
 
 - DB/RLS hardening is closed on staging.
+- Supabase production auth for the known admin account is repaired.
 - UI/content work can continue with fallbacks.
 - Business/pricing completion remains blocked by Marius.
 - Do not create speculative pricing schema or railhead tables while these inputs are pending.
@@ -36,6 +37,12 @@ Current execution note:
 | **Photo consent from property owners** | Week 12 | Phase 4 | Gallery cannot publish | ⏳ pending | Workshop/in-progress photos only | Marius |
 | **DNS registrar access** | Week 13 | Phase 4 | Domain cutover blocked | ⏳ pending | Deploy to `steelyes.vercel.app` temporarily | Marius |
 | **DNS for email (SPF/DKIM/DMARC)** | Week 13 | Phase 4 | Resend emails → spam | ⏳ pending | Use `resend.dev` subdomain, flag post-launch | Marius |
+
+Operational note verified on 2026-05-09:
+
+- `steelyes.co.uk` is still serving the legacy GoDaddy Website Builder site.
+- `steelyes.vercel.app` is not currently an active deployment.
+- The missing DNS/domain cutover is now the main reason the repaired production app is not publicly reachable.
 
 ---
 

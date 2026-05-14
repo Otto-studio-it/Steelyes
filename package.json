@@ -10,7 +10,9 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "e2e": "turbo run e2e"
+    "e2e": "turbo run e2e",
+    "photo:audit": "node scripts/photo-audit.mjs",
+    "photo:browser": "python3 scripts/photo-browser.py --source '/Volumes/SSDRubb/foto steelyes' --output docs/frontend/photo-browser --title 'Steelyes Client Photo Browser'"
   },
   "workspaces": [
     "apps/*",

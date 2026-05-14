@@ -27,20 +27,17 @@ export function HomeWeldingHero() {
       </div>
 
       {/* main content */}
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 pb-36 pt-40 md:min-h-[920px] md:justify-end md:px-8 md:pb-32">
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 pb-20 pt-40 md:min-h-[920px] md:justify-end md:px-8 md:pb-24">
         <p className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#9E000C]">
           Made to measure · Survey-led specification
         </p>
-        <h1 className="max-w-4xl font-heading text-[clamp(2.25rem,7vw,6rem)] font-black uppercase leading-[0.88] tracking-tight text-white">
-          Bespoke steel gates,
-          <br />
-          <span className="text-white/90">built to define</span>
-          <br />
-          your property.
+        <h1 className="max-w-[min(100%,42rem)] text-balance font-heading text-[clamp(1.75rem,4.2vw+0.35rem,3.75rem)] font-bold leading-[1.18] tracking-[-0.02em] text-white sm:leading-[1.14] md:max-w-[48rem] md:text-[clamp(2rem,3.6vw+0.5rem,3.75rem)] md:leading-[1.12]">
+          Bespoke metalworks, glass balustrades and steel structures{' '}
+          <span className="text-white/88">to define your property.</span>
         </h1>
         <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/80 md:text-base">
-          Made-to-measure driveway, pedestrian, sliding and automated gates — designed around your entrance and fabricated
-          for long-term strength.
+          Made to measure gates, railings, balconies and steelwork supplied and installed with care for long term
+          durability and reliability.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
@@ -51,28 +48,11 @@ export function HomeWeldingHero() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
           </Link>
           <Link
-            href="/gates"
+            href="/gallery"
             className="inline-flex min-h-[52px] w-full items-center justify-center border border-white/40 px-8 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 sm:w-auto"
           >
-            Explore gate styles
+            Explore full archive
           </Link>
-        </div>
-      </div>
-
-      {/* bottom stat bar — 2-col on mobile, 4-col on md+ */}
-      <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-black/55 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-white/10 px-4 md:grid-cols-4 md:px-8">
-          {[
-            ['Made to measure', 'Your opening'],
-            ['Survey-led', 'Before fabrication'],
-            ['Automated options', 'All gate types'],
-            ['Supply & install', 'Brief to handover'],
-          ].map(([val, label]) => (
-            <div key={label} className="px-3 py-4 first:pl-0 md:px-6">
-              <p className="font-heading text-xs font-black uppercase text-white sm:text-sm md:text-base">{val}</p>
-              <p className="mt-0.5 font-mono text-[9px] uppercase tracking-widest text-white/45 md:text-[10px]">{label}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>

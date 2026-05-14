@@ -3,7 +3,7 @@ title: Next Action Plan
 description: Ordered execution plan after DB/RLS hardening
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-06
+last_updated: 2026-05-09
 ---
 
 # Steelyes — Next Action Plan
@@ -68,9 +68,34 @@ Closure condition:
 
 ---
 
-## Phase C — UI/Content Stabilization
+## Phase C — Deployment Alignment
 
-**Status:** pending Phase B
+**Status:** urgent
+
+Goal: make the repaired production Supabase Auth actually reachable from the public-facing app.
+
+Work:
+
+- [ ] Create or verify the Vercel project for this repo with root `apps/web`.
+- [ ] Confirm Production env vars point to `steelyes-prod`:
+  - `NEXT_PUBLIC_SUPABASE_URL = https://reqgfvahdcbmbajjqtve.supabase.co`
+  - production anon key from `steelyes-prod`
+  - production service-role key from `steelyes-prod`
+- [ ] Deploy the Next app to a live Vercel production deployment.
+- [ ] Verify `/admin/login` works on the active Vercel production URL.
+- [ ] Repoint `steelyes.co.uk` from the legacy GoDaddy site to the new deployment when ready.
+
+Closure condition:
+
+- The public app is served by the new Next/Vercel deployment, not the legacy GoDaddy site.
+- The public deployment uses `steelyes-prod`.
+- `/admin/login` works from the real production frontend.
+
+---
+
+## Phase D — UI/Content Stabilization
+
+**Status:** pending after deployment alignment
 
 Goal: make the staging product feel coherent and credible before backend completion.
 
@@ -97,7 +122,7 @@ Closure condition:
 
 ---
 
-## Phase D — Backend Completion
+## Phase E — Backend Completion
 
 **Status:** paused
 
@@ -122,7 +147,7 @@ Closure condition:
 
 ---
 
-## Phase E — Pre-Production Closure
+## Phase F — Pre-Production Closure
 
 **Status:** future
 

@@ -1,18 +1,25 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
+export const metadata: Metadata = {
+  title: 'Glass Balustrades & Terraces | Bespoke Steel & Glass | Steelyes',
+  description:
+    'Bespoke glass balustrades and terrace enclosures fabricated to survey-led specification. Steel and glass systems designed around real fixing conditions and site constraints.',
+}
+
 const CAPABILITIES = [
-  { title: 'Balustrades', detail: 'Internal + external, built around real fixing conditions.' },
-  { title: 'Handrails', detail: 'Clean geometry with repeatable sections and junctions.' },
-  { title: 'Landings + stairs', detail: 'Edge protection, returns, and transitions where needed.' },
-  { title: 'Gates integration', detail: 'Consistent finish, spacing, and perimeter language.' },
+  { title: 'Glass balustrades', detail: 'Frameless and semi-framed glass panels with steel base channels and posts.' },
+  { title: 'Terrace enclosures', detail: 'Terrace perimeter systems combining glass and steel to suit the building edge.' },
+  { title: 'Handrails', detail: 'Clean steel handrail geometry with repeatable sections and tight junctions.' },
+  { title: 'Gates integration', detail: 'Consistent finish language where balustrade work sits alongside gate and railing projects.' },
 ] as const
 
 const SPEC_ITEMS = [
-  { label: 'Material', value: 'Steel (section choice per survey + loads)' },
-  { label: 'Finish', value: 'Powder coat / paint system (palette pending)' },
+  { label: 'Material', value: 'Steel + toughened / laminated glass (grade per survey)' },
+  { label: 'Finish', value: 'Powder coat / paint system — see finish palette' },
   { label: 'Fixings', value: 'Verified on site before fabrication sign-off' },
   { label: 'Compliance', value: 'Confirmed during specification; no public claims pre-approval' },
 ] as const
@@ -23,13 +30,14 @@ export default function RailingsServicePage() {
       <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-4 py-10 md:px-8 md:py-16">
         <p className="font-mono text-xs uppercase tracking-widest text-[#9E000C]">Service</p>
         <h1 className="mt-3 font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
-          Railings &
+          Glass Balustrades
           <br />
-          <span className="text-[#9E000C]">Balustrades</span>
+          <span className="text-[#9E000C]">&amp; Terraces</span>
         </h1>
         <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
-          Steel railings engineered from the site outward, with fixing points, edge conditions, and access verified before we
-          commit to fabrication. Where client specification is pending, the page intentionally stays conservative.
+          Glass balustrade and terrace systems engineered from the site outward — fixing conditions, glass specification,
+          and edge geometry verified before fabrication is committed. Where client specification is pending, the page
+          intentionally stays conservative.
         </p>
       </section>
 
@@ -37,28 +45,27 @@ export default function RailingsServicePage() {
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
           <Image
             src="/images/railings/railings-black-cross-london.jpg"
-            alt="Steel railings installed in London"
+            alt="Glass balustrade and steel terrace enclosure installed"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority
-            unoptimized
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
-            <p className="font-heading text-xl font-bold uppercase">Bespoke steel railings</p>
+            <p className="font-heading text-xl font-bold uppercase">Bespoke glass balustrade</p>
           </div>
         </div>
         <article className="border border-zinc-200 bg-white p-6 md:p-8">
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
-            Safe edges.
+            Open views.
             <br />
-            Clean <span className="text-[#9E000C]">lines.</span>
+            Safe <span className="text-[#9E000C]">edges.</span>
           </h2>
           <p className="mt-4 text-sm font-light leading-relaxed text-[#5C403D]">
-            We fabricate railing systems for residential and commercial settings. The work is defined by repeatable sections,
-            tight junctions, and durability at touch points. Final compliance approach depends on project specification and is
-            confirmed before production.
+            We fabricate glass balustrade and terrace enclosure systems for residential and commercial settings.
+            The work is defined by precise steel base channels, glass selection matched to the survey, and fixing
+            conditions confirmed before production.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {SPEC_ITEMS.map((item) => (
@@ -74,6 +81,7 @@ export default function RailingsServicePage() {
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Capabilities</p>
         <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What we build</h2>
+
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           {CAPABILITIES.map((capability) => (
             <article key={capability.title} className="border border-zinc-200 bg-white p-6">
@@ -88,7 +96,7 @@ export default function RailingsServicePage() {
       <section className="bg-[#F6F6F6] py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Workflow</p>
-          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From set-out to handover</h2>
+          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From survey to handover</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
             {[
               {
@@ -128,18 +136,17 @@ export default function RailingsServicePage() {
             sizes="100vw"
             className="object-cover"
             aria-hidden
-            unoptimized
           />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
-            Provide drawings.
+            Send drawings.
             <br />
             We will <span className="text-[#9E000C]">confirm fit.</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light text-white/85 md:text-base">
-            Send plans, photos, or a rough sketch. We will outline what is feasible and what needs a survey before pricing or
-            compliance statements are finalised.
+            Share plans, photos, or a rough sketch. We will outline what is feasible and what needs a survey before
+            glass specification, pricing, or compliance statements are finalised.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link

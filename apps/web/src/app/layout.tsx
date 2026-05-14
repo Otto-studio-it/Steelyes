@@ -21,8 +21,46 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Steelyes | The Architectural Forge",
-  description: "Bespoke steel gates engineered for reliability.",
+  metadataBase: new URL('https://www.steelyes.co.uk'),
+  title: {
+    default: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    template: '%s | Steelyes',
+  },
+  description:
+    'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK. Survey-led specification, supply and install.',
+  keywords: [
+    'bespoke steel gates',
+    'driveway gates',
+    'electric gates uk',
+    'automatic gates',
+    'steel fabrication uk',
+    'made to measure gates',
+  ],
+  authors: [{ name: 'Steelyes' }],
+  creator: 'Steelyes',
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    siteName: 'Steelyes',
+    title: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    description:
+      'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK. Survey-led specification, supply and install.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    description:
+      'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
+  },
 };
 
 export default function RootLayout({

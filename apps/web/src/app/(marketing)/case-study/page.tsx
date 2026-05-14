@@ -5,9 +5,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { MediaPlaceholder } from '@/components/marketing/MediaPlaceholder'
 
 export const metadata: Metadata = {
-  title: 'Case Studies | Steelyes Gate Projects',
+  title: 'Case Studies | Bespoke Steel Projects',
   description:
-    'Completed Steelyes gate and fabrication projects. Specifications, installation notes, and process records from real site commissions.',
+    'In-depth project case studies from the Steelyes workshop. Real gate, railing, balcony and fabrication installations with process notes and finished results.',
 }
 
 const CASE_STUDIES = [
@@ -26,8 +26,8 @@ export default function CaseStudyIndexPage() {
         <p className="mb-3 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Projects</p>
         <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">Case studies</h1>
         <p className="mt-5 max-w-2xl text-base font-light text-[#5C403D] md:text-lg">
-          Completed gate and fabrication commissions. Specifications, installation notes, and process records from real
-          Steelyes projects.
+          Completed gate, railing, balcony and fabrication commissions. Specifications, installation notes, and
+          process records from real Steelyes projects.
         </p>
         <p className="mt-3 font-mono text-xs uppercase tracking-widest text-zinc-400">
           Project archive being built — more entries added as commissions complete.

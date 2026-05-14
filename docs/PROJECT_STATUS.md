@@ -3,7 +3,7 @@ title: Project Status
 description: Current execution state, ownership, blockers, and next focus
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-06
+last_updated: 2026-05-09
 ---
 
 # Steelyes — Project Status
@@ -18,7 +18,9 @@ This is the current operating snapshot. Use it first when resuming work.
 |---|---|---|---|
 | DB migrations | Closed for current DB/RLS scope | Ruben | 19 local migrations = 19 remote migrations on staging. |
 | DB/RLS hardening | Closed on staging | Ruben | Phase 5 grant hardening applied and verified on 2026-05-06. |
+| Supabase production auth | Restored | Ruben | `steelyes-prod` admin auth repaired on 2026-05-09 after fixing a broken `auth.users` record. |
 | Business/pricing data | Blocked | Marius | Final prices, railheads, finishes, and real fencing catalogue still missing. |
+| Public deployment/domain | Blocked operationally | Ruben + Marius | `steelyes.co.uk` still serves the legacy GoDaddy site; new Next app is not live on the public domain. |
 | Share-link route | Pending app feature | Ruben | DB allows anon read of saved configurations, but `/configurator/[id]` does not exist yet. |
 | Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending. |
 | Backend completion | Paused deliberately | Ruben | Resume when frontend requires it or client data arrives. |
@@ -28,6 +30,9 @@ This is the current operating snapshot. Use it first when resuming work.
 ## What is already done
 
 - Supabase staging is linked and migration history is aligned.
+- Supabase production project was identified and verified as separate from staging:
+  - `steelyes-staging` → `hgeksaulzomkgqnfuriu`
+  - `steelyes-prod` → `reqgfvahdcbmbajjqtve`
 - Original blocking RLS bugs are resolved:
   - admin can insert/delete `gates`;
   - admin can delete `gate_options`;
@@ -39,6 +44,10 @@ This is the current operating snapshot. Use it first when resuming work.
   - anon catalogue writes removed;
   - anon/authenticated non-DML table privileges removed where not part of the app model;
   - final targeted SQL check returned `unexpected_grant_count = 0`.
+- Production auth for the known admin account is now verified working directly against `steelyes-prod`.
+- The public domain is not yet serving the new app:
+  - `steelyes.co.uk` currently serves the legacy GoDaddy website;
+  - `steelyes.vercel.app` currently returns `DEPLOYMENT_NOT_FOUND`.
 - App regression for the recorded admin CRUD scope passed earlier:
   - typecheck;
   - lint;
@@ -58,6 +67,8 @@ Canonical DB references:
 
 ### Open but owned by us
 
+- Put the new app live on Vercel with production env vars pointing at `steelyes-prod`.
+- Connect `steelyes.co.uk` (or a temporary Vercel domain) to the active deployment.
 - Decide whether to implement `/configurator/[id]` now or move share-link E2E out of DB technical closure.
 - Audit UI/content routes and bring the visible product experience up to a client-ready staging baseline.
 - Prepare fallback copy for missing catalogue data.
@@ -100,7 +111,7 @@ Proceed with frontend/content using clear fallback states:
 The next project phase is:
 
 1. Documentation cleanup and alignment.
-2. UI/content inventory.
+2. Public deployment alignment.
 3. UI/content implementation and polish.
 4. Backend completion only when driven by real UI needs or client data.
 

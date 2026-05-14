@@ -16,22 +16,22 @@ const gateStyles = [
   {
     title: 'Modern',
     body: 'Clean horizontal lines, strong geometry and a sharp architectural finish for contemporary homes.',
-    image: '/images/home/modern-diagonal-steel-gate.jpg',
-    imageAlt: 'Modern diagonal black steel driveway gate installed between brick pillars',
+    image: '/images/client-uploads/selected/1000048883.JPG',
+    imageAlt: 'Wide black steel gate and rail frontage on a residential street',
     tag: 'Architectural profile',
   },
   {
     title: 'Classic',
     body: 'Traditional proportions, heavier steel presence and timeless detailing for period homes and formal driveways.',
-    image: '/images/home/classic-ornate-driveway-gate.jpg',
-    imageAlt: 'Classic ornate black steel driveway gate with decorative finials',
+    image: '/images/client-uploads/selected/1000051998.JPG',
+    imageAlt: 'Decorative ornate steel driveway gate with matching entrance detailing',
     tag: 'Steel framed',
   },
   {
     title: 'Privacy',
     body: 'Closed and semi-closed designs for entrances that need screening, security and a quieter street-facing profile.',
-    image: '/images/home/privacy-horizontal-steel-gate.jpg',
-    imageAlt: 'Privacy steel gate with horizontal infill and matching frontage panels',
+    image: '/images/client-uploads/selected/1000052251.JPG',
+    imageAlt: 'Black privacy gate with horizontal infill panels',
     tag: 'Screened infill',
   },
 ]
@@ -61,24 +61,45 @@ const processItems = [
 
 const mosaicImages = [
   {
-    src: '/images/gates/sliding-gate-anthracite-residential.jpg',
-    alt: 'Anthracite residential sliding gate',
+    src: '/images/client-uploads/selected/1000048883.JPG',
+    alt: 'Wide black steel gate and rail frontage',
     tall: true,
   },
-  { src: '/images/railings/railings-black-cross-london.jpg', alt: 'Black cross steel railings, London', tall: false },
+  { src: '/images/client-uploads/selected/1000051985.JPG', alt: 'Steel railings and stair landing', tall: false },
   {
-    src: '/images/gates/pedestrian-gate-ornate-brick.jpg',
-    alt: 'Ornate pedestrian gate on brick pillar',
+    src: '/images/client-uploads/selected/1000052004.JPG',
+    alt: 'Balcony and terrace steel structure',
+    tall: true,
+  },
+  { src: '/images/client-uploads/selected/1000052013.JPG', alt: 'Steel frame under fabrication', tall: false },
+  {
+    src: '/images/client-uploads/selected/1000052209.JPG',
+    alt: 'Glass balcony with steel fixing points',
     tall: false,
   },
-  { src: '/images/home/architectural-cutout-gate.jpg', alt: 'Architectural cutout steel gate', tall: true },
-  { src: '/images/balconies/balcony-juliet-glass-london.jpg', alt: 'Juliet glass balcony, London', tall: false },
-  {
-    src: '/images/railings/railings-ornate-bronze-driveway.jpg',
-    alt: 'Ornate bronze-finish driveway railings',
-    tall: false,
-  },
+  { src: '/images/client-uploads/selected/1000051989.JPG', alt: 'Staircase and railing installation', tall: false },
 ]
+
+const fabricationHighlights = [
+  {
+    title: 'Workshop fit-up',
+    body: 'Show the fabrication line itself: welding, alignment, and steel preparation before finishing.',
+    image: '/images/client-uploads/selected/1000052013.JPG',
+    alt: 'Steel frame under fabrication and fit-up',
+  },
+  {
+    title: 'Detail work',
+    body: 'Use close-ups for finials, perforated steel, and edge detailing so the craftsmanship is visible.',
+    image: '/images/client-uploads/selected/1000048834.JPG',
+    alt: 'Ornamental steel detail showing finish quality',
+  },
+  {
+    title: 'Structural steel',
+    body: 'Balance gate imagery with balconies and frames so the portfolio reads as a fabrication business, not only a gate seller.',
+    image: '/images/client-uploads/selected/1000052209.JPG',
+    alt: 'Glass balcony and steel structure in an installed setting',
+  },
+] as const
 
 export default function HomePage() {
   return (
@@ -118,19 +139,16 @@ export default function HomePage() {
             {/* On mobile use 4/3 landscape; portrait on desktop */}
             <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB] md:aspect-[3/4]">
               <Image
-                src="/images/home/installed-classic-frontage-gate.jpg"
+                src="/images/client-uploads/selected/1000051998.JPG"
                 alt="Steelyes bespoke steel gate installed at a residential frontage"
                 fill
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 className="object-cover"
                 loading="eager"
-                unoptimized
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-5 md:p-6">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Installed project</p>
-                <p className="font-heading text-xl font-black uppercase text-white md:text-2xl">
-                  Residential frontage
-                </p>
+                <p className="font-heading text-xl font-black uppercase text-white md:text-2xl">Residential frontage</p>
               </div>
             </div>
             {/* floating badge — sits over the image bottom-right */}
@@ -144,22 +162,25 @@ export default function HomePage() {
           <div className="flex flex-col justify-center lg:col-span-7 lg:pl-16">
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Steel fabrication</p>
             <h2 className="font-heading text-3xl font-black uppercase leading-[0.9] sm:text-4xl md:text-5xl lg:text-6xl">
-              Everything your entrance needs —
+              Everything your property needs —
               <br />
-              <span className="text-[#9E000C]">nothing it doesn&apos;t.</span>
+              <span className="text-[#9E000C]">from structural steel to front driveway or back garden.</span>
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#5C403D] md:text-base">
-              Every gate starts with the opening it needs to serve. We survey, specify, fabricate and install around
-              the real site — not a catalogue assumption.
+              Every project starts with the site. We survey, specify, fabricate and install across driveway gates,
+              glass balustrades, metal balconies, steel structures, staircases and security. The output is a broader
+              steel fabrication story, not a gate-only catalogue.
             </p>
 
             {/* Services list */}
             <ul className="mt-8 divide-y divide-zinc-200 border-t border-zinc-200">
               {[
-                { label: 'Driveway & automated gates', href: '/gates' },
-                { label: 'Railings & balustrades', href: '/services/railings' },
-                { label: 'Steel balconies', href: '/services/balconies' },
-                { label: 'Security doors & grilles', href: '/services/security' },
+                { label: 'Driveway automated gates & railings', href: '/gates' },
+                { label: 'Glass balustrades & terraces', href: '/services/railings' },
+                { label: 'Metal & glass balconies', href: '/services/balconies' },
+                { label: 'Steel structures', href: '/services/structures' },
+                { label: 'Platforms & staircases', href: '/services/staircases' },
+                { label: 'Security grills', href: '/services/security' },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
@@ -218,7 +239,6 @@ export default function HomePage() {
                       fill
                       sizes="(max-width: 768px) 288px, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      unoptimized
                     />
                     <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   </div>
@@ -249,6 +269,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Fabrication focus ── */}
+      <section className="border-t border-zinc-200 bg-white py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-4">
+              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Beyond gates</p>
+              <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">
+                Fabrication
+                <br />
+                in view.
+              </h2>
+              <p className="mt-5 text-sm leading-relaxed text-[#5C403D] md:text-base">
+                The client asked for more visibility of the rest of the workshop output. This section makes the
+                broader range explicit: railings, balconies, steel structures and fabrication detail, not only gates.
+              </p>
+            </div>
+
+            <div className="lg:col-span-8">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                {fabricationHighlights.map((item) => (
+                  <article key={item.title} className="overflow-hidden border border-zinc-200 bg-[#F5F3F0]">
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={item.image}
+                        alt={item.alt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-heading text-2xl font-black uppercase">{item.title}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-[#5C403D]">{item.body}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── The Process ── */}
       <section className="bg-white py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
@@ -270,6 +332,18 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
+
+              {/* Mobile-only visual break */}
+              <div className="relative mt-6 aspect-[4/3] overflow-hidden lg:hidden">
+                <Image
+                  src="/images/home/modern-perforated-gate-detail.jpg"
+                  alt="Close-up of modern perforated steel gate detail"
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+
               <Link
                 href="/installation"
                 className="mt-8 inline-flex min-h-[48px] items-center gap-2 font-heading text-sm font-bold uppercase text-[#9E000C] hover:underline"
@@ -287,7 +361,6 @@ export default function HomePage() {
                   fill
                   sizes="50vw"
                   className="object-cover"
-                  unoptimized
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -298,7 +371,6 @@ export default function HomePage() {
                     fill
                     sizes="25vw"
                     className="object-cover"
-                    unoptimized
                   />
                 </div>
                 <div className="flex flex-col justify-center bg-[#1B1C1A] p-6 text-white">
@@ -357,7 +429,6 @@ export default function HomePage() {
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                    unoptimized
                   />
                   <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25" />
                 </div>
@@ -391,7 +462,6 @@ export default function HomePage() {
           sizes="100vw"
           className="object-cover opacity-25"
           aria-hidden
-          unoptimized
         />
         {/* strong vertical overlay on mobile so text stays legible across full width */}
         <div className="absolute inset-0 bg-black/60" />
@@ -406,8 +476,8 @@ export default function HomePage() {
               entrance.
             </h2>
             <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/75 md:text-base">
-              Send photos, measurements or a rough idea of the gate you need. We will help turn it into a measured
-              specification and a clear quote path.
+              Send photos, measurements or a rough idea of the steelwork you need. We will help turn it into a
+              measured specification and a clear quote path.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -443,6 +513,42 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': ['LocalBusiness', 'GeneralContractor'],
+            name: 'Steelyes',
+            url: 'https://www.steelyes.co.uk',
+            telephone: '+44 7803 002145',
+            email: 'steelyes@yahoo.com',
+            description:
+              'Bespoke steel driveway gates, electric gates, railings, balconies and security doors. Survey-led specification, supply and install across the UK.',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Unit 7, Meridian Industrial Estate',
+              addressLocality: 'Enfield',
+              addressRegion: 'London',
+              postalCode: 'EN3 7TW',
+              addressCountry: 'GB',
+            },
+            areaServed: { '@type': 'Country', name: 'United Kingdom' },
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: 'Steel Fabrication Services',
+              itemListElement: [
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Bespoke Steel Driveway Gates' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Electric & Automatic Gates' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Railings & Balustrades' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Balconies' } },
+                { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Security Gates & Steel Doors' } },
+              ],
+            },
+          }),
+        }}
+      />
     </MarketingShell>
   )
 }

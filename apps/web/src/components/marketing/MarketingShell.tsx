@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { CookieBanner } from '@/components/marketing/CookieBanner'
 import { MobileQuoteCTA } from '@/components/marketing/MobileQuoteCTA'
 import { SiteFooter } from '@/components/marketing/SiteFooter'
 import { SiteHeader } from '@/components/marketing/SiteHeader'
@@ -11,13 +12,14 @@ type MarketingShellProps = {
 
 export function MarketingShell({ pathname, children }: MarketingShellProps) {
   return (
-    <div className="min-h-screen bg-[#FBF9F6] text-[#1B1C1A]">
+    <div className="min-h-dvh bg-[#FBF9F6] text-[#1B1C1A]">
       <SiteHeader pathname={pathname} />
       <main id="main-content" className="pb-20 lg:pb-0">
         {children}
       </main>
       <SiteFooter />
       <MobileQuoteCTA />
+      <CookieBanner />
     </div>
   )
 }
