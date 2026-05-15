@@ -12,7 +12,7 @@ export function HomeWeldingHero() {
         priority
         unoptimized
         sizes="100vw"
-        className="object-cover object-center"
+        className="object-cover object-center motion-safe:animate-hero-image-in motion-reduce:opacity-100"
       />
       {/* layered overlays */}
       <div className="absolute inset-0 bg-black/45" />

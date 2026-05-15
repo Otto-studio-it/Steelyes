@@ -5,6 +5,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { Reveal } from '@/components/marketing/Reveal'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates | Steelyes',
@@ -135,7 +136,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
           {/* Left: large featured image — desktop only (hidden on phone & tablet) */}
-          <div className="relative hidden lg:col-span-5 lg:block lg:pr-12">
+          <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
             {/* On mobile use 4/3 landscape; portrait on desktop */}
             <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB] md:aspect-[3/4]">
               <Image
@@ -156,10 +157,10 @@ export default function HomePage() {
               <p className="font-mono text-[10px] uppercase tracking-widest">Survey-led</p>
               <p className="font-heading text-lg font-black uppercase md:text-xl">Made to order</p>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right: headline + services list */}
-          <div className="flex flex-col justify-center lg:col-span-7 lg:pl-16">
+          <Reveal className="flex flex-col justify-center lg:col-span-7 lg:pl-16" delay={80}>
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Steel fabrication</p>
             <h2 className="font-heading text-3xl font-black uppercase leading-[0.9] sm:text-4xl md:text-5xl lg:text-6xl">
               Everything your property needs —
@@ -203,14 +204,14 @@ export default function HomePage() {
             >
               Request a quote <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Gate styles — editorial grid ── */}
       <section className="border-t border-zinc-200 bg-[#F5F3F0] py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <Reveal className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#795916]">Gate styles</p>
               <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">The steel range</h2>
@@ -221,15 +222,13 @@ export default function HomePage() {
             >
               All gate types →
             </Link>
-          </div>
+          </Reveal>
 
           {/* Mobile: horizontal scroll prevents stacked 500px-tall cards */}
           <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
-            {gateStyles.map(({ title, body, image, imageAlt, tag }) => (
-              <article
-                key={title}
-                className="group w-72 shrink-0 bg-white md:w-auto"
-              >
+            {gateStyles.map(({ title, body, image, imageAlt, tag }, index) => (
+              <Reveal key={title} delay={index * 90} className="w-72 shrink-0 md:w-auto">
+              <article className="group bg-white">
                 <Link href="/gates" className="block">
                   {/* landscape on mobile scroll, portrait on md+ grid */}
                   <div className="relative aspect-[4/3] overflow-hidden bg-[#E4E2DF] md:aspect-[3/4]">
@@ -255,17 +254,18 @@ export default function HomePage() {
                   </Link>
                 </div>
               </article>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-6 md:hidden">
+          <Reveal className="mt-6 md:hidden" delay={120}>
             <Link
               href="/gates"
               className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-[#9E000C] font-heading text-sm font-bold uppercase text-[#9E000C]"
             >
               All gate types <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -273,7 +273,7 @@ export default function HomePage() {
       <section className="border-t border-zinc-200 bg-white py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-4">
+            <Reveal className="lg:col-span-4">
               <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Our workshop</p>
               <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">
                 More than
@@ -285,12 +285,13 @@ export default function HomePage() {
                 finish and install driveway gates alongside railings, glass balconies, staircases, platforms,
                 structural frames and security steelwork, all made to measure from your site brief.
               </p>
-            </div>
+            </Reveal>
 
             <div className="lg:col-span-8">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {fabricationHighlights.map((item) => (
-                  <article key={item.title} className="overflow-hidden border border-zinc-200 bg-[#F5F3F0]">
+                {fabricationHighlights.map((item, index) => (
+                  <Reveal key={item.title} delay={index * 100}>
+                  <article className="overflow-hidden border border-zinc-200 bg-[#F5F3F0]">
                     <div className="relative aspect-[4/3]">
                       <Image
                         src={item.image}
@@ -305,6 +306,7 @@ export default function HomePage() {
                       <p className="mt-3 text-sm leading-relaxed text-[#5C403D]">{item.body}</p>
                     </div>
                   </article>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -317,7 +319,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
             {/* Left: process steps */}
-            <div>
+            <Reveal>
               <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">How it works</p>
               <h2 className="mb-10 font-heading text-4xl font-black uppercase leading-none md:text-5xl">The process</h2>
               <ol className="divide-y divide-zinc-200 border-y border-zinc-200">
@@ -351,10 +353,10 @@ export default function HomePage() {
               >
                 How installation works <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-            </div>
+            </Reveal>
 
             {/* Right: stacked real photos — hidden on mobile, shown lg+ */}
-            <div className="hidden flex-col gap-4 lg:flex">
+            <Reveal className="hidden flex-col gap-4 lg:flex" delay={120}>
               <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB]">
                 <Image
                   src="/images/home/modern-perforated-gate-detail.jpg"
@@ -384,7 +386,7 @@ export default function HomePage() {
                   <p className="mt-3 font-mono text-xs text-white/60">No fabrication without confirmed dimensions.</p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -392,7 +394,7 @@ export default function HomePage() {
       {/* ── Photo mosaic ── */}
       <section className="bg-[#1B1C1A] py-14 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <Reveal className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">
                 From workshop to entrance
@@ -405,7 +407,7 @@ export default function HomePage() {
             >
               View full archive <ArrowRight className="h-3 w-3" aria-hidden />
             </Link>
-          </div>
+          </Reveal>
 
           {/*
             Mobile: 2-col grid, uniform aspect-[4/3] — no row-span.
@@ -413,9 +415,10 @@ export default function HomePage() {
             lg+: 6-col editorial layout.
           */}
           <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
-            {mosaicImages.map(({ src, alt, tall }) => (
-              <div
+            {mosaicImages.map(({ src, alt, tall }, index) => (
+              <Reveal
                 key={src}
+                delay={index * 50}
                 className={`group relative overflow-hidden bg-[#2A2A2A] ${tall ? 'md:row-span-2' : ''}`}
               >
                 {/* Mobile: uniform 4/3. Tall on md+: 2/3 portrait. Others: square. */}
@@ -433,11 +436,11 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25" />
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <Reveal className="mt-6 flex flex-col gap-3 sm:flex-row" delay={80}>
             <Link
               href="/gallery"
               className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/20 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 sm:w-auto"
@@ -450,7 +453,7 @@ export default function HomePage() {
             >
               Case studies
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -469,7 +472,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
-          <div className="max-w-2xl">
+          <Reveal className="max-w-2xl">
             <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Ready to start</p>
             <h2 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
               Plan your
@@ -495,10 +498,10 @@ export default function HomePage() {
                 Explore gate styles
               </Link>
             </div>
-          </div>
+          </Reveal>
 
           {/* stat strip */}
-          <div className="mt-14 grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-8">
+          <Reveal className="mt-14 grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-8" delay={120}>
             {[
               ['100%', 'Made to order'],
               ['Survey-led', 'Every project'],
@@ -511,7 +514,7 @@ export default function HomePage() {
                 </p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
