@@ -1,0 +1,4910 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "next-env.d.ts",
+      "file_type": "code",
+      "source_file": "apps/web/next-env.d.ts",
+      "source_location": "L1",
+      "id": "apps_web_next_env_d_ts",
+      "community": 14,
+      "norm_label": "next-env.d.ts"
+    },
+    {
+      "label": "playwright.config.ts",
+      "file_type": "code",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L1",
+      "id": "apps_web_playwright_config_ts",
+      "community": 12,
+      "norm_label": "playwright.config.ts"
+    },
+    {
+      "label": "stripMatchingQuotes()",
+      "file_type": "code",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L6",
+      "id": "web_playwright_config_stripmatchingquotes",
+      "community": 12,
+      "norm_label": "stripmatchingquotes()"
+    },
+    {
+      "label": "loadEnvFromLocalFile()",
+      "file_type": "code",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L16",
+      "id": "web_playwright_config_loadenvfromlocalfile",
+      "community": 12,
+      "norm_label": "loadenvfromlocalfile()"
+    },
+    {
+      "label": "next.config.mjs",
+      "file_type": "code",
+      "source_file": "apps/web/next.config.mjs",
+      "source_location": "L1",
+      "id": "apps_web_next_config_mjs",
+      "community": 15,
+      "norm_label": "next.config.mjs"
+    },
+    {
+      "label": "postcss.config.mjs",
+      "file_type": "code",
+      "source_file": "apps/web/postcss.config.mjs",
+      "source_location": "L1",
+      "id": "apps_web_postcss_config_mjs",
+      "community": 3,
+      "norm_label": "postcss.config.mjs"
+    },
+    {
+      "label": "tailwind.config.ts",
+      "file_type": "code",
+      "source_file": "apps/web/tailwind.config.ts",
+      "source_location": "L1",
+      "id": "apps_web_tailwind_config_ts",
+      "community": 3,
+      "norm_label": "tailwind.config.ts"
+    },
+    {
+      "label": "smoke.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/smoke.spec.ts",
+      "source_location": "L1",
+      "id": "apps_web_tests_e2e_smoke_spec_ts",
+      "community": 16,
+      "norm_label": "smoke.spec.ts"
+    },
+    {
+      "label": "admin-crud.spec.ts",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L1",
+      "id": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "community": 4,
+      "norm_label": "admin-crud.spec.ts"
+    },
+    {
+      "label": "gateCard",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L32",
+      "id": "e2e_admin_crud_spec_gatecard",
+      "community": 4,
+      "norm_label": "gatecard"
+    },
+    {
+      "label": "manualInput",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L40",
+      "id": "e2e_admin_crud_spec_manualinput",
+      "community": 4,
+      "norm_label": "manualinput"
+    },
+    {
+      "label": "original",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L41",
+      "id": "e2e_admin_crud_spec_original",
+      "community": 4,
+      "norm_label": "original"
+    },
+    {
+      "label": "updated",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L42",
+      "id": "e2e_admin_crud_spec_updated",
+      "community": 4,
+      "norm_label": "updated"
+    },
+    {
+      "label": "reloadedCard",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L49",
+      "id": "e2e_admin_crud_spec_reloadedcard",
+      "community": 4,
+      "norm_label": "reloadedcard"
+    },
+    {
+      "label": "spiralsCard",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L67",
+      "id": "e2e_admin_crud_spec_spiralscard",
+      "community": 4,
+      "norm_label": "spiralscard"
+    },
+    {
+      "label": "perUnitInput",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L75",
+      "id": "e2e_admin_crud_spec_perunitinput",
+      "community": 4,
+      "norm_label": "perunitinput"
+    },
+    {
+      "label": "reloadedSpirals",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L84",
+      "id": "e2e_admin_crud_spec_reloadedspirals",
+      "community": 4,
+      "norm_label": "reloadedspirals"
+    },
+    {
+      "label": "basePrice",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L103",
+      "id": "e2e_admin_crud_spec_baseprice",
+      "community": 4,
+      "norm_label": "baseprice"
+    },
+    {
+      "label": "perM2Price",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L104",
+      "id": "e2e_admin_crud_spec_perm2price",
+      "community": 4,
+      "norm_label": "perm2price"
+    },
+    {
+      "label": "updatedPerM2",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L105",
+      "id": "e2e_admin_crud_spec_updatedperm2",
+      "community": 4,
+      "norm_label": "updatedperm2"
+    },
+    {
+      "label": "createPanelForm",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L108",
+      "id": "e2e_admin_crud_spec_createpanelform",
+      "community": 4,
+      "norm_label": "createpanelform"
+    },
+    {
+      "label": "createdPanel",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L117",
+      "id": "e2e_admin_crud_spec_createdpanel",
+      "community": 4,
+      "norm_label": "createdpanel"
+    },
+    {
+      "label": "updatedPanel",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L133",
+      "id": "e2e_admin_crud_spec_updatedpanel",
+      "community": 4,
+      "norm_label": "updatedpanel"
+    },
+    {
+      "label": "loginAsAdmin()",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L142",
+      "id": "e2e_admin_crud_spec_loginasadmin",
+      "community": 4,
+      "norm_label": "loginasadmin()"
+    },
+    {
+      "label": "openCard()",
+      "file_type": "code",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L150",
+      "id": "e2e_admin_crud_spec_opencard",
+      "community": 4,
+      "norm_label": "opencard()"
+    },
+    {
+      "label": "middleware()",
+      "file_type": "code",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L5",
+      "id": "src_middleware_middleware",
+      "community": 3,
+      "norm_label": "middleware()"
+    },
+    {
+      "label": "config",
+      "file_type": "code",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L49",
+      "id": "src_middleware_config",
+      "community": 3,
+      "norm_label": "config"
+    },
+    {
+      "label": "layout.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_app_layout_tsx",
+      "community": 9,
+      "norm_label": "layout.tsx"
+    },
+    {
+      "label": "barlowCondensed",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L5",
+      "id": "app_layout_barlowcondensed",
+      "community": 9,
+      "norm_label": "barlowcondensed"
+    },
+    {
+      "label": "barlow",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L11",
+      "id": "app_layout_barlow",
+      "community": 9,
+      "norm_label": "barlow"
+    },
+    {
+      "label": "ibmPlexMono",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L17",
+      "id": "app_layout_ibmplexmono",
+      "community": 9,
+      "norm_label": "ibmplexmono"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L23",
+      "id": "app_layout_metadata",
+      "community": 9,
+      "norm_label": "metadata"
+    },
+    {
+      "label": "RootLayout()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L28",
+      "id": "app_layout_rootlayout",
+      "community": 9,
+      "norm_label": "rootlayout()"
+    },
+    {
+      "label": "actions.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_app_actions_ts",
+      "community": 1,
+      "norm_label": "actions.ts"
+    },
+    {
+      "label": "trackGetQuoteClicked()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L6",
+      "id": "app_actions_trackgetquoteclicked",
+      "community": 1,
+      "norm_label": "trackgetquoteclicked()"
+    },
+    {
+      "label": "trackCatalogueViewed()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L18",
+      "id": "app_actions_trackcatalogueviewed",
+      "community": 1,
+      "norm_label": "trackcatalogueviewed()"
+    },
+    {
+      "label": "AdminLayout()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/layout.tsx",
+      "source_location": "L8",
+      "id": "admin_layout_adminlayout",
+      "community": 9,
+      "norm_label": "adminlayout()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/page.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_app_admin_page_tsx",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "AdminRootPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/page.tsx",
+      "source_location": "L3",
+      "id": "admin_page_adminrootpage",
+      "community": 0,
+      "norm_label": "adminrootpage()"
+    },
+    {
+      "label": "AdminLoginPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/login/page.tsx",
+      "source_location": "L4",
+      "id": "login_page_adminloginpage",
+      "community": 0,
+      "norm_label": "adminloginpage()"
+    },
+    {
+      "label": "LoginForm()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/login/LoginForm.tsx",
+      "source_location": "L9",
+      "id": "login_loginform_loginform",
+      "community": 3,
+      "norm_label": "loginform()"
+    },
+    {
+      "label": "SECTIONS",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/dashboard/page.tsx",
+      "source_location": "L6",
+      "id": "dashboard_page_sections",
+      "community": 0,
+      "norm_label": "sections"
+    },
+    {
+      "label": "DashboardPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/dashboard/page.tsx",
+      "source_location": "L27",
+      "id": "dashboard_page_dashboardpage",
+      "community": 1,
+      "norm_label": "dashboardpage()"
+    },
+    {
+      "label": "GATES_COLUMNS_FULL",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L10",
+      "id": "gates_page_gates_columns_full",
+      "community": 0,
+      "norm_label": "gates_columns_full"
+    },
+    {
+      "label": "GATES_COLUMNS_WITHOUT_NAME",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L13",
+      "id": "gates_page_gates_columns_without_name",
+      "community": 0,
+      "norm_label": "gates_columns_without_name"
+    },
+    {
+      "label": "gatesNameMissingError()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L16",
+      "id": "gates_page_gatesnamemissingerror",
+      "community": 1,
+      "norm_label": "gatesnamemissingerror()"
+    },
+    {
+      "label": "GateRow",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L20",
+      "id": "gates_page_gaterow",
+      "community": 0,
+      "norm_label": "gaterow"
+    },
+    {
+      "label": "GatesAdminPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L22",
+      "id": "gates_page_gatesadminpage",
+      "community": 1,
+      "norm_label": "gatesadminpage()"
+    },
+    {
+      "label": "UpdateGatePriceSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L9",
+      "id": "gates_actions_updategatepriceschema",
+      "community": 1,
+      "norm_label": "updategatepriceschema"
+    },
+    {
+      "label": "updateGatePrice()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L15",
+      "id": "gates_actions_updategateprice",
+      "community": 1,
+      "norm_label": "updategateprice()"
+    },
+    {
+      "label": "Gate",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L9",
+      "id": "gates_gatepricecard_gate",
+      "community": 8,
+      "norm_label": "gate"
+    },
+    {
+      "label": "GatePriceCard()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L22",
+      "id": "gates_gatepricecard_gatepricecard",
+      "community": 8,
+      "norm_label": "gatepricecard()"
+    },
+    {
+      "label": "GatesBoard.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "community": 8,
+      "norm_label": "gatesboard.tsx"
+    },
+    {
+      "label": "FinishFilter",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L7",
+      "id": "gates_gatesboard_finishfilter",
+      "community": 8,
+      "norm_label": "finishfilter"
+    },
+    {
+      "label": "GatesBoard()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L15",
+      "id": "gates_gatesboard_gatesboard",
+      "community": 8,
+      "norm_label": "gatesboard()"
+    },
+    {
+      "label": "GateOptionsAdminPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gate-options/page.tsx",
+      "source_location": "L9",
+      "id": "gate_options_page_gateoptionsadminpage",
+      "community": 1,
+      "norm_label": "gateoptionsadminpage()"
+    },
+    {
+      "label": "UpdateOptionSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L9",
+      "id": "gate_options_actions_updateoptionschema",
+      "community": 1,
+      "norm_label": "updateoptionschema"
+    },
+    {
+      "label": "updateGateOption()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L15",
+      "id": "gate_options_actions_updategateoption",
+      "community": 1,
+      "norm_label": "updategateoption()"
+    },
+    {
+      "label": "Option",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L8",
+      "id": "gate_options_optioncard_option",
+      "community": 2,
+      "norm_label": "option"
+    },
+    {
+      "label": "OptionCard()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L13",
+      "id": "gate_options_optioncard_optioncard",
+      "community": 2,
+      "norm_label": "optioncard()"
+    },
+    {
+      "label": "FencingAdminPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L10",
+      "id": "fencing_page_fencingadminpage",
+      "community": 1,
+      "norm_label": "fencingadminpage()"
+    },
+    {
+      "label": "UpsertFencingSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L9",
+      "id": "fencing_actions_upsertfencingschema",
+      "community": 1,
+      "norm_label": "upsertfencingschema"
+    },
+    {
+      "label": "upsertFencingPanel()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L18",
+      "id": "fencing_actions_upsertfencingpanel",
+      "community": 1,
+      "norm_label": "upsertfencingpanel()"
+    },
+    {
+      "label": "Panel",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L8",
+      "id": "fencing_fencingcard_panel",
+      "community": 2,
+      "norm_label": "panel"
+    },
+    {
+      "label": "FencingCard()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L13",
+      "id": "fencing_fencingcard_fencingcard",
+      "community": 2,
+      "norm_label": "fencingcard()"
+    },
+    {
+      "label": "STYLES",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L7",
+      "id": "fencing_newfencingform_styles",
+      "community": 2,
+      "norm_label": "styles"
+    },
+    {
+      "label": "FINISHES",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L8",
+      "id": "fencing_newfencingform_finishes",
+      "community": 2,
+      "norm_label": "finishes"
+    },
+    {
+      "label": "NewFencingForm()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L10",
+      "id": "fencing_newfencingform_newfencingform",
+      "community": 2,
+      "norm_label": "newfencingform()"
+    },
+    {
+      "label": "capabilityItems",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L15",
+      "id": "marketing_page_capabilityitems",
+      "community": 0,
+      "norm_label": "capabilityitems"
+    },
+    {
+      "label": "gateStandardItems",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L22",
+      "id": "marketing_page_gatestandarditems",
+      "community": 0,
+      "norm_label": "gatestandarditems"
+    },
+    {
+      "label": "processItems",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L49",
+      "id": "marketing_page_processitems",
+      "community": 0,
+      "norm_label": "processitems"
+    },
+    {
+      "label": "HomePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L72",
+      "id": "marketing_page_homepage",
+      "community": 0,
+      "norm_label": "homepage()"
+    },
+    {
+      "label": "GATE_DISPLAY",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/page.tsx",
+      "source_location": "L7",
+      "id": "gates_page_gate_display",
+      "community": 0,
+      "norm_label": "gate_display"
+    },
+    {
+      "label": "GatesPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/page.tsx",
+      "source_location": "L16",
+      "id": "gates_page_gatespage",
+      "community": 0,
+      "norm_label": "gatespage()"
+    },
+    {
+      "label": "gate-marketing-data.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_app_marketing_gates_gate_marketing_data_ts",
+      "community": 0,
+      "norm_label": "gate-marketing-data.ts"
+    },
+    {
+      "label": "GateSlug",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L1",
+      "id": "gates_gate_marketing_data_gateslug",
+      "community": 0,
+      "norm_label": "gateslug"
+    },
+    {
+      "label": "GateData",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L3",
+      "id": "gates_gate_marketing_data_gatedata",
+      "community": 0,
+      "norm_label": "gatedata"
+    },
+    {
+      "label": "GATE_DATA",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L16",
+      "id": "gates_gate_marketing_data_gate_data",
+      "community": 0,
+      "norm_label": "gate_data"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L13",
+      "id": "style_page_generatemetadata",
+      "community": 0,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "GateDetailPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L22",
+      "id": "style_page_gatedetailpage",
+      "community": 0,
+      "norm_label": "gatedetailpage()"
+    },
+    {
+      "label": "SERVICES",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/page.tsx",
+      "source_location": "L6",
+      "id": "services_page_services",
+      "community": 0,
+      "norm_label": "services"
+    },
+    {
+      "label": "ServicesPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/page.tsx",
+      "source_location": "L30",
+      "id": "services_page_servicespage",
+      "community": 0,
+      "norm_label": "servicespage()"
+    },
+    {
+      "label": "CAPABILITIES",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/railings/page.tsx",
+      "source_location": "L6",
+      "id": "railings_page_capabilities",
+      "community": 0,
+      "norm_label": "capabilities"
+    },
+    {
+      "label": "SPEC_ITEMS",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/railings/page.tsx",
+      "source_location": "L13",
+      "id": "railings_page_spec_items",
+      "community": 0,
+      "norm_label": "spec_items"
+    },
+    {
+      "label": "RailingsServicePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/railings/page.tsx",
+      "source_location": "L20",
+      "id": "railings_page_railingsservicepage",
+      "community": 0,
+      "norm_label": "railingsservicepage()"
+    },
+    {
+      "label": "SecurityServicePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/security/page.tsx",
+      "source_location": "L27",
+      "id": "security_page_securityservicepage",
+      "community": 0,
+      "norm_label": "securityservicepage()"
+    },
+    {
+      "label": "BalconiesServicePage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/services/balconies/page.tsx",
+      "source_location": "L27",
+      "id": "balconies_page_balconiesservicepage",
+      "community": 0,
+      "norm_label": "balconiesservicepage()"
+    },
+    {
+      "label": "GALLERY_ITEMS",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gallery/page.tsx",
+      "source_location": "L4",
+      "id": "gallery_page_gallery_items",
+      "community": 0,
+      "norm_label": "gallery_items"
+    },
+    {
+      "label": "GalleryPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/gallery/page.tsx",
+      "source_location": "L17",
+      "id": "gallery_page_gallerypage",
+      "community": 0,
+      "norm_label": "gallerypage()"
+    },
+    {
+      "label": "InstallationPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/installation/page.tsx",
+      "source_location": "L4",
+      "id": "installation_page_installationpage",
+      "community": 0,
+      "norm_label": "installationpage()"
+    },
+    {
+      "label": "AboutPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/about/page.tsx",
+      "source_location": "L4",
+      "id": "about_page_aboutpage",
+      "community": 0,
+      "norm_label": "aboutpage()"
+    },
+    {
+      "label": "ContactPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/contact/page.tsx",
+      "source_location": "L4",
+      "id": "contact_page_contactpage",
+      "community": 0,
+      "norm_label": "contactpage()"
+    },
+    {
+      "label": "CaseStudyIndexPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/case-study/page.tsx",
+      "source_location": "L22",
+      "id": "case_study_page_casestudyindexpage",
+      "community": 0,
+      "norm_label": "casestudyindexpage()"
+    },
+    {
+      "label": "CASE_STUDIES",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L6",
+      "id": "slug_page_case_studies",
+      "community": 0,
+      "norm_label": "case_studies"
+    },
+    {
+      "label": "CaseStudyPageProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L10",
+      "id": "slug_page_casestudypageprops",
+      "community": 0,
+      "norm_label": "casestudypageprops"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L14",
+      "id": "slug_page_generatestaticparams",
+      "community": 0,
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "CaseStudyPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L18",
+      "id": "slug_page_casestudypage",
+      "community": 0,
+      "norm_label": "casestudypage()"
+    },
+    {
+      "label": "PrivacyPolicyPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/legal/privacy-policy/page.tsx",
+      "source_location": "L3",
+      "id": "privacy_policy_page_privacypolicypage",
+      "community": 0,
+      "norm_label": "privacypolicypage()"
+    },
+    {
+      "label": "CookiePolicyPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/legal/cookie-policy/page.tsx",
+      "source_location": "L3",
+      "id": "cookie_policy_page_cookiepolicypage",
+      "community": 0,
+      "norm_label": "cookiepolicypage()"
+    },
+    {
+      "label": "TermsPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/legal/terms/page.tsx",
+      "source_location": "L3",
+      "id": "terms_page_termspage",
+      "community": 0,
+      "norm_label": "termspage()"
+    },
+    {
+      "label": "ConfiguratorPage()",
+      "file_type": "code",
+      "source_file": "apps/web/src/app/(marketing)/configurator/page.tsx",
+      "source_location": "L4",
+      "id": "configurator_page_configuratorpage",
+      "community": 0,
+      "norm_label": "configuratorpage()"
+    },
+    {
+      "label": "database.types.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_types_database_types_ts",
+      "community": 2,
+      "norm_label": "database.types.ts"
+    },
+    {
+      "label": "Json",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L1",
+      "id": "types_database_types_json",
+      "community": 2,
+      "norm_label": "json"
+    },
+    {
+      "label": "Database",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L9",
+      "id": "types_database_types_database",
+      "community": 2,
+      "norm_label": "database"
+    },
+    {
+      "label": "DatabaseWithoutInternals",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L288",
+      "id": "types_database_types_databasewithoutinternals",
+      "community": 2,
+      "norm_label": "databasewithoutinternals"
+    },
+    {
+      "label": "DefaultSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L290",
+      "id": "types_database_types_defaultschema",
+      "community": 2,
+      "norm_label": "defaultschema"
+    },
+    {
+      "label": "Tables",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L292",
+      "id": "types_database_types_tables",
+      "community": 2,
+      "norm_label": "tables"
+    },
+    {
+      "label": "TablesInsert",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L321",
+      "id": "types_database_types_tablesinsert",
+      "community": 2,
+      "norm_label": "tablesinsert"
+    },
+    {
+      "label": "TablesUpdate",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L346",
+      "id": "types_database_types_tablesupdate",
+      "community": 2,
+      "norm_label": "tablesupdate"
+    },
+    {
+      "label": "Enums",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L371",
+      "id": "types_database_types_enums",
+      "community": 2,
+      "norm_label": "enums"
+    },
+    {
+      "label": "CompositeTypes",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L388",
+      "id": "types_database_types_compositetypes",
+      "community": 2,
+      "norm_label": "compositetypes"
+    },
+    {
+      "label": "Constants",
+      "file_type": "code",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L405",
+      "id": "types_database_types_constants",
+      "community": 2,
+      "norm_label": "constants"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_utils_ts",
+      "community": 7,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L4",
+      "id": "lib_utils_cn",
+      "community": 7,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "env.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_env_ts",
+      "community": 3,
+      "norm_label": "env.ts"
+    },
+    {
+      "label": "clientSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L3",
+      "id": "lib_env_clientschema",
+      "community": 3,
+      "norm_label": "clientschema"
+    },
+    {
+      "label": "serverSchema",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L9",
+      "id": "lib_env_serverschema",
+      "community": 3,
+      "norm_label": "serverschema"
+    },
+    {
+      "label": "ServerEnv",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L13",
+      "id": "lib_env_serverenv",
+      "community": 3,
+      "norm_label": "serverenv"
+    },
+    {
+      "label": "parseEnv()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L15",
+      "id": "lib_env_parseenv",
+      "community": 3,
+      "norm_label": "parseenv()"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L32",
+      "id": "lib_env_env",
+      "community": 3,
+      "norm_label": "env"
+    },
+    {
+      "label": "posthog.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/posthog.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_posthog_ts",
+      "community": 1,
+      "norm_label": "posthog.ts"
+    },
+    {
+      "label": "getPostHogClient()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/posthog.ts",
+      "source_location": "L5",
+      "id": "lib_posthog_getposthogclient",
+      "community": 1,
+      "norm_label": "getposthogclient()"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_supabase_server_ts",
+      "community": 1,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "CookieToSet",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L7",
+      "id": "supabase_server_cookietoset",
+      "community": 1,
+      "norm_label": "cookietoset"
+    },
+    {
+      "label": "getServerClient()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L10",
+      "id": "supabase_server_getserverclient",
+      "community": 1,
+      "norm_label": "getserverclient()"
+    },
+    {
+      "label": "getServiceRoleClient()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L36",
+      "id": "supabase_server_getserviceroleclient",
+      "community": 1,
+      "norm_label": "getserviceroleclient()"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_supabase_client_ts",
+      "community": 3,
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "requireAdmin()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/require-admin.ts",
+      "source_location": "L5",
+      "id": "admin_require_admin_requireadmin",
+      "community": 1,
+      "norm_label": "requireadmin()"
+    },
+    {
+      "label": "userIsAdmin()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/user-is-admin.ts",
+      "source_location": "L8",
+      "id": "admin_user_is_admin_userisadmin",
+      "community": 3,
+      "norm_label": "userisadmin()"
+    },
+    {
+      "label": "AdminActionResult",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/admin-action-result.ts",
+      "source_location": "L1",
+      "id": "admin_admin_action_result_adminactionresult",
+      "community": 2,
+      "norm_label": "adminactionresult"
+    },
+    {
+      "label": "isAdminActionError()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/admin-action-result.ts",
+      "source_location": "L3",
+      "id": "admin_admin_action_result_isadminactionerror",
+      "community": 2,
+      "norm_label": "isadminactionerror()"
+    },
+    {
+      "label": "format.ts",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/format.ts",
+      "source_location": "L1",
+      "id": "apps_web_src_lib_admin_format_ts",
+      "community": 8,
+      "norm_label": "format.ts"
+    },
+    {
+      "label": "humanizeSlug()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/format.ts",
+      "source_location": "L1",
+      "id": "admin_format_humanizeslug",
+      "community": 8,
+      "norm_label": "humanizeslug()"
+    },
+    {
+      "label": "formatFinishLabel()",
+      "file_type": "code",
+      "source_file": "apps/web/src/lib/admin/format.ts",
+      "source_location": "L9",
+      "id": "admin_format_formatfinishlabel",
+      "community": 8,
+      "norm_label": "formatfinishlabel()"
+    },
+    {
+      "label": "CtaButtons.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ctabuttons_tsx",
+      "community": 1,
+      "norm_label": "ctabuttons.tsx"
+    },
+    {
+      "label": "CtaButtons()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L5",
+      "id": "components_ctabuttons_ctabuttons",
+      "community": 1,
+      "norm_label": "ctabuttons()"
+    },
+    {
+      "label": "Button.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_ui_button_tsx",
+      "community": 7,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "buttonVariants",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L7",
+      "id": "ui_button_buttonvariants",
+      "community": 7,
+      "norm_label": "buttonvariants"
+    },
+    {
+      "label": "ButtonProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L36",
+      "id": "ui_button_buttonprops",
+      "community": 7,
+      "norm_label": "buttonprops"
+    },
+    {
+      "label": "Button",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L42",
+      "id": "ui_button_button",
+      "community": 7,
+      "norm_label": "button"
+    },
+    {
+      "label": "MediaPlaceholder()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/MediaPlaceholder.tsx",
+      "source_location": "L9",
+      "id": "marketing_mediaplaceholder_mediaplaceholder",
+      "community": 7,
+      "norm_label": "mediaplaceholder()"
+    },
+    {
+      "label": "SiteHeaderProps",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L9",
+      "id": "marketing_siteheader_siteheaderprops",
+      "community": 5,
+      "norm_label": "siteheaderprops"
+    },
+    {
+      "label": "NavLink",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L13",
+      "id": "marketing_siteheader_navlink",
+      "community": 5,
+      "norm_label": "navlink"
+    },
+    {
+      "label": "NavGroup",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L18",
+      "id": "marketing_siteheader_navgroup",
+      "community": 5,
+      "norm_label": "navgroup"
+    },
+    {
+      "label": "GATE_LINKS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L24",
+      "id": "marketing_siteheader_gate_links",
+      "community": 5,
+      "norm_label": "gate_links"
+    },
+    {
+      "label": "SERVICE_LINKS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L34",
+      "id": "marketing_siteheader_service_links",
+      "community": 5,
+      "norm_label": "service_links"
+    },
+    {
+      "label": "PRIMARY_LINKS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L44",
+      "id": "marketing_siteheader_primary_links",
+      "community": 5,
+      "norm_label": "primary_links"
+    },
+    {
+      "label": "isActive()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L50",
+      "id": "marketing_siteheader_isactive",
+      "community": 5,
+      "norm_label": "isactive()"
+    },
+    {
+      "label": "groupIsActive()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L55",
+      "id": "marketing_siteheader_groupisactive",
+      "community": 5,
+      "norm_label": "groupisactive()"
+    },
+    {
+      "label": "SiteHeader()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L59",
+      "id": "marketing_siteheader_siteheader",
+      "community": 5,
+      "norm_label": "siteheader()"
+    },
+    {
+      "label": "SiteFooter.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_marketing_sitefooter_tsx",
+      "community": 5,
+      "norm_label": "sitefooter.tsx"
+    },
+    {
+      "label": "START_LINKS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L20",
+      "id": "marketing_sitefooter_start_links",
+      "community": 5,
+      "norm_label": "start_links"
+    },
+    {
+      "label": "LEGAL_LINKS",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L26",
+      "id": "marketing_sitefooter_legal_links",
+      "community": 5,
+      "norm_label": "legal_links"
+    },
+    {
+      "label": "FooterLink()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L32",
+      "id": "marketing_sitefooter_footerlink",
+      "community": 5,
+      "norm_label": "footerlink()"
+    },
+    {
+      "label": "SiteFooter()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L40",
+      "id": "marketing_sitefooter_sitefooter",
+      "community": 5,
+      "norm_label": "sitefooter()"
+    },
+    {
+      "label": "MarketingShell()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L12",
+      "id": "marketing_marketingshell_marketingshell",
+      "community": 5,
+      "norm_label": "marketingshell()"
+    },
+    {
+      "label": "HomeWeldingHero()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/HomeWeldingHero.tsx",
+      "source_location": "L5",
+      "id": "marketing_homeweldinghero_homeweldinghero",
+      "community": 0,
+      "norm_label": "homeweldinghero()"
+    },
+    {
+      "label": "MobileQuoteCTA.tsx",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/MobileQuoteCTA.tsx",
+      "source_location": "L1",
+      "id": "apps_web_src_components_marketing_mobilequotecta_tsx",
+      "community": 5,
+      "norm_label": "mobilequotecta.tsx"
+    },
+    {
+      "label": "MobileQuoteCTA()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/marketing/MobileQuoteCTA.tsx",
+      "source_location": "L6",
+      "id": "marketing_mobilequotecta_mobilequotecta",
+      "community": 5,
+      "norm_label": "mobilequotecta()"
+    },
+    {
+      "label": "NAV",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L9",
+      "id": "admin_adminheader_nav",
+      "community": 7,
+      "norm_label": "nav"
+    },
+    {
+      "label": "AdminHeader()",
+      "file_type": "code",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L15",
+      "id": "admin_adminheader_adminheader",
+      "community": 7,
+      "norm_label": "adminheader()"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "packages/gate-engine/src/index.ts",
+      "source_location": "L1",
+      "id": "packages_gate_engine_src_index_ts",
+      "community": 13,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "calculatePricePlaceholder()",
+      "file_type": "code",
+      "source_file": "packages/gate-engine/src/index.ts",
+      "source_location": "L2",
+      "id": "src_index_calculatepriceplaceholder",
+      "community": 13,
+      "norm_label": "calculatepriceplaceholder()"
+    },
+    {
+      "label": "index.test.ts",
+      "file_type": "code",
+      "source_file": "packages/gate-engine/tests/index.test.ts",
+      "source_location": "L1",
+      "id": "packages_gate_engine_tests_index_test_ts",
+      "community": 13,
+      "norm_label": "index.test.ts"
+    },
+    {
+      "label": "Steelyes Ltd Bespoke Gates Page",
+      "file_type": "code",
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "id": "steelyes_ltd_bespoke_gates_html",
+      "community": 10,
+      "norm_label": "steelyes ltd bespoke gates page"
+    },
+    {
+      "label": "Steelyes Ltd Homepage",
+      "file_type": "code",
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "id": "steelyes_ltd_homepage_html",
+      "community": 10,
+      "norm_label": "steelyes ltd homepage"
+    },
+    {
+      "label": "Steelyes Ltd Homepage Screenshot",
+      "file_type": "image",
+      "source_file": "steelyes_ltd_homepage/screen.png",
+      "id": "steelyes_ltd_homepage_png",
+      "community": 10,
+      "norm_label": "steelyes ltd homepage screenshot"
+    },
+    {
+      "label": "Steelyes Digital Platform",
+      "file_type": "concept",
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "id": "steelyes_ltd_digital_platform",
+      "community": 10,
+      "norm_label": "steelyes digital platform"
+    },
+    {
+      "label": "Digital Gate Configurator",
+      "file_type": "concept",
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "id": "steelyes_ltd_gate_configurator",
+      "community": 10,
+      "norm_label": "digital gate configurator"
+    },
+    {
+      "label": "Bespoke Forge",
+      "file_type": "concept",
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "id": "steelyes_ltd_bespoke_forge",
+      "community": 10,
+      "norm_label": "bespoke forge"
+    },
+    {
+      "label": "The Process (Consultation, Specification, Fabrication, Installation)",
+      "file_type": "concept",
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "id": "steelyes_ltd_process",
+      "community": 10,
+      "norm_label": "the process (consultation, specification, fabrication, installation)"
+    },
+    {
+      "label": "Project Brief",
+      "file_type": "document",
+      "source_file": "docs/PROJECT_BRIEF.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben + Marius (Steelyes Ltd)",
+      "contributor": null,
+      "id": "project_brief",
+      "community": 17,
+      "norm_label": "project brief"
+    },
+    {
+      "label": "Project Status",
+      "file_type": "document",
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "project_status",
+      "community": 6,
+      "norm_label": "project status"
+    },
+    {
+      "label": "Stack Rules",
+      "file_type": "document",
+      "source_file": "docs/STACK_RULES.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (tech lead)",
+      "contributor": null,
+      "id": "stack_rules",
+      "community": 18,
+      "norm_label": "stack rules"
+    },
+    {
+      "label": "Architecture Rules",
+      "file_type": "document",
+      "source_file": "docs/ARCHITECTURE_RULES.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (architect)",
+      "contributor": null,
+      "id": "architecture_rules",
+      "community": 3,
+      "norm_label": "architecture rules"
+    },
+    {
+      "label": "Next Action Plan",
+      "file_type": "document",
+      "source_file": "docs/NEXT_ACTION_PLAN.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "next_action_plan",
+      "community": 6,
+      "norm_label": "next action plan"
+    },
+    {
+      "label": "Design Rules",
+      "file_type": "document",
+      "source_file": "docs/DESIGN_RULES.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (UI/UX lead)",
+      "contributor": null,
+      "id": "design_rules",
+      "community": 19,
+      "norm_label": "design rules"
+    },
+    {
+      "label": "AI Workflow Rules",
+      "file_type": "document",
+      "source_file": "docs/AI_WORKFLOW_RULES.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (project lead)",
+      "contributor": null,
+      "id": "ai_workflow_rules",
+      "community": 20,
+      "norm_label": "ai workflow rules"
+    },
+    {
+      "label": "Internal Changelog",
+      "file_type": "document",
+      "source_file": "docs/CHANGELOG_INTERNAL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "changelog_internal",
+      "community": 6,
+      "norm_label": "internal changelog"
+    },
+    {
+      "label": "Codebase Conventions",
+      "file_type": "document",
+      "source_file": "docs/CODEBASE_CONVENTIONS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (tech lead)",
+      "contributor": null,
+      "id": "codebase_conventions",
+      "community": 21,
+      "norm_label": "codebase conventions"
+    },
+    {
+      "label": "Definition of Done",
+      "file_type": "document",
+      "source_file": "docs/DEFINITION_OF_DONE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (QA lead)",
+      "contributor": null,
+      "id": "definition_of_done",
+      "community": 22,
+      "norm_label": "definition of done"
+    },
+    {
+      "label": "Documentation Index",
+      "file_type": "document",
+      "source_file": "docs/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "readme",
+      "community": 6,
+      "norm_label": "documentation index"
+    },
+    {
+      "label": "Client Blockers",
+      "file_type": "document",
+      "source_file": "docs/CLIENT_BLOCKERS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (project manager)",
+      "contributor": null,
+      "id": "client_blockers",
+      "community": 6,
+      "norm_label": "client blockers"
+    },
+    {
+      "label": "ADR Index",
+      "file_type": "document",
+      "source_file": "docs/adr/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben (project lead)",
+      "contributor": null,
+      "id": "adr_readme",
+      "community": 23,
+      "norm_label": "adr index"
+    },
+    {
+      "label": "ADR 001: Supabase EU Region",
+      "file_type": "document",
+      "source_file": "docs/adr/001-supabase-eu-region.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "adr_001",
+      "community": 3,
+      "norm_label": "adr 001: supabase eu region"
+    },
+    {
+      "label": "Railheads TBD",
+      "file_type": "document",
+      "source_file": "docs/db/RAILHEADS_TBD.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "railheads_tbd",
+      "community": 6,
+      "norm_label": "railheads tbd"
+    },
+    {
+      "label": "Pricing Semantics",
+      "file_type": "document",
+      "source_file": "docs/db/PRICING_SEMANTICS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "pricing_semantics",
+      "community": 6,
+      "norm_label": "pricing semantics"
+    },
+    {
+      "label": "DB Closure Plan",
+      "file_type": "document",
+      "source_file": "docs/db/DB_CLOSURE_PLAN.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "db_closure_plan",
+      "community": 6,
+      "norm_label": "db closure plan"
+    },
+    {
+      "label": "Staging DB Baseline",
+      "file_type": "document",
+      "source_file": "docs/db/STAGING_DB_BASELINE_2026-05-04.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Agent 1",
+      "contributor": null,
+      "id": "staging_db_baseline",
+      "community": 6,
+      "norm_label": "staging db baseline"
+    },
+    {
+      "label": "UI and Content Plan",
+      "file_type": "document",
+      "source_file": "docs/frontend/UI_CONTENT_PLAN.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "ui_content_plan",
+      "community": 6,
+      "norm_label": "ui and content plan"
+    },
+    {
+      "label": "Content Fallbacks",
+      "file_type": "document",
+      "source_file": "docs/frontend/CONTENT_FALLBACKS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "content_fallbacks",
+      "community": 6,
+      "norm_label": "content fallbacks"
+    },
+    {
+      "label": "Page Inventory",
+      "file_type": "document",
+      "source_file": "docs/frontend/PAGE_INVENTORY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "page_inventory",
+      "community": 6,
+      "norm_label": "page inventory"
+    },
+    {
+      "label": "Marketing Site Audit",
+      "file_type": "document",
+      "source_file": "docs/frontend/MARKETING_SITE_AUDIT_2026-05-06.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "marketing_site_audit",
+      "community": 6,
+      "norm_label": "marketing site audit"
+    },
+    {
+      "label": "Frontend Parallel Work Plan",
+      "file_type": "document",
+      "source_file": "docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "frontend_parallel_work_plan",
+      "community": 6,
+      "norm_label": "frontend parallel work plan"
+    },
+    {
+      "label": "Homepage Copy Draft",
+      "file_type": "document",
+      "source_file": "docs/frontend/HOMEPAGE_COPY_DRAFT_2026-05-06.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "homepage_copy_draft",
+      "community": 24,
+      "norm_label": "homepage copy draft"
+    },
+    {
+      "label": "Header and Footer UX Plan",
+      "file_type": "document",
+      "source_file": "docs/frontend/HEADER_FOOTER_UX_PLAN_2026-05-06.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "header_footer_ux_plan",
+      "community": 6,
+      "norm_label": "header and footer ux plan"
+    },
+    {
+      "label": "Client Gate Requirements Reference",
+      "file_type": "document",
+      "source_file": "docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "client_gate_requirements",
+      "community": 25,
+      "norm_label": "client gate requirements reference"
+    },
+    {
+      "label": "Homepage Image Selection",
+      "file_type": "document",
+      "source_file": "docs/frontend/HOMEPAGE_IMAGE_SELECTION_2026-05-08.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Ruben",
+      "contributor": null,
+      "id": "homepage_image_selection",
+      "community": 26,
+      "norm_label": "homepage image selection"
+    },
+    {
+      "label": "Gate Engine",
+      "file_type": "concept",
+      "source_file": "packages/gate-engine/",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "gate_engine",
+      "community": 3,
+      "norm_label": "gate engine"
+    },
+    {
+      "label": "Supabase EU",
+      "file_type": "concept",
+      "source_file": null,
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "supabase_eu",
+      "community": 3,
+      "norm_label": "supabase eu"
+    },
+    {
+      "label": "Steelyes Ltd",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_steelyes_ltd",
+      "community": 11,
+      "norm_label": "steelyes ltd"
+    },
+    {
+      "label": "apps/web",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_apps_web",
+      "community": 11,
+      "norm_label": "apps/web"
+    },
+    {
+      "label": "packages/gate_engine",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_packages_gate_engine",
+      "community": 11,
+      "norm_label": "packages/gate_engine"
+    },
+    {
+      "label": "Admin Panel",
+      "file_type": "concept",
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "review_prompt_admin_panel",
+      "community": 11,
+      "norm_label": "admin panel"
+    },
+    {
+      "label": "gates table",
+      "file_type": "code",
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "review_prompt_gates_table",
+      "community": 3,
+      "norm_label": "gates table"
+    },
+    {
+      "label": "gate_options table",
+      "file_type": "code",
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "review_prompt_gate_options_table",
+      "community": 3,
+      "norm_label": "gate_options table"
+    },
+    {
+      "label": "fencing_panels table",
+      "file_type": "code",
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "review_prompt_fencing_panels_table",
+      "community": 3,
+      "norm_label": "fencing_panels table"
+    },
+    {
+      "label": "Otto Studio",
+      "file_type": "concept",
+      "source_file": "RESOCONTO_COMPLETO_OTTO_STUDIO.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "resoconto_completo_otto_studio_otto_studio",
+      "community": 11,
+      "norm_label": "otto studio"
+    },
+    {
+      "label": "Ruben Havrestiuc",
+      "file_type": "concept",
+      "source_file": "RESOCONTO_COMPLETO_OTTO_STUDIO.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "resoconto_completo_otto_studio_ruben_havrestiuc",
+      "community": 11,
+      "norm_label": "ruben havrestiuc"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_playwright_config_ts",
+      "target": "web_playwright_config_stripmatchingquotes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_web_playwright_config_ts",
+      "target": "web_playwright_config_loadenvfromlocalfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/playwright.config.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "web_playwright_config_loadenvfromlocalfile",
+      "target": "web_playwright_config_stripmatchingquotes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/postcss.config.mjs",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_postcss_config_mjs",
+      "target": "src_middleware_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tailwind.config.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_tailwind_config_ts",
+      "target": "src_middleware_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_gatecard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_manualinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_original",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_updated",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_reloadedcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_spiralscard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_perunitinput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_reloadedspirals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_baseprice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_perm2price",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_updatedperm2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_createpanelform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_createdpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_updatedpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_loginasadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/tests/e2e/admin-crud.spec.ts",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "apps_web_tests_e2e_admin_crud_spec_ts",
+      "target": "e2e_admin_crud_spec_opencard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_middleware_middleware",
+      "target": "admin_user_is_admin_userisadmin"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/middleware.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_middleware_middleware",
+      "target": "src_middleware_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "app_layout_barlowcondensed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "app_layout_barlow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "app_layout_ibmplexmono",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "app_layout_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/layout.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "app_layout_rootlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/layout.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "apps_web_src_app_layout_tsx",
+      "target": "admin_layout_adminlayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "app_layout_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "apps_web_src_lib_posthog_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "lib_posthog_getposthogclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "app_actions_trackgetquoteclicked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "app_actions_trackcatalogueviewed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "admin_admin_action_result_adminactionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "admin_require_admin_requireadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "apps_web_src_lib_supabase_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "supabase_server_getserviceroleclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "gates_actions_updategatepriceschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "gates_actions_updategateprice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "apps_web_src_app_actions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "gate_options_actions_updateoptionschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "gate_options_actions_updategateoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "apps_web_src_app_actions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "fencing_actions_upsertfencingschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "apps_web_src_app_actions_ts",
+      "target": "fencing_actions_upsertfencingpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "apps_web_src_app_actions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "apps_web_src_app_actions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ctabuttons_tsx",
+      "target": "apps_web_src_app_actions_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ctabuttons_tsx",
+      "target": "app_actions_trackgetquoteclicked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_actions_trackgetquoteclicked",
+      "target": "lib_posthog_getposthogclient"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "posthog-setup-report.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "app_actions_trackgetquoteclicked",
+      "target": "apps_web_src_lib_posthog_ts"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ctabuttons_tsx",
+      "target": "app_actions_trackcatalogueviewed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/actions.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "app_actions_trackcatalogueviewed",
+      "target": "lib_posthog_getposthogclient"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "posthog-setup-report.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "app_actions_trackcatalogueviewed",
+      "target": "apps_web_src_lib_posthog_ts"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "admin_page_adminrootpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/login/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "login_loginform_loginform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/login/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "login_page_adminloginpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "admin_adminheader_adminheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "admin_require_admin_requireadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/dashboard/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "dashboard_page_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/dashboard/page.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "dashboard_page_dashboardpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "apps_web_src_lib_supabase_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "supabase_server_getserviceroleclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_gatesboard_gatesboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gates_columns_full",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gates_columns_without_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gatesnamemissingerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gaterow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gatesadminpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gate_options_optioncard_optioncard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gate_options_page_gateoptionsadminpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "fencing_fencingcard_fencingcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "fencing_newfencingform_newfencingform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "fencing_page_fencingadminpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_homeweldinghero_homeweldinghero",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/configurator/page.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_marketingshell_marketingshell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_page_capabilityitems",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_page_gatestandarditems",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_page_processitems",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/page.tsx",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_page_homepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/configurator/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "marketing_mediaplaceholder_mediaplaceholder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "apps_web_src_app_marketing_gates_gate_marketing_data_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_gate_marketing_data_gateslug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gate_display",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_page_gatespage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gates_gate_marketing_data_gate_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "slug_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "style_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/[style]/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "style_page_gatedetailpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "services_page_services",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/page.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "services_page_servicespage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/balconies/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "railings_page_capabilities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/balconies/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "railings_page_spec_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/railings/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "railings_page_railingsservicepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/security/page.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "security_page_securityservicepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/services/balconies/page.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "balconies_page_balconiesservicepage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gallery/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gallery_page_gallery_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gallery/page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "gallery_page_gallerypage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/installation/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "installation_page_installationpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/about/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "about_page_aboutpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/contact/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "contact_page_contactpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "slug_page_case_studies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "case_study_page_casestudyindexpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "slug_page_casestudypageprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/case-study/[slug]/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "slug_page_casestudypage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/legal/privacy-policy/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "privacy_policy_page_privacypolicypage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/legal/cookie-policy/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "cookie_policy_page_cookiepolicypage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/legal/terms/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "terms_page_termspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/configurator/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_page_tsx",
+      "target": "configurator_page_configuratorpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/login/LoginForm.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "login_loginform_loginform",
+      "target": "admin_user_is_admin_userisadmin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/login/LoginForm.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "login_loginform_loginform",
+      "target": "apps_web_src_lib_supabase_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/login/LoginForm.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "login_loginform_loginform",
+      "target": "supabase_eu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/dashboard/page.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "dashboard_page_dashboardpage",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "gates_page_gatesadminpage",
+      "target": "gates_page_gatesnamemissingerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "gates_page_gatesadminpage",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gates/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "gates_page_gatesadminpage",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "gates_actions_updategateprice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "gates_actions_updategateprice",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gates/actions.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "gates_actions_updategateprice",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "gates_gatepricecard_gate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "gates_gatepricecard_gate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "admin_admin_action_result_adminactionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "admin_admin_action_result_isadminactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "apps_web_src_lib_admin_format_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "admin_format_formatfinishlabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "admin_format_humanizeslug"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatePriceCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "gates_gatepricecard_gatepricecard",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "gates_gatepricecard_gatepricecard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "apps_web_src_lib_admin_format_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "admin_format_humanizeslug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "gates_gatesboard_finishfilter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gates/GatesBoard.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_app_admin_gates_gatesboard_tsx",
+      "target": "gates_gatesboard_gatesboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gate-options/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "gate_options_page_gateoptionsadminpage",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gate-options/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "gate_options_page_gateoptionsadminpage",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "gate_options_actions_updategateoption",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "gate_options_actions_updategateoption",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/gate-options/actions.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "gate_options_actions_updategateoption",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "gate_options_optioncard_option",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "admin_admin_action_result_adminactionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "admin_admin_action_result_isadminactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/gate-options/OptionCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "gate_options_optioncard_optioncard",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "fencing_page_fencingadminpage",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/fencing/page.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "fencing_page_fencingadminpage",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "fencing_actions_upsertfencingpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "fencing_actions_upsertfencingpanel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "fencing_actions_upsertfencingpanel",
+      "target": "admin_require_admin_requireadmin"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "apps/web/src/app/admin/fencing/actions.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "fencing_actions_upsertfencingpanel",
+      "target": "supabase_server_getserviceroleclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "fencing_fencingcard_panel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "admin_admin_action_result_adminactionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "admin_admin_action_result_isadminactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/FencingCard.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "fencing_fencingcard_fencingcard",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "fencing_newfencingform_styles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "fencing_newfencingform_finishes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "admin_admin_action_result_adminactionresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/admin/fencing/NewFencingForm.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "fencing_newfencingform_newfencingform",
+      "target": "admin_admin_action_result_isadminactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L199",
+      "weight": 1.0,
+      "source": "apps_web_src_app_marketing_gates_gate_marketing_data_ts",
+      "target": "gates_gate_marketing_data_gateslug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_app_marketing_gates_gate_marketing_data_ts",
+      "target": "gates_gate_marketing_data_gatedata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/app/(marketing)/gates/gate-marketing-data.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "apps_web_src_app_marketing_gates_gate_marketing_data_ts",
+      "target": "gates_gate_marketing_data_gate_data",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L288",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_databasewithoutinternals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L290",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_defaultschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_tables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L321",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_tablesinsert",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L346",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_tablesupdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L371",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_enums",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L388",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_compositetypes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/types/database.types.ts",
+      "source_location": "L405",
+      "weight": 1.0,
+      "source": "apps_web_src_types_database_types_ts",
+      "target": "types_database_types_constants",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_client_ts",
+      "target": "apps_web_src_types_database_types_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_client_ts",
+      "target": "types_database_types_database",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_utils_ts",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MediaPlaceholder.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "marketing_mediaplaceholder_mediaplaceholder",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "admin_adminheader_adminheader",
+      "target": "apps_web_src_lib_utils_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "lib_utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MediaPlaceholder.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "marketing_mediaplaceholder_mediaplaceholder",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L282",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_adminheader_adminheader",
+      "target": "lib_utils_cn"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_env_ts",
+      "target": "lib_env_clientschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_env_ts",
+      "target": "lib_env_serverschema",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_env_ts",
+      "target": "lib_env_serverenv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_env_ts",
+      "target": "lib_env_parseenv",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/env.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_env_ts",
+      "target": "lib_env_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "apps_web_src_lib_env_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_client_ts",
+      "target": "apps_web_src_lib_env_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "lib_env_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_client_ts",
+      "target": "lib_env_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/posthog.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_posthog_ts",
+      "target": "lib_posthog_getposthogclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "supabase_server_cookietoset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "supabase_server_getserverclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/server.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_server_ts",
+      "target": "supabase_server_getserviceroleclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/require-admin.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "admin_require_admin_requireadmin",
+      "target": "apps_web_src_lib_supabase_server_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/require-admin.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_require_admin_requireadmin",
+      "target": "supabase_server_getserverclient"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/supabase/client.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_supabase_client_ts",
+      "target": "supabase_eu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "admin_adminheader_adminheader",
+      "target": "apps_web_src_lib_supabase_client_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/require-admin.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "admin_require_admin_requireadmin",
+      "target": "admin_user_is_admin_userisadmin"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/admin-action-result.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "admin_admin_action_result_adminactionresult",
+      "target": "admin_admin_action_result_isadminactionerror",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/format.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_admin_format_ts",
+      "target": "admin_format_humanizeslug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/lib/admin/format.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "apps_web_src_lib_admin_format_ts",
+      "target": "admin_format_formatfinishlabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/CtaButtons.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ctabuttons_tsx",
+      "target": "components_ctabuttons_ctabuttons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_buttonvariants",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_buttonprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/ui/Button.tsx",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "apps_web_src_components_ui_button_tsx",
+      "target": "ui_button_button",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_siteheaderprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_navlink",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_navgroup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_gate_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_siteheader_gate_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_service_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_siteheader_service_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_primary_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "context": "call",
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_isactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "marketing_siteheader_groupisactive",
+      "target": "marketing_siteheader_isactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteHeader.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "marketing_siteheader_siteheader",
+      "target": "marketing_siteheader_groupisactive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "marketing_marketingshell_marketingshell",
+      "target": "marketing_siteheader_siteheader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_sitefooter_start_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_sitefooter_legal_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_sitefooter_footerlink",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/SiteFooter.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_sitefooter_tsx",
+      "target": "marketing_sitefooter_sitefooter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "marketing_marketingshell_marketingshell",
+      "target": "apps_web_src_components_marketing_sitefooter_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "marketing_marketingshell_marketingshell",
+      "target": "marketing_sitefooter_sitefooter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "marketing_marketingshell_marketingshell",
+      "target": "apps_web_src_components_marketing_mobilequotecta_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MarketingShell.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "marketing_marketingshell_marketingshell",
+      "target": "marketing_mobilequotecta_mobilequotecta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/marketing/MobileQuoteCTA.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "apps_web_src_components_marketing_mobilequotecta_tsx",
+      "target": "marketing_mobilequotecta_mobilequotecta",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "admin_adminheader_adminheader",
+      "target": "admin_adminheader_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "apps/web/src/components/admin/AdminHeader.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "admin_adminheader_adminheader",
+      "target": "supabase_eu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/gate-engine/src/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_gate_engine_src_index_ts",
+      "target": "src_index_calculatepriceplaceholder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/gate-engine/tests/index.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_gate_engine_tests_index_test_ts",
+      "target": "packages_gate_engine_src_index_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "packages/gate-engine/tests/index.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "packages_gate_engine_tests_index_test_ts",
+      "target": "src_index_calculatepriceplaceholder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "source": "steelyes_ltd_homepage_html",
+      "target": "steelyes_ltd_bespoke_gates_html"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "source": "steelyes_ltd_bespoke_gates_html",
+      "target": "steelyes_ltd_gate_configurator"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "source": "steelyes_ltd_bespoke_gates_html",
+      "target": "steelyes_ltd_process"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "steelyes_ltd_bespoke_gates/code.html",
+      "source": "steelyes_ltd_bespoke_gates_html",
+      "target": "steelyes_ltd_bespoke_forge"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "source": "steelyes_ltd_homepage_html",
+      "target": "steelyes_ltd_homepage_png"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "source": "steelyes_ltd_homepage_html",
+      "target": "steelyes_ltd_digital_platform"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "steelyes_ltd_homepage/code.html",
+      "source": "steelyes_ltd_homepage_html",
+      "target": "steelyes_ltd_gate_configurator"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "project_status"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "db_closure_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "staging_db_baseline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "railheads_tbd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "pricing_semantics"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "client_blockers"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "frontend_parallel_work_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/PROJECT_STATUS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "project_status",
+      "target": "next_action_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ARCHITECTURE_RULES.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "architecture_rules",
+      "target": "gate_engine"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/ARCHITECTURE_RULES.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "architecture_rules",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "next_action_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "changelog_internal"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme",
+      "target": "client_blockers"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/CLIENT_BLOCKERS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "client_blockers",
+      "target": "content_fallbacks"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/adr/001-supabase-eu-region.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "adr_001",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/db/PRICING_SEMANTICS.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "pricing_semantics",
+      "target": "railheads_tbd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/db/DB_CLOSURE_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "db_closure_plan",
+      "target": "staging_db_baseline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/frontend/UI_CONTENT_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "ui_content_plan",
+      "target": "marketing_site_audit"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/frontend/UI_CONTENT_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "ui_content_plan",
+      "target": "frontend_parallel_work_plan"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/frontend/UI_CONTENT_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "ui_content_plan",
+      "target": "page_inventory"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "frontend_parallel_work_plan",
+      "target": "content_fallbacks"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/frontend/HEADER_FOOTER_UX_PLAN_2026-05-06.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "header_footer_ux_plan",
+      "target": "page_inventory"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "frontend_parallel_work_plan",
+      "target": "marketing_site_audit"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_apps_web",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "review_prompt_gates_table",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "review_prompt_gate_options_table",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "review_prompt_fencing_panels_table",
+      "target": "supabase_eu"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_apps_web",
+      "target": "readme_steelyes_ltd"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_packages_gate_engine",
+      "target": "readme_steelyes_ltd"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "RESOCONTO_COMPLETO_OTTO_STUDIO.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "resoconto_completo_otto_studio_otto_studio",
+      "target": "readme_steelyes_ltd"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "REVIEW_PROMPT.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "review_prompt_admin_panel",
+      "target": "readme_apps_web"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "RESOCONTO_COMPLETO_OTTO_STUDIO.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "resoconto_completo_otto_studio_ruben_havrestiuc",
+      "target": "resoconto_completo_otto_studio_otto_studio"
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "1966f7b401e13314901c3d62baee768759d9a544"
+}

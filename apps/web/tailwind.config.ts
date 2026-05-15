@@ -41,12 +41,22 @@ const config: Config = {
           from: { opacity: '0', transform: 'scale(1.05)' },
           to: { opacity: '1', transform: 'scale(1)' },
         },
+        'chat-widget-in': {
+          from: { opacity: '0', transform: 'translate(16px, 20px) scale(0.94)' },
+          to: { opacity: '1', transform: 'translate(0, 0) scale(1)' },
+        },
+        'chat-online-pulse': {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.55', transform: 'scale(0.88)' },
+        },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
         'hero-reveal': 'hero-reveal 450ms ease-out both',
         'hero-line-draw': 'hero-line-draw 600ms ease-out both',
         'hero-image-in': 'hero-image-in 900ms ease-out both',
+        'chat-widget-in': 'chat-widget-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both',
+        'chat-online-pulse': 'chat-online-pulse 2s ease-in-out infinite',
       },
     },
   },

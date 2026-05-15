@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { CookieBanner } from '@/components/marketing/CookieBanner'
 import { MobileQuoteCTA } from '@/components/marketing/MobileQuoteCTA'
+import { WhatsAppHelpBanner } from '@/components/marketing/WhatsAppHelpBanner'
 import { SiteFooter } from '@/components/marketing/SiteFooter'
 import { SiteHeader } from '@/components/marketing/SiteHeader'
 
@@ -19,6 +20,7 @@ export function MarketingShell({ pathname, children }: MarketingShellProps) {
       </main>
       <SiteFooter />
       <MobileQuoteCTA />
+      <WhatsAppHelpBanner />
       <CookieBanner />
     </div>
   )

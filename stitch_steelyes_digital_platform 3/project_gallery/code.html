@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow_Condensed:wght@700;900&amp;family=Barlow:wght@300;400;500&amp;family=IBM_Plex_Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#e3e1e1",
+                    "on-surface": "#1b1c1a",
+                    "inverse-surface": "#30312f",
+                    "outline": "#906f6b",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fbf9f6",
+                    "on-primary-container": "#ffd9d5",
+                    "surface-container": "#efeeeb",
+                    "surface-dim": "#dbdad7",
+                    "tertiary-container": "#646464",
+                    "tertiary": "#4c4c4c",
+                    "on-primary-fixed": "#410002",
+                    "surface-container-high": "#eae8e5",
+                    "error": "#ba1a1a",
+                    "secondary": "#795916",
+                    "surface-tint": "#bb1619",
+                    "on-background": "#1b1c1a",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "surface-container-low": "#f5f3f0",
+                    "primary": "#9e000c",
+                    "tertiary-fixed": "#e4e2e2",
+                    "inverse-primary": "#ffb4ab",
+                    "secondary-container": "#fdd182",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#93000a",
+                    "primary-container": "#c41e1e",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#775815",
+                    "on-secondary-fixed": "#271900",
+                    "surface-container-highest": "#e4e2df",
+                    "tertiary-fixed-dim": "#c8c6c6",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#ffdea7",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#fbf9f6",
+                    "inverse-on-surface": "#f2f0ed",
+                    "surface-variant": "#e4e2df",
+                    "on-secondary-fixed-variant": "#5e4200",
+                    "secondary-fixed-dim": "#ebc073",
+                    "on-tertiary-fixed": "#1b1c1c",
+                    "primary-fixed-dim": "#ffb4ab",
+                    "background": "#fbf9f6",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#e5bdb9",
+                    "primary-fixed": "#ffdad6",
+                    "on-surface-variant": "#5c403d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Barlow Condensed"],
+                    "body": ["Barlow"],
+                    "technical": ["IBM Plex Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-white">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex justify-between items-center px-8 py-4 max-w-full mx-auto">
+<a class="text-2xl font-black tracking-tighter text-zinc-900 dark:text-white font-headline" href="#">Steelyes Ltd</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-headline uppercase tracking-tight font-bold transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-red-700" href="#">Our Gates</a>
+<a class="font-headline uppercase tracking-tight font-bold transition-colors duration-200 text-red-700 dark:text-red-500 border-b-2 border-red-700 pb-1" href="#">Case Studies</a>
+<a class="font-headline uppercase tracking-tight font-bold transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-red-700" href="#">The Process</a>
+<a class="font-headline uppercase tracking-tight font-bold transition-colors duration-200 text-zinc-600 dark:text-zinc-400 hover:text-red-700" href="#">Bespoke Forge</a>
+</div>
+<button class="bg-primary hover:bg-[#9B1515] text-white px-6 py-2 font-headline font-bold uppercase tracking-tight transition-all duration-100 active:scale-95">
+                Request Quote
+            </button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-8 py-12">
+<!-- Hero / Header Section -->
+<header class="mb-16 border-l-4 border-primary pl-8">
+<h1 class="font-headline text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-on-surface">
+                The Installation <br/> <span class="text-primary">Archive</span>
+</h1>
+<p class="mt-6 text-xl font-light max-w-2xl text-on-surface-variant leading-relaxed">
+                A definitive collection of Steelyes Ltd commissions. Each project represents a unique dialogue between architectural vision and industrial fabrication.
+            </p>
+</header>
+<!-- Filters Section -->
+<div class="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-surface-container-highest pb-8">
+<div class="space-y-4">
+<span class="font-technical text-xs uppercase tracking-widest text-secondary">Project Filters</span>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2 bg-on-surface text-white font-headline font-bold uppercase tracking-tight text-sm">All Works</button>
+<button class="px-5 py-2 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors font-headline font-bold uppercase tracking-tight text-sm">Cantilever</button>
+<button class="px-5 py-2 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors font-headline font-bold uppercase tracking-tight text-sm">Bifold</button>
+<button class="px-5 py-2 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors font-headline font-bold uppercase tracking-tight text-sm">Pedestrian</button>
+<button class="px-5 py-2 bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high transition-colors font-headline font-bold uppercase tracking-tight text-sm">Architectural Screens</button>
+</div>
+</div>
+<div class="space-y-4 w-full md:w-auto">
+<span class="font-technical text-xs uppercase tracking-widest text-secondary">Region Selection</span>
+<select class="w-full md:w-64 bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary font-headline font-bold uppercase tracking-tight text-lg py-1">
+<option>United Kingdom (All)</option>
+<option>South East &amp; London</option>
+<option>The Midlands</option>
+<option>North West</option>
+<option>Scottish Highlands</option>
+</select>
+</div>
+</div>
+<!-- Masonry Grid -->
+<div class="masonry-grid">
+<!-- Gallery Item 1 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Modern steel gate" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Modern architectural cantilever gate with vertical steel slats in a luxury residential driveway during sunset, warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX_BrJXI0onX2dKTePKx1iztcmbUHgzUF34iAy2Jb3fnmgGpnh0s8SzHuoQJM8hldfUhlwr60wgVcrxD56NzB-2MOJdqOiIc95ztAR7Uvx2WaE1RsG2LKvZw09S9TE06d2OaXHqvBr7gx-gDkCi41QKKJA31Ela1_TDG-veACCfdek3Nx50l5mMb8rjnd0MEfGSmF-Nq3Dlc33Km8J965SrXD4vQnhfHht_4YKmkjK8UTBlVWRWIWpQAX1bPRtckwxtRDD_gArR60"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #2044</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Vantage Cantilever</h3>
+<p class="text-white/80 font-light text-sm mb-4">Cotswolds, UK</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+<!-- Gallery Item 2 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Industrial forge gate" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Heavy industrial black powder-coated swing gates with custom forged steel decorative elements standing against a stone wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMC4jgzH6CUzBu3jJRr5vIXuQjiKek7ktsFz7dixpje5vPnJ3mdL3khZNB2qJLFubqoNUw_Km6hJfSHp20HEfWcyozH_ZPZo8fDCT2bu-lN6JQ4SybfWX0KnbgJPwFBJEteIL78Z15wFBJGJCLZKq4QD7G1zpX-RV45Fbd6OQAVNswGXLbhfdC_6N5p84Qn9vGOXnh81Ptrp7SunvM5x9LLjSTDAYOTxl_xRGA6uQNNUcjQS-iezZxT5-WvMsi3Cc_9L5kssRnoF0"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #1982</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Foundry Swing</h3>
+<p class="text-white/80 font-light text-sm mb-4">Derbyshire Peak District</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+<!-- Gallery Item 3 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Minimalist gate" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Minimalist modern gate with horizontal wood and steel accents, set in a clean concrete wall at high noon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9cCZZCUJ_ufkTkRKqqQA2YMrLWQPnDk7C6PRoIgAXu5ICjrCA5qCZ4jKg5AlQmoeSflwmI6Xe0PcbCRjtfCaQaJ8-zbu7mnPleA58BGltIFyqz3Julx6MuQVb4qwp1BoA24lvJLNN9iiEGI3mblW-yTEEXcYJSjl-gIV5JPbnC4tB2WCMD9HZnjvdOLI3jD4WgMuu7pcBV7DgORpS8ACkxxogvOeNzvRgxetQUD97QQiEU2fsomy7zXiLAhfV1QroMcDldE8Y5mg"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #2103</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Linear Composite</h3>
+<p class="text-white/80 font-light text-sm mb-4">Surrey Hills</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+<!-- Gallery Item 4 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Luxury estate entrance" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Grand entrance of a British estate featuring massive automated steel gates with laser-cut geometric patterns and brick pillars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFYnw2cvwguocPrbErQTlm_uFfzs-p685M-DaKczgH63GLG3zpWl5PqB5syaNbaLncdJFctXcZGiOBNLrHIrm2pPeu1uR5_IpBNx-FkkHd93Xes3RVM2FyM1Z7U2-GiH8LFcaC5EO57yxSEfy4x6Qz3IT3ngT44xo2y83jkV57Nc9mqUcgX3xSopFE7VH0OHKVmTGR6g1nDaTizxQP5A4hDQ5-xoFBLEo2csrNjjkHmpFXDaW3wY-gLgt6BtL8mGzFDH3WEru3gxs"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #2019</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Estate Precision</h3>
+<p class="text-white/80 font-light text-sm mb-4">Hampshire, UK</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+<!-- Gallery Item 5 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Modern courtyard gate" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a steel pedestrian gate with intricate laser-cut organic patterns in a contemporary courtyard setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNZqoD7ueU7Pb6ASyjOmIshIiAvJY88YIWi8P6a_6Xwc_DIX8hcgdb3y7NS7HKu8KYL_U2phPNJA2swwSq86y6p05QoHRMdzdTuUoieNIkM2Zec9-1YWs8-CK1YWaaMND5ba_SPCWV1C3cnc_AhKz7CrgY7GUnCx14jjRYQxySbZLuydmha3v4hESIEtZ4evQDN36r4AVAc0Rx-Sy_NVtizvaQ_uajr7W_l0ZgafX_lJtRVP0uKT6nXLoPsBTzogzmM8mJDW9p3Pw"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #2210</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Filigree Pedestrian</h3>
+<p class="text-white/80 font-light text-sm mb-4">Chelsea, London</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+<!-- Gallery Item 6 -->
+<div class="masonry-item group relative overflow-hidden bg-surface-container-low rounded-lg">
+<img alt="Sleek black gate" class="w-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Sleek black aluminum bifold gates opening onto a modern minimalist driveway with sharp architectural lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg7R8_SxBJGsQTFv92odHme6FFTHKKT8t4rQF2ACDtXVUY0ch_7hO3O7O0SqNEAgkBc1rihAftmnSKJ5Q8TihKQVuOn17co-PuZvpSYft9GvvYkw2hxbn_-Wa7qlm-FDaf8T-t8Qh0Zci2FH03KCIlinISloJzVduTd2_3FrBGSl_m9N8_M7yGyGjGD5xNLYVCZWZEmHZEyDka9dmct4lNB16_lPJbVQ3T77WIySujpcO1g9rhqOeeejTL0YJiz3friUeAwjLBwMo"/>
+<div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="font-technical text-primary text-xs uppercase mb-2">Project #2088</span>
+<h3 class="font-headline text-3xl font-black text-white uppercase leading-none mb-1">Aura Bifold</h3>
+<p class="text-white/80 font-light text-sm mb-4">Oxfordshire</p>
+<div class="w-12 h-1 bg-primary"></div>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More -->
+<div class="mt-20 text-center">
+<button class="inline-flex items-center gap-4 bg-transparent border border-primary text-primary hover:bg-primary hover:text-white px-12 py-5 transition-all duration-300 group">
+<span class="font-headline font-bold uppercase tracking-tight text-xl">Discover More Installations</span>
+<span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Technical Specification Inset -->
+<section class="bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<h2 class="font-headline text-5xl font-black uppercase tracking-tighter leading-none text-on-surface">The Anatomy of <br/>Engineering Excellence</h2>
+<p class="text-on-surface-variant font-light text-lg">Every gate featured in this gallery is fabricated in our British workshop using aerospace-grade steel and calibrated automation components.</p>
+<div class="grid grid-cols-2 gap-8 pt-8 border-t border-surface-container-highest">
+<div>
+<span class="font-headline text-sm uppercase text-zinc-500 block mb-2">Material Standard</span>
+<span class="font-technical text-2xl text-on-surface border-b-2 border-primary inline-block">S355JR STEEL</span>
+</div>
+<div>
+<span class="font-headline text-sm uppercase text-zinc-500 block mb-2">Finish Quality</span>
+<span class="font-technical text-2xl text-on-surface border-b-2 border-primary inline-block">C5-M RATED</span>
+</div>
+</div>
+</div>
+<div class="relative bg-white p-4 shadow-xl rotate-1">
+<img alt="Workshop fabrication" class="w-full grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Action shot of a professional welder working on a large steel gate frame with sparks flying, industrial workshop background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYeVBwiZcLDXD__3CYz2GjdodY4BAPIx0PPFvqgX8vkXDSpZ-O9KhT4PojAc4gknOnjbUv0jMYW9sXW-I_iCqLI1kDg3oTjGoqltFcWSBk9v4ZsZhCYNVwHV7gfqmFiCM9quI8Wp-nbRxQhxeq9fx7BQ_gFUdHPE8imn5OXnkBTRtkI93G27EspqKJIsr0mD-eiL-zTS0nNXd5S_qgXKN-T_O1GmIxW4VP0Nnjw9-1BHvsYZA4CpIqZY3pcWbkRpKPIXys8rHGKsU"/>
+<div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 font-technical text-xs tracking-tighter uppercase">
+                    Ref: Workshop Floor / 08:42 AM
+                </div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#1B1C1A] dark:bg-black text-white">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 py-16 max-w-7xl mx-auto text-left">
+<div class="space-y-6">
+<h2 class="text-3xl font-black uppercase font-headline">Steelyes Ltd</h2>
+<p class="font-body font-light text-zinc-400 text-sm leading-relaxed">
+                    British Engineering Excellence. Defining boundaries through structural integrity and artisanal metalwork since 1994.
+                </p>
+</div>
+<div class="space-y-4">
+<h4 class="font-headline font-bold uppercase text-zinc-500 tracking-wider">Project Services</h4>
+<ul class="space-y-2 font-body font-light text-zinc-400">
+<li><a class="hover:text-white transition-colors" href="#">Bespoke Design</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Structural Calculation</a></li>
+<li><a class="hover:text-white transition-colors" href="#">On-site Installation</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Automated Systems</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-headline font-bold uppercase text-zinc-500 tracking-wider">Technical Resources</h4>
+<ul class="space-y-2 font-body font-light text-zinc-400">
+<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Technical Specs</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Material Grading</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-headline font-bold uppercase text-zinc-500 tracking-wider">Contact Workshop</h4>
+<ul class="space-y-2 font-technical text-sm text-zinc-400">
+<li>Unit 14, Ironbridge Industrial Estate</li>
+<li>Shropshire, TF8 7JQ</li>
+<li class="pt-4 text-primary">+44 (0) 1952 482 991</li>
+<li class="text-primary">forge@steelyes.co.uk</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-zinc-800 py-8 px-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-body font-light text-zinc-500 text-xs text-center md:text-left">© 2024 Steelyes Ltd. British Engineering Excellence.</span>
+<div class="flex gap-6">
+<a class="text-zinc-500 hover:text-white font-headline uppercase font-bold text-xs tracking-widest" href="#">LinkedIn</a>
+<a class="text-zinc-500 hover:text-white font-headline uppercase font-bold text-xs tracking-widest" href="#">Instagram</a>
+</div>
+</div>
+</footer>
+</body></html>

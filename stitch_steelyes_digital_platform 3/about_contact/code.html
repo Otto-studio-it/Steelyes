@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow_Condensed:wght@700;900&amp;family=Barlow:wght@300;400;500&amp;family=IBM_Plex_Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#e3e1e1",
+                        "on-surface": "#1b1c1a",
+                        "inverse-surface": "#30312f",
+                        "outline": "#906f6b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface": "#fbf9f6",
+                        "on-primary-container": "#ffd9d5",
+                        "surface-container": "#efeeeb",
+                        "surface-dim": "#dbdad7",
+                        "tertiary-container": "#646464",
+                        "tertiary": "#4c4c4c",
+                        "on-primary-fixed": "#410002",
+                        "surface-container-high": "#eae8e5",
+                        "error": "#ba1a1a",
+                        "secondary": "#795916",
+                        "surface-tint": "#bb1619",
+                        "on-background": "#1b1c1a",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "surface-container-low": "#f5f3f0",
+                        "primary": "#9e000c",
+                        "tertiary-fixed": "#e4e2e2",
+                        "inverse-primary": "#ffb4ab",
+                        "secondary-container": "#fdd182",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#93000a",
+                        "primary-container": "#c41e1e",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#775815",
+                        "on-secondary-fixed": "#271900",
+                        "surface-container-highest": "#e4e2df",
+                        "tertiary-fixed-dim": "#c8c6c6",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#ffdea7",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fbf9f6",
+                        "inverse-on-surface": "#f2f0ed",
+                        "surface-variant": "#e4e2df",
+                        "on-secondary-fixed-variant": "#5e4200",
+                        "secondary-fixed-dim": "#ebc073",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "primary-fixed-dim": "#ffb4ab",
+                        "background": "#fbf9f6",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#e5bdb9",
+                        "primary-fixed": "#ffdad6",
+                        "on-surface-variant": "#5c403d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Barlow Condensed"],
+                        "body": ["Barlow"],
+                        "label": ["IBM Plex Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-shadow-subtle { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .mask-diagonal { clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%); }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-['Barlow'] font-light">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex justify-between items-center px-8 py-4 max-w-full mx-auto">
+<div class="text-2xl font-black tracking-tighter text-zinc-900 dark:text-white font-['Barlow_Condensed']">
+                STEELYES LTD
+            </div>
+<div class="hidden md:flex gap-8 items-center font-['Barlow_Condensed'] uppercase tracking-tight font-bold">
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-red-700 transition-colors duration-200" href="#">Our Gates</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-red-700 transition-colors duration-200" href="#">Case Studies</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-red-700 transition-colors duration-200" href="#">The Process</a>
+<a class="text-zinc-600 dark:text-zinc-400 hover:text-red-700 transition-colors duration-200" href="#">Bespoke Forge</a>
+</div>
+<button class="bg-primary text-white px-6 py-2 font-['Barlow_Condensed'] font-bold uppercase tracking-widest text-sm hover:bg-primary-container transition-all active:scale-95">
+                Request Quote
+            </button>
+</div>
+</nav>
+<!-- Hero / Intro Section -->
+<section class="relative bg-surface-container-lowest overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 min-h-[614px] items-center">
+<div class="lg:col-span-7 px-8 py-20 lg:py-32 space-y-6">
+<div class="inline-block px-3 py-1 bg-surface-container text-primary font-['IBM_Plex_Mono'] text-xs tracking-widest uppercase mb-4 border-l-2 border-primary">
+                    British Engineering Excellence
+                </div>
+<h1 class="text-6xl md:text-8xl font-['Barlow_Condensed'] font-black uppercase leading-[0.9] tracking-tighter text-on-surface">
+                    Forged with <br/> <span class="text-primary">Intent.</span>
+</h1>
+<p class="max-w-xl text-lg text-on-surface-variant font-light leading-relaxed">
+                    Based in the heart of the industrial North, Steelyes Ltd combines centuries-old blacksmithing techniques with contemporary CAD precision. We don't just manufacture gates; we engineer structural statements.
+                </p>
+</div>
+<div class="lg:col-span-5 h-full min-h-[400px] relative">
+<img alt="Craftsmanship" class="w-full h-full object-cover grayscale brightness-75 contrast-125" data-alt="Close-up of industrial steel welding with bright orange sparks flying in a dark atmospheric British workshop setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ1c5_4yVq-ifk4Gci99pnYcgV3VRjX4GrpyuH2ok-HQqAbxVaunrd9rGXrjCJo1FwybgpWQwGI0Uz74dKqLbpl4zVZrKHQFQcUUtkmAdXLaVIiLMqmRIeaVIUA6o0thG4AP7zfzJYHTZvCvfFX9pbUFGIHUbwCSLbApygrx9JSZmUni2zOPqq_bcKUr9hi5QGIT1rHoBLS3FzdRCK_JbOgPCCA96fKShqN94vRq8nkOtav8Bro7JoPjSWhsa-cAjEMvEieWjQYfY"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+</div>
+</div>
+</section>
+<!-- Company Story / Workshop Focus -->
+<section class="py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
+<div class="space-y-12 order-2 md:order-1">
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-[4/5] overflow-hidden">
+<img alt="Workshop Detail" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Interior of a heavy-duty steel workshop with overhead cranes, metal sheets, and fabrication tools in soft natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSgXevpkdlJNzpILJ0gScMzYSP9VX-CE9mmIkXt5j4gEs5E8nAMyUhCzKPuFpdM4B_VvNNEw4X-nylKrGIgDEibKlvNEq0yRjkMnWsI0se5EvmJiSe6iaerteLoD02le4ageQ0Y-kVVHUkw-52t_OELrJ9NuRF25i7vq6XvK3DjoCm1sLkEiRpxjcfVSF-ynqE9qqPNnUBwfdBAwq3NSA3LmBkFbz7GXkJrM2Xxwy4g8YAahLEg_uQnC5xlAOJ_zj4p_4zT3xBOGQ"/>
+</div>
+<div class="aspect-[4/5] overflow-hidden mt-12">
+<img alt="The Artisan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Detail shot of a craftsman's hands measuring a steel beam with a precision caliper in a professional workshop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXTPzLl-wG2F5m2CW3yxJvTrBLl6usjaYr24zRSULc8A3lqnuEPWn4_nWIVkkcuBI5S26z2M_nOgOxHBxvaeKEjgoXOtWlmKe0YGsI11xZzABnKakpImC-xMhNsXTOx0ICvCnDGe3Bk1QHqOchceLf3ea44HdfaAjaE_G-bwt8iQjfG8xsqRCNyupgh__rmVS1zweVd6rEQ3gv2Wizi5T0DqS3sIT723ALcbORQuXTCInJGGDpprIcN8T5FM-wS445EUwSF8r-f2c"/>
+</div>
+</div>
+</div>
+<div class="order-1 md:order-2 space-y-8 sticky top-32">
+<h2 class="text-4xl font-['Barlow_Condensed'] font-black uppercase tracking-tight text-on-surface">The Workshop Ethos</h2>
+<div class="w-16 h-1 bg-primary"></div>
+<div class="space-y-6 text-on-surface-variant text-lg">
+<p>Our workshop is where raw iron meets digital accuracy. Every project begins with a 3D structural analysis before the first cut is even made. This marriage of high-tech planning and manual execution ensures that every gate we produce is balanced to within a millimeter.</p>
+<p>We source our steel exclusively from British foundries, ensuring a carbon footprint that respects the landscape our products eventually guard.</p>
+</div>
+<div class="pt-8">
+<div class="flex items-center gap-6">
+<div>
+<p class="font-['Barlow_Condensed'] font-bold text-5xl text-on-surface">15+</p>
+<p class="font-['IBM_Plex_Mono'] text-xs uppercase tracking-widest text-primary">Years Experience</p>
+</div>
+<div class="h-12 w-px bg-surface-container-highest"></div>
+<div>
+<p class="font-['Barlow_Condensed'] font-bold text-5xl text-on-surface">2.4k</p>
+<p class="font-['IBM_Plex_Mono'] text-xs uppercase tracking-widest text-primary">Forged Installs</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Values Section (Precision & Reliability) -->
+<section class="bg-surface-container-low py-24">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-surface-container-highest/20">
+<!-- Precision -->
+<div class="bg-surface-container-lowest p-12 md:p-20 space-y-6 group">
+<span class="material-symbols-outlined text-5xl text-primary font-light" style="font-variation-settings: 'FILL' 0;">precision_manufacturing</span>
+<h3 class="text-3xl font-['Barlow_Condensed'] font-bold uppercase tracking-tight">01. Precision</h3>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                        We operate on a zero-tolerance policy for error. Every hinge, every latch, and every structural rib is calculated for thermal expansion and long-term mechanical wear. Our precision is your peace of mind.
+                    </p>
+<div class="font-['IBM_Plex_Mono'] text-[10px] uppercase text-zinc-400 tracking-[0.3em] pt-4">Tolerances: ±0.05mm Standard</div>
+</div>
+<!-- Reliability -->
+<div class="bg-surface-container-lowest p-12 md:p-20 space-y-6 group border-l border-surface-container-highest">
+<span class="material-symbols-outlined text-5xl text-primary font-light" style="font-variation-settings: 'FILL' 0;">verified</span>
+<h3 class="text-3xl font-['Barlow_Condensed'] font-bold uppercase tracking-tight">02. Reliability</h3>
+<p class="text-on-surface-variant font-light leading-relaxed">
+                        A Steelyes gate is a permanent addition to your architecture. We use industrial-grade powder coating and marine-spec galvanization to ensure that our work withstands the harshest British coastal elements.
+                    </p>
+<div class="font-['IBM_Plex_Mono'] text-[10px] uppercase text-zinc-400 tracking-[0.3em] pt-4">Guarantee: 25-Year Structural Integrity</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="bg-surface-container-lowest py-24">
+<div class="max-w-7xl mx-auto px-8">
+<div class="mb-16">
+<h2 class="text-5xl font-['Barlow_Condensed'] font-black uppercase tracking-tighter">Contact the Workshop</h2>
+<p class="text-on-surface-variant mt-2 font-['IBM_Plex_Mono'] text-sm">Direct line to our fabrication team.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+<!-- Contact Form -->
+<div class="space-y-8">
+<div class="inline-flex items-center gap-3 px-4 py-2 bg-primary/5 border border-primary/20 rounded-full">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-['IBM_Plex_Mono'] text-xs font-bold text-primary uppercase tracking-wider">We respond within 1 business day</span>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-1">
+<label class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-zinc-500">Full Name</label>
+<input class="w-full bg-transparent border-0 border-b border-zinc-200 focus:ring-0 focus:border-primary transition-all p-0 pb-2 placeholder-zinc-300 font-light" placeholder="Johnathan Doe" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-zinc-500">Email Address</label>
+<input class="w-full bg-transparent border-0 border-b border-zinc-200 focus:ring-0 focus:border-primary transition-all p-0 pb-2 placeholder-zinc-300 font-light" placeholder="j.doe@example.com" type="email"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-zinc-500">Project Type</label>
+<select class="w-full bg-transparent border-0 border-b border-zinc-200 focus:ring-0 focus:border-primary transition-all p-0 pb-2 font-light">
+<option>Automated Swing Gates</option>
+<option>Pedestrian Entry</option>
+<option>Cantilever Sliding</option>
+<option>Bespoke Commercial</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-zinc-500">Project Details</label>
+<textarea class="w-full bg-transparent border-0 border-b border-zinc-200 focus:ring-0 focus:border-primary transition-all p-0 pb-2 placeholder-zinc-300 font-light resize-none" placeholder="Dimensions, material preference, and site location..." rows="4"></textarea>
+</div>
+<button class="w-full md:w-auto bg-primary text-white px-12 py-4 font-['Barlow_Condensed'] font-bold uppercase tracking-[0.2em] hover:bg-primary-container transition-all active:scale-95 flex items-center justify-center gap-3">
+                            Send Specification
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Details & Map -->
+<div class="space-y-12">
+<div class="aspect-video w-full grayscale contrast-125 border border-surface-container-highest relative overflow-hidden">
+<img alt="Location Map" class="w-full h-full object-cover opacity-60" data-alt="Minimalist grayscale satellite map view of an industrial park in the UK, clean and architectural." data-location="Sheffield, UK" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGkiKOW0-QUhsBN-V2Tv1HLZdPztP_cShh6Hijd9YrpcUnfP8zepPYfzKw3nfY15Gk6ToVlxHjVcO5Ee6CHgILxxtVRzEtriKF8FOQSRnQoychvOykuALbLg2MEJh5rssem75fTu-4MMRDPR9rCm16y2AD7B2XabLH4KdVGEqfMUhCNfd1LTyxddQM56DgnAM8jQFjr_j6qKMmeBKlzcDHOt1cm6CgySFlaSBbRjVLhzTkYuWzFkkhqe_dYxaB47H-vGOWZewt7es"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-12 h-12 bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white">location_on</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-light">
+<div class="space-y-4">
+<h4 class="font-['Barlow_Condensed'] font-bold uppercase tracking-widest text-primary text-sm">The Forge</h4>
+<p class="text-on-surface-variant leading-relaxed">
+                                Unit 4, Vulcan Works<br/>
+                                Ironbridge Road<br/>
+                                Sheffield, S1 4ST<br/>
+                                United Kingdom
+                            </p>
+</div>
+<div class="space-y-4">
+<h4 class="font-['Barlow_Condensed'] font-bold uppercase tracking-widest text-primary text-sm">Direct Contact</h4>
+<p class="text-on-surface-variant leading-relaxed">
+                                T: +44 (0) 114 234 5678<br/>
+                                E: forge@steelyes.co.uk
+                            </p>
+<div class="pt-2 flex gap-4">
+<a class="text-zinc-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="text-zinc-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">mark_email_read</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#1B1C1A] dark:bg-black text-white pt-24 pb-8">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 text-left mb-16">
+<div class="space-y-6">
+<div class="text-3xl font-black uppercase text-white font-['Barlow_Condensed']">STEELYES LTD</div>
+<p class="text-zinc-500 font-['Barlow'] font-light leading-relaxed">Providing high-end architectural steel solutions for commercial and residential estates across the United Kingdom since 2009.</p>
+</div>
+<div>
+<h5 class="font-['Barlow_Condensed'] font-bold uppercase text-red-600 mb-6 tracking-widest text-xs">Resources</h5>
+<ul class="space-y-4 text-zinc-500 font-['Barlow'] font-light">
+<li><a class="hover:text-white transition-colors" href="#">Technical Specs</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Material Grading</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-['Barlow_Condensed'] font-bold uppercase text-red-600 mb-6 tracking-widest text-xs">Company</h5>
+<ul class="space-y-4 text-zinc-500 font-['Barlow'] font-light">
+<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Workshop</a></li>
+<li><a class="hover:text-white transition-colors" href="#">LinkedIn</a></li>
+</ul>
+</div>
+<div class="bg-zinc-900 p-8 space-y-4">
+<h5 class="font-['Barlow_Condensed'] font-bold uppercase text-white tracking-widest text-xs">Newsletter</h5>
+<p class="text-zinc-500 text-xs font-['IBM_Plex_Mono']">Receive technical updates and portfolio reveals.</p>
+<div class="flex border-b border-zinc-700">
+<input class="bg-transparent border-none focus:ring-0 text-white placeholder-zinc-700 w-full py-2 px-0" placeholder="email@address.com" type="email"/>
+<button class="text-red-600 px-2 uppercase font-bold text-xs tracking-widest">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 border-t border-zinc-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-zinc-500 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-[0.2em]">
+                © 2024 Steelyes Ltd. British Engineering Excellence.
+            </div>
+<div class="flex gap-6 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-[0.2em] text-zinc-700">
+<span>EST 2009</span>
+<span>Reg: 0684122</span>
+</div>
+</div>
+</footer>
+</body></html>
