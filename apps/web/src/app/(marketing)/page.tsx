@@ -16,22 +16,22 @@ const gateStyles = [
   {
     title: 'Modern',
     body: 'Clean horizontal lines, strong geometry and a sharp architectural finish for contemporary homes.',
-    image: '/images/client-uploads/selected/1000048883.JPG',
-    imageAlt: 'Wide black steel gate and rail frontage on a residential street',
+    image: '/images/home/modern-diagonal-steel-gate.jpg',
+    imageAlt: 'Modern black steel driveway gate with diagonal slat infill between brick pillars',
     tag: 'Architectural profile',
   },
   {
     title: 'Classic',
     body: 'Traditional proportions, heavier steel presence and timeless detailing for period homes and formal driveways.',
-    image: '/images/client-uploads/selected/1000051998.JPG',
-    imageAlt: 'Decorative ornate steel driveway gate with matching entrance detailing',
+    image: '/images/home/classic-ornate-driveway-gate.jpg',
+    imageAlt: 'Classic ornate black wrought-iron double driveway gate with arched top',
     tag: 'Steel framed',
   },
   {
     title: 'Privacy',
     body: 'Closed and semi-closed designs for entrances that need screening, security and a quieter street-facing profile.',
-    image: '/images/client-uploads/selected/1000052251.JPG',
-    imageAlt: 'Black privacy gate with horizontal infill panels',
+    image: '/images/home/privacy-horizontal-steel-gate.jpg',
+    imageAlt: 'Privacy sliding gate with horizontal composite infill panels in a black steel frame',
     tag: 'Screened infill',
   },
 ]
@@ -83,23 +83,23 @@ const mosaicImages = [
 const fabricationHighlights = [
   {
     title: 'Workshop fit-up',
-    body: 'Show the fabrication line itself: welding, alignment, and steel preparation before finishing.',
+    body: 'Welding, alignment and steel preparation in our own workshop before finishing and installation — built by the same team that surveys your site.',
     image: '/images/client-uploads/selected/1000052013.JPG',
-    alt: 'Steel frame under fabrication and fit-up',
+    alt: 'Steel frame under fabrication and fit-up in the workshop',
   },
   {
     title: 'Detail work',
-    body: 'Use close-ups for finials, perforated steel, and edge detailing so the craftsmanship is visible.',
+    body: 'Finials, perforated steel and close-up metalwork finished to your specification — craftsmanship you can see in the detail.',
     image: '/images/client-uploads/selected/1000048834.JPG',
     alt: 'Ornamental steel detail showing finish quality',
   },
   {
     title: 'Structural steel',
-    body: 'Balance gate imagery with balconies and frames so the portfolio reads as a fabrication business, not only a gate seller.',
+    body: 'Balconies, frames and installed structural steel alongside our gates — one fabrication business for your whole property, not entrance work alone.',
     image: '/images/client-uploads/selected/1000052209.JPG',
     alt: 'Glass balcony and steel structure in an installed setting',
   },
-] as const
+]
 
 export default function HomePage() {
   return (
@@ -134,8 +134,8 @@ export default function HomePage() {
       {/* ── Editorial intro / what we build ── */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
-          {/* Left: large featured image */}
-          <div className="relative lg:col-span-5 lg:pr-12">
+          {/* Left: large featured image — desktop only (hidden on phone & tablet) */}
+          <div className="relative hidden lg:col-span-5 lg:block lg:pr-12">
             {/* On mobile use 4/3 landscape; portrait on desktop */}
             <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB] md:aspect-[3/4]">
               <Image
@@ -274,15 +274,16 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-4">
-              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Beyond gates</p>
+              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Our workshop</p>
               <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">
-                Fabrication
+                More than
                 <br />
-                in view.
+                gates alone.
               </h2>
               <p className="mt-5 text-sm leading-relaxed text-[#5C403D] md:text-base">
-                The client asked for more visibility of the rest of the workshop output. This section makes the
-                broader range explicit: railings, balconies, steel structures and fabrication detail, not only gates.
+                Steelyes is a steel fabrication workshop — not only a gate supplier. In the same shop we cut, weld,
+                finish and install driveway gates alongside railings, glass balconies, staircases, platforms,
+                structural frames and security steelwork, all made to measure from your site brief.
               </p>
             </div>
 
