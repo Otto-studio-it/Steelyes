@@ -29,9 +29,19 @@ const config: Config = {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'hero-reveal': {
+          from: { opacity: '0', transform: 'translateY(10px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'hero-line-draw': {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
+        'hero-reveal': 'hero-reveal 450ms ease-out both',
+        'hero-line-draw': 'hero-line-draw 600ms ease-out both',
       },
     },
   },
