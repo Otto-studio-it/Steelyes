@@ -21,8 +21,9 @@ This is the current operating snapshot. Use it first when resuming work.
 | Supabase production auth | Restored | Ruben | `steelyes-prod` admin auth repaired on 2026-05-09 after fixing a broken `auth.users` record. |
 | Business/pricing data | Blocked | Marius | Final prices, railheads, finishes, and real fencing catalogue still missing. |
 | Public deployment/domain | Blocked operationally | Ruben + Marius | `steelyes.co.uk` still serves the legacy GoDaddy site; new Next app is not live on the public domain. |
-| Share-link route | Pending app feature | Ruben | DB allows anon read of saved configurations, but `/configurator/[id]` does not exist yet. |
-| Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending. |
+| Share-link route | Pending app feature | Ruben | Default public share route is now `/quote/[shareToken]`; `/configurator/[id]` is no longer the baseline path. |
+| Configurator MVP | Ready for implementation | Ruben | 2D-first roadmap documented in `docs/frontend/CONFIGURATOR_ROADMAP_2026-05-19.md`; 3D/AR remains on-demand. |
+| Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending; configurator foundation work can now start in parallel. |
 | Backend completion | Paused deliberately | Ruben | Resume when frontend requires it or client data arrives. |
 
 ---
@@ -69,9 +70,10 @@ Canonical DB references:
 
 - Put the new app live on Vercel with production env vars pointing at `steelyes-prod`.
 - Connect `steelyes.co.uk` (or a temporary Vercel domain) to the active deployment.
-- Decide whether to implement `/configurator/[id]` now or move share-link E2E out of DB technical closure.
+- Decide whether to extend the share route beyond `/quote/[shareToken]` or keep the MVP share model as-is.
 - Audit UI/content routes and bring the visible product experience up to a client-ready staging baseline.
 - Prepare fallback copy for missing catalogue data.
+- Implement the 2D-first configurator foundation from `docs/frontend/CONFIGURATOR_ROADMAP_2026-05-19.md`.
 - Coordinate parallel frontend work across Claude Code, Cursor, and Codex using `docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md`.
 - Re-run frontend checks after UI/content changes.
 

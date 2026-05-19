@@ -93,6 +93,30 @@ Closure condition:
 
 ---
 
+## Phase D0 — Configurator Foundation
+
+**Status:** ready to start
+
+Goal: build the first usable configurator as a 2D-first product with on-demand 3D/AR export.
+
+Work:
+
+- [ ] Replace the current `/configurator` placeholder with a real entry flow.
+- [ ] Define the shared config model in `packages/gate-engine`.
+- [ ] Implement validation for gate type, style, dimensions, and option compatibility.
+- [ ] Implement indicative pricing with explicit fallback states.
+- [ ] Build the first 2D renderer for the selected gate configuration.
+- [ ] Wire the preview, price summary, and option controls into one flow.
+- [ ] Add the save/share contract for the configurator state.
+- [ ] Keep 3D/AR export lazy-loaded and user-initiated only.
+- [ ] Add unit tests for the shared engine and preview contract.
+
+Closure condition:
+
+- A user can configure a gate, see a live 2D preview, get an indicative price, and proceed to quote or save.
+
+---
+
 ## Phase D — UI/Content Stabilization
 
 **Status:** pending after deployment alignment
@@ -104,7 +128,7 @@ Work:
 - [ ] Polish high-value public pages first:
   - homepage;
   - gates/catalogue;
-  - configurator entry;
+  - configurator entry and configurator summary screens;
   - services/installations;
   - about/contact.
 - [ ] Apply fallback copy consistently:
@@ -130,12 +154,13 @@ Resume when one of these becomes true:
 
 - Marius provides final pricing/catalogue data.
 - UI/content work requires a backend route or action.
-- We decide share-link is in current scope and implement `/configurator/[id]`.
+- We decide to extend share-link beyond `/quote/[shareToken]` and add an alternate public share route.
 - Quote requests admin dashboard becomes a current deliverable.
+- The configurator foundation is ready to extend into share links and AR handoff.
 
 Potential work:
 
-- [ ] Implement `/configurator/[id]` or revised share route.
+- [ ] Implement alternate share route only if the MVP route set is extended beyond `/quote/[shareToken]`.
 - [ ] Add share-link E2E.
 - [ ] Import final catalogue data.
 - [ ] Promote railheads from provisional `gate_options` only if real data justifies first-class schema.
