@@ -19,7 +19,7 @@ export function MarketingShell({ pathname, children }: MarketingShellProps) {
         {children}
       </main>
       <SiteFooter />
-      <MobileQuoteCTA />
+      {!pathname.startsWith('/configurator') ? <MobileQuoteCTA /> : null}
       <WhatsAppHelpBanner />
       <CookieBanner />
     </div>
