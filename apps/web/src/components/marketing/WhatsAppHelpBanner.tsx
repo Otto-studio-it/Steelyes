@@ -48,72 +48,55 @@ export function WhatsAppHelpBanner() {
 
   return (
     <div
-      className="fixed inset-x-0 bottom-0 z-[45] flex justify-end px-3 pb-[calc(5.25rem+env(safe-area-inset-bottom))] sm:inset-x-auto sm:right-4 sm:px-0 sm:pb-6"
+      className="fixed right-4 z-[45] w-[min(calc(100vw-2rem),23.75rem)] origin-bottom-right bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:right-5 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]"
       aria-live="polite"
     >
       <div
         role="dialog"
         aria-label="WhatsApp help"
-        className="animate-chat-widget-in pointer-events-auto w-full max-w-[min(100%,15rem)] origin-bottom-right"
+        className="animate-chat-widget-in pointer-events-auto w-full"
       >
-        <div className="overflow-hidden rounded-xl border border-zinc-200/90 bg-white shadow-[0_12px_32px_-10px_rgba(0,0,0,0.22)] ring-1 ring-black/5">
-          <div className="flex items-center gap-2 border-b border-zinc-100 bg-zinc-50/80 px-2.5 py-2">
-            <div className="relative shrink-0">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#25D366] text-white shadow-sm">
-                <WhatsAppIcon className="h-3.5 w-3.5" />
-              </div>
-              <span
-                className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-white bg-[#22c55e] animate-chat-online-pulse"
-                aria-hidden
-              />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-heading text-[11px] font-bold uppercase tracking-wide text-[#1B1C1A]">
-                Steelyes Team
-              </p>
-              <p className="flex items-center gap-1 font-mono text-[8px] uppercase tracking-widest text-[#25D366]">
-                <span className="inline-block h-1 w-1 rounded-full bg-[#25D366] animate-chat-online-pulse" />
-                Online
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={dismiss}
-              aria-label="Dismiss"
-              className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-200/80 hover:text-zinc-700"
+        <div className="relative rounded-3xl bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Dismiss"
+            className="absolute right-5 top-5 inline-flex h-6 w-6 items-center justify-center text-zinc-400 transition-colors hover:text-zinc-600"
+          >
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              aria-hidden
             >
-              <span className="text-sm leading-none">×</span>
-            </button>
-          </div>
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
 
-          <div className="space-y-2 px-2.5 py-2">
-            <div className="relative max-w-[95%] rounded-lg rounded-bl-sm bg-[#F4F4F5] px-2 py-1 text-[9px] leading-tight text-[#52525B]">
-              <p>
-                Welcome to our site, if you need help simply reply to this message, we are online and ready to help.
+          <div className="flex gap-4">
+            <WhatsAppIcon className="mt-0.5 h-10 w-10 shrink-0 text-[#25D366]" />
+
+            <div className="min-w-0 flex-1 pr-5">
+              <p className="font-heading text-base font-bold leading-snug text-[#1B1C1A]">
+                We&apos;re here to help
               </p>
-              <span
-                className="absolute -bottom-0.5 left-2 h-2 w-2 rotate-45 bg-[#F4F4F5]"
-                aria-hidden
-              />
+              <p className="mt-1.5 text-sm leading-relaxed text-[#666666]">
+                Welcome to our site. If you need help, reply on WhatsApp — we&apos;re online and ready
+                to assist.
+              </p>
+
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-zinc-300 bg-white px-5 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:bg-zinc-50"
+              >
+                Reply on WhatsApp
+              </a>
             </div>
-
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex w-full min-h-[34px] items-center justify-center gap-1.5 rounded-lg bg-[#25D366] px-2.5 font-heading text-[10px] font-bold uppercase tracking-[0.05em] text-white shadow-sm transition-all duration-200 hover:bg-[#1ebe57] active:scale-[0.98]"
-            >
-              <WhatsAppIcon className="h-3.5 w-3.5 transition-transform duration-200 group-hover:scale-110" />
-              Reply on WhatsApp
-            </a>
-
-            <button
-              type="button"
-              onClick={dismiss}
-              className="w-full py-0.5 text-center font-mono text-[8px] uppercase tracking-widest text-zinc-400 transition-colors hover:text-zinc-600"
-            >
-              Maybe later
-            </button>
           </div>
         </div>
       </div>
