@@ -39,6 +39,11 @@ export {
   buildGateRenderPlan,
 } from './rendering'
 export {
+  buildGateMeshPlan,
+  mmToSceneUnits,
+  MM_TO_SCENE_UNITS,
+} from './mesh'
+export {
   FINISH_CATALOG,
   getFinishDefinition,
   getFinishStrokeColor,
@@ -83,6 +88,11 @@ export type {
   GateRenderPlan,
   GateRenderPrimitive,
 } from './rendering'
+export type {
+  GateMeshBox,
+  GateMeshBoxRole,
+  GateMeshPlan,
+} from './mesh/types'
 export type {
   FinishDefinition,
   FinishMaterialTokens,
