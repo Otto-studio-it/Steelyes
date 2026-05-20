@@ -12,7 +12,7 @@ type QuoteSharePageProps = {
   }
 }
 
-export async function generateMetadata({ params }: QuoteSharePageProps): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Shared gate configuration',
     description: 'Read-only preview of a saved Steelyes gate configuration and indicative pricing.',
