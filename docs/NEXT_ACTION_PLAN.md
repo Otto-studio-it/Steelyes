@@ -3,7 +3,7 @@ title: Next Action Plan
 description: Ordered execution plan after DB/RLS hardening
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-09
+last_updated: 2026-05-20
 ---
 
 # Steelyes — Next Action Plan
@@ -37,6 +37,7 @@ Deliverables:
 - [x] Create `docs/NEXT_ACTION_PLAN.md` as the operating plan.
 - [x] Create `docs/CHANGELOG_INTERNAL.md` as the verified work log.
 - [x] Create `docs/frontend/` planning docs for UI/content.
+- [x] Capture the configurator scope freeze in `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`.
 - [ ] Review whether stale phase docs should be archived or updated after the next UI/content audit.
 
 Closure condition:
@@ -97,11 +98,12 @@ Closure condition:
 
 **Status:** ready to start
 
-Goal: build the first usable configurator as a 2D-first product with on-demand 3D/AR export.
+Goal: harden the current `/configurator` entry into the first usable 2D-first configurator with on-demand 3D/AR export.
 
 Work:
 
-- [ ] Replace the current `/configurator` placeholder with a real entry flow.
+- [x] Treat `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md` as the authoritative configurator execution order.
+- [ ] Evolve the current `/configurator` entry shell into the real configurator flow.
 - [ ] Define the shared config model in `packages/gate-engine`.
 - [ ] Implement validation for gate type, style, dimensions, and option compatibility.
 - [ ] Implement indicative pricing with explicit fallback states.

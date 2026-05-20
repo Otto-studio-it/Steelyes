@@ -1,4 +1,41 @@
-import { type GateConfig, type GateOptionSelection } from './types'
+import { getFinishDefinition, getFinishStrokeColor } from './finishes'
+import {
+  getDecorativeBarCapacity,
+  getExpectedDogBarCount,
+  getExpectedDogBarRailheadCount,
+  getExpectedTopRailheadCount,
+} from './rules/geometry'
+import { type FinishCode, type GateConfig, type GateOptionSelection } from './types'
+import { validateGateConfig } from './validation'
+
+type RenderPalette = {
+  ink: string
+  accent: string
+  accentSoft: string
+  panel: string
+  panelSoft: string
+  steel: string
+  label: string
+  shadow: string
+  postFill: string
+}
+
+function resolveRenderPalette(finish: FinishCode): RenderPalette {
+  const definition = getFinishDefinition(finish)
+  const tokens = definition.schematic
+
+  return {
+    ink: getFinishStrokeColor(tokens, finish),
+    accent: tokens.accent,
+    accentSoft: tokens.infill,
+    panel: tokens.panel,
+    panelSoft: tokens.infill,
+    steel: tokens.strokeMuted,
+    label: tokens.label,
+    shadow: 'rgba(0, 0, 0, 0.12)',
+    postFill: finish === 'pearl_white' ? tokens.infill : tokens.panel,
+  }
+}
 
 export type GateRenderPrimitive =
   | {
@@ -84,14 +121,6 @@ const FRAME_Y = 150
 const FRAME_WIDTH = 960
 const FRAME_HEIGHT = 520
 
-const COLOR_INK = '#202020'
-const COLOR_RED = '#2A2A2A'
-const COLOR_PANEL = '#FFFFFF'
-const COLOR_PANEL_SOFT = '#F7F7F7'
-const COLOR_GOLD = '#5F5F5F'
-const COLOR_STEEL = '#8A8A8A'
-const COLOR_SHADOW = 'rgba(0, 0, 0, 0.12)'
-
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
@@ -112,6 +141,10 @@ function formatTypeLabel(gateType: GateConfig['gateType']): string {
   return gateType.split('_').join(' ')
 }
 
+function formatStyleLabel(style: GateConfig['style']): string {
+  return style.split('_').join(' ')
+}
+
 function hasOption(config: GateConfig, key: GateOptionSelection['key']): boolean {
   return config.options.some((option) => option.key === key && option.enabled)
 }
@@ -124,6 +157,7 @@ function getOptionQuantity(config: GateConfig, key: GateOptionSelection['key']):
 function pushShadowLine(
   primitives: GateRenderPrimitive[],
   primitive: Omit<Extract<GateRenderPrimitive, { kind: 'line' }>, 'id'> & { id: string },
+  palette: RenderPalette,
   offsetX = 2,
   offsetY = 2,
 ): void {
@@ -134,7 +168,7 @@ function pushShadowLine(
     y1: primitive.y1 + offsetY,
     x2: primitive.x2 + offsetX,
     y2: primitive.y2 + offsetY,
-    stroke: COLOR_SHADOW,
+    stroke: palette.shadow,
     strokeWidth: Math.max(1, (primitive.strokeWidth ?? 1) - 0.6),
     opacity: 0.45,
   })
@@ -144,6 +178,7 @@ function pushShadowLine(
 function pushShadowRect(
   primitives: GateRenderPrimitive[],
   primitive: Omit<Extract<GateRenderPrimitive, { kind: 'rect' }>, 'id'> & { id: string },
+  palette: RenderPalette,
   offsetX = 3,
   offsetY = 3,
 ): void {
@@ -152,7 +187,7 @@ function pushShadowRect(
     id: `${primitive.id}-shadow`,
     x: primitive.x + offsetX,
     y: primitive.y + offsetY,
-    stroke: COLOR_SHADOW,
+    stroke: palette.shadow,
     strokeWidth: Math.max(1, (primitive.strokeWidth ?? 1) - 1),
     opacity: 0.35,
     fill: primitive.fill ?? 'none',
@@ -164,6 +199,7 @@ function pushShadowRect(
 function pushShadowCircle(
   primitives: GateRenderPrimitive[],
   primitive: Omit<Extract<GateRenderPrimitive, { kind: 'circle' }>, 'id'> & { id: string },
+  palette: RenderPalette,
   offsetX = 2,
   offsetY = 2,
 ): void {
@@ -172,7 +208,7 @@ function pushShadowCircle(
     id: `${primitive.id}-shadow`,
     cx: primitive.cx + offsetX,
     cy: primitive.cy + offsetY,
-    stroke: COLOR_SHADOW,
+    stroke: palette.shadow,
     strokeWidth: Math.max(1, (primitive.strokeWidth ?? 1) - 0.5),
     opacity: 0.35,
     fill: primitive.fill ?? 'none',
@@ -181,7 +217,7 @@ function pushShadowCircle(
   primitives.push(primitive)
 }
 
-function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
+function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRenderPrimitive[] {
   const topY = FRAME_Y
   const bottomY = FRAME_Y + FRAME_HEIGHT
   const centerX = FRAME_X + FRAME_WIDTH / 2
@@ -198,7 +234,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
   const barGap = FRAME_WIDTH / (upperBars + 1)
   const lowerBars = clamp(Math.round(config.widthMm / 90), 16, 28)
   const lowerBarGap = (rightInset - leftInset) / (lowerBars + 1)
-  const lineColor = COLOR_INK
+  const lineColor = palette.ink
 
   const primitives: GateRenderPrimitive[] = []
 
@@ -210,10 +246,10 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     width: postWidth,
     height: FRAME_HEIGHT + 16,
     rx: 2,
-    fill: '#FCFCFC',
-    stroke: COLOR_INK,
+    fill: palette.postFill,
+    stroke: palette.ink,
     strokeWidth: 4.4,
-  })
+  }, palette)
 
   pushShadowRect(primitives, {
     kind: 'rect',
@@ -223,10 +259,10 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     width: postWidth,
     height: FRAME_HEIGHT + 16,
     rx: 2,
-    fill: '#FCFCFC',
-    stroke: COLOR_INK,
+    fill: palette.postFill,
+    stroke: palette.ink,
     strokeWidth: 4.4,
-  })
+  }, palette)
 
   pushShadowRect(primitives, {
     kind: 'rect',
@@ -237,9 +273,9 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     height: FRAME_HEIGHT,
     rx: 8,
     fill: 'none',
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 3.5,
-  })
+  }, palette)
 
   primitives.push({
     kind: 'rect',
@@ -249,7 +285,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     width: FRAME_WIDTH - 16,
     height: FRAME_HEIGHT - 16,
     rx: 8,
-    fill: config.style === 'composite_boards' ? COLOR_PANEL_SOFT : '#FEFEFE',
+    fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
     fillOpacity: 1,
     stroke: 'transparent',
     strokeWidth: 1,
@@ -263,11 +299,11 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
       y1: topY + 8,
       x2: centerX,
       y2: bottomY - 8,
-      stroke: COLOR_INK,
+      stroke: palette.ink,
       strokeWidth: 3,
       strokeDasharray: config.gateType === 'bifolding_double_swing' ? '6 10' : undefined,
       opacity: 0.7,
-    }, 1.5, 1.5)
+    }, palette, 1.5, 1.5)
   } else {
     pushShadowLine(primitives, {
       kind: 'line',
@@ -276,10 +312,10 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
       y1: topY + 12,
       x2: FRAME_X + 24,
       y2: bottomY - 12,
-      stroke: COLOR_INK,
+      stroke: palette.ink,
       strokeWidth: 3,
       opacity: 0.5,
-    }, 1.4, 1.4)
+    }, palette, 1.4, 1.4)
   }
 
   if (arch) {
@@ -288,7 +324,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
       id: 'arched-top',
       d: `M ${leftInset} ${topY + 30} C ${FRAME_X + 210} ${topY - 10}, ${FRAME_X + 990} ${topY - 10}, ${rightInset} ${topY + 30}`,
       fill: 'none',
-      stroke: COLOR_RED,
+      stroke: palette.accent,
       strokeWidth: 5,
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -301,11 +337,11 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
       y1: topY + 26,
       x2: rightInset,
       y2: topY + 26,
-      stroke: COLOR_RED,
+      stroke: palette.accent,
       strokeWidth: 5,
       strokeLinecap: 'square',
       opacity: 0.95,
-    }, 1.2, 1.2)
+    }, palette, 1.2, 1.2)
   }
 
   if (hasOption(config, 'middle_bar')) {
@@ -316,11 +352,11 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
       y1: middleY,
       x2: rightInset,
       y2: middleY,
-      stroke: COLOR_GOLD,
+      stroke: palette.accentSoft,
       strokeWidth: 7,
       strokeLinecap: 'square',
       opacity: 0.98,
-    }, 1.4, 1.4)
+    }, palette, 1.4, 1.4)
   }
 
   if (config.style === 'traditional_victorian') {
@@ -337,7 +373,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         strokeWidth: 3.4,
         strokeLinecap: 'square',
         opacity: 0.95,
-      }, 1, 1)
+      }, palette, 1, 1)
     }
 
     for (let index = 0; index < lowerBars; index += 1) {
@@ -349,11 +385,11 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         y1: lowerRailY,
         x2: x,
         y2: bottomY - 18,
-        stroke: COLOR_INK,
+        stroke: palette.ink,
         strokeWidth: 2.8,
         strokeLinecap: 'square',
         opacity: 0.94,
-      }, 1, 1)
+      }, palette, 1, 1)
     }
 
     if (hasOption(config, 'dog_bars')) {
@@ -367,11 +403,11 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
           y1: lowerRailY + 8,
           x2: x,
           y2: bottomY - 14,
-          stroke: COLOR_GOLD,
+          stroke: palette.accentSoft,
           strokeWidth: 2.1,
           strokeLinecap: 'square',
           opacity: 0.92,
-        }, 0.8, 0.8)
+        }, palette, 0.8, 0.8)
       }
     }
   } else {
@@ -387,7 +423,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         width: plankWidth - 4,
         height: FRAME_HEIGHT - 42,
         rx: 1,
-        fill: COLOR_PANEL,
+        fill: palette.panel,
         stroke: 'none',
         fillOpacity: 1,
       })
@@ -395,7 +431,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
   }
 
   if (hasOption(config, 'top_railheads')) {
-    const railheadCount = clamp(Math.round(config.widthMm / 190), 6, 14)
+    const railheadCount = Math.min(getOptionQuantity(config, 'top_railheads'), getExpectedTopRailheadCount(config.widthMm))
     const span = rightInset - leftInset
     for (let index = 0; index < railheadCount; index += 1) {
       const ratio = (index + 0.5) / railheadCount
@@ -406,15 +442,18 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         cx: x,
         cy: topY + 18,
         r: 4.8,
-        fill: COLOR_RED,
-        stroke: COLOR_INK,
+        fill: palette.accent,
+        stroke: palette.ink,
         strokeWidth: 1,
-      }, 1, 1)
+      }, palette, 1, 1)
     }
   }
 
   if (hasOption(config, 'dog_bar_railheads')) {
-    const railheadCount = clamp(Math.round(config.widthMm / 220), 4, 10)
+    const railheadCount = Math.min(
+      getOptionQuantity(config, 'dog_bar_railheads'),
+      getExpectedDogBarRailheadCount(config.widthMm),
+    )
     const span = rightInset - leftInset
     for (let index = 0; index < railheadCount; index += 1) {
       const ratio = (index + 0.5) / railheadCount
@@ -425,15 +464,15 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         cx: x,
         cy: lowerRailY - 4,
         r: 4.3,
-        fill: COLOR_GOLD,
-        stroke: COLOR_INK,
+        fill: palette.accentSoft,
+        stroke: palette.ink,
         strokeWidth: 1,
-      }, 1, 1)
+      }, palette, 1, 1)
     }
   }
 
   if (hasOption(config, 'bushes')) {
-    const bushCount = getOptionQuantity(config, 'bushes')
+    const bushCount = Math.min(getOptionQuantity(config, 'bushes'), getDecorativeBarCapacity(config))
     const span = rightInset - leftInset
     for (let index = 0; index < bushCount; index += 1) {
       const ratio = (index + 0.5) / bushCount
@@ -444,16 +483,16 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         cx: x,
         cy: middleY - 28,
         r: 8,
-        fill: COLOR_GOLD,
+        fill: palette.accentSoft,
         fillOpacity: 0.18,
-        stroke: COLOR_GOLD,
+        stroke: palette.accentSoft,
         strokeWidth: 2,
-      }, 1.2, 1.2)
+      }, palette, 1.2, 1.2)
     }
   }
 
   if (hasOption(config, 'spirals')) {
-    const spiralCount = getOptionQuantity(config, 'spirals')
+    const spiralCount = Math.min(getOptionQuantity(config, 'spirals'), getDecorativeBarCapacity(config))
     const span = rightInset - leftInset
     for (let index = 0; index < spiralCount; index += 1) {
       const ratio = (index + 0.5) / spiralCount
@@ -463,7 +502,7 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
         id: `spiral-${index}`,
         d: `M ${x - 8} ${middleY + 24} C ${x - 8} ${middleY + 5}, ${x + 10} ${middleY + 5}, ${x + 10} ${middleY + 24} C ${x + 10} ${middleY + 43}, ${x - 6} ${middleY + 43}, ${x - 6} ${middleY + 24}`,
         fill: 'none',
-        stroke: COLOR_RED,
+        stroke: palette.accent,
         strokeWidth: 2.5,
         strokeLinecap: 'round',
         strokeLinejoin: 'round',
@@ -481,9 +520,9 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     height: 116,
     rx: 6,
     fill: '#F7F7F7',
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 2.4,
-  })
+  }, palette)
 
   pushShadowCircle(primitives, {
     kind: 'circle',
@@ -491,9 +530,9 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     cx: centerX,
     cy: middleY,
     r: 3.2,
-    fill: COLOR_INK,
+    fill: palette.ink,
     stroke: 'none',
-  }, 0.8, 0.8)
+  }, palette, 0.8, 0.8)
 
   pushShadowLine(primitives, {
     kind: 'line',
@@ -502,10 +541,10 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     y1: FRAME_Y + 118,
     x2: FRAME_X + 4,
     y2: FRAME_Y + 176,
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 3.4,
     strokeLinecap: 'square',
-  }, 0.8, 0.8)
+  }, palette, 0.8, 0.8)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'right-hinge-axis',
@@ -513,10 +552,10 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     y1: FRAME_Y + 118,
     x2: FRAME_X + FRAME_WIDTH - 4,
     y2: FRAME_Y + 176,
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 3.4,
     strokeLinecap: 'square',
-  }, 0.8, 0.8)
+  }, palette, 0.8, 0.8)
 
   pushShadowCircle(primitives, {
     kind: 'circle',
@@ -525,9 +564,9 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     cy: topY + 12,
     r: 5.2,
     fill: '#FAFAFA',
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 2.2,
-  }, 0.8, 0.8)
+  }, palette, 0.8, 0.8)
   pushShadowCircle(primitives, {
     kind: 'circle',
     id: 'right-top-finial',
@@ -535,14 +574,14 @@ function buildSwingFrame(config: GateConfig): GateRenderPrimitive[] {
     cy: topY + 12,
     r: 5.2,
     fill: '#FAFAFA',
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 2.2,
-  }, 0.8, 0.8)
+  }, palette, 0.8, 0.8)
 
   return primitives
 }
 
-function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
+function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRenderPrimitive[] {
   const trackY = FRAME_Y + FRAME_HEIGHT - 38
   const baseY = FRAME_Y + 36
   const panelHeight = FRAME_HEIGHT - 64
@@ -564,7 +603,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
     height: FRAME_HEIGHT,
     rx: 18,
     fill: 'none',
-    stroke: COLOR_INK,
+    stroke: palette.ink,
     strokeWidth: 6,
   })
 
@@ -575,7 +614,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
     y1: trackY,
     x2: FRAME_X + FRAME_WIDTH - 30,
     y2: trackY,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 7,
     strokeLinecap: 'round',
     opacity: 0.9,
@@ -589,8 +628,8 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
     width: panelWidth,
     height: panelHeight,
     rx: isRadius ? 80 : 14,
-    fill: config.style === 'composite_boards' ? COLOR_PANEL_SOFT : '#FAFAF8',
-    stroke: COLOR_INK,
+    fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
+    stroke: palette.ink,
     strokeWidth: 4,
     fillOpacity: 0.95,
   })
@@ -601,7 +640,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
       id: 'radius-top',
       d: `M ${panelX + 16} ${panelY + 44} C ${panelX + panelWidth * 0.35} ${panelY - 20}, ${panelX + panelWidth * 0.68} ${panelY - 20}, ${panelX + panelWidth - 16} ${panelY + 44}`,
       fill: 'none',
-      stroke: COLOR_RED,
+      stroke: palette.accent,
       strokeWidth: 5,
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
@@ -621,7 +660,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         height: panelHeight - 4 - index * 6,
         rx: 12,
         fill: 'none',
-        stroke: COLOR_RED,
+        stroke: palette.accent,
         strokeWidth: 3,
         strokeDasharray: index === 0 ? undefined : '8 8',
         opacity: 0.7,
@@ -640,7 +679,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         y1: panelY + 26,
         x2: x,
         y2: panelY + panelHeight - 16,
-        stroke: COLOR_INK,
+        stroke: palette.ink,
         strokeWidth: 4,
         opacity: 0.85,
       })
@@ -653,7 +692,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         width: boardWidth - 2,
         height: panelHeight - 16,
         rx: 2,
-        fill: COLOR_PANEL,
+        fill: palette.panel,
         stroke: 'none',
         fillOpacity: 0.95,
       })
@@ -668,7 +707,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
       y1: panelY + panelHeight / 2,
       x2: panelX + panelWidth - 16,
       y2: panelY + panelHeight / 2,
-      stroke: COLOR_GOLD,
+      stroke: palette.accentSoft,
       strokeWidth: 5,
     })
   }
@@ -679,7 +718,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
       id: 'sliding-arch',
       d: `M ${panelX + 20} ${panelY + 38} C ${panelX + panelWidth * 0.3} ${panelY - 22}, ${panelX + panelWidth * 0.7} ${panelY - 22}, ${panelX + panelWidth - 20} ${panelY + 38}`,
       fill: 'none',
-      stroke: COLOR_RED,
+      stroke: palette.accent,
       strokeWidth: 5,
     })
   }
@@ -694,28 +733,47 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         cx: panelX + panelWidth * ratio,
         cy: panelY + 20,
         r: 4,
-        fill: COLOR_RED,
-        stroke: COLOR_INK,
+        fill: palette.accent,
+        stroke: palette.ink,
         strokeWidth: 1,
       })
     }
   }
 
   if (hasOption(config, 'dog_bar_railheads')) {
+    const railheadCount = Math.min(
+      getOptionQuantity(config, 'dog_bar_railheads'),
+      getExpectedDogBarRailheadCount(config.widthMm),
+    )
+    const y = panelY + panelHeight * 0.76
+    const span = panelWidth - 40
     primitives.push({
       kind: 'line',
       id: 'sliding-dog-bar',
       x1: panelX + 18,
-      y1: panelY + panelHeight * 0.76,
+      y1: y,
       x2: panelX + panelWidth - 18,
-      y2: panelY + panelHeight * 0.76,
-      stroke: COLOR_GOLD,
+      y2: y,
+      stroke: palette.accentSoft,
       strokeWidth: 4,
     })
+    for (let index = 0; index < railheadCount; index += 1) {
+      const ratio = (index + 0.5) / railheadCount
+      primitives.push({
+        kind: 'circle',
+        id: `sliding-dog-railhead-${index}`,
+        cx: panelX + 20 + span * ratio,
+        cy: y,
+        r: 4,
+        fill: palette.accentSoft,
+        stroke: palette.ink,
+        strokeWidth: 1,
+      })
+    }
   }
 
   if (hasOption(config, 'dog_bars')) {
-    const dogBarCount = clamp(2 + Math.round(config.widthMm / 850), 2, 5)
+    const dogBarCount = Math.min(getOptionQuantity(config, 'dog_bars'), getExpectedDogBarCount(config.widthMm))
     const span = panelWidth - 40
     for (let index = 0; index < dogBarCount; index += 1) {
       const ratio = (index + 1) / (dogBarCount + 1)
@@ -726,7 +784,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         y1: panelY + panelHeight * 0.78,
         x2: panelX + 20 + span * ratio,
         y2: panelY + panelHeight - 20,
-        stroke: COLOR_INK,
+        stroke: palette.ink,
         strokeWidth: 4,
       })
     }
@@ -741,9 +799,9 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         cx: panelX + 58 + index * 62,
         cy: panelY + panelHeight * 0.42,
         r: 8,
-        fill: COLOR_GOLD,
+        fill: palette.accentSoft,
         fillOpacity: 0.18,
-        stroke: COLOR_GOLD,
+        stroke: palette.accentSoft,
         strokeWidth: 2,
       })
     }
@@ -758,7 +816,7 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
         id: `sliding-spiral-${index}`,
         d: `M ${cx - 8} ${panelY + panelHeight * 0.42 + 24} C ${cx - 8} ${panelY + panelHeight * 0.42 + 2}, ${cx + 10} ${panelY + panelHeight * 0.42 + 2}, ${cx + 10} ${panelY + panelHeight * 0.42 + 24} C ${cx + 10} ${panelY + panelHeight * 0.42 + 46}, ${cx - 6} ${panelY + panelHeight * 0.42 + 46}, ${cx - 6} ${panelY + panelHeight * 0.42 + 24}`,
         fill: 'none',
-        stroke: COLOR_RED,
+        stroke: palette.accent,
         strokeWidth: 2.4,
       })
     }
@@ -768,20 +826,36 @@ function buildSlidingFrame(config: GateConfig): GateRenderPrimitive[] {
 }
 
 export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
+  const validation = validateGateConfig(config)
+  if (!validation.ok) {
+    throw new Error('Invalid gate config for rendering')
+  }
+
+  const palette = resolveRenderPalette(config.finish)
   const isSliding = isSlidingGate(config.gateType)
   const title = `${formatTypeLabel(config.gateType)} preview`
-  const subtitle = `${config.widthMm} mm wide · ${config.heightMm} mm high · ${config.style.split('_').join(' ')}`
+  const subtitle = `${config.widthMm} mm wide · ${config.heightMm} mm high · ${formatStyleLabel(config.style)}`
   const notes: string[] = ['2D technical drawing preview']
 
   if (hasOption(config, 'top_railheads') || hasOption(config, 'dog_bar_railheads')) {
     notes.push('Railheads are shown schematically until the final catalogue is confirmed.')
   }
 
+  if (
+    hasOption(config, 'top_railheads') ||
+    hasOption(config, 'dog_bar_railheads') ||
+    hasOption(config, 'dog_bars') ||
+    hasOption(config, 'bushes') ||
+    hasOption(config, 'spirals')
+  ) {
+    notes.push('Decorative options are shown schematically at the selected quantity.')
+  }
+
   if (config.style === 'composite_boards') {
     notes.push('Panel fill is schematic and intentionally clean.')
   }
 
-  const primitives = isSliding ? buildSlidingFrame(config) : buildSwingFrame(config)
+  const primitives = isSliding ? buildSlidingFrame(config, palette) : buildSwingFrame(config, palette)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'width-dimension-line',
@@ -789,10 +863,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y + FRAME_HEIGHT + 72,
     x2: FRAME_X + FRAME_WIDTH + 4,
     y2: FRAME_Y + FRAME_HEIGHT + 72,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'width-dimension-line-shadow',
@@ -800,10 +874,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y + FRAME_HEIGHT + 74,
     x2: FRAME_X + FRAME_WIDTH + 4,
     y2: FRAME_Y + FRAME_HEIGHT + 74,
-    stroke: COLOR_SHADOW,
+    stroke: palette.shadow,
     strokeWidth: 1,
     opacity: 0.5,
-  }, 0, 0)
+  }, palette, 0, 0)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'width-dimension-start',
@@ -811,10 +885,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y + FRAME_HEIGHT + 58,
     x2: FRAME_X,
     y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'width-dimension-end',
@@ -822,10 +896,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y + FRAME_HEIGHT + 58,
     x2: FRAME_X + FRAME_WIDTH,
     y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'height-dimension-line',
@@ -833,10 +907,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y - 2,
     x2: FRAME_X - 70,
     y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'height-dimension-line-shadow',
@@ -844,10 +918,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y - 2,
     x2: FRAME_X - 68,
     y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: COLOR_SHADOW,
+    stroke: palette.shadow,
     strokeWidth: 1,
     opacity: 0.5,
-  }, 0, 0)
+  }, palette, 0, 0)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'height-dimension-start',
@@ -855,10 +929,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y,
     x2: FRAME_X - 54,
     y2: FRAME_Y,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   pushShadowLine(primitives, {
     kind: 'line',
     id: 'height-dimension-end',
@@ -866,10 +940,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     y1: FRAME_Y + FRAME_HEIGHT,
     x2: FRAME_X - 54,
     y2: FRAME_Y + FRAME_HEIGHT,
-    stroke: COLOR_STEEL,
+    stroke: palette.steel,
     strokeWidth: 1.8,
     strokeLinecap: 'square',
-  }, 1, 1)
+  }, palette, 1, 1)
   const labels: GateRenderLabel[] = [
     {
       id: 'label-title',
@@ -878,7 +952,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       text: title,
       anchor: 'start',
       size: 28,
-      fill: COLOR_INK,
+      fill: palette.ink,
       weight: 700,
     },
     {
@@ -888,7 +962,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       text: subtitle,
       anchor: 'start',
       size: 14,
-      fill: COLOR_STEEL,
+      fill: palette.steel,
       weight: 500,
     },
     {
@@ -898,7 +972,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       text: `${config.widthMm} mm`,
       anchor: 'end',
       size: 18,
-      fill: COLOR_RED,
+      fill: palette.accent,
       weight: 700,
     },
     {
@@ -908,7 +982,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       text: `${config.heightMm} mm`,
       anchor: 'end',
       size: 18,
-      fill: COLOR_RED,
+      fill: palette.accent,
       weight: 700,
     },
   ]
@@ -921,7 +995,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       text: 'Track / rail schematic',
       anchor: 'start',
       size: 13,
-      fill: COLOR_STEEL,
+      fill: palette.steel,
       weight: 500,
     })
   }

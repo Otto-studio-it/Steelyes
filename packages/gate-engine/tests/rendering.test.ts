@@ -34,7 +34,7 @@ describe('gate-engine rendering', () => {
           ? {
               ...option,
               enabled: true,
-              quantity: 8,
+              quantity: 9,
             }
           : option,
       ),
@@ -43,6 +43,92 @@ describe('gate-engine rendering', () => {
     const plan = buildGateRenderPlan(config)
 
     expect(plan.notes).toContain('Railheads are shown schematically until the final catalogue is confirmed.')
-    expect(plan.primitives.some((primitive) => primitive.kind === 'circle' && primitive.id.startsWith('top-railhead-'))).toBe(true)
+    expect(plan.notes).toContain('Decorative options are shown schematically at the selected quantity.')
+    expect(
+      plan.primitives.filter(
+        (primitive) =>
+          primitive.kind === 'circle' &&
+          primitive.id.startsWith('top-railhead-') &&
+          !primitive.id.endsWith('-shadow'),
+      ),
+    ).toHaveLength(9)
+  })
+
+  it('renders sliding decorative options using the selected quantities', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('tracked_sliding')),
+      options: createGateConfig(createGatePreset('tracked_sliding')).options.map((option) => {
+        if (option.key === 'dog_bars') {
+          return {
+            ...option,
+            enabled: true,
+            quantity: 4,
+          }
+        }
+
+        if (option.key === 'dog_bar_railheads') {
+          return {
+            ...option,
+            enabled: true,
+            quantity: 4,
+          }
+        }
+
+        return option
+      }),
+    }
+
+    const plan = buildGateRenderPlan(config)
+
+    expect(plan.notes).toContain('Decorative options are shown schematically at the selected quantity.')
+    expect(
+      plan.primitives.filter(
+        (primitive) =>
+          primitive.kind === 'line' &&
+          primitive.id.startsWith('sliding-dog-bar-') &&
+          !primitive.id.endsWith('-shadow'),
+      ),
+    ).toHaveLength(4)
+    expect(
+      plan.primitives.filter(
+        (primitive) =>
+          primitive.kind === 'circle' &&
+          primitive.id.startsWith('sliding-dog-railhead-') &&
+          !primitive.id.endsWith('-shadow'),
+      ),
+    ).toHaveLength(4)
+  })
+
+  it('uses different schematic colors for different finishes', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const mattePlan = buildGateRenderPlan({ ...base, finish: 'matte_black' })
+    const bronzePlan = buildGateRenderPlan({ ...base, finish: 'bronze' })
+
+    const matteFrame = mattePlan.primitives.find((primitive) => primitive.id === 'swing-frame')
+    const bronzeFrame = bronzePlan.primitives.find((primitive) => primitive.id === 'swing-frame')
+
+    expect(matteFrame?.kind).toBe('rect')
+    expect(bronzeFrame?.kind).toBe('rect')
+    if (matteFrame?.kind === 'rect' && bronzeFrame?.kind === 'rect') {
+      expect(matteFrame.stroke).not.toBe(bronzeFrame.stroke)
+    }
+  })
+
+  it('rejects invalid configs before rendering', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
+        option.key === 'top_railheads'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 9,
+            }
+          : option,
+      ),
+    }
+
+    expect(() => buildGateRenderPlan(config)).toThrowError('Invalid gate config for rendering')
   })
 })

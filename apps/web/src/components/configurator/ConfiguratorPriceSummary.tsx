@@ -1,9 +1,21 @@
 'use client'
 
-import Link from 'next/link'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
+import type { GateConfig } from '@steelyes/gate-engine'
 
-import { formatLabelText, finishLabel, gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
+import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
+
+import {
+  formatLabelText,
+  finishLabel,
+  formatPricingHeadline,
+  formatPricingLead,
+  formatPricingMissingDataLabel,
+  formatPricingStatusLabel,
+  formatPricingValueLabel,
+  gateTypeLabel,
+  styleLabel,
+} from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorPricing } from '@/store/configuratorStore'
 
 function SummaryRow({ label, value }: { label: string; value: string }) {
@@ -16,20 +28,27 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
 }
 
 type ConfiguratorPriceSummaryProps = {
+  config?: GateConfig
   showActions?: boolean
   compact?: boolean
 }
 
-export function ConfiguratorPriceSummary({ showActions = true, compact = false }: ConfiguratorPriceSummaryProps) {
-  const config = useConfiguratorConfig()
-  const pricing = useConfiguratorPricing()
+export function ConfiguratorPriceSummary({
+  config: configOverride,
+  showActions = true,
+  compact = false,
+}: ConfiguratorPriceSummaryProps) {
+  const storeConfig = useConfiguratorConfig()
+  const config = configOverride ?? storeConfig
+  const pricing = useConfiguratorPricing(config)
+  const missingDataSummary = pricing.missingData.slice(0, 3).map(formatPricingMissingDataLabel)
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[#1B1C1A]/10 bg-white/92 shadow-[0_18px_50px_rgba(25,20,18,0.1)] backdrop-blur-sm lg:rounded-[28px]">
       <div className="border-b border-[#1B1C1A]/8 px-4 py-4 lg:px-5">
         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#9E000C]">Price summary</p>
         <h2 className="mt-1 font-heading text-xl font-black uppercase tracking-tight text-[#1B1C1A]">
-          Indicative total
+          {formatPricingHeadline(pricing)}
         </h2>
       </div>
 
@@ -40,8 +59,16 @@ export function ConfiguratorPriceSummary({ showActions = true, compact = false }
             {pricing.totalLabel}
           </p>
           <p className="mt-3 max-w-xl text-sm leading-6 text-white/70">
-            {pricing.disclaimer}. The same configuration state powers the preview and the pricing summary.
+            {pricing.disclaimer}. {formatPricingLead(pricing)}
           </p>
+          {pricing.missingData.length > 0 ? (
+            <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/55">Still missing</p>
+              <p className="mt-1 text-sm leading-6 text-white/75">
+                {missingDataSummary.join(', ')}
+              </p>
+            </div>
+          ) : null}
         </div>
 
         {!compact ? (
@@ -58,24 +85,30 @@ export function ConfiguratorPriceSummary({ showActions = true, compact = false }
             <div className="mt-5 rounded-[22px] border border-[#9E000C]/16 bg-[#9E000C]/4 px-4 py-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.26em] text-[#9E000C]">Breakdown</p>
               <div className="mt-3 space-y-3">
-                {pricing.breakdown.map((item) => (
-                  <div key={item.code} className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">
-                        {formatLabelText(item.label)}
-                      </p>
-                      <p className="mt-1 text-xs leading-5 text-[#5B514D]">{item.note}</p>
+                {pricing.breakdown.map((item) => {
+                  const statusLabel = formatPricingStatusLabel(item, pricing)
+
+                  return (
+                    <div key={item.code} className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">
+                          {formatLabelText(item.label)}
+                        </p>
+                        <p className="mt-1 text-xs leading-5 text-[#5B514D]">{item.note}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-mono text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">
+                          {formatPricingValueLabel(item)}
+                        </p>
+                        {statusLabel ? (
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-[#9E000C]">
+                            {statusLabel}
+                          </p>
+                        ) : null}
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="font-mono text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">
-                        {item.amountGbp === null ? 'Survey' : `£${item.amountGbp.toLocaleString('en-GB')}`}
-                      </p>
-                      {item.provisional ? (
-                        <p className="font-mono text-[10px] uppercase tracking-widest text-[#9E000C]">Indicative</p>
-                      ) : null}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -93,8 +126,8 @@ export function ConfiguratorPriceSummary({ showActions = true, compact = false }
                   pricing are confirmed.
                 </li>
                 <li>
-                  <strong className="font-semibold text-[#1B1C1A]">Next step:</strong> use the quote flow when you are
-                  ready to proceed.
+                  <strong className="font-semibold text-[#1B1C1A]">Next step:</strong> use the survey-led quote flow
+                  when you are ready to proceed.
                 </li>
               </ul>
             </div>
@@ -103,13 +136,7 @@ export function ConfiguratorPriceSummary({ showActions = true, compact = false }
 
         {showActions ? (
           <div className="mt-5 hidden flex-col gap-3 sm:flex-row lg:flex">
-            <Link
-              href="/contact"
-              className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#9E000C] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#8A0009]"
-            >
-              Request a quote
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+            <ConfiguratorQuoteHandoffButton className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-[#9E000C] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#8A0009] disabled:opacity-60" />
           </div>
         ) : null}
       </div>

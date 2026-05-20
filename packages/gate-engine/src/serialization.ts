@@ -1,5 +1,9 @@
 import { DEFAULT_CONFIG_VERSION, type FencePanelInput, type GateConfig, type GateOptionSelection } from './types'
-import { normalizeGateConfig, validateGateConfig } from './validation'
+import {
+  normalizeGateConfig,
+  validateGateConfig,
+  validateGateConfigSerializedInput,
+} from './validation'
 
 export type SerializedGateOptionSelection = {
   key: GateOptionSelection['key']
@@ -53,6 +57,13 @@ export function stringifyGateConfig(config: GateConfig): string {
 
 export function deserializeGateConfig(serialized: SerializedGateConfig | string): GateConfig {
   const raw = typeof serialized === 'string' ? (JSON.parse(serialized) as Partial<SerializedGateConfigV1>) : serialized
+  const shapeValidation = validateGateConfigSerializedInput(raw)
+  if (!shapeValidation.ok) {
+    const error = new Error('Invalid serialized gate config')
+    ;(error as Error & { issues?: unknown }).issues = [...shapeValidation.issues]
+    throw error
+  }
+
   const normalized = normalizeGateConfig(
     {
       gateType: raw.gateType,

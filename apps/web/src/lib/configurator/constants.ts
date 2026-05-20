@@ -1,7 +1,11 @@
-import type { FinishCode, GateOptionKey, GateType } from '@steelyes/gate-engine'
+import type { GateOptionKey, GateType } from '@steelyes/gate-engine'
 
 export const CONFIGURATOR_STORAGE_KEY = 'steelyes.configurator.v1'
+export const CONFIGURATOR_SHARE_META_KEY = 'steelyes.configurator.share.v1'
 export const PRIMARY_GATE_TYPE: GateType = 'double_swing'
+
+/** Fence panels remain in the engine model but are out of scope for configurator v1 UI. */
+export const FENCE_PANELS_V1_ENABLED = false
 
 export const CONFIGURATOR_STEPS = [
   { id: 'gate', label: 'Gate setup', shortLabel: 'Setup' },
@@ -60,13 +64,6 @@ export const OPTION_META: OptionMeta[] = [
     description: 'Decorative spiral inserts on the bars.',
     quantityLabel: 'Count',
   },
-]
-
-export const FINISH_OPTIONS: { value: FinishCode; label: string }[] = [
-  { value: 'matte_black', label: 'Matte black' },
-  { value: 'zinc_grey', label: 'Zinc grey' },
-  { value: 'bronze', label: 'Bronze' },
-  { value: 'pearl_white', label: 'Pearl white' },
 ]
 
 export const WIDTH_PRESETS_MM = [900, 1200, 1500, 1800, 2000, 2400, 3000] as const

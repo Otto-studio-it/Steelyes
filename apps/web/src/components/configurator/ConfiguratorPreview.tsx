@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { buildGateRenderPlan, type GateConfig, type GateRenderPrimitive } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -11,6 +12,7 @@ function renderPrimitive(primitive: GateRenderPrimitive) {
       return (
         <rect
           key={primitive.id}
+          id={primitive.id}
           x={primitive.x}
           y={primitive.y}
           width={primitive.width}
@@ -85,7 +87,7 @@ export function ConfiguratorPreview({
 }: ConfiguratorPreviewProps) {
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
-  const plan = buildGateRenderPlan(config)
+  const plan = useMemo(() => buildGateRenderPlan(config), [config])
   const showBody = !collapsible || previewExpanded || !compact
 
   return (

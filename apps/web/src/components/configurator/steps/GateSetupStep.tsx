@@ -1,9 +1,9 @@
 'use client'
 
 import { CircleSlashed, RefreshCcw } from 'lucide-react'
-import { createGateConfig, createGatePreset, GATE_STYLES, GATE_TYPES, type FinishCode, type GateStyle, type GateType } from '@steelyes/gate-engine'
+import { createGateConfig, createGatePreset, GATE_STYLES, GATE_TYPES, type GateStyle, type GateType } from '@steelyes/gate-engine'
 
-import { FINISH_OPTIONS } from '@/lib/configurator/constants'
+import { FinishPicker } from '@/components/configurator/FinishPicker'
 import { gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
 import { isPrimarySlice, useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -66,22 +66,14 @@ export function GateSetupStep() {
           </select>
         </label>
 
-        <label className="space-y-2">
-          <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#6D615D]">Finish</span>
-          <select
-            className="h-12 w-full rounded-xl border border-[#1B1C1A]/12 bg-white px-4 font-body text-base text-[#1B1C1A] shadow-sm outline-none transition focus:border-[#9E000C]"
+        <div className="space-y-2 sm:col-span-2">
+          <FinishPicker
             value={config.finish}
-            onChange={(event) => {
-              patchConfig({ finish: event.target.value as FinishCode })
+            onChange={(finish) => {
+              patchConfig({ finish })
             }}
-          >
-            {FINISH_OPTIONS.map((finish) => (
-              <option key={finish.value} value={finish.value}>
-                {finish.label}
-              </option>
-            ))}
-          </select>
-        </label>
+          />
+        </div>
 
         <div className="space-y-2 sm:col-span-2">
           <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#6D615D]">Motorised</span>

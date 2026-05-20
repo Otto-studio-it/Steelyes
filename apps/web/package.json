@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "test:release-gate": "pnpm --filter @steelyes/gate-engine test && pnpm typecheck && playwright test configurator"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

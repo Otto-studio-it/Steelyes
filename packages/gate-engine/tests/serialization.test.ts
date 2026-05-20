@@ -32,4 +32,15 @@ describe('gate-engine serialization', () => {
 
     expect(parsed).toEqual(original)
   })
+
+  it('rejects serialized payloads with duplicated option keys', () => {
+    const original = createGateConfig(createGatePreset('double_swing'))
+    const serialized = serializeGateConfig(original)
+    const invalid = {
+      ...serialized,
+      options: [...serialized.options, serialized.options[0]],
+    }
+
+    expect(() => deserializeGateConfig(invalid as never)).toThrowError('Invalid serialized gate config')
+  })
 })

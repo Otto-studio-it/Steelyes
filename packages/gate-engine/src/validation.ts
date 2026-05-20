@@ -17,6 +17,8 @@ import {
   type GateStyle,
   type GateType,
 } from './types'
+import { collectCompatibilityIssues } from './rules/compatibility'
+import { collectGeometryIssues } from './rules/geometry'
 
 export type ValidationIssue = {
   field: string
@@ -38,6 +40,10 @@ const MIN_WIDTH_MM = 600
 const MAX_WIDTH_MM = 6000
 const MIN_HEIGHT_MM = 600
 const MAX_HEIGHT_MM = 3000
+const VALIDATION_DRAFT_MODE = 'draft'
+const VALIDATION_SERIALIZED_MODE = 'serialized'
+
+type GateConfigPayloadMode = typeof VALIDATION_DRAFT_MODE | typeof VALIDATION_SERIALIZED_MODE
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -102,6 +108,234 @@ function normalizeFencePanels(input: unknown): FencePanelInput {
     quantity: quantity === null ? 0 : Math.max(quantity, 0),
     panels,
   }
+}
+
+function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadMode): ValidationIssue[] {
+  const issues: ValidationIssue[] = []
+
+  if (!isObject(input)) {
+    issues.push({
+      field: 'config',
+      code: 'invalid_input',
+      message: 'Configuration payload must be an object.',
+    })
+    return issues
+  }
+
+  if ('version' in input && input.version !== undefined && input.version !== DEFAULT_CONFIG_VERSION) {
+    issues.push({
+      field: 'version',
+      code: 'invalid_version',
+      message: `Config version must be ${DEFAULT_CONFIG_VERSION}.`,
+    })
+  }
+
+  if (mode === VALIDATION_SERIALIZED_MODE) {
+    if ('gateType' in input && !isGateType(input.gateType)) {
+      issues.push({
+        field: 'gateType',
+        code: 'invalid_gate_type',
+        message: 'Gate type is not supported.',
+      })
+    }
+
+    if ('style' in input && !isGateStyle(input.style)) {
+      issues.push({
+        field: 'style',
+        code: 'invalid_style',
+        message: 'Gate style is not supported.',
+      })
+    }
+
+    if ('finish' in input && !isFinishCode(input.finish)) {
+      issues.push({
+        field: 'finish',
+        code: 'invalid_finish',
+        message: 'Finish is not supported.',
+      })
+    }
+
+    if ('motorised' in input && typeof input.motorised !== 'boolean') {
+      issues.push({
+        field: 'motorised',
+        code: 'invalid_motorised',
+        message: 'Motorised flag must be a boolean.',
+      })
+    }
+
+    const widthMm = input.widthMm
+    if ('widthMm' in input && (typeof widthMm !== 'number' || !Number.isInteger(widthMm) || widthMm < MIN_WIDTH_MM || widthMm > MAX_WIDTH_MM)) {
+      issues.push({
+        field: 'widthMm',
+        code: 'invalid_width',
+        message: `Width must be between ${MIN_WIDTH_MM}mm and ${MAX_WIDTH_MM}mm.`,
+      })
+    }
+
+    const heightMm = input.heightMm
+    if ('heightMm' in input && (typeof heightMm !== 'number' || !Number.isInteger(heightMm) || heightMm < MIN_HEIGHT_MM || heightMm > MAX_HEIGHT_MM)) {
+      issues.push({
+        field: 'heightMm',
+        code: 'invalid_height',
+        message: `Height must be between ${MIN_HEIGHT_MM}mm and ${MAX_HEIGHT_MM}mm.`,
+      })
+    }
+  }
+
+  if ('options' in input && input.options !== undefined) {
+    if (!Array.isArray(input.options)) {
+      issues.push({
+        field: 'options',
+        code: 'invalid_option_list',
+        message: 'Options must be provided as an array.',
+      })
+    } else {
+      const seenOptionKeys = new Set<string>()
+
+      input.options.forEach((option, index) => {
+        if (!isObject(option)) {
+          issues.push({
+            field: `options[${index}]`,
+            code: 'invalid_option_shape',
+            message: 'Option entry must be an object.',
+          })
+          return
+        }
+
+        if (!isGateOptionKey(option.key)) {
+          issues.push({
+            field: `options[${index}].key`,
+            code: 'invalid_option_key',
+            message: 'Option key is not supported.',
+          })
+          return
+        }
+
+        if (seenOptionKeys.has(option.key)) {
+          issues.push({
+            field: `options.${option.key}`,
+            code: 'duplicate_option',
+            message: 'Option key is duplicated.',
+          })
+        }
+        seenOptionKeys.add(option.key)
+
+        if ('enabled' in option && typeof option.enabled !== 'boolean') {
+          issues.push({
+            field: `options[${index}].enabled`,
+            code: 'invalid_option_enabled',
+            message: 'Option enabled flag must be a boolean.',
+          })
+        }
+
+        if ('quantity' in option && (typeof option.quantity !== 'number' || !Number.isInteger(option.quantity) || option.quantity < 0)) {
+          issues.push({
+            field: `options[${index}].quantity`,
+            code: 'invalid_option_quantity',
+            message: 'Option quantity must be a non-negative integer.',
+          })
+        }
+
+        if ('variant' in option && option.variant !== undefined && typeof option.variant !== 'string') {
+          issues.push({
+            field: `options[${index}].variant`,
+            code: 'invalid_option_variant',
+            message: 'Option variant must be a string when provided.',
+          })
+        }
+      })
+    }
+  }
+
+  if ('fencePanels' in input && input.fencePanels !== undefined) {
+    if (!isObject(input.fencePanels)) {
+      issues.push({
+        field: 'fencePanels',
+        code: 'invalid_fence_panel_shape',
+        message: 'Fence panels must be provided as an object.',
+      })
+    } else {
+      const fencePanelQuantity = input.fencePanels.quantity
+      if (typeof fencePanelQuantity !== 'number' || !Number.isInteger(fencePanelQuantity) || fencePanelQuantity < 0) {
+        issues.push({
+          field: 'fencePanels.quantity',
+          code: 'invalid_fence_panel_quantity',
+          message: 'Fence panel quantity must be a non-negative integer.',
+        })
+      }
+
+      if (!Array.isArray(input.fencePanels.panels)) {
+        issues.push({
+          field: 'fencePanels.panels',
+          code: 'invalid_fence_panel_list',
+          message: 'Fence panel list must be an array.',
+        })
+      } else {
+        input.fencePanels.panels.forEach((panel, index) => {
+          if (!isObject(panel)) {
+            issues.push({
+              field: `fencePanels.panels[${index}]`,
+              code: 'invalid_fence_panel_shape',
+              message: 'Fence panel entry must be an object.',
+            })
+            return
+          }
+
+          const heightMm = panel.heightMm
+          if (typeof heightMm !== 'number' || !Number.isInteger(heightMm) || heightMm <= 0) {
+            issues.push({
+              field: `fencePanels.panels[${index}].heightMm`,
+              code: 'invalid_fence_panel_height',
+              message: 'Fence panel height must be a positive integer.',
+            })
+          }
+          const lengthMm = panel.lengthMm
+          if (typeof lengthMm !== 'number' || !Number.isInteger(lengthMm) || lengthMm <= 0) {
+            issues.push({
+              field: `fencePanels.panels[${index}].lengthMm`,
+              code: 'invalid_fence_panel_length',
+              message: 'Fence panel length must be a positive integer.',
+            })
+          }
+        })
+
+        if (
+          isObject(input.fencePanels) &&
+          typeof fencePanelQuantity === 'number' &&
+          Number.isInteger(fencePanelQuantity) &&
+          fencePanelQuantity !== input.fencePanels.panels.length
+        ) {
+          issues.push({
+            field: 'fencePanels.quantity',
+            code: 'fence_panel_quantity_mismatch',
+            message: 'Fence panel quantity must match the number of panel entries.',
+          })
+        }
+      }
+    }
+  }
+
+  return issues
+}
+
+export function validateGateConfigDraftInput(input: unknown): ValidationResult<void> {
+  const issues = collectGateConfigPayloadIssues(input, VALIDATION_DRAFT_MODE)
+
+  if (issues.length > 0) {
+    return { ok: false, issues }
+  }
+
+  return { ok: true, value: undefined }
+}
+
+export function validateGateConfigSerializedInput(input: unknown): ValidationResult<void> {
+  const issues = collectGateConfigPayloadIssues(input, VALIDATION_SERIALIZED_MODE)
+
+  if (issues.length > 0) {
+    return { ok: false, issues }
+  }
+
+  return { ok: true, value: undefined }
 }
 
 export function normalizeGateConfig(
@@ -268,14 +502,16 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
     })
   }
 
-  const hasUnknownVersion = config.version !== DEFAULT_CONFIG_VERSION
-  if (hasUnknownVersion) {
+  if (config.version !== DEFAULT_CONFIG_VERSION) {
     issues.push({
       field: 'version',
       code: 'invalid_version',
       message: `Config version must be ${DEFAULT_CONFIG_VERSION}.`,
     })
   }
+
+  issues.push(...collectCompatibilityIssues(config))
+  issues.push(...collectGeometryIssues(config))
 
   if (issues.length > 0) {
     return { ok: false, issues }

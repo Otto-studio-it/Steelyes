@@ -2,7 +2,8 @@
 
 import { DraftingCompass, ShieldCheck } from 'lucide-react'
 
-import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { ConfiguratorOrientationHint } from '@/components/configurator/ConfiguratorOrientationHint'
+import { ConfiguratorPreviewPanel } from '@/components/configurator/ConfiguratorPreviewPanel'
 import { ConfiguratorPriceBar } from '@/components/configurator/ConfiguratorPriceBar'
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
 import { ConfiguratorStepRail } from '@/components/configurator/ConfiguratorStepRail'
@@ -10,6 +11,7 @@ import { DimensionsStep } from '@/components/configurator/steps/DimensionsStep'
 import { GateSetupStep } from '@/components/configurator/steps/GateSetupStep'
 import { OptionsStep } from '@/components/configurator/steps/OptionsStep'
 import { SummaryStep } from '@/components/configurator/steps/SummaryStep'
+import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { CONFIGURATOR_STEPS } from '@/lib/configurator/constants'
 import { useConfiguratorConfig, useConfiguratorStep, useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -30,11 +32,52 @@ function StepPanel() {
   }
 }
 
-export function ConfiguratorShell() {
-  const config = useConfiguratorConfig()
+function StepCard({ showOrientationHint }: { showOrientationHint: boolean }) {
   const { stepIndex, isFirst, isLast } = useConfiguratorStep()
   const nextStep = useConfiguratorStore((state) => state.nextStep)
   const prevStep = useConfiguratorStore((state) => state.prevStep)
+
+  return (
+    <div className="rounded-[24px] border border-[#1B1C1A]/10 bg-white/90 p-4 shadow-[0_14px_40px_rgba(25,20,18,0.06)] sm:p-5">
+      {showOrientationHint ? (
+        <div className="mb-4">
+          <ConfiguratorOrientationHint />
+        </div>
+      ) : null}
+      <ConfiguratorStepRail />
+      <div key={CONFIGURATOR_STEPS[stepIndex].id} className="mt-5">
+        <StepPanel />
+      </div>
+
+      <div className="mt-6 hidden items-center justify-end gap-3 lg:flex">
+        {!isFirst ? (
+          <button
+            type="button"
+            onClick={prevStep}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[#1B1C1A]/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A] transition hover:border-[#9E000C]/30 hover:text-[#9E000C]"
+          >
+            Back
+          </button>
+        ) : null}
+        {!isLast ? (
+          <button
+            type="button"
+            onClick={nextStep}
+            className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#1B1C1A] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#9E000C]"
+          >
+            Continue
+          </button>
+        ) : null}
+      </div>
+    </div>
+  )
+}
+
+export function ConfiguratorShell() {
+  const config = useConfiguratorConfig()
+  const viewport = useConfiguratorViewport()
+  const isLandscapePhone = viewport.isLandscapePhone
+  const isPortraitPhone = viewport.isPortraitPhone
 
   return (
     <div className="relative overflow-hidden">
@@ -64,46 +107,29 @@ export function ConfiguratorShell() {
           </div>
         </div>
 
-        <div className="mt-6 lg:mt-10 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-8">
-          <div className="space-y-5 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-0">
-            <div className="lg:hidden">
-              <ConfiguratorPreview config={config} compact collapsible />
+        {isLandscapePhone ? (
+          <div className="mt-6 grid grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] items-start gap-4 pb-[calc(6.5rem+env(safe-area-inset-bottom))]">
+            <div className="sticky top-4 self-start">
+              <ConfiguratorPreviewPanel config={config} compact />
+            </div>
+            <StepCard showOrientationHint={false} />
+          </div>
+        ) : (
+          <div className="mt-6 lg:mt-10 lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-8">
+            <div className="space-y-5 pb-[calc(6.5rem+env(safe-area-inset-bottom))] lg:pb-0">
+              {isPortraitPhone ? (
+                <ConfiguratorPreviewPanel config={config} compact collapsible />
+              ) : null}
+
+              <StepCard showOrientationHint={isPortraitPhone} />
             </div>
 
-            <div className="rounded-[24px] border border-[#1B1C1A]/10 bg-white/90 p-4 shadow-[0_14px_40px_rgba(25,20,18,0.06)] sm:p-5">
-              <ConfiguratorStepRail />
-              <div key={CONFIGURATOR_STEPS[stepIndex].id} className="mt-5">
-                <StepPanel />
-              </div>
-
-              <div className="mt-6 hidden items-center justify-end gap-3 lg:flex">
-                {!isFirst ? (
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-[#1B1C1A]/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A] transition hover:border-[#9E000C]/30 hover:text-[#9E000C]"
-                  >
-                    Back
-                  </button>
-                ) : null}
-                {!isLast ? (
-                  <button
-                    type="button"
-                    onClick={nextStep}
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[#1B1C1A] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#9E000C]"
-                  >
-                    Continue
-                  </button>
-                ) : null}
-              </div>
+            <div className="hidden space-y-6 lg:sticky lg:top-6 lg:block lg:self-start">
+              <ConfiguratorPreviewPanel config={config} />
+              <ConfiguratorPriceSummary />
             </div>
           </div>
-
-          <div className="hidden space-y-6 lg:sticky lg:top-6 lg:block lg:self-start">
-            <ConfiguratorPreview config={config} />
-            <ConfiguratorPriceSummary />
-          </div>
-        </div>
+        )}
       </section>
 
       <ConfiguratorPriceBar />

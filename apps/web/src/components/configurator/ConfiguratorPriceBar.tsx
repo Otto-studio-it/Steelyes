@@ -1,8 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
+import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
+import { formatPricingHeadline, formatPricingLead } from '@/lib/configurator/labels'
 import { useConfiguratorPricing, useConfiguratorStep, useConfiguratorStore } from '@/store/configuratorStore'
 
 type ConfiguratorPriceBarProps = {
@@ -21,20 +22,20 @@ export function ConfiguratorPriceBar({ className = '' }: ConfiguratorPriceBarPro
     >
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 pt-3">
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#6D615D]">Indicative total</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#6D615D]">
+            {formatPricingHeadline(pricing)}
+          </p>
           <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-[#1B1C1A]">
             {pricing.totalLabel}
           </p>
+          <p className="mt-1 truncate text-[11px] leading-4 text-[#6D615D]">
+            {formatPricingLead(pricing)}
+          </p>
+          <p className="truncate text-[11px] leading-4 text-[#6D615D]">{pricing.disclaimer}</p>
         </div>
 
         {isLast ? (
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-xl bg-[#9E000C] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#8A0009]"
-          >
-            Request quote
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          <ConfiguratorQuoteHandoffButton className="inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-xl bg-[#9E000C] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-[#8A0009] disabled:opacity-60" />
         ) : (
           <button
             type="button"

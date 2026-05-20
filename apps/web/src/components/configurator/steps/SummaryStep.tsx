@@ -1,6 +1,7 @@
 'use client'
 
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
+import { ConfiguratorSharePanel } from '@/components/configurator/ConfiguratorSharePanel'
 
 export function SummaryStep() {
   return (
@@ -8,6 +9,8 @@ export function SummaryStep() {
       <p className="text-sm leading-6 text-[#5B514D] lg:hidden">
         Review your configuration, indicative pricing, and next step before requesting a survey-led quote.
       </p>
+
+      <ConfiguratorSharePanel />
 
       <div className="lg:hidden">
         <ConfiguratorPriceSummary showActions={false} />

@@ -3,7 +3,7 @@ title: Project Status
 description: Current execution state, ownership, blockers, and next focus
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-09
+last_updated: 2026-05-20
 ---
 
 # Steelyes — Project Status
@@ -21,9 +21,9 @@ This is the current operating snapshot. Use it first when resuming work.
 | Supabase production auth | Restored | Ruben | `steelyes-prod` admin auth repaired on 2026-05-09 after fixing a broken `auth.users` record. |
 | Business/pricing data | Blocked | Marius | Final prices, railheads, finishes, and real fencing catalogue still missing. |
 | Public deployment/domain | Blocked operationally | Ruben + Marius | `steelyes.co.uk` still serves the legacy GoDaddy site; new Next app is not live on the public domain. |
-| Share-link route | Pending app feature | Ruben | Default public share route is now `/quote/[shareToken]`; `/configurator/[id]` is no longer the baseline path. |
-| Configurator MVP | Ready for implementation | Ruben | 2D-first roadmap documented in `docs/frontend/CONFIGURATOR_ROADMAP_2026-05-19.md`; 3D/AR remains on-demand. |
-| Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending; configurator foundation work can now start in parallel. |
+| Share-link route | Confirmed baseline | Ruben | Default public share route is `/quote/[shareToken]`; `/configurator/[id]` is not the baseline path. |
+| Configurator MVP | Scope frozen for implementation | Ruben | 2D-first master roadmap is documented in `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`; 3D/AR remains on-demand. |
+| Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending; configurator foundation work should follow the frozen roadmap. |
 | Backend completion | Paused deliberately | Ruben | Resume when frontend requires it or client data arrives. |
 
 ---
@@ -61,6 +61,7 @@ Canonical DB references:
 - [`docs/db/STAGING_DB_BASELINE_2026-05-04.md`](./db/STAGING_DB_BASELINE_2026-05-04.md)
 - [`docs/db/RAILHEADS_TBD.md`](./db/RAILHEADS_TBD.md)
 - [`docs/db/PRICING_SEMANTICS.md`](./db/PRICING_SEMANTICS.md)
+- [`docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`](./frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md)
 
 ---
 
@@ -73,7 +74,7 @@ Canonical DB references:
 - Decide whether to extend the share route beyond `/quote/[shareToken]` or keep the MVP share model as-is.
 - Audit UI/content routes and bring the visible product experience up to a client-ready staging baseline.
 - Prepare fallback copy for missing catalogue data.
-- Implement the 2D-first configurator foundation from `docs/frontend/CONFIGURATOR_ROADMAP_2026-05-19.md`.
+- Implement the 2D-first configurator foundation from `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`.
 - Coordinate parallel frontend work across Claude Code, Cursor, and Codex using `docs/frontend/FRONTEND_PARALLEL_WORK_PLAN.md`.
 - Re-run frontend checks after UI/content changes.
 

@@ -1,4 +1,8 @@
-import { normalizeGateConfig, validateGateConfig } from './validation'
+import {
+  normalizeGateConfig,
+  validateGateConfig,
+  validateGateConfigDraftInput,
+} from './validation'
 import {
   type GateConfig,
   type GateOptionKey,
@@ -71,6 +75,19 @@ export type PricingResult = {
   missingData: string[]
   assumptions: string[]
   issues: PricingIssue[]
+}
+
+export type BasePricingResult = {
+  source: PricingSource
+  amountGbp: number | null
+  lineItem: PricingLineItem
+  missingData: string[]
+  note: string
+}
+
+export type OptionPricingResult = {
+  items: PricingLineItem[]
+  missingData: string[]
 }
 
 const DEFAULT_DISCLAIMER = 'Indicative, subject to survey'
@@ -242,6 +259,28 @@ function getBasePriceSource(
   }
 }
 
+export function calculateGateBasePrice(
+  config: GateConfig,
+  catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
+): BasePricingResult {
+  const baseSelection = getBasePriceSource(config, catalog)
+
+  return {
+    source: baseSelection.source,
+    amountGbp: baseSelection.amount,
+    missingData: baseSelection.missingData,
+    note: baseSelection.note,
+    lineItem: {
+      code: baseSelection.source === 'manual' ? 'base_manual' : 'base_auto',
+      label: baseSelection.source === 'manual' ? 'Manual base price' : 'Automated base price',
+      kind: 'base',
+      amountGbp: baseSelection.amount,
+      provisional: true,
+      note: baseSelection.note,
+    },
+  }
+}
+
 function computeSizeAdjustments(config: GateConfig, catalog: PricingCatalog): PricingLineItem[] {
   const entry = catalog.basePrices[config.gateType]
   const widthDeltaMm = Math.max(0, config.widthMm - entry.referenceWidthMm)
@@ -286,7 +325,7 @@ function getEnabledQuantity(quantity: number | undefined): number {
 function computeOptionLineItems(
   config: GateConfig,
   catalog: PricingCatalog,
-): { items: PricingLineItem[]; missingData: string[] } {
+): OptionPricingResult {
   const items: PricingLineItem[] = []
   const missingData: string[] = []
 
@@ -349,6 +388,13 @@ function computeOptionLineItems(
   return { items, missingData }
 }
 
+export function calculateGateOptionPricing(
+  config: GateConfig,
+  catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
+): OptionPricingResult {
+  return computeOptionLineItems(config, catalog)
+}
+
 function sumKnownItems(items: PricingLineItem[]): number {
   return items.reduce((total, item) => total + (item.amountGbp ?? 0), 0)
 }
@@ -395,20 +441,11 @@ export function calculateIndicativeGatePrice(
     )
   }
 
-  const baseSelection = getBasePriceSource(config, catalog)
+  const baseSelection = calculateGateBasePrice(config, catalog)
   const assumptions: string[] = []
   const missingData: string[] = [...baseSelection.missingData]
 
-  const breakdown: PricingLineItem[] = [
-    {
-      code: baseSelection.source === 'manual' ? 'base_manual' : 'base_auto',
-      label: baseSelection.source === 'manual' ? 'Manual base price' : 'Automated base price',
-      kind: 'base',
-      amountGbp: baseSelection.amount,
-      provisional: true,
-      note: baseSelection.note,
-    },
-  ]
+  const breakdown: PricingLineItem[] = [baseSelection.lineItem]
 
   if (config.widthMm > catalog.basePrices[config.gateType].referenceWidthMm) {
     assumptions.push('Width uplift is banded at 100mm steps above the reference size.')
@@ -421,11 +458,11 @@ export function calculateIndicativeGatePrice(
   const sizeAdjustments = computeSizeAdjustments(config, catalog)
   breakdown.push(...sizeAdjustments)
 
-  const optionResult = computeOptionLineItems(config, catalog)
+  const optionResult = calculateGateOptionPricing(config, catalog)
   breakdown.push(...optionResult.items)
   missingData.push(...optionResult.missingData)
 
-  if (baseSelection.amount === null || missingData.length > 0) {
+  if (baseSelection.amountGbp === null || missingData.length > 0) {
     assumptions.push('Missing confirmed pricing data prevents a final total.')
     return buildSurveyRequiredResult(
       baseSelection.source,
@@ -443,7 +480,7 @@ export function calculateIndicativeGatePrice(
     currency: 'GBP',
     status: 'indicative',
     source: baseSelection.source,
-    basePriceGbp: baseSelection.amount,
+    basePriceGbp: baseSelection.amountGbp,
     subtotalKnownGbp,
     totalGbp: subtotalKnownGbp,
     totalLabel: `${formatMoney(subtotalKnownGbp)} indicative`,
@@ -459,6 +496,18 @@ export function calculateIndicativeGatePriceFromDraft(
   input: Partial<GateConfig> & { gateType?: unknown } = {},
   catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
 ): PricingResult {
+  const draftValidation = validateGateConfigDraftInput(input)
+  if (!draftValidation.ok) {
+    return buildSurveyRequiredResult(
+      typeof input === 'object' && input !== null && 'motorised' in input && input.motorised === true ? 'auto' : 'manual',
+      null,
+      [],
+      draftValidation.issues.map((issue) => `${issue.field}:${issue.code}`),
+      ['Configuration draft failed structural validation before pricing.'],
+      draftValidation.issues,
+    )
+  }
+
   const normalized = normalizeGateConfig(input)
 
   return calculateIndicativeGatePrice(normalized, catalog)

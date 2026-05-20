@@ -11,7 +11,7 @@ export function OptionsStep() {
   return (
     <div className="space-y-4">
       <p className="text-sm leading-6 text-[#5B514D]">
-        Add decorative details one at a time. Railhead pricing stays provisional until the final catalogue is confirmed.
+        Add decorative details one at a time. Railheads stay provisional until their unit prices are confirmed.
       </p>
 
       {OPTION_META.map((option) => {
@@ -69,7 +69,7 @@ export function OptionsStep() {
                   />
                 </label>
                 <p className="text-xs leading-5 text-[#5B514D]">
-                  {provisionalRailhead ? 'Provisional / survey required in the price summary.' : 'Included in the indicative summary.'}
+                  {provisionalRailhead ? 'Survey required until the railhead catalogue is confirmed.' : 'Included in the indicative summary.'}
                 </p>
               </div>
             ) : null}

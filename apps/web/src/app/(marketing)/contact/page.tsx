@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 
+import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { isValidShareToken } from '@/lib/configurator/share-token'
+
 import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = {
@@ -9,7 +12,19 @@ export const metadata: Metadata = {
     'Get a quote for bespoke steel gates, electric gates, railings or security steelwork. Share your brief, measurements or photos to start a survey-led specification.',
 }
 
-export default function ContactPage() {
+type ContactPageProps = {
+  searchParams?: {
+    shareToken?: string
+  }
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const shareToken = searchParams?.shareToken?.trim()
+  const attachedConfig =
+    shareToken && isValidShareToken(shareToken)
+      ? await loadGateConfigurationByShareToken(shareToken)
+      : null
+
   return (
     <MarketingShell pathname="/contact">
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
@@ -21,7 +36,7 @@ export default function ContactPage() {
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <ContactForm />
+        <ContactForm shareToken={attachedConfig ? shareToken : undefined} attachedConfig={attachedConfig} />
 
         <div className="space-y-8">
           <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-[#1B1C1A] p-8">

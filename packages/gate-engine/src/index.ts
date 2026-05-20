@@ -15,15 +15,35 @@ export {
 export {
   normalizeGateConfig,
   validateGateConfig,
+  validateGateConfigDraftInput,
+  validateGateConfigSerializedInput,
 } from './validation'
 export {
+  collectCompatibilityIssues,
+} from './rules/compatibility'
+export {
+  collectGeometryIssues,
+  getDecorativeBarCapacity,
+  getExpectedDogBarCount,
+  getExpectedDogBarRailheadCount,
+  getExpectedTopRailheadCount,
+} from './rules/geometry'
+export {
   DEFAULT_PRICING_CATALOG,
+  calculateGateBasePrice,
+  calculateGateOptionPricing,
   calculateIndicativeGatePrice,
   calculateIndicativeGatePriceFromDraft,
 } from './pricing'
 export {
   buildGateRenderPlan,
 } from './rendering'
+export {
+  FINISH_CATALOG,
+  getFinishDefinition,
+  getFinishStrokeColor,
+  listFinishDefinitions,
+} from './finishes'
 export {
   deserializeGateConfig,
   parseGateConfigJson,
@@ -46,8 +66,10 @@ export type {
 } from './types'
 export type { ValidationIssue, ValidationResult } from './validation'
 export type {
+  BasePricingResult,
   GateBasePriceEntry,
   OptionPricingEntry,
+  OptionPricingResult,
   PricingCatalog,
   PricingCurrency,
   PricingIssue,
@@ -61,6 +83,11 @@ export type {
   GateRenderPlan,
   GateRenderPrimitive,
 } from './rendering'
+export type {
+  FinishDefinition,
+  FinishMaterialTokens,
+  FinishSchematicTokens,
+} from './finishes'
 export type {
   SerializedFencePanelInput,
   SerializedGateConfig,

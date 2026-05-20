@@ -1,7 +1,10 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom'
+import type { GateConfig } from '@steelyes/gate-engine'
+
 import { submitContactForm, type ContactFormState } from '@/app/actions'
+import { ConfigurationReferenceBanner } from '@/components/configurator/ConfigurationReferenceBanner'
 
 const initialState: ContactFormState = { status: 'idle' }
 
@@ -28,7 +31,12 @@ function SubmitButton() {
   )
 }
 
-export function ContactForm() {
+type ContactFormProps = {
+  shareToken?: string
+  attachedConfig?: GateConfig | null
+}
+
+export function ContactForm({ shareToken, attachedConfig = null }: ContactFormProps) {
   const [state, action] = useFormState(submitContactForm, initialState)
 
   if (state.status === 'success') {
@@ -54,6 +62,10 @@ export function ContactForm() {
     <form action={action} className="space-y-6 border border-zinc-200 bg-white p-5 md:p-8">
       <h2 className="font-heading text-2xl font-black uppercase">Project brief</h2>
 
+      {attachedConfig && shareToken ? (
+        <ConfigurationReferenceBanner config={attachedConfig} shareToken={shareToken} />
+      ) : null}
+
       <div className="inline-flex items-center gap-3 border border-[#9E000C]/20 bg-[#9E000C]/5 px-4 py-2">
         <span className="h-2 w-2 animate-pulse bg-[#9E000C]" />
         <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#9E000C]">
@@ -61,7 +73,6 @@ export function ContactForm() {
         </span>
       </div>
 
-      {/* Honeypot — hidden from real users */}
       <input
         type="text"
         name="website"
@@ -70,6 +81,8 @@ export function ContactForm() {
         autoComplete="off"
         className="sr-only"
       />
+
+      {shareToken ? <input type="hidden" name="share_token" value={shareToken} /> : null}
 
       {state.status === 'error' && (
         <p role="alert" className="border border-red-200 bg-red-50 px-4 py-3 font-mono text-xs text-red-700">
@@ -104,6 +117,7 @@ export function ContactForm() {
         Project type
         <select
           name="project_type"
+          defaultValue={attachedConfig ? 'Automated Swing Gates' : ''}
           className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
         >
           <option value="">Select a type</option>
@@ -135,6 +149,11 @@ export function ContactForm() {
           required
           rows={5}
           placeholder="Describe your project — opening width, gate style, access requirements, timeline..."
+          defaultValue={
+            attachedConfig && shareToken
+              ? `Please quote the attached gate configuration (${shareToken}). Add any site notes, access constraints, or timeline here.`
+              : undefined
+          }
           className="mt-2 min-h-[120px] w-full resize-none border-b border-zinc-300 bg-transparent px-0 placeholder:text-zinc-400 focus:border-[#9E000C] focus:outline-none focus:ring-0"
         />
       </label>

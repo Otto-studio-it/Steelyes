@@ -52,4 +52,90 @@ describe('gate-engine validation', () => {
       expect(result.issues.map((issue) => issue.code)).toContain('fence_panel_quantity_mismatch')
     }
   })
+
+  it('rejects duplicated option keys on a fully formed config', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const duplicated = {
+      ...config,
+      options: [
+        config.options[0],
+        {
+          ...config.options[0],
+        },
+        ...config.options.slice(1),
+      ],
+    }
+
+    const result = validateGateConfig(duplicated)
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('duplicate_option')
+    }
+  })
+
+  it('rejects decorative victorian options on composite boards', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
+        option.key === 'top_railheads'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 9,
+            }
+          : option,
+      ),
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('incompatible_option_style')
+    }
+  })
+
+  it('rejects dog bar railheads when dog bars are disabled', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const result = validateGateConfig({
+      ...config,
+      options: config.options.map((option) =>
+        option.key === 'dog_bar_railheads'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 8,
+            }
+          : option,
+      ),
+    })
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('missing_option_dependency')
+    }
+  })
+
+  it('rejects railhead quantities that exceed the gate width geometry', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const result = validateGateConfig({
+      ...config,
+      options: config.options.map((option) =>
+        option.key === 'top_railheads'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 15,
+            }
+          : option,
+      ),
+    })
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('geometry_count_mismatch')
+    }
+  })
 })

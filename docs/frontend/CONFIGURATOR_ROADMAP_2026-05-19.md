@@ -3,12 +3,12 @@ title: Configurator Roadmap
 description: Execution roadmap for the Steelyes configurator, starting from 2D preview and extending to on-demand 3D/AR export
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-19
+last_updated: 2026-05-20
 ---
 
 # Steelyes - Configurator Roadmap
 
-This document is the execution plan for building the configurator that customers will actually use.
+This document is retained as a precursor. Execution now follows `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`.
 
 Product decision assumed by this roadmap:
 
@@ -17,7 +17,7 @@ Product decision assumed by this roadmap:
 - One shared configuration model powers both views.
 - No new speculative pricing schema is added until the client confirms the missing business data.
 
-If the team later decides to keep a 3D-first experience, this roadmap still applies structurally, but Phase 3 and Phase 5 would swap priority.
+The roadmap is 2D-first with on-demand 3D/AR. Later 3D/AR work is additive, not a priority swap.
 
 ---
 
@@ -32,7 +32,7 @@ The configurator must do four things well:
 
 The first release should feel like a real product, not a teaser page.
 
-The current `/configurator` page is only a placeholder. The `gate-engine` package is also a stub. That means the roadmap is not a refinement of an existing configurator; it is the plan to create one.
+The public configurator entry remains `/configurator`, implemented under `apps/web/src/app/(marketing)/configurator/page.tsx` until a later route ADR changes it.
 
 ---
 
@@ -76,7 +76,7 @@ The configurator should be split into four layers.
 | Domain model | Gate types, styles, options, validation rules | `packages/gate-engine/src/` |
 | Pricing | Indicative pricing, rule application, fallback handling | `packages/gate-engine/src/pricing.ts` |
 | 2D rendering | SVG or canvas gate preview, option overlays, dimensions | `apps/web/src/components/configurator/` |
-| App flow | Step navigation, state, save/share, quote CTA, AR handoff | `apps/web/src/app/(configurator)/` |
+| App flow | Step navigation, state, save/share, quote CTA, AR handoff | `apps/web/src/app/(marketing)/configurator/` |
 
 The domain model should be pure TypeScript and testable in isolation.
 
@@ -108,11 +108,11 @@ The app layer should not contain pricing formulas.
 
 | File | Purpose |
 |---|---|
-| `src/app/(configurator)/configurator/page.tsx` | Configurator entry and type picker |
-| `src/app/(configurator)/configurator/[type]/page.tsx` | One flow per gate type |
-| `src/app/(configurator)/configurator/[type]/loading.tsx` | Lightweight loading state |
-| `src/app/(configurator)/configurator/[type]/error.tsx` | User-facing error state |
-| `src/app/(configurator)/quote/[shareToken]/page.tsx` | Read-only saved configuration |
+| `src/app/(marketing)/configurator/page.tsx` | Configurator entry and type picker |
+| `src/app/(marketing)/configurator/[type]/page.tsx` | One flow per gate type |
+| `src/app/(marketing)/configurator/[type]/loading.tsx` | Lightweight loading state |
+| `src/app/(marketing)/configurator/[type]/error.tsx` | User-facing error state |
+| `src/app/(marketing)/quote/[shareToken]/page.tsx` | Read-only saved configuration |
 | `src/components/configurator/ConfiguratorShell.tsx` | Layout for canvas, controls, summary |
 | `src/components/configurator/ConfiguratorCanvas.tsx` | 2D preview renderer |
 | `src/components/configurator/StepRail.tsx` | Step progress and navigation |
@@ -129,7 +129,7 @@ The app layer should not contain pricing formulas.
 
 | File | Action |
 |---|---|
-| `apps/web/src/app/(marketing)/configurator/page.tsx` | Replace the placeholder with the real entry flow or redirect it to the new route |
+| `apps/web/src/app/(marketing)/configurator/page.tsx` | Keep the public entry stable while the configurator implementation matures |
 | `packages/gate-engine/src/index.ts` | Replace the placeholder export with real public exports |
 | `packages/gate-engine/tests/index.test.ts` | Replace the placeholder test with real coverage |
 
@@ -145,11 +145,11 @@ Deliverables:
 
 | Item | Output |
 |---|---|
-| Route decision | Confirm whether `/configurator` stays at the marketing location or moves to `/(configurator)` |
-| View decision | Confirm 2D-first with on-demand 3D/AR |
-| Data decision | Confirm that no new DB table is created for unfinished catalogue data |
-| Visual decision | Confirm 2D representation style for gate frame, infill, rails, and options |
-| Docs decision | Update any stale docs that still describe only a 3D-first flow |
+| Route decision | Keep `/configurator` as the public MVP entry and keep the current marketing-route implementation until a later ADR changes the URL surface |
+| View decision | Keep 2D-first with on-demand 3D/AR |
+| Data decision | Do not create new DB tables for unfinished catalogue data |
+| Visual decision | Use a consistent 2D representation style for gate frame, infill, rails, and options |
+| Docs decision | Update stale docs so they match the master roadmap and the 2D-first release contract |
 
 Acceptance criteria:
 
@@ -164,10 +164,10 @@ Baseline decisions for Phase 0:
 | Topic | Decision |
 |---|---|
 | Public configurator entry | Keep `/configurator` as the public MVP entry |
-| Internal type flow | Use `/configurator/[type]` for the first working configurator flow |
+| Internal type flow | Keep the first working flow under the marketing route until a later ADR changes the URL surface |
 | Share route | Use `/quote/[shareToken]` as the default public share route |
-| Route group strategy | Keep the public URL stable; route groups may be introduced internally later without changing the URL surface |
-| Docs cleanup | Treat older `/configurator/[id]` references as non-baseline and update them only if a later ADR changes the share model |
+| Route group strategy | Keep the public URL stable; route groups may change internally without changing the URL surface |
+| Docs cleanup | Treat older `/configurator/[id]` references as non-baseline and keep this roadmap as historical context only |
 
 Recommended owner split:
 
@@ -182,7 +182,7 @@ Write-set boundaries:
 | Agent | Files / areas |
 |---|---|
 | Codex | `packages/gate-engine/*`, configurator docs, route/decision docs |
-| Cursor | `apps/web/src/app/(configurator)/*`, `apps/web/src/components/configurator/*` |
+| Cursor | `apps/web/src/app/(marketing)/configurator/*`, `apps/web/src/components/configurator/*` |
 | Composer | Visual references, layout experiments, no shared engine files |
 
 ---
@@ -534,7 +534,7 @@ The first release is done when all of the following are true:
 
 If we start now, the next concrete work items should be:
 
-1. Replace the placeholder `/configurator` page with a real entry flow.
+1. Evolve the current `/configurator` entry shell into the real configurator flow.
 2. Expand `packages/gate-engine` from stub to real domain and pricing logic.
 3. Define the shared configuration schema and presets.
 4. Build the first 2D preview renderer for one gate type.

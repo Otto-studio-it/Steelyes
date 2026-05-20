@@ -1,0 +1,168 @@
+import { expect, test } from '@playwright/test'
+
+import {
+  continueWizard,
+  getSwingFrameStroke,
+  goToConfiguratorStep,
+  waitForConfiguratorReady,
+  walkToSummary,
+} from './helpers/configurator'
+import { deleteSharedConfiguration, seedSharedConfiguration } from './helpers/supabase-config'
+
+test.describe('configurator release flow', () => {
+  test('loads the wizard on gate setup', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    await expect(page.getByRole('heading', { name: /Configure your gate/i })).toBeVisible()
+    await expect(page.getByRole('radiogroup', { name: 'Gate finish' })).toBeVisible()
+    await expect(page.getByText(/Indicative pricing/i).first()).toBeVisible()
+  })
+
+  test('updates preview stroke color when finish changes', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    const matteStroke = await getSwingFrameStroke(page)
+    expect(matteStroke).toBe('#1A1A1A')
+
+    await page.getByRole('radio', { name: /Bronze/i }).click()
+    await expect(page.getByRole('radio', { name: /Bronze/i })).toHaveAttribute('aria-checked', 'true')
+
+    await expect
+      .poll(async () => getSwingFrameStroke(page), {
+        message: 'Preview stroke should reflect the selected bronze finish',
+      })
+      .toBe('#8B6914')
+    expect(matteStroke).not.toBe(await getSwingFrameStroke(page))
+  })
+
+  test('walks through all steps to summary', async ({ page }) => {
+    await walkToSummary(page)
+
+    await expect(page.getByText(/Share configuration/i)).toBeVisible()
+    await expect(page.getByRole('button', { name: /Copy share link/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
+  })
+
+  test('shows survey-required pricing when top railheads are enabled', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+    await continueWizard(page)
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+
+    const railheadsCard = page.locator('div').filter({ hasText: /^Top railheads/i }).first()
+    await railheadsCard.getByRole('button', { name: /^Off$/i }).click()
+    await expect(railheadsCard.getByRole('button', { name: /^On$/i })).toBeVisible()
+
+    await expect(page.getByText(/Price on request|Survey required/i).first()).toBeVisible()
+  })
+
+  test('restores draft configuration after reload', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+    await page.getByRole('radio', { name: /Pearl white/i }).click()
+
+    await page.reload()
+    await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
+    await expect(page.getByRole('radio', { name: /Pearl white/i })).toHaveAttribute('aria-checked', 'true')
+  })
+
+  test('step rail allows jumping back to earlier steps', async ({ page }) => {
+    await walkToSummary(page)
+    await goToConfiguratorStep(page, 'Dimensions')
+    await expect(page.getByRole('slider', { name: 'Width' })).toBeVisible()
+  })
+})
+
+test.describe('configurator mobile portrait', () => {
+  test.use({ viewport: { width: 390, height: 844 } })
+
+  test('shows orientation hint and mobile price bar', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    await expect(page.getByText(/Rotate your device/i)).toBeVisible()
+    await expect(page.locator('.fixed').getByText(/Indicative total|Price on request/i)).toBeVisible()
+    await expect(page.locator('.fixed').getByRole('button', { name: /^Continue$/i })).toBeVisible()
+  })
+
+  test('supports collapsible compact preview on mobile', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    const previewToggle = page.getByRole('button', { name: /Collapse preview|Expand preview/i })
+    await expect(previewToggle).toBeVisible()
+    await expect(previewToggle).toHaveAttribute('aria-expanded', 'true')
+
+    await previewToggle.click()
+    await expect(previewToggle).toHaveAttribute('aria-expanded', 'false')
+    await expect(page.getByText(/Tap to expand the live schematic preview/i)).toBeVisible()
+
+    await previewToggle.click()
+    await expect(previewToggle).toHaveAttribute('aria-expanded', 'true')
+  })
+})
+
+test.describe('configurator share route', () => {
+  const shareToken = `e2e-share-${Date.now()}`
+
+  test.skip(
+    !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY,
+    'Supabase credentials are required for share-route E2E',
+  )
+
+  test.beforeAll(async () => {
+    const seeded = await seedSharedConfiguration(shareToken)
+    expect(seeded).toBe(true)
+  })
+
+  test.afterAll(async () => {
+    await deleteSharedConfiguration(shareToken)
+  })
+
+  test('renders a read-only shared configuration', async ({ page }) => {
+    await page.goto(`/quote/${shareToken}`)
+
+    await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
+    await expect(page.getByText(/Read-only view/i)).toBeVisible()
+    await expect(page.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+    await expect(page.getByRole('link', { name: /Request survey-led quote/i })).toHaveAttribute(
+      'href',
+      `/contact?shareToken=${encodeURIComponent(shareToken)}`,
+    )
+  })
+
+  test('prefills contact handoff with attached configuration', async ({ page }) => {
+    await page.goto(`/contact?shareToken=${shareToken}`)
+
+    await expect(page.getByText(/Attached configuration/i)).toBeVisible()
+    await expect(page.getByText(/double swing · traditional victorian/i)).toBeVisible()
+    await expect(page.locator('input[name="share_token"]')).toHaveValue(shareToken)
+  })
+})
+
+test.describe('configurator live save', () => {
+  test.skip(
+    !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY,
+    'Supabase credentials are required for live save E2E',
+  )
+
+  test('copies a share link after saving from summary', async ({ page, context }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    await walkToSummary(page)
+
+    await page.getByRole('button', { name: /Copy share link/i }).click()
+    await expect(page.getByRole('button', { name: /Link copied/i })).toBeVisible({ timeout: 15_000 })
+
+    const sharePath = await page.evaluate(async () => {
+      return navigator.clipboard.readText()
+    })
+
+    expect(sharePath).toMatch(/\/quote\/[A-Za-z0-9_-]+$/)
+    const token = sharePath.split('/quote/')[1]
+    expect(token).toBeTruthy()
+
+    await page.goto(sharePath)
+    await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
+
+    if (token) {
+      await deleteSharedConfiguration(token)
+    }
+  })
+})
