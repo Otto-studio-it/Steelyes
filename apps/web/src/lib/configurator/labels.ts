@@ -1,11 +1,16 @@
 import { getFinishDefinition, type FinishCode, type GateStyle, type GateType, type PricingLineItem, type PricingResult } from '@steelyes/gate-engine'
 
+const STYLE_LABELS: Record<GateStyle, string> = {
+  traditional_victorian: 'Traditional Victorian Style',
+  composite_boards: 'Composite Boards',
+}
+
 export function gateTypeLabel(gateType: GateType): string {
   return gateType.split('_').join(' ')
 }
 
 export function styleLabel(style: GateStyle): string {
-  return style.split('_').join(' ')
+  return STYLE_LABELS[style]
 }
 
 export function finishLabel(finish: FinishCode): string {
@@ -23,6 +28,10 @@ export function formatPricingHeadline(pricing: PricingResult): string {
 export function formatPricingLead(pricing: PricingResult): string {
   if (pricing.status === 'survey_required') {
     return 'Some pricing inputs are still provisional. The current summary is held as a survey-led estimate.'
+  }
+
+  if (pricing.assumptions.some((assumption) => assumption.toLowerCase().includes('composite boards'))) {
+    return 'Base price reflects the selected gate style. Size bands and confirmed add-ons remain indicative.'
   }
 
   return 'Base price, size bands, and confirmed add-ons are shown below. The total remains indicative.'

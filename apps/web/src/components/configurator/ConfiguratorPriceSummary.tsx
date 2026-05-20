@@ -117,6 +117,16 @@ export function ConfiguratorPriceSummary({
                 <Sparkles className="h-3.5 w-3.5" aria-hidden />
                 Visibility and follow-up
               </p>
+              {pricing.assumptions.length > 0 ? (
+                <div className="mt-3 rounded-xl border border-[#1B1C1A]/8 bg-white px-3 py-3">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#6D615D]">Style pricing notes</p>
+                  <ul className="mt-2 space-y-1.5 text-sm leading-6 text-[#5B514D]">
+                    {pricing.assumptions.map((assumption) => (
+                      <li key={assumption}>{assumption}</li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               <ul className="mt-3 space-y-2 text-sm leading-6 text-[#5B514D]">
                 <li>
                   <strong className="font-semibold text-[#1B1C1A]">Preview:</strong> the 2D sketch updates immediately.

@@ -36,6 +36,11 @@ export {
   calculateIndicativeGatePriceFromDraft,
 } from './pricing'
 export {
+  resolveStyleAwareBasePrice,
+  stylePricingAssumption,
+  stylePricingSummary,
+} from './pricing/style-pricing'
+export {
   buildGateRenderPlan,
 } from './rendering'
 export {
@@ -95,6 +100,10 @@ export type {
   PricingSource,
   PricingStatus,
 } from './pricing'
+export type {
+  StyleBasePriceResolution,
+  StyleBasePriceSource,
+} from './pricing/style-pricing'
 export type {
   GateRenderLabel,
   GateRenderPlan,

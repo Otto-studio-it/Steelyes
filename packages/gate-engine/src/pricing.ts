@@ -5,6 +5,10 @@ import {
 } from './catalog'
 import type { RailheadVariantCatalog } from './catalog'
 import {
+  resolveStyleAwareBasePrice,
+  stylePricingAssumption,
+} from './pricing/style-pricing'
+import {
   normalizeGateConfig,
   validateGateConfig,
   validateGateConfigDraftInput,
@@ -227,41 +231,57 @@ function formatOptionLabel(key: GateOptionKey): string {
 function getBasePriceSource(
   config: GateConfig,
   catalog: PricingCatalog,
-): { amount: number | null; source: PricingSource; missingData: string[]; note: string } {
+): {
+  amount: number | null
+  source: PricingSource
+  missingData: string[]
+  note: string
+  styleNote: string
+  styleConfirmed: boolean
+} {
   const entry = catalog.basePrices[config.gateType]
+  const styleResolution = resolveStyleAwareBasePrice(config, entry)
 
   if (config.motorised) {
-    if (entry.autoGbp === null) {
+    if (styleResolution.autoGbp === null) {
       return {
         amount: null,
         source: 'auto',
         missingData: ['base_price_auto_gbp'],
         note: 'Motorised base price is still required for this gate type.',
+        styleNote: styleResolution.note,
+        styleConfirmed: styleResolution.confirmed,
       }
     }
 
     return {
-      amount: entry.autoGbp,
+      amount: styleResolution.autoGbp,
       source: 'auto',
       missingData: [],
-      note: 'Motorised base price selected.',
+      note: styleResolution.note,
+      styleNote: styleResolution.note,
+      styleConfirmed: styleResolution.confirmed,
     }
   }
 
-  if (entry.manualGbp === null) {
+  if (styleResolution.manualGbp === null) {
     return {
       amount: null,
       source: 'manual',
       missingData: ['base_price_manual_gbp'],
       note: 'Manual base price is still required for this gate type.',
+      styleNote: styleResolution.note,
+      styleConfirmed: styleResolution.confirmed,
     }
   }
 
   return {
-    amount: entry.manualGbp,
+    amount: styleResolution.manualGbp,
     source: 'manual',
     missingData: [],
-    note: 'Manual base price selected.',
+    note: styleResolution.note,
+    styleNote: styleResolution.note,
+    styleConfirmed: styleResolution.confirmed,
   }
 }
 
@@ -270,6 +290,9 @@ export function calculateGateBasePrice(
   catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
 ): BasePricingResult {
   const baseSelection = getBasePriceSource(config, catalog)
+  const styleResolution = resolveStyleAwareBasePrice(config, catalog.basePrices[config.gateType])
+  const styleCodeSuffix =
+    styleResolution.source === 'style_override' ? `:${config.style}` : ''
 
   return {
     source: baseSelection.source,
@@ -277,12 +300,12 @@ export function calculateGateBasePrice(
     missingData: baseSelection.missingData,
     note: baseSelection.note,
     lineItem: {
-      code: baseSelection.source === 'manual' ? 'base_manual' : 'base_auto',
+      code: `${baseSelection.source === 'manual' ? 'base_manual' : 'base_auto'}${styleCodeSuffix}`,
       label: baseSelection.source === 'manual' ? 'Manual base price' : 'Automated base price',
       kind: 'base',
       amountGbp: baseSelection.amount,
       provisional: true,
-      note: baseSelection.note,
+      note: baseSelection.styleNote,
     },
   }
 }
@@ -478,8 +501,14 @@ export function calculateIndicativeGatePrice(
   }
 
   const baseSelection = calculateGateBasePrice(config, catalog)
+  const styleResolution = resolveStyleAwareBasePrice(config, catalog.basePrices[config.gateType])
   const assumptions: string[] = []
   const missingData: string[] = [...baseSelection.missingData]
+
+  const styleAssumption = stylePricingAssumption(styleResolution)
+  if (styleAssumption) {
+    assumptions.push(styleAssumption)
+  }
 
   const breakdown: PricingLineItem[] = [baseSelection.lineItem]
 
