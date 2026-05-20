@@ -17,6 +17,7 @@ import {
   type GateStyle,
   type GateType,
 } from './types'
+import { collectVariantCatalogIssues } from './catalog/variants'
 import { collectCompatibilityIssues } from './rules/compatibility'
 import { collectGeometryIssues } from './rules/geometry'
 
@@ -512,6 +513,7 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
 
   issues.push(...collectCompatibilityIssues(config))
   issues.push(...collectGeometryIssues(config))
+  issues.push(...collectVariantCatalogIssues(config))
 
   if (issues.length > 0) {
     return { ok: false, issues }

@@ -50,6 +50,18 @@ export {
   listFinishDefinitions,
 } from './finishes'
 export {
+  DEFAULT_RAILHEAD_VARIANT_CATALOG,
+  RAILHEAD_OPTION_KEYS,
+  collectVariantCatalogIssues,
+  findRailheadVariant,
+  getRailheadVariantCatalog,
+  isRailheadOptionKey,
+  isVariantCatalogBlocked,
+  listRailheadVariantsForOption,
+  railheadCatalogSummary,
+  resolveRailheadVariantPricing,
+} from './catalog'
+export {
   deserializeGateConfig,
   parseGateConfigJson,
   serializeGateConfig,
@@ -98,6 +110,15 @@ export type {
   FinishMaterialTokens,
   FinishSchematicTokens,
 } from './finishes'
+export type {
+  RailheadOptionKey,
+  RailheadVariantCatalog,
+  RailheadVariantDefinition,
+  ResolvedVariantPricing,
+  VariantAppliesTo,
+  VariantCatalogStatus,
+  VariantEntryStatus,
+} from './catalog'
 export type {
   SerializedFencePanelInput,
   SerializedGateConfig,

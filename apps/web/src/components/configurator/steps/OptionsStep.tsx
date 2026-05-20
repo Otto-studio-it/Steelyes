@@ -1,5 +1,6 @@
 'use client'
 
+import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
 import { OPTION_META } from '@/lib/configurator/constants'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -68,6 +69,7 @@ export function OptionsStep() {
                     }}
                   />
                 </label>
+                <VariantCatalogNotice optionKey={option.key} />
                 <p className="text-xs leading-5 text-[#5B514D]">
                   {provisionalRailhead ? 'Survey required until the railhead catalogue is confirmed.' : 'Included in the indicative summary.'}
                 </p>

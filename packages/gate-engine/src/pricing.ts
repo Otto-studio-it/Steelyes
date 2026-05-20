@@ -1,4 +1,10 @@
 import {
+  DEFAULT_RAILHEAD_VARIANT_CATALOG,
+  isRailheadOptionKey,
+  resolveRailheadVariantPricing,
+} from './catalog'
+import type { RailheadVariantCatalog } from './catalog'
+import {
   normalizeGateConfig,
   validateGateConfig,
   validateGateConfigDraftInput,
@@ -325,6 +331,7 @@ function getEnabledQuantity(quantity: number | undefined): number {
 function computeOptionLineItems(
   config: GateConfig,
   catalog: PricingCatalog,
+  variantCatalog: RailheadVariantCatalog = DEFAULT_RAILHEAD_VARIANT_CATALOG,
 ): OptionPricingResult {
   const items: PricingLineItem[] = []
   const missingData: string[] = []
@@ -336,6 +343,33 @@ function computeOptionLineItems(
 
     const pricing = catalog.optionPrices[option.key]
     const quantity = getEnabledQuantity(option.quantity)
+
+    if (isRailheadOptionKey(option.key)) {
+      const variantPricing = resolveRailheadVariantPricing(option, config, variantCatalog)
+      if (variantPricing) {
+        if (variantPricing.unitGbp === null) {
+          items.push({
+            code: `${option.key}:${variantPricing.slug}`,
+            label: `${formatOptionLabel(option.key)} — ${variantPricing.label}`,
+            kind: 'option',
+            amountGbp: null,
+            provisional: true,
+            note: variantPricing.note || 'Variant unit price is still provisional.',
+          })
+          missingData.push(`option_variant_price:${option.key}:${variantPricing.slug}`)
+        } else {
+          items.push({
+            code: `${option.key}:${variantPricing.slug}`,
+            label: `${formatOptionLabel(option.key)} — ${variantPricing.label}`,
+            kind: 'option',
+            amountGbp: roundPounds(variantPricing.unitGbp * quantity),
+            provisional: variantPricing.provisional,
+            note: variantPricing.note,
+          })
+        }
+        continue
+      }
+    }
 
     if (pricing.kind === 'flat') {
       items.push({
@@ -391,8 +425,9 @@ function computeOptionLineItems(
 export function calculateGateOptionPricing(
   config: GateConfig,
   catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
+  variantCatalog: RailheadVariantCatalog = DEFAULT_RAILHEAD_VARIANT_CATALOG,
 ): OptionPricingResult {
-  return computeOptionLineItems(config, catalog)
+  return computeOptionLineItems(config, catalog, variantCatalog)
 }
 
 function sumKnownItems(items: PricingLineItem[]): number {
@@ -428,6 +463,7 @@ function buildSurveyRequiredResult(
 export function calculateIndicativeGatePrice(
   config: GateConfig,
   catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
+  variantCatalog: RailheadVariantCatalog = DEFAULT_RAILHEAD_VARIANT_CATALOG,
 ): PricingResult {
   const validation = validateGateConfig(config)
   if (!validation.ok) {
@@ -458,7 +494,7 @@ export function calculateIndicativeGatePrice(
   const sizeAdjustments = computeSizeAdjustments(config, catalog)
   breakdown.push(...sizeAdjustments)
 
-  const optionResult = calculateGateOptionPricing(config, catalog)
+  const optionResult = calculateGateOptionPricing(config, catalog, variantCatalog)
   breakdown.push(...optionResult.items)
   missingData.push(...optionResult.missingData)
 
@@ -495,6 +531,7 @@ export function calculateIndicativeGatePrice(
 export function calculateIndicativeGatePriceFromDraft(
   input: Partial<GateConfig> & { gateType?: unknown } = {},
   catalog: PricingCatalog = DEFAULT_PRICING_CATALOG,
+  variantCatalog: RailheadVariantCatalog = DEFAULT_RAILHEAD_VARIANT_CATALOG,
 ): PricingResult {
   const draftValidation = validateGateConfigDraftInput(input)
   if (!draftValidation.ok) {
@@ -510,5 +547,5 @@ export function calculateIndicativeGatePriceFromDraft(
 
   const normalized = normalizeGateConfig(input)
 
-  return calculateIndicativeGatePrice(normalized, catalog)
+  return calculateIndicativeGatePrice(normalized, catalog, variantCatalog)
 }
