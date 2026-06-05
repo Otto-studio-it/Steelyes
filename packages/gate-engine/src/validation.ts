@@ -3,6 +3,7 @@ import {
   DEFAULT_FINISH,
   DEFAULT_GATE_OPTIONS,
   DEFAULT_GATE_PRESETS,
+  DEFAULT_SITE_SURVEY_REQUESTED,
   EMPTY_FENCE_PANEL_INPUT,
   FINISH_CODES,
   GATE_OPTION_KEYS,
@@ -41,6 +42,8 @@ const MIN_WIDTH_MM = 600
 const MAX_WIDTH_MM = 6000
 const MIN_HEIGHT_MM = 600
 const MAX_HEIGHT_MM = 3000
+const MIN_FENCE_PANEL_LENGTH_MM = 900
+const MAX_FENCE_PANEL_LENGTH_MM = 1000
 const VALIDATION_DRAFT_MODE = 'draft'
 const VALIDATION_SERIALIZED_MODE = 'serialized'
 
@@ -100,7 +103,7 @@ function normalizeFencePanels(input: unknown): FencePanelInput {
       if (heightMm === null || lengthMm === null) return null
       return {
         heightMm: Math.max(heightMm, 0),
-        lengthMm: Math.max(lengthMm, 0),
+        lengthMm: Math.min(MAX_FENCE_PANEL_LENGTH_MM, Math.max(lengthMm, MIN_FENCE_PANEL_LENGTH_MM)),
       }
     })
     .filter((panel): panel is { heightMm: number; lengthMm: number } => panel !== null)
@@ -161,6 +164,14 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
         field: 'motorised',
         code: 'invalid_motorised',
         message: 'Motorised flag must be a boolean.',
+      })
+    }
+
+    if ('siteSurveyRequested' in input && typeof input.siteSurveyRequested !== 'boolean') {
+      issues.push({
+        field: 'siteSurveyRequested',
+        code: 'invalid_site_survey_requested',
+        message: 'Site survey request flag must be a boolean.',
       })
     }
 
@@ -297,6 +308,12 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
               code: 'invalid_fence_panel_length',
               message: 'Fence panel length must be a positive integer.',
             })
+          } else if (lengthMm < MIN_FENCE_PANEL_LENGTH_MM || lengthMm > MAX_FENCE_PANEL_LENGTH_MM) {
+            issues.push({
+              field: `fencePanels.panels[${index}].lengthMm`,
+              code: 'invalid_fence_panel_length_range',
+              message: `Fence panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
+            })
           }
         })
 
@@ -366,6 +383,7 @@ export function normalizeGateConfig(
     heightMm: heightMm === null ? preset.dimensions.heightMm : Math.max(heightMm, MIN_HEIGHT_MM),
     motorised: typeof input.motorised === 'boolean' ? input.motorised : preset.motorised,
     finish: isFinishCode(input.finish) ? input.finish : DEFAULT_FINISH,
+    siteSurveyRequested: typeof input.siteSurveyRequested === 'boolean' ? input.siteSurveyRequested : DEFAULT_SITE_SURVEY_REQUESTED,
     options: normalizedOptions,
     fencePanels: normalizeFencePanels(input.fencePanels),
   }
@@ -395,6 +413,14 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
       field: 'finish',
       code: 'invalid_finish',
       message: 'Finish is not supported.',
+    })
+  }
+
+  if (typeof config.siteSurveyRequested !== 'boolean') {
+    issues.push({
+      field: 'siteSurveyRequested',
+      code: 'invalid_site_survey_requested',
+      message: 'Site survey request flag must be a boolean.',
     })
   }
 
@@ -490,6 +516,12 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
           field: `fencePanels.panels[${index}].lengthMm`,
           code: 'invalid_fence_panel_length',
           message: 'Fence panel length must be a positive integer.',
+        })
+      } else if (panel.lengthMm < MIN_FENCE_PANEL_LENGTH_MM || panel.lengthMm > MAX_FENCE_PANEL_LENGTH_MM) {
+        issues.push({
+          field: `fencePanels.panels[${index}].lengthMm`,
+          code: 'invalid_fence_panel_length_range',
+          message: `Fence panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
         })
       }
     })
