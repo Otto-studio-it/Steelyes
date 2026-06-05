@@ -22,6 +22,7 @@ export type SerializedGateConfigV1 = {
   heightMm: number
   motorised: boolean
   finish: GateConfig['finish']
+  siteSurveyRequested: boolean
   options: SerializedGateOptionSelection[]
   fencePanels: SerializedFencePanelInput
 }
@@ -46,6 +47,7 @@ export function serializeGateConfig(config: GateConfig): SerializedGateConfigV1 
     heightMm: config.heightMm,
     motorised: config.motorised,
     finish: config.finish,
+    siteSurveyRequested: config.siteSurveyRequested,
     options: config.options.map(normalizeSerializedOption),
     fencePanels: structuredClone(config.fencePanels),
   }
@@ -72,6 +74,7 @@ export function deserializeGateConfig(serialized: SerializedGateConfig | string)
       heightMm: raw.heightMm,
       motorised: raw.motorised,
       finish: raw.finish,
+      siteSurveyRequested: raw.siteSurveyRequested,
       options: Array.isArray(raw.options) ? raw.options : undefined,
       fencePanels: raw.fencePanels,
       version: raw.version,

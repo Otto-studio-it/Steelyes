@@ -63,6 +63,7 @@ export type GateConfig = GateDimensions & {
   style: GateStyle
   motorised: boolean
   finish: FinishCode
+  siteSurveyRequested: boolean
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
 }
@@ -73,6 +74,7 @@ export type GatePreset = {
   dimensions: GateDimensions
   motorised: boolean
   finish: FinishCode
+  siteSurveyRequested: boolean
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
 }
@@ -80,6 +82,7 @@ export type GatePreset = {
 export const DEFAULT_CONFIG_VERSION = 1 as const
 
 export const DEFAULT_FINISH: FinishCode = 'matte_black'
+export const DEFAULT_SITE_SURVEY_REQUESTED = false
 
 export const EMPTY_FENCE_PANEL_INPUT: FencePanelInput = {
   quantity: 0,
@@ -103,6 +106,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 1800, heightMm: 1000 },
     motorised: false,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -112,6 +116,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 900, heightMm: 1000 },
     motorised: false,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -121,6 +126,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 2500, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -130,6 +136,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 2500, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -139,6 +146,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 3000, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -148,6 +156,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 1600, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -157,6 +166,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 2100, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -166,6 +176,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     dimensions: { widthMm: 1700, heightMm: 1000 },
     motorised: true,
     finish: DEFAULT_FINISH,
+    siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -184,6 +195,7 @@ export function createGateConfig(preset: GatePreset): GateConfig {
     heightMm: preset.dimensions.heightMm,
     motorised: preset.motorised,
     finish: preset.finish,
+    siteSurveyRequested: preset.siteSurveyRequested,
     options: structuredClone(preset.options),
     fencePanels: structuredClone(preset.fencePanels),
   }
