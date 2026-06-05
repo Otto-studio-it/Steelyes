@@ -509,7 +509,7 @@ export default function HomePage() {
             ].map(([stat, desc]) => (
               <div key={desc} className="px-4 first:pl-0 last:pr-0 md:px-8">
                 <p className="font-heading text-lg font-black uppercase text-white md:text-2xl lg:text-3xl">{stat}</p>
-                <p className="mt-1 font-mono text-[9px] uppercase tracking-widest text-white/40 md:text-[10px]">
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-white/40 md:text-xs">
                   {desc}
                 </p>
               </div>

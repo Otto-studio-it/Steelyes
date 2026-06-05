@@ -129,8 +129,8 @@ Consolidated from [`UI_UX_ROADMAP.md`](./UI_UX_ROADMAP.md), homepage refresh, an
 | CL-202 | `/` hero | layout | Full-viewport mobile height (`100svh`) | done | UI roadmap §2.1 |
 | CL-203 | `/` hero | copy | Overline must not duplicate H1 | done | hero uses distinct overline |
 | CL-204 | `/` hero | layout | Progressive H1 scale / `clamp()` typography | done | `HomeWeldingHero.tsx` |
-| CL-205 | `/` hero | layout | Lighten overlay so product photo stays visible | triaged | Current `bg-black/45` + strong gradient; roadmap target ~45% combined |
-| CL-206 | `/` hero | performance | Remove `unoptimized` on hero `next/image` after format check | triaged | `HomeWeldingHero.tsx` |
+| CL-205 | `/` hero | layout | Lighten overlay so product photo stays visible | done | `HomeWeldingHero.tsx` May 2026 |
+| CL-206 | `/` hero | performance | Remove `unoptimized` on hero `next/image` after format check | done | `HomeWeldingHero.tsx` May 2026 |
 | CL-207 | `/` | layout | Gate style cards linked + browse CTAs | done | `page.tsx` gate styles section |
 | CL-208 | `/` | layout | Mobile gate cards — horizontal scroll vs stacked giants | done | `page.tsx` scroll row |
 | CL-209 | `/` | conversion | Configurator CTA + “subject to survey” disclaimer | triaged | Homepage redesigned; verify configurator section copy |
@@ -169,10 +169,10 @@ Consolidated from [`UI_UX_ROADMAP.md`](./UI_UX_ROADMAP.md), homepage refresh, an
 
 | ID | Route / area | Type | Request | Status | Source |
 |---|---|---|---|---|---|
-| CL-501 | Global | a11y | Audit `text-[10px]` labels for mobile legibility (min 12px where possible) | triaged | UI roadmap, gallery, footer |
+| CL-501 | Global | a11y | Audit `text-[10px]` labels for mobile legibility (min 12px where possible) | in_progress | Hero strip + footer updated |
 | CL-502 | `/` + gallery | performance | Image `sizes` attributes tuned per breakpoint | triaged | UI roadmap §7.3 |
 | CL-503 | `public/images` | hygiene | Semantic filenames; WebP/AVIF where beneficial | triaged | UI roadmap §7 |
-| CL-504 | `/` hero | layout | Safe-area insets for landscape iPhone | triaged | UI roadmap §2.5 |
+| CL-504 | `/` hero | layout | Safe-area insets for landscape iPhone | done | UI roadmap §2.5 |
 | CL-505 | `layout.tsx` | build | Local fonts (no Google Fonts fetch at build) | done | commit `d13b08a` |
 | CL-506 | `PAGE_INVENTORY.md` | docs | Sync route table with implemented pages | done | Phase 2 audit 2026-05-19 |
 | CL-507 | `MARKETING_SITE_AUDIT` | docs | Mark missing routes as implemented | triaged | doc drift |
@@ -225,6 +225,7 @@ Review before sharing staging with Marius or going live. Tick when verified.
 | 2026-05-19 | Phase 1 intake: created backlog from `UI_UX_ROADMAP`, `MARKETING_SITE_AUDIT`, `CLIENT_BLOCKERS`, `PAGE_INVENTORY`, and current `apps/web` route scan. |
 | 2026-05-19 | Phase 2 audit: CI baseline, `REPO_HEALTH.md`, `HANDOFF.md`, `.env.example`, route inventory sync, `graphify-out` untracked. |
 | 2026-05-19 | Phase 3 Batch A: claims audit, `business.ts`, footer legal block, legal draft notices, deploy guide, broken PDF link removed. |
+| 2026-05-19 | Phase 3 Batch B: hero overlay/lighten, remove `unoptimized`, safe-area padding, social links in header. |
 
 _When an item ships, update Status here and add a line to [`../CHANGELOG_INTERNAL.md`](../CHANGELOG_INTERNAL.md) with commit hash._
 

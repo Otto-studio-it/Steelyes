@@ -69,7 +69,7 @@ export function SiteFooter() {
                 {BUSINESS.email}
               </a>
             </p>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+            <p className="mt-2 font-mono text-xs uppercase tracking-widest text-zinc-500">
               {formatCompanyRegistration()} · {formatVatRegistration()}
             </p>
           </address>
@@ -124,7 +124,7 @@ export function SiteFooter() {
 
       <div className="border-t border-zinc-800 px-4 py-6 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+          <p className="font-mono text-xs uppercase tracking-widest text-zinc-400">
             (c) 2026 {BUSINESS.legalName}
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
