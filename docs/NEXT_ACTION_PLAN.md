@@ -49,7 +49,7 @@ Closure condition:
 
 ## Phase B — UI/Content Inventory
 
-**Status:** in progress
+**Status:** largely complete (route sync 2026-05-19)
 
 Goal: understand the visible product surface before editing design/content.
 
@@ -59,6 +59,7 @@ Work:
 - [x] Compare existing routes against intended marketing/configurator/admin pages.
 - [x] Identify pages with missing, placeholder, weak, or stale content.
 - [ ] Identify visual issues on mobile and desktop with browser screenshots.
+- [x] Sync `PAGE_INVENTORY.md` with implemented routes (`REPO_HEALTH.md` audit 2026-05-19).
 - [x] Identify where missing client assets need fallback states.
 - [x] Record findings in `docs/frontend/PAGE_INVENTORY.md`.
 - [x] Record detailed audit in `docs/frontend/MARKETING_SITE_AUDIT_2026-05-06.md`.

@@ -13,7 +13,7 @@ export function SummaryStep() {
       <ConfiguratorSharePanel />
 
       <div className="lg:hidden">
-        <ConfiguratorPriceSummary showActions={false} />
+        <ConfiguratorPriceSummary showActions={false} pricingCopyVariant="mobile" />
       </div>
 
       <div className="hidden rounded-2xl border border-dashed border-[#1B1C1A]/12 bg-[#F9F7F4] px-4 py-4 lg:block">

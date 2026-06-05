@@ -8,13 +8,15 @@ import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/Config
 import {
   formatLabelText,
   finishLabel,
-  formatPricingHeadline,
-  formatPricingLead,
+  formatPricingDisplayAmount,
+  formatPricingDisplayHeadline,
+  formatPricingDisplayNote,
   formatPricingMissingDataLabel,
   formatPricingStatusLabel,
   formatPricingValueLabel,
   gateTypeLabel,
   styleLabel,
+  type PricingCopyVariant,
 } from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorPricing } from '@/store/configuratorStore'
 
@@ -31,35 +33,44 @@ type ConfiguratorPriceSummaryProps = {
   config?: GateConfig
   showActions?: boolean
   compact?: boolean
+  pricingCopyVariant?: PricingCopyVariant
 }
 
 export function ConfiguratorPriceSummary({
   config: configOverride,
   showActions = true,
   compact = false,
+  pricingCopyVariant = 'desktop',
 }: ConfiguratorPriceSummaryProps) {
   const storeConfig = useConfiguratorConfig()
   const config = configOverride ?? storeConfig
   const pricing = useConfiguratorPricing(config)
   const missingDataSummary = pricing.missingData.slice(0, 3).map(formatPricingMissingDataLabel)
+  const isMobileCopy = pricingCopyVariant === 'mobile'
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[#1B1C1A]/10 bg-white/92 shadow-[0_18px_50px_rgba(25,20,18,0.1)] backdrop-blur-sm lg:rounded-[28px]">
       <div className="border-b border-[#1B1C1A]/8 px-4 py-4 lg:px-5">
         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#9E000C]">Price summary</p>
         <h2 className="mt-1 font-heading text-xl font-black uppercase tracking-tight text-[#1B1C1A]">
-          {formatPricingHeadline(pricing)}
+          {formatPricingDisplayHeadline(pricing, pricingCopyVariant)}
         </h2>
       </div>
 
       <div className="px-4 py-4 lg:px-5 lg:py-5">
         <div className="rounded-[22px] border border-[#1B1C1A]/10 bg-[#1B1C1A] px-4 py-4 text-white lg:px-5 lg:py-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">Live estimate</p>
-          <p className={`mt-2 font-heading font-black uppercase tracking-tight ${compact ? 'text-2xl' : 'text-4xl'}`}>
-            {pricing.totalLabel}
+          {!isMobileCopy ? (
+            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">Live estimate</p>
+          ) : null}
+          <p
+            className={`font-heading font-black uppercase tracking-tight ${compact ? 'text-2xl' : 'text-4xl'} ${
+              isMobileCopy ? '' : 'mt-2'
+            }`}
+          >
+            {formatPricingDisplayAmount(pricing, pricingCopyVariant)}
           </p>
           <p className="mt-3 max-w-xl text-sm leading-6 text-white/70">
-            {pricing.disclaimer}. {formatPricingLead(pricing)}
+            {formatPricingDisplayNote(pricing, pricingCopyVariant)}
           </p>
           {pricing.missingData.length > 0 ? (
             <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">

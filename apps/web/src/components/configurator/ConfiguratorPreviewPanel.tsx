@@ -25,6 +25,7 @@ type ConfiguratorPreviewPanelProps = {
   config: GateConfig
   compact?: boolean
   collapsible?: boolean
+  pinned?: boolean
   className?: string
   mode?: ConfiguratorPreviewMode
   allowModeSwitch?: boolean
@@ -34,16 +35,18 @@ export function ConfiguratorPreviewPanel({
   config,
   compact = false,
   collapsible = false,
+  pinned = false,
   className = '',
   mode: controlledMode,
   allowModeSwitch = CONFIGURATOR_3D_PREVIEW_ENABLED,
 }: ConfiguratorPreviewPanelProps) {
   const [internalMode, setInternalMode] = useState<ConfiguratorPreviewMode>('2d')
   const mode = controlledMode ?? internalMode
-  const canSwitch = allowModeSwitch && CONFIGURATOR_3D_PREVIEW_ENABLED && !compact
+  const canSwitch = allowModeSwitch && CONFIGURATOR_3D_PREVIEW_ENABLED && !compact && !pinned
+  const previewCompact = pinned ? false : compact
 
   return (
-    <div className={className}>
+    <div className={className} data-testid={pinned ? 'configurator-preview-pinned' : undefined}>
       {canSwitch ? (
         <div className="mb-3 inline-flex rounded-full border border-[#1B1C1A]/10 bg-white p-1">
           {(['2d', '3d'] as const).map((option) => (
@@ -65,12 +68,17 @@ export function ConfiguratorPreviewPanel({
       ) : null}
 
       {mode === '3d' ? (
-        <ConfiguratorPreview3D config={config} compact={compact} />
+        <ConfiguratorPreview3D config={config} compact={previewCompact} />
       ) : (
-        <ConfiguratorPreview config={config} compact={compact} collapsible={collapsible} />
+        <ConfiguratorPreview
+          config={config}
+          compact={previewCompact}
+          collapsible={pinned ? false : collapsible}
+          pinned={pinned}
+        />
       )}
 
-      {!compact ? (
+      {!previewCompact ? (
         <p className="mt-2 px-1 text-xs leading-5 text-[#5B514D]">
           {mode === '3d'
             ? '3D preview is schematic and loaded on demand — final geometry and powder coat may vary.'

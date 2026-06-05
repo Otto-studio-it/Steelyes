@@ -21,6 +21,8 @@ Start here when resuming the project.
 | [`CHANGELOG_INTERNAL.md`](./CHANGELOG_INTERNAL.md) | Verified work history and commits. |
 | [`CLIENT_BLOCKERS.md`](./CLIENT_BLOCKERS.md) | Missing client inputs, fallback strategy, escalation. |
 | [`frontend/CLIENT_CHANGELOG.md`](./frontend/CLIENT_CHANGELOG.md) | Prioritized backlog of client-requested site changes. |
+| [`HANDOFF.md`](./HANDOFF.md) | Senior developer 30-minute onboarding. |
+| [`REPO_HEALTH.md`](./REPO_HEALTH.md) | CI status, hygiene audit, deploy readiness. |
 
 ---
 

@@ -25,6 +25,49 @@ export function formatPricingHeadline(pricing: PricingResult): string {
   return pricing.status === 'survey_required' ? 'Price on request' : 'Indicative total'
 }
 
+export function formatPricingBarHeadline(pricing: PricingResult): string {
+  return pricing.status === 'survey_required' ? 'Survey required' : 'Live estimate'
+}
+
+export function formatPricingBarAmount(pricing: PricingResult): string {
+  if (pricing.status === 'survey_required') {
+    return 'Price on request'
+  }
+
+  if (pricing.totalGbp === null) {
+    return pricing.totalLabel
+  }
+
+  return `£${pricing.totalGbp.toLocaleString('en-GB')}`
+}
+
+export type PricingCopyVariant = 'desktop' | 'mobile'
+
+export function formatPricingDisplayHeadline(
+  pricing: PricingResult,
+  variant: PricingCopyVariant = 'desktop',
+): string {
+  return variant === 'mobile' ? formatPricingBarHeadline(pricing) : formatPricingHeadline(pricing)
+}
+
+export function formatPricingDisplayAmount(
+  pricing: PricingResult,
+  variant: PricingCopyVariant = 'desktop',
+): string {
+  return variant === 'mobile' ? formatPricingBarAmount(pricing) : pricing.totalLabel
+}
+
+export function formatPricingDisplayNote(
+  pricing: PricingResult,
+  variant: PricingCopyVariant = 'desktop',
+): string {
+  if (variant === 'mobile') {
+    return pricing.disclaimer
+  }
+
+  return `${pricing.disclaimer}. ${formatPricingLead(pricing)}`
+}
+
 export function formatPricingLead(pricing: PricingResult): string {
   if (pricing.status === 'survey_required') {
     return 'Some pricing inputs are still provisional. The current summary is held as a survey-led estimate.'

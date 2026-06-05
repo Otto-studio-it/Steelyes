@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronLeft } from 'lucide-react'
+import { Check, ChevronLeft } from 'lucide-react'
 
 import { CONFIGURATOR_STEPS } from '@/lib/configurator/constants'
 import { useConfiguratorStore, useConfiguratorStep } from '@/store/configuratorStore'
@@ -15,9 +15,9 @@ export function ConfiguratorStepRail() {
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#9E000C]">
-            Step {stepIndex + 1} of {totalSteps}
+            Step {stepIndex + 1} of {totalSteps} · {step.shortLabel}
           </p>
-          <h2 className="mt-1 font-heading text-xl font-black uppercase tracking-tight text-[#1B1C1A]">
+          <h2 className="mt-1 font-heading text-xl font-black uppercase tracking-tight text-[#1B1C1A] sm:text-2xl">
             {step.label}
           </h2>
         </div>
@@ -33,27 +33,33 @@ export function ConfiguratorStepRail() {
         ) : null}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-end gap-2">
         {CONFIGURATOR_STEPS.map((item, index) => {
           const active = index === stepIndex
           const complete = index < stepIndex
+
           return (
             <button
               key={item.id}
               type="button"
               onClick={() => setStepIndex(index)}
-              className="group flex min-h-[44px] flex-1 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 transition"
+              className="group flex min-h-[44px] min-w-0 flex-1 flex-col items-center justify-end gap-1.5 rounded-xl px-1 py-2 transition"
               aria-current={active ? 'step' : undefined}
               aria-label={`${item.label}${active ? ', current step' : complete ? ', completed' : ''}`}
             >
+              {complete ? (
+                <Check className="h-3.5 w-3.5 text-[#1B1C1A]" aria-hidden />
+              ) : (
+                <span className="h-3.5" aria-hidden />
+              )}
               <span
                 className={`h-1.5 w-full rounded-full transition ${
                   active ? 'bg-[#9E000C]' : complete ? 'bg-[#1B1C1A]' : 'bg-[#E8E4DD] group-hover:bg-[#D8D2CB]'
                 }`}
               />
               <span
-                className={`hidden font-mono text-[9px] uppercase tracking-widest sm:block ${
-                  active ? 'text-[#9E000C]' : 'text-[#8A807B]'
+                className={`truncate font-mono text-[9px] uppercase tracking-widest ${
+                  active ? 'text-[#9E000C]' : complete ? 'text-[#1B1C1A]' : 'text-[#8A807B]'
                 }`}
               >
                 {item.shortLabel}

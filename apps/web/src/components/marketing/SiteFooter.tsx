@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { SocialLinks } from '@/components/marketing/SocialLinks'
+
 const GATE_LINKS = [
   { label: 'All Gates', href: '/gates' },
   { label: 'Sliding Gates', href: '/gates/sliding' },
@@ -47,6 +49,7 @@ export function SiteFooter() {
           <p className="max-w-sm text-sm font-light leading-relaxed text-zinc-400">
             Bespoke steel gates and fabrication, specified around each entrance, site condition, and survey-led quote path.
           </p>
+          <SocialLinks className="mt-5" />
         </section>
 
         <section>
@@ -98,17 +101,20 @@ export function SiteFooter() {
       <div className="border-t border-zinc-800 px-4 py-6 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">(c) 2026 Steelyes Ltd</p>
-          <nav aria-label="Footer legal navigation">
-            <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">
-              {LEGAL_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <nav aria-label="Footer legal navigation">
+              <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">
+                {LEGAL_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <SocialLinks iconClassName="hover:text-white" />
+          </div>
         </div>
       </div>
     </footer>

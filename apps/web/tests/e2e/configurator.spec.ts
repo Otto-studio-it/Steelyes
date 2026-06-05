@@ -75,27 +75,27 @@ test.describe('configurator release flow', () => {
 test.describe('configurator mobile portrait', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 
-  test('shows orientation hint and mobile price bar', async ({ page }) => {
+  test('shows mobile price bar on portrait', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    await expect(page.getByText(/Rotate your device/i)).toBeVisible()
-    await expect(page.locator('.fixed').getByText(/Indicative total|Price on request/i)).toBeVisible()
+    await expect(page.getByTestId('configurator-preview-pinned')).toBeVisible()
+    await expect(page.locator('.fixed').getByText(/Live estimate|Survey required|Price on request/i)).toBeVisible()
     await expect(page.locator('.fixed').getByRole('button', { name: /^Continue$/i })).toBeVisible()
   })
 
-  test('supports collapsible compact preview on mobile', async ({ page }) => {
+  test('keeps the pinned gate preview visible while moving through steps', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    const previewToggle = page.getByRole('button', { name: /Collapse preview|Expand preview/i })
-    await expect(previewToggle).toBeVisible()
-    await expect(previewToggle).toHaveAttribute('aria-expanded', 'true')
+    const preview = page.locator('[data-testid="configurator-preview-pinned"] svg[aria-label*="preview" i]').first()
+    await expect(preview).toBeVisible()
 
-    await previewToggle.click()
-    await expect(previewToggle).toHaveAttribute('aria-expanded', 'false')
-    await expect(page.getByText(/Tap to expand the live schematic preview/i)).toBeVisible()
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Dimensions' })).toBeVisible()
+    await expect(preview).toBeVisible()
 
-    await previewToggle.click()
-    await expect(previewToggle).toHaveAttribute('aria-expanded', 'true')
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await expect(preview).toBeVisible()
   })
 })
 

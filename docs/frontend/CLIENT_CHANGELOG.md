@@ -174,11 +174,11 @@ Consolidated from [`UI_UX_ROADMAP.md`](./UI_UX_ROADMAP.md), homepage refresh, an
 | CL-503 | `public/images` | hygiene | Semantic filenames; WebP/AVIF where beneficial | triaged | UI roadmap §7 |
 | CL-504 | `/` hero | layout | Safe-area insets for landscape iPhone | triaged | UI roadmap §2.5 |
 | CL-505 | `layout.tsx` | build | Local fonts (no Google Fonts fetch at build) | done | commit `d13b08a` |
-| CL-506 | `PAGE_INVENTORY.md` | docs | Sync route table with implemented pages | triaged | Phase B audit |
+| CL-506 | `PAGE_INVENTORY.md` | docs | Sync route table with implemented pages | done | Phase 2 audit 2026-05-19 |
 | CL-507 | `MARKETING_SITE_AUDIT` | docs | Mark missing routes as implemented | triaged | doc drift |
 | CL-508 | E2E | quality | Configurator + admin CRUD Playwright green before handoff | triaged | `ci.yml`, local WIP |
-| CL-509 | Repo | hygiene | `.gitignore` for `graphify-out/`, `.agents/`, worktrees | triaged | Phase 2 repo audit |
-| CL-510 | `docs/adr/` | hygiene | Remove stray screenshot file from adr folder | triaged | git untracked |
+| CL-509 | Repo | hygiene | `.gitignore` for `graphify-out/`, worktrees; untrack `graphify-out/` | done | Phase 2 audit 2026-05-19 |
+| CL-510 | `docs/adr/` | hygiene | Remove stray screenshot file from adr folder | done | Phase 2 audit 2026-05-19 |
 | CL-511 | Process section | layout | Desktop connector line between process steps | superseded | homepage redesign uses list layout |
 | CL-512 | Gallery section | layout | Single column mobile + bottom-left captions | triaged | partial in `GalleryClient.tsx` |
 
@@ -223,6 +223,7 @@ Review before sharing staging with Marius or going live. Tick when verified.
 | Date | Action |
 |---|---|
 | 2026-05-19 | Phase 1 intake: created backlog from `UI_UX_ROADMAP`, `MARKETING_SITE_AUDIT`, `CLIENT_BLOCKERS`, `PAGE_INVENTORY`, and current `apps/web` route scan. |
+| 2026-05-19 | Phase 2 audit: CI baseline, `REPO_HEALTH.md`, `HANDOFF.md`, `.env.example`, route inventory sync, `graphify-out` untracked. |
 
 _When an item ships, update Status here and add a line to [`../CHANGELOG_INTERNAL.md`](../CHANGELOG_INTERNAL.md) with commit hash._
 

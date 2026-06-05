@@ -9,12 +9,15 @@ import {
 
 import { ConfiguratorPreviewPanel } from '@/components/configurator/ConfiguratorPreviewPanel'
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
+import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { buildContactHandoffPath } from '@/lib/configurator/share-token'
 import {
   finishLabel,
-  formatPricingHeadline,
+  formatPricingDisplayAmount,
+  formatPricingDisplayHeadline,
   gateTypeLabel,
   styleLabel,
+  type PricingCopyVariant,
 } from '@/lib/configurator/labels'
 
 type QuoteShareViewProps = {
@@ -24,9 +27,11 @@ type QuoteShareViewProps = {
 
 export function QuoteShareView({ config, shareToken }: QuoteShareViewProps) {
   const pricing = calculateIndicativeGatePrice(config)
+  const viewport = useConfiguratorViewport()
+  const pricingCopyVariant: PricingCopyVariant = viewport.mode === 'desktop' ? 'desktop' : 'mobile'
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-12">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:py-12 supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))]">
       <div className="max-w-3xl">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#9E000C]">Shared configuration</p>
         <h1 className="mt-2 font-heading text-[clamp(1.85rem,5vw,3.5rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-[#1B1C1A]">
@@ -64,12 +69,20 @@ export function QuoteShareView({ config, shareToken }: QuoteShareViewProps) {
               </div>
               <div className="flex justify-between gap-4">
                 <dt className="text-[#6D615D]">Estimate</dt>
-                <dd className="font-heading font-bold uppercase">{formatPricingHeadline(pricing)} · {pricing.totalLabel}</dd>
+                <dd className="text-right font-heading font-bold uppercase">
+                  {formatPricingDisplayHeadline(pricing, pricingCopyVariant)}
+                  <span className="mt-0.5 block">{formatPricingDisplayAmount(pricing, pricingCopyVariant)}</span>
+                </dd>
               </div>
             </dl>
           </div>
 
-          <ConfiguratorPriceSummary config={config} showActions={false} compact />
+          <ConfiguratorPriceSummary
+            config={config}
+            showActions={false}
+            compact
+            pricingCopyVariant={pricingCopyVariant}
+          />
 
           <Link
             href={buildContactHandoffPath(shareToken)}

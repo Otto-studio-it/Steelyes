@@ -46,8 +46,20 @@ assets-raw/**
 # Misc
 .turbo/
 
+# Local tooling / analysis output (never commit)
+graphify-out/
+.claude/worktrees/
+
+# Agent skill caches (skills live in user profile; repo copies are optional)
+.agents/skills/**/__pycache__/
+
 # Local tooling / Supabase CLI cache (never commit)
 playwright-report/
 test-results/
 supabase/.temp/
 apps/web/supabase/.temp/
+
+# Stray local screenshots and design dumps
+docs/**/*.png
+docs/**/*.jpg
+!docs/frontend/photo-browser/**
