@@ -3,7 +3,7 @@ title: Next Action Plan
 description: Ordered execution plan after DB/RLS hardening
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-20
+last_updated: 2026-05-19
 ---
 
 # Steelyes — Next Action Plan
@@ -38,6 +38,7 @@ Deliverables:
 - [x] Create `docs/CHANGELOG_INTERNAL.md` as the verified work log.
 - [x] Create `docs/frontend/` planning docs for UI/content.
 - [x] Capture the configurator scope freeze in `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`.
+- [x] Create `docs/frontend/CLIENT_CHANGELOG.md` as the structured client change intake and prioritized backlog.
 - [ ] Review whether stale phase docs should be archived or updated after the next UI/content audit.
 
 Closure condition:

@@ -3,7 +3,7 @@ title: Documentation Index
 description: Entry point for Steelyes project documentation
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-09
+last_updated: 2026-05-19
 ---
 
 # Steelyes — Documentation Index
@@ -20,6 +20,7 @@ Start here when resuming the project.
 | [`NEXT_ACTION_PLAN.md`](./NEXT_ACTION_PLAN.md) | Ordered execution plan from here. |
 | [`CHANGELOG_INTERNAL.md`](./CHANGELOG_INTERNAL.md) | Verified work history and commits. |
 | [`CLIENT_BLOCKERS.md`](./CLIENT_BLOCKERS.md) | Missing client inputs, fallback strategy, escalation. |
+| [`frontend/CLIENT_CHANGELOG.md`](./frontend/CLIENT_CHANGELOG.md) | Prioritized backlog of client-requested site changes. |
 
 ---
 
