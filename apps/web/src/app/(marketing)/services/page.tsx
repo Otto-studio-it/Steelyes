@@ -102,20 +102,14 @@ export default function ServicesPage() {
             <p className="font-mono text-[10px] uppercase tracking-widest text-[#9E000C]">Service catalogue 2026</p>
             <h3 className="mt-2 font-heading text-xl font-black uppercase">Download our full service catalogue</h3>
             <p className="mt-2 max-w-xl text-sm font-light leading-relaxed text-[#5C403D]">
-              All gate types, services, finishes, and options in one document. Indicative pricing — confirmed by free site survey.
+              Gate types, services, finishes, and options summarised for enquiry. Indicative pricing — confirmed after site survey.
             </p>
           </div>
           <a
-            href="/downloads/steelyes-listino-2026.pdf"
-            download
+            href="/contact"
             className="inline-flex min-h-[48px] shrink-0 items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            Download PDF
+            Request catalogue
           </a>
         </div>
       </section>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { GALLERY_CONSENT_NOTICE } from '@/lib/marketing/business'
+
 import { GalleryClient } from './GalleryClient'
 
 export const metadata: Metadata = {
@@ -19,8 +21,11 @@ export default function GalleryPage() {
           <span className="text-[#9E000C]">Archive</span>
         </h1>
         <p className="mt-5 max-w-2xl text-base font-light text-[#5C403D] md:text-lg">
-          A definitive collection of Steelyes commissions — gates, railings, balconies and workshop fabrication,
-          surveyed, fabricated and installed across the UK.
+          Selected Steelyes commissions — gates, railings, balconies and workshop fabrication from surveyed,
+          fabricated and installed projects.
+        </p>
+        <p className="mt-4 max-w-2xl border-l-2 border-[#9E000C] pl-4 font-mono text-xs uppercase tracking-wide text-[#5C403D]">
+          {GALLERY_CONSENT_NOTICE}
         </p>
       </section>
 

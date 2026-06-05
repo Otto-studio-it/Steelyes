@@ -91,14 +91,14 @@ _Add client requests here as Ruben provides them. Items move to numbered section
 
 | ID | Route / area | Type | Request | Depends on | Status | Source |
 |---|---|---|---|---|---|---|
-| CL-001 | Vercel + `steelyes.co.uk` | deploy | Put Next app live; point domain away from GoDaddy legacy site | Marius DNS / Vercel project | blocked | `CLIENT_BLOCKERS.md`, `PROJECT_STATUS.md` |
-| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | blocked | `CLIENT_BLOCKERS.md` |
-| CL-003 | `/legal/*` | legal | Final privacy, cookie, terms copy + CMP alignment (Iubenda) | legal review | triaged | `MARKETING_SITE_AUDIT` |
-| CL-004 | Pricing surfaces | copy | All public prices must say indicative / subject to survey; no invented motorised prices | Marius price list | triaged | `CONTENT_FALLBACKS.md`, `PRICING_SEMANTICS.md` |
+| CL-001 | Vercel + `steelyes.co.uk` | deploy | Put Next app live; point domain away from GoDaddy legacy site | Marius DNS / Vercel project | in_progress | `docs/DEPLOY.md`, `apps/web/vercel.json` |
+| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | `business.ts` — reg/VAT pending |
+| CL-003 | `/legal/*` | legal | Final privacy, cookie, terms copy + CMP alignment (Iubenda) | legal review | in_progress | Draft notice + quotation-based warranty |
+| CL-004 | Pricing surfaces | copy | All public prices must say indicative / subject to survey; no invented motorised prices | Marius price list | done | Gates/services/installation copy audited |
 | CL-005 | `/gallery` | asset | Publish only photos with property-owner consent | Marius consent | blocked | `CLIENT_BLOCKERS.md` |
 | CL-006 | Configurator catalogue | functionality | Final gate prices, finishes, railheads for accurate quotes | Marius | blocked | `CLIENT_BLOCKERS.md` |
 | CL-007 | Email deliverability | deploy | SPF/DKIM/DMARC for Resend on production domain | Marius DNS | blocked | `CLIENT_BLOCKERS.md` |
-| CL-008 | Global claims audit | copy | Remove or soften unconfirmed stats (`500+`, `10yr`, `UK-wide`, Gate Safe, fixed £ amounts) | Marius confirmation | triaged | `MARKETING_SITE_AUDIT` |
+| CL-008 | Global claims audit | copy | Remove or soften unconfirmed stats (`500+`, `10yr`, `UK-wide`, Gate Safe, fixed £ amounts) | Marius confirmation | done | About, contact, installation, services |
 | CL-009 | `/contact` form | functionality | Quote/contact submission must reach Steelyes (Resend + DB) | env vars on deploy | done | `ContactForm.tsx` + server actions |
 | CL-010 | Admin production | functionality | Marius can log in to prod admin and manage catalogue | prod Supabase auth | done | `CHANGELOG_INTERNAL` 2026-05-09 |
 
@@ -205,11 +205,11 @@ Consolidated from [`UI_UX_ROADMAP.md`](./UI_UX_ROADMAP.md), homepage refresh, an
 
 Review before sharing staging with Marius or going live. Tick when verified.
 
-- [ ] No exact final prices without “indicative / subject to survey”
+- [x] No exact final prices without “indicative / subject to survey” (catalogue pages audited May 2026)
 - [ ] No motorised price invented where DB value is NULL
-- [ ] No project counts, years, or warranty unless Marius approved
-- [ ] No “UK-wide” or zone claims beyond confirmed coverage
-- [ ] No Gate Safe / certification badges without proof
+- [x] No project counts, years, or warranty unless Marius approved (about stats removed; terms warranty softened)
+- [x] No “UK-wide” or zone claims beyond confirmed coverage (softened to survey-confirmed)
+- [x] No Gate Safe / certification badges without proof (FAQ item removed)
 - [ ] Gallery images cleared for publication (faces, plates, house numbers)
 - [ ] Footer legal block complete or intentionally blank with internal flag
 - [ ] Contact details match Marius-approved business info
@@ -224,6 +224,7 @@ Review before sharing staging with Marius or going live. Tick when verified.
 |---|---|
 | 2026-05-19 | Phase 1 intake: created backlog from `UI_UX_ROADMAP`, `MARKETING_SITE_AUDIT`, `CLIENT_BLOCKERS`, `PAGE_INVENTORY`, and current `apps/web` route scan. |
 | 2026-05-19 | Phase 2 audit: CI baseline, `REPO_HEALTH.md`, `HANDOFF.md`, `.env.example`, route inventory sync, `graphify-out` untracked. |
+| 2026-05-19 | Phase 3 Batch A: claims audit, `business.ts`, footer legal block, legal draft notices, deploy guide, broken PDF link removed. |
 
 _When an item ships, update Status here and add a line to [`../CHANGELOG_INTERNAL.md`](../CHANGELOG_INTERNAL.md) with commit hash._
 

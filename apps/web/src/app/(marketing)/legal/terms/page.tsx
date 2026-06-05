@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
+
+import { LegalDraftNotice } from '@/components/marketing/LegalDraftNotice'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { BUSINESS, formatBusinessAddress } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions | Steelyes',
@@ -13,13 +16,14 @@ export default function TermsPage() {
         <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Legal</p>
         <h1 className="font-heading text-4xl font-black uppercase sm:text-5xl">Terms &amp; Conditions</h1>
         <p className="mt-4 font-mono text-xs text-zinc-500">Last updated: May 2026</p>
+        <LegalDraftNotice />
 
         <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-[#3A3A3A] [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-[#1B1C1A] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
 
           <h2>1. About us</h2>
           <p>
             Steelyes (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) is a steel fabrication and installation business operating across the
-            United Kingdom. Our registered workshop is at Unit 7, Meridian Industrial Estate, Enfield, London EN3 7TW.
+            United Kingdom. Our workshop is at {formatBusinessAddress(false)}.
           </p>
           <p>
             These Terms &amp; Conditions govern your use of this website and any contract formed between us for the
@@ -88,8 +92,9 @@ export default function TermsPage() {
 
           <h2>8. Defects and warranty</h2>
           <p>
-            We warrant that goods supplied by us will be free from material defects in workmanship for a period of
-            12 months from the date of installation or delivery (supply-only). This warranty does not cover:
+            Defects in workmanship are covered for the warranty period stated in your written quotation or order
+            confirmation. Unless otherwise agreed in writing, no fixed warranty term applies from this website alone.
+            Warranty exclusions typically include:
           </p>
           <ul>
             <li>Fair wear and tear</li>
@@ -99,7 +104,7 @@ export default function TermsPage() {
           </ul>
           <p>
             To make a warranty claim, contact us at{' '}
-            <a href="mailto:steelyes@yahoo.com" className="text-[#9E000C] hover:underline">steelyes@yahoo.com</a>{' '}
+            <a href={`mailto:${BUSINESS.email}`} className="text-[#9E000C] hover:underline">{BUSINESS.email}</a>{' '}
             within the warranty period with a description and photographs of the defect.
           </p>
 
@@ -117,8 +122,8 @@ export default function TermsPage() {
 
           <h2>11. Contact</h2>
           <p>
-            Questions about these terms: <a href="mailto:steelyes@yahoo.com" className="text-[#9E000C] hover:underline">steelyes@yahoo.com</a><br />
-            Tel: +44 7803 002145
+            Questions about these terms: <a href={`mailto:${BUSINESS.email}`} className="text-[#9E000C] hover:underline">{BUSINESS.email}</a><br />
+            Tel: {BUSINESS.phoneDisplay}
           </p>
         </div>
       </section>

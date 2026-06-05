@@ -96,7 +96,7 @@ Baseline audit for senior handoff. Re-run checks after major merges.
 
 | Requirement | Status |
 |---|---|
-| Vercel root = `apps/web` | ⚠️ not verified in repo (no `vercel.json`; configure in Vercel UI) |
+| Vercel root = `apps/web` | ✅ `apps/web/vercel.json` + [`DEPLOY.md`](./DEPLOY.md) |
 | `.env.example` documented | ✅ added |
 | Production domain live | ❌ `steelyes.co.uk` → GoDaddy legacy |
 | `steelyes.vercel.app` | ❌ `DEPLOYMENT_NOT_FOUND` (per PROJECT_STATUS) |

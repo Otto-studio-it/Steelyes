@@ -82,6 +82,16 @@ Full tracker: [`CLIENT_BLOCKERS.md`](./CLIENT_BLOCKERS.md).
 
 ---
 
+## Business copy source of truth
+
+Public contact details, coverage copy, pricing disclaimers, and legal placeholders live in:
+
+`apps/web/src/lib/marketing/business.ts`
+
+Update `companyNumber` and `vatNumber` when Marius confirms. Until then, footer shows “pending confirmation”.
+
+---
+
 ## Conventions (non-negotiable)
 
 - [`CODEBASE_CONVENTIONS.md`](./CODEBASE_CONVENTIONS.md) — folders, naming, commits.

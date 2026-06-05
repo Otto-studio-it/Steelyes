@@ -104,10 +104,16 @@ export default function GatesPage() {
             </article>
           ))}
         </div>
-        <div className="mt-16 flex justify-center">
-          <button className="min-h-[48px] border border-zinc-300 px-10 py-3 font-heading text-sm font-bold uppercase tracking-widest">
-            Load engineering catalogue
-          </button>
+        <div className="mt-16 flex flex-col items-center gap-3">
+          <Link
+            href="/configurator"
+            className="inline-flex min-h-[48px] items-center border border-zinc-300 px-10 py-3 font-heading text-sm font-bold uppercase tracking-widest transition-colors hover:border-[#9E000C] hover:text-[#9E000C]"
+          >
+            Explore configurator
+          </Link>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+            Indicative specification — subject to survey
+          </p>
         </div>
       </section>
     </MarketingShell>

@@ -34,12 +34,12 @@ export default function AboutPage() {
           </p>
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div>
-              <p className="font-heading text-5xl font-black">15+</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">Years Experience</p>
+              <p className="font-heading text-3xl font-black uppercase">Survey-led</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">Every project</p>
             </div>
             <div>
-              <p className="font-heading text-5xl font-black">2.4k</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">Forged installs</p>
+              <p className="font-heading text-3xl font-black uppercase">Made to order</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">No stock gates</p>
             </div>
           </div>
         </div>
@@ -99,14 +99,14 @@ export default function AboutPage() {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-16 md:px-8 md:py-20 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
-            Built for London,
+            UK fabrication,
             <br />
-            <span className="text-[#9E000C]">designed to endure</span>
+            <span className="text-[#9E000C]">survey-led delivery</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#5C403D] md:text-base">
-            We work across the UK, with a concentration of commissions in London and the South East. Projects range from
-            single residential entrances to multi-gate commercial perimeters — each surveyed, drawn, fabricated and
-            installed by the same team. No subcontracted site work. No handoffs between supplier and installer.
+            We work on commissions across the United Kingdom, with our workshop based in Enfield, London. Projects range
+            from single residential entrances to multi-gate commercial perimeters — each surveyed, drawn, fabricated and
+            installed by the same team where our scope includes installation.
           </p>
         </div>
         <div className="relative aspect-[4/3] w-full overflow-hidden border border-zinc-200">

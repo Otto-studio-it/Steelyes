@@ -1,6 +1,11 @@
 import Link from 'next/link'
 
 import { SocialLinks } from '@/components/marketing/SocialLinks'
+import {
+  BUSINESS,
+  formatCompanyRegistration,
+  formatVatRegistration,
+} from '@/lib/marketing/business'
 
 const GATE_LINKS = [
   { label: 'All Gates', href: '/gates' },
@@ -49,6 +54,25 @@ export function SiteFooter() {
           <p className="max-w-sm text-sm font-light leading-relaxed text-zinc-400">
             Bespoke steel gates and fabrication, specified around each entrance, site condition, and survey-led quote path.
           </p>
+          <address className="mt-5 not-italic text-sm leading-relaxed text-zinc-400">
+            <p>{BUSINESS.address.line1}</p>
+            <p>
+              {BUSINESS.address.locality}, {BUSINESS.address.region} {BUSINESS.address.postalCode}
+            </p>
+            <p className="mt-2">
+              <a href={`tel:${BUSINESS.phone}`} className="transition-colors hover:text-white">
+                {BUSINESS.phoneDisplay}
+              </a>
+            </p>
+            <p>
+              <a href={`mailto:${BUSINESS.email}`} className="transition-colors hover:text-white">
+                {BUSINESS.email}
+              </a>
+            </p>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+              {formatCompanyRegistration()} · {formatVatRegistration()}
+            </p>
+          </address>
           <SocialLinks className="mt-5" />
         </section>
 
@@ -100,7 +124,9 @@ export function SiteFooter() {
 
       <div className="border-t border-zinc-800 px-4 py-6 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">(c) 2026 Steelyes Ltd</p>
+          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+            (c) 2026 {BUSINESS.legalName}
+          </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <nav aria-label="Footer legal navigation">
               <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">

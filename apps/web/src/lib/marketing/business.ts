@@ -1,0 +1,64 @@
+/**
+ * Confirmed business details and safe public copy fallbacks.
+ * Update here when Marius supplies company number, VAT, or final contact info.
+ */
+
+export const BUSINESS = {
+  legalName: 'Steelyes Ltd',
+  tradingName: 'Steelyes',
+  email: 'steelyes@yahoo.com',
+  phone: '+447803002145',
+  phoneDisplay: '+44 7803 002145',
+  website: 'https://www.steelyes.co.uk',
+  address: {
+    line1: 'Unit 7, Meridian Industrial Estate',
+    locality: 'Enfield',
+    region: 'London',
+    postalCode: 'EN3 7TW',
+    country: 'United Kingdom',
+  },
+  /** Pending Marius confirmation — do not invent values. */
+  companyNumber: null as string | null,
+  vatNumber: null as string | null,
+} as const
+
+export const PRICING_DISCLAIMER =
+  'Indicative pricing only. Final quotation confirmed after site survey.'
+
+export const COVERAGE_COPY = {
+  headline: 'UK projects',
+  body: 'We take commissions across the United Kingdom. Service availability and survey scheduling are confirmed per enquiry.',
+} as const
+
+export const SURVEY_COPY = {
+  headline: 'Survey-led',
+  body: 'Site surveys are arranged per project. Scope and any survey fee are confirmed before booking.',
+} as const
+
+export const GALLERY_CONSENT_NOTICE =
+  'Gallery images show completed Steelyes work. Residential property photos are published only with owner consent. Some images may show workshop or in-progress fabrication.'
+
+export const LEGAL_DRAFT_NOTICE =
+  'Draft legal copy for pre-launch review. Company registration and VAT details will be added before go-live.'
+
+export function formatBusinessAddress(multiline = true): string {
+  const { line1, locality, region, postalCode, country } = BUSINESS.address
+  if (multiline) {
+    return `${line1}\n${locality}, ${region}, ${postalCode}\n${country}`
+  }
+  return `${line1}, ${locality}, ${region}, ${postalCode}, ${country}`
+}
+
+export function formatCompanyRegistration(): string {
+  if (BUSINESS.companyNumber) {
+    return `Company no. ${BUSINESS.companyNumber}`
+  }
+  return 'Company no. pending confirmation'
+}
+
+export function formatVatRegistration(): string {
+  if (BUSINESS.vatNumber) {
+    return `VAT ${BUSINESS.vatNumber}`
+  }
+  return 'VAT no. pending confirmation'
+}
