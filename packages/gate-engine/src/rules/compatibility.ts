@@ -1,3 +1,4 @@
+import { hasOption } from '../internal/shared'
 import type { GateConfig, GateOptionKey } from '../types'
 
 export type RuleIssue = {
@@ -13,10 +14,6 @@ const PROVISIONAL_VICTORIAN_OPTION_KEYS: GateOptionKey[] = [
   'bushes',
   'spirals',
 ]
-
-function hasOption(config: GateConfig, key: GateOptionKey): boolean {
-  return config.options.some((option) => option.key === key && option.enabled)
-}
 
 function pushIssue(issues: RuleIssue[], field: string, code: string, message: string): void {
   issues.push({ field, code, message })

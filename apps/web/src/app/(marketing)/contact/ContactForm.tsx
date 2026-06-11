@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom'
-import type { GateConfig } from '@steelyes/gate-engine'
+import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
 
 import { submitContactForm, type ContactFormState } from '@/app/actions'
 import { ConfigurationReferenceBanner } from '@/components/configurator/ConfigurationReferenceBanner'
@@ -34,9 +34,10 @@ function SubmitButton() {
 type ContactFormProps = {
   shareToken?: string
   attachedConfig?: GateConfig | null
+  pricingCatalog?: PricingCatalog
 }
 
-export function ContactForm({ shareToken, attachedConfig = null }: ContactFormProps) {
+export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog }: ContactFormProps) {
   const [state, action] = useFormState(submitContactForm, initialState)
 
   if (state.status === 'success') {
@@ -63,7 +64,11 @@ export function ContactForm({ shareToken, attachedConfig = null }: ContactFormPr
       <h2 className="font-heading text-2xl font-black uppercase">Project brief</h2>
 
       {attachedConfig && shareToken ? (
-        <ConfigurationReferenceBanner config={attachedConfig} shareToken={shareToken} />
+        <ConfigurationReferenceBanner
+          config={attachedConfig}
+          shareToken={shareToken}
+          pricingCatalog={pricingCatalog}
+        />
       ) : null}
 
       <div className="inline-flex items-center gap-3 border border-[#9E000C]/20 bg-[#9E000C]/5 px-4 py-2">

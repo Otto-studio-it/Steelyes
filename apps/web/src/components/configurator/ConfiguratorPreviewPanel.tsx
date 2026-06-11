@@ -12,7 +12,7 @@ const ConfiguratorPreview3D = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-[#1B1C1A]/10 bg-[#F7F5F2] px-4 text-sm text-[#5B514D]">
+      <div className="flex min-h-[220px] items-center justify-center rounded-2xl border border-steel/10 bg-paper px-4 text-sm text-muted-deep">
         Loading 3D preview…
       </div>
     ),
@@ -48,7 +48,7 @@ export function ConfiguratorPreviewPanel({
   return (
     <div className={className} data-testid={pinned ? 'configurator-preview-pinned' : undefined}>
       {canSwitch ? (
-        <div className="mb-3 inline-flex rounded-full border border-[#1B1C1A]/10 bg-white p-1">
+        <div className="mb-3 inline-flex rounded-full border border-steel/10 bg-white p-1">
           {(['2d', '3d'] as const).map((option) => (
             <button
               key={option}
@@ -56,8 +56,8 @@ export function ConfiguratorPreviewPanel({
               onClick={() => setInternalMode(option)}
               className={`min-h-[40px] rounded-full px-4 font-mono text-[10px] uppercase tracking-[0.18em] transition ${
                 mode === option
-                  ? 'bg-[#1B1C1A] text-white'
-                  : 'text-[#6D615D] hover:text-[#9E000C]'
+                  ? 'bg-steel text-white'
+                  : 'text-muted hover:text-primary'
               }`}
               aria-pressed={mode === option}
             >
@@ -79,7 +79,7 @@ export function ConfiguratorPreviewPanel({
       )}
 
       {!previewCompact ? (
-        <p className="mt-2 px-1 text-xs leading-5 text-[#5B514D]">
+        <p className="mt-2 px-1 text-xs leading-5 text-muted-deep">
           {mode === '3d'
             ? '3D preview is schematic and loaded on demand — final geometry and powder coat may vary.'
             : 'Finish preview is schematic — final powder coat may vary.'}

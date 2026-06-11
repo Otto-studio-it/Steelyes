@@ -1,0 +1,14 @@
+# Example — copy to inputs/double_swing/manifest.yaml
+
+gate_type: double_swing
+style_hint: traditional_victorian
+known_dimensions_mm:
+  width: 1800
+  height: 1000
+motorised_hint: false
+photos:
+  - path: front.jpg
+    view: front_elevation
+  - path: detail_latch.jpg
+    view: center_hardware
+notes: Replace with real project notes. Add JPG/PNG files beside this manifest.

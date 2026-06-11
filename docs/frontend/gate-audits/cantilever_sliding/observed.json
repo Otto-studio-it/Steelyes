@@ -1,0 +1,88 @@
+{
+  "gate_type_guess": "cantilever_sliding",
+  "confidence": 0.94,
+  "leaf_count": 1,
+  "style_guess": "traditional_victorian",
+  "brand_evidence": "SteelYes Ltd van visible (steelyes.co.uk)",
+  "topology": {
+    "mechanism": {
+      "type": "cantilever_sliding",
+      "ground_track_across_opening": false,
+      "suspended_above_ground": true,
+      "counterbalance_tail": {
+        "side": "left",
+        "diagonal_brace": true,
+        "estimated_length_mm": [1500, 2000]
+      },
+      "carriage": {
+        "support_post": "left",
+        "rollers_or_guides": true
+      }
+    },
+    "panel": {
+      "rails": ["top", "mid", "bottom_heavy"],
+      "infill": "vertical_pickets_spear_finials",
+      "lower_density_multiplier": 2
+    },
+    "automation": {
+      "gear_rack_on_bottom_rail": true,
+      "ground_motor": true,
+      "limit_switch_bracket": true
+    }
+  },
+  "dimensions_estimated_from_photo": {
+    "method": "commercial_van_scale_steel_yes_transit_class",
+    "clear_opening_width_mm": [4000, 5000],
+    "height_to_finials_mm": [1800, 2100],
+    "tail_length_mm": [1500, 2000],
+    "tail_ratio_of_opening": [0.37, 0.5],
+    "total_gate_length_mm": [5500, 7000],
+    "ground_clearance_mm": [50, 100]
+  },
+  "dimensions_client_catalog": {
+    "opening_width_mm": [2500, 2600],
+    "height_mm": [900, 1000],
+    "manual_from_gbp": 2900,
+    "automated_from_gbp": 4200
+  },
+  "dimensions_engine_preset": {
+    "width_mm": 2500,
+    "height_mm": 1000,
+    "motorised": true,
+    "tail_ratio_default": 0.28,
+    "tail_ratio_at_4000mm": 0.333,
+    "computed_tail_mm_at_2500": 700,
+    "computed_tail_mm_at_4000": 1333
+  },
+  "dimensions_web_benchmarks": {
+    "total_length_rule": "1.3_to_1.5_times_clear_opening",
+    "tail_ratio_range": [0.3, 0.5],
+    "typical_heights_mm_uk_market": [1800, 2400],
+    "sources": [
+      "https://steelyes.co.uk/gates/cantilever",
+      "https://drivewaydrivewaygates.co.uk/driveway-gates/sliding-driveway-gates",
+      "https://www.agdsystems.co.uk/home/agd-gate-systems/commercial-gates/cantilever-sliding-gates-overview/",
+      "https://www.richmondau.com/cantilever-buying-guide/"
+    ]
+  },
+  "dimension_alignment": {
+    "engine_vs_client_preset": "MATCH",
+    "photo_vs_client_width": "REVIEW_photo_much_wider",
+    "photo_vs_client_height": "REVIEW_photo_much_taller",
+    "engine_tail_vs_photo_tail": "REVIEW_engine_28pct_may_underestimate",
+    "engine_tail_at_4m_vs_photo": "CLOSER_33pct_rule"
+  },
+  "renderer_gaps": [
+    "Ground track line drawn for cantilever type",
+    "No carriage post or diagonal brace",
+    "No gear rack or motor schematic",
+    "Tail ratio 28% default below photo and many industry norms"
+  ],
+  "open_questions_for_client": [
+    "Does widthMm mean clear opening or total gate length including tail?",
+    "What is Steelyes production tail ratio for 2.5m vs 4m openings?",
+    "Can we obtain as-built dimensions for the SteelYes van install photo?",
+    "Does catalog height 900/1000mm include finial extension?"
+  ],
+  "photo_sources": ["photos/01-victorian-steelyes-install-motorised.png"]
+}

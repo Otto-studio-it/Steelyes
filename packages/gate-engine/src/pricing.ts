@@ -85,6 +85,8 @@ export type PricingResult = {
   missingData: string[]
   assumptions: string[]
   issues: PricingIssue[]
+  /** Mirrors GateConfig.siteSurveyRequested so every pricing surface can show it. */
+  siteSurveyRequested: boolean
 }
 
 export type BasePricingResult = {
@@ -101,13 +103,22 @@ export type OptionPricingResult = {
 }
 
 const DEFAULT_DISCLAIMER = 'Indicative, subject to survey'
+const SITE_SURVEY_ASSUMPTION = 'Customer requested a site survey; the final quote follows the survey.'
 
+/**
+ * Reference sizes are the TOP of each client catalogue band
+ * (see docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md, e.g. double swing
+ * "1800/1900mm -> GBP 1800"). Any size within the catalogue band costs the
+ * base price; uplifts apply only above the band. Default presets must stay
+ * within these bands so the advertised "FROM" price equals the base price
+ * (guarded by a regression test in tests/pricing.test.ts).
+ */
 export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
   basePrices: {
     double_swing: {
       manualGbp: 1800,
       autoGbp: 3800,
-      referenceWidthMm: 1800,
+      referenceWidthMm: 1900,
       referenceHeightMm: 1000,
       widthStepGbp: 90,
       heightStepGbp: 80,
@@ -115,7 +126,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     single_swing: {
       manualGbp: 850,
       autoGbp: 2700,
-      referenceWidthMm: 850,
+      referenceWidthMm: 900,
       referenceHeightMm: 1000,
       widthStepGbp: 70,
       heightStepGbp: 60,
@@ -123,7 +134,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     tracked_sliding: {
       manualGbp: 2200,
       autoGbp: 3600,
-      referenceWidthMm: 2550,
+      referenceWidthMm: 2600,
       referenceHeightMm: 1000,
       widthStepGbp: 75,
       heightStepGbp: 70,
@@ -131,7 +142,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     cantilever_sliding: {
       manualGbp: 2900,
       autoGbp: 4200,
-      referenceWidthMm: 2550,
+      referenceWidthMm: 2600,
       referenceHeightMm: 1000,
       widthStepGbp: 85,
       heightStepGbp: 70,
@@ -139,7 +150,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     bifolding_double_swing: {
       manualGbp: 2500,
       autoGbp: 4200,
-      referenceWidthMm: 2950,
+      referenceWidthMm: 3000,
       referenceHeightMm: 1000,
       widthStepGbp: 95,
       heightStepGbp: 80,
@@ -147,7 +158,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     single_bifolding: {
       manualGbp: 1900,
       autoGbp: 3000,
-      referenceWidthMm: 1550,
+      referenceWidthMm: 1600,
       referenceHeightMm: 1000,
       widthStepGbp: 85,
       heightStepGbp: 75,
@@ -155,7 +166,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     telescopic_sliding: {
       manualGbp: 3100,
       autoGbp: 4200,
-      referenceWidthMm: 2050,
+      referenceWidthMm: 2100,
       referenceHeightMm: 1000,
       widthStepGbp: 90,
       heightStepGbp: 70,
@@ -163,7 +174,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
     radius_sliding: {
       manualGbp: 2500,
       autoGbp: 4200,
-      referenceWidthMm: 1650,
+      referenceWidthMm: 1700,
       referenceHeightMm: 1000,
       widthStepGbp: 90,
       heightStepGbp: 70,
@@ -464,6 +475,7 @@ function buildSurveyRequiredResult(
   missingData: string[],
   assumptions: string[],
   issues: PricingIssue[],
+  siteSurveyRequested = false,
 ): PricingResult {
   const subtotalKnownGbp = sumKnownItems(breakdown)
 
@@ -480,6 +492,7 @@ function buildSurveyRequiredResult(
     missingData,
     assumptions,
     issues,
+    siteSurveyRequested,
   }
 }
 
@@ -497,6 +510,7 @@ export function calculateIndicativeGatePrice(
       validation.issues.map((issue) => `${issue.field}:${issue.code}`),
       ['Configuration failed domain validation before pricing.'],
       validation.issues,
+      config.siteSurveyRequested === true,
     )
   }
 
@@ -508,6 +522,10 @@ export function calculateIndicativeGatePrice(
   const styleAssumption = stylePricingAssumption(styleResolution)
   if (styleAssumption) {
     assumptions.push(styleAssumption)
+  }
+
+  if (config.siteSurveyRequested) {
+    assumptions.push(SITE_SURVEY_ASSUMPTION)
   }
 
   const breakdown: PricingLineItem[] = [baseSelection.lineItem]
@@ -536,6 +554,7 @@ export function calculateIndicativeGatePrice(
       missingData,
       assumptions,
       [],
+      config.siteSurveyRequested,
     )
   }
 
@@ -554,6 +573,7 @@ export function calculateIndicativeGatePrice(
     missingData,
     assumptions,
     issues: [],
+    siteSurveyRequested: config.siteSurveyRequested,
   }
 }
 
@@ -571,6 +591,7 @@ export function calculateIndicativeGatePriceFromDraft(
       draftValidation.issues.map((issue) => `${issue.field}:${issue.code}`),
       ['Configuration draft failed structural validation before pricing.'],
       draftValidation.issues,
+      input.siteSurveyRequested === true,
     )
   }
 

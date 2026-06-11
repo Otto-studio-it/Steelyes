@@ -1,14 +1,18 @@
 'use client'
 
 import {
+  DEFAULT_PRICING_CATALOG,
   calculateIndicativeGatePrice,
   createGateConfig,
   createGatePreset,
   deserializeGateConfig,
   stringifyGateConfig,
+  validateGateConfig,
   type GateConfig,
   type GateOptionKey,
+  type PricingCatalog,
   type PricingResult,
+  type ValidationIssue,
 } from '@steelyes/gate-engine'
 import { create } from 'zustand'
 
@@ -97,12 +101,14 @@ type ConfiguratorState = {
   stepIndex: number
   hydrated: boolean
   previewExpanded: boolean
+  pricingCatalog: PricingCatalog
   shareToken: string | null
   configurationId: string | null
   savedConfigHash: string | null
   saveState: SaveState
   saveError: string | null
   hydrate: () => void
+  setPricingCatalog: (catalog: PricingCatalog) => void
   setConfig: (config: GateConfig) => void
   patchConfig: (patch: Partial<GateConfig>) => void
   resetToPrimarySlice: () => void
@@ -135,6 +141,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
   stepIndex: 0,
   hydrated: false,
   previewExpanded: true,
+  pricingCatalog: DEFAULT_PRICING_CATALOG,
   shareToken: null,
   configurationId: null,
   savedConfigHash: null,
@@ -155,6 +162,10 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
       savedConfigHash: shareStillValid ? shareMeta.savedConfigHash : null,
       saveState: shareStillValid ? 'saved' : 'idle',
     })
+  },
+
+  setPricingCatalog: (pricingCatalog) => {
+    set({ pricingCatalog })
   },
 
   setConfig: (config) => {
@@ -189,6 +200,12 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
   setStepIndex: (stepIndex) => {
     const clamped = Math.max(0, Math.min(stepIndex, CONFIGURATOR_STEPS.length - 1))
+
+    // Moving backward is always allowed; moving forward requires a valid config.
+    if (clamped > get().stepIndex && !validateGateConfig(get().config).ok) {
+      return
+    }
+
     set({ stepIndex: clamped })
   },
 
@@ -267,10 +284,20 @@ export function useConfiguratorConfig(): GateConfig {
   return useConfiguratorStore((state) => state.config)
 }
 
-export function useConfiguratorPricing(configOverride?: GateConfig): PricingResult {
+export function useConfiguratorPricing(
+  configOverride?: GateConfig,
+  catalogOverride?: PricingCatalog,
+): PricingResult {
   const storeConfig = useConfiguratorConfig()
+  const storeCatalog = useConfiguratorStore((state) => state.pricingCatalog)
   const config = configOverride ?? storeConfig
-  return calculateIndicativeGatePrice(config)
+  return calculateIndicativeGatePrice(config, catalogOverride ?? storeCatalog)
+}
+
+export function useConfiguratorValidationIssues(): ValidationIssue[] {
+  const config = useConfiguratorConfig()
+  const result = validateGateConfig(config)
+  return result.ok ? [] : result.issues
 }
 
 export function useConfiguratorStep() {

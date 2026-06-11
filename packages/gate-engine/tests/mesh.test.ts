@@ -31,6 +31,17 @@ describe('gate-engine mesh', () => {
     expect(plan.boxes.some((box) => box.id === 'sliding-panel')).toBe(true)
   })
 
+  it('includes a counterbalance tail in cantilever mesh plans', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('cantilever_sliding')),
+      widthMm: 4000,
+    }
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.boxes.some((box) => box.id === 'counterbalance-tail')).toBe(true)
+    expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+  })
+
   it('rejects invalid configs before mesh generation', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),

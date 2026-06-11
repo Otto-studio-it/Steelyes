@@ -140,7 +140,7 @@ describe('gate-engine pricing', () => {
   it('adds deterministic uplifts when width and height increase above the reference size', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),
-      widthMm: 1900,
+      widthMm: 2000,
       heightMm: 1100,
     }
 
@@ -154,6 +154,39 @@ describe('gate-engine pricing', () => {
       'size_height',
     ])
   })
+
+  it('does not charge a size uplift inside the client catalogue band', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      widthMm: 1900,
+      heightMm: 1000,
+    }
+
+    const result = calculateIndicativeGatePrice(config)
+
+    expect(result.status).toBe('indicative')
+    expect(result.totalGbp).toBe(1800)
+    expect(result.breakdown.map((item) => item.code)).toEqual(['base_manual'])
+  })
+
+  it.each(GATE_TYPES)(
+    'keeps the %s default preset inside the reference band so FROM price equals the base price',
+    (gateType) => {
+      const entry = DEFAULT_PRICING_CATALOG.basePrices[gateType]
+      const config = createGateConfig(createGatePreset(gateType))
+      const expectedBase = config.motorised ? entry.autoGbp : entry.manualGbp
+
+      expect(config.widthMm).toBeLessThanOrEqual(entry.referenceWidthMm)
+      expect(config.heightMm).toBeLessThanOrEqual(entry.referenceHeightMm)
+
+      const result = calculateIndicativeGatePrice(config)
+
+      expect(result.status).toBe('indicative')
+      expect(result.basePriceGbp).toBe(expectedBase)
+      expect(result.totalGbp).toBe(expectedBase)
+      expect(result.breakdown.filter((item) => item.kind === 'size')).toHaveLength(0)
+    },
+  )
 
   it('falls back to survey required when the auto base price is missing', () => {
     const catalog: PricingCatalog = {
@@ -210,6 +243,22 @@ describe('gate-engine pricing', () => {
       'bushes',
       'spirals',
     ])
+  })
+
+  it('propagates the site survey request into the pricing result', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      siteSurveyRequested: true,
+    }
+
+    const result = calculateIndicativeGatePrice(config)
+
+    expect(result.status).toBe('indicative')
+    expect(result.siteSurveyRequested).toBe(true)
+    expect(result.assumptions.some((assumption) => assumption.toLowerCase().includes('site survey'))).toBe(true)
+
+    const withoutSurvey = calculateIndicativeGatePrice(createGateConfig(createGatePreset('double_swing')))
+    expect(withoutSurvey.siteSurveyRequested).toBe(false)
   })
 
   it('marks a draft with duplicated options as survey required before normalization', () => {

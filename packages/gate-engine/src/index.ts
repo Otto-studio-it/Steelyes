@@ -4,6 +4,7 @@ export {
   DEFAULT_GATE_OPTIONS,
   DEFAULT_GATE_PRESETS,
   EMPTY_FENCE_PANEL_INPUT,
+  DEFAULT_SITE_SURVEY_REQUESTED,
   FINISH_CODES,
   GATE_MECHANISMS,
   GATE_OPTION_KEYS,
@@ -19,6 +20,12 @@ export {
   validateGateConfigSerializedInput,
 } from './validation'
 export {
+  GATE_DIMENSION_LIMITS,
+  GLOBAL_DIMENSION_LIMITS,
+  getDimensionLimits,
+} from './dimension-limits'
+export type { DimensionLimits } from './dimension-limits'
+export {
   collectCompatibilityIssues,
 } from './rules/compatibility'
 export {
@@ -28,6 +35,13 @@ export {
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
 } from './rules/geometry'
+export {
+  CANTILEVER_RULE_WIDTH_MM,
+  CANTILEVER_TAIL_RATIO_AT_4M,
+  CANTILEVER_TAIL_RATIO_DEFAULT,
+  cantileverTailNote,
+  getCantileverTailRatio,
+} from './rules/cantilever'
 export {
   DEFAULT_PRICING_CATALOG,
   calculateGateBasePrice,

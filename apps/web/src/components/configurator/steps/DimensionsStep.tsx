@@ -17,7 +17,7 @@ export function DimensionsStep() {
 
   return (
     <div className="space-y-5">
-      <p className="text-sm leading-6 text-[#5B514D]">
+      <p className="text-sm leading-6 text-muted-deep">
         Use the sliders or quick presets to set width and height. The preview and indicative price update immediately.
       </p>
 

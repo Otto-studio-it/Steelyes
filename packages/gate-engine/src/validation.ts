@@ -19,6 +19,8 @@ import {
   type GateType,
 } from './types'
 import { collectVariantCatalogIssues } from './catalog/variants'
+import { GLOBAL_DIMENSION_LIMITS, getDimensionLimits } from './dimension-limits'
+import { clamp } from './internal/shared'
 import { collectCompatibilityIssues } from './rules/compatibility'
 import { collectGeometryIssues } from './rules/geometry'
 
@@ -38,12 +40,12 @@ export type ValidationResult<T> =
       issues: ValidationIssue[]
     }
 
-const MIN_WIDTH_MM = 600
-const MAX_WIDTH_MM = 6000
-const MIN_HEIGHT_MM = 600
-const MAX_HEIGHT_MM = 3000
+// Standard fence panels in this configurator slice use a fixed 900–1000 mm length band.
 const MIN_FENCE_PANEL_LENGTH_MM = 900
 const MAX_FENCE_PANEL_LENGTH_MM = 1000
+
+/** Options priced as a single flat add-on: quantity above 1 has no meaning. */
+const SINGLE_INSTANCE_OPTION_KEYS: readonly GateOptionKey[] = ['middle_bar', 'arched_top']
 const VALIDATION_DRAFT_MODE = 'draft'
 const VALIDATION_SERIALIZED_MODE = 'serialized'
 
@@ -80,11 +82,14 @@ function normalizeOptionSelection(option: Partial<GateOptionSelection> | undefin
 
   const enabled = Boolean(option.enabled)
   const quantity = toIntegerOrNull(option.quantity)
+  const sanitizedQuantity = quantity === null ? 0 : Math.max(quantity, 0)
 
   return {
     key: option.key,
     enabled,
-    quantity: quantity === null ? 0 : Math.max(quantity, 0),
+    quantity: SINGLE_INSTANCE_OPTION_KEYS.includes(option.key)
+      ? Math.min(sanitizedQuantity, 1)
+      : sanitizedQuantity,
     variant: typeof option.variant === 'string' && option.variant.trim() ? option.variant.trim() : undefined,
   }
 }
@@ -175,21 +180,25 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
       })
     }
 
+    const serializedLimits = isGateType(input.gateType)
+      ? getDimensionLimits(input.gateType)
+      : GLOBAL_DIMENSION_LIMITS
+
     const widthMm = input.widthMm
-    if ('widthMm' in input && (typeof widthMm !== 'number' || !Number.isInteger(widthMm) || widthMm < MIN_WIDTH_MM || widthMm > MAX_WIDTH_MM)) {
+    if ('widthMm' in input && (typeof widthMm !== 'number' || !Number.isInteger(widthMm) || widthMm < serializedLimits.minWidthMm || widthMm > serializedLimits.maxWidthMm)) {
       issues.push({
         field: 'widthMm',
         code: 'invalid_width',
-        message: `Width must be between ${MIN_WIDTH_MM}mm and ${MAX_WIDTH_MM}mm.`,
+        message: `Width must be between ${serializedLimits.minWidthMm}mm and ${serializedLimits.maxWidthMm}mm.`,
       })
     }
 
     const heightMm = input.heightMm
-    if ('heightMm' in input && (typeof heightMm !== 'number' || !Number.isInteger(heightMm) || heightMm < MIN_HEIGHT_MM || heightMm > MAX_HEIGHT_MM)) {
+    if ('heightMm' in input && (typeof heightMm !== 'number' || !Number.isInteger(heightMm) || heightMm < serializedLimits.minHeightMm || heightMm > serializedLimits.maxHeightMm)) {
       issues.push({
         field: 'heightMm',
         code: 'invalid_height',
-        message: `Height must be between ${MIN_HEIGHT_MM}mm and ${MAX_HEIGHT_MM}mm.`,
+        message: `Height must be between ${serializedLimits.minHeightMm}mm and ${serializedLimits.maxHeightMm}mm.`,
       })
     }
   }
@@ -375,12 +384,20 @@ export function normalizeGateConfig(
     return match ? match : structuredClone(defaultOption)
   }) as GateOptionSelection[]
 
+  const limits = getDimensionLimits(gateType)
+
   return {
     version: DEFAULT_CONFIG_VERSION,
     gateType,
     style: isGateStyle(input.style) ? input.style : preset.style,
-    widthMm: widthMm === null ? preset.dimensions.widthMm : Math.max(widthMm, MIN_WIDTH_MM),
-    heightMm: heightMm === null ? preset.dimensions.heightMm : Math.max(heightMm, MIN_HEIGHT_MM),
+    widthMm:
+      widthMm === null
+        ? preset.dimensions.widthMm
+        : clamp(widthMm, limits.minWidthMm, limits.maxWidthMm),
+    heightMm:
+      heightMm === null
+        ? preset.dimensions.heightMm
+        : clamp(heightMm, limits.minHeightMm, limits.maxHeightMm),
     motorised: typeof input.motorised === 'boolean' ? input.motorised : preset.motorised,
     finish: isFinishCode(input.finish) ? input.finish : DEFAULT_FINISH,
     siteSurveyRequested: typeof input.siteSurveyRequested === 'boolean' ? input.siteSurveyRequested : DEFAULT_SITE_SURVEY_REQUESTED,
@@ -424,19 +441,21 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
     })
   }
 
-  if (!Number.isInteger(config.widthMm) || config.widthMm < MIN_WIDTH_MM || config.widthMm > MAX_WIDTH_MM) {
+  const limits = isGateType(config.gateType) ? getDimensionLimits(config.gateType) : GLOBAL_DIMENSION_LIMITS
+
+  if (!Number.isInteger(config.widthMm) || config.widthMm < limits.minWidthMm || config.widthMm > limits.maxWidthMm) {
     issues.push({
       field: 'widthMm',
       code: 'invalid_width',
-      message: `Width must be between ${MIN_WIDTH_MM}mm and ${MAX_WIDTH_MM}mm.`,
+      message: `Width must be between ${limits.minWidthMm}mm and ${limits.maxWidthMm}mm.`,
     })
   }
 
-  if (!Number.isInteger(config.heightMm) || config.heightMm < MIN_HEIGHT_MM || config.heightMm > MAX_HEIGHT_MM) {
+  if (!Number.isInteger(config.heightMm) || config.heightMm < limits.minHeightMm || config.heightMm > limits.maxHeightMm) {
     issues.push({
       field: 'heightMm',
       code: 'invalid_height',
-      message: `Height must be between ${MIN_HEIGHT_MM}mm and ${MAX_HEIGHT_MM}mm.`,
+      message: `Height must be between ${limits.minHeightMm}mm and ${limits.maxHeightMm}mm.`,
     })
   }
 
@@ -474,6 +493,12 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
           field: `options.${option.key}.quantity`,
           code: 'invalid_option_quantity',
           message: 'Option quantity must be a non-negative integer.',
+        })
+      } else if (SINGLE_INSTANCE_OPTION_KEYS.includes(option.key) && option.quantity > 1) {
+        issues.push({
+          field: `options.${option.key}.quantity`,
+          code: 'option_quantity_not_applicable',
+          message: 'This option is a single flat add-on; quantity above 1 is not supported.',
         })
       }
     }

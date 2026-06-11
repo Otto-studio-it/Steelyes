@@ -63,3 +63,15 @@ apps/web/supabase/.temp/
 docs/**/*.png
 docs/**/*.jpg
 !docs/frontend/photo-browser/**
+!docs/frontend/gate-audits/**/photos/**
+# Re-exclude AppleDouble noise re-included by the negations above
+docs/**/._*
+
+# Gate photo audit — client reference photos + agent handoff (keep schema/reports)
+tools/gate-photo-audit/.venv/
+tools/gate-photo-audit/handoff/
+tools/gate-photo-audit/inputs/**/*
+!tools/gate-photo-audit/inputs/_example/
+!tools/gate-photo-audit/inputs/_example/**
+tools/gate-photo-audit/**/__pycache__/
+**/._*

@@ -33,23 +33,23 @@ export function ConfiguratorSharePanel() {
   const activeToken = shareToken
 
   return (
-    <div className="rounded-2xl border border-[#1B1C1A]/10 bg-white px-4 py-4">
-      <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-[#6D615D]">
+    <div className="rounded-2xl border border-steel/10 bg-white px-4 py-4">
+      <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
         <Link2 className="h-3.5 w-3.5" aria-hidden />
         Share configuration
       </p>
-      <p className="mt-2 text-sm leading-6 text-[#5B514D]">
+      <p className="mt-2 text-sm leading-6 text-muted-deep">
         Save a read-only link you can reopen or send to the workshop before requesting a quote.
       </p>
 
       {activeToken ? (
-        <p className="mt-3 break-all font-mono text-xs text-[#1B1C1A]">
+        <p className="mt-3 break-all font-mono text-xs text-steel">
           {buildQuoteSharePath(activeToken)}
         </p>
       ) : null}
 
       {saveError ? (
-        <p className="mt-3 text-sm text-[#9E000C]" role="alert">
+        <p className="mt-3 text-sm text-primary" role="alert">
           {saveError}
         </p>
       ) : null}
@@ -58,7 +58,7 @@ export function ConfiguratorSharePanel() {
         type="button"
         onClick={handleCopyLink}
         disabled={saveState === 'saving'}
-        className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[#1B1C1A]/12 bg-[#F9F7F4] px-4 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A] transition hover:border-[#9E000C]/30 hover:text-[#9E000C] disabled:opacity-60"
+        className="mt-4 inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-steel/12 bg-paper px-4 font-heading text-sm font-bold uppercase tracking-tight text-steel transition hover:border-primary/30 hover:text-primary disabled:opacity-60"
       >
         {saveState === 'saving' ? (
           <>

@@ -1,22 +1,10 @@
-import type { GateConfig, GateOptionKey } from '../types'
+import { clamp, getOptionQuantity, hasOption } from '../internal/shared'
+import type { GateConfig } from '../types'
 
 export type RuleIssue = {
   field: string
   code: string
   message: string
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value))
-}
-
-function hasOption(config: GateConfig, key: GateOptionKey): boolean {
-  return config.options.some((option) => option.key === key && option.enabled)
-}
-
-function getOptionQuantity(config: GateConfig, key: GateOptionKey): number {
-  const option = config.options.find((item) => item.key === key && item.enabled)
-  return option?.quantity && option.quantity > 0 ? option.quantity : 1
 }
 
 export function getExpectedTopRailheadCount(widthMm: number): number {

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { QuoteShareView } from '@/components/configurator/QuoteShareView'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
+import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
 type QuoteSharePageProps = {
@@ -36,9 +37,11 @@ export default async function QuoteSharePage({ params }: QuoteSharePageProps) {
     notFound()
   }
 
+  const pricingCatalog = await fetchPricingCatalog()
+
   return (
     <MarketingShell pathname={`/quote/${shareToken}`}>
-      <QuoteShareView config={config} shareToken={shareToken} />
+      <QuoteShareView config={config} shareToken={shareToken} pricingCatalog={pricingCatalog} />
     </MarketingShell>
   )
 }

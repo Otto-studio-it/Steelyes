@@ -31,10 +31,10 @@ export function ConfiguratorOrientationHint() {
   }
 
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-[#1B1C1A]/10 bg-[#F9F7F4] px-4 py-3">
-      <RotateCw className="mt-0.5 h-4 w-4 shrink-0 text-[#9E000C]" aria-hidden />
+    <div className="flex items-start gap-3 rounded-2xl border border-steel/10 bg-paper px-4 py-3">
+      <RotateCw className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
       <div className="min-w-0 flex-1">
-        <p className="text-sm leading-6 text-[#1B1C1A]">
+        <p className="text-sm leading-6 text-steel">
           <strong className="font-semibold">Tip:</strong> Rotate your device to see the preview and controls side by
           side.
         </p>
@@ -42,7 +42,7 @@ export function ConfiguratorOrientationHint() {
       <button
         type="button"
         onClick={dismiss}
-        className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full border border-[#1B1C1A]/10 bg-white text-[#6D615D] transition hover:border-[#9E000C]/30 hover:text-[#9E000C]"
+        className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full border border-steel/10 bg-white text-muted transition hover:border-primary/30 hover:text-primary"
         aria-label="Dismiss orientation tip"
       >
         <X className="h-4 w-4" aria-hidden />

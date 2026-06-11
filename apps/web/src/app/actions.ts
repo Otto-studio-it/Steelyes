@@ -1,10 +1,13 @@
 'use server'
 
-import type { FinishCode, GateStyle, GateType } from '@steelyes/gate-engine'
+import type { FinishCode, GateStyle, GateType, SerializedGateConfigV1 } from '@steelyes/gate-engine'
+import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
 import { Resend } from 'resend'
 
-import { finishLabel, gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
-import { buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
+import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
+import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
+import { SITE_SURVEY_FIELD_LABEL, finishLabel, gateTypeLabel, siteSurveyLabel, styleLabel } from '@/lib/configurator/labels'
+import { buildQuotePdfPath, buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 import { env } from '@/lib/env'
 
@@ -12,6 +15,9 @@ export type ContactFormState =
   | { status: 'idle' }
   | { status: 'success' }
   | { status: 'error'; message: string }
+
+const WORKSHOP_EMAIL = 'steelyes755@gmail.com'
+const RESEND_FROM = 'Steelyes Configurator <onboarding@resend.dev>'
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/)
@@ -23,6 +29,11 @@ function splitName(name: string): { firstName: string; lastName: string } {
     firstName: parts[0],
     lastName: parts.slice(1).join(' '),
   }
+}
+
+function absoluteSiteUrl(path: string): string {
+  const base = env.NEXT_PUBLIC_SITE_URL ?? 'https://steelyes.co.uk'
+  return `${base.replace(/\/$/, '')}${path}`
 }
 
 export async function submitContactForm(
@@ -52,6 +63,9 @@ export async function submitContactForm(
   const supabase = getServiceRoleClient()
   let configurationId: string | null = null
   let configurationSummary = ''
+  let shareUrl = ''
+  let pdfUrl = ''
+  let pricingSummary = ''
 
   if (shareToken && isValidShareToken(shareToken)) {
     const { data: configurationRow } = await supabase
@@ -62,21 +76,34 @@ export async function submitContactForm(
 
     if (configurationRow) {
       configurationId = configurationRow.id
-      const parameters = configurationRow.parameters as {
-        gateType?: string
-        style?: string
-        widthMm?: number
-        heightMm?: number
-        finish?: string
-      }
+      shareUrl = absoluteSiteUrl(buildQuoteSharePath(shareToken))
+      pdfUrl = absoluteSiteUrl(buildQuotePdfPath(shareToken))
 
-      if (parameters.gateType && parameters.style && parameters.widthMm && parameters.heightMm && parameters.finish) {
-        configurationSummary = [
-          gateTypeLabel(parameters.gateType as GateType),
-          styleLabel(parameters.style as GateStyle),
-          `${parameters.widthMm} × ${parameters.heightMm} mm`,
-          finishLabel(parameters.finish as FinishCode),
-        ].join(' · ')
+      try {
+        const config = deserializeGateConfig(configurationRow.parameters as SerializedGateConfigV1)
+        const pricingCatalog = await fetchPricingCatalog()
+        const pricing = calculateIndicativeGatePrice(config, pricingCatalog)
+        configurationSummary = formatConfigurationSummaryText(config, pricing)
+        pricingSummary = `${pricing.totalLabel} (${pricing.disclaimer})`
+      } catch {
+        const parameters = configurationRow.parameters as {
+          gateType?: string
+          style?: string
+          widthMm?: number
+          heightMm?: number
+          finish?: string
+          siteSurveyRequested?: boolean
+        }
+
+        if (parameters.gateType && parameters.style && parameters.widthMm && parameters.heightMm && parameters.finish) {
+          configurationSummary = [
+            gateTypeLabel(parameters.gateType as GateType),
+            styleLabel(parameters.style as GateStyle),
+            `${parameters.widthMm} × ${parameters.heightMm} mm`,
+            finishLabel(parameters.finish as FinishCode),
+            `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(parameters.siteSurveyRequested === true)}`,
+          ].join(' · ')
+        }
       }
     }
   }
@@ -119,8 +146,8 @@ export async function submitContactForm(
 
   try {
     const { error: resendError } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'steelyes755@gmail.com',
+      from: RESEND_FROM,
+      to: WORKSHOP_EMAIL,
       subject: configurationId
         ? `New configurator quote — ${name}`
         : `New enquiry — ${name} (${projectType || 'Steel project'})`,
@@ -131,7 +158,7 @@ export async function submitContactForm(
         <tr><td style="padding:8px 12px;font-weight:bold">Email</td><td style="padding:8px 12px"><a href="mailto:${email}">${email}</a></td></tr>
         <tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Project type</td><td style="padding:8px 12px;background:#f5f5f5">${projectType || '—'}</td></tr>
         <tr><td style="padding:8px 12px;font-weight:bold">Postcode</td><td style="padding:8px 12px">${postcode || '—'}</td></tr>
-        ${configurationId ? `<tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Configuration</td><td style="padding:8px 12px;background:#f5f5f5">${buildQuoteSharePath(shareToken)}${configurationSummary ? `<br>${configurationSummary}` : ''}</td></tr>` : ''}
+        ${configurationId ? `<tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Configuration</td><td style="padding:8px 12px;background:#f5f5f5">${shareUrl}${configurationSummary ? `<br>${configurationSummary}` : ''}${pdfUrl ? `<br><a href="${pdfUrl}">Download indicative PDF</a>` : ''}</td></tr>` : ''}
         <tr><td style="padding:8px 12px;font-weight:bold;vertical-align:top;background:#f5f5f5">Details</td><td style="padding:8px 12px;white-space:pre-wrap;background:#f5f5f5">${message}</td></tr>
       </table>
       <p style="color:#999;font-size:11px;margin-top:24px;font-family:sans-serif">Submitted via steelyes.co.uk contact form</p>
@@ -142,6 +169,35 @@ export async function submitContactForm(
     }
   } catch (err) {
     console.error('Resend notify threw (lead still saved):', err)
+  }
+
+  if (configurationId && shareUrl) {
+    try {
+      const { error: customerEmailError } = await resend.emails.send({
+        from: RESEND_FROM,
+        to: email,
+        subject: 'Your Steelyes gate configuration',
+        html: `
+        <h2 style="font-family:sans-serif">Thank you, ${name.split(' ')[0] || name}</h2>
+        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">
+          We received your quote request. Our workshop will review your configuration and follow up after any site survey needed.
+        </p>
+        ${configurationSummary ? `<p style="font-family:sans-serif;font-size:14px;line-height:1.6"><strong>Configuration:</strong> ${configurationSummary}</p>` : ''}
+        ${pricingSummary ? `<p style="font-family:sans-serif;font-size:14px;line-height:1.6"><strong>Indicative estimate:</strong> ${pricingSummary}</p>` : ''}
+        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">
+          <a href="${shareUrl}">View your saved configuration</a>
+          ${pdfUrl ? ` · <a href="${pdfUrl}">Download indicative PDF</a>` : ''}
+        </p>
+        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">Your message:<br>${message.replace(/\n/g, '<br>')}</p>
+        <p style="color:#666;font-size:12px;margin-top:24px;font-family:sans-serif">Indicative pricing only — final quote follows survey confirmation.</p>
+      `,
+      })
+      if (customerEmailError) {
+        console.error('Resend customer email error:', customerEmailError)
+      }
+    } catch (err) {
+      console.error('Resend customer email threw:', err)
+    }
   }
 
   return { status: 'success' }

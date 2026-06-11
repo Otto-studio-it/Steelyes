@@ -49,6 +49,7 @@ describe('gate-engine', () => {
     expect(config.gateType).toBe('double_swing')
     expect(config.style).toBe('traditional_victorian')
     expect(config.finish).toBe(DEFAULT_FINISH)
+    expect(config.siteSurveyRequested).toBe(false)
     expect(config.options).toHaveLength(DEFAULT_GATE_PRESETS.double_swing.options.length)
     expect(config.fencePanels.quantity).toBe(0)
   })

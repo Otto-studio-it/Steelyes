@@ -26,6 +26,19 @@ describe('gate-engine rendering', () => {
     expect(plan.labels.some((label) => label.id === 'label-track')).toBe(true)
   })
 
+  it('shows the cantilever counterbalance tail and 4m ratio note', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('cantilever_sliding')),
+      widthMm: 4000,
+    }
+
+    const plan = buildGateRenderPlan(config)
+
+    expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'cantilever-tail')).toBe(true)
+    expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+    expect(plan.labels.some((label) => label.id === 'label-tail')).toBe(true)
+  })
+
   it('flags provisional railheads in the notes when they are shown', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),
@@ -97,6 +110,62 @@ describe('gate-engine rendering', () => {
           !primitive.id.endsWith('-shadow'),
       ),
     ).toHaveLength(4)
+  })
+
+  it('caps sliding top railheads at the geometry rule expectation', () => {
+    const base = createGateConfig(createGatePreset('tracked_sliding'))
+    const config = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'top_railheads'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 8,
+            }
+          : option,
+      ),
+    }
+
+    const plan = buildGateRenderPlan(config)
+    const railheads = plan.primitives.filter(
+      (primitive) =>
+        primitive.kind === 'circle' &&
+        primitive.id.startsWith('sliding-top-railhead-') &&
+        !primitive.id.endsWith('-shadow'),
+    )
+
+    expect(railheads).toHaveLength(8)
+  })
+
+  it('caps sliding bushes and spirals at the decorative capacity', () => {
+    const base = createGateConfig(createGatePreset('tracked_sliding'))
+    const config = {
+      ...base,
+      options: base.options.map((option) => {
+        if (option.key === 'bushes' || option.key === 'spirals') {
+          return {
+            ...option,
+            enabled: true,
+            quantity: 11,
+          }
+        }
+
+        return option
+      }),
+    }
+
+    const plan = buildGateRenderPlan(config)
+    const bushes = plan.primitives.filter(
+      (primitive) => primitive.kind === 'circle' && primitive.id.startsWith('sliding-bush-'),
+    )
+    const spirals = plan.primitives.filter(
+      (primitive) => primitive.kind === 'path' && primitive.id.startsWith('sliding-spiral-'),
+    )
+
+    // tracked_sliding preset is 2500mm wide -> capacity clamp(round(2500/230), 6, 14) = 11
+    expect(bushes).toHaveLength(11)
+    expect(spirals).toHaveLength(11)
   })
 
   it('uses different schematic colors for different finishes', () => {

@@ -16,11 +16,11 @@ export function VariantCatalogNotice({ optionKey }: VariantCatalogNoticeProps) {
 
   return (
     <div
-      className="rounded-xl border border-dashed border-[#9E000C]/25 bg-[#9E000C]/4 px-3 py-2.5"
+      className="rounded-xl border border-dashed border-primary/25 bg-primary/4 px-3 py-2.5"
       data-testid={`variant-catalog-notice-${optionKey}`}
     >
-      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9E000C]">Catalogue pending</p>
-      <p className="mt-1 text-xs leading-5 text-[#5B514D]">
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary">Catalogue pending</p>
+      <p className="mt-1 text-xs leading-5 text-muted-deep">
         Railhead variant selection and unit pricing are blocked until {summary.owner} confirms the final catalogue.
         Count is schematic only; survey is required for an exact quote.
       </p>

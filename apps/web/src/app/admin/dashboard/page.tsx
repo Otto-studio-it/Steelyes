@@ -22,6 +22,12 @@ const SECTIONS = [
     desc: 'Prezzi pannelli recinzione (da inserire appena disponibili).',
     icon: '≡',
   },
+  {
+    href: '/admin/quotes',
+    label: 'Richieste Preventivo',
+    desc: 'Lead arrivati dal configuratore con la configurazione collegata.',
+    icon: '✉',
+  },
 ]
 
 export default async function DashboardPage() {

@@ -16,6 +16,9 @@ function roleOpacity(role: string): number {
   if (role === 'rail') {
     return 0.75
   }
+  if (role === 'counterweight') {
+    return 0.88
+  }
   return 1
 }
 
@@ -122,7 +125,7 @@ export function ConfiguratorPreview3D({ config, compact = false }: ConfiguratorP
   return (
     <div
       ref={hostRef}
-      className={`overflow-hidden rounded-2xl border border-[#1B1C1A]/10 bg-[#F7F5F2] ${
+      className={`overflow-hidden rounded-2xl border border-steel/10 bg-[#F7F5F2] ${
         compact ? 'min-h-[220px]' : 'min-h-[320px] lg:min-h-[420px]'
       }`}
       aria-label="3D schematic gate preview"

@@ -1,6 +1,12 @@
 import { expect, type Page } from '@playwright/test'
 
 export async function waitForConfiguratorReady(page: Page) {
+  // Pre-accept the cookie notice so its fixed banner never covers the mobile price bar.
+  await page.addInitScript(() => {
+    try {
+      window.localStorage.setItem('sy_cookie_consent', 'accepted')
+    } catch {}
+  })
   await page.goto('/configurator')
   await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
 }
@@ -61,6 +67,7 @@ export function buildTestConfigurationPayload() {
     heightMm: 1000,
     motorised: false,
     finish: 'matte_black' as const,
+    siteSurveyRequested: false,
     options: DEFAULT_SERIALIZED_OPTIONS.map((option) => ({ ...option })),
     fencePanels: {
       quantity: 0,

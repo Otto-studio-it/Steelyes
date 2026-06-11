@@ -56,6 +56,29 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/Price on request|Survey required/i).first()).toBeVisible()
   })
 
+  test('persists site survey request through reload and summary', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+    await continueWizard(page)
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+
+    const siteSurveyCheckbox = page.getByRole('checkbox', { name: /site survey requested/i })
+    await siteSurveyCheckbox.check()
+    await expect(siteSurveyCheckbox).toBeChecked()
+
+    await page.reload()
+    await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
+    await continueWizard(page)
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeChecked()
+
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
+    await expect(page.getByText(/Site survey requested/i).filter({ visible: true }).first()).toBeVisible()
+    await expect(page.getByText(/^Requested$/i).filter({ visible: true }).first()).toBeVisible()
+  })
+
   test('restores draft configuration after reload', async ({ page }) => {
     await waitForConfiguratorReady(page)
     await page.getByRole('radio', { name: /Pearl white/i }).click()
@@ -126,6 +149,19 @@ test.describe('configurator share route', () => {
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,
     )
+    await expect(page.getByRole('link', { name: /Download indicative PDF/i })).toHaveAttribute(
+      'href',
+      `/api/quote/${encodeURIComponent(shareToken)}/pdf`,
+    )
+  })
+
+  test('serves an indicative PDF for a shared configuration', async ({ request }) => {
+    const response = await request.get(`/api/quote/${shareToken}/pdf`)
+    expect(response.ok()).toBeTruthy()
+    expect(response.headers()['content-type']).toContain('application/pdf')
+    const body = await response.body()
+    expect(body.byteLength).toBeGreaterThan(500)
+    expect(body.subarray(0, 4).toString()).toBe('%PDF')
   })
 
   test('prefills contact handoff with attached configuration', async ({ page }) => {

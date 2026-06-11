@@ -11,8 +11,13 @@ const config: Config = {
       colors: {
         canvas: "var(--color-canvas)",
         ink: "var(--color-ink)",
+        steel: "rgb(var(--color-steel-rgb) / <alpha-value>)",
+        muted: "rgb(var(--color-muted-rgb) / <alpha-value>)",
+        "muted-deep": "rgb(var(--color-muted-deep-rgb) / <alpha-value>)",
+        paper: "rgb(var(--color-paper-rgb) / <alpha-value>)",
         primary: {
-          DEFAULT: "var(--color-primary)",
+          DEFAULT: "rgb(var(--color-primary-rgb) / <alpha-value>)",
+          dark: "rgb(var(--color-primary-dark-rgb) / <alpha-value>)",
           container: "var(--color-primary-container)",
         },
         foundry: {

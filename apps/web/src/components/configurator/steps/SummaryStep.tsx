@@ -6,7 +6,7 @@ import { ConfiguratorSharePanel } from '@/components/configurator/ConfiguratorSh
 export function SummaryStep() {
   return (
     <div className="space-y-4">
-      <p className="text-sm leading-6 text-[#5B514D] lg:hidden">
+      <p className="text-sm leading-6 text-muted-deep lg:hidden">
         Review your configuration, indicative pricing, and next step before requesting a survey-led quote.
       </p>
 
@@ -16,11 +16,11 @@ export function SummaryStep() {
         <ConfiguratorPriceSummary showActions={false} pricingCopyVariant="mobile" />
       </div>
 
-      <div className="hidden rounded-2xl border border-dashed border-[#1B1C1A]/12 bg-[#F9F7F4] px-4 py-4 lg:block">
-        <p className="font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">
+      <div className="hidden rounded-2xl border border-dashed border-steel/12 bg-paper px-4 py-4 lg:block">
+        <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel">
           Ready for review
         </p>
-        <p className="mt-2 text-sm leading-6 text-[#5B514D]">
+        <p className="mt-2 text-sm leading-6 text-muted-deep">
           Your live preview and full indicative breakdown stay visible in the panel on the right. Use Request a quote
           when you want to proceed to the survey-led flow.
         </p>

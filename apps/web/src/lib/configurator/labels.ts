@@ -13,6 +13,12 @@ export function styleLabel(style: GateStyle): string {
   return STYLE_LABELS[style]
 }
 
+export const SITE_SURVEY_FIELD_LABEL = 'Site survey requested'
+
+export function siteSurveyLabel(requested: boolean): string {
+  return requested ? 'Requested' : 'Not requested'
+}
+
 export function finishLabel(finish: FinishCode): string {
   return getFinishDefinition(finish).label
 }

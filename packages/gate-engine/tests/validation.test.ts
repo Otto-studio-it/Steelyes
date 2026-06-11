@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  GLOBAL_DIMENSION_LIMITS,
   createGateConfig,
   createGatePreset,
+  getDimensionLimits,
   normalizeGateConfig,
   validateGateConfig,
 } from '../src/index'
@@ -50,6 +52,23 @@ describe('gate-engine validation', () => {
     if (!result.ok) {
       expect(result.issues.map((issue) => issue.code)).toContain('invalid_width')
       expect(result.issues.map((issue) => issue.code)).toContain('fence_panel_quantity_mismatch')
+    }
+  })
+
+  it('rejects fence panels outside the standard 900mm to 1000mm band', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      fencePanels: {
+        quantity: 1,
+        panels: [{ heightMm: 900, lengthMm: 850 }],
+      },
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('invalid_fence_panel_length_range')
     }
   })
 
@@ -116,6 +135,57 @@ describe('gate-engine validation', () => {
     if (!result.ok) {
       expect(result.issues.map((issue) => issue.code)).toContain('missing_option_dependency')
     }
+  })
+
+  it('clamps oversized dimensions to the gate type limits during normalization', () => {
+    const limits = getDimensionLimits('double_swing')
+    const config = normalizeGateConfig({
+      gateType: 'double_swing',
+      widthMm: 9000,
+      heightMm: 5000,
+    })
+
+    expect(config.widthMm).toBe(limits.maxWidthMm)
+    expect(config.heightMm).toBe(limits.maxHeightMm)
+    expect(validateGateConfig(config).ok).toBe(true)
+  })
+
+  it('exposes the global dimension envelope as the per-type default', () => {
+    expect(getDimensionLimits('single_swing')).toEqual(GLOBAL_DIMENSION_LIMITS)
+    expect(getDimensionLimits()).toEqual(GLOBAL_DIMENSION_LIMITS)
+  })
+
+  it('rejects quantity above 1 for single-instance flat options', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const result = validateGateConfig({
+      ...config,
+      options: config.options.map((option) =>
+        option.key === 'arched_top'
+          ? {
+              ...option,
+              enabled: true,
+              quantity: 3,
+            }
+          : option,
+      ),
+    })
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('option_quantity_not_applicable')
+    }
+  })
+
+  it('normalizes single-instance flat option quantities down to 1', () => {
+    const config = normalizeGateConfig({
+      gateType: 'double_swing',
+      options: [{ key: 'middle_bar', enabled: true, quantity: 4 }],
+    })
+
+    const middleBar = config.options.find((option) => option.key === 'middle_bar')
+
+    expect(middleBar?.quantity).toBe(1)
+    expect(validateGateConfig(config).ok).toBe(true)
   })
 
   it('rejects railhead quantities that exceed the gate width geometry', () => {

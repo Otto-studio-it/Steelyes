@@ -1,3 +1,4 @@
+import { GLOBAL_DIMENSION_LIMITS } from '@steelyes/gate-engine'
 import type { GateOptionKey, GateType } from '@steelyes/gate-engine'
 
 export const CONFIGURATOR_STORAGE_KEY = 'steelyes.configurator.v1'
@@ -69,7 +70,8 @@ export const OPTION_META: OptionMeta[] = [
 export const WIDTH_PRESETS_MM = [900, 1200, 1500, 1800, 2000, 2400, 3000] as const
 export const HEIGHT_PRESETS_MM = [900, 1000, 1100, 1200, 1500] as const
 
-export const MIN_WIDTH_MM = 600
-export const MAX_WIDTH_MM = 6000
-export const MIN_HEIGHT_MM = 600
-export const MAX_HEIGHT_MM = 3000
+// Dimension limits are owned by the gate engine; re-exported here for UI convenience.
+export const MIN_WIDTH_MM = GLOBAL_DIMENSION_LIMITS.minWidthMm
+export const MAX_WIDTH_MM = GLOBAL_DIMENSION_LIMITS.maxWidthMm
+export const MIN_HEIGHT_MM = GLOBAL_DIMENSION_LIMITS.minHeightMm
+export const MAX_HEIGHT_MM = GLOBAL_DIMENSION_LIMITS.maxHeightMm

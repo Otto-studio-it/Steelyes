@@ -1,0 +1,13 @@
+gate_type: cantilever_sliding
+style_hint: traditional_victorian
+known_dimensions_mm:
+  width: 2500
+  height: 1000
+motorised_hint: true
+photos:
+  - path: photos/01-victorian-steelyes-install-motorised.png
+    view: front_elevation_steelyes_branded
+notes: >
+  SteelYes Ltd branded install — cantilever confirmed (no ground track, visible tail).
+  Photo scale estimate ~4000-5000mm opening vs client FROM band 2500-2600mm.
+  See DIMENSIONS_RESEARCH.md for web industry tail ratios (30-50%) vs engine default 28%.

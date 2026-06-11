@@ -10,6 +10,7 @@ const NAV = [
   { label: 'Prezzi Cancelli', href: '/admin/gates' },
   { label: 'Addon', href: '/admin/gate-options' },
   { label: 'Recinzioni', href: '/admin/fencing' },
+  { label: 'Preventivi', href: '/admin/quotes' },
 ]
 
 export function AdminHeader() {

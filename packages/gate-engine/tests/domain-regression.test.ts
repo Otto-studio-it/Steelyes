@@ -26,6 +26,7 @@ describe('gate-engine domain regression', () => {
         version: 1,
         gateType,
         style: 'traditional_victorian',
+        siteSurveyRequested: false,
       })
       expect(deserializeGateConfig(stringifyGateConfig(config))).toEqual(config)
     }

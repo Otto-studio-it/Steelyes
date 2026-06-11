@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { SocialLinks } from '@/components/marketing/SocialLinks'
+import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
 import { BUSINESS, COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
@@ -27,6 +28,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
     shareToken && isValidShareToken(shareToken)
       ? await loadGateConfigurationByShareToken(shareToken)
       : null
+  const pricingCatalog = attachedConfig ? await fetchPricingCatalog() : undefined
 
   return (
     <MarketingShell pathname="/contact">
@@ -39,7 +41,11 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <ContactForm shareToken={attachedConfig ? shareToken : undefined} attachedConfig={attachedConfig} />
+        <ContactForm
+          shareToken={attachedConfig ? shareToken : undefined}
+          attachedConfig={attachedConfig}
+          pricingCatalog={pricingCatalog}
+        />
 
         <div className="space-y-8">
           <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-[#1B1C1A] p-8">

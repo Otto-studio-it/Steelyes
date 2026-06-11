@@ -20,10 +20,10 @@ export function DimensionControl({
   onChange,
 }: DimensionControlProps) {
   return (
-    <div className="space-y-3 rounded-2xl border border-[#1B1C1A]/10 bg-[#FCFBF8] p-4">
+    <div className="space-y-3 rounded-2xl border border-steel/10 bg-paper p-4">
       <div className="flex items-end justify-between gap-3">
-        <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#6D615D]">{label}</span>
-        <span className="font-heading text-lg font-black uppercase tracking-tight text-[#1B1C1A]">{value} mm</span>
+        <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted">{label}</span>
+        <span className="font-heading text-lg font-black uppercase tracking-tight text-steel">{value} mm</span>
       </div>
 
       <input
@@ -33,7 +33,7 @@ export function DimensionControl({
         step={step}
         value={value}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-[#E8E4DD] accent-[#9E000C]"
+        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-steel/15 accent-primary"
         aria-label={label}
       />
 
@@ -45,8 +45,8 @@ export function DimensionControl({
             onClick={() => onChange(preset)}
             className={`inline-flex min-h-[44px] items-center justify-center rounded-full px-3 font-mono text-[11px] uppercase tracking-widest transition ${
               value === preset
-                ? 'bg-[#1B1C1A] text-white'
-                : 'border border-[#1B1C1A]/12 bg-white text-[#6D615D] hover:border-[#9E000C]/30 hover:text-[#9E000C]'
+                ? 'bg-steel text-white'
+                : 'border border-steel/12 bg-white text-muted hover:border-primary/30 hover:text-primary'
             }`}
           >
             {preset}
@@ -55,7 +55,7 @@ export function DimensionControl({
       </div>
 
       <label className="block space-y-2 lg:hidden">
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6D615D]">Exact value</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Exact value</span>
         <input
           type="number"
           min={min}
@@ -67,7 +67,7 @@ export function DimensionControl({
             const next = Number(event.target.value)
             if (!Number.isNaN(next)) onChange(next)
           }}
-          className="h-12 w-full rounded-xl border border-[#1B1C1A]/12 bg-white px-4 font-body text-base text-[#1B1C1A] outline-none transition focus:border-[#9E000C]"
+          className="h-12 w-full rounded-xl border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary"
         />
       </label>
     </div>

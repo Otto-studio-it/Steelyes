@@ -1,0 +1,23 @@
+gate_type: tracked_sliding
+style_hint: traditional_victorian
+known_dimensions_mm:
+  width: 2500
+  height: 1000
+motorised_hint: true
+photos:
+  - path: photos/01-victorian-ball-finials-track.png
+    view: front_elevation_track
+  - path: photos/02-victorian-spear-finials-brick.png
+    view: front_elevation
+  - path: photos/03-composite-three-tier-vision-strip.png
+    view: composite_modern
+  - path: photos/04-victorian-sliding-motorised-rack.png
+    view: automation_detail
+  - path: photos/05-composite-camelback-lattice.png
+    view: composite_camelback
+  - path: photos/06-victorian-arched-rings-sliding.png
+    view: arched_victorian
+notes: >
+  Tracked sliding audit — ground track, no cantilever tail.
+  Photos 04-06 copied from single_swing/double_swing audits (same mechanism family).
+  Primary Victorian refs: 01, 02. Primary composite: 03. Arched: 06.

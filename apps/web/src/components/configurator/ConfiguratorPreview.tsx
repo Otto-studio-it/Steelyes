@@ -133,15 +133,15 @@ export function ConfiguratorPreview({
 
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-[#1B1C1A]/10 bg-[#FBFBF8] shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)] ${pinned ? 'shadow-[0_16px_40px_rgba(25,20,18,0.12)]' : ''} ${className}`}
+      className={`overflow-hidden rounded-2xl border border-steel/10 bg-[#FBFBF8] shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)] ${pinned ? 'shadow-[0_16px_40px_rgba(25,20,18,0.12)]' : ''} ${className}`}
     >
       <div
-        className={`flex items-center justify-between border-b border-[#1B1C1A]/8 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
+        className={`flex items-center justify-between border-b border-steel/8 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
       >
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8A807B]">2D preview</p>
           <h2
-            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-[#1B1C1A] ${
+            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
               pinned ? 'text-base sm:text-lg' : 'text-sm lg:mt-1 lg:text-lg'
             }`}
           >
@@ -151,7 +151,7 @@ export function ConfiguratorPreview({
         <div className="flex items-center gap-2">
           {!compact || pinned ? (
             <div
-              className={`rounded-full border border-[#1B1C1A]/10 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-[#6D615D] ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
+              className={`rounded-full border border-steel/10 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
             >
               technical drawing
             </div>
@@ -160,7 +160,7 @@ export function ConfiguratorPreview({
             <button
               type="button"
               onClick={togglePreviewExpanded}
-              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-[#1B1C1A]/10 bg-white text-[#6D615D] transition hover:border-[#9E000C]/30 hover:text-[#9E000C]"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-steel/10 bg-white text-muted transition hover:border-primary/30 hover:text-primary"
               aria-expanded={previewExpanded}
               aria-label={previewExpanded ? 'Collapse preview' : 'Expand preview'}
             >
@@ -177,12 +177,12 @@ export function ConfiguratorPreview({
           className="flex w-full items-center gap-3 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.85),transparent_54%),linear-gradient(180deg,rgba(251,251,248,1),rgba(244,241,236,1))] px-3 py-3 text-left transition hover:bg-[#F4F1EC]"
           aria-label="Expand live schematic preview"
         >
-          <div className="h-[72px] w-[112px] shrink-0 overflow-hidden rounded-xl border border-[#1B1C1A]/10 bg-[#FEFEFC]">
+          <div className="h-[72px] w-[112px] shrink-0 overflow-hidden rounded-xl border border-steel/10 bg-[#FEFEFC]">
             <PreviewSvg plan={plan} className="h-full w-full scale-[1.35] origin-top" />
           </div>
           <div className="min-w-0">
-            <p className="font-heading text-xs font-bold uppercase tracking-tight text-[#1B1C1A]">Live preview</p>
-            <p className="mt-1 text-sm leading-5 text-[#5B514D]">Tap to expand the schematic drawing.</p>
+            <p className="font-heading text-xs font-bold uppercase tracking-tight text-steel">Live preview</p>
+            <p className="mt-1 text-sm leading-5 text-muted-deep">Tap to expand the schematic drawing.</p>
           </div>
         </button>
       ) : null}

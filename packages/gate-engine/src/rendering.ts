@@ -1,12 +1,21 @@
 import { getFinishDefinition, getFinishStrokeColor } from './finishes'
 import {
+  clamp,
+  getLeafCount,
+  getOptionQuantity,
+  hasOption,
+  isSlidingGate,
+} from './internal/shared'
+import { cantileverTailNote, getCantileverTailRatio } from './rules/cantilever'
+import {
   getDecorativeBarCapacity,
   getExpectedDogBarCount,
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
 } from './rules/geometry'
-import { type FinishCode, type GateConfig, type GateOptionSelection } from './types'
+import { type FinishCode, type GateConfig } from './types'
 import { validateGateConfig } from './validation'
+import { scaleVisualBoldness } from './visual-scale'
 
 type RenderPalette = {
   ink: string
@@ -121,20 +130,8 @@ const FRAME_Y = 150
 const FRAME_WIDTH = 960
 const FRAME_HEIGHT = 520
 
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value))
-}
-
-function getLeafCount(gateType: GateConfig['gateType']): number {
-  if (gateType === 'double_swing' || gateType === 'bifolding_double_swing') {
-    return 2
-  }
-
-  return 1
-}
-
-function isSlidingGate(gateType: GateConfig['gateType']): boolean {
-  return gateType.includes('sliding')
+function scaleVisual(value: number): number {
+  return scaleVisualBoldness(value)
 }
 
 function formatTypeLabel(gateType: GateConfig['gateType']): string {
@@ -143,15 +140,6 @@ function formatTypeLabel(gateType: GateConfig['gateType']): string {
 
 function formatStyleLabel(style: GateConfig['style']): string {
   return style.split('_').join(' ')
-}
-
-function hasOption(config: GateConfig, key: GateOptionSelection['key']): boolean {
-  return config.options.some((option) => option.key === key && option.enabled)
-}
-
-function getOptionQuantity(config: GateConfig, key: GateOptionSelection['key']): number {
-  const option = config.options.find((item) => item.key === key && item.enabled)
-  return option?.quantity && option.quantity > 0 ? option.quantity : 1
 }
 
 function pushShadowLine(
@@ -223,11 +211,11 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
   const centerX = FRAME_X + FRAME_WIDTH / 2
   const leafCount = getLeafCount(config.gateType)
   const arch = hasOption(config, 'arched_top')
-  const postWidth = 42
-  const leftPostX = FRAME_X - 24
-  const rightPostX = FRAME_X + FRAME_WIDTH - postWidth + 24
-  const leftInset = FRAME_X + 32
-  const rightInset = FRAME_X + FRAME_WIDTH - 32
+  const postWidth = scaleVisual(42)
+  const leftPostX = FRAME_X - scaleVisual(24)
+  const rightPostX = FRAME_X + FRAME_WIDTH - postWidth + scaleVisual(24)
+  const leftInset = FRAME_X + scaleVisual(32)
+  const rightInset = FRAME_X + FRAME_WIDTH - scaleVisual(32)
   const middleY = FRAME_Y + FRAME_HEIGHT / 2
   const lowerRailY = FRAME_Y + FRAME_HEIGHT * 0.78
   const upperBars = clamp(Math.round(config.widthMm / 210), 8, 16)
@@ -248,7 +236,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     rx: 2,
     fill: palette.postFill,
     stroke: palette.ink,
-    strokeWidth: 4.4,
+    strokeWidth: scaleVisual(4.4),
   }, palette)
 
   pushShadowRect(primitives, {
@@ -261,7 +249,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     rx: 2,
     fill: palette.postFill,
     stroke: palette.ink,
-    strokeWidth: 4.4,
+    strokeWidth: scaleVisual(4.4),
   }, palette)
 
   pushShadowRect(primitives, {
@@ -274,7 +262,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     rx: 8,
     fill: 'none',
     stroke: palette.ink,
-    strokeWidth: 3.5,
+    strokeWidth: scaleVisual(3.5),
   }, palette)
 
   primitives.push({
@@ -288,7 +276,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
     fillOpacity: 1,
     stroke: 'transparent',
-    strokeWidth: 1,
+    strokeWidth: 1.25,
   })
 
   if (leafCount === 2) {
@@ -300,7 +288,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: centerX,
       y2: bottomY - 8,
       stroke: palette.ink,
-      strokeWidth: 3,
+      strokeWidth: scaleVisual(3),
       strokeDasharray: config.gateType === 'bifolding_double_swing' ? '6 10' : undefined,
       opacity: 0.7,
     }, palette, 1.5, 1.5)
@@ -313,7 +301,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: FRAME_X + 24,
       y2: bottomY - 12,
       stroke: palette.ink,
-      strokeWidth: 3,
+      strokeWidth: scaleVisual(3),
       opacity: 0.5,
     }, palette, 1.4, 1.4)
   }
@@ -325,7 +313,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       d: `M ${leftInset} ${topY + 30} C ${FRAME_X + 210} ${topY - 10}, ${FRAME_X + 990} ${topY - 10}, ${rightInset} ${topY + 30}`,
       fill: 'none',
       stroke: palette.accent,
-      strokeWidth: 5,
+      strokeWidth: scaleVisual(5),
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
     })
@@ -338,7 +326,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: rightInset,
       y2: topY + 26,
       stroke: palette.accent,
-      strokeWidth: 5,
+      strokeWidth: scaleVisual(5),
       strokeLinecap: 'square',
       opacity: 0.95,
     }, palette, 1.2, 1.2)
@@ -353,7 +341,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: rightInset,
       y2: middleY,
       stroke: palette.accentSoft,
-      strokeWidth: 7,
+      strokeWidth: scaleVisual(7),
       strokeLinecap: 'square',
       opacity: 0.98,
     }, palette, 1.4, 1.4)
@@ -370,7 +358,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         x2: x,
         y2: lowerRailY,
         stroke: lineColor,
-        strokeWidth: 3.4,
+        strokeWidth: scaleVisual(3.4),
         strokeLinecap: 'square',
         opacity: 0.95,
       }, palette, 1, 1)
@@ -386,7 +374,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         x2: x,
         y2: bottomY - 18,
         stroke: palette.ink,
-        strokeWidth: 2.8,
+        strokeWidth: scaleVisual(2.8),
         strokeLinecap: 'square',
         opacity: 0.94,
       }, palette, 1, 1)
@@ -404,7 +392,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
           x2: x,
           y2: bottomY - 14,
           stroke: palette.accentSoft,
-          strokeWidth: 2.1,
+          strokeWidth: scaleVisual(2.1),
           strokeLinecap: 'square',
           opacity: 0.92,
         }, palette, 0.8, 0.8)
@@ -441,7 +429,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         id: `top-railhead-${index}`,
         cx: x,
         cy: topY + 18,
-        r: 4.8,
+        r: scaleVisual(4.8),
         fill: palette.accent,
         stroke: palette.ink,
         strokeWidth: 1,
@@ -463,7 +451,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         id: `dog-railhead-${index}`,
         cx: x,
         cy: lowerRailY - 4,
-        r: 4.3,
+        r: scaleVisual(4.3),
         fill: palette.accentSoft,
         stroke: palette.ink,
         strokeWidth: 1,
@@ -482,11 +470,11 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         id: `bush-${index}`,
         cx: x,
         cy: middleY - 28,
-        r: 8,
+        r: scaleVisual(8),
         fill: palette.accentSoft,
         fillOpacity: 0.18,
         stroke: palette.accentSoft,
-        strokeWidth: 2,
+        strokeWidth: scaleVisual(2),
       }, palette, 1.2, 1.2)
     }
   }
@@ -503,7 +491,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
         d: `M ${x - 8} ${middleY + 24} C ${x - 8} ${middleY + 5}, ${x + 10} ${middleY + 5}, ${x + 10} ${middleY + 24} C ${x + 10} ${middleY + 43}, ${x - 6} ${middleY + 43}, ${x - 6} ${middleY + 24}`,
         fill: 'none',
         stroke: palette.accent,
-        strokeWidth: 2.5,
+        strokeWidth: scaleVisual(2.5),
         strokeLinecap: 'round',
         strokeLinejoin: 'round',
         opacity: 0.75,
@@ -521,7 +509,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     rx: 6,
     fill: '#F7F7F7',
     stroke: palette.ink,
-    strokeWidth: 2.4,
+    strokeWidth: scaleVisual(2.4),
   }, palette)
 
   pushShadowCircle(primitives, {
@@ -542,7 +530,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     x2: FRAME_X + 4,
     y2: FRAME_Y + 176,
     stroke: palette.ink,
-    strokeWidth: 3.4,
+    strokeWidth: scaleVisual(3.4),
     strokeLinecap: 'square',
   }, palette, 0.8, 0.8)
   pushShadowLine(primitives, {
@@ -553,7 +541,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     x2: FRAME_X + FRAME_WIDTH - 4,
     y2: FRAME_Y + 176,
     stroke: palette.ink,
-    strokeWidth: 3.4,
+    strokeWidth: scaleVisual(3.4),
     strokeLinecap: 'square',
   }, palette, 0.8, 0.8)
 
@@ -562,20 +550,20 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     id: 'left-top-finial',
     cx: FRAME_X + 10,
     cy: topY + 12,
-    r: 5.2,
+    r: scaleVisual(5.2),
     fill: '#FAFAFA',
     stroke: palette.ink,
-    strokeWidth: 2.2,
+    strokeWidth: scaleVisual(2.2),
   }, palette, 0.8, 0.8)
   pushShadowCircle(primitives, {
     kind: 'circle',
     id: 'right-top-finial',
     cx: FRAME_X + FRAME_WIDTH - 10,
     cy: topY + 12,
-    r: 5.2,
+    r: scaleVisual(5.2),
     fill: '#FAFAFA',
     stroke: palette.ink,
-    strokeWidth: 2.2,
+    strokeWidth: scaleVisual(2.2),
   }, palette, 0.8, 0.8)
 
   return primitives
@@ -585,8 +573,13 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   const trackY = FRAME_Y + FRAME_HEIGHT - 38
   const baseY = FRAME_Y + 36
   const panelHeight = FRAME_HEIGHT - 64
-  const panelWidth = FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 0.78 : 0.92)
-  const panelX = FRAME_X + FRAME_WIDTH - panelWidth - 32
+  const isCantilever = config.gateType === 'cantilever_sliding'
+  const tailRatio = getCantileverTailRatio(config.widthMm)
+  const tailWidth = isCantilever ? FRAME_WIDTH * tailRatio : 0
+  const panelWidth = isCantilever
+    ? FRAME_WIDTH - tailWidth - 100
+    : FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 0.78 : 0.92)
+  const panelX = isCantilever ? FRAME_X + 28 + tailWidth - 12 : FRAME_X + FRAME_WIDTH - panelWidth - 32
   const panelY = baseY
   const isRadius = config.gateType === 'radius_sliding'
   const isTelescopic = config.gateType === 'telescopic_sliding'
@@ -604,7 +597,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     rx: 18,
     fill: 'none',
     stroke: palette.ink,
-    strokeWidth: 6,
+    strokeWidth: scaleVisual(6),
   })
 
   primitives.push({
@@ -615,22 +608,51 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     x2: FRAME_X + FRAME_WIDTH - 30,
     y2: trackY,
     stroke: palette.steel,
-    strokeWidth: 7,
+    strokeWidth: scaleVisual(7),
     strokeLinecap: 'round',
     opacity: 0.9,
   })
 
+  if (isCantilever) {
+    primitives.push({
+      kind: 'rect',
+      id: 'cantilever-tail',
+      x: FRAME_X + 28,
+      y: panelY + 8,
+      width: tailWidth,
+      height: panelHeight - 16,
+      rx: 10,
+      fill: palette.postFill,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(3.4),
+      fillOpacity: 0.98,
+    })
+
+    primitives.push({
+      kind: 'line',
+      id: 'cantilever-tail-join',
+      x1: FRAME_X + 28 + tailWidth,
+      y1: panelY + 12,
+      x2: FRAME_X + 28 + tailWidth,
+      y2: panelY + panelHeight - 12,
+      stroke: palette.accent,
+      strokeWidth: scaleVisual(4),
+      strokeDasharray: '9 9',
+      opacity: 0.65,
+    })
+  }
+
   primitives.push({
     kind: 'rect',
     id: 'sliding-panel',
-    x: panelX,
+    x: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
     y: panelY,
-    width: panelWidth,
+    width: isCantilever ? panelWidth + 12 : panelWidth,
     height: panelHeight,
     rx: isRadius ? 80 : 14,
     fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
     stroke: palette.ink,
-    strokeWidth: 4,
+    strokeWidth: scaleVisual(4),
     fillOpacity: 0.95,
   })
 
@@ -641,7 +663,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
       d: `M ${panelX + 16} ${panelY + 44} C ${panelX + panelWidth * 0.35} ${panelY - 20}, ${panelX + panelWidth * 0.68} ${panelY - 20}, ${panelX + panelWidth - 16} ${panelY + 44}`,
       fill: 'none',
       stroke: palette.accent,
-      strokeWidth: 5,
+      strokeWidth: scaleVisual(5),
       strokeLinecap: 'round',
       strokeLinejoin: 'round',
     })
@@ -661,7 +683,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         rx: 12,
         fill: 'none',
         stroke: palette.accent,
-        strokeWidth: 3,
+        strokeWidth: scaleVisual(3),
         strokeDasharray: index === 0 ? undefined : '8 8',
         opacity: 0.7,
       })
@@ -680,7 +702,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         x2: x,
         y2: panelY + panelHeight - 16,
         stroke: palette.ink,
-        strokeWidth: 4,
+        strokeWidth: scaleVisual(4),
         opacity: 0.85,
       })
     } else {
@@ -708,7 +730,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
       x2: panelX + panelWidth - 16,
       y2: panelY + panelHeight / 2,
       stroke: palette.accentSoft,
-      strokeWidth: 5,
+      strokeWidth: scaleVisual(5),
     })
   }
 
@@ -719,12 +741,15 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
       d: `M ${panelX + 20} ${panelY + 38} C ${panelX + panelWidth * 0.3} ${panelY - 22}, ${panelX + panelWidth * 0.7} ${panelY - 22}, ${panelX + panelWidth - 20} ${panelY + 38}`,
       fill: 'none',
       stroke: palette.accent,
-      strokeWidth: 5,
+      strokeWidth: scaleVisual(5),
     })
   }
 
   if (hasOption(config, 'top_railheads')) {
-    const railheadCount = clamp(Math.round(config.widthMm / 200), 5, 12)
+    const railheadCount = Math.min(
+      getOptionQuantity(config, 'top_railheads'),
+      getExpectedTopRailheadCount(config.widthMm),
+    )
     for (let index = 0; index < railheadCount; index += 1) {
       const ratio = (index + 0.5) / railheadCount
       primitives.push({
@@ -732,7 +757,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         id: `sliding-top-railhead-${index}`,
         cx: panelX + panelWidth * ratio,
         cy: panelY + 20,
-        r: 4,
+        r: scaleVisual(4),
         fill: palette.accent,
         stroke: palette.ink,
         strokeWidth: 1,
@@ -755,7 +780,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
       x2: panelX + panelWidth - 18,
       y2: y,
       stroke: palette.accentSoft,
-      strokeWidth: 4,
+      strokeWidth: scaleVisual(4),
     })
     for (let index = 0; index < railheadCount; index += 1) {
       const ratio = (index + 0.5) / railheadCount
@@ -764,7 +789,7 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         id: `sliding-dog-railhead-${index}`,
         cx: panelX + 20 + span * ratio,
         cy: y,
-        r: 4,
+        r: scaleVisual(4),
         fill: palette.accentSoft,
         stroke: palette.ink,
         strokeWidth: 1,
@@ -785,39 +810,42 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         x2: panelX + 20 + span * ratio,
         y2: panelY + panelHeight - 20,
         stroke: palette.ink,
-        strokeWidth: 4,
+        strokeWidth: scaleVisual(4),
       })
     }
   }
 
   if (hasOption(config, 'bushes')) {
-    const bushCount = getOptionQuantity(config, 'bushes')
+    const bushCount = Math.min(getOptionQuantity(config, 'bushes'), getDecorativeBarCapacity(config))
+    const span = panelWidth - 80
     for (let index = 0; index < bushCount; index += 1) {
+      const ratio = (index + 0.5) / bushCount
       primitives.push({
         kind: 'circle',
         id: `sliding-bush-${index}`,
-        cx: panelX + 58 + index * 62,
+        cx: panelX + 40 + span * ratio,
         cy: panelY + panelHeight * 0.42,
-        r: 8,
+        r: scaleVisual(8),
         fill: palette.accentSoft,
         fillOpacity: 0.18,
         stroke: palette.accentSoft,
-        strokeWidth: 2,
+        strokeWidth: scaleVisual(2),
       })
     }
   }
 
   if (hasOption(config, 'spirals')) {
-    const spiralCount = getOptionQuantity(config, 'spirals')
+    const spiralCount = Math.min(getOptionQuantity(config, 'spirals'), getDecorativeBarCapacity(config))
+    const span = panelWidth - 80
     for (let index = 0; index < spiralCount; index += 1) {
-      const cx = panelX + 58 + index * 62
+      const cx = panelX + 40 + span * ((index + 0.5) / spiralCount)
       primitives.push({
         kind: 'path',
         id: `sliding-spiral-${index}`,
         d: `M ${cx - 8} ${panelY + panelHeight * 0.42 + 24} C ${cx - 8} ${panelY + panelHeight * 0.42 + 2}, ${cx + 10} ${panelY + panelHeight * 0.42 + 2}, ${cx + 10} ${panelY + panelHeight * 0.42 + 24} C ${cx + 10} ${panelY + panelHeight * 0.42 + 46}, ${cx - 6} ${panelY + panelHeight * 0.42 + 46}, ${cx - 6} ${panelY + panelHeight * 0.42 + 24}`,
         fill: 'none',
         stroke: palette.accent,
-        strokeWidth: 2.4,
+        strokeWidth: scaleVisual(2.4),
       })
     }
   }
@@ -855,6 +883,10 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     notes.push('Panel fill is schematic and intentionally clean.')
   }
 
+  if (config.gateType === 'cantilever_sliding') {
+    notes.push(cantileverTailNote(config.widthMm))
+  }
+
   const primitives = isSliding ? buildSlidingFrame(config, palette) : buildSwingFrame(config, palette)
   pushShadowLine(primitives, {
     kind: 'line',
@@ -864,7 +896,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X + FRAME_WIDTH + 4,
     y2: FRAME_Y + FRAME_HEIGHT + 72,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   pushShadowLine(primitives, {
@@ -875,7 +907,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X + FRAME_WIDTH + 4,
     y2: FRAME_Y + FRAME_HEIGHT + 74,
     stroke: palette.shadow,
-    strokeWidth: 1,
+    strokeWidth: scaleVisual(1),
     opacity: 0.5,
   }, palette, 0, 0)
   pushShadowLine(primitives, {
@@ -886,7 +918,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X,
     y2: FRAME_Y + FRAME_HEIGHT + 86,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   pushShadowLine(primitives, {
@@ -897,7 +929,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X + FRAME_WIDTH,
     y2: FRAME_Y + FRAME_HEIGHT + 86,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   pushShadowLine(primitives, {
@@ -908,7 +940,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X - 70,
     y2: FRAME_Y + FRAME_HEIGHT + 2,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   pushShadowLine(primitives, {
@@ -919,7 +951,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X - 68,
     y2: FRAME_Y + FRAME_HEIGHT + 2,
     stroke: palette.shadow,
-    strokeWidth: 1,
+    strokeWidth: scaleVisual(1),
     opacity: 0.5,
   }, palette, 0, 0)
   pushShadowLine(primitives, {
@@ -930,7 +962,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X - 54,
     y2: FRAME_Y,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   pushShadowLine(primitives, {
@@ -941,7 +973,7 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
     x2: FRAME_X - 54,
     y2: FRAME_Y + FRAME_HEIGHT,
     stroke: palette.steel,
-    strokeWidth: 1.8,
+    strokeWidth: scaleVisual(1.8),
     strokeLinecap: 'square',
   }, palette, 1, 1)
   const labels: GateRenderLabel[] = [
@@ -992,12 +1024,25 @@ export function buildGateRenderPlan(config: GateConfig): GateRenderPlan {
       id: 'label-track',
       x: FRAME_X + 22,
       y: FRAME_Y + FRAME_HEIGHT + 32,
-      text: 'Track / rail schematic',
+      text: config.gateType === 'cantilever_sliding' ? 'Track / counterbalance schematic' : 'Track / rail schematic',
       anchor: 'start',
       size: 13,
       fill: palette.steel,
       weight: 500,
     })
+    if (config.gateType === 'cantilever_sliding') {
+      labels.push({
+        id: 'label-tail',
+        x: FRAME_X + 28 + (FRAME_WIDTH * getCantileverTailRatio(config.widthMm)) / 2,
+        y: FRAME_Y + 84,
+        text:
+          config.widthMm === 4000 ? 'Counterbalance tail = 1/3 at 4m' : 'Counterbalance tail visible',
+        anchor: 'middle',
+        size: 12,
+        fill: palette.accent,
+        weight: 600,
+      })
+    }
   }
 
   return {
