@@ -67,6 +67,7 @@ test.describe('configurator release flow', () => {
     await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeChecked()
 
     await continueWizard(page)
+    await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
     await expect(page.getByText(/Site survey requested/i).filter({ visible: true }).first()).toBeVisible()
     await expect(page.getByText(/^Requested$/i).filter({ visible: true }).first()).toBeVisible()
@@ -115,6 +116,10 @@ test.describe('configurator mobile portrait', () => {
 
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await expect(preview).toBeVisible()
+
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Fence panels' })).toBeVisible()
     await expect(preview).toBeVisible()
   })
 })

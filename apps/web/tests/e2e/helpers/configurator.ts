@@ -41,7 +41,8 @@ export async function continueWizard(page: Page) {
 export async function walkToSummary(page: Page) {
   await waitForConfiguratorReady(page)
 
-  for (let index = 0; index < 4; index += 1) {
+  // gate → dimensions → posts → options → fence → summary
+  for (let index = 0; index < 5; index += 1) {
     await continueWizard(page)
   }
 
@@ -51,7 +52,8 @@ export async function walkToSummary(page: Page) {
 export async function walkToOptions(page: Page) {
   await waitForConfiguratorReady(page)
 
-  for (let index = 0; index < 2; index += 1) {
+  // gate → dimensions → posts → options
+  for (let index = 0; index < 3; index += 1) {
     await continueWizard(page)
   }
 

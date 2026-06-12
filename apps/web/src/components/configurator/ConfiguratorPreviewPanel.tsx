@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { CONFIGURATOR_3D_PREVIEW_ENABLED } from '@/lib/configurator/features'
-import type { GateConfig } from '@steelyes/gate-engine'
+import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
 
 const ConfiguratorPreview3D = dynamic(
   () => import('@/components/configurator/ConfiguratorPreview3D').then((module) => module.ConfiguratorPreview3D),
@@ -42,7 +42,7 @@ type ConfiguratorPreviewPanelProps = {
   className?: string
   mode?: ConfiguratorPreviewMode
   allowModeSwitch?: boolean
-  tenant?: import('@steelyes/gate-engine').TenantBundle
+  tenant?: TenantBundle
 }
 
 const MODE_OPTIONS: { id: ConfiguratorPreviewMode; label: string }[] = [
