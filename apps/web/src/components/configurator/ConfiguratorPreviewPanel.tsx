@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
@@ -20,7 +20,19 @@ const ConfiguratorPreview3D = dynamic(
   },
 )
 
-export type ConfiguratorPreviewMode = 'installation' | 'technical' | 'plan' | '3d'
+const ConfiguratorPhotoPreview = dynamic(
+  () => import('@/components/configurator/ConfiguratorPhotoPreview').then((module) => module.ConfiguratorPhotoPreview),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[280px] items-center justify-center rounded-2xl border border-steel/10 bg-paper px-4 text-sm text-muted">
+        Loading photo simulation…
+      </div>
+    ),
+  },
+)
+
+export type ConfiguratorPreviewMode = 'installation' | 'technical' | 'plan' | 'photo' | '3d'
 
 type ConfiguratorPreviewPanelProps = {
   config: GateConfig
@@ -36,6 +48,7 @@ const MODE_OPTIONS: { id: ConfiguratorPreviewMode; label: string }[] = [
   { id: 'installation', label: 'Installation' },
   { id: 'technical', label: 'Technical' },
   { id: 'plan', label: 'Plan' },
+  { id: 'photo', label: 'Photo' },
   { id: '3d', label: '3D' },
 ]
 
@@ -97,14 +110,27 @@ export function ConfiguratorPreviewPanel({
   allowModeSwitch = true,
 }: ConfiguratorPreviewPanelProps) {
   const [internalMode, setInternalMode] = useState<ConfiguratorPreviewMode>('installation')
+  const [load3dChunk, setLoad3dChunk] = useState(false)
+  const [loadPhotoChunk, setLoadPhotoChunk] = useState(false)
   const mode = controlledMode ?? internalMode
   const previewCompact = pinned ? false : compact
   const visibleModes = MODE_OPTIONS.filter((option) => option.id !== '3d' || CONFIGURATOR_3D_PREVIEW_ENABLED)
   const canSwitch = allowModeSwitch && !compact
 
+  useEffect(() => {
+    if (mode === '3d') {
+      setLoad3dChunk(true)
+    }
+    if (mode === 'photo') {
+      setLoadPhotoChunk(true)
+    }
+  }, [mode])
+
   const previewBody =
-    mode === '3d' && CONFIGURATOR_3D_PREVIEW_ENABLED ? (
+    mode === '3d' && CONFIGURATOR_3D_PREVIEW_ENABLED && load3dChunk ? (
       <ConfiguratorPreview3D config={config} compact={previewCompact} studio={pinned || !compact} />
+    ) : mode === 'photo' && loadPhotoChunk ? (
+      <ConfiguratorPhotoPreview config={config} compact={previewCompact} studio={pinned || !compact} />
     ) : (
       <ConfiguratorPreview
         config={config}
@@ -149,7 +175,9 @@ export function ConfiguratorPreviewPanel({
         <p className="mt-2 px-1 text-xs leading-5 text-muted-deep">
           {mode === '3d'
             ? '3D schematic view with mounting posts — final geometry and powder coat may vary.'
-            : mode === 'plan'
+            : mode === 'photo'
+              ? 'Photo simulation overlays your schematic gate on a reference installation image.'
+              : mode === 'plan'
               ? 'Top-down plan view showing driveway layout, opening width, and leaf or panel sweep.'
               : mode === 'installation'
                 ? 'Installation view with ground context, shadow, and configurable mounting posts.'

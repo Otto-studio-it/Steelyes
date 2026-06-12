@@ -1,4 +1,5 @@
 import { PDFDocument, StandardFonts, rgb, type PDFPage } from 'pdf-lib'
+import QRCode from 'qrcode'
 import {
   buildGateRenderPlan,
   calculateIndicativeGatePrice,
@@ -129,6 +130,26 @@ export async function buildIndicativeQuotePdf(input: {
   drawLine('Steelyes — Indicative gate quote', { bold: true, size: 18, gap: 24 })
   drawLine(`Reference: ${shareToken}`, { size: 10, gap: 14 })
   drawLine(`View online: ${shareUrl}`, { size: 10, gap: 20 })
+
+  try {
+    const qrPng = await QRCode.toBuffer(shareUrl, { type: 'png', margin: 1, width: 180 })
+    const qrImage = await pdf.embedPng(qrPng)
+    page.drawImage(qrImage, {
+      x: PAGE_WIDTH - MARGIN - 96,
+      y: PAGE_HEIGHT - MARGIN - 96,
+      width: 96,
+      height: 96,
+    })
+    page.drawText('Scan for live config', {
+      x: PAGE_WIDTH - MARGIN - 96,
+      y: PAGE_HEIGHT - MARGIN - 108,
+      size: 8,
+      font,
+      color: rgb(0.35, 0.35, 0.35),
+    })
+  } catch {
+    // QR generation is best-effort only.
+  }
 
   drawLine('Configuration summary', { bold: true, size: 13, gap: 18 })
   for (const line of buildConfigurationSummaryLines(config, pricing)) {
