@@ -35,6 +35,12 @@ export const GATE_MECHANISMS = GATE_TYPES
 
 export type GateMechanism = GateType
 
+import type { GatePostsConfig } from './posts'
+import { DEFAULT_GATE_POSTS } from './posts'
+
+export type { GatePostsConfig, PostCapStyle, PostMaterial } from './posts'
+export { DEFAULT_GATE_POSTS, POST_CAP_LABELS, POST_CAP_STYLES, POST_MATERIAL_LABELS, POST_MATERIALS } from './posts'
+
 export type GateOptionSelection = {
   key: GateOptionKey
   enabled: boolean
@@ -64,6 +70,7 @@ export type GateConfig = GateDimensions & {
   motorised: boolean
   finish: FinishCode
   siteSurveyRequested: boolean
+  posts: GatePostsConfig
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
 }
@@ -75,6 +82,7 @@ export type GatePreset = {
   motorised: boolean
   finish: FinishCode
   siteSurveyRequested: boolean
+  posts: GatePostsConfig
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
 }
@@ -107,6 +115,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: false,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -117,6 +126,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: false,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -127,6 +137,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -137,6 +148,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -147,6 +159,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -157,6 +170,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -167,6 +181,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -177,6 +192,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
   },
@@ -196,6 +212,7 @@ export function createGateConfig(preset: GatePreset): GateConfig {
     motorised: preset.motorised,
     finish: preset.finish,
     siteSurveyRequested: preset.siteSurveyRequested,
+    posts: structuredClone(preset.posts ?? DEFAULT_GATE_POSTS),
     options: structuredClone(preset.options),
     fencePanels: structuredClone(preset.fencePanels),
   }

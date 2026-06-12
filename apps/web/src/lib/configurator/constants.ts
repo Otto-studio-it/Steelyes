@@ -5,13 +5,17 @@ export const CONFIGURATOR_STORAGE_KEY = 'steelyes.configurator.v1'
 export const CONFIGURATOR_SHARE_META_KEY = 'steelyes.configurator.share.v1'
 export const PRIMARY_GATE_TYPE: GateType = 'double_swing'
 
-/** Fence panels remain in the engine model but are out of scope for configurator v1 UI. */
-export const FENCE_PANELS_V1_ENABLED = false
+/** Fence panels step is enabled for v2 multi-product flow. */
+export const FENCE_PANELS_V1_ENABLED = true
 
 export const CONFIGURATOR_STEPS = [
   { id: 'gate', label: 'Gate setup', shortLabel: 'Setup' },
   { id: 'dimensions', label: 'Dimensions', shortLabel: 'Size' },
+  { id: 'posts', label: 'Mounting posts', shortLabel: 'Posts' },
   { id: 'options', label: 'Options', shortLabel: 'Options' },
+  ...(FENCE_PANELS_V1_ENABLED
+    ? [{ id: 'fence' as const, label: 'Fence panels', shortLabel: 'Fence' }]
+    : []),
   { id: 'summary', label: 'Summary', shortLabel: 'Summary' },
 ] as const
 

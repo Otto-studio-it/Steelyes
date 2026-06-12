@@ -5,11 +5,13 @@ import { buildGateRenderPlan, createGateConfig, createGatePreset } from '../src/
 describe('gate-engine rendering', () => {
   it('builds a swing preview plan with labels and frame primitives', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
-    const plan = buildGateRenderPlan(config)
+    const plan = buildGateRenderPlan(config, { viewMode: 'technical' })
 
     expect(plan.title).toContain('double swing')
-    expect(plan.subtitle).toContain('1800 mm wide')
+    expect(plan.subtitle).toContain('1800 mm opening')
     expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'swing-frame')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'upper-mid-rail')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'bottom-rail')).toBe(true)
     expect(plan.labels).toHaveLength(4)
   })
 
@@ -18,7 +20,7 @@ describe('gate-engine rendering', () => {
       ...createGateConfig(createGatePreset('tracked_sliding')),
       motorised: true,
     }
-    const plan = buildGateRenderPlan(config)
+    const plan = buildGateRenderPlan(config, { viewMode: 'technical' })
 
     expect(plan.title).toContain('tracked sliding')
     expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'track-line')).toBe(true)

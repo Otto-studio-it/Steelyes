@@ -1,4 +1,14 @@
-import { getFinishDefinition, type FinishCode, type GateStyle, type GateType, type PricingLineItem, type PricingResult } from '@steelyes/gate-engine'
+import {
+  getFinishDefinition,
+  POST_CAP_LABELS,
+  POST_MATERIAL_LABELS,
+  type FinishCode,
+  type GateConfig,
+  type GateStyle,
+  type GateType,
+  type PricingLineItem,
+  type PricingResult,
+} from '@steelyes/gate-engine'
 
 const STYLE_LABELS: Record<GateStyle, string> = {
   traditional_victorian: 'Traditional Victorian Style',
@@ -17,6 +27,13 @@ export const SITE_SURVEY_FIELD_LABEL = 'Site survey requested'
 
 export function siteSurveyLabel(requested: boolean): string {
   return requested ? 'Requested' : 'Not requested'
+}
+
+export function postsSummaryLabel(config: GateConfig): string {
+  if (!config.posts.enabled || config.posts.material === 'none') {
+    return 'No mounting posts'
+  }
+  return `${POST_MATERIAL_LABELS[config.posts.material]} · ${POST_CAP_LABELS[config.posts.capStyle]} · +${config.posts.extendAboveGateMm} mm`
 }
 
 export function finishLabel(finish: FinishCode): string {

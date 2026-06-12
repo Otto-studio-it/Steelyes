@@ -21,6 +21,7 @@ import {
 import { collectVariantCatalogIssues } from './catalog/variants'
 import { GLOBAL_DIMENSION_LIMITS, getDimensionLimits } from './dimension-limits'
 import { clamp } from './internal/shared'
+import { normalizeGatePosts } from './posts'
 import { collectCompatibilityIssues } from './rules/compatibility'
 import { collectGeometryIssues } from './rules/geometry'
 
@@ -401,6 +402,7 @@ export function normalizeGateConfig(
     motorised: typeof input.motorised === 'boolean' ? input.motorised : preset.motorised,
     finish: isFinishCode(input.finish) ? input.finish : DEFAULT_FINISH,
     siteSurveyRequested: typeof input.siteSurveyRequested === 'boolean' ? input.siteSurveyRequested : DEFAULT_SITE_SURVEY_REQUESTED,
+    posts: normalizeGatePosts(input.posts),
     options: normalizedOptions,
     fencePanels: normalizeFencePanels(input.fencePanels),
   }

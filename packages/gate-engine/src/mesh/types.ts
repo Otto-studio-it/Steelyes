@@ -1,7 +1,7 @@
 import type { FinishMaterialTokens } from '../finishes'
 import type { FinishCode, GateConfig, GateType } from '../types'
 
-export type GateMeshBoxRole = 'frame' | 'panel' | 'post' | 'rail' | 'counterweight'
+export type GateMeshBoxRole = 'frame' | 'panel' | 'post' | 'rail' | 'counterweight' | 'bar'
 
 export type GateMeshBox = {
   kind: 'box'
@@ -13,11 +13,21 @@ export type GateMeshBox = {
   role: GateMeshBoxRole
 }
 
+export type GateMeshCylinder = {
+  kind: 'cylinder'
+  id: string
+  radiusMm: number
+  heightMm: number
+  positionMm: [number, number, number]
+  role: GateMeshBoxRole
+}
+
 export type GateMeshPlan = {
   gateType: GateType
   finish: FinishCode
   material: FinishMaterialTokens
   boxes: GateMeshBox[]
+  cylinders: GateMeshCylinder[]
   notes: string[]
 }
 

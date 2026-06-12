@@ -1,2 +1,2 @@
 export const CONFIGURATOR_3D_PREVIEW_ENABLED =
-  process.env.NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW === 'true'
+  process.env.NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW !== 'false'

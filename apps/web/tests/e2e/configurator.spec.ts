@@ -5,6 +5,7 @@ import {
   getSwingFrameStroke,
   goToConfiguratorStep,
   waitForConfiguratorReady,
+  walkToOptions,
   walkToSummary,
 } from './helpers/configurator'
 import { deleteSharedConfiguration, seedSharedConfiguration } from './helpers/supabase-config'
@@ -13,7 +14,7 @@ test.describe('configurator release flow', () => {
   test('loads the wizard on gate setup', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    await expect(page.getByRole('heading', { name: /Configure your gate/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Design your gate installation/i })).toBeVisible()
     await expect(page.getByRole('radiogroup', { name: 'Gate finish' })).toBeVisible()
     await expect(page.getByText(/Indicative pricing/i).first()).toBeVisible()
   })
@@ -44,10 +45,7 @@ test.describe('configurator release flow', () => {
   })
 
   test('shows survey-required pricing when top railheads are enabled', async ({ page }) => {
-    await waitForConfiguratorReady(page)
-    await continueWizard(page)
-    await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await walkToOptions(page)
 
     const railheadsCard = page.locator('div').filter({ hasText: /^Top railheads/i }).first()
     await railheadsCard.getByRole('button', { name: /^Off$/i }).click()
@@ -57,10 +55,7 @@ test.describe('configurator release flow', () => {
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {
-    await waitForConfiguratorReady(page)
-    await continueWizard(page)
-    await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await walkToOptions(page)
 
     const siteSurveyCheckbox = page.getByRole('checkbox', { name: /site survey requested/i })
     await siteSurveyCheckbox.check()
@@ -68,9 +63,7 @@ test.describe('configurator release flow', () => {
 
     await page.reload()
     await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
-    await continueWizard(page)
-    await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+    await walkToOptions(page)
     await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeChecked()
 
     await continueWizard(page)
@@ -114,6 +107,10 @@ test.describe('configurator mobile portrait', () => {
 
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Dimensions' })).toBeVisible()
+    await expect(preview).toBeVisible()
+
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Mounting posts' })).toBeVisible()
     await expect(preview).toBeVisible()
 
     await continueWizard(page)

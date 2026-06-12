@@ -3,8 +3,13 @@ export {
   DEFAULT_FINISH,
   DEFAULT_GATE_OPTIONS,
   DEFAULT_GATE_PRESETS,
+  DEFAULT_GATE_POSTS,
   EMPTY_FENCE_PANEL_INPUT,
   DEFAULT_SITE_SURVEY_REQUESTED,
+  POST_CAP_LABELS,
+  POST_CAP_STYLES,
+  POST_MATERIAL_LABELS,
+  POST_MATERIALS,
   FINISH_CODES,
   GATE_MECHANISMS,
   GATE_OPTION_KEYS,
@@ -55,8 +60,26 @@ export {
   stylePricingSummary,
 } from './pricing/style-pricing'
 export {
+  buildGateGeometryPlan,
+  buildSwingRailLayout,
+  buildSwingVictorianGeometryPlan,
+  DEFAULT_PICKET_SPACING_MM,
+  DEFAULT_TUBE_OUTER_MM,
+  SWING_RAIL_COUNT,
+  VICTORIAN_DOUBLE_SWING_ZONE_RATIOS,
+} from './geometry'
+export type {
+  GateGeometryPlan,
+  SwingVictorianGeometryPlan,
+  SwingRailLayout,
+  VerticalZoneRatios,
+} from './geometry'
+export {
   buildGateRenderPlan,
+  serializeGateRenderPlanToSvg,
 } from './rendering'
+export type { GateRenderViewMode } from './rendering/render-plan'
+export { normalizeGatePosts } from './posts'
 export {
   buildGateMeshPlan,
   mmToSceneUnits,
@@ -68,6 +91,17 @@ export {
   getFinishStrokeColor,
   listFinishDefinitions,
 } from './finishes'
+export {
+  DEFAULT_MOTOR_CATALOG,
+  findMotorDefinition,
+  listMotorsForGateType,
+} from './catalog/motors'
+export type { GateMotorDefinition, MotorMount } from './catalog/motors'
+export {
+  STEELYES_TENANT_ID,
+  createDefaultTenantFeatures,
+} from './platform/tenant-bundle'
+export type { TenantBranding, TenantBundle, TenantFeatureFlags, TenantLeadRouting } from './platform/tenant-bundle'
 export {
   DEFAULT_RAILHEAD_VARIANT_CATALOG,
   RAILHEAD_OPTION_KEYS,
@@ -96,9 +130,12 @@ export type {
   GateMechanism,
   GateOptionKey,
   GateOptionSelection,
+  GatePostsConfig,
   GatePreset,
   GateStyle,
   GateType,
+  PostCapStyle,
+  PostMaterial,
 } from './types'
 export type { ValidationIssue, ValidationResult } from './validation'
 export type {
@@ -126,6 +163,7 @@ export type {
 export type {
   GateMeshBox,
   GateMeshBoxRole,
+  GateMeshCylinder,
   GateMeshPlan,
 } from './mesh/types'
 export type {

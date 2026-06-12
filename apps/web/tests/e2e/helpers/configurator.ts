@@ -41,11 +41,21 @@ export async function continueWizard(page: Page) {
 export async function walkToSummary(page: Page) {
   await waitForConfiguratorReady(page)
 
-  for (let index = 0; index < 3; index += 1) {
+  for (let index = 0; index < 4; index += 1) {
     await continueWizard(page)
   }
 
   await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
+}
+
+export async function walkToOptions(page: Page) {
+  await waitForConfiguratorReady(page)
+
+  for (let index = 0; index < 2; index += 1) {
+    await continueWizard(page)
+  }
+
+  await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
 }
 
 export const DEFAULT_SERIALIZED_OPTIONS = [
@@ -69,6 +79,12 @@ export function buildTestConfigurationPayload() {
     finish: 'matte_black' as const,
     siteSurveyRequested: false,
     options: DEFAULT_SERIALIZED_OPTIONS.map((option) => ({ ...option })),
+    posts: {
+      enabled: true,
+      material: 'steel' as const,
+      capStyle: 'ball' as const,
+      extendAboveGateMm: 80,
+    },
     fencePanels: {
       quantity: 0,
       panels: [],

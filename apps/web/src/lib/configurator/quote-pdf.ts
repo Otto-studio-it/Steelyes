@@ -1,7 +1,10 @@
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb, type PDFPage } from 'pdf-lib'
 import {
+  buildGateRenderPlan,
   calculateIndicativeGatePrice,
   type GateConfig,
+  type GateRenderPlan,
+  type GateRenderPrimitive,
   type PricingCatalog,
   type PricingResult,
 } from '@steelyes/gate-engine'
@@ -16,6 +19,58 @@ const PAGE_WIDTH = 595
 const PAGE_HEIGHT = 842
 const MARGIN = 48
 const LINE_HEIGHT = 16
+
+function parseHexColor(hex: string): ReturnType<typeof rgb> {
+  const normalized = hex.replace('#', '')
+  const value = normalized.length === 3
+    ? normalized
+        .split('')
+        .map((char) => char + char)
+        .join('')
+    : normalized
+  const red = Number.parseInt(value.slice(0, 2), 16) / 255
+  const green = Number.parseInt(value.slice(2, 4), 16) / 255
+  const blue = Number.parseInt(value.slice(4, 6), 16) / 255
+  return rgb(red, green, blue)
+}
+
+function drawRenderPlanPreview(page: PDFPage, plan: GateRenderPlan, box: { x: number; y: number; width: number; height: number }) {
+  const scale = Math.min(box.width / plan.width, box.height / plan.height)
+  const originX = box.x
+  const originY = box.y + box.height
+
+  const toPdfY = (svgY: number, height = 0) => originY - svgY * scale - height * scale
+
+  const drawPrimitive = (primitive: GateRenderPrimitive) => {
+    if (primitive.kind === 'rect') {
+      page.drawRectangle({
+        x: originX + primitive.x * scale,
+        y: toPdfY(primitive.y, primitive.height),
+        width: primitive.width * scale,
+        height: primitive.height * scale,
+        borderWidth: (primitive.strokeWidth ?? 0) * scale * 0.5,
+        borderColor: primitive.stroke ? parseHexColor(primitive.stroke) : undefined,
+        color: primitive.fill && primitive.fill !== 'none' ? parseHexColor(primitive.fill) : undefined,
+        opacity: primitive.opacity ?? 1,
+      })
+      return
+    }
+
+    if (primitive.kind === 'line') {
+      page.drawLine({
+        start: { x: originX + primitive.x1 * scale, y: toPdfY(primitive.y1) },
+        end: { x: originX + primitive.x2 * scale, y: toPdfY(primitive.y2) },
+        thickness: (primitive.strokeWidth ?? 1) * scale * 0.6,
+        color: parseHexColor(primitive.stroke ?? '#1B1C1A'),
+        opacity: primitive.opacity ?? 1,
+      })
+    }
+  }
+
+  for (const primitive of [...plan.background, ...plan.primitives]) {
+    drawPrimitive(primitive)
+  }
+}
 
 function wrapText(text: string, maxChars: number): string[] {
   const words = text.split(/\s+/)
@@ -104,6 +159,19 @@ export async function buildIndicativeQuotePdf(input: {
     { size: 10 },
   )
   drawLine(formatConfigurationSummaryText(config, pricing), { size: 9, gap: 12 })
+
+  page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT])
+  y = PAGE_HEIGHT - MARGIN
+  drawLine('Technical drawing (schematic)', { bold: true, size: 16, gap: 22 })
+  drawLine(`${config.widthMm} mm × ${config.heightMm} mm · ${config.gateType.split('_').join(' ')}`, { size: 10, gap: 16 })
+
+  const renderPlan = buildGateRenderPlan(config, { viewMode: 'technical' })
+  drawRenderPlanPreview(page, renderPlan, {
+    x: MARGIN,
+    y: MARGIN + 40,
+    width: PAGE_WIDTH - MARGIN * 2,
+    height: PAGE_HEIGHT - MARGIN * 2 - 80,
+  })
 
   return pdf.save()
 }

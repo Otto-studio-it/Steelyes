@@ -3,7 +3,7 @@ title: Next Action Plan
 description: Ordered execution plan after DB/RLS hardening
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-19
+last_updated: 2026-06-12
 ---
 
 # Steelyes — Next Action Plan
@@ -13,6 +13,10 @@ This document controls what we do next. It separates work that can proceed now f
 ---
 
 ## Guiding decision
+
+**Authoritative configurator vision:** `docs/frontend/CONFIGURATOR_V1_VISION.md`  
+**Competitive benchmark:** `docs/frontend/MYCONFIGURATOR_COMPETITIVE_MATRIX.md`  
+**Platform extraction:** `docs/PLATFORM_ROADMAP.md`
 
 The database is in a controlled pause.
 

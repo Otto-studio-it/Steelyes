@@ -9,8 +9,10 @@ describe('gate-engine mesh', () => {
 
     expect(plan.finish).toBe('matte_black')
     expect(plan.material.colorHex).toBe('#1A1A1A')
-    expect(plan.boxes.some((box) => box.id === 'leaf-1')).toBe(true)
-    expect(plan.boxes.some((box) => box.id === 'leaf-2')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-frame-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-frame-2')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'left-mount-post')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'right-mount-post')).toBe(true)
   })
 
   it('uses finish material tokens from the shared catalog', () => {
@@ -40,6 +42,14 @@ describe('gate-engine mesh', () => {
 
     expect(plan.boxes.some((box) => box.id === 'counterbalance-tail')).toBe(true)
     expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+  })
+
+  it('includes tube pickets as cylinders for Victorian double swing', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.cylinders.length).toBeGreaterThan(0)
+    expect(plan.cylinders.some((cylinder) => cylinder.role === 'bar')).toBe(true)
   })
 
   it('rejects invalid configs before mesh generation', () => {

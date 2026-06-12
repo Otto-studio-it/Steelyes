@@ -4,52 +4,82 @@ import { cantileverTailNote, getCantileverTailRatio } from '../rules/cantilever'
 import type { GateConfig } from '../types'
 import { validateGateConfig } from '../validation'
 import { scaleVisualBoldness } from '../visual-scale'
-import { type GateMeshBox, type GateMeshPlan, MM_TO_SCENE_UNITS, mmToSceneUnits } from './types'
+import { buildSwingProceduralMembers } from './swing-procedural'
+import {
+  type GateMeshBox,
+  type GateMeshCylinder,
+  type GateMeshPlan,
+  MM_TO_SCENE_UNITS,
+  mmToSceneUnits,
+} from './types'
 
 export { MM_TO_SCENE_UNITS, mmToSceneUnits }
-export type { GateMeshBox, GateMeshBoxRole, GateMeshPlan } from './types'
+export type { GateMeshBox, GateMeshBoxRole, GateMeshCylinder, GateMeshPlan } from './types'
 
 const FRAME_DEPTH_MM = scaleVisualBoldness(45)
 const POST_WIDTH_MM = scaleVisualBoldness(90)
 
-function buildSwingMeshBoxes(config: GateConfig, leafCount: number): GateMeshBox[] {
+function buildMountingPostMeshBoxes(config: GateConfig): GateMeshBox[] {
+  if (!config.posts.enabled || config.posts.material === 'none') {
+    return []
+  }
+
   const halfSpan = config.widthMm / 2
-  const leafWidth = config.widthMm / leafCount
+  const postWidth = config.posts.material === 'brick' || config.posts.material === 'stone' ? POST_WIDTH_MM * 1.15 : POST_WIDTH_MM
+  const totalHeight = config.heightMm + config.posts.extendAboveGateMm + 60
+  const baseY = totalHeight / 2
+
   const boxes: GateMeshBox[] = [
     {
       kind: 'box',
-      id: 'left-post',
-      widthMm: POST_WIDTH_MM,
-      heightMm: config.heightMm,
-      depthMm: FRAME_DEPTH_MM,
-      positionMm: [-halfSpan - POST_WIDTH_MM / 2, config.heightMm / 2, 0],
+      id: 'left-mount-post',
+      widthMm: postWidth,
+      heightMm: totalHeight,
+      depthMm: FRAME_DEPTH_MM * 1.1,
+      positionMm: [-halfSpan - postWidth * 0.65, baseY, 0],
       role: 'post',
     },
     {
       kind: 'box',
-      id: 'right-post',
-      widthMm: POST_WIDTH_MM,
-      heightMm: config.heightMm,
-      depthMm: FRAME_DEPTH_MM,
-      positionMm: [halfSpan + POST_WIDTH_MM / 2, config.heightMm / 2, 0],
+      id: 'right-mount-post',
+      widthMm: postWidth,
+      heightMm: totalHeight,
+      depthMm: FRAME_DEPTH_MM * 1.1,
+      positionMm: [halfSpan + postWidth * 0.65, baseY, 0],
       role: 'post',
     },
   ]
 
-  for (let index = 0; index < leafCount; index += 1) {
-    const centerX = -halfSpan + leafWidth * (index + 0.5)
-    boxes.push({
-      kind: 'box',
-      id: `leaf-${index + 1}`,
-      widthMm: leafWidth - scaleVisualBoldness(24),
-      heightMm: config.heightMm - 48,
-      depthMm: FRAME_DEPTH_MM * 0.75,
-      positionMm: [centerX, config.heightMm / 2, 0],
-      role: config.style === 'composite_boards' ? 'panel' : 'frame',
-    })
+  if (config.posts.capStyle !== 'flat') {
+    const capSize = scaleVisualBoldness(28)
+    boxes.push(
+      {
+        kind: 'box',
+        id: 'left-post-cap',
+        widthMm: capSize,
+        heightMm: capSize,
+        depthMm: capSize,
+        positionMm: [-halfSpan - postWidth * 0.65, totalHeight + capSize * 0.2, 0],
+        role: 'post',
+      },
+      {
+        kind: 'box',
+        id: 'right-post-cap',
+        widthMm: capSize,
+        heightMm: capSize,
+        depthMm: capSize,
+        positionMm: [halfSpan + postWidth * 0.65, totalHeight + capSize * 0.2, 0],
+        role: 'post',
+      },
+    )
   }
 
   return boxes
+}
+
+function buildSwingMesh(config: GateConfig, leafCount: number): { boxes: GateMeshBox[]; cylinders: GateMeshCylinder[] } {
+  const posts = buildMountingPostMeshBoxes(config)
+  return buildSwingProceduralMembers(config, posts)
 }
 
 function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
@@ -60,6 +90,7 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
   const panelHeight = config.heightMm - 56
 
   const boxes: GateMeshBox[] = [
+    ...buildMountingPostMeshBoxes(config),
     {
       kind: 'box',
       id: 'sliding-track',
@@ -103,13 +134,17 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
   }
 
   const material = getFinishDefinition(config.finish).material
-  const boxes = isSlidingGate(config.gateType)
-    ? buildSlidingMeshBoxes(config)
-    : buildSwingMeshBoxes(config, getLeafCount(config.gateType))
+  const swingMesh = isSlidingGate(config.gateType)
+    ? null
+    : buildSwingMesh(config, getLeafCount(config.gateType))
+  const boxes = swingMesh ? swingMesh.boxes : buildSlidingMeshBoxes(config)
+  const cylinders = swingMesh?.cylinders ?? []
 
   const notes = [
-    'Schematic 3D placeholder mesh derived from the same GateConfig as the 2D preview.',
-    'Detailed procedural geometry will replace these boxes in a later mesh-builder phase.',
+    'Procedural 3D mesh derived from the same GateConfig and geometry recipe as the 2D preview.',
+    cylinders.length > 0
+      ? `${cylinders.length} tube pickets rendered as cylinders for Victorian swing layouts.`
+      : 'Frame and panel boxes represent sliding or composite layouts schematically.',
   ]
 
   if (config.gateType === 'cantilever_sliding') {
@@ -121,6 +156,7 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
     finish: config.finish,
     material,
     boxes,
+    cylinders,
     notes,
   }
 }

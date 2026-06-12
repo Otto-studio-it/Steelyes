@@ -25,6 +25,7 @@ import {
   type ConfiguratorStepId,
 } from '@/lib/configurator/constants'
 import { setOptionQuantity, updateOption } from '@/lib/configurator/option-actions'
+import { validateConfiguratorStep, validateConfiguratorStepsBeforeIndex } from '@/lib/configurator/step-validation'
 
 type ShareMeta = {
   shareToken: string
@@ -200,10 +201,13 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
   setStepIndex: (stepIndex) => {
     const clamped = Math.max(0, Math.min(stepIndex, CONFIGURATOR_STEPS.length - 1))
+    const current = get().stepIndex
 
-    // Moving backward is always allowed; moving forward requires a valid config.
-    if (clamped > get().stepIndex && !validateGateConfig(get().config).ok) {
-      return
+    if (clamped > current) {
+      const blockingIssues = validateConfiguratorStepsBeforeIndex(get().config, clamped, CONFIGURATOR_STEPS)
+      if (blockingIssues.length > 0) {
+        return
+      }
     }
 
     set({ stepIndex: clamped })
@@ -298,6 +302,12 @@ export function useConfiguratorValidationIssues(): ValidationIssue[] {
   const config = useConfiguratorConfig()
   const result = validateGateConfig(config)
   return result.ok ? [] : result.issues
+}
+
+export function useConfiguratorStepValidationIssues(): ValidationIssue[] {
+  const config = useConfiguratorConfig()
+  const step = useConfiguratorStore((state) => CONFIGURATOR_STEPS[state.stepIndex])
+  return validateConfiguratorStep(step.id, config)
 }
 
 export function useConfiguratorStep() {

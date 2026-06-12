@@ -1,7 +1,12 @@
 'use client'
 
 import { useMemo } from 'react'
-import { buildGateRenderPlan, type GateConfig, type GateRenderPrimitive } from '@steelyes/gate-engine'
+import {
+  buildGateRenderPlan,
+  type GateConfig,
+  type GateRenderPrimitive,
+  type GateRenderViewMode,
+} from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
 import { useConfiguratorStore } from '@/store/configuratorStore'
@@ -74,18 +79,24 @@ function renderPrimitive(primitive: GateRenderPrimitive) {
 
 type ConfiguratorPreviewProps = {
   config: GateConfig
+  viewMode?: GateRenderViewMode
   compact?: boolean
   collapsible?: boolean
   pinned?: boolean
+  studio?: boolean
   className?: string
 }
 
 type PreviewSvgProps = {
   plan: ReturnType<typeof buildGateRenderPlan>
+  studio?: boolean
   className?: string
 }
 
-function PreviewSvg({ plan, className = '' }: PreviewSvgProps) {
+function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgProps) {
+  const frameFill = plan.viewMode === 'installation' ? 'transparent' : '#FEFEFC'
+  const frameStroke = plan.viewMode === 'installation' ? 'transparent' : '#E8E4DD'
+
   return (
     <svg
       viewBox={plan.viewBox}
@@ -95,9 +106,23 @@ function PreviewSvg({ plan, className = '' }: PreviewSvgProps) {
     >
       <title>{plan.title}</title>
       <desc>{`${plan.subtitle}. ${plan.notes.join(' ')}`}</desc>
-      <rect x="0" y="0" width={plan.width} height={plan.height} rx="24" fill="#FEFEFC" stroke="#E8E4DD" strokeWidth="2" />
-      <path d="M 0 720 H 1200" stroke="rgba(25,20,18,0.06)" strokeWidth="1.5" />
-      <path d="M 72 620 H 1128" stroke="rgba(25,20,18,0.05)" strokeWidth="1" strokeDasharray="10 14" />
+      {plan.background.map(renderPrimitive)}
+      <rect
+        x="0"
+        y="0"
+        width={plan.width}
+        height={plan.height}
+        rx="24"
+        fill={frameFill}
+        stroke={frameStroke}
+        strokeWidth={plan.viewMode === 'installation' ? 0 : 2}
+      />
+      {plan.viewMode === 'technical' ? (
+        <>
+          <path d="M 0 720 H 1200" stroke="rgba(25,20,18,0.06)" strokeWidth="1.5" />
+          <path d="M 72 620 H 1128" stroke="rgba(25,20,18,0.05)" strokeWidth="1" strokeDasharray="10 14" />
+        </>
+      ) : null}
       {plan.primitives.map(renderPrimitive)}
       {plan.labels.map((label) => (
         <text
@@ -107,7 +132,7 @@ function PreviewSvg({ plan, className = '' }: PreviewSvgProps) {
           textAnchor={label.anchor}
           fontSize={label.size}
           fontWeight={label.weight}
-          fill={label.fill}
+          fill={studio && plan.viewMode === 'installation' ? '#F5F3F0' : label.fill}
           opacity={label.opacity}
           fontFamily="var(--font-ibm-plex-mono)"
         >
@@ -120,28 +145,36 @@ function PreviewSvg({ plan, className = '' }: PreviewSvgProps) {
 
 export function ConfiguratorPreview({
   config,
+  viewMode = 'installation',
   compact = false,
   collapsible = false,
   pinned = false,
+  studio = false,
   className = '',
 }: ConfiguratorPreviewProps) {
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
-  const plan = useMemo(() => buildGateRenderPlan(config), [config])
+  const plan = useMemo(() => buildGateRenderPlan(config, { viewMode }), [config, viewMode])
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
 
+  const shellClass = studio
+    ? 'border-white/10 bg-steel text-white'
+    : 'border-steel/10 bg-paper text-steel'
+
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-steel/10 bg-[#FBFBF8] shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)] ${pinned ? 'shadow-[0_16px_40px_rgba(25,20,18,0.12)]' : ''} ${className}`}
+      className={`overflow-hidden rounded-2xl border shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)] ${shellClass} ${pinned ? 'shadow-[0_16px_40px_rgba(0,0,0,0.22)]' : ''} ${className}`}
     >
       <div
-        className={`flex items-center justify-between border-b border-steel/8 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
+        className={`flex items-center justify-between border-b px-4 ${studio ? 'border-white/10' : 'border-steel/8'} ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
       >
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8A807B]">2D preview</p>
+          <p className={`font-mono text-[10px] uppercase tracking-[0.28em] ${studio ? 'text-white/55' : 'text-muted'}`}>
+            {viewMode === 'installation' ? 'Installation preview' : 'Technical drawing'}
+          </p>
           <h2
-            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
+            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight ${
               pinned ? 'text-base sm:text-lg' : 'text-sm lg:mt-1 lg:text-lg'
             }`}
           >
@@ -151,16 +184,22 @@ export function ConfiguratorPreview({
         <div className="flex items-center gap-2">
           {!compact || pinned ? (
             <div
-              className={`rounded-full border border-steel/10 bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-muted ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
+              className={`rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-widest ${
+                studio ? 'border-white/15 bg-white/5 text-white/70' : 'border-steel/10 bg-white text-muted'
+              } ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
             >
-              technical drawing
+              {config.widthMm} × {config.heightMm} mm
             </div>
           ) : null}
           {collapsible && !pinned ? (
             <button
               type="button"
               onClick={togglePreviewExpanded}
-              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-steel/10 bg-white text-muted transition hover:border-primary/30 hover:text-primary"
+              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border transition ${
+                studio
+                  ? 'border-white/15 bg-white/5 text-white/80 hover:text-white'
+                  : 'border-steel/10 bg-white text-muted hover:border-primary/30 hover:text-primary'
+              }`}
               aria-expanded={previewExpanded}
               aria-label={previewExpanded ? 'Collapse preview' : 'Expand preview'}
             >
@@ -174,24 +213,24 @@ export function ConfiguratorPreview({
         <button
           type="button"
           onClick={togglePreviewExpanded}
-          className="flex w-full items-center gap-3 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.85),transparent_54%),linear-gradient(180deg,rgba(251,251,248,1),rgba(244,241,236,1))] px-3 py-3 text-left transition hover:bg-[#F4F1EC]"
+          className="flex w-full items-center gap-3 bg-gradient-to-b from-paper to-canvas px-3 py-3 text-left transition hover:from-white hover:to-paper"
           aria-label="Expand live schematic preview"
         >
-          <div className="h-[72px] w-[112px] shrink-0 overflow-hidden rounded-xl border border-steel/10 bg-[#FEFEFC]">
+          <div className="h-[72px] w-[112px] shrink-0 overflow-hidden rounded-xl border border-steel/10 bg-white">
             <PreviewSvg plan={plan} className="h-full w-full scale-[1.35] origin-top" />
           </div>
           <div className="min-w-0">
             <p className="font-heading text-xs font-bold uppercase tracking-tight text-steel">Live preview</p>
-            <p className="mt-1 text-sm leading-5 text-muted-deep">Tap to expand the schematic drawing.</p>
+            <p className="mt-1 text-sm leading-5 text-muted-deep">Tap to expand the gate preview.</p>
           </div>
         </button>
       ) : null}
 
       {showFullBody ? (
         <div
-          className={`bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.85),transparent_54%),linear-gradient(180deg,rgba(251,251,248,1),rgba(244,241,236,1))] p-3 lg:p-4 ${pinned ? 'flex min-h-[clamp(240px,42vh,440px)] items-center justify-center' : ''}`}
+          className={`p-3 lg:p-4 ${studio ? 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_42%),linear-gradient(180deg,#242422,#151514)]' : 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.85),transparent_54%),linear-gradient(180deg,rgba(251,251,248,1),rgba(244,241,236,1))]'} ${pinned ? 'flex min-h-[clamp(260px,44vh,480px)] items-center justify-center' : ''}`}
         >
-          <PreviewSvg plan={plan} className={pinned ? 'max-h-[42vh] w-full' : ''} />
+          <PreviewSvg plan={plan} studio={studio} className={pinned ? 'max-h-[44vh] w-full' : ''} />
         </div>
       ) : null}
     </div>

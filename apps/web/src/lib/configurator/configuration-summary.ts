@@ -4,6 +4,7 @@ import {
   finishLabel,
   formatPricingHeadline,
   gateTypeLabel,
+  postsSummaryLabel,
   SITE_SURVEY_FIELD_LABEL,
   siteSurveyLabel,
   styleLabel,
@@ -24,6 +25,7 @@ export function buildConfigurationSummaryLines(
     { label: 'Dimensions', value: `${config.widthMm} × ${config.heightMm} mm` },
     { label: 'Finish', value: finishLabel(config.finish) },
     { label: 'Motorised', value: config.motorised ? 'Yes' : 'No' },
+    { label: 'Mounting posts', value: postsSummaryLabel(config) },
     { label: SITE_SURVEY_FIELD_LABEL, value: siteSurveyLabel(config.siteSurveyRequested) },
   ]
 
@@ -53,6 +55,7 @@ export function formatConfigurationSummaryInline(config: GateConfig): string {
     `${config.widthMm} × ${config.heightMm} mm`,
     finishLabel(config.finish),
     config.motorised ? 'Motorised' : 'Manual',
+    postsSummaryLabel(config),
     `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(config.siteSurveyRequested)}`,
   ].join(' · ')
 }

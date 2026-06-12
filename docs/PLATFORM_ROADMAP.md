@@ -4,6 +4,9 @@ description: Architecture and execution plan from Steelyes tenant #1 to embeddab
 owner: Ruben
 status: ACTIVE
 last_updated: 2026-06-12
+depends_on:
+  - docs/frontend/CONFIGURATOR_V1_VISION.md
+  - docs/frontend/MYCONFIGURATOR_COMPETITIVE_MATRIX.md
 ---
 
 # Platform Roadmap — Steelyes Configurator
@@ -79,6 +82,7 @@ Delivery: iframe embed + script loader + `postMessage` events.
 
 ## Phase B — Product polish
 
+- [x] Orientation hint wired in portrait phone (`ConfiguratorOrientationHint`)
 - [ ] Per-step validation (not only global `validateGateConfig`)
 - [ ] Disable step-rail jumps to unreachable future steps
 - [ ] Unified `ConfigurationSummary` everywhere (admin uses inline formatter)
@@ -87,8 +91,12 @@ Delivery: iframe embed + script loader + `postMessage` events.
 
 ## Phase C — Visual fidelity
 
+- [x] Geometry recipe layer (`packages/gate-engine/src/geometry/`) from gate-audits
+- [x] Victorian swing: 4 rails, tube-profile pickets, circle bands, spear row (2D)
+- [ ] Finials on arched path per picket
+- [ ] Mesh plan consumes geometry recipe (procedural tubes)
+- [ ] Gate-audit renderer passes: tracked_sliding, cantilever_sliding, single_swing
 - [ ] Enable 3D on desktop (`NEXT_PUBLIC_CONFIGURATOR_3D=true`)
-- [ ] Procedural mesh per gate type (use `docs/frontend/gate-audits/`)
 - [ ] Photo-in-environment overlay (v2)
 - [ ] AR / GLB export via `ar_model_key` (v2)
 

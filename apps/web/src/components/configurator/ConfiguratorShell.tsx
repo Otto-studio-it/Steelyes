@@ -2,19 +2,23 @@
 
 import { DraftingCompass, ShieldCheck } from 'lucide-react'
 
+import { ConfiguratorOrientationHint } from '@/components/configurator/ConfiguratorOrientationHint'
 import { ConfiguratorPreviewPanel } from '@/components/configurator/ConfiguratorPreviewPanel'
 import { ConfiguratorPriceBar } from '@/components/configurator/ConfiguratorPriceBar'
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
 import { ConfiguratorStepRail } from '@/components/configurator/ConfiguratorStepRail'
 import { DimensionsStep } from '@/components/configurator/steps/DimensionsStep'
+import { FencePanelsStep } from '@/components/configurator/steps/FencePanelsStep'
 import { GateSetupStep } from '@/components/configurator/steps/GateSetupStep'
 import { OptionsStep } from '@/components/configurator/steps/OptionsStep'
+import { PostsStep } from '@/components/configurator/steps/PostsStep'
 import { SummaryStep } from '@/components/configurator/steps/SummaryStep'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { CONFIGURATOR_STEPS } from '@/lib/configurator/constants'
 import {
   useConfiguratorConfig,
   useConfiguratorStep,
+  useConfiguratorStepValidationIssues,
   useConfiguratorStore,
   useConfiguratorValidationIssues,
 } from '@/store/configuratorStore'
@@ -30,8 +34,12 @@ function StepPanel() {
       return <GateSetupStep />
     case 'dimensions':
       return <DimensionsStep />
+    case 'posts':
+      return <PostsStep />
     case 'options':
       return <OptionsStep />
+    case 'fence':
+      return <FencePanelsStep />
     case 'summary':
       return <SummaryStep />
     default:
@@ -40,10 +48,12 @@ function StepPanel() {
 }
 
 function StepCard() {
-  const { stepIndex, isFirst, isLast } = useConfiguratorStep()
+  const { stepIndex, isFirst, isLast, step } = useConfiguratorStep()
   const nextStep = useConfiguratorStore((state) => state.nextStep)
   const prevStep = useConfiguratorStore((state) => state.prevStep)
-  const validationIssues = useConfiguratorValidationIssues()
+  const stepValidationIssues = useConfiguratorStepValidationIssues()
+  const summaryValidationIssues = useConfiguratorValidationIssues()
+  const validationIssues = step.id === 'summary' ? summaryValidationIssues : stepValidationIssues
   const blocked = validationIssues.length > 0
 
   return (
@@ -97,13 +107,13 @@ function StepCard() {
 function DesktopHero() {
   return (
     <div className="max-w-3xl">
-      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">Configurator · mobile first</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">Gate configurator</p>
       <h1 className="mt-2 text-balance font-heading text-[clamp(1.85rem,5vw,4.9rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-steel">
-        Configure your gate in clear steps.
+        Design your gate installation.
       </h1>
       <p className="mt-3 hidden max-w-2xl text-base leading-7 text-muted-deep sm:block lg:mt-5 lg:text-lg">
-        Preview, pricing, and summary stay connected as you move through the flow. The first release slice is
-        calibrated around double swing.
+        Configure mechanism, dimensions, mounting posts, and options with a live installation preview — similar
+        to professional gate design tools.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-2 rounded-full border border-primary/18 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
@@ -112,14 +122,14 @@ function DesktopHero() {
         </span>
         <span className="inline-flex items-center gap-2 rounded-full border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-steel">
           <DraftingCompass className="h-3.5 w-3.5" aria-hidden />
-          2D preview
+          Live installation preview
         </span>
       </div>
     </div>
   )
 }
 
-export function ConfiguratorShell() {
+export function ConfiguratorShell({ embed = false }: { embed?: boolean }) {
   const config = useConfiguratorConfig()
   const viewport = useConfiguratorViewport()
   const isDesktop = viewport.mode === 'desktop'
@@ -160,6 +170,11 @@ export function ConfiguratorShell() {
         </div>
 
         <section className={`mx-auto max-w-7xl px-4 py-4 ${safeAreaX}`} style={{ paddingBottom: MOBILE_PRICE_BAR_OFFSET }}>
+          {viewport.mode === 'portrait-phone' ? (
+            <div className="mb-4">
+              <ConfiguratorOrientationHint />
+            </div>
+          ) : null}
           <StepCard />
         </section>
 
@@ -172,10 +187,10 @@ export function ConfiguratorShell() {
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[440px] bg-[radial-gradient(circle_at_top_left,rgba(158,0,12,0.14),transparent_36%),radial-gradient(circle_at_top_right,rgba(121,89,22,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.72),rgba(245,243,240,0))]" />
 
-      <section className={`mx-auto max-w-7xl px-4 py-8 lg:px-8 lg:py-12 ${safeAreaX}`}>
-        <DesktopHero />
+      <section className={`mx-auto max-w-7xl px-4 py-8 lg:px-8 ${embed ? 'py-4 lg:py-6' : 'lg:py-12'} ${safeAreaX}`}>
+        {embed ? null : <DesktopHero />}
 
-        <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        <div className={`grid items-start gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] ${embed ? 'mt-4' : 'mt-10'}`}>
           <div className="sticky top-24 self-start">
             <ConfiguratorPreviewPanel config={config} pinned />
           </div>
