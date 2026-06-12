@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { formatConfigurationSummaryInline } from '@/lib/configurator/configuration-summary'
-import { buildQuoteSharePath } from '@/lib/configurator/share-token'
+import { buildQuoteSharePath, buildConfiguratorEditorPath } from '@/lib/configurator/share-token'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 import type { Database } from '@/types/database.types'
 import { deserializeGateConfig, type SerializedGateConfigV1 } from '@steelyes/gate-engine'
@@ -114,12 +114,20 @@ export default async function QuotesAdminPage() {
                       {formatDate(quote.created_at)}
                     </p>
                     {configuration?.share_token ? (
-                      <Link
-                        href={buildQuoteSharePath(configuration.share_token)}
-                        className="font-mono text-[10px] uppercase tracking-widest text-primary underline-offset-2 hover:underline"
-                      >
-                        Apri configurazione →
-                      </Link>
+                      <div className="flex flex-wrap gap-3">
+                        <Link
+                          href={buildQuoteSharePath(configuration.share_token)}
+                          className="font-mono text-[10px] uppercase tracking-widest text-primary underline-offset-2 hover:underline"
+                        >
+                          Vista cliente →
+                        </Link>
+                        <Link
+                          href={buildConfiguratorEditorPath(configuration.share_token)}
+                          className="font-mono text-[10px] uppercase tracking-widest text-steel underline-offset-2 hover:underline"
+                        >
+                          Apri nel configuratore →
+                        </Link>
+                      </div>
                     ) : null}
                   </div>
 

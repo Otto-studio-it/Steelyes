@@ -6,6 +6,8 @@ import { Resend } from 'resend'
 
 import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
+import { captureServerEvent } from '@/lib/analytics/posthog-server'
+import { verifyTurnstileToken } from '@/lib/security/turnstile'
 import { SITE_SURVEY_FIELD_LABEL, finishLabel, gateTypeLabel, siteSurveyLabel, styleLabel } from '@/lib/configurator/labels'
 import { buildQuotePdfPath, buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
 import { getServiceRoleClient } from '@/lib/supabase/server'
@@ -17,7 +19,8 @@ export type ContactFormState =
   | { status: 'error'; message: string }
 
 const WORKSHOP_EMAIL = 'steelyes755@gmail.com'
-const RESEND_FROM = 'Steelyes Configurator <onboarding@resend.dev>'
+const RESEND_FROM =
+  process.env.RESEND_FROM ?? 'Steelyes Configurator <onboarding@resend.dev>'
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/)
@@ -50,9 +53,15 @@ export async function submitContactForm(
   const postcode = (formData.get('postcode') as string | null)?.trim() ?? ''
   const message = (formData.get('message') as string | null)?.trim() ?? ''
   const shareToken = (formData.get('share_token') as string | null)?.trim() ?? ''
+  const turnstileToken = (formData.get('turnstile_token') as string | null)?.trim() ?? ''
 
   if (!name || !email || !message) {
     return { status: 'error', message: 'Name, email and project details are required.' }
+  }
+
+  const turnstileVerified = await verifyTurnstileToken(turnstileToken)
+  if (!turnstileVerified) {
+    return { status: 'error', message: 'Please complete the security check and try again.' }
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -117,7 +126,7 @@ export async function submitContactForm(
       postcode: postcode || '—',
       configuration_id: configurationId,
       status: 'new',
-      turnstile_verified: false,
+      turnstile_verified: turnstileVerified,
     })
 
     if (quoteError) {
@@ -199,6 +208,12 @@ export async function submitContactForm(
       console.error('Resend customer email threw:', err)
     }
   }
+
+  await captureServerEvent(email, 'contact form submitted', {
+    has_configuration: Boolean(configurationId),
+    share_token: shareToken || null,
+    turnstile_verified: turnstileVerified,
+  })
 
   return { status: 'success' }
 }

@@ -34,3 +34,21 @@ export function setOptionQuantity(config: GateConfig, key: GateOptionKey, quanti
     ),
   }
 }
+
+export function setOptionVariant(
+  config: GateConfig,
+  key: GateOptionKey,
+  variant: string | undefined,
+): GateConfig {
+  return {
+    ...config,
+    options: config.options.map((option) =>
+      option.key === key
+        ? {
+            ...option,
+            variant,
+          }
+        : option,
+    ),
+  }
+}

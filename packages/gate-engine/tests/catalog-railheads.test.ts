@@ -81,40 +81,34 @@ function withOptionVariant(
 }
 
 describe('railhead variant catalog', () => {
-  it('keeps the production catalog blocked with no entries', () => {
-    expect(isVariantCatalogBlocked()).toBe(true)
-    expect(DEFAULT_RAILHEAD_VARIANT_CATALOG.entries).toEqual([])
+  it('exposes a provisional schematic catalog until final prices are confirmed', () => {
+    expect(isVariantCatalogBlocked()).toBe(false)
+    expect(DEFAULT_RAILHEAD_VARIANT_CATALOG.status).toBe('provisional')
+    expect(DEFAULT_RAILHEAD_VARIANT_CATALOG.entries.length).toBeGreaterThan(0)
     expect(railheadCatalogSummary()).toMatchObject({
-      status: 'blocked_pending_client',
-      entryCount: 0,
+      status: 'provisional',
       owner: 'Marius',
     })
   })
 
-  it('rejects variant selection while the production catalog is blocked', () => {
+  it('lists compatible variants from the production provisional catalog', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+
+    expect(listRailheadVariantsForOption('top_railheads', config).length).toBeGreaterThan(0)
+    expect(listRailheadVariantsForOption('dog_bar_railheads', config).length).toBeGreaterThan(0)
+  })
+
+  it('rejects unknown variant slugs', () => {
     const config = withOptionVariant(
       createGateConfig(createGatePreset('double_swing')),
       'top_railheads',
       true,
       4,
-      'ball-finial',
+      'unknown-variant',
     )
 
     const issues = collectVariantCatalogIssues(config)
-    expect(issues.map((issue) => issue.code)).toContain('variant_catalog_blocked')
-
-    const validation = validateGateConfig(config)
-    expect(validation.ok).toBe(false)
-  })
-
-  it('lists compatible variants from an injectable fixture catalog', () => {
-    const config = createGateConfig(createGatePreset('double_swing'))
-
-    expect(listRailheadVariantsForOption('top_railheads', config, FIXTURE_RAILHEAD_CATALOG)).toHaveLength(1)
-    expect(listRailheadVariantsForOption('top_railheads', config, FIXTURE_RAILHEAD_CATALOG)[0]?.slug).toBe(
-      'ball-finial',
-    )
-    expect(listRailheadVariantsForOption('dog_bar_railheads', config, FIXTURE_RAILHEAD_CATALOG)).toHaveLength(1)
+    expect(issues.map((issue) => issue.code)).toContain('unknown_variant')
   })
 
   it('validates variant slug, option key, and style compatibility', () => {

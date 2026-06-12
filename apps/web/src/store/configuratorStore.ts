@@ -24,8 +24,9 @@ import {
   PRIMARY_GATE_TYPE,
   type ConfiguratorStepId,
 } from '@/lib/configurator/constants'
-import { setOptionQuantity, updateOption } from '@/lib/configurator/option-actions'
+import { setOptionQuantity, updateOption, setOptionVariant } from '@/lib/configurator/option-actions'
 import { validateConfiguratorStep, validateConfiguratorStepsBeforeIndex } from '@/lib/configurator/step-validation'
+import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 
 type ShareMeta = {
   shareToken: string
@@ -120,6 +121,7 @@ type ConfiguratorState = {
   togglePreviewExpanded: () => void
   toggleOption: (key: GateOptionKey, enabled: boolean) => void
   setOptionQty: (key: GateOptionKey, quantity: number) => void
+  setOptionVariant: (key: GateOptionKey, variant: string | undefined) => void
   ensureSavedConfiguration: () => Promise<{ shareToken: string; configurationId: string } | null>
 }
 
@@ -211,6 +213,12 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
     }
 
     set({ stepIndex: clamped })
+    if (clamped > current) {
+      captureConfiguratorEvent('configurator step completed', {
+        step_id: CONFIGURATOR_STEPS[current].id,
+        step_index: current,
+      })
+    }
   },
 
   goToStep: (stepId) => {
@@ -236,6 +244,11 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
   setOptionQty: (key, quantity) => {
     const config = setOptionQuantity(get().config, key, quantity)
+    get().setConfig(config)
+  },
+
+  setOptionVariant: (key, variant) => {
+    const config = setOptionVariant(get().config, key, variant)
     get().setConfig(config)
   },
 
@@ -276,6 +289,13 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
       saveError: null,
     })
     persistShareMeta(meta)
+
+    captureConfiguratorEvent('configuration saved', {
+      share_token: result.shareToken,
+      gate_type: config.gateType,
+      width_mm: config.widthMm,
+      height_mm: config.heightMm,
+    })
 
     return {
       shareToken: result.shareToken,

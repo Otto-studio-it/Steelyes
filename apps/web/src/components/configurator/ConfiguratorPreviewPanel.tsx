@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { CONFIGURATOR_3D_PREVIEW_ENABLED } from '@/lib/configurator/features'
 import type { GateConfig } from '@steelyes/gate-engine'
 
@@ -63,7 +64,10 @@ function PreviewModeTabs({
           <button
             key={option.id}
             type="button"
-            onClick={() => onSelect(option.id)}
+            onClick={() => {
+              onSelect(option.id)
+              captureConfiguratorEvent('preview mode changed', { mode: option.id })
+            }}
             className={`min-h-[40px] rounded-full px-4 font-mono text-[10px] uppercase tracking-[0.18em] transition ${
               mode === option.id
                 ? pinned

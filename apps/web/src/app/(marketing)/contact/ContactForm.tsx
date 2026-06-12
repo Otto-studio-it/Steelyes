@@ -1,19 +1,21 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom'
+import { useState } from 'react'
 import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
 
 import { submitContactForm, type ContactFormState } from '@/app/actions'
 import { ConfigurationReferenceBanner } from '@/components/configurator/ConfigurationReferenceBanner'
+import { TurnstileWidget } from '@/components/security/TurnstileWidget'
 
 const initialState: ContactFormState = { status: 'idle' }
 
-function SubmitButton() {
+function SubmitButton({ disabled = false }: { disabled?: boolean }) {
   const { pending } = useFormStatus()
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white disabled:opacity-60"
     >
       {pending ? (
@@ -39,6 +41,8 @@ type ContactFormProps = {
 
 export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog }: ContactFormProps) {
   const [state, action] = useFormState(submitContactForm, initialState)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   if (state.status === 'success') {
     return (
@@ -88,6 +92,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
       />
 
       {shareToken ? <input type="hidden" name="share_token" value={shareToken} /> : null}
+      {turnstileToken ? <input type="hidden" name="turnstile_token" value={turnstileToken} /> : null}
 
       {state.status === 'error' && (
         <p role="alert" className="border border-red-200 bg-red-50 px-4 py-3 font-mono text-xs text-red-700">
@@ -163,7 +168,9 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
         />
       </label>
 
-      <SubmitButton />
+      <TurnstileWidget onToken={setTurnstileToken} />
+
+      <SubmitButton disabled={turnstileRequired && !turnstileToken} />
     </form>
   )
 }

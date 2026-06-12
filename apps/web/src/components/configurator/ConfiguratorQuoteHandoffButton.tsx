@@ -5,6 +5,7 @@ import { ArrowRight, LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { buildContactHandoffPath } from '@/lib/configurator/share-token'
+import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
 type ConfiguratorQuoteHandoffButtonProps = {
@@ -24,6 +25,7 @@ export function ConfiguratorQuoteHandoffButton({
   async function handlePrepare() {
     const result = await ensureSavedConfiguration()
     if (result?.shareToken) {
+      captureConfiguratorEvent('quote handoff prepared', { share_token: result.shareToken })
       setPendingHref(buildContactHandoffPath(result.shareToken))
     }
   }

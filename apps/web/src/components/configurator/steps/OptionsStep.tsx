@@ -1,6 +1,8 @@
 'use client'
 
 import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
+import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
+import { isRailheadOptionKey } from '@steelyes/gate-engine'
 import { OPTION_META } from '@/lib/configurator/constants'
 import { SITE_SURVEY_FIELD_LABEL } from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
@@ -88,6 +90,7 @@ export function OptionsStep() {
                     }}
                   />
                 </label>
+                {isRailheadOptionKey(option.key) ? <RailheadVariantPicker optionKey={option.key} /> : null}
                 <VariantCatalogNotice optionKey={option.key} />
                 <p className="text-xs leading-5 text-muted-deep">
                   {provisionalRailhead ? 'Survey required until the railhead catalogue is confirmed.' : 'Included in the indicative summary.'}

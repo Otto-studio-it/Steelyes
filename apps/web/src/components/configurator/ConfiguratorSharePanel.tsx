@@ -4,6 +4,7 @@ import { Check, Copy, Link2, LoaderCircle } from 'lucide-react'
 import { useState } from 'react'
 
 import { buildQuoteSharePath } from '@/lib/configurator/share-token'
+import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
 export function ConfiguratorSharePanel() {
@@ -24,6 +25,7 @@ export function ConfiguratorSharePanel() {
     try {
       await navigator.clipboard.writeText(url)
       setCopied(true)
+      captureConfiguratorEvent('share link copied', { share_token: result.shareToken })
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
       // Clipboard may be unavailable on some mobile browsers.

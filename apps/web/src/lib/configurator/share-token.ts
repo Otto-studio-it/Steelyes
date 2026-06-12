@@ -21,3 +21,7 @@ export function buildContactHandoffPath(shareToken: string): string {
 export function buildQuotePdfPath(shareToken: string): string {
   return `/api/quote/${encodeURIComponent(shareToken)}/pdf`
 }
+
+export function buildConfiguratorEditorPath(shareToken: string): string {
+  return `/configurator?shareToken=${encodeURIComponent(shareToken)}`
+}
