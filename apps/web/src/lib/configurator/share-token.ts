@@ -22,6 +22,11 @@ export function buildQuotePdfPath(shareToken: string): string {
   return `/api/quote/${encodeURIComponent(shareToken)}/pdf`
 }
 
+export function buildCutListPath(shareToken: string, format?: 'pdf'): string {
+  const base = `/api/quote/${encodeURIComponent(shareToken)}/cut-list`
+  return format === 'pdf' ? `${base}?format=pdf` : base
+}
+
 export function buildConfiguratorEditorPath(shareToken: string): string {
   return `/configurator?shareToken=${encodeURIComponent(shareToken)}`
 }

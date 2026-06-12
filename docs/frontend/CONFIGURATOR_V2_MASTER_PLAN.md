@@ -1,7 +1,7 @@
 # Configurator V2 Master Plan
 
 **Date:** 2026-05-20  
-**Status:** In progress — sprint foundation landed  
+**Status:** Phases 1–5 implemented (2026-05-20)  
 **Owner:** Steelyes product + engineering
 
 ## North star

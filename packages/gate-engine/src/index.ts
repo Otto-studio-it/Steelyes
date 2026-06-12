@@ -98,6 +98,11 @@ export {
 } from './catalog/motors'
 export type { GateMotorDefinition, MotorMount } from './catalog/motors'
 export {
+  buildGateCutList,
+  serializeCutListCsv,
+} from './fabrication/cut-list'
+export type { CutListLine, GateCutList } from './fabrication/cut-list'
+export {
   STEELYES_TENANT_ID,
   createDefaultTenantFeatures,
 } from './platform/tenant-bundle'
