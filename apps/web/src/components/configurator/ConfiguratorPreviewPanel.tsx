@@ -42,6 +42,7 @@ type ConfiguratorPreviewPanelProps = {
   className?: string
   mode?: ConfiguratorPreviewMode
   allowModeSwitch?: boolean
+  tenant?: import('@steelyes/gate-engine').TenantBundle
 }
 
 const MODE_OPTIONS: { id: ConfiguratorPreviewMode; label: string }[] = [
@@ -108,13 +109,25 @@ export function ConfiguratorPreviewPanel({
   className = '',
   mode: controlledMode,
   allowModeSwitch = true,
+  tenant,
 }: ConfiguratorPreviewPanelProps) {
   const [internalMode, setInternalMode] = useState<ConfiguratorPreviewMode>('installation')
   const [load3dChunk, setLoad3dChunk] = useState(false)
   const [loadPhotoChunk, setLoadPhotoChunk] = useState(false)
   const mode = controlledMode ?? internalMode
   const previewCompact = pinned ? false : compact
-  const visibleModes = MODE_OPTIONS.filter((option) => option.id !== '3d' || CONFIGURATOR_3D_PREVIEW_ENABLED)
+  const visibleModes = MODE_OPTIONS.filter((option) => {
+    if (option.id === '3d' && (!CONFIGURATOR_3D_PREVIEW_ENABLED || tenant?.features.enable3d === false)) {
+      return false
+    }
+    if (option.id === 'plan' && tenant?.features.enablePlanView === false) {
+      return false
+    }
+    if (option.id === 'photo' && tenant?.features.enablePhotoOverlay === false) {
+      return false
+    }
+    return true
+  })
   const canSwitch = allowModeSwitch && !compact
 
   useEffect(() => {

@@ -7,6 +7,8 @@ import { Resend } from 'resend'
 import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { captureServerEvent } from '@/lib/analytics/posthog-server'
+import { dispatchTenantLeadWebhook } from '@/lib/platform/lead-webhook'
+import { loadTenantBundle } from '@/lib/platform/load-tenant'
 import { verifyTurnstileToken } from '@/lib/security/turnstile'
 import { SITE_SURVEY_FIELD_LABEL, finishLabel, gateTypeLabel, siteSurveyLabel, styleLabel } from '@/lib/configurator/labels'
 import { buildQuotePdfPath, buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
@@ -208,6 +210,14 @@ export async function submitContactForm(
       console.error('Resend customer email threw:', err)
     }
   }
+
+  await dispatchTenantLeadWebhook(loadTenantBundle('steelyes'), {
+    event: 'contact_form_submitted',
+    email,
+    name,
+    share_token: shareToken || null,
+    configuration_id: configurationId,
+  })
 
   await captureServerEvent(email, 'contact form submitted', {
     has_configuration: Boolean(configurationId),

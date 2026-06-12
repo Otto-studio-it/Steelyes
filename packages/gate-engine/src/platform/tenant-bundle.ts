@@ -39,7 +39,7 @@ export function createDefaultTenantFeatures(): TenantFeatureFlags {
   return {
     enable3d: true,
     enablePlanView: true,
-    enablePhotoOverlay: false,
+    enablePhotoOverlay: true,
     enableFencePanels: true,
     enableMotorCatalog: true,
   }

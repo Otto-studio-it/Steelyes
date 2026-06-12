@@ -3,9 +3,10 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-import type { PricingCatalog } from '@steelyes/gate-engine'
+import type { PricingCatalog, TenantBundle } from '@steelyes/gate-engine'
 
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
+import { TenantBrandingProvider } from '@/components/platform/TenantBrandingProvider'
 import { ConfiguratorShell } from '@/components/configurator/ConfiguratorShell'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { isValidShareToken } from '@/lib/configurator/share-token'
@@ -14,9 +15,10 @@ import { useConfiguratorStore } from '@/store/configuratorStore'
 type ConfiguratorClientProps = {
   pricingCatalog?: PricingCatalog
   embed?: boolean
+  tenant?: TenantBundle
 }
 
-export function ConfiguratorClient({ pricingCatalog, embed = false }: ConfiguratorClientProps) {
+export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: ConfiguratorClientProps) {
   const searchParams = useSearchParams()
   const hydrate = useConfiguratorStore((state) => state.hydrate)
   const hydrated = useConfiguratorStore((state) => state.hydrated)
@@ -24,11 +26,12 @@ export function ConfiguratorClient({ pricingCatalog, embed = false }: Configurat
   const setConfig = useConfiguratorStore((state) => state.setConfig)
 
   useEffect(() => {
-    if (pricingCatalog) {
-      setPricingCatalog(pricingCatalog)
+    const catalog = tenant?.catalog ?? pricingCatalog
+    if (catalog) {
+      setPricingCatalog(catalog)
     }
     hydrate()
-  }, [hydrate, pricingCatalog, setPricingCatalog])
+  }, [hydrate, pricingCatalog, setPricingCatalog, tenant?.catalog])
 
   useEffect(() => {
     if (!hydrated) {
@@ -59,5 +62,11 @@ export function ConfiguratorClient({ pricingCatalog, embed = false }: Configurat
     )
   }
 
-  return <ConfiguratorShell embed={embed} />
+  const shell = <ConfiguratorShell embed={embed} tenant={tenant} />
+
+  if (tenant) {
+    return <TenantBrandingProvider tenant={tenant}>{shell}</TenantBrandingProvider>
+  }
+
+  return shell
 }

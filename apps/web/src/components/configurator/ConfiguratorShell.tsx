@@ -15,6 +15,7 @@ import { PostsStep } from '@/components/configurator/steps/PostsStep'
 import { SummaryStep } from '@/components/configurator/steps/SummaryStep'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { CONFIGURATOR_STEPS } from '@/lib/configurator/constants'
+import type { TenantBundle } from '@steelyes/gate-engine'
 import {
   useConfiguratorConfig,
   useConfiguratorStep,
@@ -129,7 +130,7 @@ function DesktopHero() {
   )
 }
 
-export function ConfiguratorShell({ embed = false }: { embed?: boolean }) {
+export function ConfiguratorShell({ embed = false, tenant }: { embed?: boolean; tenant?: TenantBundle }) {
   const config = useConfiguratorConfig()
   const viewport = useConfiguratorViewport()
   const isDesktop = viewport.mode === 'desktop'
@@ -146,7 +147,7 @@ export function ConfiguratorShell({ embed = false }: { embed?: boolean }) {
         <section className={`mx-auto max-w-7xl px-4 py-4 ${safeAreaX}`} style={{ paddingBottom: MOBILE_PRICE_BAR_OFFSET }}>
           <div className="grid grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] items-start gap-4">
             <div className="sticky self-start" style={{ top: STICKY_PREVIEW_TOP }}>
-              <ConfiguratorPreviewPanel config={config} pinned />
+              <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
             </div>
             <StepCard />
           </div>
@@ -165,7 +166,7 @@ export function ConfiguratorShell({ embed = false }: { embed?: boolean }) {
           style={{ top: STICKY_PREVIEW_TOP }}
         >
           <div className="mx-auto max-w-7xl px-4 py-3">
-            <ConfiguratorPreviewPanel config={config} pinned />
+            <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
           </div>
         </div>
 
@@ -192,7 +193,7 @@ export function ConfiguratorShell({ embed = false }: { embed?: boolean }) {
 
         <div className={`grid items-start gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] ${embed ? 'mt-4' : 'mt-10'}`}>
           <div className="sticky top-24 self-start">
-            <ConfiguratorPreviewPanel config={config} pinned />
+            <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
           </div>
 
           <div className="space-y-6">
