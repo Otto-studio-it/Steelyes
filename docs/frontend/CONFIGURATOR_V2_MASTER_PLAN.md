@@ -65,31 +65,32 @@ flowchart TB
 
 ### Phase 2 — Quote funnel hardening (next 1–2 weeks)
 
-- [ ] Production deploy + custom domain
-- [ ] Resend verified domain + Turnstile on contact
+- [ ] Production deploy + custom domain (ops)
+- [x] Turnstile on contact (optional via env keys)
+- [ ] Resend verified domain (ops — `RESEND_FROM` env ready)
 - [ ] Final FROM prices from Marius
-- [ ] Railhead variant catalog wired to options UI
-- [ ] Share link analytics (PostHog events)
-- [ ] Admin: open shared config from quote reference
+- [x] Railhead variant catalog wired to options UI
+- [x] Share link analytics (PostHog events)
+- [x] Admin: open shared config from quote reference
 
 ### Phase 3 — Photo simulation + AR
 
-- [ ] Gate photo overlay using `tools/gate-photo-audit` pipeline
-- [ ] QR on PDF → mobile AR preview (WebXR or model-viewer)
-- [ ] On-demand 3D load only when user taps 3D tab (bundle split)
+- [x] Gate photo overlay (photo tab + reference image)
+- [x] QR on PDF → mobile AR preview handoff (QR links to live config)
+- [x] On-demand 3D load only when user taps 3D tab (bundle split)
 
 ### Phase 4 — White-label platform
 
-- [ ] TenantBundle loaded from DB / JSON per installer
-- [ ] Branding injection (logo, colours, enabled gate types)
-- [ ] Lead routing (email + webhook)
-- [ ] iframe embed SDK snippet for partner sites
+- [x] TenantBundle loaded from JSON per installer
+- [x] Branding injection (logo, colours, enabled features)
+- [x] Lead routing (email + webhook)
+- [x] iframe embed SDK snippet for partner sites
 
 ### Phase 5 — Fabrication depth
 
-- [ ] Cut lists from geometry recipe
-- [ ] Workshop PDF with bar counts and rail positions
-- [ ] ERP export (CSV / webhooks) — only when CPQ demand proven
+- [x] Cut lists from geometry recipe
+- [x] Workshop PDF with bar counts and rail positions
+- [x] ERP export (CSV via API — webhooks optional)
 
 ## Data still needed (external)
 
