@@ -34,6 +34,7 @@ Start here when resuming the project.
 | DB/RLS | [`db/DB_CLOSURE_PLAN.md`](./db/DB_CLOSURE_PLAN.md), [`db/STAGING_DB_BASELINE_2026-05-04.md`](./db/STAGING_DB_BASELINE_2026-05-04.md) |
 | Pricing semantics | [`db/PRICING_SEMANTICS.md`](./db/PRICING_SEMANTICS.md), [`db/RAILHEADS_TBD.md`](./db/RAILHEADS_TBD.md) |
 | UI/content | [`frontend/UI_CONTENT_PLAN.md`](./frontend/UI_CONTENT_PLAN.md), [`frontend/UI_UX_ROADMAP.md`](./frontend/UI_UX_ROADMAP.md), [`frontend/HOMEPAGE_IMAGE_SELECTION_2026-05-08.md`](./frontend/HOMEPAGE_IMAGE_SELECTION_2026-05-08.md), [`frontend/MARKETING_SITE_AUDIT_2026-05-06.md`](./frontend/MARKETING_SITE_AUDIT_2026-05-06.md), [`frontend/FRONTEND_PARALLEL_WORK_PLAN.md`](./frontend/FRONTEND_PARALLEL_WORK_PLAN.md), [`frontend/PAGE_INVENTORY.md`](./frontend/PAGE_INVENTORY.md), [`frontend/CONTENT_FALLBACKS.md`](./frontend/CONTENT_FALLBACKS.md) |
+| Gate catalog | [`frontend/gate-catalog/`](./frontend/gate-catalog/) | Technical sheet per gate type with confirmed and provisional data |
 | Phase gates | [`DEFINITION_OF_DONE.md`](./DEFINITION_OF_DONE.md), [`phases/README.md`](./phases/README.md) |
 
 ---

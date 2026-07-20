@@ -72,7 +72,7 @@ flowchart TB
     subgraph web [apps/web]
         CFG[GateConfig.finish]
         PICK[FinishPicker]
-        PREV[ConfiguratorPreviewPanel]
+        PREV[PreviewCanvas]
         SHELL[ConfiguratorShell layout modes]
     end
 
@@ -102,11 +102,11 @@ Rules:
 
 | Area | Current state | Target state |
 |---|---|---|
-| Finish UI | `<select>` in `GateSetupStep` | Swatch picker with labels |
+| Finish UI | `<select>` in `ChooseActPanel` | Swatch picker with labels |
 | 2D renderer | Hardcoded ink/grey constants in `rendering.ts` | Uses finish palette from engine |
 | Orientation UX | None | Soft dismissible hint in portrait phone |
 | Phone landscape | Same as portrait stack | Split preview + controls |
-| 3D readiness | No preview abstraction | `ConfiguratorPreviewPanel` contract |
+| 3D readiness | No preview abstraction | `PreviewCanvas` contract |
 
 ---
 
@@ -132,7 +132,7 @@ Rules:
 | File | Purpose |
 |---|---|
 | `apps/web/src/components/configurator/FinishPicker.tsx` | Touch-friendly swatch grid |
-| `apps/web/src/components/configurator/ConfiguratorPreviewPanel.tsx` | Preview host (`mode: '2d'`, future `'3d'`) |
+| `apps/web/src/components/configurator/PreviewCanvas.tsx` | Preview host (`mode: 'installation'`, future `'3d'`) |
 | `apps/web/src/components/configurator/ConfiguratorOrientationHint.tsx` | Dismissible rotate tip |
 | `apps/web/src/hooks/useConfiguratorViewport.ts` | `portrait-phone` / `landscape-phone` / `tablet` / `desktop` |
 
@@ -140,8 +140,8 @@ Rules:
 
 | File | Change |
 |---|---|
-| `apps/web/src/lib/configurator/constants.ts` | Remove duplicated finish labels if moved to engine re-export; keep UI-only copy |
-| `apps/web/src/components/configurator/steps/GateSetupStep.tsx` | Replace finish `<select>` with `FinishPicker` |
+| `apps/web/src/lib/configurator/presentation.ts` | Remove duplicated finish labels if moved to engine re-export; keep UI-only copy |
+| `apps/web/src/components/configurator/acts/ChooseActPanel.tsx` | Replace finish `<select>` with `FinishPicker` |
 | `apps/web/src/components/configurator/ConfiguratorPreview.tsx` | Consume preview panel wrapper or become thin 2D child |
 | `apps/web/src/components/configurator/ConfiguratorShell.tsx` | Layout modes + hint + landscape grid |
 | `apps/web/src/store/configuratorStore.ts` | Optional: `orientationHintDismissed` if not using standalone localStorage key |
@@ -220,7 +220,7 @@ Copy rule:
 
 ## Preview panel design (3D-safe)
 
-Introduce `ConfiguratorPreviewPanel` as the only preview entry point in the shell.
+Introduce `PreviewCanvas` as the only preview entry point in the shell.
 
 Responsibilities:
 
@@ -235,7 +235,7 @@ Responsibilities:
 Suggested API:
 
 ```tsx
-type ConfiguratorPreviewPanelProps = {
+type PreviewCanvasProps = {
   config: GateConfig
   compact?: boolean
   collapsible?: boolean
@@ -367,7 +367,7 @@ Goal: replace finish dropdown with palette.
 Deliverables:
 
 - `FinishPicker.tsx`
-- integrate in `GateSetupStep.tsx`
+- integrate in `ChooseActPanel.tsx`
 - schematic disclaimer near preview
 
 Acceptance:
@@ -427,7 +427,7 @@ Goal: prepare 3D without implementing it.
 
 Deliverables:
 
-- `ConfiguratorPreviewPanel.tsx`
+- `PreviewCanvas.tsx`
 - migrate shell to use panel wrapper
 - document future `mode` extension in this file’s comment block
 
@@ -519,7 +519,7 @@ Write-set rule:
 | Duplicated finish hex in UI and engine | UI imports catalog only; lint/review check |
 | Pearl white preview low contrast | darker `strokeMuted` token + test snapshot |
 | Landscape hint ships before layout | enforce execution order; gate hint on O2 completion |
-| 3D later rewrites preview shell | introduce `ConfiguratorPreviewPanel` in O3 first |
+| 3D later rewrites preview shell | introduce `PreviewCanvas` in O3 first |
 | Finish pricing expected by user | keep pricing unchanged; disclaimer unchanged |
 | Bundle bloat from Three.js | no dynamic import work in this wave |
 | iOS safe-area overlap | test with bottom price bar + WhatsApp toast |
@@ -579,7 +579,7 @@ Do not touch apps/web.
 ```text
 Read:
 - docs/frontend/CONFIGURATOR_FINISH_ORIENTATION_EXECUTION_PLAN_2026-05-20.md
-- apps/web/src/components/configurator/steps/GateSetupStep.tsx
+- apps/web/src/components/configurator/acts/ChooseActPanel.tsx
 
 Add FinishPicker using engine finish catalog only.
 Replace finish select. Ensure 44px touch targets and accessible selection.
@@ -595,7 +595,7 @@ Read:
 - apps/web/src/components/configurator/ConfiguratorShell.tsx
 
 Implement useConfiguratorViewport, ConfiguratorOrientationHint,
-ConfiguratorPreviewPanel, and landscape-phone layout.
+PreviewCanvas, and landscape-phone layout.
 
 No Three.js. Hint copy must not mention performance.
 Do not ship hint before landscape layout unless hint is feature-flagged off.
@@ -610,7 +610,7 @@ When 3D preview arrives (ADR 002 phase):
 | Piece | Action |
 |---|---|
 | `finishes.ts` | Use `material` tokens in `mesh/shared.ts` `applyFinish()` |
-| `ConfiguratorPreviewPanel` | Add `mode='3d'` and lazy Three.js child |
+| `PreviewCanvas` | Add `mode='3d'` and lazy Three.js child |
 | `GateConfig` | unchanged |
 | Bundle | dynamic import only on user action |
 | Pricing / save | unchanged |

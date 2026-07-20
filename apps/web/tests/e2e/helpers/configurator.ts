@@ -1,14 +1,13 @@
 import { expect, type Page } from '@playwright/test'
 
 export async function waitForConfiguratorReady(page: Page) {
-  // Pre-accept the cookie notice so its fixed banner never covers the mobile price bar.
   await page.addInitScript(() => {
     try {
       window.localStorage.setItem('sy_cookie_consent', 'accepted')
     } catch {}
   })
   await page.goto('/configurator')
-  await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
 }
 
 export async function getSwingFrameStroke(page: Page): Promise<string | null> {
@@ -19,19 +18,18 @@ export async function getSwingFrameStroke(page: Page): Promise<string | null> {
   return frame.getAttribute('stroke')
 }
 
-export async function goToConfiguratorStep(page: Page, stepLabel: string) {
-  await page.getByRole('button', { name: new RegExp(stepLabel, 'i') }).click()
-  await expect(page.getByRole('heading', { name: new RegExp(stepLabel, 'i') })).toBeVisible()
+export async function goToConfiguratorAct(page: Page, actLabel: string) {
+  await page.getByRole('tab', { name: new RegExp(actLabel, 'i') }).click()
+  await expect(page.getByRole('heading', { name: new RegExp(actLabel, 'i') })).toBeVisible()
 }
 
-export async function continueWizard(page: Page) {
-  const desktopContinue = page
-    .locator('.rounded-\\[24px\\]')
-    .getByRole('button', { name: /^Continue$/i })
-    .first()
+/** @deprecated Use goToConfiguratorAct */
+export const goToConfiguratorStep = goToConfiguratorAct
 
-  if (await desktopContinue.isVisible()) {
-    await desktopContinue.click()
+export async function continueWizard(page: Page) {
+  const continueButton = page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })
+  if (await continueButton.isVisible()) {
+    await continueButton.click()
     return
   }
 
@@ -41,24 +39,27 @@ export async function continueWizard(page: Page) {
 export async function walkToSummary(page: Page) {
   await waitForConfiguratorReady(page)
 
-  // gate → dimensions → posts → options → fence → summary
-  for (let index = 0; index < 5; index += 1) {
+  // choose → define → refine → summary
+  for (let index = 0; index < 3; index += 1) {
     await continueWizard(page)
   }
 
   await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
 }
 
-export async function walkToOptions(page: Page) {
+export async function walkToRefine(page: Page) {
   await waitForConfiguratorReady(page)
 
-  // gate → dimensions → posts → options
-  for (let index = 0; index < 3; index += 1) {
+  // choose → define → refine
+  for (let index = 0; index < 2; index += 1) {
     await continueWizard(page)
   }
 
-  await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Refine' })).toBeVisible()
 }
+
+/** @deprecated Use walkToRefine */
+export const walkToOptions = walkToRefine
 
 export const DEFAULT_SERIALIZED_OPTIONS = [
   { key: 'middle_bar', enabled: false, quantity: 0 },

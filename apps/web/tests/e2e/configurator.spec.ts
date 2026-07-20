@@ -3,15 +3,15 @@ import { expect, test } from '@playwright/test'
 import {
   continueWizard,
   getSwingFrameStroke,
-  goToConfiguratorStep,
+  goToConfiguratorAct,
   waitForConfiguratorReady,
-  walkToOptions,
+  walkToRefine,
   walkToSummary,
 } from './helpers/configurator'
 import { deleteSharedConfiguration, seedSharedConfiguration } from './helpers/supabase-config'
 
 test.describe('configurator release flow', () => {
-  test('loads the wizard on gate setup', async ({ page }) => {
+  test('loads the design studio on choose act', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
     await expect(page.getByRole('heading', { name: /Design your gate installation/i })).toBeVisible()
@@ -36,7 +36,7 @@ test.describe('configurator release flow', () => {
     expect(matteStroke).not.toBe(await getSwingFrameStroke(page))
   })
 
-  test('walks through all steps to summary', async ({ page }) => {
+  test('walks through all acts to summary', async ({ page }) => {
     await walkToSummary(page)
 
     await expect(page.getByText(/Share configuration/i)).toBeVisible()
@@ -45,28 +45,27 @@ test.describe('configurator release flow', () => {
   })
 
   test('shows survey-required pricing when top railheads are enabled', async ({ page }) => {
-    await walkToOptions(page)
+    await walkToRefine(page)
 
-    const railheadsCard = page.locator('div').filter({ hasText: /^Top railheads/i }).first()
-    await railheadsCard.getByRole('button', { name: /^Off$/i }).click()
-    await expect(railheadsCard.getByRole('button', { name: /^On$/i })).toBeVisible()
+    const railheadsSwitch = page.getByRole('switch', { name: /Top railheads/i })
+    await railheadsSwitch.click()
+    await expect(railheadsSwitch).toHaveAttribute('aria-checked', 'true')
 
     await expect(page.getByText(/Price on request|Survey required/i).first()).toBeVisible()
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {
-    await walkToOptions(page)
+    await walkToRefine(page)
 
     const siteSurveyCheckbox = page.getByRole('checkbox', { name: /site survey requested/i })
     await siteSurveyCheckbox.check()
     await expect(siteSurveyCheckbox).toBeChecked()
 
     await page.reload()
-    await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
-    await walkToOptions(page)
+    await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
+    await walkToRefine(page)
     await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeChecked()
 
-    await continueWizard(page)
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
     await expect(page.getByText(/Site survey requested/i).filter({ visible: true }).first()).toBeVisible()
@@ -78,49 +77,134 @@ test.describe('configurator release flow', () => {
     await page.getByRole('radio', { name: /Pearl white/i }).click()
 
     await page.reload()
-    await expect(page.getByRole('heading', { name: 'Gate setup' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
     await expect(page.getByRole('radio', { name: /Pearl white/i })).toHaveAttribute('aria-checked', 'true')
   })
 
-  test('step rail allows jumping back to earlier steps', async ({ page }) => {
+  test('act rail allows jumping back to earlier acts', async ({ page }) => {
     await walkToSummary(page)
-    await goToConfiguratorStep(page, 'Dimensions')
+    await goToConfiguratorAct(page, 'Define')
     await expect(page.getByRole('slider', { name: 'Width' })).toBeVisible()
   })
 })
 
-test.describe('configurator mobile portrait', () => {
+async function gotoQuickPath(page: import('@playwright/test').Page) {
+  await page.addInitScript(() => {
+    try {
+      window.localStorage.setItem('sy_cookie_consent', 'accepted')
+    } catch {}
+  })
+  await page.goto('/configurator')
+  // Phase 2: phones default to the Quick Path, not the Design Studio.
+  await expect(page.getByText(/Step 1 of 3/i)).toBeVisible()
+}
+
+test.describe('configurator mobile quick path', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 
-  test('shows mobile price bar on portrait', async ({ page }) => {
-    await waitForConfiguratorReady(page)
+  test('defaults phones to Quick Path screen 1 with compact chrome', async ({ page }) => {
+    await gotoQuickPath(page)
 
-    await expect(page.getByTestId('configurator-preview-pinned')).toBeVisible()
-    await expect(page.locator('.fixed').getByText(/Live estimate|Survey required|Price on request/i)).toBeVisible()
-    await expect(page.locator('.fixed').getByRole('button', { name: /^Continue$/i })).toBeVisible()
+    // No Design Studio header or act heading on the quick path.
+    await expect(page.getByText('Design studio')).toHaveCount(0)
+    await expect(page.getByRole('heading', { name: /Choose your gate/i })).toHaveCount(0)
+
+    // 96px chip + compact action bar with a live estimate and Continue.
+    await expect(page.getByRole('button', { name: /Open full gate preview/i })).toBeVisible()
+    await expect(page.getByTestId('configurator-preview-pinned')).toHaveCount(0)
+    await expect(page.getByTestId('configurator-action-bar').getByText(/Live estimate|Survey required|Price on request/i)).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toBeVisible()
   })
 
-  test('keeps the pinned gate preview visible while moving through steps', async ({ page }) => {
-    await waitForConfiguratorReady(page)
+  test('walks the three quick screens to the quote handoff', async ({ page }) => {
+    await gotoQuickPath(page)
 
-    const preview = page.locator('[data-testid="configurator-preview-pinned"] svg[aria-label*="preview" i]').first()
-    await expect(preview).toBeVisible()
+    // Screen 1 → 2: opening with curated width presets.
+    await continueWizard(page)
+    await expect(page.getByText(/Step 2 of 3/i)).toBeVisible()
+    await expect(page.getByRole('button', { name: /Standard drive/i })).toBeVisible()
+
+    // Screen 2 → 3: quote ready with site survey + quote CTA, no Continue.
+    await continueWizard(page)
+    await expect(page.getByText(/Step 3 of 3/i)).toBeVisible()
+    await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /Request quote/i })).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toHaveCount(0)
+  })
+
+  test('opens the full preview in a bottom sheet from the chip', async ({ page }) => {
+    await gotoQuickPath(page)
+
+    await page.getByRole('button', { name: /Open full gate preview/i }).click()
+
+    const sheet = page.getByRole('dialog')
+    await expect(sheet.getByText(/Gate preview/i)).toBeVisible()
+    await expect(sheet.getByTestId('configurator-preview-pinned')).toBeVisible()
+    await expect(sheet.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+
+    await sheet.getByRole('button', { name: /Close gate preview/i }).click()
+    await expect(page.getByRole('dialog')).toHaveCount(0)
+  })
+
+  test('Customise everything switches to the Design Studio and back', async ({ page }) => {
+    await gotoQuickPath(page)
+
+    await page.getByRole('button', { name: /Customise everything/i }).click()
+
+    // Design Studio is now active with its act heading + back-to-quick link.
+    await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
+    const backToQuick = page.getByRole('button', { name: /Quick path/i })
+    await expect(backToQuick).toBeVisible()
+
+    await backToQuick.click()
+    await expect(page.getByText(/Step 1 of 3/i)).toBeVisible()
+  })
+
+  test('browser back returns to the previous quick screen', async ({ page }) => {
+    await gotoQuickPath(page)
 
     await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Dimensions' })).toBeVisible()
-    await expect(preview).toBeVisible()
+    await expect(page.getByText(/Step 2 of 3/i)).toBeVisible()
+
+    // Phase 3: system / browser back steps down instead of leaving the page.
+    await page.goBack()
+    await expect(page.getByText(/Step 1 of 3/i)).toBeVisible()
+  })
+
+  test('in-app Back steps down the quick path', async ({ page }) => {
+    await gotoQuickPath(page)
 
     await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Mounting posts' })).toBeVisible()
-    await expect(preview).toBeVisible()
+    await expect(page.getByText(/Step 2 of 3/i)).toBeVisible()
 
-    await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Options' })).toBeVisible()
-    await expect(preview).toBeVisible()
+    await page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Back$/i }).click()
+    await expect(page.getByText(/Step 1 of 3/i)).toBeVisible()
+  })
+})
 
-    await continueWizard(page)
-    await expect(page.getByRole('heading', { name: 'Fence panels' })).toBeVisible()
-    await expect(preview).toBeVisible()
+test.describe('configurator quick path small phone (375px)', () => {
+  test.use({ viewport: { width: 375, height: 667 } })
+
+  test('renders without horizontal overflow', async ({ page }) => {
+    await gotoQuickPath(page)
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    )
+    expect(overflow).toBeLessThanOrEqual(1)
+
+    await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toBeVisible()
+  })
+})
+
+test.describe('configurator quick path landscape phone', () => {
+  test.use({ viewport: { width: 740, height: 360 } })
+
+  test('still defaults to the Quick Path in landscape', async ({ page }) => {
+    await gotoQuickPath(page)
+
+    await expect(page.getByRole('button', { name: /Open full gate preview/i })).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar')).toBeVisible()
   })
 })
 

@@ -64,7 +64,7 @@ What to change:
 - make the wording consistent across UI and backend-facing views
 
 Files to touch:
-- `apps/web/src/components/configurator/steps/OptionsStep.tsx`
+- `apps/web/src/components/configurator/OptionsAccordion.tsx`
 - `apps/web/src/components/configurator/ConfiguratorPriceSummary.tsx`
 - `apps/web/src/components/configurator/ConfigurationReferenceBanner.tsx`
 - `apps/web/src/components/configurator/QuoteShareView.tsx`
@@ -137,7 +137,7 @@ What to change:
 
 Files to touch:
 - `apps/web/src/lib/configurator/labels.ts`
-- `apps/web/src/components/configurator/steps/OptionsStep.tsx`
+- `apps/web/src/components/configurator/OptionsAccordion.tsx`
 - `apps/web/src/components/configurator/ConfiguratorPriceSummary.tsx`
 - `apps/web/src/components/configurator/ConfigurationReferenceBanner.tsx`
 - `apps/web/src/components/configurator/QuoteShareView.tsx`

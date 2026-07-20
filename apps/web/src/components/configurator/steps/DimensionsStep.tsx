@@ -1,13 +1,13 @@
 'use client'
 
 import {
-  HEIGHT_PRESETS_MM,
+  HEIGHT_DIMENSION_PRESETS,
   MAX_HEIGHT_MM,
   MAX_WIDTH_MM,
   MIN_HEIGHT_MM,
   MIN_WIDTH_MM,
-  WIDTH_PRESETS_MM,
-} from '@/lib/configurator/constants'
+  WIDTH_DIMENSION_PRESETS,
+} from '@/lib/configurator/presentation'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -16,17 +16,13 @@ export function DimensionsStep() {
   const patchConfig = useConfiguratorStore((state) => state.patchConfig)
 
   return (
-    <div className="space-y-5">
-      <p className="text-sm leading-6 text-muted-deep">
-        Use the sliders or quick presets to set width and height. The preview and indicative price update immediately.
-      </p>
-
+    <div className="space-y-4">
       <DimensionControl
         label="Width"
         value={config.widthMm}
         min={MIN_WIDTH_MM}
         max={MAX_WIDTH_MM}
-        presets={WIDTH_PRESETS_MM}
+        presets={WIDTH_DIMENSION_PRESETS}
         onChange={(widthMm) => patchConfig({ widthMm })}
       />
 
@@ -35,7 +31,7 @@ export function DimensionsStep() {
         value={config.heightMm}
         min={MIN_HEIGHT_MM}
         max={MAX_HEIGHT_MM}
-        presets={HEIGHT_PRESETS_MM}
+        presets={HEIGHT_DIMENSION_PRESETS}
         onChange={(heightMm) => patchConfig({ heightMm })}
       />
     </div>

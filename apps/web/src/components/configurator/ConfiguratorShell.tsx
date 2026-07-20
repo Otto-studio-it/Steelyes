@@ -1,46 +1,48 @@
 'use client'
 
-import { DraftingCompass, ShieldCheck } from 'lucide-react'
+import { ChevronLeft, DraftingCompass, ShieldCheck } from 'lucide-react'
 
-import { ConfiguratorOrientationHint } from '@/components/configurator/ConfiguratorOrientationHint'
-import { ConfiguratorPreviewPanel } from '@/components/configurator/ConfiguratorPreviewPanel'
-import { ConfiguratorPriceBar } from '@/components/configurator/ConfiguratorPriceBar'
-import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
-import { ConfiguratorStepRail } from '@/components/configurator/ConfiguratorStepRail'
-import { DimensionsStep } from '@/components/configurator/steps/DimensionsStep'
-import { FencePanelsStep } from '@/components/configurator/steps/FencePanelsStep'
-import { GateSetupStep } from '@/components/configurator/steps/GateSetupStep'
-import { OptionsStep } from '@/components/configurator/steps/OptionsStep'
-import { PostsStep } from '@/components/configurator/steps/PostsStep'
+import { ActProgressRail } from '@/components/configurator/ActProgressRail'
+import { ChooseActPanel } from '@/components/configurator/acts/ChooseActPanel'
+import { DefineActPanel } from '@/components/configurator/acts/DefineActPanel'
+import { RefineActPanel } from '@/components/configurator/acts/RefineActPanel'
+import { ConfiguratorActionBar } from '@/components/configurator/ConfiguratorActionBar'
+import { ConfiguratorStudioHeader } from '@/components/configurator/ConfiguratorStudioHeader'
+import { ConfiguratorMobileShell } from '@/components/configurator/mobile/ConfiguratorMobileShell'
+import { MobilePreviewChip } from '@/components/configurator/mobile/MobilePreviewChip'
+import { PreviewCanvas } from '@/components/configurator/PreviewCanvas'
 import { SummaryStep } from '@/components/configurator/steps/SummaryStep'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
-import { CONFIGURATOR_STEPS } from '@/lib/configurator/constants'
+import { CONFIGURATOR_ACTS } from '@/lib/configurator/navigation'
 import type { TenantBundle } from '@steelyes/gate-engine'
 import {
+  isPrimarySlice,
+  useConfiguratorAct,
+  useConfiguratorActValidationIssues,
   useConfiguratorConfig,
-  useConfiguratorStep,
-  useConfiguratorStepValidationIssues,
+  useConfiguratorFlowMode,
   useConfiguratorStore,
   useConfiguratorValidationIssues,
 } from '@/store/configuratorStore'
 
-const MOBILE_PRICE_BAR_OFFSET = 'calc(9rem + env(safe-area-inset-bottom))'
+// Reserve exactly the measured compact action-bar height (published as
+// --cfg-actionbar-h by ConfiguratorActionBar) plus an 8pt breathing gap.
+// Fallback covers the first paint before the ResizeObserver runs.
+const MOBILE_CONTENT_BOTTOM_INSET = 'calc(var(--cfg-actionbar-h, 5.5rem) + 1rem)'
 const STICKY_PREVIEW_TOP = 'calc(3.5rem + env(safe-area-inset-top, 0px))'
+const SAFE_AREA_X =
+  'supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))]'
 
-function StepPanel() {
-  const { step } = useConfiguratorStep()
+function ActPanel() {
+  const { act } = useConfiguratorAct()
 
-  switch (step.id) {
-    case 'gate':
-      return <GateSetupStep />
-    case 'dimensions':
-      return <DimensionsStep />
-    case 'posts':
-      return <PostsStep />
-    case 'options':
-      return <OptionsStep />
-    case 'fence':
-      return <FencePanelsStep />
+  switch (act.id) {
+    case 'choose':
+      return <ChooseActPanel />
+    case 'define':
+      return <DefineActPanel />
+    case 'refine':
+      return <RefineActPanel />
     case 'summary':
       return <SummaryStep />
     default:
@@ -48,80 +50,61 @@ function StepPanel() {
   }
 }
 
-function StepCard() {
-  const { stepIndex, isFirst, isLast, step } = useConfiguratorStep()
-  const nextStep = useConfiguratorStore((state) => state.nextStep)
-  const prevStep = useConfiguratorStore((state) => state.prevStep)
-  const stepValidationIssues = useConfiguratorStepValidationIssues()
+function SpecPanel() {
+  const { actIndex, act } = useConfiguratorAct()
+  const actValidationIssues = useConfiguratorActValidationIssues()
   const summaryValidationIssues = useConfiguratorValidationIssues()
-  const validationIssues = step.id === 'summary' ? summaryValidationIssues : stepValidationIssues
-  const blocked = validationIssues.length > 0
+  const validationIssues = act.id === 'summary' ? summaryValidationIssues : actValidationIssues
+  const blocked = validationIssues.length > 0 && act.id !== 'summary'
 
   return (
-    <div className="rounded-[24px] border border-steel/10 bg-white/90 p-4 shadow-[0_14px_40px_rgba(25,20,18,0.06)] sm:p-5">
-      <ConfiguratorStepRail />
-      <div key={CONFIGURATOR_STEPS[stepIndex].id} className="mt-5">
-        <StepPanel />
-      </div>
-
-      {blocked && !isLast ? (
-        <div
-          role="alert"
-          className="mt-5 rounded-xl border border-primary/25 bg-primary/5 px-4 py-3"
-        >
-          <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-            Resolve before continuing
-          </p>
-          <ul className="mt-2 space-y-1 text-sm leading-6 text-muted-deep">
-            {validationIssues.slice(0, 3).map((issue) => (
-              <li key={`${issue.field}:${issue.code}`}>{issue.message}</li>
-            ))}
-          </ul>
+    <div className="border border-steel/10 bg-white">
+      <div className="border-l-4 border-primary p-4 sm:p-5">
+        <ActProgressRail />
+        <div key={CONFIGURATOR_ACTS[actIndex].id} className="mt-5">
+          <ActPanel />
         </div>
-      ) : null}
 
-      <div className="mt-6 hidden items-center justify-end gap-3 lg:flex">
-        {!isFirst ? (
-          <button
-            type="button"
-            onClick={prevStep}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-steel/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-steel transition hover:border-primary/30 hover:text-primary"
+        {blocked ? (
+          <div
+            role="alert"
+            className="mt-5 border border-primary/25 bg-primary/5 px-4 py-3"
           >
-            Back
-          </button>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">
+              Resolve before continuing
+            </p>
+            <ul className="mt-2 space-y-1 text-sm leading-6 text-muted-deep">
+              {validationIssues.slice(0, 3).map((issue) => (
+                <li key={`${issue.field}:${issue.code}`}>{issue.message}</li>
+              ))}
+            </ul>
+          </div>
         ) : null}
-        {!isLast ? (
-          <button
-            type="button"
-            onClick={nextStep}
-            disabled={blocked}
-            className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-steel px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Continue
-          </button>
-        ) : null}
+
+        <div className="mt-6 hidden lg:block">
+          <ConfiguratorActionBar variant="inline" />
+        </div>
       </div>
     </div>
   )
 }
 
-function DesktopHero() {
+function DesktopIntro() {
   return (
     <div className="max-w-3xl">
-      <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">Gate configurator</p>
-      <h1 className="mt-2 text-balance font-heading text-[clamp(1.85rem,5vw,4.9rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-steel">
+      <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
+      <h1 className="mt-2 text-balance font-heading text-[clamp(1.85rem,5vw,3.5rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-steel">
         Design your gate installation.
       </h1>
-      <p className="mt-3 hidden max-w-2xl text-base leading-7 text-muted-deep sm:block lg:mt-5 lg:text-lg">
-        Configure mechanism, dimensions, mounting posts, and options with a live installation preview — similar
-        to professional gate design tools.
+      <p className="mt-3 max-w-2xl text-base leading-7 text-muted-deep lg:text-lg">
+        Configure mechanism, dimensions, mounting posts, and options with a live installation preview.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <span className="inline-flex items-center gap-2 rounded-full border border-primary/18 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+        <span className="inline-flex items-center gap-2 border border-primary/18 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-primary">
           <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
           Indicative pricing
         </span>
-        <span className="inline-flex items-center gap-2 rounded-full border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-steel">
+        <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">
           <DraftingCompass className="h-3.5 w-3.5" aria-hidden />
           Live installation preview
         </span>
@@ -130,78 +113,135 @@ function DesktopHero() {
   )
 }
 
-export function ConfiguratorShell({ embed = false, tenant }: { embed?: boolean; tenant?: TenantBundle }) {
-  const config = useConfiguratorConfig()
-  const viewport = useConfiguratorViewport()
-  const isDesktop = viewport.mode === 'desktop'
-  const isLandscapePhone = viewport.isLandscapePhone
-
-  const safeAreaX =
-    'supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))]'
-
-  if (isLandscapePhone) {
-    return (
-      <div className="relative overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[320px] bg-[radial-gradient(circle_at_top_left,rgba(158,0,12,0.14),transparent_36%),radial-gradient(circle_at_top_right,rgba(121,89,22,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.72),rgba(245,243,240,0))]" />
-
-        <section className={`mx-auto max-w-7xl px-4 py-4 ${safeAreaX}`} style={{ paddingBottom: MOBILE_PRICE_BAR_OFFSET }}>
-          <div className="grid grid-cols-[minmax(0,0.52fr)_minmax(0,0.48fr)] items-start gap-4">
-            <div className="sticky self-start" style={{ top: STICKY_PREVIEW_TOP }}>
-              <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
-            </div>
-            <StepCard />
-          </div>
-        </section>
-
-        <ConfiguratorPriceBar />
-      </div>
-    )
-  }
-
-  if (!isDesktop) {
-    return (
-      <div className="relative">
-        <div
-          className={`sticky z-30 border-b border-steel/10 bg-canvas/98 backdrop-blur-md ${safeAreaX}`}
-          style={{ top: STICKY_PREVIEW_TOP }}
-        >
-          <div className="mx-auto max-w-7xl px-4 py-3">
-            <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
-          </div>
-        </div>
-
-        <section className={`mx-auto max-w-7xl px-4 py-4 ${safeAreaX}`} style={{ paddingBottom: MOBILE_PRICE_BAR_OFFSET }}>
-          {viewport.mode === 'portrait-phone' ? (
-            <div className="mb-4">
-              <ConfiguratorOrientationHint />
-            </div>
-          ) : null}
-          <StepCard />
-        </section>
-
-        <ConfiguratorPriceBar />
-      </div>
-    )
-  }
-
+function MobileShell({
+  config,
+  tenant,
+  showDimensionOverlay,
+  onDimensionOverlayClick,
+  onBackToQuick,
+}: {
+  config: ReturnType<typeof useConfiguratorConfig>
+  tenant?: TenantBundle
+  showDimensionOverlay: boolean
+  onDimensionOverlayClick: () => void
+  onBackToQuick?: () => void
+}) {
   return (
-    <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[440px] bg-[radial-gradient(circle_at_top_left,rgba(158,0,12,0.14),transparent_36%),radial-gradient(circle_at_top_right,rgba(121,89,22,0.16),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.72),rgba(245,243,240,0))]" />
+    <div className="relative bg-canvas">
+      <div
+        className={`sticky z-30 border-b border-steel/10 bg-steel px-4 py-2 ${SAFE_AREA_X}`}
+        style={{ top: STICKY_PREVIEW_TOP }}
+      >
+        <MobilePreviewChip
+          config={config}
+          tenant={tenant}
+          showDimensionOverlay={showDimensionOverlay}
+          onDimensionOverlayClick={onDimensionOverlayClick}
+        />
+      </div>
 
-      <section className={`mx-auto max-w-7xl px-4 py-8 lg:px-8 ${embed ? 'py-4 lg:py-6' : 'lg:py-12'} ${safeAreaX}`}>
-        {embed ? null : <DesktopHero />}
+      <section
+        className={`mx-auto max-w-7xl px-4 py-4 ${SAFE_AREA_X}`}
+        style={{ paddingBottom: MOBILE_CONTENT_BOTTOM_INSET }}
+      >
+        {onBackToQuick ? (
+          <button
+            type="button"
+            onClick={onBackToQuick}
+            className="mb-3 inline-flex min-h-[44px] items-center gap-1 font-mono text-xs uppercase tracking-widest text-muted transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" aria-hidden />
+            Quick path
+          </button>
+        ) : null}
 
-        <div className={`grid items-start gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] ${embed ? 'mt-4' : 'mt-10'}`}>
-          <div className="sticky top-24 self-start">
-            <ConfiguratorPreviewPanel config={config} pinned tenant={tenant} />
+        <SpecPanel />
+      </section>
+
+      <ConfiguratorActionBar variant="compact" className="lg:hidden" />
+    </div>
+  )
+}
+
+function DesktopShell({
+  config,
+  tenant,
+  embed,
+  showDimensionOverlay,
+  onDimensionOverlayClick,
+}: {
+  config: ReturnType<typeof useConfiguratorConfig>
+  tenant?: TenantBundle
+  embed: boolean
+  showDimensionOverlay: boolean
+  onDimensionOverlayClick: () => void
+  }) {
+  return (
+    <div className="relative min-h-screen bg-canvas">
+      <ConfiguratorStudioHeader embed={embed} />
+
+      <section className={`mx-auto max-w-7xl px-4 py-6 lg:px-8 ${embed ? 'py-4' : 'lg:py-8'} ${SAFE_AREA_X}`}>
+        {embed ? null : <DesktopIntro />}
+
+        <div className={`grid items-start gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] ${embed ? 'mt-4' : 'mt-8'}`}>
+          <div className="sticky top-[7.5rem] self-start">
+            <PreviewCanvas
+              config={config}
+              tenant={tenant}
+              showDimensionOverlay={showDimensionOverlay}
+              onDimensionOverlayClick={onDimensionOverlayClick}
+            />
           </div>
 
-          <div className="space-y-6">
-            <StepCard />
-            <ConfiguratorPriceSummary />
-          </div>
+          <SpecPanel />
         </div>
       </section>
     </div>
   )
 }
+
+export function ConfiguratorShell({ embed = false, tenant }: { embed?: boolean; tenant?: TenantBundle }) {
+  const config = useConfiguratorConfig()
+  const viewport = useConfiguratorViewport()
+  const isDesktop = viewport.mode === 'desktop'
+  const flowMode = useConfiguratorFlowMode()
+  const goToAct = useConfiguratorStore((state) => state.goToAct)
+  const setQuickStepIndex = useConfiguratorStore((state) => state.setQuickStepIndex)
+  const setFlowMode = useConfiguratorStore((state) => state.setFlowMode)
+  const { act } = useConfiguratorAct()
+
+  const showDimensionOverlay = act.id === 'define' || act.id === 'choose'
+
+  // Phones default to the Quick Path; desktop and tablet keep the Design Studio.
+  if (viewport.isMobileQuickEligible && flowMode === 'quick') {
+    return <ConfiguratorMobileShell tenant={tenant} />
+  }
+
+  return isDesktop ? (
+    <DesktopShell
+      config={config}
+      tenant={tenant}
+      embed={embed}
+      showDimensionOverlay={showDimensionOverlay}
+      onDimensionOverlayClick={() => goToAct('define')}
+    />
+  ) : (
+    <MobileShell
+      config={config}
+      tenant={tenant}
+      showDimensionOverlay={showDimensionOverlay}
+      onDimensionOverlayClick={() => goToAct('define')}
+      onBackToQuick={
+        viewport.isMobileQuickEligible && isPrimarySlice(config)
+          ? () => {
+              setQuickStepIndex(0)
+              setFlowMode('quick')
+            }
+          : undefined
+      }
+    />
+  )
+}
+
+/** Design Studio shell — alias for embed compatibility */
+export const ConfiguratorStudioShell = ConfiguratorShell

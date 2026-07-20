@@ -49,7 +49,7 @@ export function ConfiguratorPriceSummary({
   const isMobileCopy = pricingCopyVariant === 'mobile'
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-steel/10 bg-white/92 shadow-[0_18px_50px_rgba(25,20,18,0.1)] backdrop-blur-sm lg:rounded-[28px]">
+    <div className="overflow-hidden border border-steel/10 bg-white">
       <div className="border-b border-steel/8 px-4 py-4 lg:px-5">
         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">Price summary</p>
         <h2 className="mt-1 font-heading text-xl font-black uppercase tracking-tight text-steel">
@@ -58,7 +58,7 @@ export function ConfiguratorPriceSummary({
       </div>
 
       <div className="px-4 py-4 lg:px-5 lg:py-5">
-        <div className="rounded-[22px] border border-steel/10 bg-steel px-4 py-4 text-white lg:px-5 lg:py-5">
+        <div className="border border-steel/10 bg-steel px-4 py-4 text-white lg:px-5 lg:py-5">
           {!isMobileCopy ? (
             <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">Live estimate</p>
           ) : null}

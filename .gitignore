@@ -30,6 +30,9 @@ coverage/
 npm-debug.log*
 pnpm-debug.log*
 
+# Python bytecode caches
+**/__pycache__/
+
 # Raw/unprocessed assets (commit processed assets only)
 assets-raw/**
 !assets-raw/.gitkeep

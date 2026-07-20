@@ -63,7 +63,7 @@ Delivery: iframe embed + script loader + `postMessage` events.
 |---|---|
 | Option pricing from Supabase `gate_options` | `pricing-catalog.ts`, `pricing-catalog-server.ts` |
 | Shared configuration summary helpers | `configuration-summary.ts`, `ConfigurationSummary.tsx` |
-| Wizard step gating (validation blocks forward navigation) | `configuratorStore.ts`, `ConfiguratorShell.tsx`, `ConfiguratorPriceBar.tsx` |
+| Wizard step gating (validation blocks forward navigation) | `configuratorStore.ts`, `ConfiguratorShell.tsx`, `ConfiguratorActionBar.tsx` |
 | Theming token cleanup (configurator UI) | configurator components → Tailwind semantic tokens |
 | Admin quote pipeline with status updates | `admin/quotes/` |
 | Customer confirmation email on quote submit | `app/actions.ts` |

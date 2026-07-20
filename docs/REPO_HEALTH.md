@@ -26,7 +26,7 @@ Baseline audit for senior handoff. Re-run checks after major merges.
 
 **Fixes applied this audit**
 
-- Removed unused `PricingCopyVariant` import in `ConfiguratorPriceBar.tsx`.
+- Removed unused `PricingCopyVariant` import in `ConfiguratorActionBar.tsx`.
 - Removed unused `SocialLinks` import in `SiteFooter.tsx` (partial WIP).
 
 ---
@@ -39,7 +39,7 @@ Baseline audit for senior handoff. Re-run checks after major merges.
 |---|---|
 | `ConfiguratorShell.tsx` | Mobile layout / step flow |
 | `ConfiguratorPreview*.tsx` | Preview panel behaviour |
-| `ConfiguratorPriceBar.tsx` | Mobile pricing bar copy |
+| `ConfiguratorActionBar.tsx` | Mobile pricing bar copy |
 | `ConfiguratorPriceSummary.tsx` | Desktop/mobile pricing display |
 | `labels.ts` | Shared pricing copy helpers (`formatPricingDisplay*`) |
 | `configurator.spec.ts` | E2E selectors aligned |
@@ -86,7 +86,6 @@ Baseline audit for senior handoff. Re-run checks after major merges.
 | Item | Size | Risk | Recommendation |
 |---|---|---|---|
 | `.agents/skills/` (~230 tracked files) | Large | Low functional risk | Evaluate: keep for team tooling OR move to external skill pack and `git rm --cached` |
-| `seo /Screenshot*.png` (2 files) | Small | Noise | Move to `assets-raw/` or delete; untrack |
 | `turbo.json` test outputs | Config | CI cache warnings | Add `dist/**` output for `gate-engine#build` |
 | `.claude/worktrees/frosty-swartz` | Submodule? | Git noise | `git submodule deinit` or remove worktree |
 
@@ -134,3 +133,25 @@ git status --short
 ```
 
 Update this file when checks or deploy status change.
+
+### Graphify output
+
+`graphify-out/` is generated, not source-controlled.
+
+Use these commands to rebuild it from the repo root:
+
+```bash
+graphify update /Volumes/SSDRubb/Steelyes
+```
+
+If files were deleted or renamed and you want the graph refreshed even with a smaller node count:
+
+```bash
+graphify update /Volumes/SSDRubb/Steelyes --force
+```
+
+If you only want to regenerate clustering and HTML from an existing `graphify-out/graph.json`:
+
+```bash
+graphify cluster-only /Volumes/SSDRubb/Steelyes
+```

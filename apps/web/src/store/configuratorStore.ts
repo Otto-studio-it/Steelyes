@@ -18,14 +18,16 @@ import { create } from 'zustand'
 
 import { saveGateConfiguration } from '@/app/(marketing)/configurator/actions'
 import {
+  CONFIGURATOR_ACTS,
   CONFIGURATOR_SHARE_META_KEY,
-  CONFIGURATOR_STEPS,
   CONFIGURATOR_STORAGE_KEY,
   PRIMARY_GATE_TYPE,
-  type ConfiguratorStepId,
-} from '@/lib/configurator/constants'
+  QUICK_PATH_STEP_COUNT,
+  type ConfiguratorActId,
+  type ConfiguratorFlowMode,
+} from '@/lib/configurator/navigation'
 import { setOptionQuantity, updateOption, setOptionVariant } from '@/lib/configurator/option-actions'
-import { validateConfiguratorStep, validateConfiguratorStepsBeforeIndex } from '@/lib/configurator/step-validation'
+import { validateConfiguratorAct, validateConfiguratorActsBeforeIndex } from '@/lib/configurator/step-validation'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 
 type ShareMeta = {
@@ -94,13 +96,15 @@ function persistShareMeta(meta: ShareMeta | null) {
   }
 }
 
-function stepIndexForId(stepId: ConfiguratorStepId): number {
-  return CONFIGURATOR_STEPS.findIndex((step) => step.id === stepId)
+function actIndexForId(actId: ConfiguratorActId): number {
+  return CONFIGURATOR_ACTS.findIndex((act) => act.id === actId)
 }
 
 type ConfiguratorState = {
   config: GateConfig
-  stepIndex: number
+  actIndex: number
+  flowMode: ConfiguratorFlowMode
+  quickStepIndex: number
   hydrated: boolean
   previewExpanded: boolean
   pricingCatalog: PricingCatalog
@@ -114,10 +118,14 @@ type ConfiguratorState = {
   setConfig: (config: GateConfig) => void
   patchConfig: (patch: Partial<GateConfig>) => void
   resetToPrimarySlice: () => void
-  setStepIndex: (index: number) => void
-  goToStep: (stepId: ConfiguratorStepId) => void
-  nextStep: () => void
-  prevStep: () => void
+  setActIndex: (index: number) => void
+  goToAct: (actId: ConfiguratorActId) => void
+  nextAct: () => void
+  prevAct: () => void
+  setFlowMode: (mode: ConfiguratorFlowMode) => void
+  setQuickStepIndex: (index: number) => void
+  nextQuickStep: () => void
+  prevQuickStep: () => void
   togglePreviewExpanded: () => void
   toggleOption: (key: GateOptionKey, enabled: boolean) => void
   setOptionQty: (key: GateOptionKey, quantity: number) => void
@@ -141,7 +149,9 @@ function invalidateShareIfConfigChanged(config: GateConfig, get: () => Configura
 
 export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
   config: createGateConfig(createGatePreset(PRIMARY_GATE_TYPE)),
-  stepIndex: 0,
+  actIndex: 0,
+  flowMode: 'quick',
+  quickStepIndex: 0,
   hydrated: false,
   previewExpanded: true,
   pricingCatalog: DEFAULT_PRICING_CATALOG,
@@ -188,7 +198,9 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
     const config = createGateConfig(createGatePreset(PRIMARY_GATE_TYPE))
     set({
       config,
-      stepIndex: 0,
+      actIndex: 0,
+      flowMode: 'quick',
+      quickStepIndex: 0,
       shareToken: null,
       configurationId: null,
       savedConfigHash: null,
@@ -201,36 +213,62 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
     }
   },
 
-  setStepIndex: (stepIndex) => {
-    const clamped = Math.max(0, Math.min(stepIndex, CONFIGURATOR_STEPS.length - 1))
-    const current = get().stepIndex
+  setActIndex: (actIndex) => {
+    const clamped = Math.max(0, Math.min(actIndex, CONFIGURATOR_ACTS.length - 1))
+    const current = get().actIndex
 
     if (clamped > current) {
-      const blockingIssues = validateConfiguratorStepsBeforeIndex(get().config, clamped, CONFIGURATOR_STEPS)
+      const blockingIssues = validateConfiguratorActsBeforeIndex(get().config, clamped, CONFIGURATOR_ACTS)
       if (blockingIssues.length > 0) {
         return
       }
     }
 
-    set({ stepIndex: clamped })
+    set({ actIndex: clamped })
     if (clamped > current) {
-      captureConfiguratorEvent('configurator step completed', {
-        step_id: CONFIGURATOR_STEPS[current].id,
-        step_index: current,
+      captureConfiguratorEvent('configurator act completed', {
+        act_id: CONFIGURATOR_ACTS[current].id,
+        act_index: current,
       })
     }
   },
 
-  goToStep: (stepId) => {
-    get().setStepIndex(stepIndexForId(stepId))
+  goToAct: (actId) => {
+    get().setActIndex(actIndexForId(actId))
   },
 
-  nextStep: () => {
-    get().setStepIndex(get().stepIndex + 1)
+  nextAct: () => {
+    get().setActIndex(get().actIndex + 1)
   },
 
-  prevStep: () => {
-    get().setStepIndex(get().stepIndex - 1)
+  prevAct: () => {
+    get().setActIndex(get().actIndex - 1)
+  },
+
+  setFlowMode: (flowMode) => {
+    if (get().flowMode === flowMode) return
+    set({ flowMode })
+    captureConfiguratorEvent('configurator flow mode', { mode: flowMode })
+  },
+
+  setQuickStepIndex: (index) => {
+    const clamped = Math.max(0, Math.min(index, QUICK_PATH_STEP_COUNT - 1))
+    set({ quickStepIndex: clamped })
+  },
+
+  nextQuickStep: () => {
+    const current = get().quickStepIndex
+    const next = Math.min(current + 1, QUICK_PATH_STEP_COUNT - 1)
+    if (next === current) return
+    set({ quickStepIndex: next })
+    captureConfiguratorEvent('quick step completed', { step: current })
+    if (next === QUICK_PATH_STEP_COUNT - 1) {
+      captureConfiguratorEvent('quick path completed')
+    }
+  },
+
+  prevQuickStep: () => {
+    get().setQuickStepIndex(get().quickStepIndex - 1)
   },
 
   togglePreviewExpanded: () => {
@@ -324,23 +362,35 @@ export function useConfiguratorValidationIssues(): ValidationIssue[] {
   return result.ok ? [] : result.issues
 }
 
-export function useConfiguratorStepValidationIssues(): ValidationIssue[] {
+export function useConfiguratorActValidationIssues(): ValidationIssue[] {
   const config = useConfiguratorConfig()
-  const step = useConfiguratorStore((state) => CONFIGURATOR_STEPS[state.stepIndex])
-  return validateConfiguratorStep(step.id, config)
+  const act = useConfiguratorStore((state) => CONFIGURATOR_ACTS[state.actIndex])
+  return validateConfiguratorAct(act.id, config)
 }
 
-export function useConfiguratorStep() {
-  const stepIndex = useConfiguratorStore((state) => state.stepIndex)
+export function useConfiguratorAct() {
+  const actIndex = useConfiguratorStore((state) => state.actIndex)
   return {
-    stepIndex,
-    step: CONFIGURATOR_STEPS[stepIndex],
-    isFirst: stepIndex === 0,
-    isLast: stepIndex === CONFIGURATOR_STEPS.length - 1,
-    totalSteps: CONFIGURATOR_STEPS.length,
+    actIndex,
+    act: CONFIGURATOR_ACTS[actIndex],
+    isFirst: actIndex === 0,
+    isLast: actIndex === CONFIGURATOR_ACTS.length - 1,
+    totalActs: CONFIGURATOR_ACTS.length,
   }
+}
+
+export function useConfiguratorFlowMode(): ConfiguratorFlowMode {
+  return useConfiguratorStore((state) => state.flowMode)
+}
+
+export function useConfiguratorQuickStep(): number {
+  return useConfiguratorStore((state) => state.quickStepIndex)
 }
 
 export function isPrimarySlice(config: GateConfig): boolean {
   return config.gateType === PRIMARY_GATE_TYPE
+}
+
+export function isPrimaryStyle(config: GateConfig): boolean {
+  return config.gateType === PRIMARY_GATE_TYPE && config.style === 'traditional_victorian'
 }

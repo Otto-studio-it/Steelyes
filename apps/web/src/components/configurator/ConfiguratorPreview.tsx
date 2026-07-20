@@ -93,7 +93,7 @@ type PreviewSvgProps = {
   className?: string
 }
 
-function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgProps) {
+export function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgProps) {
   const frameFill = plan.viewMode === 'installation' ? 'transparent' : '#FEFEFC'
   const frameStroke = plan.viewMode === 'installation' ? 'transparent' : '#E8E4DD'
 
@@ -162,9 +162,13 @@ export function ConfiguratorPreview({
     ? 'border-white/10 bg-steel text-white'
     : 'border-steel/10 bg-paper text-steel'
 
+  const frameClass = studio
+    ? 'overflow-hidden border-0 shadow-none rounded-none'
+    : 'overflow-hidden rounded-2xl border shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)]'
+
   return (
     <div
-      className={`overflow-hidden rounded-2xl border shadow-[0_12px_32px_rgba(25,20,18,0.08)] lg:rounded-[28px] lg:shadow-[0_24px_64px_rgba(25,20,18,0.14)] ${shellClass} ${pinned ? 'shadow-[0_16px_40px_rgba(0,0,0,0.22)]' : ''} ${className}`}
+      className={`${frameClass} ${shellClass} ${pinned && !studio ? 'shadow-[0_16px_40px_rgba(0,0,0,0.22)]' : ''} ${className}`}
     >
       <div
         className={`flex items-center justify-between border-b px-4 ${studio ? 'border-white/10' : 'border-steel/8'} ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
@@ -184,7 +188,7 @@ export function ConfiguratorPreview({
         <div className="flex items-center gap-2">
           {!compact || pinned ? (
             <div
-              className={`rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-widest ${
+              className={`border px-3 py-1 font-mono text-xs uppercase tracking-widest ${
                 studio ? 'border-white/15 bg-white/5 text-white/70' : 'border-steel/10 bg-white text-muted'
               } ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
             >

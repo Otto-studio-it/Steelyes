@@ -19,7 +19,14 @@ function roleOpacity(role: string): number {
   return 1
 }
 
-function roleColor(role: string, baseHex: string): THREE.Color {
+function isDarkFinish(baseHex: string): boolean {
+  const color = new THREE.Color(baseHex)
+  const hsl = { h: 0, s: 0, l: 0 }
+  color.getHSL(hsl)
+  return hsl.l < 0.42
+}
+
+function roleColor(role: string, baseHex: string, studio: boolean): THREE.Color {
   const color = new THREE.Color(baseHex)
   if (role === 'post') {
     color.offsetHSL(0, -0.08, -0.12)
@@ -29,6 +36,9 @@ function roleColor(role: string, baseHex: string): THREE.Color {
   }
   if (role === 'counterweight') {
     color.offsetHSL(0, -0.05, -0.05)
+  }
+  if (studio && isDarkFinish(baseHex)) {
+    color.offsetHSL(0, -0.04, 0.34)
   }
   return color
 }
@@ -42,8 +52,9 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
 
     const plan = buildGateMeshPlan(config)
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(studio ? '#151514' : '#eef2ea')
-    scene.fog = new THREE.Fog(studio ? '#151514' : '#eef2ea', 8, 24)
+    const studioBackground = '#5c5852'
+    scene.background = new THREE.Color(studio ? studioBackground : '#eef2ea')
+    scene.fog = new THREE.Fog(studio ? studioBackground : '#eef2ea', 8, 24)
 
     const camera = new THREE.PerspectiveCamera(36, 1, 0.01, 100)
     camera.position.set(0, mmToSceneUnits(config.heightMm) * 0.62, mmToSceneUnits(config.widthMm) * 1.45)
@@ -52,6 +63,9 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.shadowMap.enabled = true
+    renderer.domElement.style.display = 'block'
+    renderer.domElement.style.width = '100%'
+    renderer.domElement.style.height = '100%'
     host.replaceChildren(renderer.domElement)
 
     const group = new THREE.Group()
@@ -62,11 +76,13 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
         mmToSceneUnits(box.depthMm),
       )
       const meshMaterial = new THREE.MeshStandardMaterial({
-        color: roleColor(box.role, plan.material.colorHex),
+        color: roleColor(box.role, plan.material.colorHex, studio),
         metalness: box.role === 'post' ? plan.material.metalness * 0.7 : plan.material.metalness,
         roughness: box.role === 'panel' ? plan.material.roughness + 0.08 : plan.material.roughness,
         transparent: box.role === 'panel' || box.role === 'counterweight',
         opacity: roleOpacity(box.role),
+        emissive: studio && isDarkFinish(plan.material.colorHex) ? new THREE.Color('#c8c2b8') : undefined,
+        emissiveIntensity: studio && isDarkFinish(plan.material.colorHex) ? 0.14 : 0,
       })
       const mesh = new THREE.Mesh(geometry, meshMaterial)
       mesh.castShadow = true
@@ -88,11 +104,13 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
         12,
       )
       const meshMaterial = new THREE.MeshStandardMaterial({
-        color: roleColor(cylinder.role, plan.material.colorHex),
+        color: roleColor(cylinder.role, plan.material.colorHex, studio),
         metalness: plan.material.metalness,
         roughness: plan.material.roughness,
         transparent: cylinder.role === 'bar',
         opacity: cylinder.role === 'bar' ? 0.88 : 1,
+        emissive: studio && isDarkFinish(plan.material.colorHex) ? new THREE.Color('#c8c2b8') : undefined,
+        emissiveIntensity: studio && isDarkFinish(plan.material.colorHex) ? 0.14 : 0,
       })
       const mesh = new THREE.Mesh(geometry, meshMaterial)
       mesh.castShadow = true
@@ -107,13 +125,15 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     }
     scene.add(group)
 
-    const ambient = new THREE.AmbientLight(studio ? 0xffffff : 0xffffff, studio ? 0.45 : 0.65)
-    const key = new THREE.DirectionalLight(0xffffff, studio ? 1.35 : 1.1)
+    const ambient = new THREE.AmbientLight(0xffffff, studio ? 0.95 : 0.65)
+    const key = new THREE.DirectionalLight(0xffffff, studio ? 2.4 : 1.1)
     key.position.set(2.5, 4, 3)
     key.castShadow = true
-    const fill = new THREE.DirectionalLight(0xdce8ff, 0.35)
+    const fill = new THREE.DirectionalLight(0xdce8ff, studio ? 0.65 : 0.35)
     fill.position.set(-2, 2, -1)
-    scene.add(ambient, key, fill)
+    const rim = new THREE.DirectionalLight(0xfff2df, studio ? 0.55 : 0.2)
+    rim.position.set(0, 2.5, -3)
+    scene.add(ambient, key, fill, rim)
 
     const groundGeo = new THREE.PlaneGeometry(12, 8)
     const groundMat = new THREE.MeshStandardMaterial({
@@ -151,8 +171,13 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     observer.observe(container)
 
     let frameId = 0
+    const prefersReducedMotion =
+      typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const renderLoop = () => {
-      group.rotation.y = Math.sin(Date.now() * 0.00028) * 0.06
+      if (!prefersReducedMotion) {
+        group.rotation.y = Math.sin(Date.now() * 0.00028) * 0.06
+      }
       renderer.render(scene, camera)
       frameId = window.requestAnimationFrame(renderLoop)
     }

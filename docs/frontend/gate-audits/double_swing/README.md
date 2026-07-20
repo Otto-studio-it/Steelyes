@@ -22,6 +22,9 @@ Audit visivo delle 4 foto fornite, confrontato con:
 | [TOPOLOGY_COMPOSITE_VARIANT.md](./TOPOLOGY_COMPOSITE_VARIANT.md) | Variante composite + track (foto 01) |
 | [COMPARISON_CLIENT_AND_ENGINE.md](./COMPARISON_CLIENT_AND_ENGINE.md) | Diff foto vs cliente vs configurator |
 | [RENDERER_RECOMMENDATIONS.md](./RENDERER_RECOMMENDATIONS.md) | Cosa cambiare in 2D/3D |
+| [WORKPACK.md](./WORKPACK.md) | Scheda operativa per la ricostruzione del preview |
+| [CLIENT_QUESTIONS.md](./CLIENT_QUESTIONS.md) | Domande secche da chiudere con il cliente |
+| [CLIENT_QUESTIONS.pdf](./CLIENT_QUESTIONS.pdf) | Versione PDF pronta da condividere |
 | [observed.json](./observed.json) | Dati strutturati (Victorian, riferimento primario) |
 | [manifest.yaml](./manifest.yaml) | Input per `tools/gate-photo-audit` |
 | `photos/` | Copie foto reference |

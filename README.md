@@ -14,6 +14,15 @@ Monorepo della piattaforma digitale **Steelyes Ltd**: sito marketing, configurat
 | `supabase/` | Migrazioni database (gates, gate_options, configurations, quote_requests, leads) |
 | `.github/` | CI/CD |
 
+Ordine operativo:
+
+1. `packages/gate-engine` decide il dominio.
+2. `apps/web` consuma il dominio e gestisce la UI.
+3. `docs/` spiega vincoli, stato e piano di esecuzione.
+4. `design-system/` contiene materiale di riferimento, non logica di prodotto.
+5. `assets-raw/` resta fuori dal prodotto finito e viene ignorato da git.
+6. Ogni output locale temporaneo, cache o export va tenuto fuori da questi percorsi.
+
 ## 🛠 Stack
 
 - **Framework**: Next.js 14 App Router, TypeScript strict
@@ -68,3 +77,4 @@ Senza Supabase il configuratore funziona comunque con il catalogo prezzi di defa
 5. `docs/ARCHITECTURE_RULES.md`
 6. `docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md` — fonte primaria per regole di dominio e prezzi
 7. `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md` — roadmap autoritativa configuratore
+8. `docs/frontend/gate-catalog/` — schede tecniche per ogni tipologia di cancello

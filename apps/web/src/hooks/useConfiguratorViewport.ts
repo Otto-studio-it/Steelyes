@@ -8,6 +8,8 @@ export type ConfiguratorViewport = {
   mode: ConfiguratorViewportMode
   isPortraitPhone: boolean
   isLandscapePhone: boolean
+  /** Phones (portrait or landscape) — the Quick Path default surface. Excludes tablet. */
+  isMobileQuickEligible: boolean
 }
 
 const DESKTOP_QUERY = '(min-width: 1024px)'
@@ -20,6 +22,7 @@ function resolveViewport(): ConfiguratorViewport {
       mode: 'desktop',
       isPortraitPhone: false,
       isLandscapePhone: false,
+      isMobileQuickEligible: false,
     }
   }
 
@@ -28,6 +31,7 @@ function resolveViewport(): ConfiguratorViewport {
       mode: 'desktop',
       isPortraitPhone: false,
       isLandscapePhone: false,
+      isMobileQuickEligible: false,
     }
   }
 
@@ -36,6 +40,7 @@ function resolveViewport(): ConfiguratorViewport {
       mode: 'landscape-phone',
       isPortraitPhone: false,
       isLandscapePhone: true,
+      isMobileQuickEligible: true,
     }
   }
 
@@ -44,6 +49,7 @@ function resolveViewport(): ConfiguratorViewport {
       mode: 'tablet',
       isPortraitPhone: false,
       isLandscapePhone: false,
+      isMobileQuickEligible: false,
     }
   }
 
@@ -51,6 +57,7 @@ function resolveViewport(): ConfiguratorViewport {
     mode: 'portrait-phone',
     isPortraitPhone: true,
     isLandscapePhone: false,
+    isMobileQuickEligible: true,
   }
 }
 

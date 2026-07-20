@@ -109,7 +109,9 @@ What is still incomplete:
 ### Web
 
 - `apps/web/src/store/configuratorStore.ts`
-- `apps/web/src/lib/configurator/constants.ts`
+- `apps/web/src/lib/configurator/navigation.ts`
+- `apps/web/src/lib/configurator/options.ts`
+- `apps/web/src/lib/configurator/presentation.ts`
 - `apps/web/src/lib/configurator/labels.ts`
 - `apps/web/src/components/configurator/*`
 - `apps/web/src/app/(marketing)/configurator/page.tsx`
@@ -274,7 +276,7 @@ Files to touch:
 - `packages/gate-engine/tests/pricing.test.ts`
 - `apps/web/src/lib/configurator/labels.ts`
 - `apps/web/src/components/configurator/ConfiguratorPriceSummary.tsx`
-- `apps/web/src/components/configurator/ConfiguratorPriceBar.tsx`
+- `apps/web/src/components/configurator/ConfiguratorActionBar.tsx`
 
 How to do it:
 
@@ -376,9 +378,9 @@ Files to touch:
 - `packages/gate-engine/src/index.ts`
 - `packages/gate-engine/tests/finishes.test.ts` new
 - `packages/gate-engine/tests/rendering.test.ts`
-- `apps/web/src/lib/configurator/constants.ts`
+- `apps/web/src/lib/configurator/presentation.ts`
 - `apps/web/src/lib/configurator/labels.ts`
-- `apps/web/src/components/configurator/steps/GateSetupStep.tsx`
+- `apps/web/src/components/configurator/acts/ChooseActPanel.tsx`
 - `apps/web/src/components/configurator/FinishPicker.tsx` new
 
 How to do it:
@@ -537,7 +539,7 @@ What to do:
 Files to touch:
 
 - `apps/web/src/components/configurator/ConfiguratorPriceSummary.tsx`
-- `apps/web/src/components/configurator/ConfiguratorPriceBar.tsx`
+- `apps/web/src/components/configurator/ConfiguratorActionBar.tsx`
 - `apps/web/src/components/configurator/steps/SummaryStep.tsx`
 
 Done when:
@@ -562,7 +564,8 @@ Files to touch:
 
 - `apps/web/src/components/configurator/ConfiguratorShell.tsx`
 - `apps/web/src/components/configurator/steps/*`
-- `apps/web/src/lib/configurator/constants.ts`
+- `apps/web/src/lib/configurator/navigation.ts`
+- `apps/web/src/lib/configurator/presentation.ts`
 - `packages/gate-engine/src/types.ts`
 - `packages/gate-engine/src/validation.ts`
 
@@ -590,7 +593,8 @@ Files to touch if fence panels become visible:
 
 - `apps/web/src/components/configurator/steps/FencePanelsStep.tsx` new
 - `apps/web/src/components/configurator/ConfiguratorShell.tsx`
-- `apps/web/src/lib/configurator/constants.ts`
+- `apps/web/src/lib/configurator/navigation.ts`
+- `apps/web/src/lib/configurator/presentation.ts`
 - `apps/web/src/store/configuratorStore.ts`
 - `packages/gate-engine/src/validation.ts`
 - `packages/gate-engine/src/pricing.ts`

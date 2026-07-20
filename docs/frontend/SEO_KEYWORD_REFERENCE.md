@@ -5,11 +5,11 @@ owner: Ruben
 status: ACTIVE
 last_updated: 2026-05-09
 sources:
-  - "seo /Keyword Tool Export - Keyword Suggestions - gates.csv"
-  - "seo /searched_with_top-queries_GB_20260508-1315_20260509-1315.csv"
-  - "seo /searched_with_top-queries_GB_20260508-1315_20260509-1315-2.csv"
-  - "seo /searched_with_rising-queries_GB_20260508-1315_20260509-1315.csv"
-  - "seo /searched_with_rising-queries_GB_20260508-1315_20260509-1315-2.csv"
+  - "Keyword Tool Export - Keyword Suggestions - gates.csv (local SEO export; source folder removed)"
+  - "searched_with_top-queries_GB_20260508-1315_20260509-1315.csv (local SEO export; source folder removed)"
+  - "searched_with_top-queries_GB_20260508-1315_20260509-1315-2.csv (local SEO export; source folder removed)"
+  - "searched_with_rising-queries_GB_20260508-1315_20260509-1315.csv (local SEO export; source folder removed)"
+  - "searched_with_rising-queries_GB_20260508-1315_20260509-1315-2.csv (local SEO export; source folder removed)"
 ---
 
 # Steelyes — SEO Keyword Reference

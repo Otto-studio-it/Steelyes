@@ -10,8 +10,8 @@ import {
 } from '@steelyes/gate-engine'
 
 import { ConfigurationSummary } from '@/components/configurator/ConfigurationSummary'
-import { ConfiguratorPreviewPanel } from '@/components/configurator/ConfiguratorPreviewPanel'
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
+import { PreviewCanvas } from '@/components/configurator/PreviewCanvas'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { buildContactHandoffPath, buildCutListPath, buildQuotePdfPath } from '@/lib/configurator/share-token'
 import {
@@ -48,7 +48,7 @@ export function QuoteShareView({
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
-        <ConfiguratorPreviewPanel config={config} />
+        <PreviewCanvas config={config} />
 
         <div className="space-y-5">
           <div className="rounded-2xl border border-steel/10 bg-white px-4 py-4">
