@@ -4,6 +4,8 @@ import { ArrowRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
+import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
+import { usePriceDeltaFlash } from '@/hooks/usePriceDeltaFlash'
 import { formatPricingDisplayAmount, formatPricingDisplayHeadline } from '@/lib/configurator/labels'
 import {
   useConfiguratorAct,
@@ -20,6 +22,7 @@ type ConfiguratorActionBarProps = {
 
 export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: ConfiguratorActionBarProps) {
   const pricing = useConfiguratorPricing()
+  const priceDeltaFlash = usePriceDeltaFlash(pricing.totalGbp)
   const { isFirst, isLast, act } = useConfiguratorAct()
   const nextAct = useConfiguratorStore((state) => state.nextAct)
   const prevAct = useConfiguratorStore((state) => state.prevAct)
@@ -56,9 +59,12 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
       <p className="font-mono text-xs uppercase tracking-widest text-muted">
         {formatPricingDisplayHeadline(pricing, copyVariant)}
       </p>
-      <p className="truncate font-heading text-xl font-black uppercase tracking-tight text-steel tabular-nums">
-        {formatPricingDisplayAmount(pricing, copyVariant)}
-      </p>
+      <div className="flex items-baseline gap-2">
+        <p className="truncate font-heading text-xl font-black uppercase tracking-tight text-steel tabular-nums">
+          {formatPricingDisplayAmount(pricing, copyVariant)}
+        </p>
+        <PriceDeltaChip label={priceDeltaFlash} />
+      </div>
     </div>
   )
 
@@ -67,9 +73,12 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
         {formatPricingDisplayHeadline(pricing, 'mobile')}
       </p>
-      <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
-        {formatPricingDisplayAmount(pricing, 'mobile')}
-      </p>
+      <div className="flex items-baseline gap-2">
+        <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
+          {formatPricingDisplayAmount(pricing, 'mobile')}
+        </p>
+        <PriceDeltaChip label={priceDeltaFlash} />
+      </div>
     </div>
   )
 

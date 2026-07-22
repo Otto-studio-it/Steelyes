@@ -4,6 +4,8 @@ import { ArrowRight } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
 import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
+import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
+import { usePriceDeltaFlash } from '@/hooks/usePriceDeltaFlash'
 import { formatPricingBarAmount, formatPricingBarHeadline } from '@/lib/configurator/labels'
 import { QUICK_PATH_STEP_COUNT } from '@/lib/configurator/navigation'
 import { useConfiguratorPricing, useConfiguratorQuickStep, useConfiguratorStore } from '@/store/configuratorStore'
@@ -15,6 +17,7 @@ import { useConfiguratorPricing, useConfiguratorQuickStep, useConfiguratorStore 
  */
 export function MobileQuickActionBar() {
   const pricing = useConfiguratorPricing()
+  const priceDeltaFlash = usePriceDeltaFlash(pricing.totalGbp)
   const step = useConfiguratorQuickStep()
   const nextQuickStep = useConfiguratorStore((state) => state.nextQuickStep)
   const barRef = useRef<HTMLDivElement>(null)
@@ -58,9 +61,12 @@ export function MobileQuickActionBar() {
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
             {formatPricingBarHeadline(pricing)}
           </p>
-          <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
-            {formatPricingBarAmount(pricing)}
-          </p>
+          <div className="flex items-baseline gap-2">
+            <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
+              {formatPricingBarAmount(pricing)}
+            </p>
+            <PriceDeltaChip label={priceDeltaFlash} />
+          </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-3">

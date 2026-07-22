@@ -4,6 +4,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
+import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
+import { usePriceDeltaFlash } from '@/hooks/usePriceDeltaFlash'
 import { formatPricingDisplayAmount, formatPricingDisplayHeadline } from '@/lib/configurator/labels'
 import { useConfiguratorPricing } from '@/store/configuratorStore'
 
@@ -13,6 +15,7 @@ type ConfiguratorStudioHeaderProps = {
 
 export function ConfiguratorStudioHeader({ embed = false }: ConfiguratorStudioHeaderProps) {
   const pricing = useConfiguratorPricing()
+  const priceDeltaFlash = usePriceDeltaFlash(pricing.totalGbp)
   const [breakdownOpen, setBreakdownOpen] = useState(false)
 
   return (
@@ -43,8 +46,11 @@ export function ConfiguratorStudioHeader({ embed = false }: ConfiguratorStudioHe
                 <ChevronDown className="h-3.5 w-3.5" aria-hidden />
               )}
             </span>
-            <span className="font-heading text-lg font-black uppercase tracking-tight text-steel sm:text-xl">
-              {formatPricingDisplayAmount(pricing, 'desktop')}
+            <span className="inline-flex items-baseline gap-2">
+              <span className="font-heading text-lg font-black uppercase tracking-tight text-steel sm:text-xl">
+                {formatPricingDisplayAmount(pricing, 'desktop')}
+              </span>
+              <PriceDeltaChip label={priceDeltaFlash} />
             </span>
           </button>
         </div>

@@ -6,14 +6,17 @@ import { ChevronDown } from 'lucide-react'
 import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
 import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
+import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
 import { isRailheadOptionKey } from '@steelyes/gate-engine'
 import { OPTION_GROUPS, OPTION_META, type OptionGroupId } from '@/lib/configurator/options'
 import { SITE_SURVEY_FIELD_LABEL } from '@/lib/configurator/labels'
+import { estimateOptionEnableDelta, formatPriceDelta } from '@/lib/configurator/price-delta'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 import { cn } from '@/lib/utils'
 
 function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key'] }) {
   const config = useConfiguratorConfig()
+  const pricingCatalog = useConfiguratorStore((state) => state.pricingCatalog)
   const toggleOption = useConfiguratorStore((state) => state.toggleOption)
   const setOptionQty = useConfiguratorStore((state) => state.setOptionQty)
   const option = OPTION_META.find((item) => item.key === optionKey)
@@ -23,6 +26,8 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
   const enabled = Boolean(selected?.enabled)
   const quantity = selected?.quantity ?? 0
   const provisionalRailhead = option.key === 'top_railheads' || option.key === 'dog_bar_railheads'
+  const enableDelta = estimateOptionEnableDelta(config, pricingCatalog, option.key)
+  const deltaLabel = formatPriceDelta(enableDelta.deltaGbp)
 
   return (
     <div
@@ -30,13 +35,24 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
         enabled ? 'border-primary/30 bg-primary/5' : 'border-steel/10 bg-paper'
       }`}
     >
-      <ConfiguratorSwitch
-        checked={enabled}
-        onCheckedChange={(checked) => toggleOption(option.key, checked)}
-        label={option.label}
-        description={option.description}
-        id={`option-${option.key}`}
-      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <ConfiguratorSwitch
+            checked={enabled}
+            onCheckedChange={(checked) => toggleOption(option.key, checked)}
+            label={option.label}
+            description={option.description}
+            id={`option-${option.key}`}
+          />
+        </div>
+        {deltaLabel ? (
+          <PriceDeltaChip
+            label={deltaLabel}
+            tone="hint"
+            className="mt-1 shrink-0"
+          />
+        ) : null}
+      </div>
 
       {enabled && option.quantityLabel ? (
         <div className="mt-4 space-y-3 border-t border-steel/8 pt-4">
