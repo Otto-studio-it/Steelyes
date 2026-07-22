@@ -47,6 +47,7 @@ type PreviewCanvasProps = {
   showSecondaryModes?: boolean
 }
 
+// Installation trusted default; Technical stays primary; bury Plan/Photo/3D
 const PRIMARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
   { id: 'installation', label: 'Installation' },
   { id: 'technical', label: 'Technical' },
@@ -268,6 +269,11 @@ export function PreviewCanvas({
           load3dChunk={load3dChunk}
           loadPhotoChunk={loadPhotoChunk}
         />
+        {mode === '3d' || mode === 'photo' || mode === 'plan' ? (
+          <div className="pointer-events-none absolute left-3 top-3 border border-white/15 bg-steel/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/75">
+            Schematic preview
+          </div>
+        ) : null}
         {showDimensionOverlay ? (
           <button
             type="button"

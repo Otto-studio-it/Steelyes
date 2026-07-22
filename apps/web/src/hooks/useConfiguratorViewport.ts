@@ -8,7 +8,7 @@ export type ConfiguratorViewport = {
   mode: ConfiguratorViewportMode
   isPortraitPhone: boolean
   isLandscapePhone: boolean
-  /** Phones (portrait or landscape) — the Quick Path default surface. Excludes tablet. */
+  /** Phones + tablet — Quick Path default surface. Desktop stays Design Studio. */
   isMobileQuickEligible: boolean
 }
 
@@ -49,7 +49,8 @@ function resolveViewport(): ConfiguratorViewport {
       mode: 'tablet',
       isPortraitPhone: false,
       isLandscapePhone: false,
-      isMobileQuickEligible: false,
+      // ponytail: tablet had worst density with full studio — use Quick Path
+      isMobileQuickEligible: true,
     }
   }
 

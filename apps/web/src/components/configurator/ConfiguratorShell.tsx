@@ -67,8 +67,10 @@ function SpecPanel() {
 
         {blocked ? (
           <div
+            id="cfg-act-validation"
             role="alert"
-            className="mt-5 border border-primary/25 bg-primary/5 px-4 py-3"
+            tabIndex={-1}
+            className="mt-5 border border-primary/25 bg-primary/5 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <p className="font-mono text-xs uppercase tracking-widest text-primary">
               Resolve before continuing
@@ -212,7 +214,7 @@ export function ConfiguratorShell({ embed = false, tenant }: { embed?: boolean; 
 
   const showDimensionOverlay = act.id === 'define' || act.id === 'choose'
 
-  // Phones default to the Quick Path; desktop and tablet keep the Design Studio.
+  // Phones + tablet default to Quick Path; desktop keeps Design Studio.
   if (viewport.isMobileQuickEligible && flowMode === 'quick') {
     return <ConfiguratorMobileShell tenant={tenant} />
   }

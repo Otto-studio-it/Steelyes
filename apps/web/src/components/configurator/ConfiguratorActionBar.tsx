@@ -73,6 +73,13 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
     </div>
   )
 
+  const focusValidationAlert = () => {
+    const alert = document.getElementById('cfg-act-validation')
+    if (!alert) return
+    alert.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    alert.focus()
+  }
+
   const actions = (
     <div className="flex items-center gap-3">
       {!isFirst ? (
@@ -89,9 +96,15 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
       ) : (
         <button
           type="button"
-          onClick={nextAct}
-          disabled={blocked}
-          className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
+          onClick={() => {
+            if (blocked) {
+              focusValidationAlert()
+              return
+            }
+            nextAct()
+          }}
+          aria-disabled={blocked}
+          className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary aria-disabled:opacity-50 sm:flex-none"
         >
           Continue
           <ArrowRight className="h-4 w-4" aria-hidden />

@@ -1,12 +1,16 @@
 'use client'
 
+import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+
 import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
 import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
 import { isRailheadOptionKey } from '@steelyes/gate-engine'
-import { OPTION_GROUPS, OPTION_META } from '@/lib/configurator/options'
+import { OPTION_GROUPS, OPTION_META, type OptionGroupId } from '@/lib/configurator/options'
 import { SITE_SURVEY_FIELD_LABEL } from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
+import { cn } from '@/lib/utils'
 
 function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key'] }) {
   const config = useConfiguratorConfig()
@@ -71,46 +75,75 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
 export function OptionsAccordion() {
   const config = useConfiguratorConfig()
   const patchConfig = useConfiguratorStore((state) => state.patchConfig)
+  // ponytail: one group open — Structure first
+  const [openGroupId, setOpenGroupId] = useState<OptionGroupId>('structure')
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <p className="text-sm leading-6 text-muted-deep">
-        Personalise structure, decoration, and site preferences. Each change updates the live preview immediately.
+        Personalise structure, decoration, and site preferences. Open one group at a time — each change updates the
+        live preview.
       </p>
 
-      {OPTION_GROUPS.map((group) => (
-        <section key={group.id} aria-labelledby={`option-group-${group.id}`}>
-          <div className="mb-3 border-l-4 border-steel/20 pl-4">
-            <h3 id={`option-group-${group.id}`} className="font-heading text-sm font-bold uppercase tracking-tight text-steel">
-              {group.label}
-            </h3>
-            <p className="mt-1 text-sm text-muted-deep">{group.description}</p>
-          </div>
+      {OPTION_GROUPS.map((group) => {
+        const open = openGroupId === group.id
 
-          <div className="space-y-3">
-            {group.id === 'site' ? (
-              <label className="flex items-start gap-3 border border-steel/10 bg-paper p-4">
-                <input
-                  type="checkbox"
-                  checked={config.siteSurveyRequested}
-                  onChange={(event) => patchConfig({ siteSurveyRequested: event.target.checked })}
-                  className="mt-1 h-5 w-5 border-steel/20 text-primary focus:ring-primary"
-                />
-                <span className="min-w-0">
+        return (
+          <section key={group.id} className="border border-steel/10 bg-white">
+            <h3>
+              <button
+                type="button"
+                id={`option-group-${group.id}`}
+                aria-expanded={open}
+                aria-controls={`option-group-panel-${group.id}`}
+                onClick={() => setOpenGroupId(group.id)}
+                className="flex min-h-[52px] w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+              >
+                <span>
                   <span className="block font-heading text-sm font-bold uppercase tracking-tight text-steel">
-                    {SITE_SURVEY_FIELD_LABEL}
+                    {group.label}
                   </span>
-                  <span className="mt-1 block text-sm leading-6 text-muted-deep">
-                    Steelyes will attend site to verify measurements and conditions before fabrication.
-                  </span>
+                  <span className="mt-0.5 block text-sm text-muted-deep">{group.description}</span>
                 </span>
-              </label>
-            ) : (
-              group.keys.map((key) => <OptionRow key={key} optionKey={key} />)
-            )}
-          </div>
-        </section>
-      ))}
+                <ChevronDown
+                  className={cn('h-4 w-4 shrink-0 text-muted transition-transform', open && 'rotate-180')}
+                  aria-hidden
+                />
+              </button>
+            </h3>
+
+            {open ? (
+              <div
+                id={`option-group-panel-${group.id}`}
+                role="region"
+                aria-labelledby={`option-group-${group.id}`}
+                className="space-y-3 border-t border-steel/10 px-4 py-4"
+              >
+                {group.id === 'site' ? (
+                  <label className="flex items-start gap-3 border border-steel/10 bg-paper p-4">
+                    <input
+                      type="checkbox"
+                      checked={config.siteSurveyRequested}
+                      onChange={(event) => patchConfig({ siteSurveyRequested: event.target.checked })}
+                      className="mt-1 h-5 w-5 border-steel/20 text-primary focus:ring-primary"
+                    />
+                    <span className="min-w-0">
+                      <span className="block font-heading text-sm font-bold uppercase tracking-tight text-steel">
+                        {SITE_SURVEY_FIELD_LABEL}
+                      </span>
+                      <span className="mt-1 block text-sm leading-6 text-muted-deep">
+                        Steelyes will attend site to verify measurements and conditions before fabrication.
+                      </span>
+                    </span>
+                  </label>
+                ) : (
+                  group.keys.map((key) => <OptionRow key={key} optionKey={key} />)
+                )}
+              </div>
+            ) : null}
+          </section>
+        )
+      })}
     </div>
   )
 }

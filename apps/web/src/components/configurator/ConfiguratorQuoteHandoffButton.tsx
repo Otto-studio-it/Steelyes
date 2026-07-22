@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
-import { ArrowRight, LoaderCircle } from 'lucide-react'
+import { LoaderCircle, ArrowRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { buildContactHandoffPath } from '@/lib/configurator/share-token'
@@ -13,54 +13,55 @@ type ConfiguratorQuoteHandoffButtonProps = {
   children?: React.ReactNode
 }
 
+/** ponytail: one click — save then navigate (no Save → then Link two-step). */
 export function ConfiguratorQuoteHandoffButton({
   className = '',
-  children = 'Request survey-led quote',
+  children = 'Request a quote',
 }: ConfiguratorQuoteHandoffButtonProps) {
+  const router = useRouter()
   const ensureSavedConfiguration = useConfiguratorStore((state) => state.ensureSavedConfiguration)
   const saveState = useConfiguratorStore((state) => state.saveState)
-  const shareToken = useConfiguratorStore((state) => state.shareToken)
-  const [pendingHref, setPendingHref] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  async function handlePrepare() {
+  async function handleHandoff() {
+    setError(null)
     const result = await ensureSavedConfiguration()
-    if (result?.shareToken) {
-      captureConfiguratorEvent('quote handoff prepared', { share_token: result.shareToken })
-      setPendingHref(buildContactHandoffPath(result.shareToken))
+    if (!result?.shareToken) {
+      setError('Could not save configuration. Try again.')
+      return
     }
+    captureConfiguratorEvent('quote handoff prepared', { share_token: result.shareToken })
+    router.push(buildContactHandoffPath(result.shareToken))
   }
 
-  if (pendingHref || (saveState === 'saved' && shareToken)) {
-    const href = pendingHref ?? buildContactHandoffPath(shareToken!)
-    return (
-      <Link
-        href={href}
-        className={className}
-      >
-        {children}
-        <ArrowRight className="h-4 w-4" aria-hidden />
-      </Link>
-    )
-  }
+  const busy = saveState === 'saving'
 
   return (
-    <button
-      type="button"
-      onClick={handlePrepare}
-      disabled={saveState === 'saving'}
-      className={className}
-    >
-      {saveState === 'saving' ? (
-        <>
-          <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
-          Saving…
-        </>
-      ) : (
-        <>
-          {children}
-          <ArrowRight className="h-4 w-4" aria-hidden />
-        </>
-      )}
-    </button>
+    <span className="inline-flex flex-col items-stretch gap-1 sm:items-end">
+      <button
+        type="button"
+        onClick={handleHandoff}
+        disabled={busy}
+        className={className}
+        aria-busy={busy}
+      >
+        {busy ? (
+          <>
+            <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden />
+            Saving…
+          </>
+        ) : (
+          <>
+            {children}
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </>
+        )}
+      </button>
+      {error ? (
+        <p role="alert" className="text-xs text-primary">
+          {error}
+        </p>
+      ) : null}
+    </span>
   )
 }
