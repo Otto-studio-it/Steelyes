@@ -31,12 +31,12 @@ export function GateTypeExplorationDialog({
           <div className="flex items-start justify-between gap-4">
             <div>
               <Dialog.Title className="font-heading text-lg font-black uppercase tracking-tight text-steel">
-                Schematic preview
+                Exploration mode
               </Dialog.Title>
               <Dialog.Description className="mt-2 text-sm leading-6 text-muted-deep">
                 <strong className="font-semibold text-steel">{gateTypeLabel(gateType)}</strong> is outside the
-                primary production path. You can explore it with a schematic preview, but visual fidelity and
-                pricing may be incomplete.
+                primary Double Swing path. You can explore it with a schematic preview — visual fidelity and
+                pricing may be incomplete until survey.
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
@@ -71,7 +71,7 @@ export function GateTypeExplorationDialog({
               }}
               className="inline-flex min-h-[48px] items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
-              Continue exploring
+              Continue in exploration
             </button>
           </div>
         </Dialog.Content>

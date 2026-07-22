@@ -105,8 +105,8 @@ test.describe('configurator mobile quick path', () => {
   test('defaults phones to Quick Path screen 1 with compact chrome', async ({ page }) => {
     await gotoQuickPath(page)
 
-    // No Design Studio header or act heading on the quick path.
-    await expect(page.getByText('Design studio')).toHaveCount(0)
+    // No full-options studio chrome on the quick path.
+    await expect(page.getByText('Gate configurator')).toHaveCount(0)
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toHaveCount(0)
 
     // 96px chip + compact action bar with a live estimate and Continue.
@@ -146,14 +146,14 @@ test.describe('configurator mobile quick path', () => {
     await expect(page.getByRole('dialog')).toHaveCount(0)
   })
 
-  test('Customise everything switches to the Design Studio and back', async ({ page }) => {
+  test('All details switches to full options and back to Quick setup', async ({ page }) => {
     await gotoQuickPath(page)
 
-    await page.getByRole('button', { name: /Customise everything/i }).click()
+    await page.getByRole('button', { name: /All details/i }).click()
 
-    // Design Studio is now active with its act heading + back-to-quick link.
+    // Full-options density is now active with its act heading + back-to-simple link.
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
-    const backToQuick = page.getByRole('button', { name: /Quick path/i })
+    const backToQuick = page.getByRole('button', { name: /Quick setup/i })
     await expect(backToQuick).toBeVisible()
 
     await backToQuick.click()

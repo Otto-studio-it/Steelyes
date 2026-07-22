@@ -54,9 +54,9 @@ const PRIMARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
 ]
 
 const SECONDARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
-  { id: 'plan', label: 'Plan' },
-  { id: 'photo', label: 'Photo' },
-  { id: '3d', label: '3D' },
+  { id: 'plan', label: 'Plan (schematic)' },
+  { id: 'photo', label: 'Photo (schematic)' },
+  { id: '3d', label: '3D (schematic)' },
 ]
 
 function filterModes(tenant: TenantBundle | undefined, modes: { id: ConfiguratorPreviewMode; label: string }[]) {

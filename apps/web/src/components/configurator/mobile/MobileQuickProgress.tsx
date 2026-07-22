@@ -22,7 +22,7 @@ export function MobileQuickProgress({ step }: { step: number }) {
         aria-valuenow={step + 1}
         aria-valuemin={1}
         aria-valuemax={QUICK_PATH_STEP_COUNT}
-        aria-label={`Quick path step ${step + 1} of ${QUICK_PATH_STEP_COUNT}`}
+        aria-label={`Quick setup step ${step + 1} of ${QUICK_PATH_STEP_COUNT}`}
       >
         {Array.from({ length: QUICK_PATH_STEP_COUNT }).map((_, index) => (
           <span

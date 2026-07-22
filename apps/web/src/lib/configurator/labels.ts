@@ -16,7 +16,7 @@ const STYLE_LABELS: Record<GateStyle, string> = {
 }
 
 export function gateTypeLabel(gateType: GateType): string {
-  return gateType.split('_').join(' ')
+  return titleCaseWords(gateType.split('_').join(' '))
 }
 
 export function styleLabel(style: GateStyle): string {
@@ -41,7 +41,30 @@ export function finishLabel(finish: FinishCode): string {
 }
 
 export function formatLabelText(key: string): string {
-  return key.split('_').join(' ')
+  return titleCaseWords(key.split('_').join(' '))
+}
+
+/** Title-case words for product labels (Double Swing, not double swing). */
+function titleCaseWords(value: string): string {
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
+
+/** Soften engine validation copy for the configurator UI. */
+export function humanizeValidationMessage(message: string): string {
+  return message
+    .replace(
+      /^Width must be between (\d+)mm and (\d+)mm\.$/,
+      'Choose a width between $1 and $2 mm.',
+    )
+    .replace(
+      /^Height must be between (\d+)mm and (\d+)mm\.$/,
+      'Choose a height between $1 and $2 mm.',
+    )
+    .replace(/(\d+)mm/g, '$1 mm')
 }
 
 export function formatPricingHeadline(pricing: PricingResult): string {

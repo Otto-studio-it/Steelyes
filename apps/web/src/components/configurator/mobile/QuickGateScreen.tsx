@@ -51,8 +51,8 @@ export function QuickGateScreen() {
 
       {!primary ? (
         <p className="border-l-4 border-primary bg-primary/5 px-4 py-3 text-sm leading-6 text-muted-deep">
-          You&rsquo;re exploring a schematic gate type. Visual detail and pricing may differ from the double swing
-          reference.
+          You&rsquo;re in exploration mode for this gate type. Visual detail and pricing may differ from the
+          primary Double Swing reference.
         </p>
       ) : null}
 

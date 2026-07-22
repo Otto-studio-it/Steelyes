@@ -23,7 +23,7 @@ export function ConfiguratorStudioHeader({ embed = false }: ConfiguratorStudioHe
             <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
           ) : null}
           <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel sm:text-base">
-            Design studio
+            All details
           </p>
         </div>
 

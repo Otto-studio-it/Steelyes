@@ -14,6 +14,7 @@ import { PreviewCanvas } from '@/components/configurator/PreviewCanvas'
 import { SummaryStep } from '@/components/configurator/steps/SummaryStep'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { CONFIGURATOR_ACTS } from '@/lib/configurator/navigation'
+import { humanizeValidationMessage } from '@/lib/configurator/labels'
 import type { TenantBundle } from '@steelyes/gate-engine'
 import {
   isPrimarySlice,
@@ -77,7 +78,7 @@ function SpecPanel() {
             </p>
             <ul className="mt-2 space-y-1 text-sm leading-6 text-muted-deep">
               {validationIssues.slice(0, 3).map((issue) => (
-                <li key={`${issue.field}:${issue.code}`}>{issue.message}</li>
+                <li key={`${issue.field}:${issue.code}`}>{humanizeValidationMessage(issue.message)}</li>
               ))}
             </ul>
           </div>
@@ -99,7 +100,8 @@ function DesktopIntro() {
         Design your gate installation.
       </h1>
       <p className="mt-3 max-w-2xl text-base leading-7 text-muted-deep lg:text-lg">
-        Configure mechanism, dimensions, mounting posts, and options with a live installation preview.
+        One gate path with denser controls when you need them. Mechanism, size, posts and options update a live
+        installation preview.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-2 border border-primary/18 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-primary">
@@ -153,7 +155,7 @@ function MobileShell({
             className="mb-3 inline-flex min-h-[44px] items-center gap-1 font-mono text-xs uppercase tracking-widest text-muted transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <ChevronLeft className="h-3.5 w-3.5" aria-hidden />
-            Quick path
+            Quick setup
           </button>
         ) : null}
 

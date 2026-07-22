@@ -19,8 +19,8 @@ const SAFE_AREA_X =
   'supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))]'
 
 const CUSTOMIZE_BY_STEP: { label: string; act: ConfiguratorActId }[] = [
-  { label: 'Customise everything', act: 'choose' },
-  { label: 'Customise everything', act: 'define' },
+  { label: 'All details', act: 'choose' },
+  { label: 'All details', act: 'define' },
   { label: 'Add decorative details', act: 'refine' },
 ]
 

@@ -85,7 +85,7 @@ export function GateTypeCardGrid() {
                       primary ? 'bg-primary text-white' : 'bg-steel/80 text-white'
                     }`}
                   >
-                    {primary ? 'Full path' : 'Schematic'}
+                    {primary ? 'Primary' : 'Explore'}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col justify-center px-3 py-2">
