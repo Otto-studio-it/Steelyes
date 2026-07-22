@@ -47,7 +47,7 @@ const NAV_GROUPS: NavGroup[] = [
 ]
 
 const PRIMARY_LINKS: NavLink[] = [
-  { label: 'Process', href: '/installation' },
+  { label: 'Installation', href: '/installation' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'About', href: '/about' },
 ]

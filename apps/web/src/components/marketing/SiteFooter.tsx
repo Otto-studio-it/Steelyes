@@ -19,15 +19,17 @@ const GATE_LINKS = [
 
 const SERVICE_LINKS = [
   { label: 'Services Overview', href: '/services' },
-  { label: 'Railings', href: '/services/railings' },
-  { label: 'Balconies', href: '/services/balconies' },
-  { label: 'Security', href: '/services/security' },
-  { label: 'Installation Process', href: '/installation' },
+  { label: 'Glass Balustrades & Terraces', href: '/services/railings' },
+  { label: 'Metal & Glass Balconies', href: '/services/balconies' },
+  { label: 'Steel Structures', href: '/services/structures' },
+  { label: 'Platforms & Staircases', href: '/services/staircases' },
+  { label: 'Security Grills', href: '/services/security' },
 ] as const
 
 const START_LINKS = [
   { label: 'Request a quote', href: '/contact', primary: true },
   { label: 'Configure a gate', href: '/configurator', primary: false },
+  { label: 'Installation', href: '/installation', primary: false },
   { label: 'About', href: '/about', primary: false },
 ] as const
 

@@ -11,7 +11,7 @@ type MarketingShellProps = {
 
 export function MarketingShell({ pathname, children }: MarketingShellProps) {
   return (
-    <div className="min-h-dvh bg-[#FBF9F6] text-[#1B1C1A]">
+    <div className="min-h-dvh bg-canvas text-ink">
       <SiteHeader pathname={pathname} />
       <main id="main-content" className="pb-20 lg:pb-0">
         {children}
