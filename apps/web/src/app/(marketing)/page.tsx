@@ -108,8 +108,8 @@ export default function HomePage() {
       <HomeWeldingHero />
 
       {/* ── Marquee ticker ── */}
-      <div className="overflow-hidden border-y border-zinc-200 bg-[#F5F3F0] py-3" aria-hidden="true">
-        <div className="flex animate-marquee whitespace-nowrap">
+      <div className="overflow-hidden border-y border-zinc-200 bg-[#F5F3F0] py-3 motion-reduce:hidden" aria-hidden="true">
+        <div className="flex animate-marquee whitespace-nowrap motion-reduce:animate-none">
           {[0, 1].map((pass) => (
             <span key={pass} className="flex shrink-0 items-center gap-8 pr-8">
               {[

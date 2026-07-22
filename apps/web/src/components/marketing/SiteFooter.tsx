@@ -26,8 +26,8 @@ const SERVICE_LINKS = [
 ] as const
 
 const START_LINKS = [
-  { label: 'Request a Quote', href: '/contact', primary: true },
-  { label: 'Configure Your Gate', href: '/configurator', primary: false },
+  { label: 'Request a quote', href: '/contact', primary: true },
+  { label: 'Configure a gate', href: '/configurator', primary: false },
   { label: 'About', href: '/about', primary: false },
 ] as const
 

@@ -18,6 +18,7 @@ export function MobileQuoteCTA() {
       setVisible(scrolled && !nearFooter)
     }
 
+    handler()
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
@@ -32,9 +33,9 @@ export function MobileQuoteCTA() {
       <div className="px-4 pt-3">
         <Link
           href="/contact"
-          className="inline-flex w-full min-h-[52px] items-center justify-center bg-[#9E000C] font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515]"
+          className="inline-flex w-full min-h-[52px] items-center justify-center bg-[#9E000C] font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
         >
-          Request a Quote
+          Request a quote
         </Link>
       </div>
     </div>

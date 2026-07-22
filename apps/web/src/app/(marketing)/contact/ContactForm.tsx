@@ -27,11 +27,14 @@ function SubmitButton({ disabled = false }: { disabled?: boolean }) {
           Sending…
         </>
       ) : (
-        'Send specification'
+        'Request a quote'
       )}
     </button>
   )
 }
+
+const fieldClassName =
+  'mt-2 min-h-[44px] w-full border-b-2 border-zinc-300 bg-transparent px-0 transition-[border-color] focus:border-[#9E000C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9E000C] focus-visible:ring-offset-2'
 
 type ContactFormProps = {
   shareToken?: string
@@ -107,7 +110,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
             name="name"
             required
             autoComplete="name"
-            className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+            className={fieldClassName}
           />
         </label>
         <label className="block text-sm font-medium">
@@ -118,7 +121,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
             inputMode="email"
             required
             autoComplete="email"
-            className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+            className={fieldClassName}
           />
         </label>
       </div>
@@ -128,7 +131,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
         <select
           name="project_type"
           defaultValue={attachedConfig ? 'Automated Swing Gates' : ''}
-          className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+          className={fieldClassName}
         >
           <option value="">Select a type</option>
           <option>Automated Swing Gates</option>
@@ -148,7 +151,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
         <input
           name="postcode"
           autoComplete="postal-code"
-          className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+          className={fieldClassName}
         />
       </label>
 
@@ -164,7 +167,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
               ? `Please quote the attached gate configuration (${shareToken}). Add any site notes, access constraints, or timeline here.`
               : undefined
           }
-          className="mt-2 min-h-[120px] w-full resize-none border-b border-zinc-300 bg-transparent px-0 placeholder:text-zinc-400 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+          className={`${fieldClassName} min-h-[120px] resize-none placeholder:text-zinc-400`}
         />
       </label>
 

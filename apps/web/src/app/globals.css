@@ -73,4 +73,9 @@
   .cfg-sheet-draggable {
     transition: none;
   }
+
+  .animate-marquee,
+  .animate-chat-widget-in {
+    animation: none !important;
+  }
 }

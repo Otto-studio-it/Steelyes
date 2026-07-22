@@ -20,12 +20,20 @@ function WhatsAppIcon({ className }: { className?: string }) {
   )
 }
 
-export function WhatsAppHelpBanner() {
+type WhatsAppHelpBannerProps = {
+  onOpenChange?: (open: boolean) => void
+}
+
+export function WhatsAppHelpBanner({ onOpenChange }: WhatsAppHelpBannerProps) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (pathname === '/contact') return
+    if (pathname === '/contact') {
+      setOpen(false)
+      onOpenChange?.(false)
+      return
+    }
 
     try {
       if (localStorage.getItem(STORAGE_KEY)) return
@@ -33,15 +41,19 @@ export function WhatsAppHelpBanner() {
       return
     }
 
-    const timer = window.setTimeout(() => setOpen(true), DELAY_MS)
+    const timer = window.setTimeout(() => {
+      setOpen(true)
+      onOpenChange?.(true)
+    }, DELAY_MS)
     return () => window.clearTimeout(timer)
-  }, [pathname])
+  }, [pathname, onOpenChange])
 
   function dismiss() {
     try {
       localStorage.setItem(STORAGE_KEY, 'dismissed')
     } catch {}
     setOpen(false)
+    onOpenChange?.(false)
   }
 
   if (pathname === '/contact' || !open) return null
@@ -51,17 +63,14 @@ export function WhatsAppHelpBanner() {
       className="fixed right-4 z-[45] w-[min(calc(100vw-2rem),23.75rem)] origin-bottom-right bottom-[calc(1rem+env(safe-area-inset-bottom))] sm:right-5 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]"
       aria-live="polite"
     >
-      <div
-        role="dialog"
-        aria-label="WhatsApp help"
-        className="animate-chat-widget-in pointer-events-auto w-full"
-      >
-        <div className="relative rounded-3xl bg-white p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+      <div role="dialog" aria-label="WhatsApp help" className="animate-chat-widget-in pointer-events-auto w-full">
+        {/* Brand: hard edges, no pill chrome (DESIGN_RULES) */}
+        <div className="relative border border-zinc-200 bg-white p-6">
           <button
             type="button"
             onClick={dismiss}
-            aria-label="Dismiss"
-            className="absolute right-5 top-5 inline-flex h-6 w-6 items-center justify-center text-zinc-400 transition-colors hover:text-zinc-600"
+            aria-label="Dismiss WhatsApp help"
+            className="absolute right-3 top-3 inline-flex min-h-[44px] min-w-[44px] items-center justify-center text-zinc-400 transition-colors hover:text-zinc-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
           >
             <svg
               className="h-4 w-4"
@@ -79,20 +88,17 @@ export function WhatsAppHelpBanner() {
           <div className="flex gap-4">
             <WhatsAppIcon className="mt-0.5 h-10 w-10 shrink-0 text-[#25D366]" />
 
-            <div className="min-w-0 flex-1 pr-5">
-              <p className="font-heading text-base font-bold leading-snug text-[#1B1C1A]">
-                We&apos;re here to help
-              </p>
+            <div className="min-w-0 flex-1 pr-8">
+              <p className="font-heading text-base font-bold leading-snug text-[#1B1C1A]">We&apos;re here to help</p>
               <p className="mt-1.5 text-sm leading-relaxed text-[#666666]">
-                Welcome to our site. If you need help, reply on WhatsApp — we&apos;re online and ready
-                to assist.
+                Welcome to our site. If you need help, reply on WhatsApp — we&apos;re online and ready to assist.
               </p>
 
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-full border border-zinc-300 bg-white px-5 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:bg-zinc-50"
+                className="mt-4 inline-flex min-h-[44px] items-center justify-center border border-zinc-300 bg-white px-5 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-400 hover:bg-zinc-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
               >
                 Reply on WhatsApp
               </a>
