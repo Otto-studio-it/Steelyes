@@ -392,6 +392,18 @@ export function useConfiguratorFlowMode(): ConfiguratorFlowMode {
   return useConfiguratorStore((state) => state.flowMode)
 }
 
+/**
+ * Client request (Marius): amounts must appear only after the customer has
+ * entered all their data — i.e. on the final summary/quote step of either flow.
+ */
+export function useConfiguratorPriceRevealed(): boolean {
+  return useConfiguratorStore((state) =>
+    state.flowMode === 'quick'
+      ? state.quickStepIndex >= QUICK_PATH_STEP_COUNT - 1
+      : CONFIGURATOR_ACTS[state.actIndex]?.id === 'summary',
+  )
+}
+
 export function useConfiguratorQuickStep(): number {
   return useConfiguratorStore((state) => state.quickStepIndex)
 }

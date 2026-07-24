@@ -38,8 +38,8 @@ export function HomeWeldingHero() {
           Made to measure · Survey-led specification
         </p>
         <h1 className="max-w-[min(100%,42rem)] text-balance font-heading text-[clamp(1.75rem,4.2vw+0.35rem,3.75rem)] font-bold leading-[1.18] tracking-[-0.02em] text-white motion-safe:animate-hero-reveal motion-safe:[animation-delay:320ms] motion-reduce:opacity-100 sm:leading-[1.14] md:max-w-[48rem] md:text-[clamp(2rem,3.6vw+0.5rem,3.75rem)] md:leading-[1.12]">
-          Bespoke metalworks, glass balustrades and steel structures{' '}
-          <span className="text-white/88">to define your property.</span>
+          Bespoke metalworks, gates and railings, glass balustrades and structural steel{' '}
+          <span className="text-white/88">to define and upgrade your property.</span>
         </h1>
         <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/80 motion-safe:animate-hero-reveal motion-safe:[animation-delay:440ms] motion-reduce:opacity-100 md:text-base">
           Made to measure gates, railings, balconies and steelwork supplied and installed with care for long term

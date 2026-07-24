@@ -63,7 +63,7 @@ describe('gate-engine domain regression', () => {
         widthMm: 1800,
         heightMm: 1000,
         motorised: false,
-        finish: 'matte_black',
+        finish: 'black_satin',
         options: [],
         fencePanels: { quantity: 1, panels: [] },
       } as any),

@@ -27,7 +27,19 @@ export const GATE_OPTION_KEYS = [
 
 export type GateOptionKey = (typeof GATE_OPTION_KEYS)[number]
 
-export const FINISH_CODES = ['matte_black', 'zinc_grey', 'bronze', 'pearl_white'] as const
+/**
+ * Client-confirmed standard colours (Marius, 2026-07): black in satin, matt or
+ * gloss, anthracite RAL 7016, plus an "any other RAL code" escape hatch where
+ * the customer writes the code in the quote notes and pricing is agreed after
+ * the quotation request.
+ */
+export const FINISH_CODES = [
+  'black_satin',
+  'black_matt',
+  'black_gloss',
+  'anthracite_ral7016',
+  'other_ral',
+] as const
 
 export type FinishCode = (typeof FINISH_CODES)[number]
 
@@ -89,7 +101,7 @@ export type GatePreset = {
 
 export const DEFAULT_CONFIG_VERSION = 1 as const
 
-export const DEFAULT_FINISH: FinishCode = 'matte_black'
+export const DEFAULT_FINISH: FinishCode = 'black_satin'
 export const DEFAULT_SITE_SURVEY_REQUESTED = false
 
 export const EMPTY_FENCE_PANEL_INPUT: FencePanelInput = {

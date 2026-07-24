@@ -17,20 +17,20 @@ describe('gate-engine finishes', () => {
   })
 
   it('returns stable labels for UI consumption', () => {
-    expect(getFinishDefinition('matte_black').label).toBe('Matte black')
-    expect(getFinishDefinition('bronze').label).toBe('Bronze')
+    expect(getFinishDefinition('black_satin').label).toBe('Black satin')
+    expect(getFinishDefinition('black_matt').label).toBe('Black matt')
     expect(listFinishDefinitions()).toHaveLength(FINISH_CODES.length)
   })
 
-  it('uses darker strokes for pearl white contrast', () => {
-    const tokens = getFinishDefinition('pearl_white').schematic
-    expect(getFinishStrokeColor(tokens, 'pearl_white')).toBe(tokens.label)
-    expect(getFinishStrokeColor(tokens, 'pearl_white')).not.toBe(tokens.frame)
+  it('uses darker strokes for the light Other RAL swatch contrast', () => {
+    const tokens = getFinishDefinition('other_ral').schematic
+    expect(getFinishStrokeColor(tokens, 'other_ral')).toBe(tokens.label)
+    expect(getFinishStrokeColor(tokens, 'other_ral')).not.toBe(tokens.frame)
   })
 
   it('keeps schematic tokens distinct per finish', () => {
-    const matte = getFinishDefinition('matte_black').schematic
-    const bronze = getFinishDefinition('bronze').schematic
+    const matte = getFinishDefinition('black_satin').schematic
+    const bronze = getFinishDefinition('black_matt').schematic
     expect(matte.frame).not.toBe(bronze.frame)
     expect(matte.infill).not.toBe(bronze.infill)
   })

@@ -172,8 +172,8 @@ describe('gate-engine rendering', () => {
 
   it('uses different schematic colors for different finishes', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
-    const mattePlan = buildGateRenderPlan({ ...base, finish: 'matte_black' })
-    const bronzePlan = buildGateRenderPlan({ ...base, finish: 'bronze' })
+    const mattePlan = buildGateRenderPlan({ ...base, finish: 'black_satin' })
+    const bronzePlan = buildGateRenderPlan({ ...base, finish: 'black_matt' })
 
     const matteFrame = mattePlan.primitives.find((primitive) => primitive.id === 'swing-frame')
     const bronzeFrame = bronzePlan.primitives.find((primitive) => primitive.id === 'swing-frame')

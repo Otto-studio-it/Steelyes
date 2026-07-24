@@ -20,7 +20,7 @@ describe('gate-engine serialization', () => {
       widthMm: 2500,
       heightMm: 1000,
       motorised: true,
-      finish: 'matte_black',
+      finish: 'black_satin',
       siteSurveyRequested: false,
     })
     expect(serialized.options).toHaveLength(7)

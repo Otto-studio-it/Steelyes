@@ -17,8 +17,10 @@ import { useConfiguratorPricing, useConfiguratorQuickStep, useConfiguratorStore 
  */
 export function MobileQuickActionBar() {
   const pricing = useConfiguratorPricing()
-  const priceDeltaFlash = usePriceDeltaFlash(pricing.totalGbp)
   const step = useConfiguratorQuickStep()
+  // Client request: amounts only on the final quote step.
+  const priceRevealed = step === QUICK_PATH_STEP_COUNT - 1
+  const priceDeltaFlash = usePriceDeltaFlash(priceRevealed ? pricing.totalGbp : null)
   const nextQuickStep = useConfiguratorStore((state) => state.nextQuickStep)
   const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
   const barRef = useRef<HTMLDivElement>(null)
@@ -59,15 +61,23 @@ export function MobileQuickActionBar() {
     >
       <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 pt-2.5">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
-            {formatPricingBarHeadline(pricing)}
-          </p>
-          <div className="flex items-baseline gap-2">
-            <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
-              {formatPricingBarAmount(pricing)}
+          {priceRevealed ? (
+            <>
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                {formatPricingBarHeadline(pricing)}
+              </p>
+              <div className="flex items-baseline gap-2">
+                <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
+                  {formatPricingBarAmount(pricing)}
+                </p>
+                <PriceDeltaChip label={priceDeltaFlash} />
+              </div>
+            </>
+          ) : (
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              Price at final step
             </p>
-            <PriceDeltaChip label={priceDeltaFlash} />
-          </div>
+          )}
         </div>
 
         <div className="flex shrink-0 items-center gap-3">

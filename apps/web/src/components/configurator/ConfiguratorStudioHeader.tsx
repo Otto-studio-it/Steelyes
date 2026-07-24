@@ -7,7 +7,7 @@ import { ConfiguratorPriceSummary } from '@/components/configurator/Configurator
 import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
 import { usePriceDeltaFlash } from '@/hooks/usePriceDeltaFlash'
 import { formatPricingDisplayAmount, formatPricingDisplayHeadline } from '@/lib/configurator/labels'
-import { useConfiguratorPricing } from '@/store/configuratorStore'
+import { useConfiguratorPriceRevealed, useConfiguratorPricing } from '@/store/configuratorStore'
 
 type ConfiguratorStudioHeaderProps = {
   embed?: boolean
@@ -15,8 +15,30 @@ type ConfiguratorStudioHeaderProps = {
 
 export function ConfiguratorStudioHeader({ embed = false }: ConfiguratorStudioHeaderProps) {
   const pricing = useConfiguratorPricing()
-  const priceDeltaFlash = usePriceDeltaFlash(pricing.totalGbp)
+  const priceRevealed = useConfiguratorPriceRevealed()
+  const priceDeltaFlash = usePriceDeltaFlash(priceRevealed ? pricing.totalGbp : null)
   const [breakdownOpen, setBreakdownOpen] = useState(false)
+
+  // Client request: no amounts until the customer reaches the summary step.
+  if (!priceRevealed) {
+    return (
+      <header className="border-b border-steel/10 bg-canvas/95 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
+          <div className="min-w-0">
+            {!embed ? (
+              <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
+            ) : null}
+            <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel sm:text-base">
+              All details
+            </p>
+          </div>
+          <p className="px-2 text-right font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            Price revealed at summary
+          </p>
+        </div>
+      </header>
+    )
+  }
 
   return (
     <header className="border-b border-steel/10 bg-canvas/95 backdrop-blur-md">
