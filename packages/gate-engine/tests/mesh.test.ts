@@ -7,8 +7,8 @@ describe('gate-engine mesh', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const plan = buildGateMeshPlan(config)
 
-    expect(plan.finish).toBe('matte_black')
-    expect(plan.material.colorHex).toBe('#1A1A1A')
+    expect(plan.finish).toBe('black_satin')
+    expect(plan.material.colorHex).toBe('#1C1C1E')
     expect(plan.boxes.some((box) => box.id === 'leaf-frame-1')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'leaf-frame-2')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'left-mount-post')).toBe(true)
@@ -18,11 +18,11 @@ describe('gate-engine mesh', () => {
   it('uses finish material tokens from the shared catalog', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),
-      finish: 'bronze' as const,
+      finish: 'black_matt' as const,
     }
     const plan = buildGateMeshPlan(config)
 
-    expect(plan.material.colorHex).toBe('#8B6914')
+    expect(plan.material.colorHex).toBe('#1A1A1A')
   })
 
   it('builds a sliding mesh plan with track and panel boxes', () => {

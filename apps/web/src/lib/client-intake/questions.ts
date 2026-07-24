@@ -717,9 +717,29 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
   {
     id: 'open.finish_palette',
     section: 'open_composite',
-    label: 'Palette finiture/colori ufficiali (e se cambiano il prezzo)',
-    context: 'Elenco RAL / nomi commerciali + eventuali moltiplicatori.',
+    label: 'Colori standard: black satin/matt/gloss + anthracite RAL 7016, più “Other RAL” su richiesta',
+    context:
+      'Dal tuo messaggio di luglio: questi sono i colori standard, e per altri RAL il cliente scrive il codice nelle note del preventivo e vi accordate dopo. Conferma o correggi.',
+    input: 'confirm',
+    options: CONFIRM_OPTIONS,
+    seed: {
+      status: 'proposed',
+      value: {
+        choice: null,
+        standard: ['black_satin', 'black_matt', 'black_gloss', 'anthracite_ral7016'],
+        other_ral: 'cliente scrive il codice nelle note, prezzo da accordare',
+        note: '',
+      },
+    },
+  },
+  {
+    id: 'open.finish_uplift_rule',
+    section: 'open_composite',
+    label: 'Il colore costa £55+VAT al m²: su quali colori si applica, e qual è la base inclusa nel FROM?',
+    context:
+      'Hai scritto “£55+VAT pe metru patrat” per i colori standard. Da chiarire: il FROM include già un colore (es. black) e gli altri sono +£55/m²? Oppure OGNI verniciatura è +£55/m² e la base è solo zincata? E il m² si calcola larghezza × altezza del cancello?',
     input: 'textarea',
+    placeholder: 'Es. black incluso, RAL a scelta +£55/m², area = W×H…',
     blocking: true,
   },
 
@@ -1238,6 +1258,15 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     label: 'Hai un logo SVG / file ufficiali da usare?',
     context: 'Se sì, come ce li mandi (Drive, email…)?',
     input: 'textarea',
+  },
+  {
+    id: 'launch.gallery_photos',
+    section: 'launch',
+    label: 'Gallery e portfolio molto più grandi: mandaci foto per OGNI categoria',
+    context:
+      'Hai chiesto di dare più visibilità a tutte le lavorazioni, non solo ai cancelli. Servono foto per: gates+railings, glass balustrades+terraces, balconies, steel structures, platforms+staircases, security grilles. Scrivi come ce le mandi (Drive, WhatsApp…) e quante per categoria.',
+    input: 'textarea',
+    placeholder: 'Es. cartella Drive con sottocartelle per categoria, 10+ foto ciascuna…',
   },
   {
     id: 'launch.photo_consent',

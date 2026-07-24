@@ -21,7 +21,7 @@ describe('gate-engine validation', () => {
     expect(config.style).toBe('traditional_victorian')
     expect(config.widthMm).toBe(880)
     expect(config.heightMm).toBe(1000)
-    expect(config.finish).toBe('matte_black')
+    expect(config.finish).toBe('black_satin')
     expect(config.fencePanels.quantity).toBe(0)
     expect(config.options).toHaveLength(7)
   })

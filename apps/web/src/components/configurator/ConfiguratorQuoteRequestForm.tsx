@@ -163,7 +163,7 @@ export function ConfiguratorQuoteRequestForm() {
           name="message"
           rows={3}
           className="mt-2 w-full border border-steel/12 bg-white px-4 py-3 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
-          placeholder="Access notes, timelines, questions…"
+          placeholder="Access notes, timelines, questions… If you chose Other RAL colour, write the RAL code here."
         />
       </label>
 

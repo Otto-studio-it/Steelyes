@@ -53,7 +53,7 @@ function resolveRenderPalette(finish: FinishCode): RenderPalette {
     steel: tokens.strokeMuted,
     label: tokens.label,
     shadow: 'rgba(0, 0, 0, 0.12)',
-    postFill: finish === 'pearl_white' ? tokens.infill : tokens.panel,
+    postFill: finish === 'black_gloss' ? tokens.infill : tokens.panel,
   }
 }
 
