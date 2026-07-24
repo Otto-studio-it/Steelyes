@@ -19,11 +19,19 @@ export type IntakeAnswerView = {
   status: IntakeAnswerStatus
 }
 
+export type IntakeEventView = {
+  event_type: string
+  actor: string
+  question_id: string | null
+  created_at: string
+}
+
 type Props = {
   token: string
   clientName: string
   sessionStatus: string
   answers: IntakeAnswerView[]
+  events?: IntakeEventView[]
 }
 
 const PHASE_LABEL: Record<string, string> = {
@@ -33,7 +41,13 @@ const PHASE_LABEL: Record<string, string> = {
   launch: '4 · Lancio sito',
 }
 
-export function IntakeForm({ token, clientName, sessionStatus, answers: initialAnswers }: Props) {
+export function IntakeForm({
+  token,
+  clientName,
+  sessionStatus,
+  answers: initialAnswers,
+  events = [],
+}: Props) {
   const [openSection, setOpenSection] = useState<IntakeSectionId | null>(
     INTAKE_SECTIONS[0]?.id ?? null,
   )
@@ -168,6 +182,8 @@ export function IntakeForm({ token, clientName, sessionStatus, answers: initialA
         )
       })}
 
+      {events.length > 0 && <ActivityTimeline events={events} />}
+
       {!locked && (
         <div className="sticky bottom-0 -mx-4 border-t border-zinc-200 bg-[#fbf9f6]/95 px-4 py-3 backdrop-blur">
           <button
@@ -198,6 +214,68 @@ export function IntakeForm({ token, clientName, sessionStatus, answers: initialA
         </div>
       )}
     </div>
+  )
+}
+
+const EVENT_LABEL: Record<string, string> = {
+  session_created: 'Sessione creata da Steelyes',
+  intake_opened: 'Hai aperto il questionario',
+  answer_saved: 'Risposta salvata',
+  session_submitted: 'Hai segnato la sessione come completata',
+  session_locked: 'Steelyes ha bloccato la sessione',
+  session_unlocked: 'Steelyes ha riaperto la sessione',
+  pdf_exported: 'Steelyes ha esportato il PDF delle risposte',
+}
+
+function ActivityTimeline({ events }: { events: IntakeEventView[] }) {
+  const [open, setOpen] = useState(false)
+  const shown = open ? events : events.slice(0, 5)
+  return (
+    <section className="mb-8 border border-zinc-200 bg-white">
+      <div className="flex items-center justify-between px-4 py-3">
+        <div>
+          <p className="font-heading text-sm font-bold uppercase tracking-tight text-[#1b1c1a]">
+            La tua attività
+          </p>
+          <p className="mt-0.5 text-xs text-zinc-500">
+            Ogni salvataggio resta registrato: niente va perso, anche se correggi una risposta.
+          </p>
+        </div>
+        {events.length > 5 && (
+          <button
+            type="button"
+            className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-zinc-400"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? 'Meno' : `Tutte (${events.length})`}
+          </button>
+        )}
+      </div>
+      <ul className="border-t border-zinc-100 px-4 py-2">
+        {shown.map((e, i) => {
+          const q = e.question_id ? INTAKE_QUESTIONS.find((x) => x.id === e.question_id) : null
+          return (
+            <li
+              key={`${e.created_at}-${i}`}
+              className="flex items-baseline justify-between gap-3 border-b border-zinc-50 py-1.5 last:border-b-0"
+            >
+              <span className="text-xs text-zinc-700">
+                {EVENT_LABEL[e.event_type] ?? e.event_type}
+                {q && <span className="text-zinc-400"> — {q.label}</span>}
+              </span>
+              <span className="shrink-0 font-mono text-[9px] uppercase tracking-widest text-zinc-400">
+                {new Date(e.created_at).toLocaleString('it-IT', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
   )
 }
 

@@ -12,6 +12,7 @@ import {
   createIntakeSession,
   getIntakeAnswers,
   getLatestIntakeSession,
+  logIntakeEvent,
   setSessionStatus,
   upsertIntakeAnswer,
   type IntakeSessionRow,
@@ -76,6 +77,14 @@ export async function adminSaveIntakeAnswer(input: {
     source: 'admin',
   })
 
+  await logIntakeEvent({
+    sessionId: parsed.data.sessionId,
+    type: 'answer_saved',
+    actor: 'admin',
+    questionId: question.id,
+    meta: { status: parsed.data.status },
+  })
+
   revalidatePath('/admin/client-data')
   return { success: true }
 }
@@ -89,6 +98,11 @@ export async function adminSetIntakeStatus(
 
   if (!z.string().uuid().safeParse(sessionId).success) return { error: 'Sessione non valida.' }
   await setSessionStatus(sessionId, status)
+  await logIntakeEvent({
+    sessionId,
+    type: status === 'locked' ? 'session_locked' : 'session_unlocked',
+    actor: 'admin',
+  })
   revalidatePath('/admin/client-data')
   return { success: true }
 }
@@ -125,6 +139,8 @@ export async function exportIntakePdfAction(
       updated_at: a.updated_at,
     })),
   })
+
+  await logIntakeEvent({ sessionId, type: 'pdf_exported', actor: 'admin' })
 
   return {
     success: true,

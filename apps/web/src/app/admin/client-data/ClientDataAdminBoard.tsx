@@ -29,10 +29,18 @@ type AnswerView = {
   updated_at: string
 }
 
+type EventView = {
+  event_type: string
+  actor: string
+  question_id: string | null
+  created_at: string
+}
+
 type Props = {
   session: IntakeSessionRow | null
   answers: AnswerView[]
   siteUrl: string
+  events?: EventView[]
 }
 
 function downloadBase64Pdf(filename: string, base64: string) {
@@ -48,10 +56,16 @@ function downloadBase64Pdf(filename: string, base64: string) {
   URL.revokeObjectURL(url)
 }
 
-export function ClientDataAdminBoard({ session, answers: initialAnswers, siteUrl }: Props) {
+export function ClientDataAdminBoard({
+  session,
+  answers: initialAnswers,
+  siteUrl,
+  events = [],
+}: Props) {
   const [openSection, setOpenSection] = useState<IntakeSectionId | null>('confirm_shared')
   const [answers, setAnswers] = useState<AnswerView[]>(initialAnswers)
   const [message, setMessage] = useState<string | null>(null)
+  const [onlyOpen, setOnlyOpen] = useState(false)
   const [pending, startTransition] = useTransition()
 
   const byId = useMemo(() => {
@@ -218,9 +232,27 @@ export function ClientDataAdminBoard({ session, answers: initialAnswers, siteUrl
             <MiniStat label="Bloccanti" value={progress.blockingMissing} accent />
           </div>
 
+          {events.length > 0 && <AdminActivityTimeline events={events} />}
+
+          <label className="flex items-center gap-2 text-xs text-zinc-600">
+            <input
+              type="checkbox"
+              checked={onlyOpen}
+              onChange={(e) => setOnlyOpen(e.target.checked)}
+              className="accent-[#9e000c]"
+            />
+            Mostra solo domande aperte (mancanti o da confermare)
+          </label>
+
           <div className="flex flex-col gap-2">
             {INTAKE_SECTIONS.map((section) => {
-              const qs = INTAKE_QUESTIONS.filter((q) => q.section === section.id)
+              const qs = INTAKE_QUESTIONS.filter((q) => {
+                if (q.section !== section.id) return false
+                if (!onlyOpen) return true
+                const st = byId.get(q.id)?.status ?? 'missing'
+                return st === 'missing' || st === 'proposed'
+              })
+              if (onlyOpen && qs.length === 0) return null
               const open = openSection === section.id
               const done = qs.filter((q) => {
                 const st = byId.get(q.id)?.status
@@ -284,6 +316,71 @@ export function ClientDataAdminBoard({ session, answers: initialAnswers, siteUrl
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+const ADMIN_EVENT_LABEL: Record<string, string> = {
+  session_created: 'Sessione creata',
+  intake_opened: 'Marius ha aperto il questionario',
+  answer_saved: 'Risposta salvata',
+  session_submitted: 'Marius ha completato la sessione',
+  session_locked: 'Sessione bloccata',
+  session_unlocked: 'Sessione riaperta',
+  pdf_exported: 'PDF esportato',
+}
+
+function AdminActivityTimeline({ events }: { events: EventView[] }) {
+  const [open, setOpen] = useState(false)
+  const shown = open ? events : events.slice(0, 6)
+  return (
+    <div className="border border-zinc-200 bg-white">
+      <div className="flex items-center justify-between px-4 py-3">
+        <p className="font-heading text-sm font-bold uppercase tracking-tight text-[#1b1c1a]">
+          Attività sessione
+        </p>
+        {events.length > 6 && (
+          <button
+            type="button"
+            className="font-mono text-[10px] uppercase tracking-widest text-zinc-400"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? 'Meno' : `Tutte (${events.length})`}
+          </button>
+        )}
+      </div>
+      <ul className="border-t border-zinc-100 px-4 py-2">
+        {shown.map((e, i) => {
+          const q = e.question_id ? INTAKE_QUESTIONS.find((x) => x.id === e.question_id) : null
+          return (
+            <li
+              key={`${e.created_at}-${i}`}
+              className="flex items-baseline justify-between gap-3 border-b border-zinc-50 py-1.5 last:border-b-0"
+            >
+              <span className="text-xs text-zinc-700">
+                <span
+                  className={cn(
+                    'mr-1.5 font-mono text-[9px] uppercase tracking-widest',
+                    e.actor === 'client' ? 'text-[#9e000c]' : 'text-zinc-400',
+                  )}
+                >
+                  {e.actor === 'client' ? 'Marius' : 'Admin'}
+                </span>
+                {ADMIN_EVENT_LABEL[e.event_type] ?? e.event_type}
+                {q && <span className="text-zinc-400"> — {q.label}</span>}
+              </span>
+              <span className="shrink-0 font-mono text-[9px] uppercase tracking-widest text-zinc-400">
+                {new Date(e.created_at).toLocaleString('it-IT', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }

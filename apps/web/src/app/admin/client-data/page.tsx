@@ -1,12 +1,12 @@
 import { redirect } from 'next/navigation'
 
 import { ClientDataAdminBoard } from '@/app/admin/client-data/ClientDataAdminBoard'
-import { AdminHeader } from '@/components/admin/AdminHeader'
 import { ClientProvenancePanel } from '@/components/client-intake/ClientProvenancePanel'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import type { IntakeAnswerStatus } from '@/lib/client-intake/questions'
 import {
   ensureAnswersSeeded,
+  getIntakeEvents,
   getLatestIntakeSession,
 } from '@/lib/client-intake/session'
 import { env } from '@/lib/env'
@@ -19,11 +19,11 @@ export default async function ClientDataAdminPage() {
 
   const session = await getLatestIntakeSession()
   const answers = session ? await ensureAnswersSeeded(session.id) : []
+  const events = session ? await getIntakeEvents(session.id, 60) : []
   const siteUrl = (env.NEXT_PUBLIC_SITE_URL ?? 'https://steelyes.co.uk').replace(/\/$/, '')
 
   return (
     <>
-      <AdminHeader />
       <main className="mx-auto max-w-3xl px-4 py-8 md:py-12">
         <p className="font-mono text-[10px] uppercase tracking-widest text-[#906f6b]">
           Intake prodotto
@@ -53,6 +53,12 @@ export default async function ClientDataAdminPage() {
               status: a.status as IntakeAnswerStatus,
               source: a.source,
               updated_at: a.updated_at,
+            }))}
+            events={events.map((e) => ({
+              event_type: e.event_type,
+              actor: e.actor,
+              question_id: e.question_id,
+              created_at: e.created_at,
             }))}
           />
         </div>

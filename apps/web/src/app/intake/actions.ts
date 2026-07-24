@@ -7,6 +7,7 @@ import {
   computeProgress,
   getIntakeAnswers,
   getIntakeSessionByToken,
+  logIntakeEvent,
   markSessionSubmitted,
   touchSessionNotified,
   upsertIntakeAnswer,
@@ -68,6 +69,14 @@ export async function saveIntakeAnswer(input: {
     source: 'client',
   })
 
+  await logIntakeEvent({
+    sessionId: session.id,
+    type: 'answer_saved',
+    actor: 'client',
+    questionId: question.id,
+    meta: { status: parsed.data.status },
+  })
+
   if (shouldNotify(session)) {
     const answers = await getIntakeAnswers(session.id)
     const progress = computeProgress(answers)
@@ -96,6 +105,7 @@ export async function submitIntakeSession(token: string): Promise<IntakeSaveResu
   }
 
   await markSessionSubmitted(session.id)
+  await logIntakeEvent({ sessionId: session.id, type: 'session_submitted', actor: 'client' })
 
   const answers = await getIntakeAnswers(session.id)
   const progress = computeProgress(answers)

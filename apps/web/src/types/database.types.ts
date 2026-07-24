@@ -251,6 +251,91 @@ export type Database = {
           },
         ]
       }
+      client_intake_answer_history: {
+        Row: {
+          id: string
+          answer_id: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json: Json | null
+          status: string
+          source: string
+          change_kind: string
+          changed_at: string
+        }
+        Insert: {
+          id?: string
+          answer_id: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json?: Json | null
+          status: string
+          source: string
+          change_kind: string
+          changed_at?: string
+        }
+        Update: {
+          id?: string
+          answer_id?: string
+          session_id?: string
+          question_id?: string
+          section?: string
+          value_json?: Json | null
+          status?: string
+          source?: string
+          change_kind?: string
+          changed_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_answer_history_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "client_intake_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_intake_events: {
+        Row: {
+          id: string
+          session_id: string
+          event_type: string
+          actor: string
+          question_id: string | null
+          meta: Json | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          event_type: string
+          actor: string
+          question_id?: string | null
+          meta?: Json | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          event_type?: string
+          actor?: string
+          question_id?: string | null
+          meta?: Json | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "client_intake_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_intake_sessions: {
         Row: {
           id: string

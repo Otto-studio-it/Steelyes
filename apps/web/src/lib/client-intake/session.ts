@@ -76,6 +76,8 @@ export async function createIntakeSession(clientName = 'Marius'): Promise<Intake
     throw new Error(seedError.message)
   }
 
+  await logIntakeEvent({ sessionId: session.id, type: 'session_created', actor: 'admin' })
+
   return session as IntakeSessionRow
 }
 
@@ -230,6 +232,97 @@ export async function touchSessionNotified(sessionId: string): Promise<void> {
     .from('client_intake_sessions')
     .update({ last_notified_at: new Date().toISOString() })
     .eq('id', sessionId)
+}
+
+// ── Activity events + answer history (append-only, data-safety) ──────────────
+
+export type IntakeEventType =
+  | 'session_created'
+  | 'intake_opened'
+  | 'answer_saved'
+  | 'session_submitted'
+  | 'session_locked'
+  | 'session_unlocked'
+  | 'pdf_exported'
+
+export type IntakeEventRow = {
+  id: string
+  session_id: string
+  event_type: IntakeEventType
+  actor: 'client' | 'admin' | 'system'
+  question_id: string | null
+  meta: Json | null
+  created_at: string
+}
+
+export type IntakeAnswerHistoryRow = {
+  id: string
+  answer_id: string
+  session_id: string
+  question_id: string
+  section: string
+  value_json: Json | null
+  status: IntakeAnswerStatus
+  source: IntakeAnswerSource
+  change_kind: 'insert' | 'update'
+  changed_at: string
+}
+
+/** Fire-and-forget activity log. Never blocks the main flow. */
+export async function logIntakeEvent(input: {
+  sessionId: string
+  type: IntakeEventType
+  actor: 'client' | 'admin' | 'system'
+  questionId?: string
+  meta?: Json
+}): Promise<void> {
+  try {
+    const client = getServiceRoleClient()
+    await client.from('client_intake_events').insert({
+      session_id: input.sessionId,
+      event_type: input.type,
+      actor: input.actor,
+      question_id: input.questionId ?? null,
+      meta: input.meta ?? null,
+    })
+  } catch {
+    // Logging must never break saving an answer.
+  }
+}
+
+export async function getIntakeEvents(
+  sessionId: string,
+  limit = 100,
+): Promise<IntakeEventRow[]> {
+  const client = getServiceRoleClient()
+  const { data, error } = await client
+    .from('client_intake_events')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) throw new Error(error.message)
+  return (data as IntakeEventRow[]) ?? []
+}
+
+export async function getAnswerHistory(
+  sessionId: string,
+  questionId?: string,
+): Promise<IntakeAnswerHistoryRow[]> {
+  const client = getServiceRoleClient()
+  let query = client
+    .from('client_intake_answer_history')
+    .select('*')
+    .eq('session_id', sessionId)
+    .order('changed_at', { ascending: false })
+    .limit(200)
+
+  if (questionId) query = query.eq('question_id', questionId)
+
+  const { data, error } = await query
+  if (error) throw new Error(error.message)
+  return (data as IntakeAnswerHistoryRow[]) ?? []
 }
 
 export function computeProgress(answers: IntakeAnswerRow[]): IntakeProgress {
