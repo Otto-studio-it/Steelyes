@@ -8,7 +8,7 @@ import {
   walkToRefine,
   walkToSummary,
 } from './helpers/configurator'
-import { deleteSharedConfiguration, seedSharedConfiguration } from './helpers/supabase-config'
+import { deleteQuoteTestData, deleteSharedConfiguration, seedSharedConfiguration } from './helpers/supabase-config'
 
 test.describe('configurator release flow', () => {
   test('loads the design studio on choose act', async ({ page }) => {
@@ -39,14 +39,16 @@ test.describe('configurator release flow', () => {
   test('walks through all acts to summary', async ({ page }) => {
     await walkToSummary(page)
 
-    await expect(page.getByText(/Share configuration/i)).toBeVisible()
-    await expect(page.getByRole('button', { name: /Copy share link/i })).toBeVisible()
+    await expect(page.getByTestId('quote-request-form')).toBeVisible()
+    await expect(page.getByRole('button', { name: /Email my design/i })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
   })
 
   test('shows survey-required pricing when top railheads are enabled', async ({ page }) => {
     await walkToRefine(page)
 
+    // Accordion keeps one group open at a time; railheads live under Decoration.
+    await page.getByRole('button', { name: /Decoration/i }).click()
     const railheadsSwitch = page.getByRole('switch', { name: /Top railheads/i })
     await railheadsSwitch.click()
     await expect(railheadsSwitch).toHaveAttribute('aria-checked', 'true')
@@ -57,6 +59,8 @@ test.describe('configurator release flow', () => {
   test('persists site survey request through reload and summary', async ({ page }) => {
     await walkToRefine(page)
 
+    // Survey preference lives under the Site accordion group.
+    await page.getByRole('button', { name: /^Site/i }).click()
     const siteSurveyCheckbox = page.getByRole('checkbox', { name: /site survey requested/i })
     await siteSurveyCheckbox.check()
     await expect(siteSurveyCheckbox).toBeChecked()
@@ -64,6 +68,7 @@ test.describe('configurator release flow', () => {
     await page.reload()
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
     await walkToRefine(page)
+    await page.getByRole('button', { name: /^Site/i }).click()
     await expect(page.getByRole('checkbox', { name: /site survey requested/i })).toBeChecked()
 
     await continueWizard(page)
@@ -239,6 +244,14 @@ test.describe('configurator share route', () => {
       'href',
       `/api/quote/${encodeURIComponent(shareToken)}/pdf`,
     )
+    // Workshop fabrication documents must not be exposed on the public share page.
+    await expect(page.getByRole('link', { name: /cut list/i })).toHaveCount(0)
+    await expect(page.getByRole('link', { name: /workshop PDF/i })).toHaveCount(0)
+  })
+
+  test('blocks the workshop cut list for unauthenticated visitors', async ({ request }) => {
+    const response = await request.get(`/api/quote/${shareToken}/cut-list`)
+    expect(response.status()).toBe(403)
   })
 
   test('serves an indicative PDF for a shared configuration', async ({ request }) => {
@@ -254,37 +267,36 @@ test.describe('configurator share route', () => {
     await page.goto(`/contact?shareToken=${shareToken}`)
 
     await expect(page.getByText(/Attached configuration/i)).toBeVisible()
-    await expect(page.getByText(/double swing · traditional victorian/i)).toBeVisible()
+    await expect(page.getByText(/double swing · traditional victorian/i).first()).toBeVisible()
     await expect(page.locator('input[name="share_token"]')).toHaveValue(shareToken)
   })
 })
 
 test.describe('configurator live save', () => {
+  const testEmail = `e2e-quote-${Date.now()}@example.com`
+
   test.skip(
     !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY,
     'Supabase credentials are required for live save E2E',
   )
 
-  test('copies a share link after saving from summary', async ({ page, context }) => {
-    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  test.afterAll(async () => {
+    await deleteQuoteTestData(testEmail)
+  })
+
+  test('submits a quote request from the summary form', async ({ page }) => {
     await walkToSummary(page)
 
-    await page.getByRole('button', { name: /Copy share link/i }).click()
-    await expect(page.getByRole('button', { name: /Link copied/i })).toBeVisible({ timeout: 15_000 })
+    const form = page.getByTestId('quote-request-form')
+    await form.locator('input[name="name"]').fill('E2E Tester')
+    await form.locator('input[name="email"]').fill(testEmail)
+    await form.locator('input[name="phone"]').fill('+44 7700 900000')
+    await form.locator('input[name="postcode"]').fill('EN3 7TW')
 
-    const sharePath = await page.evaluate(async () => {
-      return navigator.clipboard.readText()
-    })
+    // Desktop uses the inline action bar; the submit button is bound to the form id.
+    await page.getByRole('button', { name: /Request quote/i }).first().click()
 
-    expect(sharePath).toMatch(/\/quote\/[A-Za-z0-9_-]+$/)
-    const token = sharePath.split('/quote/')[1]
-    expect(token).toBeTruthy()
-
-    await page.goto(sharePath)
-    await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
-
-    if (token) {
-      await deleteSharedConfiguration(token)
-    }
+    await expect(page.getByTestId('quote-request-success')).toBeVisible({ timeout: 15_000 })
+    await expect(page.getByRole('button', { name: /Request sent/i }).first()).toBeVisible()
   })
 })

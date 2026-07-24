@@ -13,7 +13,7 @@ import { ConfigurationSummary } from '@/components/configurator/ConfigurationSum
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
 import { PreviewCanvas } from '@/components/configurator/PreviewCanvas'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
-import { buildContactHandoffPath, buildCutListPath, buildQuotePdfPath } from '@/lib/configurator/share-token'
+import { buildContactHandoffPath, buildQuotePdfPath } from '@/lib/configurator/share-token'
 import {
   formatPricingDisplayAmount,
   formatPricingDisplayHeadline,
@@ -62,7 +62,6 @@ export function QuoteShareView({
 
           <ConfiguratorPriceSummary
             config={config}
-            showActions={false}
             compact
             pricingCopyVariant={pricingCopyVariant}
             pricingCatalog={pricingCatalog}
@@ -82,22 +81,6 @@ export function QuoteShareView({
             download
           >
             Download indicative PDF
-          </a>
-
-          <a
-            href={buildCutListPath(shareToken)}
-            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-steel/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-steel transition hover:border-primary/30 hover:text-primary"
-            download
-          >
-            Download cut list (CSV)
-          </a>
-
-          <a
-            href={buildCutListPath(shareToken, 'pdf')}
-            className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-steel/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-steel transition hover:border-primary/30 hover:text-primary"
-            download
-          >
-            Download workshop PDF
           </a>
 
           <Link

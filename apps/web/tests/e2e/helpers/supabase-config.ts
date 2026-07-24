@@ -38,3 +38,28 @@ export async function deleteSharedConfiguration(shareToken: string): Promise<voi
 
   await supabase.from('configurations').delete().eq('share_token', shareToken)
 }
+
+/** Remove all rows created by an E2E quote submission for the given email. */
+export async function deleteQuoteTestData(email: string): Promise<void> {
+  const supabase = getE2EServiceClient()
+  if (!supabase) {
+    return
+  }
+
+  const { data: quotes } = await supabase
+    .from('quote_requests')
+    .select('configuration_id')
+    .eq('email', email)
+
+  const configurationIds = (quotes ?? [])
+    .map((quote) => quote.configuration_id)
+    .filter((id): id is string => Boolean(id))
+
+  await supabase.from('quote_requests').delete().eq('email', email)
+  await supabase.from('design_captures').delete().eq('email', email)
+  await supabase.from('leads').delete().eq('email', email)
+
+  if (configurationIds.length > 0) {
+    await supabase.from('configurations').delete().in('id', configurationIds)
+  }
+}

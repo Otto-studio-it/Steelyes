@@ -84,9 +84,10 @@ function buildSwingMesh(config: GateConfig, leafCount: number): { boxes: GateMes
 
 function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
   const isCantilever = config.gateType === 'cantilever_sliding'
+  const isTelescopic = config.gateType === 'telescopic_sliding'
   const tailRatio = getCantileverTailRatio(config.widthMm)
   const tailWidth = isCantilever ? config.widthMm * tailRatio : 0
-  const panelWidth = isCantilever ? config.widthMm * 0.64 : config.widthMm * 0.88
+  const panelWidth = isCantilever ? config.widthMm * 0.64 : isTelescopic ? config.widthMm * 0.78 : config.widthMm * 0.88
   const panelHeight = config.heightMm - 56
 
   const boxes: GateMeshBox[] = [
@@ -123,6 +124,26 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
     positionMm: [isCantilever ? tailWidth + panelWidth / 2 - 24 : config.widthMm * 0.04, panelHeight / 2 + 28, 0],
     role: config.style === 'composite_boards' ? 'panel' : 'frame',
   })
+
+  if (isTelescopic) {
+    const segmentCount = 3
+    const segmentWidth = panelWidth / segmentCount
+    for (let index = 0; index < segmentCount; index += 1) {
+      boxes.push({
+        kind: 'box',
+        id: `telescopic-segment-${index + 1}`,
+        widthMm: segmentWidth - index * scaleVisualBoldness(14),
+        heightMm: panelHeight - index * scaleVisualBoldness(10),
+        depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
+        positionMm: [
+          config.widthMm * 0.04 + index * segmentWidth * 0.9,
+          panelHeight / 2 + 28 + index * 3,
+          index * 1.5,
+        ],
+        role: config.style === 'composite_boards' ? 'panel' : 'frame',
+      })
+    }
+  }
 
   return boxes
 }

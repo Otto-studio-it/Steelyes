@@ -3,8 +3,6 @@
 import { Sparkles } from 'lucide-react'
 import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
 
-import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
-
 import { buildConfigurationSummaryLines } from '@/lib/configurator/configuration-summary'
 import {
   formatLabelText,
@@ -29,7 +27,6 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
 
 type ConfiguratorPriceSummaryProps = {
   config?: GateConfig
-  showActions?: boolean
   compact?: boolean
   pricingCopyVariant?: PricingCopyVariant
   pricingCatalog?: PricingCatalog
@@ -37,7 +34,6 @@ type ConfiguratorPriceSummaryProps = {
 
 export function ConfiguratorPriceSummary({
   config: configOverride,
-  showActions = true,
   compact = false,
   pricingCopyVariant = 'desktop',
   pricingCatalog,
@@ -151,12 +147,6 @@ export function ConfiguratorPriceSummary({
               </ul>
             </div>
           </>
-        ) : null}
-
-        {showActions ? (
-          <div className="mt-5 hidden flex-col gap-3 sm:flex-row lg:flex">
-            <ConfiguratorQuoteHandoffButton className="inline-flex min-h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark disabled:opacity-60" />
-          </div>
         ) : null}
       </div>
     </div>

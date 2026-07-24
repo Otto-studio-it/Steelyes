@@ -59,7 +59,7 @@ export function ConfiguratorStudioHeader({ embed = false }: ConfiguratorStudioHe
       {breakdownOpen ? (
         <div id="configurator-price-breakdown" className="border-t border-steel/10 bg-white px-4 py-4 lg:px-8">
           <div className="mx-auto max-w-7xl">
-            <ConfiguratorPriceSummary showActions={false} pricingCopyVariant="desktop" />
+            <ConfiguratorPriceSummary pricingCopyVariant="desktop" />
           </div>
         </div>
       ) : null}

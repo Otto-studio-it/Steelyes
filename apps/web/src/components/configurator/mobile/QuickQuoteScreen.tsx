@@ -1,6 +1,7 @@
 'use client'
 
-import { ConfiguratorSharePanel } from '@/components/configurator/ConfiguratorSharePanel'
+import { ConfiguratorQuoteRequestForm } from '@/components/configurator/ConfiguratorQuoteRequestForm'
+import { EmailMyDesignPanel } from '@/components/configurator/EmailMyDesignPanel'
 import {
   SITE_SURVEY_FIELD_LABEL,
   finishLabel,
@@ -67,7 +68,9 @@ export function QuickQuoteScreen() {
         Add decorative details
       </button>
 
-      <ConfiguratorSharePanel />
+      <ConfiguratorQuoteRequestForm />
+
+      <EmailMyDesignPanel />
     </div>
   )
 }

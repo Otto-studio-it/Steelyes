@@ -126,6 +126,27 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
         </label>
       </div>
 
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <label className="block text-sm font-medium">
+          Phone
+          <input
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            className={fieldClassName}
+          />
+        </label>
+        <label className="block text-sm font-medium">
+          Postcode
+          <input
+            name="postcode"
+            autoComplete="postal-code"
+            className={fieldClassName}
+          />
+        </label>
+      </div>
+
       <label className="block text-sm font-medium">
         Project type
         <select
@@ -144,15 +165,6 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
           <option>Security Gates / Doors</option>
           <option>Other</option>
         </select>
-      </label>
-
-      <label className="block text-sm font-medium">
-        Postcode
-        <input
-          name="postcode"
-          autoComplete="postal-code"
-          className={fieldClassName}
-        />
       </label>
 
       <label className="block text-sm font-medium">

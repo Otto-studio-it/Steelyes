@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { buildGateCutList, serializeCutListCsv } from '@steelyes/gate-engine'
 
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
+import { requireAdmin } from '@/lib/admin/require-admin'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 import { buildWorkshopCutListPdf } from '@/lib/configurator/workshop-pdf'
 
@@ -10,6 +11,12 @@ export async function GET(
   request: Request,
   context: { params: { shareToken: string } },
 ): Promise<NextResponse> {
+  // Fabrication documents are workshop-internal: admin session required.
+  const denied = await requireAdmin()
+  if (denied) {
+    return NextResponse.json({ error: denied.error }, { status: 403 })
+  }
+
   const { shareToken } = context.params
 
   if (!isValidShareToken(shareToken)) {

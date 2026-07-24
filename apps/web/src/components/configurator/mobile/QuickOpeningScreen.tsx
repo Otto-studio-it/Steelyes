@@ -4,6 +4,7 @@ import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 
 import { DimensionControl } from '@/components/configurator/DimensionControl'
+import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
 import {
   HEIGHT_DIMENSION_PRESETS,
   MAX_HEIGHT_MM,
@@ -26,6 +27,8 @@ export function QuickOpeningScreen() {
 
   return (
     <div className="space-y-6">
+      <MeasurementGuide />
+
       <div className="space-y-2">
         <span className="block font-mono text-xs uppercase tracking-widest text-muted">Opening width</span>
         <div className="grid grid-cols-1 gap-2">

@@ -113,6 +113,8 @@ type ConfiguratorState = {
   savedConfigHash: string | null
   saveState: SaveState
   saveError: string | null
+  quoteSubmitted: boolean
+  markQuoteSubmitted: () => void
   hydrate: () => void
   setPricingCatalog: (catalog: PricingCatalog) => void
   setConfig: (config: GateConfig) => void
@@ -142,6 +144,7 @@ function invalidateShareIfConfigChanged(config: GateConfig, get: () => Configura
       savedConfigHash: null,
       saveState: 'idle',
       saveError: null,
+      quoteSubmitted: false,
     })
     persistShareMeta(null)
   }
@@ -160,6 +163,11 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
   savedConfigHash: null,
   saveState: 'idle',
   saveError: null,
+  quoteSubmitted: false,
+
+  markQuoteSubmitted: () => {
+    set({ quoteSubmitted: true })
+  },
 
   hydrate: () => {
     const config = readStoredConfig()
@@ -206,6 +214,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
       savedConfigHash: null,
       saveState: 'idle',
       saveError: null,
+      quoteSubmitted: false,
     })
     if (get().hydrated) {
       persistConfig(config)

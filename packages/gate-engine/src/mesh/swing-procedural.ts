@@ -10,6 +10,10 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
+function isBifoldingGate(gateType: GateConfig['gateType']): boolean {
+  return gateType === 'bifolding_double_swing' || gateType === 'single_bifolding'
+}
+
 export function buildSwingProceduralMembers(
   config: GateConfig,
   mountingPosts: GateMeshBox[],
@@ -33,16 +37,47 @@ export function buildSwingProceduralMembers(
   for (let leafIndex = 0; leafIndex < leafCount; leafIndex += 1) {
     const leafCenterX = -halfSpan + leafWidth * (leafIndex + 0.5)
     const leafInnerWidth = leafWidth - scaleVisualBoldness(24)
+    const bifoldGap = isBifoldingGate(config.gateType) ? scaleVisualBoldness(14) : 0
+    const bifoldPanelWidth = isBifoldingGate(config.gateType) ? (leafInnerWidth - bifoldGap) / 2 : leafInnerWidth
 
     boxes.push({
       kind: 'box',
       id: `leaf-frame-${leafIndex + 1}`,
-      widthMm: leafInnerWidth,
+      widthMm: isBifoldingGate(config.gateType) ? bifoldPanelWidth : leafInnerWidth,
       heightMm: config.heightMm - 48,
       depthMm: FRAME_DEPTH_MM * 0.75,
-      positionMm: [leafCenterX, config.heightMm / 2, 0],
+      positionMm: [
+        isBifoldingGate(config.gateType) ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
+        config.heightMm / 2,
+        0,
+      ],
       role: config.style === 'composite_boards' ? 'panel' : 'frame',
     })
+
+    if (isBifoldingGate(config.gateType)) {
+      boxes.push({
+        kind: 'box',
+        id: `leaf-fold-${leafIndex + 1}`,
+        widthMm: bifoldGap,
+        heightMm: config.heightMm - 30,
+        depthMm: FRAME_DEPTH_MM * 0.56,
+        positionMm: [leafCenterX, config.heightMm / 2, FRAME_DEPTH_MM * 0.1],
+        role: 'rail',
+      })
+      boxes.push({
+        kind: 'box',
+        id: `leaf-frame-${leafIndex + 1}-outer`,
+        widthMm: bifoldPanelWidth,
+        heightMm: config.heightMm - 48,
+        depthMm: FRAME_DEPTH_MM * 0.75,
+        positionMm: [
+          leafCenterX + (bifoldPanelWidth + bifoldGap) / 2,
+          config.heightMm / 2,
+          0,
+        ],
+        role: config.style === 'composite_boards' ? 'panel' : 'frame',
+      })
+    }
 
     const railYs = [
       { id: `leaf-${leafIndex + 1}-rail-upper`, ratio: rails.upperMid },
@@ -55,10 +90,14 @@ export function buildSwingProceduralMembers(
       boxes.push({
         kind: 'box',
         id: rail.id,
-        widthMm: leafInnerWidth - 8,
+        widthMm: isBifoldingGate(config.gateType) ? bifoldPanelWidth - 8 : leafInnerWidth - 8,
         heightMm: scaleVisualBoldness(8),
         depthMm: FRAME_DEPTH_MM * 0.65,
-        positionMm: [leafCenterX, config.heightMm * rail.ratio, 0],
+        positionMm: [
+          isBifoldingGate(config.gateType) ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
+          config.heightMm * rail.ratio,
+          0,
+        ],
         role: 'rail',
       })
     }
@@ -78,7 +117,9 @@ export function buildSwingProceduralMembers(
 
     for (let picketIndex = 0; picketIndex < picketCount; picketIndex += 1) {
       const ratio = (picketIndex + 0.5) / picketCount
-      const x = leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
+      const x = isBifoldingGate(config.gateType)
+        ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 + bifoldPanelWidth * ratio
+        : leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
       cylinders.push({
         kind: 'cylinder',
         id: `leaf-${leafIndex + 1}-picket-upper-${picketIndex}`,
@@ -93,7 +134,9 @@ export function buildSwingProceduralMembers(
     const effectiveLower = Math.round(lowerCount / leafCount) * kickMultiplier
     for (let picketIndex = 0; picketIndex < effectiveLower; picketIndex += 1) {
       const ratio = (picketIndex + 0.5) / effectiveLower
-      const x = leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
+      const x = isBifoldingGate(config.gateType)
+        ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 + bifoldPanelWidth * ratio
+        : leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
       cylinders.push({
         kind: 'cylinder',
         id: `leaf-${leafIndex + 1}-picket-lower-${picketIndex}`,

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { formatConfigurationSummaryInline } from '@/lib/configurator/configuration-summary'
-import { buildQuoteSharePath, buildConfiguratorEditorPath } from '@/lib/configurator/share-token'
+import { buildCutListPath, buildQuoteSharePath, buildConfiguratorEditorPath } from '@/lib/configurator/share-token'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 import type { Database } from '@/types/database.types'
 import { deserializeGateConfig, type SerializedGateConfigV1 } from '@steelyes/gate-engine'
@@ -59,7 +59,7 @@ export default async function QuotesAdminPage() {
   const { data: quotes, error } = await client
     .from('quote_requests')
     .select(
-      'id, first_name, last_name, email, postcode, status, admin_notes, created_at, configurations ( share_token, gate_type, parameters )',
+      'id, first_name, last_name, email, phone, postcode, status, admin_notes, created_at, configurations ( share_token, gate_type, parameters )',
     )
     .order('created_at', { ascending: false })
     .limit(100)
@@ -101,6 +101,14 @@ export default async function QuotesAdminPage() {
                     <a href={`mailto:${quote.email}`} className="underline-offset-2 hover:underline">
                       {quote.email}
                     </a>
+                    {quote.phone ? (
+                      <>
+                        {' · '}
+                        <a href={`tel:${quote.phone}`} className="underline-offset-2 hover:underline">
+                          {quote.phone}
+                        </a>
+                      </>
+                    ) : null}
                     {' · '}
                     {quote.postcode}
                   </p>
@@ -127,6 +135,18 @@ export default async function QuotesAdminPage() {
                         >
                           Apri nel configuratore →
                         </Link>
+                        <a
+                          href={buildCutListPath(configuration.share_token)}
+                          className="font-mono text-[10px] uppercase tracking-widest text-steel underline-offset-2 hover:underline"
+                        >
+                          Cut list CSV ↓
+                        </a>
+                        <a
+                          href={buildCutListPath(configuration.share_token, 'pdf')}
+                          className="font-mono text-[10px] uppercase tracking-widest text-steel underline-offset-2 hover:underline"
+                        >
+                          PDF officina ↓
+                        </a>
                       </div>
                     ) : null}
                   </div>

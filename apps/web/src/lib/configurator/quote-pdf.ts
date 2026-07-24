@@ -21,8 +21,15 @@ const PAGE_HEIGHT = 842
 const MARGIN = 48
 const LINE_HEIGHT = 16
 
-function parseHexColor(hex: string): ReturnType<typeof rgb> {
-  const normalized = hex.replace('#', '')
+// Render plans emit both hex and rgba() colors; alpha is carried separately
+// by primitive.opacity, so only the RGB channels matter here.
+function parseHexColor(color: string): ReturnType<typeof rgb> {
+  const rgbaMatch = color.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/)
+  if (rgbaMatch) {
+    return rgb(Number(rgbaMatch[1]) / 255, Number(rgbaMatch[2]) / 255, Number(rgbaMatch[3]) / 255)
+  }
+
+  const normalized = color.replace('#', '')
   const value = normalized.length === 3
     ? normalized
         .split('')
@@ -32,6 +39,12 @@ function parseHexColor(hex: string): ReturnType<typeof rgb> {
   const red = Number.parseInt(value.slice(0, 2), 16) / 255
   const green = Number.parseInt(value.slice(2, 4), 16) / 255
   const blue = Number.parseInt(value.slice(4, 6), 16) / 255
+
+  if (Number.isNaN(red) || Number.isNaN(green) || Number.isNaN(blue)) {
+    // Unknown color format — fall back to the ink colour instead of crashing.
+    return rgb(27 / 255, 28 / 255, 26 / 255)
+  }
+
   return rgb(red, green, blue)
 }
 

@@ -9,6 +9,7 @@ import {
   WIDTH_DIMENSION_PRESETS,
 } from '@/lib/configurator/presentation'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
+import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 export function DimensionsStep() {
@@ -17,6 +18,8 @@ export function DimensionsStep() {
 
   return (
     <div className="space-y-4">
+      <MeasurementGuide />
+
       <DimensionControl
         label="Width"
         value={config.widthMm}

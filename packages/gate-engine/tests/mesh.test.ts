@@ -52,6 +52,22 @@ describe('gate-engine mesh', () => {
     expect(plan.cylinders.some((cylinder) => cylinder.role === 'bar')).toBe(true)
   })
 
+  it('adds fold detail boxes for bifolding swing gates', () => {
+    const config = createGateConfig(createGatePreset('bifolding_double_swing'))
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-frame-1-outer')).toBe(true)
+  })
+
+  it('adds telescopic segment boxes for telescopic sliding gates', () => {
+    const config = createGateConfig(createGatePreset('telescopic_sliding'))
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-3')).toBe(true)
+  })
+
   it('rejects invalid configs before mesh generation', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),

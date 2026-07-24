@@ -1,9 +1,9 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { useEffect, useRef } from 'react'
 
-import { ConfiguratorQuoteHandoffButton } from '@/components/configurator/ConfiguratorQuoteHandoffButton'
+import { CONFIGURATOR_QUOTE_FORM_ID } from '@/components/configurator/ConfiguratorQuoteRequestForm'
 import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
 import { usePriceDeltaFlash } from '@/hooks/usePriceDeltaFlash'
 import { formatPricingDisplayAmount, formatPricingDisplayHeadline } from '@/lib/configurator/labels'
@@ -26,6 +26,7 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
   const { isFirst, isLast, act } = useConfiguratorAct()
   const nextAct = useConfiguratorStore((state) => state.nextAct)
   const prevAct = useConfiguratorStore((state) => state.prevAct)
+  const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
   const actValidationIssues = useConfiguratorActValidationIssues()
   const summaryValidationIssues = useConfiguratorValidationIssues()
   const validationIssues = act.id === 'summary' ? summaryValidationIssues : actValidationIssues
@@ -101,7 +102,24 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
         </button>
       ) : null}
       {isLast ? (
-        <ConfiguratorQuoteHandoffButton className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60 sm:flex-none" />
+        <button
+          type="submit"
+          form={CONFIGURATOR_QUOTE_FORM_ID}
+          disabled={quoteSubmitted}
+          className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60 sm:flex-none"
+        >
+          {quoteSubmitted ? (
+            <>
+              <Check className="h-4 w-4" aria-hidden />
+              Request sent
+            </>
+          ) : (
+            <>
+              Request quote
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </>
+          )}
+        </button>
       ) : (
         <button
           type="button"
