@@ -442,6 +442,19 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     placeholder: 'Descrivi step e importi…',
     blocking: true,
   },
+  {
+    id: 'open.size_uplift_scope',
+    section: 'open_pricing',
+    label: 'La regola di rincaro misure è la stessa per tutte le 8 tipologie?',
+    context:
+      'Un cantilever più largo costa più di uno swing più largo? Se la regola cambia per tipo, indica quali differiscono.',
+    input: 'choice',
+    options: [
+      { value: 'same_all', label: 'Stessa regola per tutti' },
+      { value: 'differs', label: 'Cambia per tipo (scrivi sopra quali)' },
+      { value: 'unsure', label: 'Non so' },
+    ],
+  },
 
   // ── Open commercial (installazione, IVA, consegna, pagamenti) ──
   {
@@ -548,6 +561,26 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
 
   // ── Open dimensions ─────────────────────────────────────────
   {
+    id: 'open.posts_offering',
+    section: 'open_dimensions',
+    label: 'Che pali/pilastri vendete con i cancelli? Materiali, sezione, cima?',
+    context:
+      'Il configuratore oggi fa scegliere pali in acciaio/mattone/pietra/legno con cima flat/ball/pyramid/spear e 120 mm sopra il telaio — tutto inventato da noi. Serve la gamma reale: cosa producete voi, cosa fa il muratore del cliente.',
+    input: 'textarea',
+    placeholder: 'Es. pali acciaio 100×100 con ball finial; mattone lo fa il cliente…',
+    blocking: true,
+  },
+  {
+    id: 'open.posts_pricing',
+    section: 'open_dimensions',
+    label: 'I pali sono inclusi nel prezzo FROM o extra? A che prezzo?',
+    context:
+      'Il preventivo deve sapere se il FROM copre anche i pali di sostegno o se vanno aggiunti come voce separata.',
+    input: 'textarea',
+    placeholder: 'Es. coppia pali acciaio inclusa; pilastri muratura esclusi…',
+    blocking: true,
+  },
+  {
     id: 'open.width_meaning',
     section: 'open_dimensions',
     label: 'La larghezza digitata dal cliente cos’è?',
@@ -642,6 +675,15 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     label: 'Varianti bushes/spirals (taglie + prezzi) e regola di conteggio',
     context: '',
     input: 'textarea',
+  },
+  {
+    id: 'open.arched_geometry',
+    section: 'open_decorations',
+    label: 'Com’è fatto l’arco (£850)? Quanto si alza al centro rispetto ai lati?',
+    context:
+      'Il 3D oggi disegna una curva inventata. Serve la freccia tipica dell’arco (es. +150 mm al centro) e se la curva è sempre uguale o scala con la larghezza.',
+    input: 'textarea',
+    placeholder: 'Es. +150 mm al centro su 2 m, proporzionale sulla larghezza…',
   },
   {
     id: 'open.option_compatibility',
@@ -950,6 +992,19 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     input: 'textarea',
     placeholder: 'Es. W 2500–6000 mm, H 900–2200 mm…',
     blocking: true,
+  },
+  {
+    id: 'gate.tracked.frame_tube',
+    section: 'gate_tracked_sliding',
+    label: 'Le famiglie scorrevoli (tracked, cantilever, telescopic, bifold) usano la stessa sezione tubo dello swing?',
+    context:
+      'La struttura del telaio è chiesta in dettaglio solo per il double swing. Se gli scorrevoli usano tubi o rinforzi diversi, il 3D e la cut list devono saperlo.',
+    input: 'choice',
+    options: [
+      { value: 'same', label: 'Stesso tubo per tutte le famiglie' },
+      { value: 'different', label: 'Diverso (spiega nelle note binario)' },
+      { value: 'unsure', label: 'Non so' },
+    ],
   },
   {
     id: 'gate.tracked.upper_guide',
