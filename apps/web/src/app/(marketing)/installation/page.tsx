@@ -1,7 +1,9 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
   title: 'Gate Installation | Supply & Install Steel Gates UK',
@@ -84,11 +86,11 @@ export default function InstallationPage() {
           </div>
           <div className="absolute bottom-4 left-4 bg-black/70 px-4 py-3 text-white">
             <p className="font-heading text-xs font-bold uppercase tracking-widest">Zones</p>
-            <p className="font-mono text-[10px] uppercase text-white/80">UK-wide install team</p>
+            <p className="font-mono text-[10px] uppercase text-white/80">{COVERAGE_COPY.headline}</p>
           </div>
           <div className="absolute -bottom-4 -left-1 bg-[#1B1C1A] p-4 text-white md:p-6">
-            <p className="font-heading text-3xl font-black text-[#9E000C]">48H</p>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Site survey response</p>
+            <p className="font-heading text-xl font-black uppercase text-[#9E000C]">{SURVEY_COPY.headline}</p>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Confirmed per enquiry</p>
           </div>
         </div>
       </section>
@@ -100,7 +102,7 @@ export default function InstallationPage() {
             {[
               {
                 step: 'Technical Survey',
-                body: 'Free site visit — laser measure, substrate check, access and drainage assessment. Survey report and indicative drawing delivered within 48 hours.',
+                body: 'Site survey — laser measure, substrate check, access and drainage assessment. Survey scope and timing are confirmed before booking.',
               },
               {
                 step: 'Frame Setting',
@@ -108,7 +110,7 @@ export default function InstallationPage() {
               },
               {
                 step: 'On-site Wiring',
-                body: 'For automated gates, supply cable routing, control board installation and safety device wiring handled by our own team. No subcontracted electricians.',
+                body: 'For automated gates, supply cable routing, control board installation and safety device wiring are handled by qualified electricians within our installation scope.',
               },
               {
                 step: 'Final Tuning',
@@ -137,22 +139,26 @@ export default function InstallationPage() {
               <span className="font-mono text-lg text-zinc-500">−</span>
             </summary>
             <p className="mt-4 text-sm font-light text-[#5C403D]">
-              Yes. Installation teams include certified electricians to manage supply, controls, and access integration.
+              Yes, where automation is included in scope. Electrical work is carried out by qualified electricians as part of the agreed installation package.
             </p>
           </details>
           {[
-            'How long does a typical driveway install take?',
-            'Are your installers Gate Safe certified?',
-            'Can you install onto existing stone pillars?',
-          ].map((q) => (
-            <button
-              key={q}
-              type="button"
-              className="flex min-h-[52px] w-full items-center justify-between border border-zinc-200 bg-white px-5 text-left font-heading text-sm font-bold uppercase tracking-tight"
-            >
-              {q}
-              <span className="font-mono text-lg text-zinc-500">+</span>
-            </button>
+            {
+              q: 'How long does a typical driveway install take?',
+              a: 'Duration depends on gate type, automation, and site conditions. We confirm programme length in your written quotation after survey.',
+            },
+            {
+              q: 'Can you install onto existing stone pillars?',
+              a: 'Often yes, subject to structural review during survey. Post condition, fixing centres and load paths must be verified before fabrication.',
+            },
+          ].map(({ q, a }) => (
+            <details key={q} className="border border-zinc-200 bg-white p-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between font-heading text-sm font-bold uppercase tracking-tight">
+                {q}
+                <span className="font-mono text-lg text-zinc-500">+</span>
+              </summary>
+              <p className="mt-4 text-sm font-light text-[#5C403D]">{a}</p>
+            </details>
           ))}
         </div>
       </section>
@@ -175,9 +181,12 @@ export default function InstallationPage() {
           <p className="mt-5 max-w-2xl text-sm font-light text-white/85 md:text-base">
             Book your survey and we will outline gate geometry, set-out, and installation sequence for your project.
           </p>
-          <button className="mt-8 min-h-[48px] bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white">
-            Book free survey
-          </button>
+          <Link
+            href="/contact"
+            className="mt-8 inline-flex min-h-[48px] items-center bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white"
+          >
+            Request a survey
+          </Link>
         </div>
       </section>
     </MarketingShell>

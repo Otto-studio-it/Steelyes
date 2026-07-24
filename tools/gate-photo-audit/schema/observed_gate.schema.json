@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ObservedGateAnalysis",
+  "type": "object",
+  "required": [
+    "gate_type_guess",
+    "confidence",
+    "leaf_count",
+    "style_guess",
+    "topology",
+    "visible_options",
+    "composition_narrative",
+    "proportion_observations",
+    "uncertainties"
+  ],
+  "properties": {
+    "gate_type_guess": {
+      "type": "string",
+      "description": "One of the gate-engine GateType values"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "leaf_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "style_guess": {
+      "type": "string",
+      "description": "traditional_victorian or composite_boards"
+    },
+    "topology": {
+      "type": "object",
+      "properties": {
+        "posts": { "type": "object" },
+        "frame": { "type": "object" },
+        "infill": { "type": "object" },
+        "hardware": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sliding_system": {
+          "type": ["object", "null"]
+        }
+      }
+    },
+    "visible_options": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "composition_narrative": {
+      "type": "object",
+      "required": ["how_parts_connect", "why_layout", "distinctive_features"],
+      "properties": {
+        "how_parts_connect": { "type": "string" },
+        "why_layout": { "type": "string" },
+        "distinctive_features": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "proportion_observations": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "renderer_recommendations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "open_questions_for_client": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

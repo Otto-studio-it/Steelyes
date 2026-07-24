@@ -1,0 +1,130 @@
+{
+  "gate_type_guess": "tracked_sliding",
+  "confidence": 0.92,
+  "leaf_count": 1,
+  "style_guess": "traditional_victorian",
+  "topology": {
+    "mechanism": {
+      "type": "ground_tracked_sliding",
+      "cantilever_tail": false,
+      "travel_direction": "horizontal_parallel_to_fence",
+      "track": {
+        "visible": true,
+        "position": "ground_embedded_in_paving",
+        "components": ["rail", "rollers_under_bottom_rail"]
+      }
+    },
+    "posts": {
+      "count": 2,
+      "role": "opening_pillars_with_coping",
+      "site_hardware": ["photocell_sensors", "optional_intercom"]
+    },
+    "panel": {
+      "leaf_count": 1,
+      "frame": "rectangular_tubular_steel",
+      "rails": ["top", "mid_cross_rail", "bottom_heavy"],
+      "mid_rail_height_ratio": 0.33
+    },
+    "infill": {
+      "upper_zone": "vertical_pickets_regular_spacing",
+      "lower_zone": "increased_vertical_density_below_mid_rail",
+      "finial_styles_observed": ["ball", "spear", "mid_rail_spear_row"],
+      "bar_orientation": "vertical"
+    },
+    "automation_observed": {
+      "gear_rack": "photo_04",
+      "ground_motor": "photo_04",
+      "photocells": "photos_01_03"
+    },
+    "sliding_system": {
+      "type": "tracked",
+      "not_cantilever": true
+    }
+  },
+  "visible_options": {
+    "middle_bar": true,
+    "top_railheads": true,
+    "dog_bars": true,
+    "dog_bar_railheads": true,
+    "arched_top": true,
+    "bushes": true,
+    "spirals": false
+  },
+  "composition_narrative": {
+    "how_parts_connect": "A ground-level track is fixed across the driveway opening. The gate panel is a welded frame with top, mid, and bottom rails. Vertical pickets infill the frame; density increases below the mid-rail. The panel rolls on wheels captured by the track. When open, the panel slides parallel to the boundary fence or wall. Pillars define the clear opening width; automation adds a rack on the bottom rail and a motor drive.",
+    "why_layout": "Tracked sliding suits wide driveways where swing arcs are impractical. The mid-rail stiffens the panel and anchors decorative rows. Dense lower bars reduce gap at the base. Ground track carries weight compared to cantilever systems that need a counterweight tail.",
+    "distinctive_features": [
+      "Visible ground track in paving",
+      "Single sliding leaf (not two swing leaves)",
+      "No cantilever counterweight tail",
+      "Mid-rail with optional second finial row",
+      "Lower infill denser than upper",
+      "Motorisation common (rack + operator)"
+    ]
+  },
+  "proportion_observations": {
+    "photo_01_lower_dense_ratio": "approx_33_percent_height",
+    "photo_02_height_estimate": "1400_to_1500mm",
+    "photo_02_width_estimate": "3500_to_4000mm",
+    "photo_03_width_estimate": "4500_to_5500mm",
+    "photo_03_height_estimate": "1800_to_2000mm",
+    "visual_vs_catalog_width": "photos often exceed 2600mm catalog max",
+    "visual_vs_catalog_height": "photos often exceed 1000mm catalog max except photo_02 near low height"
+  },
+  "uncertainties": [
+    "Exact catalog mapping for ball vs spear finials",
+    "Whether photo 02 height contradicts catalog or measures different reference",
+    "Diagonal brace on photo 04 — standard on tracked or cantilever-only",
+    "Composite variants (03 vs 05) — one SKU or two product lines"
+  ],
+  "renderer_recommendations": [
+    "Draw ground track prominently; keep cantilever tail disabled for tracked_sliding",
+    "Model mid-rail and dual-density pickets for Victorian tracked",
+    "Support finial style variants on top_railheads",
+    "Composite: horizontal slats + optional vision strip tier (photo 03)",
+    "Composite: camelback lattice variant (photo 05) separate layout path",
+    "Schematic motor/rack layer when motorised true",
+    "Panel width in render ~88-92% of opening — validate against photos"
+  ],
+  "open_questions_for_client": [
+    "Is 2500-2600mm the standard width or minimum FROM band?",
+    "Is vision strip a catalog option on composite tracked?",
+    "Are mid-rail finials standard or part of dog_bar_railheads?",
+    "Confirm photo 05 is tracked sliding not another mechanism"
+  ],
+  "client_reference_alignment": {
+    "catalog_gate_type": "Tracked Sliding Gate",
+    "catalog_style_victorian": "Traditional Victorian Style",
+    "catalog_height_mm": [900, 1000],
+    "catalog_width_mm": [2500, 2600],
+    "catalog_manual_from_gbp": 2200,
+    "catalog_automated_from_gbp": 3600,
+    "engine_preset_width_mm": 2500,
+    "engine_preset_height_mm": 1000,
+    "engine_preset_motorised": true,
+    "dimension_match_engine_vs_catalog": "MATCH",
+    "dimension_match_photos_vs_catalog": "REVIEW"
+  },
+  "photo_sources": {
+    "primary_victorian": [
+      "photos/01-victorian-ball-finials-track.png",
+      "photos/02-victorian-spear-finials-brick.png"
+    ],
+    "primary_composite": "photos/03-composite-three-tier-vision-strip.png",
+    "automation_reference": "photos/04-victorian-sliding-motorised-rack.png",
+    "composite_camelback": "photos/05-composite-camelback-lattice.png",
+    "victorian_arched": "photos/06-victorian-arched-rings-sliding.png"
+  },
+  "composite_variants": [
+    {
+      "id": "three_tier_vision",
+      "photo": "photos/03-composite-three-tier-vision-strip.png",
+      "layout": "solid_slats_top + vision_bars_mid + solid_slats_bottom"
+    },
+    {
+      "id": "camelback_lattice",
+      "photo": "photos/05-composite-camelback-lattice.png",
+      "layout": "arched_lattice_top + wood_panels_mid + lattice_bottom"
+    }
+  ]
+}

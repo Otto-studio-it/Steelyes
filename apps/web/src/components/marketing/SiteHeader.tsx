@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
+import { SocialLinks } from '@/components/marketing/SocialLinks'
 
 type SiteHeaderProps = {
   pathname: string
@@ -46,7 +47,7 @@ const NAV_GROUPS: NavGroup[] = [
 ]
 
 const PRIMARY_LINKS: NavLink[] = [
-  { label: 'Process', href: '/installation' },
+  { label: 'Installation', href: '/installation' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'About', href: '/about' },
 ]
@@ -174,17 +175,19 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <SocialLinks iconClassName="text-zinc-500 hover:text-[#9E000C]" />
+          {/* Secondary exploration — quote is the only primary CTA */}
           <Link
             href="/configurator"
-            className="inline-flex min-h-[44px] items-center justify-center border border-zinc-300 px-4 py-2 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A] transition-colors duration-100 hover:border-[#9E000C] hover:text-[#9E000C]"
+            className="inline-flex min-h-[44px] items-center justify-center px-2 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]"
           >
             Configure
           </Link>
           <Link
             href="/contact"
-            className="inline-flex min-h-[44px] items-center justify-center bg-[#9E000C] px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-[#9B1515]"
+            className="inline-flex min-h-[44px] items-center justify-center bg-[#9E000C] px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-[#9B1515] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
           >
-            Request Quote
+            Request a quote
           </Link>
         </div>
 
@@ -206,20 +209,20 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
           aria-label="Mobile primary navigation"
           className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-zinc-200 bg-white lg:hidden"
         >
-          <div className="space-y-3 px-4 py-4">
+          <div className="space-y-2 px-4 py-4">
             <Link
               href="/contact"
               onClick={closeMenu}
-              className="inline-flex min-h-[52px] w-full items-center justify-center bg-[#9E000C] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white"
+              className="inline-flex min-h-[52px] w-full items-center justify-center bg-[#9E000C] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
             >
-              Request a Quote
+              Request a quote
             </Link>
             <Link
               href="/configurator"
               onClick={closeMenu}
-              className="inline-flex min-h-[52px] w-full items-center justify-center border border-[#1B1C1A] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]"
+              className="inline-flex min-h-[44px] w-full items-center justify-center font-heading text-xs font-bold uppercase tracking-tight text-zinc-600 underline-offset-4 hover:text-[#9E000C] hover:underline"
             >
-              Configure Your Gate
+              Or configure a gate
             </Link>
           </div>
 
@@ -292,6 +295,9 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
               </Link>
             </li>
           </ul>
+          <div className="border-t border-zinc-100 px-0 py-2">
+            <SocialLinks iconClassName="text-zinc-500 hover:text-[#9E000C]" />
+          </div>
         </nav>
       ) : null}
     </header>

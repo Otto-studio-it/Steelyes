@@ -1,16 +1,21 @@
 'use client'
 
 import { useFormState, useFormStatus } from 'react-dom'
+import { useState } from 'react'
+import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
+
 import { submitContactForm, type ContactFormState } from '@/app/actions'
+import { ConfigurationReferenceBanner } from '@/components/configurator/ConfigurationReferenceBanner'
+import { TurnstileWidget } from '@/components/security/TurnstileWidget'
 
 const initialState: ContactFormState = { status: 'idle' }
 
-function SubmitButton() {
+function SubmitButton({ disabled = false }: { disabled?: boolean }) {
   const { pending } = useFormStatus()
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={pending || disabled}
       className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white disabled:opacity-60"
     >
       {pending ? (
@@ -22,14 +27,25 @@ function SubmitButton() {
           Sending…
         </>
       ) : (
-        'Send specification'
+        'Request a quote'
       )}
     </button>
   )
 }
 
-export function ContactForm() {
+const fieldClassName =
+  'mt-2 min-h-[44px] w-full border-b-2 border-zinc-300 bg-transparent px-0 transition-[border-color] focus:border-[#9E000C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9E000C] focus-visible:ring-offset-2'
+
+type ContactFormProps = {
+  shareToken?: string
+  attachedConfig?: GateConfig | null
+  pricingCatalog?: PricingCatalog
+}
+
+export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog }: ContactFormProps) {
   const [state, action] = useFormState(submitContactForm, initialState)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   if (state.status === 'success') {
     return (
@@ -54,6 +70,14 @@ export function ContactForm() {
     <form action={action} className="space-y-6 border border-zinc-200 bg-white p-5 md:p-8">
       <h2 className="font-heading text-2xl font-black uppercase">Project brief</h2>
 
+      {attachedConfig && shareToken ? (
+        <ConfigurationReferenceBanner
+          config={attachedConfig}
+          shareToken={shareToken}
+          pricingCatalog={pricingCatalog}
+        />
+      ) : null}
+
       <div className="inline-flex items-center gap-3 border border-[#9E000C]/20 bg-[#9E000C]/5 px-4 py-2">
         <span className="h-2 w-2 animate-pulse bg-[#9E000C]" />
         <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#9E000C]">
@@ -61,7 +85,6 @@ export function ContactForm() {
         </span>
       </div>
 
-      {/* Honeypot — hidden from real users */}
       <input
         type="text"
         name="website"
@@ -70,6 +93,9 @@ export function ContactForm() {
         autoComplete="off"
         className="sr-only"
       />
+
+      {shareToken ? <input type="hidden" name="share_token" value={shareToken} /> : null}
+      {turnstileToken ? <input type="hidden" name="turnstile_token" value={turnstileToken} /> : null}
 
       {state.status === 'error' && (
         <p role="alert" className="border border-red-200 bg-red-50 px-4 py-3 font-mono text-xs text-red-700">
@@ -84,7 +110,7 @@ export function ContactForm() {
             name="name"
             required
             autoComplete="name"
-            className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+            className={fieldClassName}
           />
         </label>
         <label className="block text-sm font-medium">
@@ -95,7 +121,28 @@ export function ContactForm() {
             inputMode="email"
             required
             autoComplete="email"
-            className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+            className={fieldClassName}
+          />
+        </label>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <label className="block text-sm font-medium">
+          Phone
+          <input
+            name="phone"
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            className={fieldClassName}
+          />
+        </label>
+        <label className="block text-sm font-medium">
+          Postcode
+          <input
+            name="postcode"
+            autoComplete="postal-code"
+            className={fieldClassName}
           />
         </label>
       </div>
@@ -104,7 +151,8 @@ export function ContactForm() {
         Project type
         <select
           name="project_type"
-          className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+          defaultValue={attachedConfig ? 'Automated Swing Gates' : ''}
+          className={fieldClassName}
         >
           <option value="">Select a type</option>
           <option>Automated Swing Gates</option>
@@ -120,26 +168,24 @@ export function ContactForm() {
       </label>
 
       <label className="block text-sm font-medium">
-        Postcode
-        <input
-          name="postcode"
-          autoComplete="postal-code"
-          className="mt-2 min-h-[44px] w-full border-b border-zinc-300 bg-transparent px-0 focus:border-[#9E000C] focus:outline-none focus:ring-0"
-        />
-      </label>
-
-      <label className="block text-sm font-medium">
         Project details <span aria-hidden="true" className="text-[#9E000C]">*</span>
         <textarea
           name="message"
           required
           rows={5}
           placeholder="Describe your project — opening width, gate style, access requirements, timeline..."
-          className="mt-2 min-h-[120px] w-full resize-none border-b border-zinc-300 bg-transparent px-0 placeholder:text-zinc-400 focus:border-[#9E000C] focus:outline-none focus:ring-0"
+          defaultValue={
+            attachedConfig && shareToken
+              ? `Please quote the attached gate configuration (${shareToken}). Add any site notes, access constraints, or timeline here.`
+              : undefined
+          }
+          className={`${fieldClassName} min-h-[120px] resize-none placeholder:text-zinc-400`}
         />
       </label>
 
-      <SubmitButton />
+      <TurnstileWidget onToken={setTurnstileToken} />
+
+      <SubmitButton disabled={turnstileRequired && !turnstileToken} />
     </form>
   )
 }

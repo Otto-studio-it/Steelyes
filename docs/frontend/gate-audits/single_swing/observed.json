@@ -1,0 +1,114 @@
+{
+  "gate_type_guess": "single_swing",
+  "confidence": 0.85,
+  "leaf_count": 1,
+  "style_guess": "traditional_victorian",
+  "topology": {
+    "posts": {
+      "count": 1,
+      "role": "hinge_post_with_heavy_duty_hinges",
+      "free_side": "opposite_edge_latch_or_drop_bolt_optional"
+    },
+    "frame": {
+      "top_rail": "straight_horizontal",
+      "middle_rail": true,
+      "bottom_rail": true,
+      "rail_count": 3,
+      "middle_rail_height_ratio": 0.33,
+      "profile": "square_hollow_tube_black"
+    },
+    "infill": {
+      "upper_zone": "primary_pickets_wide_spacing_with_top_finials",
+      "mid_tier_finials": "smaller_finials_above_middle_rail_on_secondary_pickets",
+      "lower_zone": "double_density_pickets_between_middle_and_bottom_rail",
+      "bar_orientation": "vertical",
+      "kick_plate_density_multiplier": 2
+    },
+    "hardware": [
+      "wrap_around_hinges_on_hinge_post",
+      "gear_rack_on_bottom_rail_observed_requires_client_confirmation"
+    ],
+    "sliding_system": null
+  },
+  "visible_options": {
+    "middle_bar": true,
+    "top_railheads": true,
+    "dog_bars": true,
+    "dog_bar_railheads": false,
+    "arched_top": false,
+    "bushes": false,
+    "spirals": false
+  },
+  "composition_narrative": {
+    "how_parts_connect": "A single rectangular frame hangs from one hinge post. Three horizontal rails divide the leaf. Primary vertical pickets run full height with large finials extending above the top rail. Secondary shorter pickets sit between primaries in the upper section, each with a smaller finial above the middle rail. Below the middle rail, filler pickets double the vertical density for a dog-bar safety zone.",
+    "why_layout": "Single leaf suits narrower or side openings where one pivot is enough. Mid-height finials add Victorian ornament without closing the gate. Dense lower zone blocks small gaps. One hinge side keeps hardware simple versus double-leaf meeting stiles.",
+    "distinctive_features": [
+      "Single leaf only — no center meeting stile",
+      "Three-rail layout with middle rail at roughly one-third height",
+      "Two-tier finial heights (large top, small mid)",
+      "100 percent denser pickets below middle rail",
+      "Straight top rail in primary reference photo"
+    ]
+  },
+  "proportion_observations": {
+    "middle_rail_from_bottom_ratio": "approx_33_percent",
+    "lower_dense_zone_ratio": "approx_33_percent_of_height",
+    "finial_extension_above_top_rail": "approx_15_to_20_cm_visual",
+    "visual_width_vs_client_catalog": "photo_02 approx_3500_to_4000mm vs catalog_800_900mm",
+    "visual_height_vs_client_catalog": "photo_02 approx_1500_to_1600mm vs catalog_900_1000mm"
+  },
+  "uncertainties": [
+    "Gear rack on photo 02 — swing gate or misclassified sliding panel",
+    "Whether catalog width 800-900mm is pedestrian band vs photo driveway width",
+    "Mid-tier finials mapping to catalog options",
+    "Photos 01 and 03 are sliding not single swing"
+  ],
+  "renderer_recommendations": [
+    "When leafCount is 1, remove center split and draw explicit hinge post edge",
+    "Add three-rail layout for single swing Victorian fidelity",
+    "Model dual-density pickets below middle rail",
+    "Support staggered finial tiers or document as GAP until catalog confirms",
+    "Composite branch: horizontal slats in 3 vertical bays (photo 04)",
+    "Clarify product copy: single leaf swing vs single panel sliding"
+  ],
+  "open_questions_for_client": [
+    "Is 800-900mm the standard single swing width or minimum FROM band?",
+    "What causes gear rack on hinged gate in photo 02?",
+    "Are mid-height finials priced as railheads or standard feature?",
+    "Is 3-bay composite layout standard or project-specific?"
+  ],
+  "client_reference_alignment": {
+    "catalog_gate_type": "Single Swing Gate",
+    "catalog_style_victorian": "Traditional Victorian Style",
+    "catalog_height_mm": [900, 1000],
+    "catalog_width_mm": [800, 900],
+    "catalog_manual_from_gbp_victorian": 850,
+    "catalog_automated_from_gbp_victorian": 2700,
+    "catalog_manual_from_gbp_composite": 750,
+    "engine_preset_width_mm": 900,
+    "engine_preset_height_mm": 1000,
+    "dimension_match_engine_vs_catalog": "MATCH",
+    "dimension_match_photos_vs_catalog": "REVIEW"
+  },
+  "photo_sources": {
+    "primary_victorian": "photos/02-victorian-single-panel-driveway.png",
+    "primary_composite": "photos/04-composite-single-swing-privacy.png"
+  },
+  "excluded_photos": [
+    {
+      "path": "photos/01-victorian-arched-sliding-panel.png",
+      "reason": "Single panel sliding with track — use tracked_sliding audit"
+    },
+    {
+      "path": "photos/03-victorian-sliding-automated.png",
+      "reason": "Motorised sliding with gear rack — use tracked_sliding audit"
+    }
+  ],
+  "composite_variant": {
+    "gate_type_guess": "single_swing",
+    "style_guess": "composite_boards",
+    "leaf_count": 1,
+    "photo": "photos/04-composite-single-swing-privacy.png",
+    "topology_summary": "Three vertical bays, horizontal grey wood-effect slats, full privacy, hinge on one post, straight top"
+  }
+}

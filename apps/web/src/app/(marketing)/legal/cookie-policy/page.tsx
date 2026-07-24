@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
+
+import { LegalDraftNotice } from '@/components/marketing/LegalDraftNotice'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { BUSINESS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy | Steelyes',
@@ -13,6 +16,7 @@ export default function CookiePolicyPage() {
         <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Legal</p>
         <h1 className="font-heading text-4xl font-black uppercase sm:text-5xl">Cookie Policy</h1>
         <p className="mt-4 font-mono text-xs text-zinc-500">Last updated: May 2026</p>
+        <LegalDraftNotice />
 
         <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-[#3A3A3A] [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-[#1B1C1A] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
 
@@ -90,7 +94,7 @@ export default function CookiePolicyPage() {
           <h2>7. Contact</h2>
           <p>
             If you have questions about our use of cookies, please contact us at{' '}
-            <a href="mailto:steelyes@yahoo.com" className="text-[#9E000C] hover:underline">steelyes@yahoo.com</a>.
+            <a href={`mailto:${BUSINESS.email}`} className="text-[#9E000C] hover:underline">{BUSINESS.email}</a>.
           </p>
 
           <p className="mt-8 border-t border-zinc-200 pt-6 text-xs text-zinc-400">
