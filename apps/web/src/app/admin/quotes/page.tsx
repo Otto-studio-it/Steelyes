@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { formatConfigurationSummaryInline } from '@/lib/configurator/configuration-summary'
 import { buildCutListPath, buildQuoteSharePath, buildConfiguratorEditorPath } from '@/lib/configurator/share-token'
@@ -66,7 +65,6 @@ export default async function QuotesAdminPage() {
 
   return (
     <>
-      <AdminHeader />
       <main className="mx-auto max-w-3xl px-4 py-8 md:py-12">
         <p className="font-mono text-[10px] uppercase tracking-widest text-muted">Pipeline preventivi</p>
         <h1 className="mt-1 font-heading text-2xl font-black uppercase tracking-tight text-steel">

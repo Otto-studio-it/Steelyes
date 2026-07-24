@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
 
 const SECTIONS = [
@@ -42,7 +41,6 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <AdminHeader />
       <main className="mx-auto max-w-2xl px-4 py-10 md:py-16">
         <p className="font-mono text-[10px] uppercase tracking-widest text-[#906f6b]">
           Pannello di Gestione
