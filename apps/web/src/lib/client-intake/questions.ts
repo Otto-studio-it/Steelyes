@@ -19,6 +19,7 @@ export type IntakeSectionId =
   | 'confirm_gates'
   | 'confirm_decorations'
   | 'open_pricing'
+  | 'open_commercial'
   | 'open_dimensions'
   | 'open_decorations'
   | 'open_composite'
@@ -78,6 +79,13 @@ export const INTAKE_SECTIONS: IntakeSection[] = [
     id: 'open_pricing',
     title: 'Prezzi ancora da chiarire',
     intro: 'Serve per aggiornare listino e preventivi senza inventare formule.',
+    phase: 'open',
+  },
+  {
+    id: 'open_commercial',
+    title: 'Installazione, IVA, consegna e pagamenti',
+    intro:
+      'Regole commerciali mai chiarite nei messaggi: decidono cosa promette il sito e cosa scriviamo nei preventivi.',
     phase: 'open',
   },
   {
@@ -435,6 +443,109 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     blocking: true,
   },
 
+  // ── Open commercial (installazione, IVA, consegna, pagamenti) ──
+  {
+    id: 'open.vat_included',
+    section: 'open_commercial',
+    label: 'I prezzi FROM sono IVA inclusa o esclusa?',
+    context:
+      'Nei messaggi WhatsApp i prezzi (es. Double Swing Auto £3800) non dicono mai se includono VAT 20%. Serve per ogni prezzo mostrato sul sito e sui preventivi: sbagliare qui significa mostrare tutti i prezzi sbagliati del 20%.',
+    input: 'choice',
+    options: [
+      { value: 'inc_vat', label: 'IVA inclusa (prezzo finale consumatore)' },
+      { value: 'ex_vat', label: 'IVA esclusa (+20% da aggiungere)' },
+      { value: 'unsure', label: 'Non so / dipende dal cliente' },
+    ],
+    blocking: true,
+  },
+  {
+    id: 'open.from_includes_install',
+    section: 'open_commercial',
+    label: 'Il prezzo FROM include l’installazione / posa in opera?',
+    context:
+      'Mai chiarito nel listino WhatsApp. Decide se il configuratore mostra “fornitura e posa” o “solo cancello”; cambia anche il testo dei preventivi PDF.',
+    input: 'choice',
+    options: [
+      { value: 'includes_install', label: 'Sì, fornitura + posa inclusa' },
+      { value: 'supply_only', label: 'No, solo fornitura (posa a parte)' },
+      { value: 'depends', label: 'Dipende (spiega sotto)' },
+    ],
+    blocking: true,
+  },
+  {
+    id: 'open.survey_cost',
+    section: 'open_commercial',
+    label: 'Il sopralluogo (survey) è gratuito o a pagamento?',
+    context:
+      'Il sito in bozza promette “free survey” nella trust bar della homepage: va confermato prima del lancio, altrimenti lo togliamo.',
+    input: 'choice',
+    options: [
+      { value: 'free', label: 'Gratuito' },
+      { value: 'paid', label: 'A pagamento (indica quanto sotto)' },
+      { value: 'free_if_order', label: 'Gratuito solo se si conferma l’ordine' },
+    ],
+  },
+  {
+    id: 'open.delivery_terms',
+    section: 'open_commercial',
+    label: 'Consegna e trasporto: incluso nel prezzo? Fino a dove arrivate?',
+    context:
+      'Serve per definire le zone servite sul sito e se il preventivo deve aggiungere un costo di trasporto per distanza.',
+    input: 'textarea',
+    placeholder: 'Es. incluso entro 50 miglia da Londra, oltre £X/miglio…',
+  },
+  {
+    id: 'open.lead_time',
+    section: 'open_commercial',
+    label: 'Tempi di produzione e consegna tipici (per tipo di cancello, se cambiano)',
+    context:
+      'Il cliente finale lo chiede sempre. Va mostrato nel configuratore e nel preventivo per gestire le aspettative.',
+    input: 'textarea',
+    placeholder: 'Es. 4–6 settimane standard, 8 per automatizzati…',
+  },
+  {
+    id: 'open.deposit_terms',
+    section: 'open_commercial',
+    label: 'Come funzionano acconto e pagamenti?',
+    context:
+      'Es. 50% alla conferma, saldo a installazione. Serve per il testo del preventivo e per le condizioni di vendita sul sito.',
+    input: 'textarea',
+    placeholder: 'Es. 50% deposito, saldo a fine posa…',
+  },
+  {
+    id: 'open.auto_includes',
+    section: 'open_commercial',
+    label: 'Cosa include esattamente il prezzo “Automated”?',
+    context:
+      'I listini distinguono solo Auto vs Manual. Per descrivere l’opzione servono i dettagli: marca/modello motore, fotocellule, quanti telecomandi, tastierino, collegamento elettrico incluso o no.',
+    input: 'textarea',
+    placeholder: 'Es. motore BFT, 2 telecomandi, fotocellule incluse, scavi esclusi…',
+    blocking: true,
+  },
+  {
+    id: 'open.automation_limits',
+    section: 'open_commercial',
+    label: 'Ci sono limiti oltre i quali NON automatizzate (peso, larghezza, tipo)?',
+    context:
+      'Dal PDF catalogo: “limiti tecnici della meccanica automatizzata” mai definiti. Serve per non vendere “Automated” su misure che poi in officina non si possono motorizzare.',
+    input: 'textarea',
+    placeholder: 'Es. sopra 5 m o 400 kg per anta solo motori industriali, prezzo a parte…',
+  },
+  {
+    id: 'open.finish_included',
+    section: 'open_commercial',
+    label: 'Zincatura e verniciatura sono incluse nel prezzo FROM?',
+    context:
+      'Serve per la palette finiture del configuratore: se la verniciatura a polvere è un extra va prezzata, se è inclusa va detto nel preventivo.',
+    input: 'choice',
+    options: [
+      { value: 'both_included', label: 'Zincatura + verniciatura incluse' },
+      { value: 'galv_only', label: 'Solo zincatura inclusa, vernice extra' },
+      { value: 'both_extra', label: 'Entrambe extra' },
+      { value: 'depends', label: 'Dipende (spiega nelle note finiture)' },
+    ],
+  },
+
   // ── Open dimensions ─────────────────────────────────────────
   {
     id: 'open.width_meaning',
@@ -593,6 +704,15 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     input: 'textarea',
   },
   {
+    id: 'open.fencing_panel_specs',
+    section: 'open_fencing',
+    label: 'Misure standard dei pannelli e pali: cosa è incluso?',
+    context:
+      'Nel brief ogni pannello ha height + length ma mancano le taglie standard (es. pannelli da 1830 mm?) e se i pali di fissaggio sono inclusi nel prezzo del pannello o venduti a parte.',
+    input: 'textarea',
+    placeholder: 'Es. pannelli standard 1800×1200, pali £X cad, inclusi ogni 2 pannelli…',
+  },
+  {
     id: 'open.fencing_match_gate',
     section: 'open_fencing',
     label: 'Lo stile del pannello deve sempre abbinarsi al cancello scelto?',
@@ -625,6 +745,30 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     context: 'Indica quali usare come baseline, o “uso quelle già mandate”.',
     input: 'textarea',
   },
+  {
+    id: 'open.posts_in_preview',
+    section: 'open_preview',
+    label: 'La preview deve mostrare anche pali/pilastri di default, o solo il cancello?',
+    context: 'Vale per tutte le famiglie. Dal PDF audit double swing (brick pillars sì/no).',
+    input: 'choice',
+    options: [
+      { value: 'with_posts', label: 'Sì, con pali/pilastri' },
+      { value: 'gate_only', label: 'Solo il cancello' },
+      { value: 'per_family', label: 'Dipende dalla famiglia (spiega nelle note foto)' },
+    ],
+  },
+  {
+    id: 'open.motor_in_preview',
+    section: 'open_preview',
+    label: 'Motore, cremagliera e fotocellule devono vedersi nella preview?',
+    context: 'Soprattutto per tracked e cantilever: disegno tecnico completo o pulito commerciale?',
+    input: 'choice',
+    options: [
+      { value: 'show', label: 'Sì, mostrare l’automazione' },
+      { value: 'hide', label: 'No, preview pulita' },
+      { value: 'toggle', label: 'Meglio un interruttore mostra/nascondi' },
+    ],
+  },
 
   // ── Per-gate ────────────────────────────────────────────────
   {
@@ -647,11 +791,138 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     input: 'textarea',
   },
   {
+    id: 'gate.double_swing.rail_structure',
+    section: 'gate_double_swing',
+    label: 'Struttura del telaio: quanti rail orizzontali e che sezione di tubo usate?',
+    context:
+      'Oggi il disegno 3D usa 4 rail e tubo 40×2,5 mm presi dall’analisi delle foto, non da un tuo dato. Serve il valore di officina per disegnare il cancello giusto e per la cut list di produzione.',
+    input: 'textarea',
+    placeholder: 'Es. 4 rail, tubo quadro 40×40×3 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.double_swing.picket_spacing',
+    section: 'gate_double_swing',
+    label: 'Interasse delle barre verticali (picket)?',
+    context:
+      'Il 3D oggi usa 110 mm di default. Il valore vero cambia l’aspetto del cancello e il conteggio dei railheads.',
+    input: 'text',
+    placeholder: 'Es. 110 mm centro-centro…',
+  },
+  {
+    id: 'gate.double_swing.ground_clearance',
+    section: 'gate_double_swing',
+    label: 'Quanta luce da terra lasciate sotto il cancello?',
+    context:
+      'Dal PDF audit: mai specificato. Cambia il disegno in preview e l’altezza utile del corpo.',
+    input: 'text',
+    placeholder: 'Es. 50 mm standard, di più su pendenze…',
+  },
+  {
+    id: 'gate.double_swing.center_detail',
+    section: 'gate_double_swing',
+    label: 'Al centro delle due ante: piastra decorativa, latch semplice, o entrambi?',
+    context: 'Serve per disegnare il gruppo centrale nella preview 2D/3D.',
+    input: 'choice',
+    options: [
+      { value: 'latch_plate', label: 'Piastra decorativa con latch' },
+      { value: 'simple_latch', label: 'Latch semplice' },
+      { value: 'both', label: 'Entrambi, dipende dal modello' },
+      { value: 'unsure', label: 'Non so' },
+    ],
+  },
+  {
+    id: 'gate.double_swing.deco_photo_mapping',
+    section: 'gate_double_swing',
+    label: 'Nelle foto che ci hai mandato: quali elementi sono top bands, basket twist, spear row e cerchi?',
+    context:
+      'I nomi del listino non sono mai stati collegati agli elementi reali nelle foto. Senza questa mappa il 3D disegna decorazioni inventate.',
+    input: 'textarea',
+    placeholder: 'Es. i due anelli in alto = top bands, la torsione al centro = basket twist…',
+    blocking: true,
+  },
+  {
+    id: 'gate.double_swing.size_limits',
+    section: 'gate_double_swing',
+    label: 'Double Swing: larghezza e altezza minime e massime REALI, e step standard?',
+    context:
+      'Dal PDF catalogo: oggi abbiamo solo la misura iniziale (1800/1900 × 900/1000). Il configuratore accetta 600–6000 mm per tutti i cancelli — limite inventato. Servono i veri min/max di produzione per bloccare configurazioni impossibili.',
+    input: 'textarea',
+    placeholder: 'Es. W 1800–4000 mm, H 900–2000 mm, step 100 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.double_swing.opening_direction',
+    section: 'gate_double_swing',
+    label: 'Le ante aprono verso l’interno, l’esterno, o sceglie il cliente?',
+    context:
+      'Dal PDF catalogo: il sistema deve supportare inward/outward. Serve il default di fabbrica e se ci sono limiti (es. mai verso strada).',
+    input: 'choice',
+    options: [
+      { value: 'inward_default', label: 'Interno di default' },
+      { value: 'outward_default', label: 'Esterno di default' },
+      { value: 'client_chooses', label: 'Sceglie il cliente' },
+      { value: 'unsure', label: 'Non so' },
+    ],
+  },
+  {
+    id: 'gate.double_swing.dog_bars_real',
+    section: 'gate_double_swing',
+    label: 'Dog bars e dog bar railheads sono opzioni di produzione vere o solo etichette visive?',
+    context: 'Decide se vanno mostrate come opzioni acquistabili nel configuratore.',
+    input: 'choice',
+    options: [
+      { value: 'real_options', label: 'Opzioni vere che produciamo' },
+      { value: 'visual_labels', label: 'Solo descrizioni visive' },
+      { value: 'unsure', label: 'Non so' },
+    ],
+  },
+  {
     id: 'gate.single_swing.default_handing',
     section: 'gate_single_swing',
     label: 'Single Swing: lato cerniera / serratura di default?',
     context: 'Es. cerniera a sinistra vista da fuori, serratura a destra.',
     input: 'textarea',
+  },
+  {
+    id: 'gate.single_swing.reuse_double',
+    section: 'gate_single_swing',
+    label: 'Il single swing riusa identica la struttura del double swing (rail, pali, decorazioni)?',
+    context:
+      'Dal PDF audit: se è identico, il 3D riusa lo stesso disegno con una sola anta. Se cambia qualcosa (meno decorazioni, rail diversi), scrivilo.',
+    input: 'choice',
+    options: [
+      { value: 'identical', label: 'Identico, solo un’anta' },
+      { value: 'reduced', label: 'Simile ma ridotto (scrivi sotto cosa cambia)' },
+      { value: 'different', label: 'Struttura diversa (spiega sotto)' },
+      { value: 'unsure', label: 'Non so' },
+    ],
+  },
+  {
+    id: 'gate.single_swing.reuse_double_note',
+    section: 'gate_single_swing',
+    label: 'Note sulle differenze dal double swing (incluso limiti arched top)',
+    context: '',
+    input: 'textarea',
+  },
+  {
+    id: 'gate.single_swing.size_limits',
+    section: 'gate_single_swing',
+    label: 'Single Swing: min/max reali di larghezza e altezza, e step?',
+    context:
+      'Dal PDF catalogo: confermata solo la misura iniziale (800/900 × 900/1000). Servono i limiti veri, anche per capire dove finisce il pedonale e inizia il driveway.',
+    input: 'textarea',
+    placeholder: 'Es. W 800–1500 mm, H 900–2000 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.single_swing.opening_direction',
+    section: 'gate_single_swing',
+    label: 'Il single swing apre verso interno o esterno di default? Vincoli in spazi ridotti?',
+    context:
+      'Dal PDF catalogo: serve default + eventuali limiti quando lo spazio di rotazione è poco.',
+    input: 'textarea',
+    placeholder: 'Es. interno di default, esterno solo se richiesto e lo spazio lo permette…',
   },
   {
     id: 'gate.tracked.track_details',
@@ -660,6 +931,46 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     context: '',
     input: 'textarea',
     blocking: true,
+  },
+  {
+    id: 'gate.tracked.track_run',
+    section: 'gate_tracked_sliding',
+    label: 'Quanto è lungo il binario rispetto alla luce, e quanto spazio laterale serve a cancello aperto (runback)?',
+    context:
+      'Dal PDF audit: senza la corsa reale la preview non può mostrare l’apertura corretta né avvisare il cliente dello spazio necessario.',
+    input: 'textarea',
+    placeholder: 'Es. binario = luce × 2, runback = luce + 300 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.tracked.size_limits',
+    section: 'gate_tracked_sliding',
+    label: 'Tracked: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (2500/2600 × 900/1000).',
+    input: 'textarea',
+    placeholder: 'Es. W 2500–6000 mm, H 900–2200 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.tracked.upper_guide',
+    section: 'gate_tracked_sliding',
+    label: 'C’è una guida superiore anti-ribaltamento? Quando serve e deve vedersi in preview?',
+    context:
+      'Dal PDF catalogo: il sistema può prevedere guida superiore. Serve sapere se c’è sempre, solo sopra certe misure, e se disegnarla.',
+    input: 'textarea',
+    placeholder: 'Es. sempre presente sul palo di ricezione, non disegnarla…',
+  },
+  {
+    id: 'gate.tracked.deco_reuse',
+    section: 'gate_tracked_sliding',
+    label: 'Le decorazioni Victorian sullo sliding sono le stesse dello swing o semplificate?',
+    context: 'Decide se il 3D riusa il disegno decorativo dello swing sul pannello scorrevole.',
+    input: 'choice',
+    options: [
+      { value: 'same', label: 'Stesse decorazioni' },
+      { value: 'simplified', label: 'Semplificate (spiega nelle note)' },
+      { value: 'unsure', label: 'Non so' },
+    ],
   },
   {
     id: 'gate.cantilever.tail_ratio',
@@ -685,11 +996,70 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     blocking: true,
   },
   {
+    id: 'gate.cantilever.carriage_guide',
+    section: 'gate_cantilever_sliding',
+    label: 'Cantilever: dove stanno i carrelli di sostegno, quanta luce da terra, e c’è una guida a terra visibile?',
+    context:
+      'Dal PDF audit: il cantilever non tocca terra nella luce di passaggio — la preview deve mostrare carrelli e clearance giusti per essere credibile.',
+    input: 'textarea',
+    placeholder: 'Es. due carrelli sul lato coda, 100 mm da terra, nessuna guida nella luce…',
+    blocking: true,
+  },
+  {
+    id: 'gate.cantilever.size_limits',
+    section: 'gate_cantilever_sliding',
+    label: 'Cantilever: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (2500/2600 × 900/1000).',
+    input: 'textarea',
+    placeholder: 'Es. W 2500–8000 mm, H 900–2200 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.cantilever.foundation',
+    section: 'gate_cantilever_sliding',
+    label: 'Che basamento/fondazione serve sul lato coda? Va mostrato in pianta?',
+    context:
+      'Dal PDF catalogo: vincoli di fondazione e posa mai definiti. Servono per la vista in pianta e per il testo di sopralluogo nel preventivo.',
+    input: 'textarea',
+    placeholder: 'Es. plinto cemento 2000×400 mm sul lato coda…',
+  },
+  {
+    id: 'gate.cantilever.support_visibility',
+    section: 'gate_cantilever_sliding',
+    label: 'Nella preview, quanta struttura di supporto del cantilever si deve vedere?',
+    context: '',
+    input: 'choice',
+    options: [
+      { value: 'full', label: 'Tutta (coda, carrelli, pali)' },
+      { value: 'minimal', label: 'Solo il cancello, supporti minimi' },
+      { value: 'unsure', label: 'Decidete voi' },
+    ],
+  },
+  {
     id: 'gate.bifold.panels_per_leaf',
     section: 'gate_bifolding_double',
     label: 'Bifold double: quanti pannelli per anta e come si piega?',
     context: '',
     input: 'textarea',
+    blocking: true,
+  },
+  {
+    id: 'gate.bifold.size_limits',
+    section: 'gate_bifolding_double',
+    label: 'Bifold double: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (2900/3000 × 900/1000 min).',
+    input: 'textarea',
+    placeholder: 'Es. W 2900–5000 mm, H 900–2000 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.bifold.fold_footprint',
+    section: 'gate_bifolding_double',
+    label: 'A cancello aperto, quanto spazio occupano i pannelli piegati (ingombro)?',
+    context:
+      'Dal PDF audit: serve il rapporto di piega tra pannello esterno e interno e l’ingombro reale da aperto, per disegnare l’apertura e avvisare il cliente dello spazio.',
+    input: 'textarea',
+    placeholder: 'Es. i due pannelli si impacchettano a 90°, ingombro ~600 mm per lato…',
     blocking: true,
   },
   {
@@ -700,11 +1070,50 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     input: 'textarea',
   },
   {
+    id: 'gate.single_bifold.reuse_footprint',
+    section: 'gate_single_bifolding',
+    label: 'Il single bifold riusa la stessa logica del bifold double? Che ingombro ha da aperto?',
+    context:
+      'Se è metà del bifold double, il 3D riusa lo stesso meccanismo. Se cambia (anche apertura interno/esterno), spiega.',
+    input: 'textarea',
+  },
+  {
+    id: 'gate.single_bifold.size_limits',
+    section: 'gate_single_bifolding',
+    label: 'Single bifold: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (1500/1600 × 900/1000 min).',
+    input: 'textarea',
+    placeholder: 'Es. W 1500–2500 mm, H 900–2000 mm…',
+    blocking: true,
+  },
+  {
     id: 'gate.telescopic.panel_count',
     section: 'gate_telescopic',
     label: 'Telescopic: numero pannelli, ordine di sovrapposizione, stack aperto/chiuso',
     context: 'Senza questo la cinematica resta bloccata.',
     input: 'textarea',
+    blocking: true,
+  },
+  {
+    id: 'gate.telescopic.size_limits',
+    section: 'gate_telescopic',
+    label: 'Telescopic: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (2000/2100 × 900/1000).',
+    input: 'textarea',
+    placeholder: 'Es. W 2000–6000 mm, H 900–2200 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.telescopic.width_rule',
+    section: 'gate_telescopic',
+    label: 'Nel telescopic, la larghezza indicata dal cliente è la luce netta o la corsa totale dei pannelli?',
+    context: 'Dal PDF audit: senza questa regola prezzo e disegno partono dal numero sbagliato.',
+    input: 'choice',
+    options: [
+      { value: 'clear_opening', label: 'Luce netta di passaggio' },
+      { value: 'total_run', label: 'Corsa/lunghezza totale pannelli' },
+      { value: 'unsure', label: 'Non so' },
+    ],
     blocking: true,
   },
   {
@@ -727,6 +1136,22 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     section: 'gate_radius',
     label: 'Dettagli aggiuntivi sul Radius Sliding',
     context: '',
+    input: 'textarea',
+  },
+  {
+    id: 'gate.radius.size_limits',
+    section: 'gate_radius',
+    label: 'Radius: min/max reali di larghezza e altezza, e step?',
+    context: 'Dal PDF catalogo: solo misura iniziale confermata (1600/1700 × 900/1000).',
+    input: 'textarea',
+    placeholder: 'Es. W 1600–4000 mm, H 900–2000 mm…',
+    blocking: true,
+  },
+  {
+    id: 'gate.radius.preview_views',
+    section: 'gate_radius',
+    label: 'Se il radius va mostrato: cosa deve far vedere la preview in pianta e di fronte?',
+    context: 'Es. curva del percorso vista dall’alto + prospetto normale, oppure solo cima arcuata.',
     input: 'textarea',
   },
 
