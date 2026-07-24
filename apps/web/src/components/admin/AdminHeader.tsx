@@ -11,6 +11,7 @@ const NAV = [
   { label: 'Addon', href: '/admin/gate-options' },
   { label: 'Recinzioni', href: '/admin/fencing' },
   { label: 'Preventivi', href: '/admin/quotes' },
+  { label: 'Dati Cliente', href: '/admin/client-data' },
 ]
 
 export function AdminHeader() {

@@ -28,6 +28,12 @@ const SECTIONS = [
     desc: 'Lead arrivati dal configuratore con la configurazione collegata.',
     icon: '✉',
   },
+  {
+    href: '/admin/client-data',
+    label: 'Dati Cliente',
+    desc: 'Questionario Marius: conferme prezzi, misure, decorazioni e gap aperti.',
+    icon: '☰',
+  },
 ]
 
 export default async function DashboardPage() {

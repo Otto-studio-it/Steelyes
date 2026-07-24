@@ -2,11 +2,15 @@
 
 import type { FinishCode, GateStyle, GateType, SerializedGateConfigV1 } from '@steelyes/gate-engine'
 import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
-import { Resend } from 'resend'
 
 import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { captureServerEvent } from '@/lib/analytics/posthog-server'
+import {
+  sendCustomerConfirmationEmail,
+  sendDesignSaveEmail,
+  sendWorkshopLeadEmail,
+} from '@/lib/email/send'
 import { dispatchTenantLeadWebhook } from '@/lib/platform/lead-webhook'
 import { loadTenantBundle } from '@/lib/platform/load-tenant'
 import { verifyTurnstileToken } from '@/lib/security/turnstile'
@@ -20,9 +24,7 @@ export type ContactFormState =
   | { status: 'success' }
   | { status: 'error'; message: string }
 
-const WORKSHOP_EMAIL = 'steelyes755@gmail.com'
-const RESEND_FROM =
-  process.env.RESEND_FROM ?? 'Steelyes Configurator <onboarding@resend.dev>'
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/)
@@ -41,83 +43,106 @@ function absoluteSiteUrl(path: string): string {
   return `${base.replace(/\/$/, '')}${path}`
 }
 
-export async function submitContactForm(
-  _prev: ContactFormState,
-  formData: FormData,
-): Promise<ContactFormState> {
-  if (formData.get('website')) {
-    return { status: 'success' }
+type ConfigurationContext = {
+  configurationId: string | null
+  configurationSummary: string
+  pricingSummary: string
+  shareUrl: string
+  pdfUrl: string
+}
+
+async function loadConfigurationContext(shareToken: string): Promise<ConfigurationContext> {
+  const empty: ConfigurationContext = {
+    configurationId: null,
+    configurationSummary: '',
+    pricingSummary: '',
+    shareUrl: '',
+    pdfUrl: '',
   }
 
-  const name = (formData.get('name') as string | null)?.trim() ?? ''
-  const email = (formData.get('email') as string | null)?.trim() ?? ''
-  const projectType = (formData.get('project_type') as string | null)?.trim() ?? ''
-  const postcode = (formData.get('postcode') as string | null)?.trim() ?? ''
-  const message = (formData.get('message') as string | null)?.trim() ?? ''
-  const shareToken = (formData.get('share_token') as string | null)?.trim() ?? ''
-  const turnstileToken = (formData.get('turnstile_token') as string | null)?.trim() ?? ''
-
-  if (!name || !email || !message) {
-    return { status: 'error', message: 'Name, email and project details are required.' }
+  if (!shareToken || !isValidShareToken(shareToken)) {
+    return empty
   }
 
-  const turnstileVerified = await verifyTurnstileToken(turnstileToken)
+  const supabase = getServiceRoleClient()
+  const { data: configurationRow } = await supabase
+    .from('configurations')
+    .select('id, gate_type, parameters')
+    .eq('share_token', shareToken)
+    .maybeSingle()
+
+  if (!configurationRow) {
+    return empty
+  }
+
+  const context: ConfigurationContext = {
+    ...empty,
+    configurationId: configurationRow.id,
+    shareUrl: absoluteSiteUrl(buildQuoteSharePath(shareToken)),
+    pdfUrl: absoluteSiteUrl(buildQuotePdfPath(shareToken)),
+  }
+
+  try {
+    const config = deserializeGateConfig(configurationRow.parameters as SerializedGateConfigV1)
+    const pricingCatalog = await fetchPricingCatalog()
+    const pricing = calculateIndicativeGatePrice(config, pricingCatalog)
+    context.configurationSummary = formatConfigurationSummaryText(config, pricing)
+    context.pricingSummary = `${pricing.totalLabel} (${pricing.disclaimer})`
+  } catch {
+    const parameters = configurationRow.parameters as {
+      gateType?: string
+      style?: string
+      widthMm?: number
+      heightMm?: number
+      finish?: string
+      siteSurveyRequested?: boolean
+    }
+
+    if (parameters.gateType && parameters.style && parameters.widthMm && parameters.heightMm && parameters.finish) {
+      context.configurationSummary = [
+        gateTypeLabel(parameters.gateType as GateType),
+        styleLabel(parameters.style as GateStyle),
+        `${parameters.widthMm} × ${parameters.heightMm} mm`,
+        finishLabel(parameters.finish as FinishCode),
+        `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(parameters.siteSurveyRequested === true)}`,
+      ].join(' · ')
+    }
+  }
+
+  return context
+}
+
+type QuoteSubmissionInput = {
+  name: string
+  email: string
+  phone: string
+  projectType: string
+  postcode: string
+  message: string
+  shareToken: string
+  turnstileToken: string
+  source: 'contact_form' | 'configurator'
+}
+
+async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<ContactFormState> {
+  const { name, email, phone, projectType, postcode, message, shareToken, source } = input
+
+  if (!name || !email) {
+    return { status: 'error', message: 'Name and email are required.' }
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
+    return { status: 'error', message: 'Please enter a valid email address.' }
+  }
+
+  const turnstileVerified = await verifyTurnstileToken(input.turnstileToken)
   if (!turnstileVerified) {
     return { status: 'error', message: 'Please complete the security check and try again.' }
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    return { status: 'error', message: 'Please enter a valid email address.' }
-  }
-
   const supabase = getServiceRoleClient()
-  let configurationId: string | null = null
-  let configurationSummary = ''
-  let shareUrl = ''
-  let pdfUrl = ''
-  let pricingSummary = ''
-
-  if (shareToken && isValidShareToken(shareToken)) {
-    const { data: configurationRow } = await supabase
-      .from('configurations')
-      .select('id, gate_type, parameters')
-      .eq('share_token', shareToken)
-      .maybeSingle()
-
-    if (configurationRow) {
-      configurationId = configurationRow.id
-      shareUrl = absoluteSiteUrl(buildQuoteSharePath(shareToken))
-      pdfUrl = absoluteSiteUrl(buildQuotePdfPath(shareToken))
-
-      try {
-        const config = deserializeGateConfig(configurationRow.parameters as SerializedGateConfigV1)
-        const pricingCatalog = await fetchPricingCatalog()
-        const pricing = calculateIndicativeGatePrice(config, pricingCatalog)
-        configurationSummary = formatConfigurationSummaryText(config, pricing)
-        pricingSummary = `${pricing.totalLabel} (${pricing.disclaimer})`
-      } catch {
-        const parameters = configurationRow.parameters as {
-          gateType?: string
-          style?: string
-          widthMm?: number
-          heightMm?: number
-          finish?: string
-          siteSurveyRequested?: boolean
-        }
-
-        if (parameters.gateType && parameters.style && parameters.widthMm && parameters.heightMm && parameters.finish) {
-          configurationSummary = [
-            gateTypeLabel(parameters.gateType as GateType),
-            styleLabel(parameters.style as GateStyle),
-            `${parameters.widthMm} × ${parameters.heightMm} mm`,
-            finishLabel(parameters.finish as FinishCode),
-            `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(parameters.siteSurveyRequested === true)}`,
-          ].join(' · ')
-        }
-      }
-    }
-  }
+  const context = await loadConfigurationContext(shareToken)
+  const { configurationId, configurationSummary, pricingSummary, shareUrl, pdfUrl } = context
 
   if (configurationId) {
     const { firstName, lastName } = splitName(name)
@@ -125,6 +150,7 @@ export async function submitContactForm(
       first_name: firstName,
       last_name: lastName,
       email,
+      phone: phone || null,
       postcode: postcode || '—',
       configuration_id: configurationId,
       status: 'new',
@@ -140,6 +166,7 @@ export async function submitContactForm(
   const { error: dbError } = await supabase.from('leads').insert({
     name,
     email,
+    phone: phone || null,
     project_type: projectType || null,
     postcode: postcode || null,
     message: configurationId
@@ -153,76 +180,169 @@ export async function submitContactForm(
     return { status: 'error', message: 'Something went wrong. Please try again or email us directly.' }
   }
 
-  const resend = new Resend(env.RESEND_API_KEY)
-
-  try {
-    const { error: resendError } = await resend.emails.send({
-      from: RESEND_FROM,
-      to: WORKSHOP_EMAIL,
-      subject: configurationId
-        ? `New configurator quote — ${name}`
-        : `New enquiry — ${name} (${projectType || 'Steel project'})`,
-      html: `
-      <h2 style="font-family:sans-serif">${configurationId ? 'New configurator quote request' : 'New project enquiry'}</h2>
-      <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
-        <tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Name</td><td style="padding:8px 12px">${name}</td></tr>
-        <tr><td style="padding:8px 12px;font-weight:bold">Email</td><td style="padding:8px 12px"><a href="mailto:${email}">${email}</a></td></tr>
-        <tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Project type</td><td style="padding:8px 12px;background:#f5f5f5">${projectType || '—'}</td></tr>
-        <tr><td style="padding:8px 12px;font-weight:bold">Postcode</td><td style="padding:8px 12px">${postcode || '—'}</td></tr>
-        ${configurationId ? `<tr><td style="padding:8px 12px;font-weight:bold;background:#f5f5f5">Configuration</td><td style="padding:8px 12px;background:#f5f5f5">${shareUrl}${configurationSummary ? `<br>${configurationSummary}` : ''}${pdfUrl ? `<br><a href="${pdfUrl}">Download indicative PDF</a>` : ''}</td></tr>` : ''}
-        <tr><td style="padding:8px 12px;font-weight:bold;vertical-align:top;background:#f5f5f5">Details</td><td style="padding:8px 12px;white-space:pre-wrap;background:#f5f5f5">${message}</td></tr>
-      </table>
-      <p style="color:#999;font-size:11px;margin-top:24px;font-family:sans-serif">Submitted via steelyes.co.uk contact form</p>
-    `,
-    })
-    if (resendError) {
-      console.error('Resend notify error (lead still saved):', resendError)
-    }
-  } catch (err) {
-    console.error('Resend notify threw (lead still saved):', err)
-  }
+  await sendWorkshopLeadEmail({
+    name,
+    email,
+    phone,
+    projectType,
+    postcode,
+    message,
+    shareUrl,
+    pdfUrl,
+    configurationSummary,
+    hasConfiguration: Boolean(configurationId),
+  })
 
   if (configurationId && shareUrl) {
-    try {
-      const { error: customerEmailError } = await resend.emails.send({
-        from: RESEND_FROM,
-        to: email,
-        subject: 'Your Steelyes gate configuration',
-        html: `
-        <h2 style="font-family:sans-serif">Thank you, ${name.split(' ')[0] || name}</h2>
-        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">
-          We received your quote request. Our workshop will review your configuration and follow up after any site survey needed.
-        </p>
-        ${configurationSummary ? `<p style="font-family:sans-serif;font-size:14px;line-height:1.6"><strong>Configuration:</strong> ${configurationSummary}</p>` : ''}
-        ${pricingSummary ? `<p style="font-family:sans-serif;font-size:14px;line-height:1.6"><strong>Indicative estimate:</strong> ${pricingSummary}</p>` : ''}
-        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">
-          <a href="${shareUrl}">View your saved configuration</a>
-          ${pdfUrl ? ` · <a href="${pdfUrl}">Download indicative PDF</a>` : ''}
-        </p>
-        <p style="font-family:sans-serif;font-size:14px;line-height:1.6">Your message:<br>${message.replace(/\n/g, '<br>')}</p>
-        <p style="color:#666;font-size:12px;margin-top:24px;font-family:sans-serif">Indicative pricing only — final quote follows survey confirmation.</p>
-      `,
-      })
-      if (customerEmailError) {
-        console.error('Resend customer email error:', customerEmailError)
-      }
-    } catch (err) {
-      console.error('Resend customer email threw:', err)
-    }
+    await sendCustomerConfirmationEmail({
+      name,
+      email,
+      message,
+      shareUrl,
+      pdfUrl,
+      configurationSummary,
+      pricingSummary,
+    })
   }
 
   await dispatchTenantLeadWebhook(loadTenantBundle('steelyes'), {
-    event: 'contact_form_submitted',
+    event: source === 'configurator' ? 'configurator_quote_submitted' : 'contact_form_submitted',
     email,
     name,
     share_token: shareToken || null,
     configuration_id: configurationId,
   })
 
-  await captureServerEvent(email, 'contact form submitted', {
+  await captureServerEvent(email, source === 'configurator' ? 'configurator quote submitted' : 'contact form submitted', {
     has_configuration: Boolean(configurationId),
     share_token: shareToken || null,
     turnstile_verified: turnstileVerified,
+  })
+
+  return { status: 'success' }
+}
+
+function readField(formData: FormData, key: string): string {
+  const value = formData.get(key)
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+export async function submitContactForm(
+  _prev: ContactFormState,
+  formData: FormData,
+): Promise<ContactFormState> {
+  if (formData.get('website')) {
+    return { status: 'success' }
+  }
+
+  const message = readField(formData, 'message')
+  if (!message) {
+    return { status: 'error', message: 'Name, email and project details are required.' }
+  }
+
+  return processQuoteSubmission({
+    name: readField(formData, 'name'),
+    email: readField(formData, 'email'),
+    phone: readField(formData, 'phone'),
+    projectType: readField(formData, 'project_type'),
+    postcode: readField(formData, 'postcode'),
+    message,
+    shareToken: readField(formData, 'share_token'),
+    turnstileToken: readField(formData, 'turnstile_token'),
+    source: 'contact_form',
+  })
+}
+
+/**
+ * Quote request submitted from inside the configurator (final step form).
+ * Same pipeline as the contact form, but message is optional and the
+ * configuration share token is required.
+ */
+export async function submitConfiguratorQuote(formData: FormData): Promise<ContactFormState> {
+  if (formData.get('website')) {
+    return { status: 'success' }
+  }
+
+  const shareToken = readField(formData, 'share_token')
+  if (!shareToken || !isValidShareToken(shareToken)) {
+    return { status: 'error', message: 'Could not attach your configuration. Please try again.' }
+  }
+
+  return processQuoteSubmission({
+    name: readField(formData, 'name'),
+    email: readField(formData, 'email'),
+    phone: readField(formData, 'phone'),
+    projectType: 'Gate configurator',
+    postcode: readField(formData, 'postcode'),
+    message: readField(formData, 'message'),
+    shareToken,
+    turnstileToken: readField(formData, 'turnstile_token'),
+    source: 'configurator',
+  })
+}
+
+export type EmailMyDesignState =
+  | { status: 'idle' }
+  | { status: 'success' }
+  | { status: 'error'; message: string }
+
+/**
+ * "Email me my design": captures the customer's email against a saved
+ * configuration and sends the share link. Also feeds the abandoned-design
+ * reminder job via design_captures.
+ */
+export async function emailMyDesign(formData: FormData): Promise<EmailMyDesignState> {
+  if (formData.get('website')) {
+    return { status: 'success' }
+  }
+
+  const email = readField(formData, 'email')
+  const shareToken = readField(formData, 'share_token')
+
+  if (!EMAIL_REGEX.test(email)) {
+    return { status: 'error', message: 'Please enter a valid email address.' }
+  }
+
+  if (!shareToken || !isValidShareToken(shareToken)) {
+    return { status: 'error', message: 'Could not save your design. Please try again.' }
+  }
+
+  const context = await loadConfigurationContext(shareToken)
+  if (!context.configurationId) {
+    return { status: 'error', message: 'Could not find your saved design. Please try again.' }
+  }
+
+  const supabase = getServiceRoleClient()
+  const { error: captureError } = await supabase
+    .from('design_captures')
+    .upsert(
+      {
+        email,
+        configuration_id: context.configurationId,
+        share_token: shareToken,
+      },
+      { onConflict: 'email,configuration_id', ignoreDuplicates: true },
+    )
+
+  if (captureError) {
+    console.error('Design capture insert error:', captureError)
+    return { status: 'error', message: 'Something went wrong. Please try again.' }
+  }
+
+  const sent = await sendDesignSaveEmail({
+    email,
+    shareUrl: context.shareUrl,
+    pdfUrl: context.pdfUrl,
+    configurationSummary: context.configurationSummary,
+  })
+
+  if (!sent) {
+    return { status: 'error', message: 'We could not send the email. Please try again shortly.' }
+  }
+
+  await captureServerEvent(email, 'design emailed to customer', {
+    share_token: shareToken,
+    configuration_id: context.configurationId,
   })
 
   return { status: 'success' }
