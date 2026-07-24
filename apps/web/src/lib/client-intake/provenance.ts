@@ -130,6 +130,11 @@ export const PROVENANCE_DOCS: ProvenanceDoc[] = [
       { label: 'Fonte completa', value: 'docs/frontend/gate-missing-data/*.pdf (audit per tipologia)' },
     ],
     questionIds: [
+      'open.posts_offering',
+      'open.posts_pricing',
+      'open.arched_geometry',
+      'open.size_uplift_scope',
+      'gate.tracked.frame_tube',
       'gate.double_swing.rail_structure',
       'gate.double_swing.picket_spacing',
       'gate.double_swing.ground_clearance',
