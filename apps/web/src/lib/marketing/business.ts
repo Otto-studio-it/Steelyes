@@ -6,7 +6,8 @@
 export const BUSINESS = {
   legalName: 'Steelyes Ltd',
   tradingName: 'Steelyes',
-  email: 'steelyes@yahoo.com',
+  /** CA-06 — official sales inbox. */
+  email: 'sales@steelyes.co.uk',
   phone: '+447803002145',
   phoneDisplay: '+44 7803 002145',
   website: 'https://www.steelyes.co.uk',
@@ -17,10 +18,25 @@ export const BUSINESS = {
     postalCode: 'EN3 7TW',
     country: 'United Kingdom',
   },
+  /**
+   * CA-07 — canonical social profiles (tracking params stripped).
+   * Facebook is still a share/ redirect until Marius supplies a vanity URL.
+   */
+  social: {
+    instagram: 'https://www.instagram.com/steelyes_ltd',
+    facebook: 'https://www.facebook.com/share/179t5dQVcD/',
+    tiktok: 'https://www.tiktok.com/@steelyesltd',
+  },
   /** Pending Marius confirmation — do not invent values. */
   companyNumber: null as string | null,
   vatNumber: null as string | null,
 } as const
+
+export const BUSINESS_SAME_AS = [
+  BUSINESS.social.instagram,
+  BUSINESS.social.facebook,
+  BUSINESS.social.tiktok,
+] as const
 
 export const PRICING_DISCLAIMER =
   'Indicative pricing only. Final quotation confirmed after site survey.'

@@ -24,12 +24,14 @@ type NavGroup = {
 
 const GATE_LINKS: NavLink[] = [
   { label: 'All Gates', href: '/gates' },
-  { label: 'Sliding Gates', href: '/gates/sliding' },
-  { label: 'Cantilever Gates', href: '/gates/cantilever' },
-  { label: 'Bifold Gates', href: '/gates/bifold' },
-  { label: 'Pedestrian Gates', href: '/gates/pedestrian' },
-  { label: 'Telescopic Gates', href: '/gates/telescopic' },
-  { label: 'Architectural Gates', href: '/gates/architectural' },
+  { label: 'Double Swing', href: '/gates/double-swing' },
+  { label: 'Single Swing', href: '/gates/single-swing' },
+  { label: 'Tracked Sliding', href: '/gates/tracked-sliding' },
+  { label: 'Cantilever', href: '/gates/cantilever' },
+  { label: 'Bifold', href: '/gates/bifold' },
+  { label: 'Single Bifold', href: '/gates/single-bifold' },
+  { label: 'Telescopic', href: '/gates/telescopic' },
+  { label: 'Radius', href: '/gates/radius' },
 ]
 
 const SERVICE_LINKS: NavLink[] = [
@@ -48,7 +50,7 @@ const NAV_GROUPS: NavGroup[] = [
 
 const PRIMARY_LINKS: NavLink[] = [
   { label: 'Installation', href: '/installation' },
-  { label: 'Gallery', href: '/gallery' },
+  { label: 'Workshop gallery', href: '/gallery' },
   { label: 'About', href: '/about' },
 ]
 

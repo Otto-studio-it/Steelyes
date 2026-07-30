@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildGateRenderPlan, createGateConfig, createGatePreset } from '../src/index'
+import {
+  buildGateRenderPlan,
+  cantileverTailNote,
+  createGateConfig,
+  createGatePreset,
+} from '../src/index'
 
 describe('gate-engine rendering', () => {
   it('builds a swing preview plan with labels and frame primitives', () => {
@@ -9,10 +14,31 @@ describe('gate-engine rendering', () => {
 
     expect(plan.title).toContain('double swing')
     expect(plan.subtitle).toContain('1800 mm opening')
+    expect(plan.subtitle).toContain('Black')
+    expect(plan.labels.some((label) => label.id === 'label-finish')).toBe(true)
     expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'swing-frame')).toBe(true)
     expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'upper-mid-rail')).toBe(true)
     expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'bottom-rail')).toBe(true)
-    expect(plan.labels).toHaveLength(4)
+    expect(plan.labels.some((label) => label.id === 'label-title')).toBe(true)
+    expect(plan.labels.some((label) => label.id === 'cad-dim-gate-width-label')).toBe(true)
+    expect(plan.labels.length).toBeGreaterThanOrEqual(4)
+  })
+
+  it('paints installation fills from the selected finish and shows a finish swatch', () => {
+    const satin = createGateConfig(createGatePreset('double_swing'))
+    const anthracite = { ...satin, finish: 'anthracite_ral7016' as const }
+    const satinPlan = buildGateRenderPlan(satin, { viewMode: 'installation' })
+    const anthracitePlan = buildGateRenderPlan(anthracite, { viewMode: 'installation' })
+
+    const satinFill = satinPlan.primitives.find((p) => p.id === 'swing-fill')
+    const anthraciteFill = anthracitePlan.primitives.find((p) => p.id === 'swing-fill')
+    expect(satinFill?.kind).toBe('rect')
+    expect(anthraciteFill?.kind).toBe('rect')
+    if (satinFill?.kind === 'rect' && anthraciteFill?.kind === 'rect') {
+      expect(satinFill.fill).not.toBe(anthraciteFill.fill)
+    }
+    expect(satinPlan.primitives.some((p) => p.id === 'finish-swatch')).toBe(true)
+    expect(satinPlan.notes.some((n) => n.includes('Black satin'))).toBe(true)
   })
 
   it('builds a sliding preview plan with a track and note', () => {
@@ -24,7 +50,9 @@ describe('gate-engine rendering', () => {
 
     expect(plan.title).toContain('tracked sliding')
     expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'track-line')).toBe(true)
-    expect(plan.notes).toContain('2D technical drawing preview')
+    expect(plan.notes).toContain(
+      'CAD elevation style — black linework, red dimensions, white paper.',
+    )
     expect(plan.labels.some((label) => label.id === 'label-track')).toBe(true)
   })
 
@@ -37,7 +65,7 @@ describe('gate-engine rendering', () => {
     const plan = buildGateRenderPlan(config)
 
     expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'cantilever-tail')).toBe(true)
-    expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+    expect(plan.notes).toContain(cantileverTailNote(4000))
     expect(plan.labels.some((label) => label.id === 'label-tail')).toBe(true)
   })
 

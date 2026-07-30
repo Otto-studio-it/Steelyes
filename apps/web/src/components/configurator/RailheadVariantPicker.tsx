@@ -40,12 +40,12 @@ export function RailheadVariantPicker({ optionKey }: RailheadVariantPickerProps)
         {variants.map((variant) => (
           <option key={variant.slug} value={variant.slug}>
             {variant.label}
-            {variant.unitPriceGbp !== null ? ` — from £${variant.unitPriceGbp}` : ''}
+            {variant.unitPriceGbp !== null ? ' — price on survey' : ''}
           </option>
         ))}
       </select>
       <p className="text-xs leading-5 text-muted-deep">
-        Provisional catalogue — final SKU and unit price confirmed after survey.
+        Provisional catalogue — SKU and unit price confirmed after survey. Counts are schematic guides only.
       </p>
     </label>
   )

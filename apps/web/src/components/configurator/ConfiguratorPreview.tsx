@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import {
   buildGateRenderPlan,
+  getFinishDefinition,
   type GateConfig,
   type GateRenderPrimitive,
   type GateRenderViewMode,
@@ -94,8 +95,11 @@ type PreviewSvgProps = {
 }
 
 export function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgProps) {
-  const frameFill = plan.viewMode === 'installation' ? 'transparent' : '#FEFEFC'
-  const frameStroke = plan.viewMode === 'installation' ? 'transparent' : '#E8E4DD'
+  const isTechnical = plan.viewMode === 'technical'
+  // Technical CAD sheets use plan.background paper/ground — no cream chrome overlay.
+  const showChromeFrame = plan.viewMode !== 'installation' && !isTechnical
+  const frameFill = showChromeFrame ? '#FEFEFC' : 'transparent'
+  const frameStroke = showChromeFrame ? '#E8E4DD' : 'transparent'
 
   return (
     <svg
@@ -107,21 +111,17 @@ export function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgP
       <title>{plan.title}</title>
       <desc>{`${plan.subtitle}. ${plan.notes.join(' ')}`}</desc>
       {plan.background.map(renderPrimitive)}
-      <rect
-        x="0"
-        y="0"
-        width={plan.width}
-        height={plan.height}
-        rx="24"
-        fill={frameFill}
-        stroke={frameStroke}
-        strokeWidth={plan.viewMode === 'installation' ? 0 : 2}
-      />
-      {plan.viewMode === 'technical' ? (
-        <>
-          <path d="M 0 720 H 1200" stroke="rgba(25,20,18,0.06)" strokeWidth="1.5" />
-          <path d="M 72 620 H 1128" stroke="rgba(25,20,18,0.05)" strokeWidth="1" strokeDasharray="10 14" />
-        </>
+      {showChromeFrame ? (
+        <rect
+          x="0"
+          y="0"
+          width={plan.width}
+          height={plan.height}
+          rx="24"
+          fill={frameFill}
+          stroke={frameStroke}
+          strokeWidth={2}
+        />
       ) : null}
       {plan.primitives.map(renderPrimitive)}
       {plan.labels.map((label) => (
@@ -134,7 +134,9 @@ export function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgP
           fontWeight={label.weight}
           fill={studio && plan.viewMode === 'installation' ? '#F5F3F0' : label.fill}
           opacity={label.opacity}
-          fontFamily="var(--font-ibm-plex-mono)"
+          fontFamily={
+            isTechnical ? 'var(--font-ibm-plex-mono), ui-monospace, monospace' : 'var(--font-ibm-plex-mono)'
+          }
         >
           {label.text}
         </text>
@@ -155,6 +157,7 @@ export function ConfiguratorPreview({
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
   const plan = useMemo(() => buildGateRenderPlan(config, { viewMode }), [config, viewMode])
+  const finish = getFinishDefinition(config.finish)
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
 
@@ -186,6 +189,23 @@ export function ConfiguratorPreview({
           </h2>
         </div>
         <div className="flex items-center gap-2">
+          <div
+            className={`inline-flex items-center gap-2 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest ${
+              studio ? 'border-white/15 bg-white/5 text-white/70' : 'border-steel/10 bg-white text-muted'
+            }`}
+            title={
+              viewMode === 'technical'
+                ? 'Colour appears in Installation view'
+                : 'Schematic finish preview'
+            }
+          >
+            <span
+              className="h-3.5 w-3.5 shrink-0 border border-black/20"
+              style={{ backgroundColor: finish.schematic.frame }}
+              aria-hidden
+            />
+            <span className="max-w-[7rem] truncate">{finish.label}</span>
+          </div>
           {!compact || pinned ? (
             <div
               className={`border px-3 py-1 font-mono text-xs uppercase tracking-widest ${

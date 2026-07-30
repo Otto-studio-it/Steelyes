@@ -9,12 +9,13 @@ import {
 
 const GATE_LINKS = [
   { label: 'All Gates', href: '/gates' },
-  { label: 'Sliding Gates', href: '/gates/sliding' },
-  { label: 'Cantilever Gates', href: '/gates/cantilever' },
-  { label: 'Bifold Gates', href: '/gates/bifold' },
-  { label: 'Pedestrian Gates', href: '/gates/pedestrian' },
-  { label: 'Telescopic Gates', href: '/gates/telescopic' },
-  { label: 'Architectural Gates', href: '/gates/architectural' },
+  { label: 'Double Swing', href: '/gates/double-swing' },
+  { label: 'Single Swing', href: '/gates/single-swing' },
+  { label: 'Tracked Sliding', href: '/gates/tracked-sliding' },
+  { label: 'Cantilever', href: '/gates/cantilever' },
+  { label: 'Bifold', href: '/gates/bifold' },
+  { label: 'Telescopic', href: '/gates/telescopic' },
+  { label: 'Radius', href: '/gates/radius' },
 ] as const
 
 const SERVICE_LINKS = [

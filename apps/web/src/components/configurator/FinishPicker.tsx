@@ -47,6 +47,9 @@ export function FinishPicker({ value, onChange }: FinishPickerProps) {
       </div>
       <p className="text-xs leading-5 text-muted-deep">
         Finish preview is schematic — final powder coat may vary.
+        {value === 'other_ral'
+          ? ' Custom RAL: + extra charge — powder coating (quoted separately).'
+          : ' Colour line totals are confirmed at survey.'}
       </p>
     </div>
   )

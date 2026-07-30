@@ -8,7 +8,9 @@ import {
   MIN_WIDTH_MM,
   WIDTH_DIMENSION_PRESETS,
 } from '@/lib/configurator/presentation'
+import { CantileverSiteSpaceNote } from '@/components/configurator/CantileverSiteSpaceNote'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
+import { DimensionMeaningNote } from '@/components/configurator/DimensionMeaningNote'
 import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -19,15 +21,20 @@ export function DimensionsStep() {
   return (
     <div className="space-y-4">
       <MeasurementGuide />
+      <DimensionMeaningNote gateType={config.gateType} />
 
       <DimensionControl
-        label="Width"
+        label={config.gateType === 'cantilever_sliding' ? 'Clear opening width' : 'Width'}
         value={config.widthMm}
         min={MIN_WIDTH_MM}
         max={MAX_WIDTH_MM}
         presets={WIDTH_DIMENSION_PRESETS}
         onChange={(widthMm) => patchConfig({ widthMm })}
       />
+
+      {config.gateType === 'cantilever_sliding' ? (
+        <CantileverSiteSpaceNote clearOpeningMm={config.widthMm} />
+      ) : null}
 
       <DimensionControl
         label="Height"

@@ -23,18 +23,22 @@ import { GLOBAL_DIMENSION_LIMITS, getDimensionLimits } from './dimension-limits'
 import { clamp } from './internal/shared'
 import { normalizeGatePosts } from './posts'
 import { collectCompatibilityIssues } from './rules/compatibility'
-import { collectGeometryIssues } from './rules/geometry'
+import { collectGeometryIssues, isProvisionalCountGuidance } from './rules/geometry'
 
 export type ValidationIssue = {
   field: string
   code: string
   message: string
+  /** Soft schematic guidance — never blocks quote/save when set to guidance. */
+  severity?: 'error' | 'guidance'
 }
 
 export type ValidationResult<T> =
   | {
       ok: true
       value: T
+      /** Provisional count / layout hints — do not treat as blocking errors. */
+      guidance?: ValidationIssue[]
     }
   | {
       ok: false
@@ -571,12 +575,14 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
   }
 
   issues.push(...collectCompatibilityIssues(config))
-  issues.push(...collectGeometryIssues(config))
+  const geometryIssues = collectGeometryIssues(config)
+  const guidance = geometryIssues.filter(isProvisionalCountGuidance)
+  issues.push(...geometryIssues.filter((issue) => !isProvisionalCountGuidance(issue)))
   issues.push(...collectVariantCatalogIssues(config))
 
   if (issues.length > 0) {
     return { ok: false, issues }
   }
 
-  return { ok: true, value: config }
+  return guidance.length > 0 ? { ok: true, value: config, guidance } : { ok: true, value: config }
 }

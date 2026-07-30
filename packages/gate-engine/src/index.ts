@@ -34,19 +34,24 @@ export {
   collectCompatibilityIssues,
 } from './rules/compatibility'
 export {
+  PROVISIONAL_COUNT_RULES,
   collectGeometryIssues,
   getDecorativeBarCapacity,
   getExpectedDogBarCount,
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
+  isProvisionalCountGuidance,
 } from './rules/geometry'
 export {
-  CANTILEVER_RULE_WIDTH_MM,
+  CANTILEVER_TAIL_RATIO,
   CANTILEVER_TAIL_RATIO_AT_4M,
-  CANTILEVER_TAIL_RATIO_DEFAULT,
   cantileverTailNote,
+  getCantileverSiteSpace,
+  getCantileverTailMm,
   getCantileverTailRatio,
+  getCantileverTotalRunMm,
 } from './rules/cantilever'
+export type { CantileverSiteSpace } from './rules/cantilever'
 export {
   DEFAULT_PRICING_CATALOG,
   calculateGateBasePrice,
@@ -77,8 +82,28 @@ export type {
 export {
   buildGateRenderPlan,
   serializeGateRenderPlanToSvg,
+  CAD_COLORS,
+  CAD_DIMENSION,
+  CAD_STROKES,
+  CAD_BRICK_HATCH,
+  CAD_GROUND,
+  CAD_POST_LAYOUT,
+  CAD_STYLE_SOURCE,
+  CAD_PROVISIONAL_GROUND_CLEARANCE_MM,
+  CAD_CLEARANCE_MIN_PX,
+  CAD_PROVISIONAL_CENTER_GAP_MM,
+  CAD_PROVISIONAL_SIDE_GAP_MM,
+  getCadTechnicalPalette,
+  getCadClearancePx,
+  buildCadTechnicalBackground,
+  buildCadMountingPosts,
+  buildCadDimensionLayer,
+  restylePrimitivesForCadTechnical,
+  isCadTechnicalView,
 } from './rendering'
 export type { GateRenderViewMode } from './rendering/render-plan'
+export type { CadTechnicalPalette } from './rendering/cad-style'
+export type { CadDimensionLayer, CadDimensionLayerInput } from './rendering/cad-dimensions'
 export { normalizeGatePosts } from './posts'
 export {
   buildGateMeshPlan,

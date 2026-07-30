@@ -22,7 +22,7 @@ export function VariantCatalogNotice({ optionKey }: VariantCatalogNoticeProps) {
       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-primary">Catalogue pending</p>
       <p className="mt-1 text-xs leading-5 text-muted-deep">
         Railhead variant selection and unit pricing are blocked until {summary.owner} confirms the final catalogue.
-        Count is schematic only; survey is required for an exact quote.
+        Counts are schematic guides only — not workshop maximums — until survey.
       </p>
     </div>
   )

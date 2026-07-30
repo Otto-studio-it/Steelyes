@@ -1,29 +1,51 @@
 /**
- * Cantilever counterbalance tail rule.
+ * Cantilever counterbalance tail rule — CA-05 (Marius 2026-07-28).
  *
- * The only client-confirmed data point is a 4m opening, where the
- * counterbalance tail equals 1/3 of the opening (see
- * docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md and the cantilever gate
- * audit). For every other width the tail is rendered at a schematic default
- * ratio; do not interpolate or invent engineering ratios until the client
- * confirms the full sizing table.
+ * clearOpeningMm  = width the customer enters (distance between posts)
+ * tailMm          = round(clearOpeningMm / 3)   — MINIMUM
+ * totalAssemblyMm = clearOpeningMm + tailMm
  *
- * This module is the single source of truth for the rule: both the 2D render
- * plan and the 3D mesh plan must consume it.
+ * Worked example: 4000 → tail 1333 → total run 5333 mm.
+ * Both the 2D render plan and the 3D mesh plan must consume this module.
  */
 
-export const CANTILEVER_RULE_WIDTH_MM = 4000
-export const CANTILEVER_TAIL_RATIO_AT_4M = 1 / 3
-export const CANTILEVER_TAIL_RATIO_DEFAULT = 0.28
+/** Minimum counterbalance tail as a fraction of the clear opening. */
+export const CANTILEVER_TAIL_RATIO = 1 / 3
 
-export function getCantileverTailRatio(widthMm: number): number {
-  return widthMm === CANTILEVER_RULE_WIDTH_MM
-    ? CANTILEVER_TAIL_RATIO_AT_4M
-    : CANTILEVER_TAIL_RATIO_DEFAULT
+/** @deprecated Use CANTILEVER_TAIL_RATIO — kept briefly for import migration. */
+export const CANTILEVER_TAIL_RATIO_AT_4M = CANTILEVER_TAIL_RATIO
+
+export function getCantileverTailRatio(_widthMm?: number): number {
+  return CANTILEVER_TAIL_RATIO
+}
+
+/** Minimum tail length in mm (nearest mm; matches client 4000 → 1333). */
+export function getCantileverTailMm(clearOpeningMm: number): number {
+  return Math.round(Math.max(0, clearOpeningMm) * CANTILEVER_TAIL_RATIO)
+}
+
+/** Clear opening + minimum tail — parking-side run the site must provide. */
+export function getCantileverTotalRunMm(clearOpeningMm: number): number {
+  return Math.max(0, clearOpeningMm) + getCantileverTailMm(clearOpeningMm)
+}
+
+export type CantileverSiteSpace = {
+  clearOpeningMm: number
+  tailMm: number
+  totalRunMm: number
+}
+
+export function getCantileverSiteSpace(clearOpeningMm: number): CantileverSiteSpace {
+  const opening = Math.max(0, clearOpeningMm)
+  const tailMm = getCantileverTailMm(opening)
+  return {
+    clearOpeningMm: opening,
+    tailMm,
+    totalRunMm: opening + tailMm,
+  }
 }
 
 export function cantileverTailNote(widthMm: number): string {
-  return widthMm === CANTILEVER_RULE_WIDTH_MM
-    ? 'Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.'
-    : 'Cantilever counterbalance tail is shown schematically.'
+  const { clearOpeningMm, tailMm, totalRunMm } = getCantileverSiteSpace(widthMm)
+  return `Cantilever: opening ${clearOpeningMm} mm needs a minimum counterbalance tail of ${tailMm} mm (1/3) — allow at least ${totalRunMm} mm clear run on the parking side, plus posts and hardware.`
 }

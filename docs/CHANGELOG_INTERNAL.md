@@ -3,7 +3,7 @@ title: Internal Changelog
 description: Verified implementation log for project work
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-09
+last_updated: 2026-07-28
 ---
 
 # Steelyes — Internal Changelog
@@ -11,6 +11,45 @@ last_updated: 2026-05-09
 This is an internal implementation log. It records what changed, how it was verified, and which commit contains the work.
 
 It is not a public product changelog.
+
+---
+
+## 2026-07-28 — Client answer batch CA-01…CA-07 recorded and propagated
+
+Commit: _pending_
+
+Changed — documentation only, no code touched:
+
+- Created `docs/client-answers/` as the canonical verbatim record of client answers:
+  - `README.md` — id scheme, confidence levels, protocol for the next batch;
+  - `2026-07-28-marius.md` — batch CA-01…CA-07 with verbatim text, translation, normalized rule, downstream impact.
+- Propagated the batch into every doc that carried the superseded data:
+  - `docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md` — new "Confirmed Build Rules" and "Finishes / Colours" sections, aluminium panel upgrade, answered questions marked;
+  - `docs/CLIENT_BLOCKERS.md` — finish palette and business email moved to received; finish rate base and aluminium count rule added as new blockers;
+  - `docs/frontend/CLIENT_CHANGELOG.md` — CL-701…CL-708 triaged;
+  - `docs/frontend/CONTENT_FALLBACKS.md` — retired the zinc-grey/bronze/pearl-white fallback palette;
+  - `docs/db/PRICING_SEMANTICS.md` — finish charge and aluminium upgrade semantics, both explicitly not implementable yet;
+  - `docs/frontend/gate-catalog/cantilever-sliding.md` — confirmed tail geometry;
+  - `docs/CLIENT_INTAKE.md` — protocol for answers arriving outside the form;
+  - `docs/PROJECT_STATUS.md` — business/pricing data moved to partially unblocked.
+
+Why:
+
+- Client answers were arriving as raw multilingual WhatsApp text and being pasted directly into feature docs, which destroyed the distinction between what Marius said and what we inferred from truncated messages.
+- Two docs still carried finishes (`zinc grey`, `bronze`, `pearl white`) that the client has withdrawn, and a contact email (`steelyes@yahoo.com`) that is superseded.
+
+Verified:
+
+- 16 blocking intake questions before the batch, 13 after — `gate.cantilever.tail_ratio`, `gate.cantilever.width_meaning` and `open.finish_palette` are closed.
+- Confirmed against the source that `packages/gate-engine/src/finishes.ts` and `FINISH_CODES` already match CA-03 (shipped in `b32cfb8`); no code change needed there.
+
+Known-wrong code identified but **not** changed in this pass:
+
+- `packages/gate-engine/src/rules/cantilever.ts` — `CANTILEVER_TAIL_RATIO_DEFAULT = 0.28` and the `widthMm === 4000` special case are superseded by CA-05. The rule is 1/3 at every width, as a minimum. Tracked as CL-705.
+- `apps/web/src/lib/marketing/business.ts` — `email` is still the Yahoo placeholder. Tracked as CL-706.
+- `apps/web/src/components/marketing/SocialLinks.tsx` — Facebook id differs from the one the client last sent, TikTok is absent. Tracked as CL-707.
+- `apps/web/src/lib/client-intake/questions.ts` — the three closed answers are not mirrored back, so `/admin/client-data` still asks them. Tracked as CL-708.
+- `apps/web/tests/e2e/configurator.spec.ts` — two finish tests click `Bronze` and `Pearl white` radios and assert the stroke `#8B6914`. `FinishPicker` renders from `listFinishDefinitions()`, which no longer contains those codes, so both tests fail on selector timeout. Broken since the palette change in `b32cfb8`, found while propagating CA-03. Tracked as CL-709.
 
 ---
 

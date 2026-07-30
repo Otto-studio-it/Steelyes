@@ -3,7 +3,7 @@ title: Project Status
 description: Current execution state, ownership, blockers, and next focus
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-20
+last_updated: 2026-07-30
 ---
 
 # Steelyes — Project Status
@@ -19,11 +19,12 @@ This is the current operating snapshot. Use it first when resuming work.
 | DB migrations | Closed for current DB/RLS scope | Ruben | 19 local migrations = 19 remote migrations on staging. |
 | DB/RLS hardening | Closed on staging | Ruben | Phase 5 grant hardening applied and verified on 2026-05-06. |
 | Supabase production auth | Restored | Ruben | `steelyes-prod` admin auth repaired on 2026-05-09 after fixing a broken `auth.users` record. |
-| Business/pricing data | Blocked | Marius | Final prices, railheads, finishes, and real fencing catalogue still missing. |
+| Business/pricing data | Partially unblocked | Marius | Batch 2026-07-28 landed the finish palette, cantilever tail rule, sales email and socials. Final prices, size uplift formula, railheads, finish rate base and real fencing catalogue still missing. 13 of 16 blocking intake questions remain. See [`client-answers/2026-07-28-marius.md`](./client-answers/2026-07-28-marius.md). |
+| Client answer record | New canonical folder | Ruben | Verbatim client messages now live in [`docs/client-answers/`](./client-answers/README.md) with `CA-NN` ids. Other docs cite ids instead of re-quoting WhatsApp. |
 | Public deployment/domain | Blocked operationally | Ruben + Marius | `steelyes.co.uk` still serves the legacy GoDaddy site; new Next app is not live on the public domain. |
 | Share-link route | Confirmed baseline | Ruben | Default public share route is `/quote/[shareToken]`; `/configurator/[id]` is not the baseline path. |
-| Configurator MVP | Scope frozen for implementation | Ruben | 2D-first master roadmap is documented in `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`; 3D/AR remains on-demand. |
-| Frontend/content | Next focus | Ruben | UI/content can proceed with documented fallbacks while client data is pending; configurator foundation work should follow the frozen roadmap. |
+| Configurator MVP | 2-week delivery in progress | Ruben | Authoritative plan: [`frontend/DELIVERY_ROADMAP_2W_2026-07-30.md`](./frontend/DELIVERY_ROADMAP_2W_2026-07-30.md). 2D-first; 3D/AR = phone camera via Quick Look / Scene Viewer after 2D is solid. Older master roadmap remains for file detail. |
+| Frontend/content | Week-1 focus of delivery | Ruben | Deploy + claims + legal + honest 2D scope freeze (2 buildable + 2 schematic + 4 enquire). |
 | Backend completion | Paused deliberately | Ruben | Resume when frontend requires it or client data arrives. |
 
 ---
@@ -63,6 +64,13 @@ Canonical DB references:
 - [`docs/db/PRICING_SEMANTICS.md`](./db/PRICING_SEMANTICS.md)
 - [`docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`](./frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md)
 
+Canonical client-data references:
+
+- [`docs/client-answers/`](./client-answers/README.md) — verbatim answers, `CA-NN` ids
+- [`docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md`](./frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md) — interpreted requirements
+- [`docs/frontend/CLIENT_CHANGELOG.md`](./frontend/CLIENT_CHANGELOG.md) — triaged request backlog
+- [`docs/frontend/CONFIGURATOR_DATA_READINESS_2026-07-28.md`](./frontend/CONFIGURATOR_DATA_READINESS_2026-07-28.md) — per-gate-type 2D/3D readiness verdict
+
 ---
 
 ## What remains open
@@ -83,11 +91,12 @@ Canonical DB references:
 - Final gate base prices:
   - `base_price_manual_gbp`;
   - `base_price_auto_gbp`.
-- Final option prices and multipliers.
+- Final option prices and multipliers, including the size-uplift formula.
 - Railhead variant list, unit prices, and compatibility rules.
-- Finish palette and finish multipliers.
+- ~~Finish palette~~ ✅ received 2026-07-28 — what remains is the **finish rate base**: £55/m²+VAT is known, the base and the measured area are not.
+- Aluminium panel upgrade count rule (£12.75/panel, £12/bar are known; the counts are not).
 - Real `fencing_panels` catalogue data.
-- Legal/company details, photo consent, DNS access, and final launch assets.
+- Legal/company details (email ✅ received; company no., VAT, phone, address pending), photo consent, DNS access, and final launch assets.
 
 Detailed blocker tracker:
 
@@ -102,7 +111,7 @@ Do not create speculative DB schema or pricing logic for missing client data.
 Proceed with frontend/content using clear fallback states:
 
 - “Indicative, subject to survey” for pricing;
-- generic finish palette where needed;
+- the confirmed finish palette (four blacks + RAL 7016 + custom RAL) with pricing still marked provisional — **never** the retired zinc-grey/bronze/pearl-white set;
 - railheads remain provisional `gate_options`;
 - missing gallery/case study assets stay hidden or use workshop/in-progress alternatives;
 - missing legal details remain a pre-launch blocker.
@@ -111,13 +120,14 @@ Proceed with frontend/content using clear fallback states:
 
 ## Next focus
 
-The next project phase is:
+Execute the 2-week handoff plan:
 
-1. Documentation cleanup and alignment.
-2. Public deployment alignment.
-3. UI/content implementation and polish.
-4. Backend completion only when driven by real UI needs or client data.
+1. **D0–D1** — Accept [`frontend/DELIVERY_ROADMAP_2W_2026-07-30.md`](./frontend/DELIVERY_ROADMAP_2W_2026-07-30.md); ping Marius; get Vercel prod URL live.
+2. **Week 1** — Site truth + indicative pricing + honest 2D (no fiction gate types).
+3. **Week 2** — Mesh parity → lazy 3D → GLB/USDZ → “View in your space” (phone camera).
+4. Backend only when UI or confirmed client data requires it.
 
 Execution plan:
 
-- [`docs/NEXT_ACTION_PLAN.md`](./NEXT_ACTION_PLAN.md)
+- [`docs/frontend/DELIVERY_ROADMAP_2W_2026-07-30.md`](./frontend/DELIVERY_ROADMAP_2W_2026-07-30.md) (primary for next 14 days)
+- [`docs/NEXT_ACTION_PLAN.md`](./NEXT_ACTION_PLAN.md) (legacy ordered list — defer to delivery roadmap on conflict)

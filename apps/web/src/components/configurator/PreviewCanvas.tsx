@@ -47,7 +47,7 @@ type PreviewCanvasProps = {
   showSecondaryModes?: boolean
 }
 
-// Installation trusted default; Technical stays primary; bury Plan/Photo/3D
+// Installation first so finish colour is visible; Technical for CAD dims.
 const PRIMARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
   { id: 'installation', label: 'Installation' },
   { id: 'technical', label: 'Technical' },

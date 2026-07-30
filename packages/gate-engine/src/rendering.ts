@@ -20,6 +20,16 @@ import { scaleVisualBoldness } from './visual-scale'
 import type { GateRenderLabel, GateRenderPlan, GateRenderPrimitive, GateRenderViewMode } from './rendering/render-plan'
 import { buildPlanViewPlan } from './rendering/plan-view'
 import { serializeGateRenderPlanToSvg } from './rendering/svg-serialize'
+import { buildCadDimensionLayer } from './rendering/cad-dimensions'
+import {
+  buildCadMountingPosts,
+  buildCadTechnicalBackground,
+  getCadClearancePx,
+  getCadPostOuterBounds,
+  getCadTechnicalPalette,
+  isCadTechnicalView,
+  restylePrimitivesForCadTechnical,
+} from './rendering/cad-style'
 import {
   buildGateShadow,
   buildInstallationBackground,
@@ -53,7 +63,8 @@ function resolveRenderPalette(finish: FinishCode): RenderPalette {
     steel: tokens.strokeMuted,
     label: tokens.label,
     shadow: 'rgba(0, 0, 0, 0.12)',
-    postFill: finish === 'black_gloss' ? tokens.infill : tokens.panel,
+    // Installation SVG fills use the finish infill so anthracite vs black reads clearly.
+    postFill: tokens.infill,
   }
 }
 
@@ -645,28 +656,59 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     }
   }
 
-  pushShadowRect(primitives, {
-    kind: 'rect',
-    id: 'center-latch-plate',
-    x: centerX - 12,
-    y: middleY - 58,
-    width: 24,
-    height: 116,
-    rx: 6,
-    fill: '#F7F7F7',
-    stroke: palette.ink,
-    strokeWidth: scaleVisual(2.4),
-  }, palette)
+  if (leafCount > 1) {
+    pushShadowRect(primitives, {
+      kind: 'rect',
+      id: 'center-latch-plate',
+      x: centerX - 12,
+      y: middleY - 58,
+      width: 24,
+      height: 116,
+      rx: 6,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2.4),
+    }, palette)
 
-  pushShadowCircle(primitives, {
-    kind: 'circle',
-    id: 'center-latch-hole',
-    cx: centerX,
-    cy: middleY,
-    r: 3.2,
-    fill: palette.ink,
-    stroke: 'none',
-  }, palette, 0.8, 0.8)
+    pushShadowCircle(primitives, {
+      kind: 'circle',
+      id: 'center-latch-hole',
+      cx: centerX,
+      cy: middleY,
+      r: 3.2,
+      fill: palette.ink,
+      stroke: 'none',
+    }, palette, 0.8, 0.8)
+  }
+
+  // CA-01: manual gates show a handle; motorised gates never do.
+  if (!config.motorised) {
+    const handleX =
+      leafCount > 1 ? centerX - 36 : FRAME_X + FRAME_WIDTH - scaleVisual(48)
+    pushShadowRect(primitives, {
+      kind: 'rect',
+      id: 'manual-handle-plate',
+      x: handleX - 7,
+      y: middleY - 28,
+      width: 14,
+      height: 56,
+      rx: 3,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2),
+    }, palette)
+    pushShadowLine(primitives, {
+      kind: 'line',
+      id: 'manual-handle-grip',
+      x1: handleX,
+      y1: middleY - 18,
+      x2: handleX,
+      y2: middleY + 18,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(3.2),
+      strokeLinecap: 'round',
+    }, palette, 0.6, 0.6)
+  }
 
   pushShadowLine(primitives, {
     kind: 'line',
@@ -1009,8 +1051,23 @@ export function buildGateRenderPlan(
     throw new Error('Invalid gate config for rendering')
   }
 
-  const palette = resolveRenderPalette(config.finish)
-  const subtitle = `${config.widthMm} mm opening · ${config.heightMm} mm high · ${formatStyleLabel(config.style)}`
+  const finishPalette = resolveRenderPalette(config.finish)
+  const cadPalette = getCadTechnicalPalette()
+  const palette: RenderPalette = isCadTechnicalView(viewMode)
+    ? {
+        ink: cadPalette.ink,
+        accent: cadPalette.dim,
+        accentSoft: cadPalette.accentSoft,
+        panel: cadPalette.panel,
+        panelSoft: cadPalette.panelSoft,
+        steel: cadPalette.steel,
+        label: cadPalette.label,
+        shadow: cadPalette.shadow,
+        postFill: cadPalette.postFill,
+      }
+    : finishPalette
+  const finishDefinition = getFinishDefinition(config.finish)
+  const subtitle = `${config.widthMm} mm opening · ${config.heightMm} mm high · ${formatStyleLabel(config.style)} · ${finishDefinition.label}`
 
   if (viewMode === 'plan') {
     const planTitle = `${formatTypeLabel(config.gateType)} — plan view`
@@ -1066,8 +1123,15 @@ export function buildGateRenderPlan(
       : `${formatTypeLabel(config.gateType)} preview`
   const notes: string[] =
     viewMode === 'installation'
-      ? ['Installation preview with mounting posts and ground context']
-      : ['2D technical drawing preview']
+      ? [
+          'Installation preview with mounting posts and ground context.',
+          `Finish shown schematically as ${finishDefinition.label} — final powder coat confirmed at survey.`,
+        ]
+      : [
+          'CAD elevation style — black linework, red dimensions, white paper.',
+          'Millimetre values come from your configuration, not from sample CAD drawings.',
+          `Selected finish: ${finishDefinition.label} (colour appears in Installation view).`,
+        ]
 
   if (hasOption(config, 'top_railheads') || hasOption(config, 'dog_bar_railheads')) {
     notes.push('Railheads are shown schematically until the final catalogue is confirmed.')
@@ -1106,9 +1170,29 @@ export function buildGateRenderPlan(
     frameHeight: FRAME_HEIGHT,
   }
 
-  const gatePrimitives = isSliding ? buildSlidingFrame(config, palette) : buildSwingFrame(config, palette)
+  const rawGatePrimitives = isSliding
+    ? buildSlidingFrame(config, palette)
+    : buildSwingFrame(config, palette)
+  const gatePrimitives = isCadTechnicalView(viewMode)
+    ? restylePrimitivesForCadTechnical(rawGatePrimitives)
+    : rawGatePrimitives
+
+  const cadClearancePx = isCadTechnicalView(viewMode)
+    ? getCadClearancePx(config.heightMm, FRAME_HEIGHT)
+    : 0
+  const cadPostOuter = isCadTechnicalView(viewMode) ? getCadPostOuterBounds(frameBounds) : null
   const background =
-    viewMode === 'installation' ? buildInstallationBackground(CANVAS_WIDTH, CANVAS_HEIGHT) : []
+    viewMode === 'installation'
+      ? buildInstallationBackground(CANVAS_WIDTH, CANVAS_HEIGHT)
+      : isCadTechnicalView(viewMode)
+        ? buildCadTechnicalBackground({
+            canvasWidth: CANVAS_WIDTH,
+            canvasHeight: CANVAS_HEIGHT,
+            groundTopY: FRAME_Y + FRAME_HEIGHT + cadClearancePx,
+            gateLeftX: cadPostOuter?.leftX ?? FRAME_X,
+            gateRightX: cadPostOuter?.rightX ?? FRAME_X + FRAME_WIDTH,
+          })
+        : []
   const sceneElements: GateRenderPrimitive[] = []
 
   if (viewMode === 'installation') {
@@ -1116,98 +1200,35 @@ export function buildGateRenderPlan(
     sceneElements.push(...buildMountingPosts(config, frameBounds, palette))
   }
 
-  const primitives = [...sceneElements, ...gatePrimitives]
+  const showCadPosts =
+    isCadTechnicalView(viewMode) && config.posts.enabled && config.posts.material !== 'none'
 
-  if (viewMode === 'technical') {
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-line',
-    x1: FRAME_X - 4,
-    y1: FRAME_Y + FRAME_HEIGHT + 72,
-    x2: FRAME_X + FRAME_WIDTH + 4,
-    y2: FRAME_Y + FRAME_HEIGHT + 72,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-line-shadow',
-    x1: FRAME_X - 4,
-    y1: FRAME_Y + FRAME_HEIGHT + 74,
-    x2: FRAME_X + FRAME_WIDTH + 4,
-    y2: FRAME_Y + FRAME_HEIGHT + 74,
-    stroke: palette.shadow,
-    strokeWidth: scaleVisual(1),
-    opacity: 0.5,
-  }, palette, 0, 0)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-start',
-    x1: FRAME_X,
-    y1: FRAME_Y + FRAME_HEIGHT + 58,
-    x2: FRAME_X,
-    y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-end',
-    x1: FRAME_X + FRAME_WIDTH,
-    y1: FRAME_Y + FRAME_HEIGHT + 58,
-    x2: FRAME_X + FRAME_WIDTH,
-    y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-line',
-    x1: FRAME_X - 70,
-    y1: FRAME_Y - 2,
-    x2: FRAME_X - 70,
-    y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-line-shadow',
-    x1: FRAME_X - 68,
-    y1: FRAME_Y - 2,
-    x2: FRAME_X - 68,
-    y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: palette.shadow,
-    strokeWidth: scaleVisual(1),
-    opacity: 0.5,
-  }, palette, 0, 0)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-start',
-    x1: FRAME_X - 86,
-    y1: FRAME_Y,
-    x2: FRAME_X - 54,
-    y2: FRAME_Y,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-end',
-    x1: FRAME_X - 86,
-    y1: FRAME_Y + FRAME_HEIGHT,
-    x2: FRAME_X - 54,
-    y2: FRAME_Y + FRAME_HEIGHT,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
+  if (showCadPosts) {
+    sceneElements.push(
+      ...buildCadMountingPosts(frameBounds, { extendBelowFramePx: cadClearancePx }),
+    )
   }
+
+  const cadDimensions = isCadTechnicalView(viewMode)
+    ? buildCadDimensionLayer({
+        bounds: frameBounds,
+        widthMm: config.widthMm,
+        heightMm: config.heightMm,
+        leafCount: getLeafCount(config.gateType),
+        showPosts: showCadPosts,
+        clearancePx: cadClearancePx,
+      })
+    : null
+
+  if (cadDimensions) {
+    notes.push(...cadDimensions.notes)
+  }
+
+  const primitives: GateRenderPrimitive[] = [
+    ...sceneElements,
+    ...gatePrimitives,
+    ...(cadDimensions?.primitives ?? []),
+  ]
 
   const labels: GateRenderLabel[] = [
     {
@@ -1216,9 +1237,9 @@ export function buildGateRenderPlan(
       y: FRAME_Y - 46,
       text: title,
       anchor: 'start',
-      size: 28,
+      size: isCadTechnicalView(viewMode) ? 18 : 28,
       fill: palette.ink,
-      weight: 700,
+      weight: isCadTechnicalView(viewMode) ? 600 : 700,
     },
     {
       id: 'label-subtitle',
@@ -1226,31 +1247,73 @@ export function buildGateRenderPlan(
       y: FRAME_Y - 18,
       text: subtitle,
       anchor: 'start',
-      size: 14,
+      size: 13,
       fill: palette.steel,
       weight: 500,
     },
-    {
-      id: 'label-dimensions',
-      x: FRAME_X + FRAME_WIDTH - 12,
-      y: FRAME_Y + FRAME_HEIGHT + 54,
-      text: `${config.widthMm} mm`,
-      anchor: 'end',
-      size: 18,
-      fill: palette.accent,
-      weight: 700,
-    },
-    {
-      id: 'label-height',
-      x: FRAME_X - 78,
-      y: FRAME_Y + FRAME_HEIGHT / 2,
-      text: `${config.heightMm} mm`,
-      anchor: 'end',
-      size: 18,
-      fill: palette.accent,
-      weight: 700,
-    },
   ]
+
+  if (cadDimensions) {
+    labels.push(...cadDimensions.labels)
+    labels.push({
+      id: 'label-finish',
+      x: FRAME_X + FRAME_WIDTH,
+      y: FRAME_Y - 18,
+      text: finishDefinition.label,
+      anchor: 'end',
+      size: 12,
+      fill: palette.steel,
+      weight: 600,
+    })
+  } else {
+    labels.push(
+      {
+        id: 'label-dimensions',
+        x: FRAME_X + FRAME_WIDTH - 12,
+        y: FRAME_Y + FRAME_HEIGHT + 54,
+        text: `${config.widthMm} mm`,
+        anchor: 'end',
+        size: 18,
+        fill: palette.accent,
+        weight: 700,
+      },
+      {
+        id: 'label-height',
+        x: FRAME_X - 78,
+        y: FRAME_Y + FRAME_HEIGHT / 2,
+        text: `${config.heightMm} mm`,
+        anchor: 'end',
+        size: 18,
+        fill: palette.accent,
+        weight: 700,
+      },
+      {
+        id: 'label-finish',
+        x: FRAME_X + FRAME_WIDTH - 12,
+        y: FRAME_Y + FRAME_HEIGHT + 78,
+        text: finishDefinition.label,
+        anchor: 'end',
+        size: 13,
+        fill: finishPalette.label,
+        weight: 600,
+      },
+    )
+  }
+
+  // Finish swatch (installation only — technical stays ink CAD).
+  if (viewMode === 'installation') {
+    primitives.push({
+      kind: 'rect',
+      id: 'finish-swatch',
+      x: FRAME_X + FRAME_WIDTH - 48,
+      y: FRAME_Y + FRAME_HEIGHT + 62,
+      width: 36,
+      height: 14,
+      fill: finishDefinition.schematic.frame,
+      stroke: finishPalette.ink,
+      strokeWidth: 1.5,
+    })
+  }
 
   if (viewMode === 'installation' && config.posts.enabled && config.posts.material !== 'none') {
     labels.push({
@@ -1281,8 +1344,7 @@ export function buildGateRenderPlan(
         id: 'label-tail',
         x: FRAME_X + 28 + (FRAME_WIDTH * getCantileverTailRatio(config.widthMm)) / 2,
         y: FRAME_Y + 84,
-        text:
-          config.widthMm === 4000 ? 'Counterbalance tail = 1/3 at 4m' : 'Counterbalance tail visible',
+        text: 'Counterbalance tail = 1/3 of opening (min)',
         anchor: 'middle',
         size: 12,
         fill: palette.accent,
@@ -1306,3 +1368,28 @@ export function buildGateRenderPlan(
 }
 
 export { serializeGateRenderPlanToSvg } from './rendering/svg-serialize'
+export {
+  CAD_BRICK_HATCH,
+  CAD_CLEARANCE_MIN_PX,
+  CAD_COLORS,
+  CAD_DIMENSION,
+  CAD_GROUND,
+  CAD_POST_LAYOUT,
+  CAD_PROVISIONAL_GROUND_CLEARANCE_MM,
+  CAD_STROKES,
+  CAD_STYLE_SOURCE,
+  buildCadMountingPosts,
+  buildCadTechnicalBackground,
+  getCadClearancePx,
+  getCadPostOuterBounds,
+  getCadTechnicalPalette,
+  isCadTechnicalView,
+  restylePrimitivesForCadTechnical,
+} from './rendering/cad-style'
+export type { CadTechnicalPalette } from './rendering/cad-style'
+export {
+  buildCadDimensionLayer,
+  CAD_PROVISIONAL_CENTER_GAP_MM,
+  CAD_PROVISIONAL_SIDE_GAP_MM,
+} from './rendering/cad-dimensions'
+export type { CadDimensionLayer, CadDimensionLayerInput } from './rendering/cad-dimensions'

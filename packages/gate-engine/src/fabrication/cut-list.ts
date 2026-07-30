@@ -4,7 +4,7 @@ import { getLeafCount, isSlidingGate } from '../internal/shared'
 
 export type CutListLine = {
   id: string
-  role: 'rail' | 'picket' | 'frame' | 'post' | 'panel'
+  role: 'rail' | 'picket' | 'frame' | 'post' | 'panel' | 'hardware'
   profile: string
   lengthMm: number
   quantity: number
@@ -110,6 +110,20 @@ export function buildGateCutList(config: GateConfig): GateCutList {
         quantity: Math.round(lowerCount / leafCount) * leafCount * (geometry?.pickets.kickPlateMultiplier ?? 1),
       })
     }
+  }
+
+  // CA-01: handle is base hardware on manual gates only — never on motorised.
+  if (!config.motorised && !isSlidingGate(config.gateType)) {
+    lines.push({
+      id: 'manual-handle',
+      role: 'hardware',
+      profile: 'lever handle',
+      lengthMm: 0,
+      quantity: 1,
+      note: 'Omitted when motorised',
+    })
+  } else if (config.motorised) {
+    notes.push('Motorised build: no leaf handle (CA-01).')
   }
 
   if (geometry) {

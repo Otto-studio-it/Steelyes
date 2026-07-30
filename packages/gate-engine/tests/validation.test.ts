@@ -188,7 +188,7 @@ describe('gate-engine validation', () => {
     expect(validateGateConfig(config).ok).toBe(true)
   })
 
-  it('rejects railhead quantities that exceed the gate width geometry', () => {
+  it('treats high railhead quantities as provisional guidance, not a hard fail', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const result = validateGateConfig({
       ...config,
@@ -203,9 +203,11 @@ describe('gate-engine validation', () => {
       ),
     })
 
-    expect(result.ok).toBe(false)
-    if (!result.ok) {
-      expect(result.issues.map((issue) => issue.code)).toContain('geometry_count_mismatch')
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.guidance?.some((issue) => issue.code === 'provisional_count_guidance')).toBe(true)
+      expect(result.guidance?.[0]?.message).toMatch(/survey/i)
+      expect(result.guidance?.[0]?.message).not.toMatch(/cannot exceed/i)
     }
   })
 })

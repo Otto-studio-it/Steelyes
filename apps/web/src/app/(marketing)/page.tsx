@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
+import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates | Steelyes',
@@ -297,20 +298,21 @@ export default function HomePage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
-            name: 'Steelyes',
-            url: 'https://www.steelyes.co.uk',
-            telephone: '+44 7803 002145',
-            email: 'steelyes@yahoo.com',
+            name: BUSINESS.tradingName,
+            url: BUSINESS.website,
+            telephone: BUSINESS.phoneDisplay,
+            email: BUSINESS.email,
             description:
               'Bespoke steel driveway gates, electric gates, railings, balconies and security doors. Survey-led specification, supply and install across the UK.',
             address: {
               '@type': 'PostalAddress',
-              streetAddress: 'Unit 7, Meridian Industrial Estate',
-              addressLocality: 'Enfield',
-              addressRegion: 'London',
-              postalCode: 'EN3 7TW',
+              streetAddress: BUSINESS.address.line1,
+              addressLocality: BUSINESS.address.locality,
+              addressRegion: BUSINESS.address.region,
+              postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
+            sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {
               '@type': 'OfferCatalog',

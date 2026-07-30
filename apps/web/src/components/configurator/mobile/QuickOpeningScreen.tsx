@@ -3,7 +3,9 @@
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 
+import { CantileverSiteSpaceNote } from '@/components/configurator/CantileverSiteSpaceNote'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
+import { DimensionMeaningNote } from '@/components/configurator/DimensionMeaningNote'
 import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
 import {
   HEIGHT_DIMENSION_PRESETS,
@@ -28,6 +30,7 @@ export function QuickOpeningScreen() {
   return (
     <div className="space-y-6">
       <MeasurementGuide />
+      <DimensionMeaningNote gateType={config.gateType} />
 
       <div className="space-y-2">
         <span className="block font-mono text-xs uppercase tracking-widest text-muted">Opening width</span>
@@ -77,13 +80,17 @@ export function QuickOpeningScreen() {
 
         {widthCustom ? (
           <DimensionControl
-            label="Width"
+            label={config.gateType === 'cantilever_sliding' ? 'Clear opening width' : 'Width'}
             value={config.widthMm}
             min={MIN_WIDTH_MM}
             max={MAX_WIDTH_MM}
             presets={WIDTH_DIMENSION_PRESETS}
             onChange={(widthMm) => patchConfig({ widthMm })}
           />
+        ) : null}
+
+        {config.gateType === 'cantilever_sliding' ? (
+          <CantileverSiteSpaceNote clearOpeningMm={config.widthMm} />
         ) : null}
       </div>
 

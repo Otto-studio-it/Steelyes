@@ -41,7 +41,7 @@ describe('gate-engine mesh', () => {
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'counterbalance-tail')).toBe(true)
-    expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+    expect(plan.notes.some((note) => note.includes('5333') && note.includes('1/3'))).toBe(true)
   })
 
   it('includes tube pickets as cylinders for Victorian double swing', () => {

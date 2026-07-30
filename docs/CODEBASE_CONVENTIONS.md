@@ -201,7 +201,7 @@ packages/gate-engine/
 │   │   │   ├── export function buildInfill(...)
 │   │   │   ├── export function applyFinish(...)
 │   │   │   ├── export function disposeGate(scene)
-│   │   │   └── Materials (PBR matte-black, zinc-grey, bronze, pearl-white)
+│   │   │   └── Materials (PBR black satin/matt/gloss, anthracite RAL 7016, custom RAL)
 │   │   │
 │   │   ├── double-swing.ts  (1 or 2 leaves)
 │   │   ├── sliding.ts       (1 leaf + rail)

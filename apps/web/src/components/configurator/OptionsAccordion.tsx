@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
+import { ProvisionalCountNotice } from '@/components/configurator/ProvisionalCountNotice'
 import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
 import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
@@ -77,6 +78,13 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
           </label>
           {isRailheadOptionKey(option.key) ? <RailheadVariantPicker optionKey={option.key} /> : null}
           <VariantCatalogNotice optionKey={option.key} />
+          {option.key === 'top_railheads' ||
+          option.key === 'dog_bars' ||
+          option.key === 'dog_bar_railheads' ||
+          option.key === 'bushes' ||
+          option.key === 'spirals' ? (
+            <ProvisionalCountNotice />
+          ) : null}
           <p className="text-xs leading-5 text-muted-deep">
             {provisionalRailhead
               ? 'Price confirmed at site survey — does not block your configuration.'
