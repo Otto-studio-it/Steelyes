@@ -8,10 +8,13 @@ import {
   MIN_WIDTH_MM,
   WIDTH_DIMENSION_PRESETS,
 } from '@/lib/configurator/presentation'
+import { BifoldSchematicNote } from '@/components/configurator/BifoldSchematicNote'
 import { CantileverSiteSpaceNote } from '@/components/configurator/CantileverSiteSpaceNote'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
 import { DimensionMeaningNote } from '@/components/configurator/DimensionMeaningNote'
 import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
+import { RadiusSchematicNote } from '@/components/configurator/RadiusSchematicNote'
+import { TelescopicSchematicNote } from '@/components/configurator/TelescopicSchematicNote'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 export function DimensionsStep() {
@@ -22,6 +25,9 @@ export function DimensionsStep() {
     <div className="space-y-4">
       <MeasurementGuide />
       <DimensionMeaningNote gateType={config.gateType} />
+      <BifoldSchematicNote gateType={config.gateType} />
+      <TelescopicSchematicNote gateType={config.gateType} clearOpeningMm={config.widthMm} />
+      <RadiusSchematicNote gateType={config.gateType} />
 
       <DimensionControl
         label={config.gateType === 'cantilever_sliding' ? 'Clear opening width' : 'Width'}

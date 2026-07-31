@@ -1,5 +1,6 @@
 import { buildGateGeometryPlan } from '../geometry'
 import { getLeafCount } from '../internal/shared'
+import { getBifoldPanelsPerLeaf, isBifoldGate } from '../rules/bifold'
 import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
 import type { GateMeshBox, GateMeshCylinder } from './types'
@@ -8,10 +9,6 @@ const FRAME_DEPTH_MM = scaleVisualBoldness(45)
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
-}
-
-function isBifoldingGate(gateType: GateConfig['gateType']): boolean {
-  return gateType === 'bifolding_double_swing' || gateType === 'single_bifolding'
 }
 
 export function buildSwingProceduralMembers(
@@ -37,24 +34,26 @@ export function buildSwingProceduralMembers(
   for (let leafIndex = 0; leafIndex < leafCount; leafIndex += 1) {
     const leafCenterX = -halfSpan + leafWidth * (leafIndex + 0.5)
     const leafInnerWidth = leafWidth - scaleVisualBoldness(24)
-    const bifoldGap = isBifoldingGate(config.gateType) ? scaleVisualBoldness(14) : 0
-    const bifoldPanelWidth = isBifoldingGate(config.gateType) ? (leafInnerWidth - bifoldGap) / 2 : leafInnerWidth
+    const panelsPerLeaf = getBifoldPanelsPerLeaf(config.gateType)
+    const bifoldActive = isBifoldGate(config.gateType) && panelsPerLeaf >= 2
+    const bifoldGap = bifoldActive ? scaleVisualBoldness(14) : 0
+    const bifoldPanelWidth = bifoldActive ? (leafInnerWidth - bifoldGap) / panelsPerLeaf : leafInnerWidth
 
     boxes.push({
       kind: 'box',
       id: `leaf-frame-${leafIndex + 1}`,
-      widthMm: isBifoldingGate(config.gateType) ? bifoldPanelWidth : leafInnerWidth,
+      widthMm: bifoldActive ? bifoldPanelWidth : leafInnerWidth,
       heightMm: config.heightMm - 48,
       depthMm: FRAME_DEPTH_MM * 0.75,
       positionMm: [
-        isBifoldingGate(config.gateType) ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
+        bifoldActive ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
         config.heightMm / 2,
         0,
       ],
       role: config.style === 'composite_boards' ? 'panel' : 'frame',
     })
 
-    if (isBifoldingGate(config.gateType)) {
+    if (bifoldActive) {
       boxes.push({
         kind: 'box',
         id: `leaf-fold-${leafIndex + 1}`,
@@ -90,11 +89,11 @@ export function buildSwingProceduralMembers(
       boxes.push({
         kind: 'box',
         id: rail.id,
-        widthMm: isBifoldingGate(config.gateType) ? bifoldPanelWidth - 8 : leafInnerWidth - 8,
+        widthMm: bifoldActive ? bifoldPanelWidth - 8 : leafInnerWidth - 8,
         heightMm: scaleVisualBoldness(8),
         depthMm: FRAME_DEPTH_MM * 0.65,
         positionMm: [
-          isBifoldingGate(config.gateType) ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
+          bifoldActive ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
           config.heightMm * rail.ratio,
           0,
         ],
@@ -117,7 +116,7 @@ export function buildSwingProceduralMembers(
 
     for (let picketIndex = 0; picketIndex < picketCount; picketIndex += 1) {
       const ratio = (picketIndex + 0.5) / picketCount
-      const x = isBifoldingGate(config.gateType)
+      const x = bifoldActive
         ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 + bifoldPanelWidth * ratio
         : leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
       cylinders.push({
@@ -134,7 +133,7 @@ export function buildSwingProceduralMembers(
     const effectiveLower = Math.round(lowerCount / leafCount) * kickMultiplier
     for (let picketIndex = 0; picketIndex < effectiveLower; picketIndex += 1) {
       const ratio = (picketIndex + 0.5) / effectiveLower
-      const x = isBifoldingGate(config.gateType)
+      const x = bifoldActive
         ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 + bifoldPanelWidth * ratio
         : leafCenterX - leafInnerWidth / 2 + leafInnerWidth * ratio
       cylinders.push({

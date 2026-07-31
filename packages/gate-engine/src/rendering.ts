@@ -7,7 +7,20 @@ import {
   hasOption,
   isSlidingGate,
 } from './internal/shared'
+import {
+  bifoldSchematicNote,
+  getBifoldPanelsPerLeaf,
+  isBifoldGate,
+  BIFOLD_PANEL_SPLIT_RATIO,
+} from './rules/bifold'
 import { cantileverTailNote, getCantileverTailRatio } from './rules/cantilever'
+import { dimensionMeaningNote } from './rules/dimensions'
+import { getRadiusTopProfile, radiusSchematicNote } from './rules/radius'
+import {
+  getTelescopicOverlapMm,
+  getTelescopicPanelCount,
+  telescopicSchematicNote,
+} from './rules/telescopic'
 import {
   getDecorativeBarCapacity,
   getExpectedDogBarCount,
@@ -297,6 +310,69 @@ function swingTopYAtX(
   return arch ? archYOnSwingTop(leftInset, rightInset, topY, x) : topY + flatOffset
 }
 
+/**
+ * Elevation fold markers for bifold leaves — mid-leaf dashed stile + hinge ticks.
+ * Panel count / split come from rules/bifold (provisional until Marius).
+ */
+function pushBifoldFoldMarkers(
+  primitives: GateRenderPrimitive[],
+  palette: RenderPalette,
+  args: {
+    gateType: GateConfig['gateType']
+    topY: number
+    bottomY: number
+    leafCount: number
+  },
+): void {
+  const panelsPerLeaf = getBifoldPanelsPerLeaf(args.gateType)
+  if (panelsPerLeaf < 2) {
+    return
+  }
+
+  const leafWidth = FRAME_WIDTH / args.leafCount
+  const foldRatio = BIFOLD_PANEL_SPLIT_RATIO
+
+  for (let leafIndex = 0; leafIndex < args.leafCount; leafIndex += 1) {
+    const leafLeft = FRAME_X + leafWidth * leafIndex
+    const foldX = leafLeft + leafWidth * foldRatio
+
+    pushShadowLine(
+      primitives,
+      {
+        kind: 'line',
+        id: `bifold-fold-${leafIndex + 1}`,
+        x1: foldX,
+        y1: args.topY + 10,
+        x2: foldX,
+        y2: args.bottomY - 10,
+        stroke: palette.accent,
+        strokeWidth: scaleVisual(2.6),
+        strokeDasharray: '7 6',
+        opacity: 0.85,
+      },
+      palette,
+      1.2,
+      1.2,
+    )
+
+    // Fold hinge ticks (schematic — not fabrication hardware).
+    for (const tickY of [args.topY + FRAME_HEIGHT * 0.28, args.topY + FRAME_HEIGHT * 0.72]) {
+      primitives.push({
+        kind: 'line',
+        id: `bifold-hinge-${leafIndex + 1}-${tickY}`,
+        x1: foldX - 10,
+        y1: tickY,
+        x2: foldX + 10,
+        y2: tickY,
+        stroke: palette.accent,
+        strokeWidth: scaleVisual(3),
+        strokeLinecap: 'square',
+        opacity: 0.95,
+      })
+    }
+  }
+}
+
 function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRenderPrimitive[] {
   const topY = FRAME_Y
   const bottomY = FRAME_Y + FRAME_HEIGHT
@@ -365,8 +441,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: centerX,
       y2: bottomY - 8,
       stroke: palette.ink,
-      strokeWidth: scaleVisual(3),
-      strokeDasharray: config.gateType === 'bifolding_double_swing' ? '6 10' : undefined,
+      strokeWidth: scaleVisual(isBifoldGate(config.gateType) ? 3.5 : 3),
       opacity: 0.7,
     }, palette, 1.5, 1.5)
   } else {
@@ -381,6 +456,15 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       strokeWidth: scaleVisual(3),
       opacity: 0.5,
     }, palette, 1.4, 1.4)
+  }
+
+  if (isBifoldGate(config.gateType)) {
+    pushBifoldFoldMarkers(primitives, palette, {
+      gateType: config.gateType,
+      topY,
+      bottomY,
+      leafCount,
+    })
   }
 
   if (arch) {
@@ -771,6 +855,9 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   const panelY = baseY
   const isRadius = config.gateType === 'radius_sliding'
   const isTelescopic = config.gateType === 'telescopic_sliding'
+  const radiusCurvedTop = isRadius && hasOption(config, 'arched_top')
+  const telescopicPanels = isTelescopic ? getTelescopicPanelCount() : 0
+  const telescopicOverlapMm = isTelescopic ? getTelescopicOverlapMm(config.widthMm) : 0
   const boardCount = clamp(Math.round(config.widthMm / 320), 5, 11)
   const boardWidth = panelWidth / boardCount
   const primitives: GateRenderPrimitive[] = []
@@ -788,18 +875,32 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     strokeWidth: scaleVisual(6),
   })
 
-  primitives.push({
-    kind: 'line',
-    id: 'track-line',
-    x1: FRAME_X + 30,
-    y1: trackY,
-    x2: FRAME_X + FRAME_WIDTH - 30,
-    y2: trackY,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(7),
-    strokeLinecap: 'round',
-    opacity: 0.9,
-  })
+  // Track: straight for tracked/cantilever/telescopic; curved plan cue for radius (elevation + arc).
+  if (isRadius) {
+    primitives.push({
+      kind: 'path',
+      id: 'track-line',
+      d: `M ${FRAME_X + 30} ${trackY} Q ${FRAME_X + FRAME_WIDTH / 2} ${trackY + 48}, ${FRAME_X + FRAME_WIDTH - 30} ${trackY}`,
+      fill: 'none',
+      stroke: palette.steel,
+      strokeWidth: scaleVisual(7),
+      strokeLinecap: 'round',
+      opacity: 0.9,
+    })
+  } else {
+    primitives.push({
+      kind: 'line',
+      id: 'track-line',
+      x1: FRAME_X + 30,
+      y1: trackY,
+      x2: FRAME_X + FRAME_WIDTH - 30,
+      y2: trackY,
+      stroke: palette.steel,
+      strokeWidth: scaleVisual(7),
+      strokeLinecap: 'round',
+      opacity: 0.9,
+    })
+  }
 
   if (isCantilever) {
     primitives.push({
@@ -830,21 +931,48 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     })
   }
 
-  primitives.push({
-    kind: 'rect',
-    id: 'sliding-panel',
-    x: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
-    y: panelY,
-    width: isCantilever ? panelWidth + 12 : panelWidth,
-    height: panelHeight,
-    rx: isRadius ? 80 : 14,
-    fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
-    stroke: palette.ink,
-    strokeWidth: scaleVisual(4),
-    fillOpacity: 0.95,
-  })
+  if (isTelescopic) {
+    const overlapPx = Math.max(
+      8,
+      (telescopicOverlapMm / Math.max(1, config.widthMm)) * panelWidth,
+    )
+    const segmentSpan = (panelWidth + overlapPx * (telescopicPanels - 1)) / telescopicPanels
+    for (let index = 0; index < telescopicPanels; index += 1) {
+      const x = panelX + index * (segmentSpan - overlapPx)
+      const inset = index * 4
+      primitives.push({
+        kind: 'rect',
+        id: `telescopic-segment-${index}`,
+        x: x + inset * 0.25,
+        y: panelY + inset,
+        width: segmentSpan - inset * 0.5,
+        height: panelHeight - inset * 2,
+        rx: 12,
+        fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
+        stroke: palette.ink,
+        strokeWidth: scaleVisual(index === 0 ? 4 : 3),
+        strokeDasharray: index === 0 ? undefined : '8 8',
+        fillOpacity: 0.92 - index * 0.08,
+        opacity: 1,
+      })
+    }
+  } else {
+    primitives.push({
+      kind: 'rect',
+      id: 'sliding-panel',
+      x: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
+      y: panelY,
+      width: isCantilever ? panelWidth + 12 : panelWidth,
+      height: panelHeight,
+      rx: isRadius ? 24 : 14,
+      fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(4),
+      fillOpacity: 0.95,
+    })
+  }
 
-  if (isRadius) {
+  if (isRadius && radiusCurvedTop) {
     primitives.push({
       kind: 'path',
       id: 'radius-top',
@@ -857,25 +985,18 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     })
   }
 
-  if (isTelescopic) {
-    const segmentCount = 3
-    const segmentWidth = panelWidth / segmentCount
-    for (let index = 0; index < segmentCount; index += 1) {
-      primitives.push({
-        kind: 'rect',
-        id: `telescopic-segment-${index}`,
-        x: panelX + index * segmentWidth,
-        y: panelY + 2 + index * 3,
-        width: segmentWidth - index * 6,
-        height: panelHeight - 4 - index * 6,
-        rx: 12,
-        fill: 'none',
-        stroke: palette.accent,
-        strokeWidth: scaleVisual(3),
-        strokeDasharray: index === 0 ? undefined : '8 8',
-        opacity: 0.7,
-      })
-    }
+  // Keep a subtle curved-path cue on radius even with straight top (CA-12).
+  if (isRadius && !radiusCurvedTop) {
+    primitives.push({
+      kind: 'path',
+      id: 'radius-path-cue',
+      d: `M ${panelX + 24} ${panelY + panelHeight - 28} Q ${panelX + panelWidth / 2} ${panelY + panelHeight + 8}, ${panelX + panelWidth - 24} ${panelY + panelHeight - 28}`,
+      fill: 'none',
+      stroke: palette.accent,
+      strokeWidth: scaleVisual(3),
+      strokeDasharray: '6 8',
+      opacity: 0.75,
+    })
   }
 
   const barCount = config.style === 'traditional_victorian' ? clamp(Math.round(config.widthMm / 230), 6, 14) : boardCount
@@ -1155,6 +1276,24 @@ export function buildGateRenderPlan(
     notes.push(cantileverTailNote(config.widthMm))
   }
 
+  notes.push(
+    dimensionMeaningNote({
+      cantileverTailExtra: config.gateType === 'cantilever_sliding',
+    }),
+  )
+
+  if (isBifoldGate(config.gateType)) {
+    notes.push(bifoldSchematicNote(config.gateType))
+  }
+
+  if (config.gateType === 'telescopic_sliding') {
+    notes.push(telescopicSchematicNote(config.widthMm))
+  }
+
+  if (config.gateType === 'radius_sliding') {
+    notes.push(radiusSchematicNote(hasOption(config, 'arched_top')))
+  }
+
   const geometryPlan = buildGateGeometryPlan(config)
   if (geometryPlan) {
     notes.push('Victorian swing layout uses gate-audit zone ratios and four horizontal rails.')
@@ -1333,7 +1472,14 @@ export function buildGateRenderPlan(
       id: 'label-track',
       x: FRAME_X + 22,
       y: FRAME_Y + FRAME_HEIGHT + 32,
-      text: config.gateType === 'cantilever_sliding' ? 'Track / counterbalance schematic' : 'Track / rail schematic',
+      text:
+        config.gateType === 'cantilever_sliding'
+          ? 'Track / counterbalance schematic'
+          : config.gateType === 'radius_sliding'
+            ? 'Curved travel path (schematic)'
+            : config.gateType === 'telescopic_sliding'
+              ? 'Telescopic stack (schematic)'
+              : 'Track / rail schematic',
       anchor: 'start',
       size: 13,
       fill: palette.steel,
@@ -1351,6 +1497,43 @@ export function buildGateRenderPlan(
         weight: 600,
       })
     }
+    if (config.gateType === 'telescopic_sliding') {
+      labels.push({
+        id: 'label-telescopic',
+        x: FRAME_X + FRAME_WIDTH / 2,
+        y: FRAME_Y + 36,
+        text: `${getTelescopicPanelCount()} panels · ~${getTelescopicOverlapMm(config.widthMm)} mm overlap · motor-side front`,
+        anchor: 'middle',
+        size: 12,
+        fill: palette.accent,
+        weight: 600,
+      })
+    }
+    if (config.gateType === 'radius_sliding') {
+      labels.push({
+        id: 'label-radius',
+        x: FRAME_X + FRAME_WIDTH / 2,
+        y: FRAME_Y + 36,
+        text: `Curved path · top ${getRadiusTopProfile(hasOption(config, 'arched_top'))}`,
+        anchor: 'middle',
+        size: 12,
+        fill: palette.accent,
+        weight: 600,
+      })
+    }
+  }
+
+  if (isBifoldGate(config.gateType)) {
+    labels.push({
+      id: 'label-bifold-fold',
+      x: FRAME_X + FRAME_WIDTH / 2,
+      y: FRAME_Y + 36,
+      text: 'Fold stile (schematic — confirm panels with workshop)',
+      anchor: 'middle',
+      size: 12,
+      fill: palette.accent,
+      weight: 600,
+    })
   }
 
   return {

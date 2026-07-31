@@ -185,9 +185,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Folding dual-leaf',
     ref: 'ST-205',
     tagline: 'Wide aperture. Short projection.',
-    availability: 'enquire',
-    ctaLabel: 'Enquire for this type',
-    ctaHref: '/contact?gate=bifold',
+    availability: 'schematic',
+    ctaLabel: 'Explore schematic',
+    ctaHref: '/configurator?gate=bifolding_double_swing',
     heroImage: '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
     detailImages: [
       '/images/gates/classic-ornate-driveway-gate-arch.jpg',
@@ -198,20 +198,20 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     customerVoice:
       '“The drive is short — if a swing leaf opens, it hits the car. We still want a wide entrance when it’s open. Something that folds back against the wall or pier would solve it.”',
     description:
-      'Bifold double swing folds each side as it opens, cutting the swing footprint. Geometry (panels per leaf, stacking side) is still workshop-confirmed with you — we do not fake those rules online. Send the brief; we specify after survey rather than invent panel counts in the configurator.',
+      'Bifold double swing folds each side as it opens, cutting the swing footprint. Online you get a labelled schematic (two panels per leaf from the product brief) — workshop panel count and stack are confirmed at survey before we fabricate.',
     specs: [
       { label: 'Opening mechanism', value: 'Bifold dual-leaf fold' },
       { label: 'Best for', value: 'Short drives, tight swing clearance' },
-      { label: 'Online status', value: 'Enquire — not fully configurable yet' },
+      { label: 'Online status', value: 'Schematic configurator' },
       { label: 'Material', value: 'Steel specification per project' },
       { label: 'Automation', value: 'Reviewed on survey' },
       { label: 'Lead time', value: 'After full design review' },
     ],
     features: [
       'Opens wide without a deep swing into the plot',
-      'Specified with you — not a one-size fold recipe online',
+      'Schematic fold preview — not a fabrication drawing',
       'Finish and infill matched to the house frontage',
-      'Quote path starts with an enquiry and a measure',
+      'Quote path still ends with survey and confirmation',
     ],
   },
 
@@ -221,9 +221,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'One folding leaf',
     ref: 'ST-206',
     tagline: 'Side access that folds, not swings deep.',
-    availability: 'enquire',
-    ctaLabel: 'Enquire for this type',
-    ctaHref: '/contact?gate=single-bifold',
+    availability: 'schematic',
+    ctaLabel: 'Explore schematic',
+    ctaHref: '/configurator?gate=single_bifolding',
     heroImage: '/images/home/privacy-horizontal-steel-gate.jpg',
     detailImages: [
       '/images/gates/pedestrian-gate-ornate-brick.jpg',
@@ -234,11 +234,11 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     customerVoice:
       '“Side gate is tight against a wall — a normal swing leaf would hit the bin store. Can it fold so it stacks neatly?”',
     description:
-      'Single bifold is a folding personnel or narrow vehicle leaf for constrained side openings. Collection side and panel layout are confirmed with Marius’s workshop rules before we quote steel — enquire so we can specify honestly rather than show fiction online.',
+      'Single bifold is a folding personnel or narrow vehicle leaf for constrained side openings. Explore a schematic fold online; collection side and final panel layout stay workshop-confirmed before steel is cut.',
     specs: [
       { label: 'Opening mechanism', value: 'Single bifold fold' },
       { label: 'Best for', value: 'Narrow / wall-constrained side access' },
-      { label: 'Online status', value: 'Enquire only' },
+      { label: 'Online status', value: 'Schematic configurator' },
       { label: 'Material', value: 'Steel — confirmed per project' },
       { label: 'Hardware', value: 'Specified on survey' },
       { label: 'Lead time', value: 'After design review' },
@@ -246,7 +246,7 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     features: [
       'Folding action where a full swing will not fit',
       'Matched visually to main entrance when required',
-      'No invented panel count in the public configurator',
+      'Schematic only until workshop rules are locked',
       'Survey-led quote before fabrication',
     ],
   },
@@ -257,9 +257,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Multi-panel slide',
     ref: 'ST-207',
     tagline: 'Wide opening. Shorter parked stack.',
-    availability: 'enquire',
-    ctaLabel: 'Enquire for this type',
-    ctaHref: '/contact?gate=telescopic',
+    availability: 'schematic',
+    ctaLabel: 'Explore schematic',
+    ctaHref: '/configurator?gate=telescopic_sliding',
     heroImage: '/images/gates/sliding-gate-spear-finials.jpg',
     detailImages: [
       '/images/gates/sliding-gate-anthracite-residential.jpg',
@@ -270,20 +270,20 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     customerVoice:
       '“The opening is wide but the run-back along the fence is short. A single long sliding leaf won’t fit. We need panels that telescope so the stack is shorter.”',
     description:
-      'Telescopic sliding splits the leaf into overlapping panels so the parked stack is shorter than one full-width leaf. Panel count and overlap order are still open workshop questions — we will not pretend the online tool knows them. Enquire with photos and a rough width; we engineer from survey.',
+      'Telescopic sliding splits the leaf into overlapping panels so the parked stack is shorter than one full-width leaf. Online schematic uses three panels with ~80–120 mm overlap and the motor-side panel in front — survey still locks fabrication detail.',
     specs: [
       { label: 'Opening mechanism', value: 'Multi-panel telescopic slide' },
       { label: 'Best for', value: 'Wide light, short side run' },
-      { label: 'Online status', value: 'Enquire only' },
+      { label: 'Online status', value: 'Schematic configurator' },
       { label: 'Track / ground', value: 'Confirmed on survey' },
       { label: 'Automation', value: 'Reviewed with the kit on site' },
       { label: 'Lead time', value: 'After engineered design' },
     ],
     features: [
       'Shorter stack than a single long sliding leaf',
+      'Three-panel schematic with labelled overlap band',
       'Early survey on track, drainage, and motor loads',
-      'Honest status: not yet a full online configure path',
-      'Built when the geometry is closed with you',
+      'Quote path still ends with site measure',
     ],
   },
 
@@ -293,9 +293,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     subtitle: 'Curved travel',
     ref: 'ST-208',
     tagline: 'When the opening isn’t a straight line.',
-    availability: 'enquire',
-    ctaLabel: 'Enquire for this type',
-    ctaHref: '/contact?gate=radius',
+    availability: 'schematic',
+    ctaLabel: 'Explore schematic',
+    ctaHref: '/configurator?gate=radius_sliding',
     heroImage: '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
     detailImages: [
       '/images/gates/privacy-diagonal-gate-dusk.jpg',
@@ -306,20 +306,20 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     customerVoice:
       '“The entrance is on a curve — posts aren’t parallel in a simple rectangle. We need the gate to follow the radius, not fight it.”',
     description:
-      'Radius sliding follows a curved plan — rare, site-specific, and not something we invent in a generic configurator. Share drawings or a clear survey brief; Steelyes will define the product with you before any price is treated as firm.',
+      'Radius sliding always travels on a curved path. The top may be straight or curved (arched top). Explore a labelled schematic online; curve radius and fabrication details stay survey-led.',
     specs: [
-      { label: 'Opening mechanism', value: 'Radius / curved slide' },
+      { label: 'Opening mechanism', value: 'Curved-path sliding' },
       { label: 'Best for', value: 'Non-rectilinear entrances' },
-      { label: 'Online status', value: 'Enquire only' },
-      { label: 'Design input', value: 'Survey + drawings preferred' },
-      { label: 'Pricing', value: 'On request after design review' },
+      { label: 'Online status', value: 'Schematic configurator' },
+      { label: 'Top profile', value: 'Straight or curved' },
+      { label: 'Pricing', value: 'Indicative until survey' },
       { label: 'Lead time', value: 'Subject to engineered design' },
     ],
     features: [
-      'For curved plans — not a stretch of a straight sliding leaf',
-      'Starts with your site evidence, not a stock SKU',
-      'No fake online dimensions',
-      'Quoted only when the radius is understood',
+      'Travel path always curved — not a straight-track product',
+      'Optional curved crest via arched top',
+      'Schematic preview for early conversation',
+      'Survey before steel is cut',
     ],
   },
 }

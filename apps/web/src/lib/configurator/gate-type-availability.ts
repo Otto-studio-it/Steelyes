@@ -13,10 +13,10 @@ const AVAILABILITY: Record<GateType, GateTypeAvailability> = {
   single_swing: 'configure',
   tracked_sliding: 'schematic',
   cantilever_sliding: 'schematic',
-  bifolding_double_swing: 'enquire',
-  single_bifolding: 'enquire',
-  telescopic_sliding: 'enquire',
-  radius_sliding: 'enquire',
+  bifolding_double_swing: 'schematic',
+  single_bifolding: 'schematic',
+  telescopic_sliding: 'schematic',
+  radius_sliding: 'schematic',
 }
 
 export function getGateTypeAvailability(gateType: GateType): GateTypeAvailability {

@@ -39,8 +39,8 @@ The engine currently contains all three, and a customer cannot tell them apart. 
 | `single_swing` | Same recipe, 1 leaf | Same | ✅ | **BUILDABLE** |
 | `tracked_sliding` | Schematic: frame rect + track line + panel | Schematic boxes | ✅ | **SCHEMATIC ONLY** — track type/position unknown |
 | `cantilever_sliding` | Schematic + tail (rule now correct per CA-05) | Schematic + tail box | ✅ | **SCHEMATIC ONLY** — carriage, foundation unknown |
-| `bifolding_double_swing` | **Drawn as a double swing with a dashed centre line** | **Identical to double swing** | ❌ | **NOT BUILDABLE** |
-| `single_bifolding` | **Drawn as a single swing** | **Identical to single swing** | ❌ | **NOT BUILDABLE** |
+| `bifolding_double_swing` | Fold stiles + hinge ticks (catalog 2 panels/leaf) | Split leaf boxes via `rules/bifold` | ⚠️ thin | **SCHEMATIC** — provisional until `gate.bifold.panels_per_leaf` |
+| `single_bifolding` | Mid-leaf fold stile (catalog 2 panels) | Split leaf boxes via `rules/bifold` | ⚠️ thin | **SCHEMATIC** — collection side provisional |
 | `telescopic_sliding` | 3 hardcoded segments, magic offsets | 3 hardcoded segments | ❌ | **NOT BUILDABLE** |
 | `radius_sliding` | Rounded rect + a decorative arc | **No special case at all** — falls through to generic sliding | ❌ | **NOT BUILDABLE** |
 

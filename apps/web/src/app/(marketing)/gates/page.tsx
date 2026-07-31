@@ -121,7 +121,7 @@ export default function GatesPage() {
             Explore configurator
           </Link>
           <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-            Double &amp; single swing configure fully · sliding schematic · bifold / telescopic / radius enquire
+            Double &amp; single swing configure fully · all other types schematic explore
           </p>
         </div>
       </section>

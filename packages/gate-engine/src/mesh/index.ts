@@ -1,5 +1,6 @@
 import { getFinishDefinition } from '../finishes'
 import { getLeafCount, isSlidingGate } from '../internal/shared'
+import { bifoldSchematicNote, isBifoldGate } from '../rules/bifold'
 import { cantileverTailNote, getCantileverTailRatio } from '../rules/cantilever'
 import type { GateConfig } from '../types'
 import { validateGateConfig } from '../validation'
@@ -170,6 +171,10 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
 
   if (config.gateType === 'cantilever_sliding') {
     notes.unshift(cantileverTailNote(config.widthMm))
+  }
+
+  if (isBifoldGate(config.gateType)) {
+    notes.unshift(bifoldSchematicNote(config.gateType))
   }
 
   return {

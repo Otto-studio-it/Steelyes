@@ -14,6 +14,39 @@ It is not a public product changelog.
 
 ---
 
+## 2026-07-31 — CA-08…CA-12 dimension + missing gates
+
+Commit: _pending_
+
+Source: Ruben answers to FOLLOWUP_MISSING_GATES (product owner).
+
+- Recorded `docs/client-answers/2026-07-31-ruben.md`
+- Width = clear opening; height = ground→top rail (all types)
+- Bifold 2 panels/leaf 50/50; collection on hinge side; L/R at quote
+- Telescopic 3 panels, overlap 80–120 (schematic 100), motor-side front
+- Radius: travel always curved; top straight or curved
+- All 8 types now configure (2) or schematic (6) — no enquire tier left
+
+---
+
+## 2026-07-30 — Bifold schematic honesty + missing-gates plan
+
+Commit: _pending_
+
+Changed:
+
+- Plan: `docs/frontend/MISSING_GATES_BUILD_PLAN_2026-07-30.md`
+- Marius outbound: `docs/client-answers/FOLLOWUP_MISSING_GATES_2026-07-30.md`
+- Engine: `packages/gate-engine/src/rules/bifold.ts` — provisional 2 panels/leaf from catalog
+- 2D: fold stiles + hinge ticks + notes/labels for bifold types
+- 3D mesh: shared `isBifoldGate` / panel count; bifold note on mesh plan
+- UI: bifold types `enquire` → `schematic`; `BifoldSchematicNote`; `?gate=` deep-link
+- Marketing: bifold / single-bifold CTAs → configurator schematic
+
+Still enquire: telescopic, radius.
+
+---
+
 ## 2026-07-28 — Client answer batch CA-01…CA-07 recorded and propagated
 
 Commit: _pending_

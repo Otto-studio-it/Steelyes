@@ -7,34 +7,30 @@ type DimensionMeaningNoteProps = {
 }
 
 /**
- * Honest width/height meaning until Marius closes open.width_meaning / open.height_meaning.
- * Cantilever clear-opening meaning is confirmed (CA-05).
+ * CA-08: width = clear opening between posts; height = ground → top rail.
+ * Cantilever tail remains extra (CA-05).
  */
 export function DimensionMeaningNote({ gateType }: DimensionMeaningNoteProps) {
-  if (gateType === 'cantilever_sliding') {
-    return (
-      <aside
-        className="border-l-4 border-primary bg-paper px-4 py-3"
-        data-testid="dimension-meaning-cantilever"
-      >
-        <p className="font-mono text-[10px] uppercase tracking-widest text-muted">Width meaning</p>
-        <p className="mt-1 text-sm leading-6 text-muted-deep">
-          Width is the <strong className="font-semibold text-steel">clear opening between posts</strong>. The
-          counterbalance tail is extra — see the site-space note below.
-        </p>
-      </aside>
-    )
-  }
+  const isCantilever = gateType === 'cantilever_sliding'
 
   return (
     <aside
-      className="border-l-4 border-steel/30 bg-paper px-4 py-3"
-      data-testid="dimension-meaning-provisional"
+      className="border-l-4 border-primary bg-paper px-4 py-3"
+      data-testid={isCantilever ? 'dimension-meaning-cantilever' : 'dimension-meaning-confirmed'}
     >
       <p className="font-mono text-[10px] uppercase tracking-widest text-muted">Width / height meaning</p>
       <p className="mt-1 text-sm leading-6 text-muted-deep">
-        We treat width as the <strong className="font-semibold text-steel">clear opening</strong> between post
-        inner faces, and height as ground to top of gate. Exact workshop datum is confirmed at the site survey.
+        Width is the <strong className="font-semibold text-steel">clear opening between post inner faces</strong>{' '}
+        — posts are not included in the millimetres you type (example: 3000 mm double swing → leaves ≈ 1500 mm
+        each). Height is <strong className="font-semibold text-steel">ground to top rail</strong>; railheads sit
+        above and do not count.
+        {isCantilever ? (
+          <>
+            {' '}
+            Cantilever counterbalance tail is <strong className="font-semibold text-steel">extra</strong> — see
+            the site-space note below.
+          </>
+        ) : null}
       </p>
     </aside>
   )

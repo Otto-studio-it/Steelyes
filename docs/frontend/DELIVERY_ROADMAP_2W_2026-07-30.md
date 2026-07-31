@@ -118,7 +118,7 @@ Parallel agents multiply *draft* speed, not *integration* speed. Plan assumes **
 | Invented count formulas | Dangerous | Quarantine + soft copy |
 | `width_meaning` / `height_meaning` | Open (except cantilever) | Label dimensions honestly; chase Marius |
 | Tracked / cantilever geometry | Schematic | Ship labelled schematic |
-| Bifold / telescopic / radius | Fiction | **Enquire only** — do not configure |
+| Bifold / telescopic / radius | Bifold → schematic (2026-07-30); telescopic/radius still fiction | Bifold explore labelled; telescopic/radius **Enquire** |
 | Fence panels UI | Domain only | Defer or “coming soon” |
 | Save / share / quote | Baseline exists | Harden end-to-end |
 | Mobile portrait + landscape | Partial | Finish orientation UX |
@@ -226,8 +226,8 @@ Dates assume start **Thu 30 Jul 2026** → handoff **Wed 12 Aug 2026**.
 
 ### Website
 
-- [ ] Production deploy on Vercel (`steelyes-prod` env)
-- [ ] Cloudflare / DNS cutover **or** documented temporary URL
+- [ ] Production deploy on Vercel (`steelyes-prod` env) — Coolify prod/staging already healthy (`steelyes.co.uk` / `staging.steelyes.co.uk`); next push of `feat/configurator-mobile-first` then redeploy
+- [x] Cloudflare / DNS cutover **or** documented temporary URL — Coolify FQDN live on apex + www + staging
 - [x] `sales@steelyes.co.uk` everywhere (no Yahoo)
 - [x] Instagram / Facebook / TikTok canonical URLs
 - [ ] Legal pages usable (privacy, cookies, terms)
