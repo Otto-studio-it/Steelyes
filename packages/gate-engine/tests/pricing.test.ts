@@ -38,12 +38,12 @@ describe('gate-engine pricing', () => {
     const result = calculateGateBasePrice(config)
 
     expect(result.source).toBe('manual')
-    expect(result.amountGbp).toBe(1800)
+    expect(result.amountGbp).toBe(1900)
     expect(result.missingData).toEqual([])
     expect(result.lineItem).toMatchObject({
       code: 'base_manual',
       kind: 'base',
-      amountGbp: 1800,
+      amountGbp: 1900,
     })
   })
 
@@ -90,7 +90,7 @@ describe('gate-engine pricing', () => {
     expect(result.lineItem.amountGbp).toBeNull()
   })
 
-  it('prices add-ons deterministically and keeps railheads provisional', () => {
+  it('prices add-ons deterministically including ship mid-band railheads', () => {
     let config = createGateConfig(createGatePreset('double_swing'))
     config = setOption(config, 'middle_bar', true, 1)
     config = setOption(config, 'dog_bars', true, 4)
@@ -101,7 +101,7 @@ describe('gate-engine pricing', () => {
 
     const result = calculateGateOptionPricing(config)
 
-    expect(result.missingData).toContain('option_price:top_railheads')
+    expect(result.missingData).toEqual([])
     expect(result.items.map((item) => item.code)).toEqual([
       'middle_bar',
       'top_railheads',
@@ -110,20 +110,19 @@ describe('gate-engine pricing', () => {
       'bushes',
       'spirals',
     ])
-    expect(result.items.find((item) => item.code === 'top_railheads')?.amountGbp).toBeNull()
-    expect(result.items.find((item) => item.code === 'dog_bars')?.amountGbp).toBe(89)
+    expect(result.items.find((item) => item.code === 'top_railheads')?.amountGbp).toBe(113)
+    expect(result.items.find((item) => item.code === 'dog_bars')?.amountGbp).toBe(75)
   })
 
-  it('marks the full price as survey required when provisional add-on pricing is still unresolved', () => {
+  it('keeps an indicative total when railheads use the ship mid-band unit price', () => {
     let config = createGateConfig(createGatePreset('double_swing'))
     config = setOption(config, 'top_railheads', true, 9)
 
     const result = calculateIndicativeGatePrice(config)
 
-    expect(result.status).toBe('survey_required')
-    expect(result.totalGbp).toBeNull()
-    expect(result.missingData).toContain('option_price:top_railheads')
-    expect(result.breakdown.some((item) => item.code === 'top_railheads' && item.amountGbp === null)).toBe(true)
+    expect(result.status).toBe('indicative')
+    expect(result.totalGbp).toBe(1900 + 113)
+    expect(result.breakdown.some((item) => item.code === 'top_railheads' && item.amountGbp === 113)).toBe(true)
   })
 
   it('keeps the indicative total aligned with the resolved base price when no uplifts apply', () => {
@@ -132,12 +131,12 @@ describe('gate-engine pricing', () => {
 
     expect(result.status).toBe('indicative')
     expect(result.source).toBe('manual')
-    expect(result.basePriceGbp).toBe(1800)
-    expect(result.totalGbp).toBe(1800)
-    expect(result.totalLabel).toContain('£1,800')
+    expect(result.basePriceGbp).toBe(1900)
+    expect(result.totalGbp).toBe(1900)
+    expect(result.totalLabel).toContain('£1,900')
   })
 
-  it('adds deterministic uplifts when width and height increase above the reference size', () => {
+  it('adds intake size uplift (+£50/200mm W, +£50/100mm H) above the reference band', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),
       widthMm: 2000,
@@ -147,7 +146,8 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1970)
+    // 100mm width → 1×£50; 100mm height → 1×£50; base £1900
+    expect(result.totalGbp).toBe(2000)
     expect(result.breakdown.map((item) => item.code)).toEqual([
       'base_manual',
       'size_width',
@@ -165,7 +165,7 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1800)
+    expect(result.totalGbp).toBe(1900)
     expect(result.breakdown.map((item) => item.code)).toEqual(['base_manual'])
   })
 
@@ -234,7 +234,7 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1800 + 275 + 89 + 850 + 5 + 11)
+    expect(result.totalGbp).toBe(1900 + 275 + 75 + 850 + 5 + 11)
     expect(result.breakdown.map((item) => item.code)).toEqual([
       'base_manual',
       'middle_bar',

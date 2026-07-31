@@ -23,7 +23,8 @@ Client answers arrive as raw multilingual messages (Italian / Romanian / English
 | Date | File | Items | Blocking questions closed |
 |---|---|---|---|
 | 2026-07-28 | [`2026-07-28-marius.md`](./2026-07-28-marius.md) | CA-01 … CA-07 | `gate.cantilever.tail_ratio`, `gate.cantilever.width_meaning`, `open.finish_palette` |
-| 2026-07-31 | [`2026-07-31-ruben.md`](./2026-07-31-ruben.md) | CA-08 … CA-12 | `open.width_meaning`, `open.height_meaning`, `gate.bifold.panels_per_leaf`, `gate.single_bifold.collection_side`, `gate.telescopic.panel_count`, `gate.radius.definition` |
+| 2026-07-31 | [`2026-07-31-ruben.md`](./2026-07-31-ruben.md) | CA-08 … CA-12 | `open.width_meaning`, `open.height_meaning`, bifold / telescopic / radius |
+| 2026-07-31 | [`2026-07-31-intake-ship.md`](./2026-07-31-intake-ship.md) | CA-13 | Intake PDF FROM prices + size uplift + ship inventions |
 
 Outbound (answered 2026-07-31):
 

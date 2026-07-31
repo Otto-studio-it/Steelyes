@@ -14,6 +14,17 @@ It is not a public product changelog.
 
 ---
 
+## 2026-07-31 — CA-13 intake PDF prices + ship defaults
+
+Commit: _pending_
+
+- Locked FROM prices + size uplift (£50/100mm H, £50/200mm W) from steelyes-intake-2026-07-26.pdf
+- Ship inventions: railhead £12.50 mid, aluminium panel formula, per-type size limits
+- All 8 gate types → configure; company/VAT in footer
+- Ground clearance 50 mm; picket 100 mm; tracked +350 mm runback
+
+---
+
 ## 2026-07-31 — CA-08…CA-12 dimension + missing gates
 
 Commit: _pending_

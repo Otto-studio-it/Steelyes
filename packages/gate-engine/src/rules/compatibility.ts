@@ -35,6 +35,15 @@ export function collectCompatibilityIssues(config: GateConfig): RuleIssue[] {
     }
   }
 
+  if (hasOption(config, 'aluminium_panels') && config.style !== 'composite_boards') {
+    pushIssue(
+      issues,
+      'options.aluminium_panels',
+      'incompatible_option_style',
+      'Aluminium panel upgrade is only available on Composite Boards.',
+    )
+  }
+
   if (hasOption(config, 'dog_bar_railheads') && !hasOption(config, 'dog_bars')) {
     pushIssue(
       issues,

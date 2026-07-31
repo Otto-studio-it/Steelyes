@@ -121,7 +121,7 @@ export default function GatesPage() {
             Explore configurator
           </Link>
           <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-            Double &amp; single swing configure fully · all other types schematic explore
+            Double &amp; single swing and all other types — full configure · indicative totals
           </p>
         </div>
       </section>

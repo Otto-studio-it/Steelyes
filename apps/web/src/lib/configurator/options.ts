@@ -12,7 +12,7 @@ export const OPTION_GROUPS: {
     id: 'structure',
     label: 'Structure',
     description: 'Shape and layout of the gate frame.',
-    keys: ['middle_bar', 'arched_top'],
+    keys: ['middle_bar', 'arched_top', 'aluminium_panels'],
   },
   {
     id: 'decoration',
@@ -44,13 +44,13 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'Decorative top row shown schematically until final pricing is confirmed.',
+    description: 'Decorative top row — mid-band unit price until SKU catalog confirmed.',
     quantityLabel: 'Count',
   },
   {
     key: 'dog_bars',
     label: 'Dog bars',
-    description: 'Lower reinforcement bars with indicative pricing.',
+    description: 'Lower reinforcement bars (£75 base).',
     quantityLabel: 'Count',
   },
   {
@@ -63,6 +63,11 @@ export const OPTION_META: OptionMeta[] = [
     key: 'arched_top',
     label: 'Arched top',
     description: 'Curved top rail / bolta treatment.',
+  },
+  {
+    key: 'aluminium_panels',
+    label: 'Aluminium panels',
+    description: 'Composite only — replace boards with aluminium (£250 + per panel/bar).',
   },
   {
     key: 'bushes',

@@ -8,7 +8,7 @@ export const VICTORIAN_DOUBLE_SWING_ZONE_RATIOS: VerticalZoneRatios = {
   kickPlate: 0.29,
 }
 
-export const DEFAULT_PICKET_SPACING_MM = 110
+export const DEFAULT_PICKET_SPACING_MM = 100
 export const DEFAULT_TUBE_OUTER_MM = 40
 export const DEFAULT_TUBE_WALL_MM = 2.5
 

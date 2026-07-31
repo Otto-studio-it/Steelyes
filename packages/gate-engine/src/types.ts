@@ -23,6 +23,7 @@ export const GATE_OPTION_KEYS = [
   'arched_top',
   'bushes',
   'spirals',
+  'aluminium_panels',
 ] as const
 
 export type GateOptionKey = (typeof GATE_OPTION_KEYS)[number]
@@ -117,6 +118,7 @@ export const DEFAULT_GATE_OPTIONS: GateOptionSelection[] = [
   { key: 'arched_top', enabled: false, quantity: 0, variant: undefined },
   { key: 'bushes', enabled: false, quantity: 0, variant: undefined },
   { key: 'spirals', enabled: false, quantity: 0, variant: undefined },
+  { key: 'aluminium_panels', enabled: false, quantity: 0, variant: undefined },
 ]
 
 export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {

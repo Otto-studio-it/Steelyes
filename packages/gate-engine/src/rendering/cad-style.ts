@@ -114,7 +114,7 @@ export const CAD_GROUND = {
  * Provisional ground clearance (style only — not a confirmed workshop rule).
  * Reference CAD shows 30 mm; pixel gap is floored so the elevation stays readable.
  */
-export const CAD_PROVISIONAL_GROUND_CLEARANCE_MM = 30
+export const CAD_PROVISIONAL_GROUND_CLEARANCE_MM = 50
 
 /** Minimum on-screen clearance so the CAD gap reads clearly at typical frame heights. */
 export const CAD_CLEARANCE_MIN_PX = 28

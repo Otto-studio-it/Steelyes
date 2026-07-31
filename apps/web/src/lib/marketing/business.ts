@@ -27,9 +27,9 @@ export const BUSINESS = {
     facebook: 'https://www.facebook.com/share/179t5dQVcD/',
     tiktok: 'https://www.tiktok.com/@steelyesltd',
   },
-  /** Pending Marius confirmation — do not invent values. */
-  companyNumber: null as string | null,
-  vatNumber: null as string | null,
+  /** Intake PDF 2026-07-26. */
+  companyNumber: '13415956' as string | null,
+  vatNumber: '392 1130 22' as string | null,
 } as const
 
 export const BUSINESS_SAME_AS = [

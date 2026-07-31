@@ -23,7 +23,7 @@ describe('gate-engine serialization', () => {
       finish: 'black_satin',
       siteSurveyRequested: false,
     })
-    expect(serialized.options).toHaveLength(7)
+    expect(serialized.options).toHaveLength(8)
   })
 
   it('stringifies and deserializes the config without changing meaning', () => {

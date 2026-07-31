@@ -9,16 +9,24 @@ import {
   stylePricingAssumption,
 } from './pricing/style-pricing'
 import {
-  normalizeGateConfig,
-  validateGateConfig,
-  validateGateConfigDraftInput,
-} from './validation'
+  SIZE_UPLIFT_HEIGHT_GBP,
+  SIZE_UPLIFT_HEIGHT_STEP_MM,
+  SIZE_UPLIFT_WIDTH_GBP,
+  SIZE_UPLIFT_WIDTH_STEP_MM,
+  SHIP_RAILHEAD_UNIT_GBP,
+  aluminiumUpgradeGbp,
+} from './rules/ship-defaults'
 import {
   type GateConfig,
   type GateOptionKey,
   type GateType,
 } from './types'
-import type { ValidationIssue } from './validation'
+import {
+  normalizeGateConfig,
+  validateGateConfig,
+  validateGateConfigDraftInput,
+  type ValidationIssue,
+} from './validation'
 
 export type PricingCurrency = 'GBP'
 
@@ -42,8 +50,14 @@ export type GateBasePriceEntry = {
   autoGbp: number | null
   referenceWidthMm: number
   referenceHeightMm: number
+  /** GBP charged per widthStepMm above reference. */
   widthStepGbp: number
+  /** Band size in mm for width uplift (intake: 200). */
+  widthStepMm: number
+  /** GBP charged per heightStepMm above reference. */
   heightStepGbp: number
+  /** Band size in mm for height uplift (intake: 100). */
+  heightStepMm: number
 }
 
 export type OptionPricingEntry =
@@ -106,123 +120,140 @@ const DEFAULT_DISCLAIMER = 'Indicative, subject to survey'
 const SITE_SURVEY_ASSUMPTION = 'Customer requested a site survey; the final quote follows the survey.'
 
 /**
- * Reference sizes are the TOP of each client catalogue band
- * (see docs/frontend/CLIENT_GATE_REQUIREMENTS_REFERENCE.md, e.g. double swing
- * "1800/1900mm -> GBP 1800"). Any size within the catalogue band costs the
- * base price; uplifts apply only above the band. Default presets must stay
- * within these bands so the advertised "FROM" price equals the base price
- * (guarded by a regression test in tests/pricing.test.ts).
+ * Catalogue FROM prices — intake PDF 2026-07-26 (client corrections applied).
+ * Size uplift: +£50 / 200 mm width, +£50 / 100 mm height above band top (all types).
  */
 export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
   basePrices: {
     double_swing: {
-      manualGbp: 1800,
+      manualGbp: 1900,
       autoGbp: 3800,
       referenceWidthMm: 1900,
       referenceHeightMm: 1000,
-      widthStepGbp: 90,
-      heightStepGbp: 80,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     single_swing: {
       manualGbp: 850,
       autoGbp: 2700,
       referenceWidthMm: 900,
       referenceHeightMm: 1000,
-      widthStepGbp: 70,
-      heightStepGbp: 60,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     tracked_sliding: {
-      manualGbp: 2200,
+      manualGbp: 2400,
       autoGbp: 3600,
       referenceWidthMm: 2600,
       referenceHeightMm: 1000,
-      widthStepGbp: 75,
-      heightStepGbp: 70,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     cantilever_sliding: {
       manualGbp: 2900,
       autoGbp: 4200,
       referenceWidthMm: 2600,
       referenceHeightMm: 1000,
-      widthStepGbp: 85,
-      heightStepGbp: 70,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     bifolding_double_swing: {
-      manualGbp: 2500,
+      manualGbp: 2700,
       autoGbp: 4200,
       referenceWidthMm: 3000,
       referenceHeightMm: 1000,
-      widthStepGbp: 95,
-      heightStepGbp: 80,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     single_bifolding: {
-      manualGbp: 1900,
-      autoGbp: 3000,
+      manualGbp: 2000,
+      autoGbp: 3200,
       referenceWidthMm: 1600,
       referenceHeightMm: 1000,
-      widthStepGbp: 85,
-      heightStepGbp: 75,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     telescopic_sliding: {
       manualGbp: 3100,
       autoGbp: 4200,
       referenceWidthMm: 2100,
       referenceHeightMm: 1000,
-      widthStepGbp: 90,
-      heightStepGbp: 70,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
     radius_sliding: {
-      manualGbp: 2500,
+      manualGbp: 2700,
       autoGbp: 4200,
       referenceWidthMm: 1700,
       referenceHeightMm: 1000,
-      widthStepGbp: 90,
-      heightStepGbp: 70,
+      widthStepGbp: SIZE_UPLIFT_WIDTH_GBP,
+      widthStepMm: SIZE_UPLIFT_WIDTH_STEP_MM,
+      heightStepGbp: SIZE_UPLIFT_HEIGHT_GBP,
+      heightStepMm: SIZE_UPLIFT_HEIGHT_STEP_MM,
     },
   },
   optionPrices: {
     middle_bar: {
       kind: 'flat',
       flatGbp: 275,
-      provisional: true,
-      note: 'Client reference price for middle bar.',
+      provisional: false,
+      note: 'Intake-confirmed middle bar.',
     },
     top_railheads: {
       kind: 'per_unit',
-      unitGbp: null,
+      unitGbp: SHIP_RAILHEAD_UNIT_GBP,
       provisional: true,
-      note: 'Railhead variant pricing is still provisional.',
+      note: `Ship mid-band £${SHIP_RAILHEAD_UNIT_GBP} / pc until railhead SKU catalog confirmed (intake £1.25–£25).`,
     },
     dog_bars: {
-      kind: 'flat_plus_units',
+      kind: 'flat',
       flatGbp: 75,
-      unitGbp: 4.5,
-      provisional: true,
-      note: 'Client reference price for dog bars.',
+      provisional: false,
+      note: 'Intake dog bars base £75 — per-bar extra dropped (width uplift covers growth).',
     },
     dog_bar_railheads: {
       kind: 'per_unit',
-      unitGbp: null,
+      unitGbp: SHIP_RAILHEAD_UNIT_GBP,
       provisional: true,
-      note: 'Railhead variant pricing is still provisional.',
+      note: `Ship mid-band £${SHIP_RAILHEAD_UNIT_GBP} / pc until railhead SKU catalog confirmed.`,
     },
     arched_top: {
       kind: 'flat',
       flatGbp: 850,
-      provisional: true,
-      note: 'Client reference price for arched top.',
+      provisional: false,
+      note: 'Intake-confirmed arched top (all gate types).',
     },
     bushes: {
       kind: 'per_unit',
       unitGbp: 2.5,
       provisional: true,
-      note: 'Client reference minimum price for bushes.',
+      note: 'Intake minimum £2.50 / bush (setup £90 not yet modelled as separate line).',
     },
     spirals: {
       kind: 'per_unit',
       unitGbp: 3.8,
+      provisional: false,
+      note: 'Intake minimum £3.80 / spiral.',
+    },
+    aluminium_panels: {
+      kind: 'flat',
+      flatGbp: 0,
       provisional: true,
-      note: 'Client reference minimum price for spirals.',
+      note: 'Computed from ship-defaults aluminium formula when enabled on composite.',
     },
   },
 }
@@ -315,7 +346,7 @@ export function calculateGateBasePrice(
       label: baseSelection.source === 'manual' ? 'Manual base price' : 'Automated base price',
       kind: 'base',
       amountGbp: baseSelection.amount,
-      provisional: true,
+      provisional: false,
       note: baseSelection.styleNote,
     },
   }
@@ -323,10 +354,12 @@ export function calculateGateBasePrice(
 
 function computeSizeAdjustments(config: GateConfig, catalog: PricingCatalog): PricingLineItem[] {
   const entry = catalog.basePrices[config.gateType]
+  const widthStepMm = entry.widthStepMm || SIZE_UPLIFT_WIDTH_STEP_MM
+  const heightStepMm = entry.heightStepMm || SIZE_UPLIFT_HEIGHT_STEP_MM
   const widthDeltaMm = Math.max(0, config.widthMm - entry.referenceWidthMm)
   const heightDeltaMm = Math.max(0, config.heightMm - entry.referenceHeightMm)
-  const widthSteps = Math.ceil(widthDeltaMm / 100)
-  const heightSteps = Math.ceil(heightDeltaMm / 100)
+  const widthSteps = Math.ceil(widthDeltaMm / widthStepMm)
+  const heightSteps = Math.ceil(heightDeltaMm / heightStepMm)
   const items: PricingLineItem[] = []
 
   if (widthSteps > 0) {
@@ -335,8 +368,8 @@ function computeSizeAdjustments(config: GateConfig, catalog: PricingCatalog): Pr
       label: 'Width uplift',
       kind: 'size',
       amountGbp: widthSteps * entry.widthStepGbp,
-      provisional: true,
-      note: `Indicative width uplift at 100mm bands from ${entry.referenceWidthMm}mm.`,
+      provisional: false,
+      note: `+£${entry.widthStepGbp} per ${widthStepMm} mm above ${entry.referenceWidthMm} mm (intake).`,
     })
   }
 
@@ -346,8 +379,8 @@ function computeSizeAdjustments(config: GateConfig, catalog: PricingCatalog): Pr
       label: 'Height uplift',
       kind: 'size',
       amountGbp: heightSteps * entry.heightStepGbp,
-      provisional: true,
-      note: `Indicative height uplift at 100mm bands from ${entry.referenceHeightMm}mm.`,
+      provisional: false,
+      note: `+£${entry.heightStepGbp} per ${heightStepMm} mm above ${entry.referenceHeightMm} mm (intake).`,
     })
   }
 
@@ -378,6 +411,22 @@ function computeOptionLineItems(
     const pricing = catalog.optionPrices[option.key]
     const quantity = getEnabledQuantity(option.quantity)
 
+    if (option.key === 'aluminium_panels') {
+      if (config.style !== 'composite_boards') {
+        continue
+      }
+      const amount = aluminiumUpgradeGbp(config.widthMm)
+      items.push({
+        code: 'aluminium_panels',
+        label: 'Aluminium panel upgrade',
+        kind: 'option',
+        amountGbp: roundPounds(amount),
+        provisional: true,
+        note: 'Ship formula: £250 setup + £12.50/panel (width÷139) + £12×4 bars — confirm panel count with workshop.',
+      })
+      continue
+    }
+
     if (isRailheadOptionKey(option.key)) {
       const variantPricing = resolveRailheadVariantPricing(option, config, variantCatalog)
       if (variantPricing) {
@@ -406,11 +455,13 @@ function computeOptionLineItems(
     }
 
     if (pricing.kind === 'flat') {
+      const flatAmount =
+        option.key === 'dog_bars' ? pricing.flatGbp : pricing.flatGbp * quantity
       items.push({
         code: option.key,
         label: formatOptionLabel(option.key),
         kind: 'option',
-        amountGbp: roundPounds(pricing.flatGbp * quantity),
+        amountGbp: roundPounds(flatAmount),
         provisional: pricing.provisional,
         note: pricing.note,
       })
@@ -531,11 +582,17 @@ export function calculateIndicativeGatePrice(
   const breakdown: PricingLineItem[] = [baseSelection.lineItem]
 
   if (config.widthMm > catalog.basePrices[config.gateType].referenceWidthMm) {
-    assumptions.push('Width uplift is banded at 100mm steps above the reference size.')
+    const entry = catalog.basePrices[config.gateType]
+    assumptions.push(
+      `Width uplift: +£${entry.widthStepGbp} per ${entry.widthStepMm} mm above ${entry.referenceWidthMm} mm.`,
+    )
   }
 
   if (config.heightMm > catalog.basePrices[config.gateType].referenceHeightMm) {
-    assumptions.push('Height uplift is banded at 100mm steps above the reference size.')
+    const entry = catalog.basePrices[config.gateType]
+    assumptions.push(
+      `Height uplift: +£${entry.heightStepGbp} per ${entry.heightStepMm} mm above ${entry.referenceHeightMm} mm.`,
+    )
   }
 
   const sizeAdjustments = computeSizeAdjustments(config, catalog)

@@ -25,15 +25,14 @@ export type FinishDefinition = {
 
 /**
  * Standard colours from the client (black satin/matt/gloss + RAL 7016), plus
- * "Other RAL" where the customer writes the code in the quote notes. The
- * £55+VAT/m² colour uplift is pending confirmation, so all entries stay
- * provisional for pricing purposes.
+ * "Other RAL". Standard powder coat is included in FROM (intake). other_ral =
+ * "+ extra charge — powder coating" settled by email (CA-03).
  */
 export const FINISH_CATALOG: Record<FinishCode, FinishDefinition> = {
   black_satin: {
     code: 'black_satin',
     label: 'Black satin',
-    provisional: true,
+    provisional: false,
     schematic: {
       frame: '#1C1C1E',
       infill: '#2C2C2E',
@@ -51,7 +50,7 @@ export const FINISH_CATALOG: Record<FinishCode, FinishDefinition> = {
   black_matt: {
     code: 'black_matt',
     label: 'Black matt',
-    provisional: true,
+    provisional: false,
     schematic: {
       frame: '#1A1A1A',
       infill: '#242424',
@@ -69,7 +68,7 @@ export const FINISH_CATALOG: Record<FinishCode, FinishDefinition> = {
   black_gloss: {
     code: 'black_gloss',
     label: 'Black gloss',
-    provisional: true,
+    provisional: false,
     schematic: {
       frame: '#0E0E10',
       infill: '#1B1B1E',
@@ -87,7 +86,7 @@ export const FINISH_CATALOG: Record<FinishCode, FinishDefinition> = {
   anthracite_ral7016: {
     code: 'anthracite_ral7016',
     label: 'Anthracite RAL 7016',
-    provisional: true,
+    provisional: false,
     schematic: {
       frame: '#383E42',
       infill: '#464D52',

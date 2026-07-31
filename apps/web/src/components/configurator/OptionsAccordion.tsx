@@ -22,6 +22,9 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
   const setOptionQty = useConfiguratorStore((state) => state.setOptionQty)
   const option = OPTION_META.find((item) => item.key === optionKey)
   if (!option) return null
+  if (option.key === 'aluminium_panels' && config.style !== 'composite_boards') {
+    return null
+  }
 
   const selected = config.options.find((item) => item.key === option.key)
   const enabled = Boolean(selected?.enabled)

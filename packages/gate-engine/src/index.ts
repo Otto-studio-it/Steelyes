@@ -74,6 +74,20 @@ export {
 } from './rules/dimensions'
 export type { HeightMeaning, WidthMeaning } from './rules/dimensions'
 export {
+  SIZE_UPLIFT_HEIGHT_GBP,
+  SIZE_UPLIFT_HEIGHT_STEP_MM,
+  SIZE_UPLIFT_WIDTH_GBP,
+  SIZE_UPLIFT_WIDTH_STEP_MM,
+  SHIP_GROUND_CLEARANCE_MM,
+  SHIP_PICKET_SPACING_MM,
+  SHIP_RAILHEAD_UNIT_GBP,
+  TRACKED_RUNBACK_EXTRA_MM,
+  ALUMINIUM_SETUP_GBP,
+  aluminiumPanelCount,
+  aluminiumUpgradeGbp,
+  faceAreaM2,
+} from './rules/ship-defaults'
+export {
   TELESCOPIC_DEFAULT_PANEL_COUNT,
   TELESCOPIC_FRONT_PANEL,
   TELESCOPIC_OVERLAP_MM_MAX,
