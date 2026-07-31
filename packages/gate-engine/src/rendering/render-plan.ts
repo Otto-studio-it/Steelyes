@@ -47,6 +47,7 @@ export type GateRenderPrimitive =
       fillOpacity?: number
       stroke?: string
       strokeWidth?: number
+      strokeDasharray?: string
       strokeLinecap?: 'round' | 'square' | 'butt'
       strokeLinejoin?: 'round' | 'bevel' | 'miter'
       opacity?: number
