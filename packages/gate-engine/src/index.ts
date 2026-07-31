@@ -165,9 +165,13 @@ export {
 } from './mesh'
 export {
   FINISH_CATALOG,
+  buildCustomFinishTokens,
   getFinishDefinition,
   getFinishStrokeColor,
+  isValidFinishHex,
   listFinishDefinitions,
+  normalizeFinishHex,
+  resolveFinishDefinition,
 } from './finishes'
 export {
   DEFAULT_MOTOR_CATALOG,

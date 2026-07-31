@@ -113,16 +113,16 @@ export function buildGateCutList(config: GateConfig): GateCutList {
   }
 
   // CA-01: handle is base hardware on manual gates only — never on motorised.
-  if (!config.motorised && !isSlidingGate(config.gateType)) {
+  if (!config.motorised) {
     lines.push({
       id: 'manual-handle',
       role: 'hardware',
-      profile: 'lever handle',
+      profile: isSlidingGate(config.gateType) ? 'pull handle' : 'lever handle',
       lengthMm: 0,
       quantity: 1,
       note: 'Omitted when motorised',
     })
-  } else if (config.motorised) {
+  } else {
     notes.push('Motorised build: no leaf handle (CA-01).')
   }
 

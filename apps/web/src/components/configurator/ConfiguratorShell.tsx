@@ -60,7 +60,7 @@ function SpecPanel() {
 
   return (
     <div className="border border-steel/10 bg-white">
-      <div className="border-l-4 border-primary p-4 sm:p-5">
+      <div className="border-l border-steel/20 p-4 sm:p-5">
         <ActProgressRail />
         <div key={CONFIGURATOR_ACTS[actIndex].id} className="mt-5">
           <ActPanel />
@@ -71,9 +71,9 @@ function SpecPanel() {
             id="cfg-act-validation"
             role="alert"
             tabIndex={-1}
-            className="mt-5 border border-primary/25 bg-primary/5 px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-5 border border-steel/20 bg-paper px-4 py-3 outline-none focus-visible:ring-2 focus-visible:ring-steel/40"
           >
-            <p className="font-mono text-xs uppercase tracking-widest text-primary">
+            <p className="font-mono text-xs uppercase tracking-widest text-steel">
               Resolve before continuing
             </p>
             <ul className="mt-2 space-y-1 text-sm leading-6 text-muted-deep">
@@ -95,20 +95,19 @@ function SpecPanel() {
 function DesktopIntro() {
   return (
     <div className="max-w-3xl">
-      <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
+      <p className="font-mono text-xs uppercase tracking-widest text-muted">Gate configurator</p>
       <h1 className="mt-2 text-balance font-heading text-[clamp(1.85rem,5vw,3.5rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-steel">
         Design your gate installation.
       </h1>
       <p className="mt-3 max-w-2xl text-base leading-7 text-muted-deep lg:text-lg">
-        One gate path with denser controls when you need them. Mechanism, size, posts and options update a live
-        installation preview.
+        Choose any mechanism, then tune size, finish and options. The preview stays neutral so the gate reads first.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <span className="inline-flex items-center gap-2 border border-primary/18 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-primary">
+        <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">
           <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
           Indicative pricing
         </span>
-        <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">
+        <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted">
           <DraftingCompass className="h-3.5 w-3.5" aria-hidden />
           Live installation preview
         </span>

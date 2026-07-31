@@ -82,6 +82,8 @@ export type GateConfig = GateDimensions & {
   style: GateStyle
   motorised: boolean
   finish: FinishCode
+  /** Hex `#RRGGBB` when finish is `other_ral`; ignored otherwise. */
+  customFinishHex?: string | null
   siteSurveyRequested: boolean
   posts: GatePostsConfig
   options: GateOptionSelection[]
@@ -225,6 +227,7 @@ export function createGateConfig(preset: GatePreset): GateConfig {
     heightMm: preset.dimensions.heightMm,
     motorised: preset.motorised,
     finish: preset.finish,
+    customFinishHex: null,
     siteSurveyRequested: preset.siteSurveyRequested,
     posts: structuredClone(preset.posts ?? DEFAULT_GATE_POSTS),
     options: structuredClone(preset.options),

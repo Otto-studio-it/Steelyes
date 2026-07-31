@@ -29,7 +29,7 @@ export function MobilePreviewChip({
   const [open, setOpen] = useState(false)
   const plan = useMemo(() => buildGateRenderPlan(config, { viewMode: 'installation' }), [config])
 
-  const summary = `${gateTypeLabel(config.gateType)} · ${config.widthMm} × ${config.heightMm} mm · ${finishLabel(config.finish)}`
+  const summary = `${gateTypeLabel(config.gateType)} · ${config.widthMm} × ${config.heightMm} mm · ${finishLabel(config.finish, config.customFinishHex)}`
 
   return (
     <>

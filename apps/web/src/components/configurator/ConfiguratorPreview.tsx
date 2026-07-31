@@ -3,7 +3,7 @@
 import { useMemo } from 'react'
 import {
   buildGateRenderPlan,
-  getFinishDefinition,
+  resolveFinishDefinition,
   type GateConfig,
   type GateRenderPrimitive,
   type GateRenderViewMode,
@@ -157,12 +157,12 @@ export function ConfiguratorPreview({
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
   const plan = useMemo(() => buildGateRenderPlan(config, { viewMode }), [config, viewMode])
-  const finish = getFinishDefinition(config.finish)
+  const finish = resolveFinishDefinition(config)
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
 
   const shellClass = studio
-    ? 'border-white/10 bg-steel text-white'
+    ? 'border-steel/10 bg-[#F3F2EF] text-steel'
     : 'border-steel/10 bg-paper text-steel'
 
   const frameClass = studio
@@ -171,17 +171,17 @@ export function ConfiguratorPreview({
 
   return (
     <div
-      className={`${frameClass} ${shellClass} ${pinned && !studio ? 'shadow-[0_16px_40px_rgba(0,0,0,0.22)]' : ''} ${className}`}
+      className={`${frameClass} ${shellClass} ${pinned && !studio ? 'shadow-[0_16px_40px_rgba(25,20,18,0.22)]' : ''} ${className}`}
     >
       <div
-        className={`flex items-center justify-between border-b px-4 ${studio ? 'border-white/10' : 'border-steel/8'} ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
+        className={`flex items-center justify-between border-b border-steel/10 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
       >
         <div className="min-w-0">
-          <p className={`font-mono text-[10px] uppercase tracking-[0.28em] ${studio ? 'text-white/55' : 'text-muted'}`}>
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">
             {viewMode === 'installation' ? 'Installation preview' : 'Technical drawing'}
           </p>
           <h2
-            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight ${
+            className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
               pinned ? 'text-base sm:text-lg' : 'text-sm lg:mt-1 lg:text-lg'
             }`}
           >
@@ -190,9 +190,7 @@ export function ConfiguratorPreview({
         </div>
         <div className="flex items-center gap-2">
           <div
-            className={`inline-flex items-center gap-2 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest ${
-              studio ? 'border-white/15 bg-white/5 text-white/70' : 'border-steel/10 bg-white text-muted'
-            }`}
+            className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
             title={
               viewMode === 'technical'
                 ? 'Colour appears in Installation view'
@@ -208,9 +206,9 @@ export function ConfiguratorPreview({
           </div>
           {!compact || pinned ? (
             <div
-              className={`border px-3 py-1 font-mono text-xs uppercase tracking-widest ${
-                studio ? 'border-white/15 bg-white/5 text-white/70' : 'border-steel/10 bg-white text-muted'
-              } ${pinned ? 'inline-flex' : 'hidden sm:inline-flex'}`}
+              className={`border border-steel/10 bg-white px-3 py-1 font-mono text-xs uppercase tracking-widest text-muted ${
+                pinned ? 'inline-flex' : 'hidden sm:inline-flex'
+              }`}
             >
               {config.widthMm} × {config.heightMm} mm
             </div>
@@ -219,11 +217,7 @@ export function ConfiguratorPreview({
             <button
               type="button"
               onClick={togglePreviewExpanded}
-              className={`inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border transition ${
-                studio
-                  ? 'border-white/15 bg-white/5 text-white/80 hover:text-white'
-                  : 'border-steel/10 bg-white text-muted hover:border-primary/30 hover:text-primary'
-              }`}
+              className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-steel/10 bg-white text-muted transition hover:border-steel/35 hover:text-steel"
               aria-expanded={previewExpanded}
               aria-label={previewExpanded ? 'Collapse preview' : 'Expand preview'}
             >
@@ -252,7 +246,9 @@ export function ConfiguratorPreview({
 
       {showFullBody ? (
         <div
-          className={`p-3 lg:p-4 ${studio ? 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_42%),linear-gradient(180deg,#242422,#151514)]' : 'bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.85),transparent_54%),linear-gradient(180deg,rgba(251,251,248,1),rgba(244,241,236,1))]'} ${pinned ? 'flex min-h-[clamp(260px,44vh,480px)] items-center justify-center' : ''}`}
+          className={`bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_55%),linear-gradient(180deg,#F7F6F3,#EEECE7)] p-3 lg:p-4 ${
+            pinned ? 'flex min-h-[clamp(260px,44vh,480px)] items-center justify-center' : ''
+          }`}
         >
           <PreviewSvg plan={plan} studio={studio} className={pinned ? 'max-h-[44vh] w-full' : ''} />
         </div>

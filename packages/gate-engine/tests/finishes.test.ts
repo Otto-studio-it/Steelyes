@@ -6,6 +6,8 @@ import {
   getFinishDefinition,
   getFinishStrokeColor,
   listFinishDefinitions,
+  normalizeFinishHex,
+  resolveFinishDefinition,
 } from '../src/index'
 
 describe('gate-engine finishes', () => {
@@ -22,10 +24,18 @@ describe('gate-engine finishes', () => {
     expect(listFinishDefinitions()).toHaveLength(FINISH_CODES.length)
   })
 
-  it('uses darker strokes for the light Other RAL swatch contrast', () => {
-    const tokens = getFinishDefinition('other_ral').schematic
-    expect(getFinishStrokeColor(tokens, 'other_ral')).toBe(tokens.label)
-    expect(getFinishStrokeColor(tokens, 'other_ral')).not.toBe(tokens.frame)
+  it('uses darker strokes for light custom other_ral hex', () => {
+    const light = resolveFinishDefinition({ finish: 'other_ral', customFinishHex: '#E8E4DC' })
+    expect(getFinishStrokeColor(light.schematic, 'other_ral')).toBe(light.schematic.label)
+    expect(getFinishStrokeColor(light.schematic, 'other_ral')).not.toBe(light.schematic.frame)
+  })
+
+  it('applies custom hex to other_ral preview tokens', () => {
+    const resolved = resolveFinishDefinition({ finish: 'other_ral', customFinishHex: '#9E000C' })
+    expect(normalizeFinishHex('9e000c')).toBe('#9E000C')
+    expect(resolved.material.colorHex).toBe('#9E000C')
+    expect(resolved.schematic.frame).toBe('#9E000C')
+    expect(resolved.label).toContain('#9E000C')
   })
 
   it('keeps schematic tokens distinct per finish', () => {

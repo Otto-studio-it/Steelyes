@@ -14,6 +14,17 @@ It is not a public product changelog.
 
 ---
 
+## 2026-07-31 — Configurator gate-first chrome + custom hex finish
+
+Commit: _pending_
+
+- Preview surround light/neutral so black/anthracite gates read first
+- Spec chrome uses steel accents (primary red reserved for CTAs)
+- `customFinishHex` on GateConfig + FinishPicker colour/hex for Other RAL
+- Manual handle on swing + sliding; omitted when motorised (CA-01)
+
+---
+
 ## 2026-07-31 — Per-type 2D elevation detail pass
 
 Commit: _pending_

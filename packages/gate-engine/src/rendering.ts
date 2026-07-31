@@ -1,5 +1,5 @@
 import { buildGateGeometryPlan } from './geometry'
-import { getFinishDefinition, getFinishStrokeColor } from './finishes'
+import { getFinishDefinition, getFinishStrokeColor, resolveFinishDefinition } from './finishes'
 import {
   clamp,
   getLeafCount,
@@ -27,7 +27,7 @@ import {
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
 } from './rules/geometry'
-import { type FinishCode, type GateConfig } from './types'
+import { type GateConfig } from './types'
 import { validateGateConfig } from './validation'
 import { scaleVisualBoldness } from './visual-scale'
 import type { GateRenderLabel, GateRenderPlan, GateRenderPrimitive, GateRenderViewMode } from './rendering/render-plan'
@@ -74,12 +74,12 @@ type RenderPalette = {
   postFill: string
 }
 
-function resolveRenderPalette(finish: FinishCode): RenderPalette {
-  const definition = getFinishDefinition(finish)
+function resolveRenderPalette(config: Pick<GateConfig, 'finish' | 'customFinishHex'>): RenderPalette {
+  const definition = resolveFinishDefinition(config)
   const tokens = definition.schematic
 
   return {
-    ink: getFinishStrokeColor(tokens, finish),
+    ink: getFinishStrokeColor(tokens, config.finish),
     accent: tokens.accent,
     accentSoft: tokens.infill,
     panel: tokens.panel,
@@ -1222,6 +1222,35 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     pushRadiusSlidingDetails(primitives, detailPalette, slidingLayout, config.widthMm)
   }
 
+  // CA-01: manual sliding gets a pull handle; motorised never does.
+  if (!config.motorised) {
+    const handleX = slidingLayout.panelX + slidingLayout.panelWidth - 28
+    const handleY = slidingLayout.panelY + slidingLayout.panelHeight * 0.45
+    primitives.push({
+      kind: 'rect',
+      id: 'manual-handle-plate',
+      x: handleX - 6,
+      y: handleY,
+      width: 12,
+      height: 48,
+      rx: 2,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2),
+    })
+    primitives.push({
+      kind: 'line',
+      id: 'manual-handle-grip',
+      x1: handleX,
+      y1: handleY + 8,
+      x2: handleX,
+      y2: handleY + 40,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(3),
+      strokeLinecap: 'round',
+    })
+  }
+
   return primitives
 }
 
@@ -1235,7 +1264,7 @@ export function buildGateRenderPlan(
     throw new Error('Invalid gate config for rendering')
   }
 
-  const finishPalette = resolveRenderPalette(config.finish)
+  const finishPalette = resolveRenderPalette(config)
   const cadPalette = getCadTechnicalPalette()
   const palette: RenderPalette = isCadTechnicalView(viewMode)
     ? {
@@ -1250,7 +1279,7 @@ export function buildGateRenderPlan(
         postFill: cadPalette.postFill,
       }
     : finishPalette
-  const finishDefinition = getFinishDefinition(config.finish)
+  const finishDefinition = resolveFinishDefinition(config)
   const subtitle = `${config.widthMm} mm opening · ${config.heightMm} mm high · ${formatStyleLabel(config.style)} · ${finishDefinition.label}`
 
   if (viewMode === 'plan') {
@@ -1355,6 +1384,14 @@ export function buildGateRenderPlan(
 
   if (config.gateType === 'radius_sliding') {
     notes.push(radiusSchematicNote(hasOption(config, 'arched_top')))
+  }
+
+  if (config.motorised) {
+    notes.push('Motorised build: no leaf handle (CA-01).')
+  } else if (!isSliding) {
+    notes.push('Manual swing: lever handle shown on the leaf.')
+  } else {
+    notes.push('Manual sliding: pull handle shown on the leading edge.')
   }
 
   if (isSliding) {

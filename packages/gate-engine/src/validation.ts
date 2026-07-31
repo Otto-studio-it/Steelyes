@@ -20,6 +20,7 @@ import {
 } from './types'
 import { collectVariantCatalogIssues } from './catalog/variants'
 import { GLOBAL_DIMENSION_LIMITS, getDimensionLimits } from './dimension-limits'
+import { normalizeFinishHex } from './finishes'
 import { clamp } from './internal/shared'
 import { normalizeGatePosts } from './posts'
 import { collectCompatibilityIssues } from './rules/compatibility'
@@ -166,6 +167,20 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
         field: 'finish',
         code: 'invalid_finish',
         message: 'Finish is not supported.',
+      })
+    }
+
+    if (
+      'customFinishHex' in input &&
+      input.customFinishHex != null &&
+      input.customFinishHex !== '' &&
+      typeof input.customFinishHex === 'string' &&
+      !normalizeFinishHex(input.customFinishHex)
+    ) {
+      issues.push({
+        field: 'customFinishHex',
+        code: 'invalid_custom_finish_hex',
+        message: 'Custom finish must be a hex colour like #9E000C.',
       })
     }
 
@@ -405,6 +420,12 @@ export function normalizeGateConfig(
         : clamp(heightMm, limits.minHeightMm, limits.maxHeightMm),
     motorised: typeof input.motorised === 'boolean' ? input.motorised : preset.motorised,
     finish: isFinishCode(input.finish) ? input.finish : DEFAULT_FINISH,
+    customFinishHex: (() => {
+      const finish = isFinishCode(input.finish) ? input.finish : DEFAULT_FINISH
+      if (finish !== 'other_ral') return null
+      if (typeof input.customFinishHex !== 'string') return null
+      return normalizeFinishHex(input.customFinishHex)
+    })(),
     siteSurveyRequested: typeof input.siteSurveyRequested === 'boolean' ? input.siteSurveyRequested : DEFAULT_SITE_SURVEY_REQUESTED,
     posts: normalizeGatePosts(input.posts),
     options: normalizedOptions,
@@ -436,6 +457,18 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
       field: 'finish',
       code: 'invalid_finish',
       message: 'Finish is not supported.',
+    })
+  }
+
+  if (
+    config.customFinishHex != null &&
+    config.customFinishHex !== '' &&
+    !normalizeFinishHex(config.customFinishHex)
+  ) {
+    issues.push({
+      field: 'customFinishHex',
+      code: 'invalid_custom_finish_hex',
+      message: 'Custom finish must be a hex colour like #9E000C.',
     })
   }
 

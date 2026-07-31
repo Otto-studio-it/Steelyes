@@ -58,11 +58,12 @@ North star: **"Three screens. One gate. One quote."** Double swing Victorian pre
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| Preview background | `#1B1C1A` (steel) | Full-bleed canvas |
-| Spec panel | `bg-white border border-steel/10` | No box shadow |
+| Preview background | `#F3F2EF` (neutral paper) | Full-bleed canvas — gate finishes read first |
+| Spec panel | `bg-white border border-steel/10` | No box shadow; thin steel left rule (not primary red) |
 | Corner radius | `rounded-sm` max (2px) | Cards, inputs — no pills |
-| CTA primary | `bg-primary min-h-[48px] font-heading uppercase` | Continue, quote |
+| CTA primary | `bg-primary min-h-[48px] font-heading uppercase` | Continue, quote only |
 | CTA secondary | `border border-steel/12 bg-white` | Back |
+| Selection chrome | `border-steel` / `ring-steel/25` | Finish & type selection — keep red for primary actions |
 | Label min size | `text-xs` (12px) | Mono uppercase labels |
 | Act heading | `font-heading text-xl font-black uppercase` | Panel titles |
 

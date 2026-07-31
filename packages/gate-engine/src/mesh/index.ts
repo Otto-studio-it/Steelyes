@@ -1,4 +1,4 @@
-import { getFinishDefinition } from '../finishes'
+import { resolveFinishDefinition } from '../finishes'
 import { getLeafCount, isSlidingGate } from '../internal/shared'
 import { bifoldSchematicNote, isBifoldGate } from '../rules/bifold'
 import { cantileverTailNote, getCantileverTailRatio } from '../rules/cantilever'
@@ -158,7 +158,7 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
     throw new Error('Invalid gate config for mesh generation')
   }
 
-  const material = getFinishDefinition(config.finish).material
+  const material = resolveFinishDefinition(config).material
   const swingMesh = isSlidingGate(config.gateType)
     ? null
     : buildSwingMesh(config, getLeafCount(config.gateType))

@@ -22,6 +22,7 @@ export type SerializedGateConfigV1 = {
   heightMm: number
   motorised: boolean
   finish: GateConfig['finish']
+  customFinishHex?: string | null
   siteSurveyRequested: boolean
   posts?: GateConfig['posts']
   options: SerializedGateOptionSelection[]
@@ -48,6 +49,7 @@ export function serializeGateConfig(config: GateConfig): SerializedGateConfigV1 
     heightMm: config.heightMm,
     motorised: config.motorised,
     finish: config.finish,
+    customFinishHex: config.finish === 'other_ral' ? config.customFinishHex ?? null : null,
     siteSurveyRequested: config.siteSurveyRequested,
     posts: structuredClone(config.posts),
     options: config.options.map(normalizeSerializedOption),
@@ -76,6 +78,7 @@ export function deserializeGateConfig(serialized: SerializedGateConfig | string)
       heightMm: raw.heightMm,
       motorised: raw.motorised,
       finish: raw.finish,
+      customFinishHex: raw.customFinishHex,
       siteSurveyRequested: raw.siteSurveyRequested,
       posts: raw.posts,
       options: Array.isArray(raw.options) ? raw.options : undefined,

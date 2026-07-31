@@ -27,7 +27,7 @@ describe('handle rule (CA-01)', () => {
     expect(plan.primitives.some((p) => p.id.startsWith('manual-handle'))).toBe(false)
   })
 
-  it('includes handle hardware in the cut list only for manual swing', () => {
+  it('includes handle hardware in the cut list only for manual gates', () => {
     const manual = buildGateCutList({
       ...createGateConfig(createGatePreset('single_swing')),
       motorised: false,
@@ -36,9 +36,27 @@ describe('handle rule (CA-01)', () => {
       ...createGateConfig(createGatePreset('single_swing')),
       motorised: true,
     })
+    const manualSliding = buildGateCutList({
+      ...createGateConfig(createGatePreset('tracked_sliding')),
+      motorised: false,
+    })
 
     expect(manual.lines.some((line) => line.id === 'manual-handle')).toBe(true)
+    expect(manualSliding.lines.some((line) => line.id === 'manual-handle')).toBe(true)
     expect(motorised.lines.some((line) => line.id === 'manual-handle')).toBe(false)
     expect(motorised.notes.some((note) => note.includes('no leaf handle'))).toBe(true)
+  })
+
+  it('draws a pull handle on manual sliding and omits it when motorised', () => {
+    const manual = buildGateRenderPlan({
+      ...createGateConfig(createGatePreset('tracked_sliding')),
+      motorised: false,
+    })
+    const motorised = buildGateRenderPlan({
+      ...createGateConfig(createGatePreset('tracked_sliding')),
+      motorised: true,
+    })
+    expect(manual.primitives.some((p) => p.id === 'manual-handle-grip')).toBe(true)
+    expect(motorised.primitives.some((p) => p.id.startsWith('manual-handle'))).toBe(false)
   })
 })
