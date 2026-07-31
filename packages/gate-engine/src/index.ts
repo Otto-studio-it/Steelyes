@@ -88,6 +88,7 @@ export {
   faceAreaM2,
 } from './rules/ship-defaults'
 export {
+  TELESCOPIC_CLOSED_STACK_MM,
   TELESCOPIC_DEFAULT_PANEL_COUNT,
   TELESCOPIC_FRONT_PANEL,
   TELESCOPIC_OVERLAP_MM_MAX,

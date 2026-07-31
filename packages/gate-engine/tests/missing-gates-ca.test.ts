@@ -41,15 +41,18 @@ describe('CA-09 / CA-10 bifold confirmed', () => {
   })
 })
 
-describe('CA-11 telescopic', () => {
-  it('uses 3 panels and mid-band overlap on the render plan', () => {
+describe('CA-11 / CA-13 telescopic', () => {
+  it('uses 2 intake panels and mid-band overlap on the render plan', () => {
     expect(getTelescopicPanelCount()).toBe(TELESCOPIC_DEFAULT_PANEL_COUNT)
+    expect(TELESCOPIC_DEFAULT_PANEL_COUNT).toBe(2)
     const plan = buildGateRenderPlan(
       { ...createGateConfig(createGatePreset('telescopic_sliding')), widthMm: 4000 },
       { viewMode: 'technical' },
     )
     expect(plan.primitives.some((p) => p.id === 'telescopic-segment-0')).toBe(true)
-    expect(plan.primitives.some((p) => p.id === 'telescopic-segment-2')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'telescopic-segment-1')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'telescopic-segment-2')).toBe(false)
+    expect(plan.primitives.some((p) => p.id === 'telescopic-motor-side-marker')).toBe(true)
     expect(plan.notes).toContain(telescopicSchematicNote(4000))
     expect(telescopicSchematicNote(4000)).toContain(String(TELESCOPIC_OVERLAP_MM_SCHEMATIC))
   })

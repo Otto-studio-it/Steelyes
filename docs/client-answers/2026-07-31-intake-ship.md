@@ -29,6 +29,9 @@ source: /Users/ruben/Downloads/steelyes-intake-2026-07-26.pdf + WhatsApp CA-01�
 | Tracked runback | opening + 350 mm |
 | Ground clearance | 50 mm |
 | Picket spacing | ~100 mm |
+| Telescopic panels | **2** (intake; supersedes provisional CA-11 “usually 3”) |
+| Telescopic closed stack | ~160 mm |
+| Radius leaves | min 2; ~3 near 2500 mm / 90° turn |
 
 ## Ship inventions (explicit, labelled in notes)
 

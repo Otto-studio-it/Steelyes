@@ -65,7 +65,8 @@ describe('gate-engine mesh', () => {
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-1')).toBe(true)
-    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-3')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-2')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-3')).toBe(false)
   })
 
   it('rejects invalid configs before mesh generation', () => {

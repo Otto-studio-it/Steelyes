@@ -50,6 +50,17 @@ import {
   filterInstallationLabels,
   type SceneFrameBounds,
 } from './rendering/scene'
+import {
+  pushBifoldStackCue,
+  pushCantileverSlidingDetails,
+  pushRadiusSlidingDetails,
+  pushSwingGroundClearanceCue,
+  pushTelescopicSlidingDetails,
+  pushTrackedSlidingDetails,
+  slidingTypeDetailNotes,
+  swingTypeDetailNotes,
+} from './rendering/type-details-2d'
+import { SHIP_PICKET_SPACING_MM } from './rules/ship-defaults'
 
 type RenderPalette = {
   ink: string
@@ -396,8 +407,12 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
   const bottomRailY = railY(frameBounds, rails.bottom)
   const lowerRailY = lowerMidY
   const useTubeProfile = geometry?.features.tubeProfile ?? false
-  const upperBars = geometry?.pickets.upperCount ?? clamp(Math.round(config.widthMm / 210), 8, 16)
-  const lowerBars = geometry?.pickets.lowerCount ?? clamp(Math.round(config.widthMm / 90), 16, 28)
+  const upperBars =
+    geometry?.pickets.upperCount ??
+    clamp(Math.round(config.widthMm / Math.max(SHIP_PICKET_SPACING_MM * 2.1, 180)), 8, 16)
+  const lowerBars =
+    geometry?.pickets.lowerCount ??
+    clamp(Math.round(config.widthMm / SHIP_PICKET_SPACING_MM), 16, 28)
   const lowerBarGap = (rightInset - leftInset) / (lowerBars + 1)
   const barGap = FRAME_WIDTH / (upperBars + 1)
   const lineColor = palette.ink
@@ -463,6 +478,13 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       gateType: config.gateType,
       topY,
       bottomY,
+      leafCount,
+    })
+    pushBifoldStackCue(primitives, palette, {
+      frameX: FRAME_X,
+      frameY: FRAME_Y,
+      frameWidth: FRAME_WIDTH,
+      frameHeight: FRAME_HEIGHT,
       leafCount,
     })
   }
@@ -838,6 +860,13 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     strokeWidth: scaleVisual(2.2),
   }, palette, 0.8, 0.8)
 
+  pushSwingGroundClearanceCue(primitives, palette, {
+    frameX: FRAME_X,
+    frameY: FRAME_Y,
+    frameWidth: FRAME_WIDTH,
+    frameHeight: FRAME_HEIGHT,
+  })
+
   return primitives
 }
 
@@ -1159,6 +1188,40 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     }
   }
 
+  const slidingLayout = {
+    frameX: FRAME_X,
+    frameY: FRAME_Y,
+    frameWidth: FRAME_WIDTH,
+    frameHeight: FRAME_HEIGHT,
+    panelX: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
+    panelY,
+    panelWidth: isCantilever ? panelWidth + 12 : panelWidth,
+    panelHeight,
+    trackY,
+    tailWidth,
+  }
+  const detailPalette = {
+    ink: palette.ink,
+    accent: palette.accent,
+    accentSoft: palette.accentSoft,
+    steel: palette.steel,
+    panelSoft: palette.panelSoft,
+    postFill: palette.postFill,
+  }
+
+  if (config.gateType === 'tracked_sliding') {
+    pushTrackedSlidingDetails(primitives, detailPalette, slidingLayout, config.widthMm)
+  }
+  if (isCantilever) {
+    pushCantileverSlidingDetails(primitives, detailPalette, slidingLayout)
+  }
+  if (isTelescopic) {
+    pushTelescopicSlidingDetails(primitives, detailPalette, slidingLayout)
+  }
+  if (isRadius) {
+    pushRadiusSlidingDetails(primitives, detailPalette, slidingLayout, config.widthMm)
+  }
+
   return primitives
 }
 
@@ -1292,6 +1355,12 @@ export function buildGateRenderPlan(
 
   if (config.gateType === 'radius_sliding') {
     notes.push(radiusSchematicNote(hasOption(config, 'arched_top')))
+  }
+
+  if (isSliding) {
+    notes.push(...slidingTypeDetailNotes(config))
+  } else {
+    notes.push(...swingTypeDetailNotes(config))
   }
 
   const geometryPlan = buildGateGeometryPlan(config)

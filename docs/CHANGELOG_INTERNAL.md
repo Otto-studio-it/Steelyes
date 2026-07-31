@@ -14,6 +14,16 @@ It is not a public product changelog.
 
 ---
 
+## 2026-07-31 — Per-type 2D elevation detail pass
+
+Commit: _pending_
+
+- `rendering/type-details-2d.ts`: tracked runback/guide/bottom box; cantilever carriage/foundation; telescopic motor-side + stack; radius leaf splits; bifold stack cues; swing ground clearance
+- Telescopic panel count → **2** (intake supersedes CA-11 provisional 3); overlap band kept
+- Notes + mesh segment count aligned
+
+---
+
 ## 2026-07-31 — CA-13 intake PDF prices + ship defaults
 
 Commit: _pending_
@@ -34,7 +44,7 @@ Source: Ruben answers to FOLLOWUP_MISSING_GATES (product owner).
 - Recorded `docs/client-answers/2026-07-31-ruben.md`
 - Width = clear opening; height = ground→top rail (all types)
 - Bifold 2 panels/leaf 50/50; collection on hinge side; L/R at quote
-- Telescopic 3 panels, overlap 80–120 (schematic 100), motor-side front
+- Telescopic: provisional 3 panels later superseded by intake **2** (CA-13); overlap 80–120 (schematic 100), motor-side front
 - Radius: travel always curved; top straight or curved
 - All 8 types now configure (2) or schematic (6) — no enquire tier left
 

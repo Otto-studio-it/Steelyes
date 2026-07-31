@@ -230,4 +230,47 @@ describe('gate-engine rendering', () => {
 
     expect(() => buildGateRenderPlan(config)).toThrowError('Invalid gate config for rendering')
   })
+
+  it('draws tracked runback, guide, and bottom box details', () => {
+    const plan = buildGateRenderPlan(
+      { ...createGateConfig(createGatePreset('tracked_sliding')), motorised: true },
+      { viewMode: 'technical' },
+    )
+    expect(plan.primitives.some((p) => p.id === 'tracked-runback-zone')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'tracked-guide-post')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'tracked-bottom-box')).toBe(true)
+    expect(plan.notes.some((n) => n.includes('runback'))).toBe(true)
+  })
+
+  it('draws cantilever carriage and foundation cues', () => {
+    const plan = buildGateRenderPlan(createGateConfig(createGatePreset('cantilever_sliding')), {
+      viewMode: 'technical',
+    })
+    expect(plan.primitives.some((p) => p.id === 'cantilever-bottom-box')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'cantilever-ground-guide')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'cantilever-foundation')).toBe(true)
+  })
+
+  it('draws bifold stack cues and swing ground clearance', () => {
+    const bifold = buildGateRenderPlan(createGateConfig(createGatePreset('bifolding_double_swing')), {
+      viewMode: 'technical',
+    })
+    expect(bifold.primitives.some((p) => p.id === 'bifold-stack-left')).toBe(true)
+    expect(bifold.primitives.some((p) => p.id === 'bifold-stack-right')).toBe(true)
+
+    const swing = buildGateRenderPlan(createGateConfig(createGatePreset('double_swing')), {
+      viewMode: 'technical',
+    })
+    expect(swing.primitives.some((p) => p.id === 'swing-ground-clearance')).toBe(true)
+    expect(swing.notes.some((n) => n.includes('100 mm'))).toBe(true)
+  })
+
+  it('draws radius leaf splits for wide openings', () => {
+    const plan = buildGateRenderPlan(
+      { ...createGateConfig(createGatePreset('radius_sliding')), widthMm: 2600 },
+      { viewMode: 'technical' },
+    )
+    expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-1')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-2')).toBe(true)
+  })
 })

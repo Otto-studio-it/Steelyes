@@ -2,6 +2,7 @@ import { getFinishDefinition } from '../finishes'
 import { getLeafCount, isSlidingGate } from '../internal/shared'
 import { bifoldSchematicNote, isBifoldGate } from '../rules/bifold'
 import { cantileverTailNote, getCantileverTailRatio } from '../rules/cantilever'
+import { getTelescopicOverlapMm, getTelescopicPanelCount } from '../rules/telescopic'
 import type { GateConfig } from '../types'
 import { validateGateConfig } from '../validation'
 import { scaleVisualBoldness } from '../visual-scale'
@@ -127,8 +128,10 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
   })
 
   if (isTelescopic) {
-    const segmentCount = 3
-    const segmentWidth = panelWidth / segmentCount
+    const segmentCount = getTelescopicPanelCount()
+    const overlapMm = getTelescopicOverlapMm(config.widthMm)
+    const segmentWidth =
+      (panelWidth + overlapMm * (segmentCount - 1)) / Math.max(segmentCount, 1)
     for (let index = 0; index < segmentCount; index += 1) {
       boxes.push({
         kind: 'box',
@@ -137,7 +140,7 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
         heightMm: panelHeight - index * scaleVisualBoldness(10),
         depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
         positionMm: [
-          config.widthMm * 0.04 + index * segmentWidth * 0.9,
+          config.widthMm * 0.04 + index * (segmentWidth - overlapMm) * 0.9,
           panelHeight / 2 + 28 + index * 3,
           index * 1.5,
         ],
