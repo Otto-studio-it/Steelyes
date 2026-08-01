@@ -289,3 +289,12 @@ export type {
   SilhouetteResolution,
   SilhouetteResolveInput,
 } from './silhouettes/resolve-silhouette'
+export {
+  RAILHEAD_OVERLAY_LAYOUT,
+  resolveRailheadOverlays,
+} from './silhouettes/resolve-railhead-overlays'
+export type {
+  RailheadOverlayInstance,
+  RailheadOverlayPlan,
+  RailheadOverlayRow,
+} from './silhouettes/resolve-railhead-overlays'

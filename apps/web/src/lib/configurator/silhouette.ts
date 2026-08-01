@@ -3,14 +3,16 @@
  *
  * Serving: Option A — files under `/2d-masters/...` (apps/web/public).
  * Policy: Technical preview uses these masters only (never invent CAD).
- * UI: `TechnicalMasterPreview` (Phase 1).
+ * UI: `TechnicalMasterPreview` (Phase 1 masters + Phase 2 railhead overlays).
  */
 
 export {
   SILHOUETTE_INDEX,
   SilhouetteResolveError,
   listSilhouettePublicPaths,
+  resolveRailheadOverlays,
   resolveSilhouette,
+  type RailheadOverlayPlan,
   type SilhouetteResolution,
   type SilhouetteResolveInput,
 } from '@steelyes/gate-engine'

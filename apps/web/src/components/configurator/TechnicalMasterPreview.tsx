@@ -3,9 +3,11 @@
 import { useMemo } from 'react'
 import {
   resolveFinishDefinition,
+  resolveRailheadOverlays,
   resolveSilhouette,
   SilhouetteResolveError,
   type GateConfig,
+  type RailheadOverlayInstance,
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -23,6 +25,7 @@ type TechnicalMasterPreviewProps = {
 
 /**
  * Phase 1 — Technical preview from preloaded 2D masters only.
+ * Phase 2 — railhead SKU overlays composed on top of the master.
  * Never invents live CAD. Client mm render in the strip under the image.
  */
 export function TechnicalMasterPreview({
@@ -48,6 +51,13 @@ export function TechnicalMasterPreview({
       return { ok: false as const, message }
     }
   }, [config])
+
+  const overlays = useMemo(() => resolveRailheadOverlays(config), [config])
+
+  const railheadCodes = useMemo(() => {
+    const codes = new Set(overlays.instances.map((item) => item.code))
+    return [...codes]
+  }, [overlays.instances])
 
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
@@ -111,12 +121,13 @@ export function TechnicalMasterPreview({
           className="flex w-full items-center gap-3 bg-gradient-to-b from-paper to-canvas px-3 py-3 text-left transition hover:from-white hover:to-paper"
           aria-label="Expand technical master preview"
         >
-          <div className="flex h-[72px] w-[112px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-steel/10 bg-white">
+          <div className="relative flex h-[72px] w-[112px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-steel/10 bg-white">
             {resolved.ok ? (
-              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
-              <img
-                src={resolved.value.publicPath}
-                alt=""
+              <MasterWithOverlays
+                masterSrc={resolved.value.publicPath}
+                masterAlt=""
+                instances={overlays.instances}
+                heightMm={config.heightMm}
                 className="h-full w-full object-contain object-top p-1"
               />
             ) : (
@@ -142,10 +153,11 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
-              <img
-                src={resolved.value.publicPath}
-                alt={`${title} technical master — ${resolved.value.title}`}
+              <MasterWithOverlays
+                masterSrc={resolved.value.publicPath}
+                masterAlt={`${title} technical master — ${resolved.value.title}`}
+                instances={overlays.instances}
+                heightMm={config.heightMm}
                 className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
               />
             ) : (
@@ -180,16 +192,75 @@ export function TechnicalMasterPreview({
                   <span className="ml-2 text-sm font-normal text-muted">mm</span>
                 </p>
               </div>
-              {resolved.ok ? (
-                <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
-                  Master · {resolved.value.slug.replace(/_/g, ' ')}
-                </p>
-              ) : null}
+              <div className="text-right">
+                {resolved.ok ? (
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                    Master · {resolved.value.slug.replace(/_/g, ' ')}
+                  </p>
+                ) : null}
+                {railheadCodes.length > 0 ? (
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted">
+                    Railheads · {railheadCodes.join(' · ')}
+                    <span className="ml-1 normal-case tracking-normal text-muted/80">
+                      ({overlays.instances.length} provisional)
+                    </span>
+                  </p>
+                ) : null}
+              </div>
             </div>
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
               Dimensions are client inputs — not baked into the drawing.
+              {railheadCodes.length > 0
+                ? ' Railhead count/spacing remain provisional until survey sign-off.'
+                : null}
             </p>
           </div>
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function MasterWithOverlays({
+  masterSrc,
+  masterAlt,
+  instances,
+  heightMm,
+  className,
+}: {
+  masterSrc: string
+  masterAlt: string
+  instances: RailheadOverlayInstance[]
+  heightMm: number
+  className: string
+}) {
+  return (
+    <div className={`relative inline-block max-w-full ${className.includes('w-full') ? 'w-full' : ''}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
+      <img src={masterSrc} alt={masterAlt} className={className} />
+      {instances.length > 0 ? (
+        <div className="pointer-events-none absolute inset-0" aria-hidden>
+          {instances.map((instance) => {
+            // Scale head height vs gate height; floor so spears stay readable on small previews.
+            const heightPct = Math.max(4.5, Math.min(18, (instance.heightMm / Math.max(heightMm, 1)) * 100))
+            const widthPct = heightPct * (instance.widthMm / Math.max(instance.heightMm, 1))
+            return (
+              // eslint-disable-next-line @next/next/no-img-element -- static public railhead SVG
+              <img
+                key={instance.id}
+                src={instance.publicPath}
+                alt=""
+                className="absolute object-contain object-bottom"
+                style={{
+                  left: `${instance.xRatio * 100}%`,
+                  top: `${instance.anchorYRatio * 100}%`,
+                  width: `${widthPct}%`,
+                  height: `${heightPct}%`,
+                  transform: 'translate(-50%, -100%)',
+                }}
+              />
+            )
+          })}
         </div>
       ) : null}
     </div>

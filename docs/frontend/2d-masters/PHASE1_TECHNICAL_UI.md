@@ -25,4 +25,4 @@
 
 ## Next (Phase 2)
 
-Railhead overlays on the master.
+Done — see [`PHASE2_RAILHEAD_OVERLAYS.md`](./PHASE2_RAILHEAD_OVERLAYS.md).
