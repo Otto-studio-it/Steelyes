@@ -5,7 +5,10 @@
 
 import type { GateConfig } from '../types'
 import { TRACKED_RUNBACK_EXTRA_MM } from '../rules/ship-defaults'
+import { getRadiusLeafCount } from '../rules/radius'
 import { getTelescopicPanelCount } from '../rules/telescopic'
+
+export { getRadiusLeafCount } from '../rules/radius'
 import { scaleVisualBoldness } from '../visual-scale'
 import type { GateRenderPrimitive } from './render-plan'
 
@@ -238,14 +241,6 @@ export function pushTelescopicSlidingDetails(
   })
 }
 
-/**
- * Radius leaf count — intake: min 2; ~3 when opening ≈ 2500 mm / 90° turn.
- * Schematic only (does not change pricing).
- */
-export function getRadiusLeafCount(clearOpeningMm: number): number {
-  return clearOpeningMm >= 2500 ? 3 : 2
-}
-
 /** Radius: leaf splits for curved-path multi-leaf. Track itself stays on `track-line`. */
 export function pushRadiusSlidingDetails(
   primitives: GateRenderPrimitive[],
@@ -355,7 +350,7 @@ export function slidingTypeDetailNotes(config: GateConfig): string[] {
     }
     case 'radius_sliding':
       return [
-        `Radius: travel path always curved; ${getRadiusLeafCount(config.widthMm)} leaves shown as dashed splits (intake: 2 min, 3 near 2500 mm / 90°).`,
+        `Radius: travel path always curved (~90° park); ${getRadiusLeafCount(config.widthMm)} articulated panels (hinged train, not telescopic).`,
       ]
     default:
       return []

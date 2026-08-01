@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33 103" width="33mm" height="103mm">
+  <title>RH14 railhead — CAD silhouette</title>
+  <desc>RH14 · 95×25×12 mm · £0.50 ex VAT · ball + collar + stem · source foto /railhead/RH14.JPG</desc>
+  <g id="RH14" fill="none" stroke="#111111" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16.5" cy="14" r="9.5"/>
+    <path d="M 13 24
+      L 12 30
+      L 8 36
+      L 8 44
+      L 25 44
+      L 25 36
+      L 21 30
+      L 20 24
+      Z"/>
+    <rect x="12" y="44" width="9" height="55"/>
+  </g>
+</svg>

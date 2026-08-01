@@ -274,7 +274,7 @@ export function PreviewCanvas({
             Schematic preview
           </div>
         ) : null}
-        {showDimensionOverlay ? (
+        {showDimensionOverlay && mode !== 'technical' ? (
           <button
             type="button"
             onClick={onDimensionOverlayClick}

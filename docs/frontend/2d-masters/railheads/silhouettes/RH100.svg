@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 78 168" width="78mm" height="168mm">
+  <title>RH100 railhead — CAD silhouette</title>
+  <desc>RH100 · 160×70×28 mm · £0.60 ex VAT · ornate fleur / spear · source foto /railhead/RH100.JPG</desc>
+  <g id="RH100" fill="none" stroke="#111111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 39.0 4
+      L 36 40
+      L 26 52
+      L 32 62
+      C 14 54, 6 74, 14 92
+      C 20 102, 32 96, 36 86
+      L 34 114
+      C 22 112, 16 124, 22 134
+      L 32 132
+      L 34 144
+      C 30 156, 48 156, 44 144
+      L 46 132
+      L 56 134
+      C 62 124, 56 112, 44 114
+      L 42 86
+      C 46 96, 58 102, 64 92
+      C 72 74, 64 54, 46 62
+      L 52 52
+      L 42 40
+      Z"/>
+    <line x1="39.0" y1="6" x2="39.0" y2="144" stroke-width="0.7" opacity="0.4"/>
+  </g>
+</svg>

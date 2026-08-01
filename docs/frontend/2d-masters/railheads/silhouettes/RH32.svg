@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 144" width="68mm" height="144mm">
+  <title>RH32 railhead — CAD silhouette</title>
+  <desc>RH32 · 136×60×14 mm · £0.55 ex VAT · classic spear with collar + stub · source foto /railhead/RH32.JPG</desc>
+  <g id="RH32" fill="none" stroke="#111111" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 34.0 4
+      L 30 59
+      L 6 52
+      L 26 72
+      L 29 102
+      L 22 110
+      C 26 122, 42 122, 46 110
+      L 39 102
+      L 42 72
+      L 62 52
+      L 38 59
+      Z"/>
+    <line x1="34.0" y1="6" x2="34.0" y2="102" stroke-width="0.7" opacity="0.4"/>
+    <rect x="28" y="120" width="12" height="20"/>
+  </g>
+</svg>

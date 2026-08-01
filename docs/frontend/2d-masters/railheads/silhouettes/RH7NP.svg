@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 118" width="68mm" height="118mm">
+  <title>RH7NP railhead — CAD silhouette</title>
+  <desc>RH7NP · 110×60×20 mm · £0.29 ex VAT · fleur-de-lis no peg (flush base) · source foto /railhead/RH7NP.JPG</desc>
+  <g id="RH7NP" fill="none" stroke="#111111" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 34.0 4
+      L 32 30
+      C 16 24, 6 40, 12 52
+      C 18 62, 28 58, 31 50
+      L 31 86
+      L 20 94
+      C 24 108, 44 108, 48 94
+      L 37 86
+      L 37 50
+      C 40 58, 50 62, 56 52
+      C 62 40, 52 24, 36 30
+      Z"/>
+    <line x1="34.0" y1="6" x2="34.0" y2="86" stroke-width="0.7" opacity="0.4"/>
+    <line x1="18" y1="114" x2="50" y2="114" stroke-width="1.4"/>
+  </g>
+</svg>

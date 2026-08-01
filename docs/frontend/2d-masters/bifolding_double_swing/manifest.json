@@ -1,0 +1,92 @@
+{
+  "gateType": "bifolding_double_swing",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Import silhouettes/ manually — MCP Starter rate-limited",
+    "frames": {
+      "base": "BF / base",
+      "arched": "BF / arched",
+      "dog_bars": "BF / dog_bars",
+      "arched_dog_bars": "BF / arched_dog_bars",
+      "composite": "BF / composite"
+    }
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "semantics": {
+    "source": "CA-09/10 + linea guida bifolding double swing",
+    "topology": "2 leaves × 2 panels (50/50) = 4 panels closed between posts",
+    "foldStile": "Solid mid-leaf stile + fold hinges per leaf",
+    "stackPack": "~100 mm schematic pack drawn OUTSIDE beyond posts (open footprint cue)"
+  },
+  "drawingCues": [
+    "Two leaves fill clear opening between brick posts",
+    "Each leaf split 50/50 with fold stile + hinge ticks",
+    "Center latch; pillar hinges on outer stiles",
+    "Dashed stack pack outside posts — not a gap in the opening"
+  ],
+  "doNotMislead": [
+    "Do not draw bifold as a plain double swing without fold stilts.",
+    "Do not put stack pack inside the clear opening.",
+    "Panel count is LOCKED at 2 per leaf until Marius changes CA-09/10.",
+    "Live mm stay in the UI strip under the image."
+  ],
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer; actuators = later detail)",
+    "railhead / finial SKUs",
+    "widthMm / heightMm",
+    "exact stack pack mm"
+  ],
+  "lookup": {
+    "description": "First matching rule wins.",
+    "rules": [
+      { "when": { "style": "composite_boards" }, "slug": "composite" },
+      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
+      { "when": { "options": ["arched_top"] }, "slug": "arched" },
+      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
+      { "when": {}, "slug": "base" }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite boards",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "references": ["references/linea-guida.jpg"],
+  "exportTest": "packages/gate-engine/tests/export-figma-bifolding-double-swing-variants.test.ts"
+}

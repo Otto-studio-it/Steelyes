@@ -7,7 +7,9 @@ Railhead variants (decorative tops, dog-bar rows, etc.) **do not** have a dedica
 - [`docs/frontend/foto-intake/railheads-catalog.json`](../frontend/foto-intake/railheads-catalog.json)
 - [`docs/frontend/foto-intake/railheads-catalog.csv`](../frontend/foto-intake/railheads-catalog.csv)
 
-**61 SKUs**, **54 with EX VAT unit prices** (£0.20–£3.50). Status = **provisional** (WhatsApp product cards). Safe to populate `packages/gate-engine/src/catalog/railheads.ts` as `provisional` and keep quote totals survey-flagged until count rules + Marius sign-off.
+**61 SKUs**, **54 with EX VAT unit prices** (£0.20–£3.50). Status = **provisional** (WhatsApp product cards).
+
+**2026-07-31:** Most-used **6 overlays** drawn for Figma + wired into `packages/gate-engine/src/catalog/railheads.ts` (RH32, RH7, RH7NP, RH6W/B, RH14, RH100). Pack: [`docs/frontend/2d-masters/railheads/`](../frontend/2d-masters/railheads/). Quote totals still survey-flagged until count rules + Marius sign-off.
 
 Still missing before “final”:
 

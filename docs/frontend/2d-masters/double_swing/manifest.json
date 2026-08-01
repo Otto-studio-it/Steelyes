@@ -1,0 +1,93 @@
+{
+  "gateType": "double_swing",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "02 — Double Swing Variants",
+    "frames": {
+      "base": "DS / base",
+      "arched": "DS / arched",
+      "dog_bars": "DS / dog_bars",
+      "arched_dog_bars": "DS / arched_dog_bars",
+      "composite": "DS / composite"
+    }
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer on/off)",
+    "top_railheads / dog_bar_railheads SKUs",
+    "exact picket or dog-bar count",
+    "widthMm / heightMm"
+  ],
+  "lookup": {
+    "description": "First matching rule wins.",
+    "rules": [
+      {
+        "when": { "style": "composite_boards" },
+        "slug": "composite"
+      },
+      {
+        "when": { "options": ["arched_top", "dog_bars"] },
+        "slug": "arched_dog_bars"
+      },
+      {
+        "when": { "options": ["arched_top"] },
+        "slug": "arched"
+      },
+      {
+        "when": { "options": ["dog_bars"] },
+        "slug": "dog_bars"
+      },
+      {
+        "when": {},
+        "slug": "base"
+      }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite boards",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "references": [
+    "references/linea-guida.jpg",
+    "references/photo-victorian.jpg",
+    "references/support-victorian.jpg"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-double-swing-variants.test.ts"
+}

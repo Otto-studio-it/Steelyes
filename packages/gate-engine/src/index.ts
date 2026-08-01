@@ -91,6 +91,7 @@ export {
   TELESCOPIC_CLOSED_STACK_MM,
   TELESCOPIC_DEFAULT_PANEL_COUNT,
   TELESCOPIC_FRONT_PANEL,
+  TELESCOPIC_LEAF_TAIL_MM,
   TELESCOPIC_OVERLAP_MM_MAX,
   TELESCOPIC_OVERLAP_MM_MIN,
   TELESCOPIC_OVERLAP_MM_SCHEMATIC,
@@ -101,6 +102,7 @@ export {
 export type { TelescopicFrontPanel } from './rules/telescopic'
 export {
   RADIUS_TRAVEL_PATH,
+  getRadiusLeafCount,
   getRadiusTopProfile,
   radiusSchematicNote,
 } from './rules/radius'
@@ -273,3 +275,17 @@ export type {
   SerializedGateConfigV1,
   SerializedGateOptionSelection,
 } from './serialization'
+export {
+  SILHOUETTE_INDEX,
+  SilhouetteResolveError,
+  listSilhouettePublicPaths,
+  resolveSilhouette,
+} from './silhouettes/resolve-silhouette'
+export type {
+  SilhouetteIndex,
+  SilhouetteIndexEntry,
+  SilhouetteLookupRule,
+  SilhouettePackIndex,
+  SilhouetteResolution,
+  SilhouetteResolveInput,
+} from './silhouettes/resolve-silhouette'

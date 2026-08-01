@@ -16,9 +16,9 @@ describe('gate-engine rendering', () => {
     expect(plan.subtitle).toContain('1800 mm opening')
     expect(plan.subtitle).toContain('Black')
     expect(plan.labels.some((label) => label.id === 'label-finish')).toBe(true)
-    expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'swing-frame')).toBe(true)
-    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'upper-mid-rail')).toBe(true)
-    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'bottom-rail')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.kind === 'rect' && primitive.id === 'leaf-1-frame')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'leaf-1-mid-rail')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'leaf-1-bottom-rail')).toBe(true)
     expect(plan.labels.some((label) => label.id === 'label-title')).toBe(true)
     expect(plan.labels.some((label) => label.id === 'cad-dim-gate-width-label')).toBe(true)
     expect(plan.labels.length).toBeGreaterThanOrEqual(4)
@@ -50,9 +50,7 @@ describe('gate-engine rendering', () => {
 
     expect(plan.title).toContain('tracked sliding')
     expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'track-line')).toBe(true)
-    expect(plan.notes).toContain(
-      'CAD elevation style — black linework, red dimensions, white paper.',
-    )
+    expect(plan.notes.some((n) => n.includes('CAD elevation from photo-guided 2D masters'))).toBe(true)
     expect(plan.labels.some((label) => label.id === 'label-track')).toBe(true)
   })
 
@@ -261,7 +259,7 @@ describe('gate-engine rendering', () => {
     const swing = buildGateRenderPlan(createGateConfig(createGatePreset('double_swing')), {
       viewMode: 'technical',
     })
-    expect(swing.primitives.some((p) => p.id === 'swing-ground-clearance')).toBe(true)
+    expect(swing.primitives.some((p) => p.id === 'leaf-1-bottom-rail')).toBe(true)
     expect(swing.notes.some((n) => n.includes('100 mm'))).toBe(true)
   })
 

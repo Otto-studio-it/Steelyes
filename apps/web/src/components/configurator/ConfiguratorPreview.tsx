@@ -10,6 +10,7 @@ import {
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
+import { TechnicalMasterPreview } from '@/components/configurator/TechnicalMasterPreview'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
 function renderPrimitive(primitive: GateRenderPrimitive) {
@@ -145,7 +146,8 @@ export function PreviewSvg({ plan, studio = false, className = '' }: PreviewSvgP
   )
 }
 
-export function ConfiguratorPreview({
+/** Installation / plan schematic — live engine render (not used for Technical). */
+function LiveSchematicPreview({
   config,
   viewMode = 'installation',
   compact = false,
@@ -178,7 +180,7 @@ export function ConfiguratorPreview({
       >
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">
-            {viewMode === 'installation' ? 'Installation preview' : 'Technical drawing'}
+            {viewMode === 'installation' ? 'Installation preview' : 'Schematic drawing'}
           </p>
           <h2
             className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
@@ -191,11 +193,7 @@ export function ConfiguratorPreview({
         <div className="flex items-center gap-2">
           <div
             className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
-            title={
-              viewMode === 'technical'
-                ? 'Colour appears in Installation view'
-                : 'Schematic finish preview'
-            }
+            title="Schematic finish preview"
           >
             <span
               className="h-3.5 w-3.5 shrink-0 border border-black/20"
@@ -255,4 +253,22 @@ export function ConfiguratorPreview({
       ) : null}
     </div>
   )
+}
+
+export function ConfiguratorPreview(props: ConfiguratorPreviewProps) {
+  // Phase 1: Technical = preloaded masters only (never invent live CAD).
+  if (props.viewMode === 'technical') {
+    return (
+      <TechnicalMasterPreview
+        config={props.config}
+        compact={props.compact}
+        collapsible={props.collapsible}
+        pinned={props.pinned}
+        studio={props.studio}
+        className={props.className}
+      />
+    )
+  }
+
+  return <LiveSchematicPreview {...props} />
 }

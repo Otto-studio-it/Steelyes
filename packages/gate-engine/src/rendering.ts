@@ -17,6 +17,7 @@ import { cantileverTailNote, getCantileverTailRatio } from './rules/cantilever'
 import { dimensionMeaningNote } from './rules/dimensions'
 import { getRadiusTopProfile, radiusSchematicNote } from './rules/radius'
 import {
+  TELESCOPIC_LEAF_TAIL_MM,
   getTelescopicOverlapMm,
   getTelescopicPanelCount,
   telescopicSchematicNote,
@@ -60,6 +61,7 @@ import {
   slidingTypeDetailNotes,
   swingTypeDetailNotes,
 } from './rendering/type-details-2d'
+import { buildCadBaseElevation } from './rendering/cad-base-elevation'
 import { SHIP_PICKET_SPACING_MM } from './rules/ship-defaults'
 
 type RenderPalette = {
@@ -879,14 +881,17 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   const tailWidth = isCantilever ? FRAME_WIDTH * tailRatio : 0
   const panelWidth = isCantilever
     ? FRAME_WIDTH - tailWidth - 100
-    : FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 0.78 : 0.92)
-  const panelX = isCantilever ? FRAME_X + 28 + tailWidth - 12 : FRAME_X + FRAME_WIDTH - panelWidth - 32
+    : FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 1 : 0.92)
+  const panelX = isCantilever
+    ? FRAME_X + 28 + tailWidth - 12
+    : config.gateType === 'telescopic_sliding'
+      ? FRAME_X
+      : FRAME_X + FRAME_WIDTH - panelWidth - 32
   const panelY = baseY
   const isRadius = config.gateType === 'radius_sliding'
   const isTelescopic = config.gateType === 'telescopic_sliding'
   const radiusCurvedTop = isRadius && hasOption(config, 'arched_top')
   const telescopicPanels = isTelescopic ? getTelescopicPanelCount() : 0
-  const telescopicOverlapMm = isTelescopic ? getTelescopicOverlapMm(config.widthMm) : 0
   const boardCount = clamp(Math.round(config.widthMm / 320), 5, 11)
   const boardWidth = panelWidth / boardCount
   const primitives: GateRenderPrimitive[] = []
@@ -961,27 +966,32 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   }
 
   if (isTelescopic) {
-    const overlapPx = Math.max(
-      8,
-      (telescopicOverlapMm / Math.max(1, config.widthMm)) * panelWidth,
-    )
-    const segmentSpan = (panelWidth + overlapPx * (telescopicPanels - 1)) / telescopicPanels
-    for (let index = 0; index < telescopicPanels; index += 1) {
-      const x = panelX + index * (segmentSpan - overlapPx)
-      const inset = index * 4
+    // Overlapping leaves: each longer than opening/n so seams read (tail cue ~300 mm).
+    const leafW =
+      panelWidth / telescopicPanels +
+      (TELESCOPIC_LEAF_TAIL_MM / Math.max(1, config.widthMm)) * panelWidth
+    const overlapPx =
+      telescopicPanels > 1 ? (telescopicPanels * leafW - panelWidth) / (telescopicPanels - 1) : 0
+    const stepX = leafW - overlapPx
+    for (let index = telescopicPanels - 1; index >= 0; index -= 1) {
+      const depth = index
+      const x = panelX + index * stepX + depth * 2
+      const y = panelY + depth * 6
+      const w = leafW - depth * 2
+      const h = panelHeight - depth * 6
       primitives.push({
         kind: 'rect',
         id: `telescopic-segment-${index}`,
-        x: x + inset * 0.25,
-        y: panelY + inset,
-        width: segmentSpan - inset * 0.5,
-        height: panelHeight - inset * 2,
-        rx: 12,
+        x,
+        y,
+        width: w,
+        height: h,
+        rx: 10,
         fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
         stroke: palette.ink,
-        strokeWidth: scaleVisual(index === 0 ? 4 : 3),
-        strokeDasharray: index === 0 ? undefined : '8 8',
-        fillOpacity: 0.92 - index * 0.08,
+        strokeWidth: scaleVisual(index === 0 ? 4 : 3.2),
+        strokeDasharray: index === 0 ? undefined : '7 6',
+        fillOpacity: 0.94 - index * 0.1,
         opacity: 1,
       })
     }
@@ -1341,7 +1351,7 @@ export function buildGateRenderPlan(
           `Finish shown schematically as ${finishDefinition.label} — final powder coat confirmed at survey.`,
         ]
       : [
-          'CAD elevation style — black linework, red dimensions, white paper.',
+          'CAD elevation from photo-guided 2D masters (docs/frontend/2d-masters) — black linework, white paper.',
           'Millimetre values come from your configuration, not from sample CAD drawings.',
           `Selected finish: ${finishDefinition.label} (colour appears in Installation view).`,
         ]
@@ -1408,16 +1418,29 @@ export function buildGateRenderPlan(
     }
   }
 
+  const isCantileverCad =
+    isCadTechnicalView(viewMode) && config.gateType === 'cantilever_sliding'
+  const isTrackedCad =
+    isCadTechnicalView(viewMode) && config.gateType === 'tracked_sliding'
+  // Cantilever: leave room past right post for triangular tail.
+  // Tracked: leave room past right post for schematic runback (leaf still = 100% of frame).
+  const slidingExtraFrameWidth = isCantileverCad
+    ? Math.round(FRAME_WIDTH * 0.72)
+    : isTrackedCad
+      ? Math.round(FRAME_WIDTH * 0.86)
+      : FRAME_WIDTH
   const frameBounds: SceneFrameBounds = {
     frameX: FRAME_X,
     frameY: FRAME_Y,
-    frameWidth: FRAME_WIDTH,
+    frameWidth: slidingExtraFrameWidth,
     frameHeight: FRAME_HEIGHT,
   }
 
-  const rawGatePrimitives = isSliding
-    ? buildSlidingFrame(config, palette)
-    : buildSwingFrame(config, palette)
+  const rawGatePrimitives = isCadTechnicalView(viewMode)
+    ? buildCadBaseElevation(config, frameBounds)
+    : isSliding
+      ? buildSlidingFrame(config, palette)
+      : buildSwingFrame(config, palette)
   const gatePrimitives = isCadTechnicalView(viewMode)
     ? restylePrimitivesForCadTechnical(rawGatePrimitives)
     : rawGatePrimitives
@@ -1435,7 +1458,14 @@ export function buildGateRenderPlan(
             canvasHeight: CANVAS_HEIGHT,
             groundTopY: FRAME_Y + FRAME_HEIGHT + cadClearancePx,
             gateLeftX: cadPostOuter?.leftX ?? FRAME_X,
-            gateRightX: cadPostOuter?.rightX ?? FRAME_X + FRAME_WIDTH,
+            // Cantilever: extend ground under the counterbalance tail beyond the right post
+            gateRightX: isCantileverCad
+              ? (cadPostOuter?.rightX ?? FRAME_X + frameBounds.frameWidth) +
+                Math.round(frameBounds.frameWidth * getCantileverTailRatio(config.widthMm)) +
+                12
+              : isTrackedCad
+                ? (cadPostOuter?.rightX ?? FRAME_X + frameBounds.frameWidth) + 120
+                : (cadPostOuter?.rightX ?? FRAME_X + FRAME_WIDTH),
           })
         : []
   const sceneElements: GateRenderPrimitive[] = []
@@ -1592,11 +1622,18 @@ export function buildGateRenderPlan(
       weight: 500,
     })
     if (config.gateType === 'cantilever_sliding') {
+      const tailLabelX =
+        FRAME_X +
+        frameBounds.frameWidth +
+        18 +
+        56 +
+        6 +
+        (frameBounds.frameWidth * getCantileverTailRatio(config.widthMm)) / 2
       labels.push({
         id: 'label-tail',
-        x: FRAME_X + 28 + (FRAME_WIDTH * getCantileverTailRatio(config.widthMm)) / 2,
+        x: Math.min(tailLabelX, CANVAS_WIDTH - 40),
         y: FRAME_Y + 84,
-        text: 'Counterbalance tail = 1/3 of opening (min)',
+        text: 'Counterbalance AFTER opening (min 1/3)',
         anchor: 'middle',
         size: 12,
         fill: palette.accent,
