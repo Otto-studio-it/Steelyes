@@ -2,7 +2,6 @@ import {
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
 } from '../rules/geometry'
-import { getOptionQuantity, hasOption } from '../internal/shared'
 import type { GateConfig, GateOptionKey } from '../types'
 import { SILHOUETTE_INDEX, type SilhouetteIndex } from './resolve-silhouette'
 
@@ -98,7 +97,7 @@ function placeRow(
 }
 
 function resolveRow(
-  config: Pick<GateConfig, 'widthMm' | 'options'>,
+  config: Pick<GateConfig, 'widthMm' | 'heightMm' | 'options'>,
   optionKey: Extract<GateOptionKey, 'top_railheads' | 'dog_bar_railheads'>,
   row: RailheadOverlayRow,
   expectedCount: number,
@@ -106,7 +105,9 @@ function resolveRow(
   layout: typeof RAILHEAD_OVERLAY_LAYOUT,
   notes: string[],
 ): RailheadOverlayInstance[] {
-  if (!hasOption(config, optionKey)) return []
+  if (!config.options.some((option) => option.key === optionKey && option.enabled)) {
+    return []
+  }
 
   const option = config.options.find((item) => item.key === optionKey)
   const slug = overlaySlugFromVariant(option?.variant, layout.defaultSlug)
@@ -116,7 +117,8 @@ function resolveRow(
     return []
   }
 
-  const quantity = getOptionQuantity(config, optionKey)
+  const quantity =
+    option?.quantity && option.quantity > 0 ? option.quantity : 1
   const count = Math.min(quantity > 0 ? quantity : expectedCount, expectedCount)
   if (!option?.variant) {
     notes.push(`Using default railhead ${layout.defaultSlug} until a variant is selected.`)

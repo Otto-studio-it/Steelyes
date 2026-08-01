@@ -41,7 +41,7 @@ function pushRect(
   y: number,
   w: number,
   h: number,
-  strokeWidth = FRAME,
+  strokeWidth: number = FRAME,
 ): void {
   out.push({
     kind: 'rect',
@@ -64,7 +64,7 @@ function pushLine(
   y1: number,
   x2: number,
   y2: number,
-  strokeWidth = MEMBER,
+  strokeWidth: number = MEMBER,
 ): void {
   out.push({
     kind: 'line',
