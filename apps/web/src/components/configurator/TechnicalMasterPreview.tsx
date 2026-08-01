@@ -54,10 +54,10 @@ export function TechnicalMasterPreview({
 
   const overlays = useMemo(() => resolveRailheadOverlays(config), [config])
 
-  const railheadCodes = useMemo(() => {
-    const codes = new Set(overlays.instances.map((item) => item.code))
-    return [...codes]
-  }, [overlays.instances])
+  const railheadCodes = useMemo(
+    () => Array.from(new Set(overlays.instances.map((item) => item.code))),
+    [overlays.instances],
+  )
 
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
