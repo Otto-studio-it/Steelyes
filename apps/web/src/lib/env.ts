@@ -9,7 +9,6 @@ const clientSchema = z.object({
 const serverSchema = clientSchema.extend({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'Missing Supabase service role key'),
   RESEND_API_KEY: z.string().min(1, 'Missing Resend API key'),
-  INBOX_INGEST_SECRET: z.string().min(1, 'Missing inbox ingest secret'),
 })
 
 type ServerEnv = z.infer<typeof serverSchema>
@@ -26,7 +25,6 @@ function parseEnv(): ServerEnv {
       ...clientVars,
       SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
       RESEND_API_KEY: process.env.RESEND_API_KEY,
-      INBOX_INGEST_SECRET: process.env.INBOX_INGEST_SECRET,
     })
   }
 

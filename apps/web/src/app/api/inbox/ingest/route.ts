@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 import { getServiceRoleClient } from '@/lib/supabase/server'
-import { env } from '@/lib/env'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,7 +21,12 @@ const IngestSchema = z.object({
  * the only way the app learns a customer wrote in directly.
  */
 export async function POST(request: Request): Promise<NextResponse> {
-  if (request.headers.get('authorization') !== `Bearer ${env.INBOX_INGEST_SECRET}`) {
+  const ingestSecret = process.env.INBOX_INGEST_SECRET
+  if (!ingestSecret) {
+    return NextResponse.json({ error: 'INBOX_INGEST_SECRET not configured' }, { status: 503 })
+  }
+
+  if (request.headers.get('authorization') !== `Bearer ${ingestSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
