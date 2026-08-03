@@ -26,15 +26,16 @@ async function exportGlb(group: import('three').Object3D): Promise<ArrayBuffer> 
   })
   if (result instanceof ArrayBuffer) return result
   const json = JSON.stringify(result)
-  return new TextEncoder().encode(json).buffer
+  const bytes = new TextEncoder().encode(json)
+  return bytes.buffer
 }
 
 async function exportUsdz(group: import('three').Object3D): Promise<ArrayBuffer> {
   const exporter = new USDZExporter()
   const data = await exporter.parseAsync(group)
   if (data instanceof ArrayBuffer) return data
-  const bytes = data as Uint8Array
-  return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer
+  const bytes = Uint8Array.from(data as Uint8Array)
+  return bytes.buffer
 }
 
 /** Client-side GLB + USDZ from the same GateConfig mesh (real mm → metres). */
