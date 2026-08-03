@@ -1,5 +1,5 @@
 import { buildGateGeometryPlan } from './geometry'
-import { getFinishDefinition, getFinishStrokeColor } from './finishes'
+import { getFinishDefinition, getFinishStrokeColor, resolveFinishDefinition } from './finishes'
 import {
   clamp,
   getLeafCount,
@@ -7,19 +7,43 @@ import {
   hasOption,
   isSlidingGate,
 } from './internal/shared'
+import {
+  bifoldSchematicNote,
+  getBifoldPanelsPerLeaf,
+  isBifoldGate,
+  BIFOLD_PANEL_SPLIT_RATIO,
+} from './rules/bifold'
 import { cantileverTailNote, getCantileverTailRatio } from './rules/cantilever'
+import { dimensionMeaningNote } from './rules/dimensions'
+import { getRadiusTopProfile, radiusSchematicNote } from './rules/radius'
+import {
+  TELESCOPIC_LEAF_TAIL_MM,
+  getTelescopicOverlapMm,
+  getTelescopicPanelCount,
+  telescopicSchematicNote,
+} from './rules/telescopic'
 import {
   getDecorativeBarCapacity,
   getExpectedDogBarCount,
   getExpectedDogBarRailheadCount,
   getExpectedTopRailheadCount,
 } from './rules/geometry'
-import { type FinishCode, type GateConfig } from './types'
+import { type GateConfig } from './types'
 import { validateGateConfig } from './validation'
 import { scaleVisualBoldness } from './visual-scale'
 import type { GateRenderLabel, GateRenderPlan, GateRenderPrimitive, GateRenderViewMode } from './rendering/render-plan'
 import { buildPlanViewPlan } from './rendering/plan-view'
 import { serializeGateRenderPlanToSvg } from './rendering/svg-serialize'
+import { buildCadDimensionLayer } from './rendering/cad-dimensions'
+import {
+  buildCadMountingPosts,
+  buildCadTechnicalBackground,
+  getCadClearancePx,
+  getCadPostOuterBounds,
+  getCadTechnicalPalette,
+  isCadTechnicalView,
+  restylePrimitivesForCadTechnical,
+} from './rendering/cad-style'
 import {
   buildGateShadow,
   buildInstallationBackground,
@@ -27,6 +51,18 @@ import {
   filterInstallationLabels,
   type SceneFrameBounds,
 } from './rendering/scene'
+import {
+  pushBifoldStackCue,
+  pushCantileverSlidingDetails,
+  pushRadiusSlidingDetails,
+  pushSwingGroundClearanceCue,
+  pushTelescopicSlidingDetails,
+  pushTrackedSlidingDetails,
+  slidingTypeDetailNotes,
+  swingTypeDetailNotes,
+} from './rendering/type-details-2d'
+import { buildCadBaseElevation } from './rendering/cad-base-elevation'
+import { SHIP_PICKET_SPACING_MM } from './rules/ship-defaults'
 
 type RenderPalette = {
   ink: string
@@ -40,12 +76,12 @@ type RenderPalette = {
   postFill: string
 }
 
-function resolveRenderPalette(finish: FinishCode): RenderPalette {
-  const definition = getFinishDefinition(finish)
+function resolveRenderPalette(config: Pick<GateConfig, 'finish' | 'customFinishHex'>): RenderPalette {
+  const definition = resolveFinishDefinition(config)
   const tokens = definition.schematic
 
   return {
-    ink: getFinishStrokeColor(tokens, finish),
+    ink: getFinishStrokeColor(tokens, config.finish),
     accent: tokens.accent,
     accentSoft: tokens.infill,
     panel: tokens.panel,
@@ -53,7 +89,8 @@ function resolveRenderPalette(finish: FinishCode): RenderPalette {
     steel: tokens.strokeMuted,
     label: tokens.label,
     shadow: 'rgba(0, 0, 0, 0.12)',
-    postFill: finish === 'black_gloss' ? tokens.infill : tokens.panel,
+    // Installation SVG fills use the finish infill so anthracite vs black reads clearly.
+    postFill: tokens.infill,
   }
 }
 
@@ -286,6 +323,69 @@ function swingTopYAtX(
   return arch ? archYOnSwingTop(leftInset, rightInset, topY, x) : topY + flatOffset
 }
 
+/**
+ * Elevation fold markers for bifold leaves — mid-leaf dashed stile + hinge ticks.
+ * Panel count / split come from rules/bifold (provisional until Marius).
+ */
+function pushBifoldFoldMarkers(
+  primitives: GateRenderPrimitive[],
+  palette: RenderPalette,
+  args: {
+    gateType: GateConfig['gateType']
+    topY: number
+    bottomY: number
+    leafCount: number
+  },
+): void {
+  const panelsPerLeaf = getBifoldPanelsPerLeaf(args.gateType)
+  if (panelsPerLeaf < 2) {
+    return
+  }
+
+  const leafWidth = FRAME_WIDTH / args.leafCount
+  const foldRatio = BIFOLD_PANEL_SPLIT_RATIO
+
+  for (let leafIndex = 0; leafIndex < args.leafCount; leafIndex += 1) {
+    const leafLeft = FRAME_X + leafWidth * leafIndex
+    const foldX = leafLeft + leafWidth * foldRatio
+
+    pushShadowLine(
+      primitives,
+      {
+        kind: 'line',
+        id: `bifold-fold-${leafIndex + 1}`,
+        x1: foldX,
+        y1: args.topY + 10,
+        x2: foldX,
+        y2: args.bottomY - 10,
+        stroke: palette.accent,
+        strokeWidth: scaleVisual(2.6),
+        strokeDasharray: '7 6',
+        opacity: 0.85,
+      },
+      palette,
+      1.2,
+      1.2,
+    )
+
+    // Fold hinge ticks (schematic — not fabrication hardware).
+    for (const tickY of [args.topY + FRAME_HEIGHT * 0.28, args.topY + FRAME_HEIGHT * 0.72]) {
+      primitives.push({
+        kind: 'line',
+        id: `bifold-hinge-${leafIndex + 1}-${tickY}`,
+        x1: foldX - 10,
+        y1: tickY,
+        x2: foldX + 10,
+        y2: tickY,
+        stroke: palette.accent,
+        strokeWidth: scaleVisual(3),
+        strokeLinecap: 'square',
+        opacity: 0.95,
+      })
+    }
+  }
+}
+
 function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRenderPrimitive[] {
   const topY = FRAME_Y
   const bottomY = FRAME_Y + FRAME_HEIGHT
@@ -309,8 +409,12 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
   const bottomRailY = railY(frameBounds, rails.bottom)
   const lowerRailY = lowerMidY
   const useTubeProfile = geometry?.features.tubeProfile ?? false
-  const upperBars = geometry?.pickets.upperCount ?? clamp(Math.round(config.widthMm / 210), 8, 16)
-  const lowerBars = geometry?.pickets.lowerCount ?? clamp(Math.round(config.widthMm / 90), 16, 28)
+  const upperBars =
+    geometry?.pickets.upperCount ??
+    clamp(Math.round(config.widthMm / Math.max(SHIP_PICKET_SPACING_MM * 2.1, 180)), 8, 16)
+  const lowerBars =
+    geometry?.pickets.lowerCount ??
+    clamp(Math.round(config.widthMm / SHIP_PICKET_SPACING_MM), 16, 28)
   const lowerBarGap = (rightInset - leftInset) / (lowerBars + 1)
   const barGap = FRAME_WIDTH / (upperBars + 1)
   const lineColor = palette.ink
@@ -354,8 +458,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       x2: centerX,
       y2: bottomY - 8,
       stroke: palette.ink,
-      strokeWidth: scaleVisual(3),
-      strokeDasharray: config.gateType === 'bifolding_double_swing' ? '6 10' : undefined,
+      strokeWidth: scaleVisual(isBifoldGate(config.gateType) ? 3.5 : 3),
       opacity: 0.7,
     }, palette, 1.5, 1.5)
   } else {
@@ -370,6 +473,22 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
       strokeWidth: scaleVisual(3),
       opacity: 0.5,
     }, palette, 1.4, 1.4)
+  }
+
+  if (isBifoldGate(config.gateType)) {
+    pushBifoldFoldMarkers(primitives, palette, {
+      gateType: config.gateType,
+      topY,
+      bottomY,
+      leafCount,
+    })
+    pushBifoldStackCue(primitives, palette, {
+      frameX: FRAME_X,
+      frameY: FRAME_Y,
+      frameWidth: FRAME_WIDTH,
+      frameHeight: FRAME_HEIGHT,
+      leafCount,
+    })
   }
 
   if (arch) {
@@ -645,28 +764,59 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     }
   }
 
-  pushShadowRect(primitives, {
-    kind: 'rect',
-    id: 'center-latch-plate',
-    x: centerX - 12,
-    y: middleY - 58,
-    width: 24,
-    height: 116,
-    rx: 6,
-    fill: '#F7F7F7',
-    stroke: palette.ink,
-    strokeWidth: scaleVisual(2.4),
-  }, palette)
+  if (leafCount > 1) {
+    pushShadowRect(primitives, {
+      kind: 'rect',
+      id: 'center-latch-plate',
+      x: centerX - 12,
+      y: middleY - 58,
+      width: 24,
+      height: 116,
+      rx: 6,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2.4),
+    }, palette)
 
-  pushShadowCircle(primitives, {
-    kind: 'circle',
-    id: 'center-latch-hole',
-    cx: centerX,
-    cy: middleY,
-    r: 3.2,
-    fill: palette.ink,
-    stroke: 'none',
-  }, palette, 0.8, 0.8)
+    pushShadowCircle(primitives, {
+      kind: 'circle',
+      id: 'center-latch-hole',
+      cx: centerX,
+      cy: middleY,
+      r: 3.2,
+      fill: palette.ink,
+      stroke: 'none',
+    }, palette, 0.8, 0.8)
+  }
+
+  // CA-01: manual gates show a handle; motorised gates never do.
+  if (!config.motorised) {
+    const handleX =
+      leafCount > 1 ? centerX - 36 : FRAME_X + FRAME_WIDTH - scaleVisual(48)
+    pushShadowRect(primitives, {
+      kind: 'rect',
+      id: 'manual-handle-plate',
+      x: handleX - 7,
+      y: middleY - 28,
+      width: 14,
+      height: 56,
+      rx: 3,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2),
+    }, palette)
+    pushShadowLine(primitives, {
+      kind: 'line',
+      id: 'manual-handle-grip',
+      x1: handleX,
+      y1: middleY - 18,
+      x2: handleX,
+      y2: middleY + 18,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(3.2),
+      strokeLinecap: 'round',
+    }, palette, 0.6, 0.6)
+  }
 
   pushShadowLine(primitives, {
     kind: 'line',
@@ -712,6 +862,13 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     strokeWidth: scaleVisual(2.2),
   }, palette, 0.8, 0.8)
 
+  pushSwingGroundClearanceCue(primitives, palette, {
+    frameX: FRAME_X,
+    frameY: FRAME_Y,
+    frameWidth: FRAME_WIDTH,
+    frameHeight: FRAME_HEIGHT,
+  })
+
   return primitives
 }
 
@@ -724,11 +881,17 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   const tailWidth = isCantilever ? FRAME_WIDTH * tailRatio : 0
   const panelWidth = isCantilever
     ? FRAME_WIDTH - tailWidth - 100
-    : FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 0.78 : 0.92)
-  const panelX = isCantilever ? FRAME_X + 28 + tailWidth - 12 : FRAME_X + FRAME_WIDTH - panelWidth - 32
+    : FRAME_WIDTH * (config.gateType === 'telescopic_sliding' ? 1 : 0.92)
+  const panelX = isCantilever
+    ? FRAME_X + 28 + tailWidth - 12
+    : config.gateType === 'telescopic_sliding'
+      ? FRAME_X
+      : FRAME_X + FRAME_WIDTH - panelWidth - 32
   const panelY = baseY
   const isRadius = config.gateType === 'radius_sliding'
   const isTelescopic = config.gateType === 'telescopic_sliding'
+  const radiusCurvedTop = isRadius && hasOption(config, 'arched_top')
+  const telescopicPanels = isTelescopic ? getTelescopicPanelCount() : 0
   const boardCount = clamp(Math.round(config.widthMm / 320), 5, 11)
   const boardWidth = panelWidth / boardCount
   const primitives: GateRenderPrimitive[] = []
@@ -746,18 +909,32 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     strokeWidth: scaleVisual(6),
   })
 
-  primitives.push({
-    kind: 'line',
-    id: 'track-line',
-    x1: FRAME_X + 30,
-    y1: trackY,
-    x2: FRAME_X + FRAME_WIDTH - 30,
-    y2: trackY,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(7),
-    strokeLinecap: 'round',
-    opacity: 0.9,
-  })
+  // Track: straight for tracked/cantilever/telescopic; curved plan cue for radius (elevation + arc).
+  if (isRadius) {
+    primitives.push({
+      kind: 'path',
+      id: 'track-line',
+      d: `M ${FRAME_X + 30} ${trackY} Q ${FRAME_X + FRAME_WIDTH / 2} ${trackY + 48}, ${FRAME_X + FRAME_WIDTH - 30} ${trackY}`,
+      fill: 'none',
+      stroke: palette.steel,
+      strokeWidth: scaleVisual(7),
+      strokeLinecap: 'round',
+      opacity: 0.9,
+    })
+  } else {
+    primitives.push({
+      kind: 'line',
+      id: 'track-line',
+      x1: FRAME_X + 30,
+      y1: trackY,
+      x2: FRAME_X + FRAME_WIDTH - 30,
+      y2: trackY,
+      stroke: palette.steel,
+      strokeWidth: scaleVisual(7),
+      strokeLinecap: 'round',
+      opacity: 0.9,
+    })
+  }
 
   if (isCantilever) {
     primitives.push({
@@ -788,21 +965,53 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     })
   }
 
-  primitives.push({
-    kind: 'rect',
-    id: 'sliding-panel',
-    x: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
-    y: panelY,
-    width: isCantilever ? panelWidth + 12 : panelWidth,
-    height: panelHeight,
-    rx: isRadius ? 80 : 14,
-    fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
-    stroke: palette.ink,
-    strokeWidth: scaleVisual(4),
-    fillOpacity: 0.95,
-  })
+  if (isTelescopic) {
+    // Overlapping leaves: each longer than opening/n so seams read (tail cue ~300 mm).
+    const leafW =
+      panelWidth / telescopicPanels +
+      (TELESCOPIC_LEAF_TAIL_MM / Math.max(1, config.widthMm)) * panelWidth
+    const overlapPx =
+      telescopicPanels > 1 ? (telescopicPanels * leafW - panelWidth) / (telescopicPanels - 1) : 0
+    const stepX = leafW - overlapPx
+    for (let index = telescopicPanels - 1; index >= 0; index -= 1) {
+      const depth = index
+      const x = panelX + index * stepX + depth * 2
+      const y = panelY + depth * 6
+      const w = leafW - depth * 2
+      const h = panelHeight - depth * 6
+      primitives.push({
+        kind: 'rect',
+        id: `telescopic-segment-${index}`,
+        x,
+        y,
+        width: w,
+        height: h,
+        rx: 10,
+        fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
+        stroke: palette.ink,
+        strokeWidth: scaleVisual(index === 0 ? 4 : 3.2),
+        strokeDasharray: index === 0 ? undefined : '7 6',
+        fillOpacity: 0.94 - index * 0.1,
+        opacity: 1,
+      })
+    }
+  } else {
+    primitives.push({
+      kind: 'rect',
+      id: 'sliding-panel',
+      x: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
+      y: panelY,
+      width: isCantilever ? panelWidth + 12 : panelWidth,
+      height: panelHeight,
+      rx: isRadius ? 24 : 14,
+      fill: config.style === 'composite_boards' ? palette.panelSoft : palette.postFill,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(4),
+      fillOpacity: 0.95,
+    })
+  }
 
-  if (isRadius) {
+  if (isRadius && radiusCurvedTop) {
     primitives.push({
       kind: 'path',
       id: 'radius-top',
@@ -815,25 +1024,18 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     })
   }
 
-  if (isTelescopic) {
-    const segmentCount = 3
-    const segmentWidth = panelWidth / segmentCount
-    for (let index = 0; index < segmentCount; index += 1) {
-      primitives.push({
-        kind: 'rect',
-        id: `telescopic-segment-${index}`,
-        x: panelX + index * segmentWidth,
-        y: panelY + 2 + index * 3,
-        width: segmentWidth - index * 6,
-        height: panelHeight - 4 - index * 6,
-        rx: 12,
-        fill: 'none',
-        stroke: palette.accent,
-        strokeWidth: scaleVisual(3),
-        strokeDasharray: index === 0 ? undefined : '8 8',
-        opacity: 0.7,
-      })
-    }
+  // Keep a subtle curved-path cue on radius even with straight top (CA-12).
+  if (isRadius && !radiusCurvedTop) {
+    primitives.push({
+      kind: 'path',
+      id: 'radius-path-cue',
+      d: `M ${panelX + 24} ${panelY + panelHeight - 28} Q ${panelX + panelWidth / 2} ${panelY + panelHeight + 8}, ${panelX + panelWidth - 24} ${panelY + panelHeight - 28}`,
+      fill: 'none',
+      stroke: palette.accent,
+      strokeWidth: scaleVisual(3),
+      strokeDasharray: '6 8',
+      opacity: 0.75,
+    })
   }
 
   const barCount = config.style === 'traditional_victorian' ? clamp(Math.round(config.widthMm / 230), 6, 14) : boardCount
@@ -996,6 +1198,69 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     }
   }
 
+  const slidingLayout = {
+    frameX: FRAME_X,
+    frameY: FRAME_Y,
+    frameWidth: FRAME_WIDTH,
+    frameHeight: FRAME_HEIGHT,
+    panelX: isCantilever ? FRAME_X + 28 + tailWidth - 12 : panelX,
+    panelY,
+    panelWidth: isCantilever ? panelWidth + 12 : panelWidth,
+    panelHeight,
+    trackY,
+    tailWidth,
+  }
+  const detailPalette = {
+    ink: palette.ink,
+    accent: palette.accent,
+    accentSoft: palette.accentSoft,
+    steel: palette.steel,
+    panelSoft: palette.panelSoft,
+    postFill: palette.postFill,
+  }
+
+  if (config.gateType === 'tracked_sliding') {
+    pushTrackedSlidingDetails(primitives, detailPalette, slidingLayout, config.widthMm)
+  }
+  if (isCantilever) {
+    pushCantileverSlidingDetails(primitives, detailPalette, slidingLayout)
+  }
+  if (isTelescopic) {
+    pushTelescopicSlidingDetails(primitives, detailPalette, slidingLayout)
+  }
+  if (isRadius) {
+    pushRadiusSlidingDetails(primitives, detailPalette, slidingLayout, config.widthMm)
+  }
+
+  // CA-01: manual sliding gets a pull handle; motorised never does.
+  if (!config.motorised) {
+    const handleX = slidingLayout.panelX + slidingLayout.panelWidth - 28
+    const handleY = slidingLayout.panelY + slidingLayout.panelHeight * 0.45
+    primitives.push({
+      kind: 'rect',
+      id: 'manual-handle-plate',
+      x: handleX - 6,
+      y: handleY,
+      width: 12,
+      height: 48,
+      rx: 2,
+      fill: '#F7F7F7',
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(2),
+    })
+    primitives.push({
+      kind: 'line',
+      id: 'manual-handle-grip',
+      x1: handleX,
+      y1: handleY + 8,
+      x2: handleX,
+      y2: handleY + 40,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(3),
+      strokeLinecap: 'round',
+    })
+  }
+
   return primitives
 }
 
@@ -1009,8 +1274,23 @@ export function buildGateRenderPlan(
     throw new Error('Invalid gate config for rendering')
   }
 
-  const palette = resolveRenderPalette(config.finish)
-  const subtitle = `${config.widthMm} mm opening · ${config.heightMm} mm high · ${formatStyleLabel(config.style)}`
+  const finishPalette = resolveRenderPalette(config)
+  const cadPalette = getCadTechnicalPalette()
+  const palette: RenderPalette = isCadTechnicalView(viewMode)
+    ? {
+        ink: cadPalette.ink,
+        accent: cadPalette.dim,
+        accentSoft: cadPalette.accentSoft,
+        panel: cadPalette.panel,
+        panelSoft: cadPalette.panelSoft,
+        steel: cadPalette.steel,
+        label: cadPalette.label,
+        shadow: cadPalette.shadow,
+        postFill: cadPalette.postFill,
+      }
+    : finishPalette
+  const finishDefinition = resolveFinishDefinition(config)
+  const subtitle = `${config.widthMm} mm opening · ${config.heightMm} mm high · ${formatStyleLabel(config.style)} · ${finishDefinition.label}`
 
   if (viewMode === 'plan') {
     const planTitle = `${formatTypeLabel(config.gateType)} — plan view`
@@ -1066,8 +1346,15 @@ export function buildGateRenderPlan(
       : `${formatTypeLabel(config.gateType)} preview`
   const notes: string[] =
     viewMode === 'installation'
-      ? ['Installation preview with mounting posts and ground context']
-      : ['2D technical drawing preview']
+      ? [
+          'Installation preview with mounting posts and ground context.',
+          `Finish shown schematically as ${finishDefinition.label} — final powder coat confirmed at survey.`,
+        ]
+      : [
+          'CAD elevation from photo-guided 2D masters (docs/frontend/2d-masters) — black linework, white paper.',
+          'Millimetre values come from your configuration, not from sample CAD drawings.',
+          `Selected finish: ${finishDefinition.label} (colour appears in Installation view).`,
+        ]
 
   if (hasOption(config, 'top_railheads') || hasOption(config, 'dog_bar_railheads')) {
     notes.push('Railheads are shown schematically until the final catalogue is confirmed.')
@@ -1091,6 +1378,38 @@ export function buildGateRenderPlan(
     notes.push(cantileverTailNote(config.widthMm))
   }
 
+  notes.push(
+    dimensionMeaningNote({
+      cantileverTailExtra: config.gateType === 'cantilever_sliding',
+    }),
+  )
+
+  if (isBifoldGate(config.gateType)) {
+    notes.push(bifoldSchematicNote(config.gateType))
+  }
+
+  if (config.gateType === 'telescopic_sliding') {
+    notes.push(telescopicSchematicNote(config.widthMm))
+  }
+
+  if (config.gateType === 'radius_sliding') {
+    notes.push(radiusSchematicNote(hasOption(config, 'arched_top')))
+  }
+
+  if (config.motorised) {
+    notes.push('Motorised build: no leaf handle (CA-01).')
+  } else if (!isSliding) {
+    notes.push('Manual swing: lever handle shown on the leaf.')
+  } else {
+    notes.push('Manual sliding: pull handle shown on the leading edge.')
+  }
+
+  if (isSliding) {
+    notes.push(...slidingTypeDetailNotes(config))
+  } else {
+    notes.push(...swingTypeDetailNotes(config))
+  }
+
   const geometryPlan = buildGateGeometryPlan(config)
   if (geometryPlan) {
     notes.push('Victorian swing layout uses gate-audit zone ratios and four horizontal rails.')
@@ -1099,16 +1418,56 @@ export function buildGateRenderPlan(
     }
   }
 
+  const isCantileverCad =
+    isCadTechnicalView(viewMode) && config.gateType === 'cantilever_sliding'
+  const isTrackedCad =
+    isCadTechnicalView(viewMode) && config.gateType === 'tracked_sliding'
+  // Cantilever: leave room past right post for triangular tail.
+  // Tracked: leave room past right post for schematic runback (leaf still = 100% of frame).
+  const slidingExtraFrameWidth = isCantileverCad
+    ? Math.round(FRAME_WIDTH * 0.72)
+    : isTrackedCad
+      ? Math.round(FRAME_WIDTH * 0.86)
+      : FRAME_WIDTH
   const frameBounds: SceneFrameBounds = {
     frameX: FRAME_X,
     frameY: FRAME_Y,
-    frameWidth: FRAME_WIDTH,
+    frameWidth: slidingExtraFrameWidth,
     frameHeight: FRAME_HEIGHT,
   }
 
-  const gatePrimitives = isSliding ? buildSlidingFrame(config, palette) : buildSwingFrame(config, palette)
+  const rawGatePrimitives = isCadTechnicalView(viewMode)
+    ? buildCadBaseElevation(config, frameBounds)
+    : isSliding
+      ? buildSlidingFrame(config, palette)
+      : buildSwingFrame(config, palette)
+  const gatePrimitives = isCadTechnicalView(viewMode)
+    ? restylePrimitivesForCadTechnical(rawGatePrimitives)
+    : rawGatePrimitives
+
+  const cadClearancePx = isCadTechnicalView(viewMode)
+    ? getCadClearancePx(config.heightMm, FRAME_HEIGHT)
+    : 0
+  const cadPostOuter = isCadTechnicalView(viewMode) ? getCadPostOuterBounds(frameBounds) : null
   const background =
-    viewMode === 'installation' ? buildInstallationBackground(CANVAS_WIDTH, CANVAS_HEIGHT) : []
+    viewMode === 'installation'
+      ? buildInstallationBackground(CANVAS_WIDTH, CANVAS_HEIGHT)
+      : isCadTechnicalView(viewMode)
+        ? buildCadTechnicalBackground({
+            canvasWidth: CANVAS_WIDTH,
+            canvasHeight: CANVAS_HEIGHT,
+            groundTopY: FRAME_Y + FRAME_HEIGHT + cadClearancePx,
+            gateLeftX: cadPostOuter?.leftX ?? FRAME_X,
+            // Cantilever: extend ground under the counterbalance tail beyond the right post
+            gateRightX: isCantileverCad
+              ? (cadPostOuter?.rightX ?? FRAME_X + frameBounds.frameWidth) +
+                Math.round(frameBounds.frameWidth * getCantileverTailRatio(config.widthMm)) +
+                12
+              : isTrackedCad
+                ? (cadPostOuter?.rightX ?? FRAME_X + frameBounds.frameWidth) + 120
+                : (cadPostOuter?.rightX ?? FRAME_X + FRAME_WIDTH),
+          })
+        : []
   const sceneElements: GateRenderPrimitive[] = []
 
   if (viewMode === 'installation') {
@@ -1116,98 +1475,35 @@ export function buildGateRenderPlan(
     sceneElements.push(...buildMountingPosts(config, frameBounds, palette))
   }
 
-  const primitives = [...sceneElements, ...gatePrimitives]
+  const showCadPosts =
+    isCadTechnicalView(viewMode) && config.posts.enabled && config.posts.material !== 'none'
 
-  if (viewMode === 'technical') {
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-line',
-    x1: FRAME_X - 4,
-    y1: FRAME_Y + FRAME_HEIGHT + 72,
-    x2: FRAME_X + FRAME_WIDTH + 4,
-    y2: FRAME_Y + FRAME_HEIGHT + 72,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-line-shadow',
-    x1: FRAME_X - 4,
-    y1: FRAME_Y + FRAME_HEIGHT + 74,
-    x2: FRAME_X + FRAME_WIDTH + 4,
-    y2: FRAME_Y + FRAME_HEIGHT + 74,
-    stroke: palette.shadow,
-    strokeWidth: scaleVisual(1),
-    opacity: 0.5,
-  }, palette, 0, 0)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-start',
-    x1: FRAME_X,
-    y1: FRAME_Y + FRAME_HEIGHT + 58,
-    x2: FRAME_X,
-    y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'width-dimension-end',
-    x1: FRAME_X + FRAME_WIDTH,
-    y1: FRAME_Y + FRAME_HEIGHT + 58,
-    x2: FRAME_X + FRAME_WIDTH,
-    y2: FRAME_Y + FRAME_HEIGHT + 86,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-line',
-    x1: FRAME_X - 70,
-    y1: FRAME_Y - 2,
-    x2: FRAME_X - 70,
-    y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-line-shadow',
-    x1: FRAME_X - 68,
-    y1: FRAME_Y - 2,
-    x2: FRAME_X - 68,
-    y2: FRAME_Y + FRAME_HEIGHT + 2,
-    stroke: palette.shadow,
-    strokeWidth: scaleVisual(1),
-    opacity: 0.5,
-  }, palette, 0, 0)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-start',
-    x1: FRAME_X - 86,
-    y1: FRAME_Y,
-    x2: FRAME_X - 54,
-    y2: FRAME_Y,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
-  pushShadowLine(primitives, {
-    kind: 'line',
-    id: 'height-dimension-end',
-    x1: FRAME_X - 86,
-    y1: FRAME_Y + FRAME_HEIGHT,
-    x2: FRAME_X - 54,
-    y2: FRAME_Y + FRAME_HEIGHT,
-    stroke: palette.steel,
-    strokeWidth: scaleVisual(1.8),
-    strokeLinecap: 'square',
-  }, palette, 1, 1)
+  if (showCadPosts) {
+    sceneElements.push(
+      ...buildCadMountingPosts(frameBounds, { extendBelowFramePx: cadClearancePx }),
+    )
   }
+
+  const cadDimensions = isCadTechnicalView(viewMode)
+    ? buildCadDimensionLayer({
+        bounds: frameBounds,
+        widthMm: config.widthMm,
+        heightMm: config.heightMm,
+        leafCount: getLeafCount(config.gateType),
+        showPosts: showCadPosts,
+        clearancePx: cadClearancePx,
+      })
+    : null
+
+  if (cadDimensions) {
+    notes.push(...cadDimensions.notes)
+  }
+
+  const primitives: GateRenderPrimitive[] = [
+    ...sceneElements,
+    ...gatePrimitives,
+    ...(cadDimensions?.primitives ?? []),
+  ]
 
   const labels: GateRenderLabel[] = [
     {
@@ -1216,9 +1512,9 @@ export function buildGateRenderPlan(
       y: FRAME_Y - 46,
       text: title,
       anchor: 'start',
-      size: 28,
+      size: isCadTechnicalView(viewMode) ? 18 : 28,
       fill: palette.ink,
-      weight: 700,
+      weight: isCadTechnicalView(viewMode) ? 600 : 700,
     },
     {
       id: 'label-subtitle',
@@ -1226,31 +1522,73 @@ export function buildGateRenderPlan(
       y: FRAME_Y - 18,
       text: subtitle,
       anchor: 'start',
-      size: 14,
+      size: 13,
       fill: palette.steel,
       weight: 500,
     },
-    {
-      id: 'label-dimensions',
-      x: FRAME_X + FRAME_WIDTH - 12,
-      y: FRAME_Y + FRAME_HEIGHT + 54,
-      text: `${config.widthMm} mm`,
-      anchor: 'end',
-      size: 18,
-      fill: palette.accent,
-      weight: 700,
-    },
-    {
-      id: 'label-height',
-      x: FRAME_X - 78,
-      y: FRAME_Y + FRAME_HEIGHT / 2,
-      text: `${config.heightMm} mm`,
-      anchor: 'end',
-      size: 18,
-      fill: palette.accent,
-      weight: 700,
-    },
   ]
+
+  if (cadDimensions) {
+    labels.push(...cadDimensions.labels)
+    labels.push({
+      id: 'label-finish',
+      x: FRAME_X + FRAME_WIDTH,
+      y: FRAME_Y - 18,
+      text: finishDefinition.label,
+      anchor: 'end',
+      size: 12,
+      fill: palette.steel,
+      weight: 600,
+    })
+  } else {
+    labels.push(
+      {
+        id: 'label-dimensions',
+        x: FRAME_X + FRAME_WIDTH - 12,
+        y: FRAME_Y + FRAME_HEIGHT + 54,
+        text: `${config.widthMm} mm`,
+        anchor: 'end',
+        size: 18,
+        fill: palette.accent,
+        weight: 700,
+      },
+      {
+        id: 'label-height',
+        x: FRAME_X - 78,
+        y: FRAME_Y + FRAME_HEIGHT / 2,
+        text: `${config.heightMm} mm`,
+        anchor: 'end',
+        size: 18,
+        fill: palette.accent,
+        weight: 700,
+      },
+      {
+        id: 'label-finish',
+        x: FRAME_X + FRAME_WIDTH - 12,
+        y: FRAME_Y + FRAME_HEIGHT + 78,
+        text: finishDefinition.label,
+        anchor: 'end',
+        size: 13,
+        fill: finishPalette.label,
+        weight: 600,
+      },
+    )
+  }
+
+  // Finish swatch (installation only — technical stays ink CAD).
+  if (viewMode === 'installation') {
+    primitives.push({
+      kind: 'rect',
+      id: 'finish-swatch',
+      x: FRAME_X + FRAME_WIDTH - 48,
+      y: FRAME_Y + FRAME_HEIGHT + 62,
+      width: 36,
+      height: 14,
+      fill: finishDefinition.schematic.frame,
+      stroke: finishPalette.ink,
+      strokeWidth: 1.5,
+    })
+  }
 
   if (viewMode === 'installation' && config.posts.enabled && config.posts.material !== 'none') {
     labels.push({
@@ -1270,25 +1608,75 @@ export function buildGateRenderPlan(
       id: 'label-track',
       x: FRAME_X + 22,
       y: FRAME_Y + FRAME_HEIGHT + 32,
-      text: config.gateType === 'cantilever_sliding' ? 'Track / counterbalance schematic' : 'Track / rail schematic',
+      text:
+        config.gateType === 'cantilever_sliding'
+          ? 'Track / counterbalance schematic'
+          : config.gateType === 'radius_sliding'
+            ? 'Curved travel path (schematic)'
+            : config.gateType === 'telescopic_sliding'
+              ? 'Telescopic stack (schematic)'
+              : 'Track / rail schematic',
       anchor: 'start',
       size: 13,
       fill: palette.steel,
       weight: 500,
     })
     if (config.gateType === 'cantilever_sliding') {
+      const tailLabelX =
+        FRAME_X +
+        frameBounds.frameWidth +
+        18 +
+        56 +
+        6 +
+        (frameBounds.frameWidth * getCantileverTailRatio(config.widthMm)) / 2
       labels.push({
         id: 'label-tail',
-        x: FRAME_X + 28 + (FRAME_WIDTH * getCantileverTailRatio(config.widthMm)) / 2,
+        x: Math.min(tailLabelX, CANVAS_WIDTH - 40),
         y: FRAME_Y + 84,
-        text:
-          config.widthMm === 4000 ? 'Counterbalance tail = 1/3 at 4m' : 'Counterbalance tail visible',
+        text: 'Counterbalance AFTER opening (min 1/3)',
         anchor: 'middle',
         size: 12,
         fill: palette.accent,
         weight: 600,
       })
     }
+    if (config.gateType === 'telescopic_sliding') {
+      labels.push({
+        id: 'label-telescopic',
+        x: FRAME_X + FRAME_WIDTH / 2,
+        y: FRAME_Y + 36,
+        text: `${getTelescopicPanelCount()} panels · ~${getTelescopicOverlapMm(config.widthMm)} mm overlap · motor-side front`,
+        anchor: 'middle',
+        size: 12,
+        fill: palette.accent,
+        weight: 600,
+      })
+    }
+    if (config.gateType === 'radius_sliding') {
+      labels.push({
+        id: 'label-radius',
+        x: FRAME_X + FRAME_WIDTH / 2,
+        y: FRAME_Y + 36,
+        text: `Curved path · top ${getRadiusTopProfile(hasOption(config, 'arched_top'))}`,
+        anchor: 'middle',
+        size: 12,
+        fill: palette.accent,
+        weight: 600,
+      })
+    }
+  }
+
+  if (isBifoldGate(config.gateType)) {
+    labels.push({
+      id: 'label-bifold-fold',
+      x: FRAME_X + FRAME_WIDTH / 2,
+      y: FRAME_Y + 36,
+      text: 'Fold stile (schematic — confirm panels with workshop)',
+      anchor: 'middle',
+      size: 12,
+      fill: palette.accent,
+      weight: 600,
+    })
   }
 
   return {
@@ -1306,3 +1694,28 @@ export function buildGateRenderPlan(
 }
 
 export { serializeGateRenderPlanToSvg } from './rendering/svg-serialize'
+export {
+  CAD_BRICK_HATCH,
+  CAD_CLEARANCE_MIN_PX,
+  CAD_COLORS,
+  CAD_DIMENSION,
+  CAD_GROUND,
+  CAD_POST_LAYOUT,
+  CAD_PROVISIONAL_GROUND_CLEARANCE_MM,
+  CAD_STROKES,
+  CAD_STYLE_SOURCE,
+  buildCadMountingPosts,
+  buildCadTechnicalBackground,
+  getCadClearancePx,
+  getCadPostOuterBounds,
+  getCadTechnicalPalette,
+  isCadTechnicalView,
+  restylePrimitivesForCadTechnical,
+} from './rendering/cad-style'
+export type { CadTechnicalPalette } from './rendering/cad-style'
+export {
+  buildCadDimensionLayer,
+  CAD_PROVISIONAL_CENTER_GAP_MM,
+  CAD_PROVISIONAL_SIDE_GAP_MM,
+} from './rendering/cad-dimensions'
+export type { CadDimensionLayer, CadDimensionLayerInput } from './rendering/cad-dimensions'

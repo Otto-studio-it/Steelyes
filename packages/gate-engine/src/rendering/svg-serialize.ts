@@ -36,9 +36,13 @@ function primitiveToSvg(primitive: GateRenderPrimitive): string {
     }
     case 'path': {
       const fill = primitive.fill ? ` fill="${primitive.fill}"` : ' fill="none"'
+      const fillOpacity = primitive.fillOpacity !== undefined ? ` fill-opacity="${primitive.fillOpacity}"` : ''
       const stroke = primitive.stroke ? ` stroke="${primitive.stroke}"` : ''
       const strokeWidth = primitive.strokeWidth !== undefined ? ` stroke-width="${primitive.strokeWidth}"` : ''
-      return `<path id="${primitive.id}" d="${primitive.d}"${fill}${stroke}${strokeWidth}${opacity} />`
+      const dash = primitive.strokeDasharray ? ` stroke-dasharray="${primitive.strokeDasharray}"` : ''
+      const cap = primitive.strokeLinecap ? ` stroke-linecap="${primitive.strokeLinecap}"` : ''
+      const join = primitive.strokeLinejoin ? ` stroke-linejoin="${primitive.strokeLinejoin}"` : ''
+      return `<path id="${primitive.id}" d="${primitive.d}"${fill}${fillOpacity}${stroke}${strokeWidth}${dash}${cap}${join}${opacity} />`
     }
   }
 }

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Gate Installation | Supply & Install Steel Gates UK',
   description:
     'Steelyes handles the full installation path — site survey, fabrication, electric gate wiring, delivery and fitting across the UK.',
+  alternates: { canonical: '/installation' },
 }
 
 export default function InstallationPage() {

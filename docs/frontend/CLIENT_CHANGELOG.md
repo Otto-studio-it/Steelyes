@@ -83,7 +83,31 @@ _Add client requests here as Ruben provides them. Items move to numbered section
 
 | ID | Title | Status |
 |---|---|---|
-| — | _No new verbatim client notes captured yet in this session. Paste the next batch below._ | inbox |
+| — | _Empty. The 2026-07-28 WhatsApp batch has been triaged into CL-701…CL-707 below._ | — |
+
+---
+
+## Batch 2026-07-28 — Marius WhatsApp + intake PDF
+
+Verbatim source and full analysis: [`../client-answers/2026-07-28-marius.md`](../client-answers/2026-07-28-marius.md). Do not re-quote the raw messages here.
+
+| ID | Route / area | Type | Request | Priority | Depends on | Status | Source |
+|---|---|---|---|---|---|---|---|
+| CL-701 | Configurator preview + `gate-engine` | functionality | Automated gates must render **without a handle**; only manual gates show one | P1 | none — rule is complete | done | CA-01 |
+| CL-702 | Configurator options + `gate-engine` catalog | functionality | Composite panels swappable for **aluminium panels**: +£12.75/panel, +£12/horizontal bar | P2 | Marius — panel/bar count rule | blocked | CA-02 |
+| CL-703 | Configurator finish step | data | Palette is **satin/gloss/matt black + anthracite RAL 7016**; retire zinc grey, bronze, pearl white | P1 | none | done | CA-03 (shipped `b32cfb8`) |
+| CL-704 | Configurator finish step + quote | copy | Custom RAL shows **"+ extra charge — powder coating"**, no number; Marius quotes by email | P1 | none — client chose this | triaged | CA-03 |
+| CL-705 | `rules/cantilever.ts` + dimensions step | functionality | Cantilever tail = **1/3 of clear opening, minimum**; width input is the opening only; warn on total run needed | P0 | none — rule is complete | done | CA-05 |
+| CL-706 | Footer, `/contact`, `business.ts` | legal | Public email is **`sales@steelyes.co.uk`** — replaces Yahoo placeholder | P0 | none | done | CA-06 |
+| CL-707 | `SocialLinks.tsx`, footer, JSON-LD | asset | Add **TikTok**, correct **Facebook** URL, strip share/UTM tracking params | P1 | Marius — canonical Facebook page URL | done | CA-07 |
+| CL-708 | `client-intake/questions.ts` | copy | Rewrite the 13 remaining blocking questions in plain language with worked examples | P1 | none | triaged | CA-04 |
+| CL-709 | `tests/e2e/configurator.spec.ts` | quality | E2E finish tests still click `Bronze` / `Pearl white` radios that no longer exist — broken since the palette change | P1 | none | triaged | found during CA-03 propagation |
+
+**CL-705 shipped 2026-07-30:** `CANTILEVER_TAIL_RATIO = 1/3` at every width; `CantileverSiteSpaceNote` on dimensions (4000 → 5333 mm run).
+
+**CL-706 shipped 2026-07-30:** `BUSINESS.email` + contact/JSON-LD use `sales@steelyes.co.uk`.
+
+**Intake copy follow-up (CL-708 / CA-04):** Marius said he could not parse the cantilever question, then answered it correctly in his own terms — millimetres and a worked example. Rewrite the remaining 13 blocking intake questions the same way: plain sentence, worked example, expected unit. Do this before the next intake send.
 
 ---
 
@@ -92,7 +116,7 @@ _Add client requests here as Ruben provides them. Items move to numbered section
 | ID | Route / area | Type | Request | Depends on | Status | Source |
 |---|---|---|---|---|---|---|
 | CL-001 | Vercel + `steelyes.co.uk` | deploy | Put Next app live; point domain away from GoDaddy legacy site | Marius DNS / Vercel project | in_progress | `docs/DEPLOY.md`, `apps/web/vercel.json` |
-| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | `business.ts` — reg/VAT pending |
+| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | Email ✅ `sales@steelyes.co.uk` (CA-06); company no./VAT/phone/address still pending in `business.ts` |
 | CL-003 | `/legal/*` | legal | Final privacy, cookie, terms copy + CMP alignment (Iubenda) | legal review | in_progress | Draft notice + quotation-based warranty |
 | CL-004 | Pricing surfaces | copy | All public prices must say indicative / subject to survey; no invented motorised prices | Marius price list | done | Gates/services/installation copy audited |
 | CL-005 | `/gallery` | asset | Publish only photos with property-owner consent | Marius consent | blocked | `CLIENT_BLOCKERS.md` |
@@ -191,7 +215,7 @@ Consolidated from [`UI_UX_ROADMAP.md`](./UI_UX_ROADMAP.md), homepage refresh, an
 | CL-601 | Brand | asset | Logo SVG for nav/footer | blocked | Marius |
 | CL-602 | Pricing | data | Confirmed manual + motorised base prices per gate | blocked | Marius |
 | CL-603 | Railheads | data | Variant list + per-unit GBP | blocked | Marius |
-| CL-604 | Finishes | data | Official palette + multipliers | blocked | Marius |
+| CL-604 | Finishes | data | Official palette ✅ received (CA-03); **rate base + m² area rule** still missing | blocked | Marius |
 | CL-605 | Service zones | data | Postcode prefixes for install check widget | blocked | Marius |
 | CL-606 | Gallery | asset | Telescopic install video | blocked | Marius |
 | CL-607 | Gallery | asset | Workshop-only fallback until residential consent | triaged | fallback in `CLIENT_BLOCKERS` |
@@ -226,6 +250,7 @@ Review before sharing staging with Marius or going live. Tick when verified.
 | 2026-05-19 | Phase 2 audit: CI baseline, `REPO_HEALTH.md`, `HANDOFF.md`, `.env.example`, route inventory sync, `graphify-out` untracked. |
 | 2026-05-19 | Phase 3 Batch A: claims audit, `business.ts`, footer legal block, legal draft notices, deploy guide, broken PDF link removed. |
 | 2026-05-19 | Phase 3 Batch B: hero overlay/lighten, remove `unoptimized`, safe-area padding, social links in header. |
+| 2026-07-28 | Batch 2026-07-28 intake: CL-701…CL-708 triaged from the Marius WhatsApp batch + intake PDF. Verbatim record created at `docs/client-answers/`. CL-703 already shipped in `b32cfb8`. |
 
 _When an item ships, update Status here and add a line to [`../CHANGELOG_INTERNAL.md`](../CHANGELOG_INTERNAL.md) with commit hash._
 
@@ -233,7 +258,7 @@ _When an item ships, update Status here and add a line to [`../CHANGELOG_INTERNA
 
 ## Open questions for Ruben
 
-1. Paste the **verbatim client change list** (even small items) into **Inbox** — this file currently reflects documented/planned work, not a new WhatsApp thread.
+1. ~~Paste the verbatim client change list into Inbox~~ — **done 2026-07-28.** Verbatim text now lives in [`../client-answers/`](../client-answers/README.md); this file carries only the triaged request rows. Keep that split for future batches.
 2. Confirm whether **hero overlay** (CL-205) should be lightened further per original roadmap (~38% vs current ~45%+ gradient).
 3. Confirm **case study** strategy: keep placeholder visible, or hide from nav until Marius delivers (CL-304).
 4. Priority for **deploy** (CL-001) vs **more UI polish** before senior handoff.

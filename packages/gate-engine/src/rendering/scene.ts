@@ -293,6 +293,9 @@ export function filterInstallationLabels(labels: GateRenderLabel[]): GateRenderL
     (label) =>
       label.id === 'label-posts' ||
       label.id === 'label-track' ||
-      label.id === 'label-tail',
+      label.id === 'label-tail' ||
+      label.id === 'label-bifold-fold' ||
+      label.id === 'label-telescopic' ||
+      label.id === 'label-radius',
   )
 }

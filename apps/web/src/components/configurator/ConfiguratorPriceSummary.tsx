@@ -3,6 +3,7 @@
 import { Sparkles } from 'lucide-react'
 import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
 
+import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 import { buildConfigurationSummaryLines } from '@/lib/configurator/configuration-summary'
 import {
   formatLabelText,
@@ -68,6 +69,10 @@ export function ConfiguratorPriceSummary({
           <p className="mt-3 max-w-xl text-sm leading-6 text-white/70">
             {formatPricingDisplayNote(pricing, pricingCopyVariant)}
           </p>
+          <PricingDisclaimer
+            compact
+            className="mt-3 border-white/20 bg-white/5 text-white/75"
+          />
           {pricing.missingData.length > 0 ? (
             <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
               <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/55">Still missing</p>

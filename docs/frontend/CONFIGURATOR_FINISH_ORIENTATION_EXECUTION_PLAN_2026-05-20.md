@@ -18,6 +18,8 @@ Date: 2026-05-20
 
 Purpose: execute the next configurator UX wave without breaking the shared config contract or blocking future on-demand 3D/AR.
 
+> **Palette superseded 2026-07-28.** Every `matte_black` / `zinc_grey` / `bronze` / `pearl_white` reference below is historical. The client withdrew that placeholder set and confirmed the real palette — `black_satin`, `black_matt`, `black_gloss`, `anthracite_ral7016`, plus customer-entered `other_ral`. See [CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge) and the live values in `packages/gate-engine/src/finishes.ts`. The *architecture* described here (catalog as single source, renderer injects tokens, UI imports catalog only) is unchanged and still correct.
+
 Phase 0 baseline:
 
 - `/configurator` stays the public entry.

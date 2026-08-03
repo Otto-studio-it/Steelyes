@@ -1,0 +1,114 @@
+{
+  "gateType": "telescopic_sliding",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Re-import silhouettes/ — corrected 3-panel overlap 2026-07-31",
+    "frames": {
+      "base": "TE / base",
+      "arched": "TE / arched",
+      "dog_bars": "TE / dog_bars",
+      "arched_dog_bars": "TE / arched_dog_bars",
+      "composite": "TE / composite"
+    },
+    "notes": "Local SVGs: 3 overlapping panels + plan cue. Import when a Figma page is available."
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "semantics": {
+    "customerWidthMm": "Clear opening between posts — overlapping panels together cover this when closed.",
+    "panelCount": "LOCKED = 3 overlapping (CA-11). 2-leaf Combiarialdo = VARIANT.",
+    "overlapMm": "CA-11 band 80–120 mm (schematic mid 100). Leaf tail cue ~300 mm for readable seams.",
+    "parallelTracks": "One ground track per leaf plane (3 for default).",
+    "stackZone": "Space-to-open OUTSIDE parking/guide post (~1/n opening)."
+  },
+  "drawingCues": [
+    "3 overlapping segments with depth ghosts at seams",
+    "Plan strip under elevation: parallel stacked leaves",
+    "N parallel ground tracks",
+    "Motor-side front-face marker on lead panel",
+    "Guide portal on parking post; receiver on latch post",
+    "Dashed stack zone + motor pad outside parking post"
+  ],
+  "doNotMislead": [
+    "Do not draw a single flat leaf (reads as tracked).",
+    "Do not hide overlaps with tiny seams.",
+    "Do not treat 2-leaf Combiarialdo as FROM default.",
+    "Do not draw stack as a hole inside the clear opening.",
+    "Live mm stay in the UI strip under the image."
+  ],
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer on/off)",
+    "railhead SKUs",
+    "exact picket or dog-bar count",
+    "widthMm / heightMm",
+    "exact overlap mm (shown schematically)",
+    "2-panel telescopic (planned VARIANT — not shipped masters)"
+  ],
+  "lookup": {
+    "description": "First matching rule wins. Topology always = 3 overlapping panels + N tracks + plan cue.",
+    "rules": [
+      { "when": { "style": "composite_boards" }, "slug": "composite" },
+      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
+      { "when": { "options": ["arched_top"] }, "slug": "arched" },
+      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
+      { "when": {}, "slug": "base" }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite boards",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "plannedVariants": [
+    {
+      "slug": "panels_2",
+      "title": "2-leaf (Combiarialdo / L=C/2+300)",
+      "note": "Product VARIANT — not FROM default. Ship only if Marius lists it as sellable option."
+    }
+  ],
+  "references": [
+    "references/linea-guida.png",
+    "references/photo-main.jpeg",
+    "references/screenshot-1.png",
+    "references/screenshot-diagram.png",
+    "references/tech-2leaf-formula.png",
+    "references/tech-3panel-overlap.png",
+    "references/tech-3panel-space.png"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-telescopic-sliding-variants.test.ts"
+}

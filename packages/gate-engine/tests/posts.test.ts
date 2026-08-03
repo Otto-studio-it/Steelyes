@@ -27,7 +27,7 @@ describe('gate posts rendering', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const plan = buildGateRenderPlan(config, { viewMode: 'technical' })
 
-    expect(plan.labels.some((label) => label.id === 'label-dimensions')).toBe(true)
-    expect(plan.primitives.some((item) => item.id === 'width-dimension-line')).toBe(true)
+    expect(plan.labels.some((label) => label.id === 'cad-dim-gate-width-label')).toBe(true)
+    expect(plan.primitives.some((item) => item.id === 'cad-dim-gate-width-line')).toBe(true)
   })
 })

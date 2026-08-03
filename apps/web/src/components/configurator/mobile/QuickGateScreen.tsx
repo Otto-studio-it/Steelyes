@@ -58,14 +58,28 @@ export function QuickGateScreen() {
 
       <StyleComparisonPicker />
 
-      <FinishPicker value={config.finish} onChange={(finish) => patchConfig({ finish })} />
+      <FinishPicker
+        value={config.finish}
+        customHex={config.customFinishHex}
+        onChange={(finish) =>
+          patchConfig({
+            finish,
+            customFinishHex: finish === 'other_ral' ? config.customFinishHex ?? null : null,
+          })
+        }
+        onCustomHexChange={(customFinishHex) => patchConfig({ customFinishHex })}
+      />
 
       <div className="border border-steel/10 bg-paper p-4">
         <ConfiguratorSwitch
           checked={config.motorised}
           onCheckedChange={(motorised) => patchConfig({ motorised })}
           label={config.motorised ? 'Motorised' : 'Manual only'}
-          description="Automated opening with compatible motor kit — confirmed at survey."
+          description={
+            config.motorised
+              ? 'Automated opening — no leaf handle. Motor kit confirmed at survey.'
+              : 'Manual operation — leaf handle included on the preview.'
+          }
           id="quick-motorised"
         />
       </div>

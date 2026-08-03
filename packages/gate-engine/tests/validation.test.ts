@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  GATE_DIMENSION_LIMITS,
   GLOBAL_DIMENSION_LIMITS,
   createGateConfig,
   createGatePreset,
@@ -23,7 +24,7 @@ describe('gate-engine validation', () => {
     expect(config.heightMm).toBe(1000)
     expect(config.finish).toBe('black_satin')
     expect(config.fencePanels.quantity).toBe(0)
-    expect(config.options).toHaveLength(7)
+    expect(config.options).toHaveLength(8)
   })
 
   it('accepts a valid preset-based config', () => {
@@ -150,8 +151,8 @@ describe('gate-engine validation', () => {
     expect(validateGateConfig(config).ok).toBe(true)
   })
 
-  it('exposes the global dimension envelope as the per-type default', () => {
-    expect(getDimensionLimits('single_swing')).toEqual(GLOBAL_DIMENSION_LIMITS)
+  it('returns per-type dimension limits and global fallback without gateType', () => {
+    expect(getDimensionLimits('single_swing')).toEqual(GATE_DIMENSION_LIMITS.single_swing)
     expect(getDimensionLimits()).toEqual(GLOBAL_DIMENSION_LIMITS)
   })
 
@@ -188,7 +189,7 @@ describe('gate-engine validation', () => {
     expect(validateGateConfig(config).ok).toBe(true)
   })
 
-  it('rejects railhead quantities that exceed the gate width geometry', () => {
+  it('treats high railhead quantities as provisional guidance, not a hard fail', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const result = validateGateConfig({
       ...config,
@@ -203,9 +204,11 @@ describe('gate-engine validation', () => {
       ),
     })
 
-    expect(result.ok).toBe(false)
-    if (!result.ok) {
-      expect(result.issues.map((issue) => issue.code)).toContain('geometry_count_mismatch')
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.guidance?.some((issue) => issue.code === 'provisional_count_guidance')).toBe(true)
+      expect(result.guidance?.[0]?.message).toMatch(/survey/i)
+      expect(result.guidance?.[0]?.message).not.toMatch(/cannot exceed/i)
     }
   })
 })

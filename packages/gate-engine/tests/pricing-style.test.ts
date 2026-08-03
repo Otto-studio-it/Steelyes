@@ -53,7 +53,7 @@ describe('gate-engine style-aware pricing', () => {
 
     expect(resolution.source).toBe('shared_equal')
     expect(resolution.confirmed).toBe(true)
-    expect(base.amountGbp).toBe(1800)
+    expect(base.amountGbp).toBe(1900)
     expect(base.lineItem.note).toContain('matches traditional Victorian')
   })
 

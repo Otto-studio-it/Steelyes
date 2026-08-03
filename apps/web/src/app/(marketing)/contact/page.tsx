@@ -7,23 +7,28 @@ import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
 import { BUSINESS, COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
+import { GATE_DATA, resolveGateSlug } from '@/app/(marketing)/gates/gate-marketing-data'
 
 import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Request a Steel Gate Quote | Contact Steelyes',
+  title: 'Request a Steel Gate Quote | Contact Us',
   description:
     'Get a quote for bespoke steel gates, electric gates, railings or security steelwork. Share your brief, measurements or photos to start a survey-led specification.',
+  alternates: { canonical: '/contact' },
 }
 
 type ContactPageProps = {
   searchParams?: {
     shareToken?: string
+    gate?: string
   }
 }
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const shareToken = searchParams?.shareToken?.trim()
+  const gateSlug = searchParams?.gate ? resolveGateSlug(searchParams.gate) : null
+  const gateInterest = gateSlug ? GATE_DATA[gateSlug] : null
   const attachedConfig =
     shareToken && isValidShareToken(shareToken)
       ? await loadGateConfigurationByShareToken(shareToken)
@@ -37,7 +42,11 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           Start your project
         </p>
         <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-7xl">Contact the workshop</h1>
-        <p className="mt-3 max-w-xl font-mono text-sm text-[#5C403D]">Direct line to our fabrication team.</p>
+        <p className="mt-3 max-w-xl font-mono text-sm text-[#5C403D]">
+          {gateInterest
+            ? `Enquiry focused on ${gateInterest.title.toLowerCase()} gates.`
+            : 'Direct line to our fabrication team.'}
+        </p>
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 pb-16 md:px-8 lg:grid-cols-2">
@@ -45,6 +54,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           shareToken={attachedConfig ? shareToken : undefined}
           attachedConfig={attachedConfig}
           pricingCatalog={pricingCatalog}
+          gateInterest={gateInterest ? { title: gateInterest.title, customerVoice: gateInterest.customerVoice } : null}
         />
 
         <div className="space-y-8">

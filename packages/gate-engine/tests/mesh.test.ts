@@ -41,7 +41,7 @@ describe('gate-engine mesh', () => {
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'counterbalance-tail')).toBe(true)
-    expect(plan.notes).toContain('Cantilever counterbalance tail is shown at a 1/3 ratio for a 4m opening.')
+    expect(plan.notes.some((note) => note.includes('5333') && note.includes('1/3'))).toBe(true)
   })
 
   it('includes tube pickets as cylinders for Victorian double swing', () => {
@@ -65,7 +65,42 @@ describe('gate-engine mesh', () => {
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-2')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-3')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-4')).toBe(false)
+  })
+
+  it('builds a mesh plan for every gate type', () => {
+    const types = [
+      'double_swing',
+      'single_swing',
+      'tracked_sliding',
+      'cantilever_sliding',
+      'bifolding_double_swing',
+      'single_bifolding',
+      'telescopic_sliding',
+      'radius_sliding',
+    ] as const
+
+    for (const gateType of types) {
+      const plan = buildGateMeshPlan(createGateConfig(createGatePreset(gateType)))
+      expect(plan.gateType).toBe(gateType)
+      expect(plan.boxes.length).toBeGreaterThan(0)
+      expect(plan.fidelity === 'workshop' || plan.fidelity === 'schematic').toBe(true)
+    }
+  })
+
+  it('builds a schematic articulated mesh for radius sliding', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('radius_sliding')))
+    expect(plan.boxes.some((box) => box.id === 'radius-segment-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'radius-segment-3')).toBe(true)
+    expect(plan.fidelity).toBe('schematic')
+  })
+
+  it('marks Victorian swing mesh as workshop fidelity', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('double_swing')))
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.length).toBeGreaterThan(0)
   })
 
   it('rejects invalid configs before mesh generation', () => {

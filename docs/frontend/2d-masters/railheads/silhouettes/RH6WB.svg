@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 108" width="28mm" height="108mm">
+  <title>RH6W/B railhead — CAD silhouette</title>
+  <desc>RH6W/B · 100×20×20 mm · £0.40 ex VAT · ball on tapered stem · source foto /railhead/Rh6W:B.JPG</desc>
+  <g id="RH6WB" fill="none" stroke="#111111" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="14.0" cy="11" r="6.5"/>
+    <path d="M 12 18
+      L 11 26
+      L 9 59
+      L 8 76
+      C 7 86, 10 92, 8 96
+      L 8 104
+      L 20 104
+      L 20 96
+      C 18 92, 21 86, 20 76
+      L 19 59
+      L 17 26
+      L 16 18
+      Z"/>
+  </g>
+</svg>

@@ -5,10 +5,23 @@ import { useState } from 'react'
 import { createGateConfig, createGatePreset, GATE_TYPES, type GateType } from '@steelyes/gate-engine'
 
 import { GateTypeExplorationDialog } from '@/components/configurator/GateTypeExplorationDialog'
+import {
+  gateTypeAvailabilityLabel,
+  getGateTypeAvailability,
+} from '@/lib/configurator/gate-type-availability'
 import { PRIMARY_GATE_TYPE } from '@/lib/configurator/navigation'
 import { GATE_TYPE_IMAGES } from '@/lib/configurator/presentation'
 import { gateTypeLabel } from '@/lib/configurator/labels'
+import { BUSINESS } from '@/lib/marketing/business'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
+
+function enquireMailto(gateType: GateType): string {
+  const subject = encodeURIComponent(`Enquiry — ${gateTypeLabel(gateType)}`)
+  const body = encodeURIComponent(
+    `Hi Steelyes,\n\nI am interested in a ${gateTypeLabel(gateType)}. Please contact me to discuss options.\n`,
+  )
+  return `mailto:${BUSINESS.email}?subject=${subject}&body=${body}`
+}
 
 export function GateTypeCardGrid() {
   const config = useConfiguratorConfig()
@@ -21,17 +34,29 @@ export function GateTypeCardGrid() {
       return
     }
 
-    if (nextType === PRIMARY_GATE_TYPE) {
+    const availability = getGateTypeAvailability(nextType)
+
+    if (availability === 'enquire') {
+      setPendingType(nextType)
+      setDialogOpen(true)
+      return
+    }
+
+    if (nextType === PRIMARY_GATE_TYPE || availability === 'configure') {
       setConfig(createGateConfig(createGatePreset(nextType)))
       return
     }
 
+    // schematic exploration
     setPendingType(nextType)
     setDialogOpen(true)
   }
 
   const confirmPendingType = () => {
     if (!pendingType) {
+      return
+    }
+    if (getGateTypeAvailability(pendingType) === 'enquire') {
       return
     }
     setConfig(createGateConfig(createGatePreset(pendingType)))
@@ -49,8 +74,10 @@ export function GateTypeCardGrid() {
         >
           {GATE_TYPES.map((gateType) => {
             const selected = config.gateType === gateType
+            const availability = getGateTypeAvailability(gateType)
             const primary = gateType === PRIMARY_GATE_TYPE
             const imageSrc = GATE_TYPE_IMAGES[gateType]
+            const badge = primary ? 'Primary' : gateTypeAvailabilityLabel(availability)
 
             return (
               <button
@@ -82,10 +109,14 @@ export function GateTypeCardGrid() {
                   )}
                   <span
                     className={`absolute left-2 top-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${
-                      primary ? 'bg-primary text-white' : 'bg-steel/80 text-white'
+                      primary
+                        ? 'bg-primary text-white'
+                        : availability === 'enquire'
+                          ? 'bg-steel text-white'
+                          : 'bg-steel/80 text-white'
                     }`}
                   >
-                    {primary ? 'Primary' : 'Explore'}
+                    {badge}
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col justify-center px-3 py-2">
@@ -104,6 +135,7 @@ export function GateTypeCardGrid() {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onConfirm={confirmPendingType}
+        enquireHref={pendingType ? enquireMailto(pendingType) : undefined}
       />
     </>
   )

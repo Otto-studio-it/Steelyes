@@ -390,12 +390,15 @@ How to do it:
 - let the UI read labels and swatches from the catalog
 - keep the renderer consuming the same catalog for frame/infill/stroke tokens
 
-Suggested finish codes:
+Finish codes — **confirmed by the client 2026-07-28** ([CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge)), no longer suggestions:
 
-- `matte_black`
-- `zinc_grey`
-- `bronze`
-- `pearl_white`
+- `black_satin`
+- `black_matt`
+- `black_gloss`
+- `anthracite_ral7016`
+- `other_ral` — customer-entered RAL, priced off-system ("+ extra charge — powder coating, quoted separately")
+
+The earlier placeholder set (`matte_black`, `zinc_grey`, `bronze`, `pearl_white`) is withdrawn. Do not reintroduce it.
 
 Done when:
 

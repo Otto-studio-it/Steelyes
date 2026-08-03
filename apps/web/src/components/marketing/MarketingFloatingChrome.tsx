@@ -7,6 +7,7 @@ import { MobileQuoteCTA } from '@/components/marketing/MobileQuoteCTA'
 import { WhatsAppHelpBanner } from '@/components/marketing/WhatsAppHelpBanner'
 
 const COOKIE_KEY = 'sy_cookie_consent'
+const COOKIEBOT_ENABLED = Boolean(process.env.NEXT_PUBLIC_COOKIEBOT_ID?.trim())
 
 type MarketingFloatingChromeProps = {
   /** Sticky quote bar — off on configurator */
@@ -16,6 +17,7 @@ type MarketingFloatingChromeProps = {
 /**
  * ponytail: one owner for bottom chrome so cookie / WhatsApp / quote never stack three-deep.
  * Priority: cookie (legal) → WhatsApp dialog → sticky quote.
+ * When Cookiebot is configured, the native banner is skipped (Cookiebot owns CMP).
  */
 export function MarketingFloatingChrome({ enableQuoteBar }: MarketingFloatingChromeProps) {
   const [cookieVisible, setCookieVisible] = useState(false)
@@ -23,6 +25,11 @@ export function MarketingFloatingChrome({ enableQuoteBar }: MarketingFloatingChr
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
+    if (COOKIEBOT_ENABLED) {
+      setCookieVisible(false)
+      setReady(true)
+      return
+    }
     try {
       setCookieVisible(!localStorage.getItem(COOKIE_KEY))
     } catch {

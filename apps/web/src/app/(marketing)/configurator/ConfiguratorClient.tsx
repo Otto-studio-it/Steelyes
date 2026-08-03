@@ -3,14 +3,29 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
-import type { PricingCatalog, TenantBundle } from '@steelyes/gate-engine'
+import {
+  GATE_TYPES,
+  createGateConfig,
+  createGatePreset,
+  type GateType,
+  type PricingCatalog,
+  type TenantBundle,
+} from '@steelyes/gate-engine'
 
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
 import { TenantBrandingProvider } from '@/components/platform/TenantBrandingProvider'
 import { ConfiguratorShell } from '@/components/configurator/ConfiguratorShell'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
+import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 import { useConfiguratorStore } from '@/store/configuratorStore'
+
+function parseGateTypeParam(value: string | null): GateType | null {
+  if (!value) {
+    return null
+  }
+  return (GATE_TYPES as readonly string[]).includes(value) ? (value as GateType) : null
+}
 
 type ConfiguratorClientProps = {
   pricingCatalog?: PricingCatalog
@@ -39,18 +54,26 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
     }
 
     const shareToken = searchParams.get('shareToken')?.trim()
-    if (!shareToken || !isValidShareToken(shareToken)) {
+    if (shareToken && isValidShareToken(shareToken)) {
+      void loadGateConfigurationByShareToken(shareToken).then((config) => {
+        if (!config) {
+          return
+        }
+
+        setConfig(config)
+        captureConfiguratorEvent('configuration loaded from share token', { share_token: shareToken })
+      })
       return
     }
 
-    void loadGateConfigurationByShareToken(shareToken).then((config) => {
-      if (!config) {
-        return
-      }
+    // Deep-link from marketing CTAs — only configure/schematic types (never enquire fiction).
+    const gateType = parseGateTypeParam(searchParams.get('gate'))
+    if (!gateType || getGateTypeAvailability(gateType) === 'enquire') {
+      return
+    }
 
-      setConfig(config)
-      captureConfiguratorEvent('configuration loaded from share token', { share_token: shareToken })
-    })
+    setConfig(createGateConfig(createGatePreset(gateType)))
+    captureConfiguratorEvent('configuration loaded from gate query', { gate_type: gateType })
   }, [hydrated, searchParams, setConfig])
 
   if (!hydrated) {

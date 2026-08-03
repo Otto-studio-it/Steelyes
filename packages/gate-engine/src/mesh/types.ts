@@ -22,12 +22,16 @@ export type GateMeshCylinder = {
   role: GateMeshBoxRole
 }
 
+export type GateMeshFidelity = 'workshop' | 'schematic'
+
 export type GateMeshPlan = {
   gateType: GateType
   finish: FinishCode
   material: FinishMaterialTokens
   boxes: GateMeshBox[]
   cylinders: GateMeshCylinder[]
+  /** workshop = swing Victorian with tube pickets; schematic = sliding / coarse layouts */
+  fidelity: GateMeshFidelity
   notes: string[]
 }
 

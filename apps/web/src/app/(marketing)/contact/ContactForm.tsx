@@ -7,6 +7,7 @@ import type { GateConfig, PricingCatalog } from '@steelyes/gate-engine'
 import { submitContactForm, type ContactFormState } from '@/app/actions'
 import { ConfigurationReferenceBanner } from '@/components/configurator/ConfigurationReferenceBanner'
 import { TurnstileWidget } from '@/components/security/TurnstileWidget'
+import { BUSINESS } from '@/lib/marketing/business'
 
 const initialState: ContactFormState = { status: 'idle' }
 
@@ -40,12 +41,24 @@ type ContactFormProps = {
   shareToken?: string
   attachedConfig?: GateConfig | null
   pricingCatalog?: PricingCatalog
+  gateInterest?: { title: string; customerVoice: string } | null
 }
 
-export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog }: ContactFormProps) {
+export function ContactForm({
+  shareToken,
+  attachedConfig = null,
+  pricingCatalog,
+  gateInterest = null,
+}: ContactFormProps) {
   const [state, action] = useFormState(submitContactForm, initialState)
   const [turnstileToken, setTurnstileToken] = useState('')
   const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+
+  const defaultMessage = attachedConfig && shareToken
+    ? `Please quote the attached gate configuration (${shareToken}). Add any site notes, access constraints, or timeline here.`
+    : gateInterest
+      ? `I'm interested in ${gateInterest.title} gates.\n\nTypical brief:\n${gateInterest.customerVoice}\n\nOpening width (approx): \nSite notes: `
+      : undefined
 
   if (state.status === 'success') {
     return (
@@ -60,7 +73,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
           We&apos;ll review your brief and come back to you within 24–48 hours to discuss next steps and arrange a site survey if relevant.
         </p>
         <p className="font-mono text-xs uppercase tracking-widest text-zinc-400">
-          T: +44 7803 002145 · steelyes@yahoo.com
+          T: {BUSINESS.phoneDisplay} · {BUSINESS.email}
         </p>
       </div>
     )
@@ -151,15 +164,21 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
         Project type
         <select
           name="project_type"
-          defaultValue={attachedConfig ? 'Automated Swing Gates' : ''}
+          defaultValue={
+            gateInterest?.title ??
+            (attachedConfig ? 'Double Swing' : '')
+          }
           className={fieldClassName}
         >
           <option value="">Select a type</option>
-          <option>Automated Swing Gates</option>
-          <option>Sliding Gates</option>
-          <option>Pedestrian Entry</option>
+          <option>Double Swing</option>
+          <option>Single Swing</option>
+          <option>Tracked Sliding</option>
           <option>Cantilever Sliding</option>
-          <option>Bifold Gates</option>
+          <option>Bifold Double</option>
+          <option>Single Bifold</option>
+          <option>Telescopic Sliding</option>
+          <option>Radius Sliding</option>
           <option>Steel Railings</option>
           <option>Steel Balcony</option>
           <option>Security Gates / Doors</option>
@@ -174,11 +193,7 @@ export function ContactForm({ shareToken, attachedConfig = null, pricingCatalog 
           required
           rows={5}
           placeholder="Describe your project — opening width, gate style, access requirements, timeline..."
-          defaultValue={
-            attachedConfig && shareToken
-              ? `Please quote the attached gate configuration (${shareToken}). Add any site notes, access constraints, or timeline here.`
-              : undefined
-          }
+          defaultValue={defaultMessage}
           className={`${fieldClassName} min-h-[120px] resize-none placeholder:text-zinc-400`}
         />
       </label>

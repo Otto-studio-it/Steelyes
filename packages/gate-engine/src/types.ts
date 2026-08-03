@@ -23,6 +23,7 @@ export const GATE_OPTION_KEYS = [
   'arched_top',
   'bushes',
   'spirals',
+  'aluminium_panels',
 ] as const
 
 export type GateOptionKey = (typeof GATE_OPTION_KEYS)[number]
@@ -81,6 +82,8 @@ export type GateConfig = GateDimensions & {
   style: GateStyle
   motorised: boolean
   finish: FinishCode
+  /** Hex `#RRGGBB` when finish is `other_ral`; ignored otherwise. */
+  customFinishHex?: string | null
   siteSurveyRequested: boolean
   posts: GatePostsConfig
   options: GateOptionSelection[]
@@ -117,6 +120,7 @@ export const DEFAULT_GATE_OPTIONS: GateOptionSelection[] = [
   { key: 'arched_top', enabled: false, quantity: 0, variant: undefined },
   { key: 'bushes', enabled: false, quantity: 0, variant: undefined },
   { key: 'spirals', enabled: false, quantity: 0, variant: undefined },
+  { key: 'aluminium_panels', enabled: false, quantity: 0, variant: undefined },
 ]
 
 export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
@@ -223,6 +227,7 @@ export function createGateConfig(preset: GatePreset): GateConfig {
     heightMm: preset.dimensions.heightMm,
     motorised: preset.motorised,
     finish: preset.finish,
+    customFinishHex: null,
     siteSurveyRequested: preset.siteSurveyRequested,
     posts: structuredClone(preset.posts ?? DEFAULT_GATE_POSTS),
     options: structuredClone(preset.options),

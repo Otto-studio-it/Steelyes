@@ -1,8 +1,7 @@
-import { Suspense } from 'react'
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
+import { CookiebotScript } from '@/components/consent/Cookiebot';
 
 const barlowCondensed = localFont({
   src: "./fonts/GeistVF.woff",
@@ -76,9 +75,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
-        <Suspense fallback={null}>
-          <PostHogProvider>{children}</PostHogProvider>
-        </Suspense>
+        <CookiebotScript />
+        {children}
       </body>
     </html>
   );

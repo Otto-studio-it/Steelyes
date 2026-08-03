@@ -6,7 +6,8 @@
 export const BUSINESS = {
   legalName: 'Steelyes Ltd',
   tradingName: 'Steelyes',
-  email: 'steelyes@yahoo.com',
+  /** Official public inbox — invoices, site enquiries, quote notifications. */
+  email: 'info@steelyes.co.uk',
   phone: '+447803002145',
   phoneDisplay: '+44 7803 002145',
   website: 'https://www.steelyes.co.uk',
@@ -17,10 +18,25 @@ export const BUSINESS = {
     postalCode: 'EN3 7TW',
     country: 'United Kingdom',
   },
-  /** Pending Marius confirmation — do not invent values. */
-  companyNumber: null as string | null,
-  vatNumber: null as string | null,
+  /**
+   * CA-07 — canonical social profiles (tracking params stripped).
+   * Facebook is still a share/ redirect until Marius supplies a vanity URL.
+   */
+  social: {
+    instagram: 'https://www.instagram.com/steelyes_ltd',
+    facebook: 'https://www.facebook.com/share/179t5dQVcD/',
+    tiktok: 'https://www.tiktok.com/@steelyesltd',
+  },
+  /** Intake PDF 2026-07-26. */
+  companyNumber: '13415956' as string | null,
+  vatNumber: '392 1130 22' as string | null,
 } as const
+
+export const BUSINESS_SAME_AS = [
+  BUSINESS.social.instagram,
+  BUSINESS.social.facebook,
+  BUSINESS.social.tiktok,
+] as const
 
 export const PRICING_DISCLAIMER =
   'Indicative pricing only. Final quotation confirmed after site survey.'
@@ -39,7 +55,7 @@ export const GALLERY_CONSENT_NOTICE =
   'Gallery images show completed Steelyes work. Residential property photos are published only with owner consent. Some images may show workshop or in-progress fabrication.'
 
 export const LEGAL_DRAFT_NOTICE =
-  'Draft legal copy for pre-launch review. Company registration and VAT details will be added before go-live.'
+  'Legal pages are under final review. Company registration and VAT appear in the site footer.'
 
 export function formatBusinessAddress(multiline = true): string {
   const { line1, locality, region, postalCode, country } = BUSINESS.address

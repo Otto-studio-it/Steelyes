@@ -37,6 +37,10 @@ pnpm-debug.log*
 assets-raw/**
 !assets-raw/.gitkeep
 
+# Organised client photo dump (trailing-space folder name on disk) — never commit binaries
+foto/
+foto /
+
 # Heavy design files (never commit)
 *.psd
 *.ai
@@ -51,6 +55,7 @@ assets-raw/**
 
 # Local tooling / analysis output (never commit)
 graphify-out/
+docs/frontend/foto-intake/graphify-out/
 .claude/worktrees/
 
 # Agent skill caches (skills live in user profile; repo copies are optional)

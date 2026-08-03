@@ -36,7 +36,11 @@ export function postsSummaryLabel(config: GateConfig): string {
   return `${POST_MATERIAL_LABELS[config.posts.material]} · ${POST_CAP_LABELS[config.posts.capStyle]} · +${config.posts.extendAboveGateMm} mm`
 }
 
-export function finishLabel(finish: FinishCode): string {
+export function finishLabel(finish: FinishCode, customFinishHex?: string | null): string {
+  if (finish === 'other_ral' && customFinishHex) {
+    const hex = customFinishHex.startsWith('#') ? customFinishHex.toUpperCase() : `#${customFinishHex.toUpperCase()}`
+    return `Custom ${hex}`
+  }
   return getFinishDefinition(finish).label
 }
 

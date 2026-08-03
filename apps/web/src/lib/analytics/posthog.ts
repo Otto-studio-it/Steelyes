@@ -1,55 +1,19 @@
-'use client'
-
-import posthog from 'posthog-js'
-
-let initialized = false
+/**
+ * Analytics stubs — PostHog is intentionally not used in production.
+ * Call sites keep stable event names for a future provider if needed.
+ */
 
 export function initPostHog(): void {
-  if (initialized || typeof window === 'undefined') {
-    return
-  }
-
-  const key = process.env.NEXT_PUBLIC_POSTHOG_KEY
-  const host = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? 'https://eu.i.posthog.com'
-
-  if (!key) {
-    return
-  }
-
-  posthog.init(key, {
-    api_host: host,
-    capture_pageview: false,
-    persistence: 'localStorage+cookie',
-  })
-  initialized = true
+  // no-op
 }
 
 export function captureConfiguratorEvent(
-  event: string,
-  properties?: Record<string, string | number | boolean | null | undefined>,
+  _event: string,
+  _properties?: Record<string, unknown>,
 ): void {
-  if (typeof window === 'undefined' || !process.env.NEXT_PUBLIC_POSTHOG_KEY) {
-    return
-  }
-
-  if (!initialized) {
-    initPostHog()
-  }
-
-  posthog.capture(event, {
-    product: 'configurator',
-    ...properties,
-  })
+  // no-op
 }
 
-export function identifyConfiguratorSession(distinctId: string): void {
-  if (typeof window === 'undefined' || !process.env.NEXT_PUBLIC_POSTHOG_KEY) {
-    return
-  }
-
-  if (!initialized) {
-    initPostHog()
-  }
-
-  posthog.identify(distinctId)
+export function identifyConfiguratorUser(_distinctId: string): void {
+  // no-op
 }

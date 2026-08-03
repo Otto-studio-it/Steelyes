@@ -1,0 +1,133 @@
+{
+  "gateType": "cantilever_sliding",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Import into page 4+ when MCP available — Starter rate limit",
+    "frames": {
+      "base": "CL / base",
+      "arched": "CL / arched",
+      "dog_bars": "CL / dog_bars",
+      "arched_dog_bars": "CL / arched_dog_bars",
+      "composite": "CL / composite"
+    },
+    "notes": "Local SVGs ready. Re-upload via MCP when rate limit resets."
+  },
+  "dimensionPolicy": "UI strip below image only. SVG must never imply that the full drawing width equals the typed opening.",
+  "semantics": {
+    "source": "CA-05 Marius 2026-07-28",
+    "customerWidthMm": "Clear opening between posts ONLY (what the customer types).",
+    "tailMm": "round(clearOpeningMm / 3) — MINIMUM counterbalance.",
+    "totalRunMm": "clearOpeningMm + tailMm — parking-side clear run required.",
+    "workedExample": {
+      "clearOpeningMm": 4000,
+      "tailMm": 1333,
+      "totalRunMm": 5333
+    },
+    "silhouetteSeed": "Exports use 4000×1000 so <desc> carries the worked example; proportions are schematic 1/3, not a live measurement ruler.",
+  "drawingCues": [
+    "Leaf fills 100% of clear opening between brick posts",
+    "Triangular counterbalance AFTER the right/guide post (outside opening) — LOCKED from linea guida + renders",
+    "Continuous bottom box/rack through leaf into tail",
+    "Guide rollers / upper guide cues on parking post",
+    "Carriage + foundation under tail only — dashed clearance under opening (no driveway track)",
+    "No baked dimension arrows on the silhouette"
+  ]
+  },
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer on/off)",
+    "railhead SKUs",
+    "exact picket or dog-bar count",
+    "live widthMm / heightMm (UI strip)",
+    "exact tail mm (always ratio cue on drawing; live number in UI)"
+  ],
+  "doNotMislead": [
+    "Do not draw the triangle inside the clear opening between posts.",
+    "Do not label the full CAD width (leaf+tail) as the customer opening.",
+    "Do not show a solid ground track across the driveway opening.",
+    "Show opening + min tail + total run in the UI strip below — not as rulers on the drawing.",
+    "Composite 3-bay is leaf cladding only — tail stays structural triangle."
+  ],
+  "lookup": {
+    "description": "First matching rule wins. Topology always includes counterbalance tail (~1/3 schematic).",
+    "rules": [
+      {
+        "when": { "style": "composite_boards" },
+        "slug": "composite"
+      },
+      {
+        "when": { "options": ["arched_top", "dog_bars"] },
+        "slug": "arched_dog_bars"
+      },
+      {
+        "when": { "options": ["arched_top"] },
+        "slug": "arched"
+      },
+      {
+        "when": { "options": ["dog_bars"] },
+        "slug": "dog_bars"
+      },
+      {
+        "when": {},
+        "slug": "base"
+      }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": [],
+      "shows": ["leaf pickets", "triangular tail", "opening/tail divider", "bottom box"]
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"],
+      "shows": ["centered arch on leaf", "triangular tail"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"],
+      "shows": ["lower dog rail on leaf", "triangular tail"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"],
+      "shows": ["arch", "dog bars", "triangular tail"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite 3-bay",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": [],
+      "shows": ["3-bay horizontal boards on leaf", "triangular tail"]
+    }
+  ],
+  "uiStripRecommended": [
+    { "id": "clear_opening", "label": "Clear opening", "from": "config.widthMm" },
+    { "id": "min_tail", "label": "Min counterbalance tail (1/3)", "from": "getCantileverTailMm(widthMm)" },
+    { "id": "total_run", "label": "Min parking-side run", "from": "getCantileverTotalRunMm(widthMm)" },
+    { "id": "height", "label": "Height", "from": "config.heightMm" }
+  ],
+  "references": [
+    "references/linea-guida.jpg",
+    "references/support-render-tail-after-posts.png",
+    "references/support-industrial-triangle.png"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-cantilever-sliding-variants.test.ts"
+}

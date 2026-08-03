@@ -6,6 +6,7 @@ import { Maximize2, MoreHorizontal, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { ViewInYourSpaceButton } from '@/components/configurator/ViewInYourSpace'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { CONFIGURATOR_3D_PREVIEW_ENABLED } from '@/lib/configurator/features'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
@@ -47,10 +48,10 @@ type PreviewCanvasProps = {
   showSecondaryModes?: boolean
 }
 
-// Installation trusted default; Technical stays primary; bury Plan/Photo/3D
+// Design (preloaded masters) first; Installation remains for colour / fit schematic.
 const PRIMARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
+  { id: 'technical', label: 'Design' },
   { id: 'installation', label: 'Installation' },
-  { id: 'technical', label: 'Technical' },
 ]
 
 const SECONDARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
@@ -135,14 +136,14 @@ function ModeControls({
 }) {
   return (
     <div className={`flex items-center justify-between gap-2 ${strip ? 'px-3 py-2' : 'px-4 pt-4'}`}>
-      <div className="inline-flex border border-white/15 bg-white/5 p-0.5">
+      <div className="inline-flex border border-steel/15 bg-white p-0.5">
         {PRIMARY_MODES.map((option) => (
           <button
             key={option.id}
             type="button"
             onClick={() => onSelect(option.id)}
-            className={`min-h-[40px] px-3 font-mono text-xs uppercase tracking-widest transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-              mode === option.id ? 'bg-white text-steel' : 'text-white/70 hover:text-white'
+            className={`min-h-[40px] px-3 font-mono text-xs uppercase tracking-widest transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30 ${
+              mode === option.id ? 'bg-steel text-white' : 'text-muted hover:text-steel'
             }`}
             aria-pressed={mode === option.id}
           >
@@ -157,7 +158,7 @@ function ModeControls({
             <button
               type="button"
               onClick={onToggleMenu}
-              className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-white/15 text-white/80 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+              className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-steel/15 text-muted transition hover:text-steel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30"
               aria-expanded={menuOpen}
               aria-haspopup="menu"
               aria-label="More preview views"
@@ -167,7 +168,7 @@ function ModeControls({
             {menuOpen ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full z-20 mt-1 min-w-[140px] border border-white/15 bg-steel py-1 shadow-lg"
+                className="absolute right-0 top-full z-20 mt-1 min-w-[140px] border border-steel/12 bg-white py-1 shadow-sm"
               >
                 {secondaryModes.map((option) => (
                   <button
@@ -178,8 +179,8 @@ function ModeControls({
                       onSelect(option.id)
                       onToggleMenu()
                     }}
-                    className={`block w-full px-4 py-2 text-left font-mono text-xs uppercase tracking-widest transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
-                      mode === option.id ? 'text-white' : 'text-white/70'
+                    className={`block w-full px-4 py-2 text-left font-mono text-xs uppercase tracking-widest transition hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30 ${
+                      mode === option.id ? 'text-steel' : 'text-muted'
                     }`}
                   >
                     {option.label}
@@ -193,7 +194,7 @@ function ModeControls({
           <button
             type="button"
             onClick={onFullscreen}
-            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-white/15 text-white/80 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-steel/15 text-muted transition hover:text-steel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30"
             aria-label="Open fullscreen preview"
           >
             <Maximize2 className="h-4 w-4" aria-hidden />
@@ -214,7 +215,7 @@ export function PreviewCanvas({
   onDimensionOverlayClick,
   showSecondaryModes = true,
 }: PreviewCanvasProps) {
-  const [mode, setMode] = useState<ConfiguratorPreviewMode>('installation')
+  const [mode, setMode] = useState<ConfiguratorPreviewMode>('technical')
   const [menuOpen, setMenuOpen] = useState(false)
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
   const [load3dChunk, setLoad3dChunk] = useState(false)
@@ -248,7 +249,7 @@ export function PreviewCanvas({
   const minHeight = strip ? 'min-h-[28vh]' : 'min-h-[clamp(280px,44vh,520px)]'
 
   const canvas = (
-    <div className={`overflow-hidden border border-white/10 bg-steel ${minHeight}`} data-testid="configurator-preview-pinned">
+    <div className={`overflow-hidden border border-steel/10 bg-[#F3F2EF] ${minHeight}`} data-testid="configurator-preview-pinned">
       <div ref={menuRef}>
         <ModeControls
           mode={mode}
@@ -270,11 +271,11 @@ export function PreviewCanvas({
           loadPhotoChunk={loadPhotoChunk}
         />
         {mode === '3d' || mode === 'photo' || mode === 'plan' ? (
-          <div className="pointer-events-none absolute left-3 top-3 border border-white/15 bg-steel/85 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/75">
+          <div className="pointer-events-none absolute left-3 top-3 border border-steel/15 bg-white/90 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
             Schematic preview
           </div>
         ) : null}
-        {showDimensionOverlay ? (
+        {showDimensionOverlay && mode !== 'technical' ? (
           <button
             type="button"
             onClick={onDimensionOverlayClick}
@@ -283,6 +284,11 @@ export function PreviewCanvas({
           >
             {config.widthMm} × {config.heightMm} mm
           </button>
+        ) : null}
+        {CONFIGURATOR_3D_PREVIEW_ENABLED ? (
+          <div className="absolute bottom-3 right-3 z-10">
+            <ViewInYourSpaceButton config={config} className="shadow-sm" />
+          </div>
         ) : null}
       </div>
     </div>

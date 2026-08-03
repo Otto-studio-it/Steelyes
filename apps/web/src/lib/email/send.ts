@@ -8,8 +8,9 @@ import { env } from '@/lib/env'
  * env-driven so the verified Resend domain can be swapped in without code
  * changes once DNS (SPF/DKIM/DMARC) is confirmed.
  */
-const EMAIL_FROM = process.env.RESEND_FROM ?? 'Steelyes Configurator <onboarding@resend.dev>'
-const WORKSHOP_EMAIL = process.env.WORKSHOP_EMAIL ?? 'steelyes755@gmail.com'
+const EMAIL_FROM = process.env.RESEND_FROM ?? 'Steelyes <info@steelyes.co.uk>'
+/** Destination for all site leads / quote notifications (override with WORKSHOP_EMAIL). */
+const WORKSHOP_EMAIL = process.env.WORKSHOP_EMAIL ?? BUSINESS.email
 
 const BODY_STYLE = 'font-family:sans-serif;font-size:14px;line-height:1.6'
 const FOOTNOTE_STYLE = 'color:#666;font-size:12px;margin-top:24px;font-family:sans-serif'

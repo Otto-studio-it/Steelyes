@@ -29,7 +29,8 @@ function getLeafCount(gateType: GateConfig['gateType']): number {
 }
 
 function isSwingGate(gateType: GateConfig['gateType']): boolean {
-  return gateType.includes('swing')
+  // single_bifolding does not contain "swing" but shares the Victorian leaf recipe.
+  return gateType.includes('swing') || gateType === 'single_bifolding'
 }
 
 export function buildSwingRailLayout(zones: VerticalZoneRatios): SwingRailLayout {

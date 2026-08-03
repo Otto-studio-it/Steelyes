@@ -3,6 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 
+import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import type { GateType } from '@steelyes/gate-engine'
 
@@ -11,6 +12,7 @@ type GateTypeExplorationDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
   onConfirm: () => void
+  enquireHref?: string
 }
 
 export function GateTypeExplorationDialog({
@@ -18,10 +20,14 @@ export function GateTypeExplorationDialog({
   open,
   onOpenChange,
   onConfirm,
+  enquireHref,
 }: GateTypeExplorationDialogProps) {
   if (!gateType) {
     return null
   }
+
+  const availability = getGateTypeAvailability(gateType)
+  const isEnquire = availability === 'enquire'
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -31,12 +37,22 @@ export function GateTypeExplorationDialog({
           <div className="flex items-start justify-between gap-4">
             <div>
               <Dialog.Title className="font-heading text-lg font-black uppercase tracking-tight text-steel">
-                Exploration mode
+                {isEnquire ? 'Enquire to specify' : 'Exploration mode'}
               </Dialog.Title>
               <Dialog.Description className="mt-2 text-sm leading-6 text-muted-deep">
-                <strong className="font-semibold text-steel">{gateTypeLabel(gateType)}</strong> is outside the
-                primary Double Swing path. You can explore it with a schematic preview — visual fidelity and
-                pricing may be incomplete until survey.
+                {isEnquire ? (
+                  <>
+                    <strong className="font-semibold text-steel">{gateTypeLabel(gateType)}</strong> is not
+                    available in the online configurator yet. Send an enquiry and we will specify it with you
+                    after survey — we will not invent dimensions or prices here.
+                  </>
+                ) : (
+                  <>
+                    <strong className="font-semibold text-steel">{gateTypeLabel(gateType)}</strong> is outside
+                    the primary Double Swing path. You can explore it with a schematic preview — visual fidelity
+                    and pricing may be incomplete until survey.
+                  </>
+                )}
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
@@ -50,9 +66,11 @@ export function GateTypeExplorationDialog({
             </Dialog.Close>
           </div>
 
-          <p className="mt-4 border-l-4 border-primary/40 bg-paper px-4 py-3 text-sm leading-6 text-muted-deep">
-            Your current choices will be reset to the default preset for this gate type.
-          </p>
+          {isEnquire ? null : (
+            <p className="mt-4 border-l-4 border-primary/40 bg-paper px-4 py-3 text-sm leading-6 text-muted-deep">
+              Your current choices will be reset to the default preset for this gate type.
+            </p>
+          )}
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
             <Dialog.Close asChild>
@@ -63,16 +81,25 @@ export function GateTypeExplorationDialog({
                 Cancel
               </button>
             </Dialog.Close>
-            <button
-              type="button"
-              onClick={() => {
-                onConfirm()
-                onOpenChange(false)
-              }}
-              className="inline-flex min-h-[48px] items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              Continue in exploration
-            </button>
+            {isEnquire ? (
+              <a
+                href={enquireHref}
+                className="inline-flex min-h-[48px] items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                Email enquiry
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  onConfirm()
+                  onOpenChange(false)
+                }}
+                className="inline-flex min-h-[48px] items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                Continue in exploration
+              </button>
+            )}
           </div>
         </Dialog.Content>
       </Dialog.Portal>
