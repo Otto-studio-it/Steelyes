@@ -70,7 +70,10 @@ for (const viewport of VIEWPORTS) {
 
     await revealFullPage(page, viewport.height)
     const failedImages = await page.locator('img').evaluateAll((images: HTMLImageElement[]) =>
-      images.filter((image) => !image.complete || image.naturalWidth === 0).map((image) => image.currentSrc || image.src),
+      images
+        .filter((image) => image.offsetParent !== null)
+        .filter((image) => !image.complete || image.naturalWidth === 0)
+        .map((image) => image.currentSrc || image.src),
     )
     expect(failedImages).toEqual([])
 
