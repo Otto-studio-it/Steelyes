@@ -92,7 +92,7 @@ export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Prom
     input.hasConfiguration
       ? tableRow(
           'Configuration',
-          `${input.shareUrl}${input.configurationSummary ? `<br>${input.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}`,
+          `${input.shareUrl}${input.configurationSummary ? `<br>${input.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}`,
           false,
         )
       : '',
@@ -157,7 +157,7 @@ export async function sendCustomerConfirmationEmail(
       ${input.pricingSummary ? `<p style="${BODY_STYLE}"><strong>Indicative estimate:</strong> ${input.pricingSummary}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved configuration</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       ${input.message ? `<p style="${BODY_STYLE}">Your message:<br>${input.message.replace(/\n/g, '<br>')}</p>` : ''}
       `,
@@ -168,7 +168,7 @@ export async function sendCustomerConfirmationEmail(
       input.configurationSummary ? `Configuration: ${input.configurationSummary}` : '',
       input.pricingSummary ? `Indicative estimate: ${input.pricingSummary}` : '',
       `View your saved configuration: ${input.shareUrl}`,
-      input.pdfUrl ? `Download indicative PDF: ${input.pdfUrl}` : '',
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
       input.message ? `Your message:\n${input.message}` : '',
       `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
     ]
@@ -198,7 +198,7 @@ export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<
       </p>
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your configuration</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       <p style="${BODY_STYLE}">
         Questions or ready to go ahead? Call us on <a href="tel:${BUSINESS.phone}">${BUSINESS.phoneDisplay}</a>
@@ -210,7 +210,7 @@ export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<
       `Good news, ${input.firstName}`,
       'We have reviewed your gate configuration and your quote is on its way. If it has not arrived alongside this message, it will follow shortly from our workshop.',
       `View your configuration: ${input.shareUrl}`,
-      input.pdfUrl ? `Download indicative PDF: ${input.pdfUrl}` : '',
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
       `Questions or ready to go ahead? Call us on ${BUSINESS.phoneDisplay} or simply reply to this email.`,
       `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
     ]
@@ -241,7 +241,7 @@ export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<
       ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${input.configurationSummary}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved design</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       `,
     ),
@@ -250,7 +250,7 @@ export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<
       'Here is your saved gate design. Open the link below any time to review it, keep editing, or request a quote when you are ready.',
       input.configurationSummary ? `Configuration: ${input.configurationSummary}` : '',
       `View your saved design: ${input.shareUrl}`,
-      input.pdfUrl ? `Download indicative PDF: ${input.pdfUrl}` : '',
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
       `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
     ]
       .filter(Boolean)
