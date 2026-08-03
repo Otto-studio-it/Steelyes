@@ -10,9 +10,10 @@ import { FinishPicker } from '@/components/configurator/FinishPicker'
 import { GateTypeCardGrid } from '@/components/configurator/GateTypeCardGrid'
 import { StyleComparisonPicker } from '@/components/configurator/StyleComparisonPicker'
 import { useSheetSwipeDismiss } from '@/hooks/useSheetSwipeDismiss'
+import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
 import { gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
 import { GATE_TYPE_IMAGES } from '@/lib/configurator/presentation'
-import { isPrimarySlice, useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
+import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 /** Quick Path screen 1 — gate look: type hero (progressive disclosure), style, finish, motor. */
 export function QuickGateScreen() {
@@ -20,7 +21,7 @@ export function QuickGateScreen() {
   const patchConfig = useConfiguratorStore((state) => state.patchConfig)
   const [typeSheetOpen, setTypeSheetOpen] = useState(false)
   const typeSheetSwipe = useSheetSwipeDismiss(() => setTypeSheetOpen(false))
-  const primary = isPrimarySlice(config)
+  const fullyConfigurable = getGateTypeAvailability(config.gateType) === 'configure'
   const heroImage = GATE_TYPE_IMAGES[config.gateType]
 
   return (
@@ -49,7 +50,7 @@ export function QuickGateScreen() {
         </div>
       </div>
 
-      {!primary ? (
+      {!fullyConfigurable ? (
         <p className="border-l-4 border-primary bg-primary/5 px-4 py-3 text-sm leading-6 text-muted-deep">
           You&rsquo;re in exploration mode for this gate type. Visual detail and pricing may differ from the
           primary Double Swing reference.
