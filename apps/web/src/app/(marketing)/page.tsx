@@ -114,7 +114,7 @@ export default function HomePage() {
                     alt={alt}
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                    className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.06]"
                   />
                 </div>
               </Reveal>
@@ -289,18 +289,18 @@ export default function HomePage() {
             </p>
             <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 sm:grid-cols-2">
               <Link
-                href="/configurator"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Configure your gate
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-              </Link>
-              <Link
                 href="/contact"
                 className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request a quote
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+              </Link>
+              <Link
+                href="/configurator"
+                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Configure a gate
+                <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
               </Link>
             </div>
           </Reveal>

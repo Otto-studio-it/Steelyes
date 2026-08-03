@@ -49,18 +49,18 @@ export function HomeWeldingHero() {
         </p>
         <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:grid-cols-2">
           <Link
-            href="/configurator"
-            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            Configure your gate
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-          </Link>
-          <Link
             href="/contact"
             className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Request a quote
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          </Link>
+          <Link
+            href="/configurator"
+            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Configure a gate
+            <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
           </Link>
         </div>
         <Link

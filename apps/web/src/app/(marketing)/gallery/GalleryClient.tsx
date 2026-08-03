@@ -191,7 +191,7 @@ export function GalleryClient() {
                   alt={item.label}
                   fill
                   sizes={item.span === 'wide' ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-black/0 p-4 text-white">

@@ -28,10 +28,8 @@ const SERVICE_LINKS = [
 ] as const
 
 const START_LINKS = [
-  { label: 'Configure a gate', href: '/configurator', tone: 'steel' },
   { label: 'Request a quote', href: '/contact', tone: 'primary' },
-  { label: 'Installation', href: '/installation', tone: 'link' },
-  { label: 'About', href: '/about', tone: 'link' },
+  { label: 'Configure a gate', href: '/configurator', tone: 'link' },
 ] as const
 
 const LEGAL_LINKS = [
@@ -113,9 +111,7 @@ export function SiteFooter() {
                   href={link.href}
                   className={link.tone === 'primary'
                     ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-                    : link.tone === 'steel'
-                      ? 'inline-flex min-h-[44px] w-full items-center justify-center border border-zinc-600 bg-zinc-800 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-                      : 'inline-flex min-h-[44px] items-center transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
+                    : 'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
                 >
                   {link.label}
                 </Link>
