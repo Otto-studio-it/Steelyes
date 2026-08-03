@@ -3,9 +3,11 @@
  */
 
 export async function captureServerEvent(
-  _distinctId: string,
-  _event: string,
-  _properties?: Record<string, unknown>,
+  distinctId: string,
+  event: string,
+  properties?: Record<string, unknown>,
 ): Promise<void> {
-  // no-op
+  void distinctId
+  void event
+  void properties
 }
