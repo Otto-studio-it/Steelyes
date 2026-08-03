@@ -8,12 +8,13 @@ export function initPostHog(): void {
 }
 
 export function captureConfiguratorEvent(
-  _event: string,
-  _properties?: Record<string, unknown>,
+  event: string,
+  properties?: Record<string, unknown>,
 ): void {
-  // no-op
+  void event
+  void properties
 }
 
-export function identifyConfiguratorUser(_distinctId: string): void {
-  // no-op
+export function identifyConfiguratorUser(distinctId: string): void {
+  void distinctId
 }
