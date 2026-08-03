@@ -1,0 +1,507 @@
+{
+  "generated": "2026-07-30",
+  "root": "/Volumes/SSDRubb/Steelyes/foto ",
+  "note": "Folder name has trailing space: \"foto \". Screenshots are NOT for website. Client measures beat vendor/internet measures. 2D style = CAD elevation with red dims.",
+  "totals": {
+    "files": 571,
+    "photos": 516,
+    "screenshots": 28,
+    "models": 14
+  },
+  "folders": [
+    {
+      "folder": "bifolding double swing gates ",
+      "engine_gate_type": "bifolding_double_swing",
+      "counts": {
+        "total": 18,
+        "photos_candidate_web_or_ref": 7,
+        "screenshots_configurator_only": 4,
+        "models_3d": 4,
+        "docs": 2
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.15.15.png",
+        "Screenshot 2026-07-30 alle 20.15.21.png",
+        "Screenshot 2026-07-30 alle 20.15.27.png",
+        "Screenshot 2026-07-30 alle 20.15.37.png"
+      ],
+      "models": [
+        {
+          "path": "Wiki bi-foldig gate, single leaf/Wiki25_SGL_Left_Mesh.rfa",
+          "bytes": 2822144,
+          "ext": ".rfa"
+        },
+        {
+          "path": "Wiki bi-foldig gate, single leaf/Wiki25_SGL_Left_sq30d.rfa",
+          "bytes": 2220032,
+          "ext": ".rfa"
+        },
+        {
+          "path": "sGate Trackless Double leaf 7000-8000 mm/Specialty Equipment-Heras-Entrance_Control-Bi-fold_Gates-sGate_Trackless-SG70_SG75_SG80 (Double leaf).ifc",
+          "bytes": 295859,
+          "ext": ".ifc"
+        },
+        {
+          "path": "sGate Trackless Double leaf 7000-8000 mm/Specialty Equipment-Heras-Entrance_Control-Bi-fold_Gates-sGate_Trackless-SG70_SG75_SG80 (Double leaf).rfa",
+          "bytes": 2007040,
+          "ext": ".rfa"
+        }
+      ],
+      "docs": [
+        "8db8be89-5785-48f0-bc9d-7f6b.textClipping",
+        "dati aggiuntivi "
+      ],
+      "photo_sample": [
+        "1000048855.JPG",
+        "41517b54-e5c6-4c8f-9489-946bedc4ed24.JPG",
+        "5fc33d83-f9a9-4a41-bc8a-9cb2091ea98e.JPG",
+        "66ff872f-4454-48f1-b7f4-35788d719d2e.JPG",
+        "80c82b0d-cf8e-4f62-84d0-51339c9550a8.JPG",
+        "8db8be89-5785-48f0-bc9d-7f6b9ce2d7fd.JPG",
+        "bifolding double swing gates.jpeg"
+      ],
+      "photo_count": 7
+    },
+    {
+      "folder": "double swing gates",
+      "engine_gate_type": "double_swing",
+      "counts": {
+        "total": 57,
+        "photos_candidate_web_or_ref": 48,
+        "screenshots_configurator_only": 3,
+        "models_3d": 3,
+        "docs": 3
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.14.18.png",
+        "Screenshot 2026-07-30 alle 20.14.28.png",
+        "Screenshot 2026-07-30 alle 20.14.44.png"
+      ],
+      "models": [
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.ifc",
+          "bytes": 136179,
+          "ext": ".ifc"
+        },
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.rfa",
+          "bytes": 1249280,
+          "ext": ".rfa"
+        },
+        {
+          "path": "sketchupbox_com_model_ID101664/Dual Swing Driveway Gate.skp",
+          "bytes": 13146281,
+          "ext": ".skp"
+        }
+      ],
+      "docs": [
+        "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.txt",
+        "sketchupbox_com_model_ID101664/Free Sketchup Models.url",
+        "sketchupbox_com_model_ID101664/readme.txt"
+      ],
+      "photo_sample": [
+        "0a178c0b-b3a7-4df7-a906-2f499271d764.JPG",
+        "0cabd8a7-a47a-40d2-bf92-95503b966ddf.JPG",
+        "0e3f8f88-7976-40cb-a8ec-2470d3b8198a.JPG",
+        "1000048810.JPG",
+        "1000048813.JPG",
+        "1000048840.JPG",
+        "1000048849.JPG",
+        "1000048850.JPG",
+        "1000048853.JPG",
+        "1000048860.JPG",
+        "1000048865.JPG",
+        "1000048878.JPG"
+      ],
+      "photo_count": 48
+    },
+    {
+      "folder": "radius slidings gates",
+      "engine_gate_type": "radius_sliding",
+      "counts": {
+        "total": 6,
+        "photos_candidate_web_or_ref": 2,
+        "screenshots_configurator_only": 3,
+        "models_3d": 0,
+        "docs": 1
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.13.30.png",
+        "Screenshot 2026-07-30 alle 20.13.36.png",
+        "Screenshot 2026-07-30 alle 20.13.46.png"
+      ],
+      "models": [],
+      "docs": [
+        "dati utili"
+      ],
+      "photo_sample": [
+        "2de5ec7c-8d5c-4d99-9251-cf33e35c8d14.JPG",
+        "radius slidings gates.webp"
+      ],
+      "photo_count": 2
+    },
+    {
+      "folder": "railhead",
+      "engine_gate_type": "railheads",
+      "counts": {
+        "total": 259,
+        "photos_candidate_web_or_ref": 258,
+        "screenshots_configurator_only": 0,
+        "models_3d": 0,
+        "docs": 1
+      },
+      "screenshots": [],
+      "models": [],
+      "docs": [
+        "ordine degli railhead con tutti i loro dati annessi e prezzi.numbers"
+      ],
+      "photo_sample": [
+        " RH7NP.JPG",
+        " Rh6W:B.JPG",
+        "01d7f53c-e4d2-4a43-aa15-cd82775c14a1.JPG",
+        "03031001-85cc-4354-8b18-e8ec57476449.JPG",
+        "07074749-8fba-4d05-8f55-9312ceb9a95c.JPG",
+        "0750966e-a135-45e3-a024-c23c626322c8.JPG",
+        "0c0ab047-5bfc-4444-a21d-e58ea033e76d.JPG",
+        "0d2289dc-6fce-4bfa-a544-46f57da1d760.JPG",
+        "1000043807.JPG",
+        "1000043810.JPG",
+        "1000043813.JPG",
+        "1000043816.JPG"
+      ],
+      "photo_count": 258
+    },
+    {
+      "folder": "random",
+      "engine_gate_type": "unsorted",
+      "counts": {
+        "total": 98,
+        "photos_candidate_web_or_ref": 98,
+        "screenshots_configurator_only": 0,
+        "models_3d": 0,
+        "docs": 0
+      },
+      "screenshots": [],
+      "models": [],
+      "docs": [],
+      "photo_sample": [
+        "1000048835.JPG",
+        "1000048889.JPG",
+        "1000048892.JPG",
+        "1000051897.JPG",
+        "1000051902.JPG",
+        "1000051905.JPG",
+        "1000051908.JPG",
+        "1000051911.JPG",
+        "1000051912.JPG",
+        "1000051913.JPG",
+        "1000051914.JPG",
+        "1000051915.JPG"
+      ],
+      "photo_count": 98
+    },
+    {
+      "folder": "recinzioni giardino",
+      "engine_gate_type": "fencing_panels",
+      "counts": {
+        "total": 27,
+        "photos_candidate_web_or_ref": 27,
+        "screenshots_configurator_only": 0,
+        "models_3d": 0,
+        "docs": 0
+      },
+      "screenshots": [],
+      "models": [],
+      "docs": [],
+      "photo_sample": [
+        "09a284dc-0b18-4327-8802-dd13a9df2998.JPG",
+        "0c8f9988-ab93-4a6d-9b58-18d1bad9e118.JPG",
+        "0f87ab7b-66fd-40b4-b360-87dee7fc9a8d.JPG",
+        "1000048834.JPG",
+        "1000048839.JPG",
+        "1000048843.JPG",
+        "1000048845.JPG",
+        "1000048846.JPG",
+        "1000048851.JPG",
+        "1000048859.JPG",
+        "1000048861.JPG",
+        "1000048873.JPG"
+      ],
+      "photo_count": 27
+    },
+    {
+      "folder": "single bifloding gates",
+      "engine_gate_type": "single_bifolding",
+      "counts": {
+        "total": 4,
+        "photos_candidate_web_or_ref": 2,
+        "screenshots_configurator_only": 2,
+        "models_3d": 0,
+        "docs": 0
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.12.13.png",
+        "Screenshot 2026-07-30 alle 20.12.17.png"
+      ],
+      "models": [],
+      "docs": [],
+      "photo_sample": [
+        "6daccf5a-f399-42dc-8e67-25697ae4548d.JPG",
+        "single bifloding gates.jpeg"
+      ],
+      "photo_count": 2
+    },
+    {
+      "folder": "single swing steel gate",
+      "engine_gate_type": "single_swing",
+      "counts": {
+        "total": 23,
+        "photos_candidate_web_or_ref": 18,
+        "screenshots_configurator_only": 3,
+        "models_3d": 2,
+        "docs": 0
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.11.21.png",
+        "Screenshot 2026-07-30 alle 20.11.27.png",
+        "Screenshot 2026-07-30 alle 20.11.35.png"
+      ],
+      "models": [
+        {
+          "path": "BETAFENCE Securifor Single Leaf Gates/NBS_BetafenceLimited_CrbStlGts_SecuriforSingleLeaf.ifc",
+          "bytes": 24210,
+          "ext": ".ifc"
+        },
+        {
+          "path": "BETAFENCE Securifor Single Leaf Gates/NBS_BetafenceLimited_CrbStlGts_SecuriforSingleLeaf.rfa",
+          "bytes": 520192,
+          "ext": ".rfa"
+        }
+      ],
+      "docs": [],
+      "photo_sample": [
+        "1000048884.JPG",
+        "1000048895.JPG",
+        "2405bc5a-a622-40c1-9824-7b7c433fdaa0.JPG",
+        "2c47e8a2-fb49-4bbb-bd3e-ebc6c90ac5db.JPG",
+        "523bcbe1-17da-4aaa-b78f-633014f52702.JPG",
+        "53b4ff35-9fe9-47d0-9fcf-6c47d51ad313.JPG",
+        "622c0b84-291e-49db-89bd-794c4e9304f5.JPG",
+        "6e77087d-bb01-429b-8779-47808766abfb.JPG",
+        "71f4bd53-97db-4105-a33d-d9b872b33040.JPG",
+        "8609d7fe-e5a9-4cc8-9321-74476e6f0236.JPG",
+        "8616408b-2eb6-4527-967a-b761a316083a.JPG",
+        "866169a7-2586-48fc-9d70-aa0e9c42fe98.JPG"
+      ],
+      "photo_count": 18
+    },
+    {
+      "folder": "steel cantilever sliding gate",
+      "engine_gate_type": "cantilever_sliding",
+      "counts": {
+        "total": 24,
+        "photos_candidate_web_or_ref": 14,
+        "screenshots_configurator_only": 5,
+        "models_3d": 3,
+        "docs": 2
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.07.49.png",
+        "Screenshot 2026-07-30 alle 20.08.16.png",
+        "Screenshot 2026-07-30 alle 20.08.26.png",
+        "Screenshot 2026-07-30 alle 20.08.32.png",
+        "Screenshot 2026-07-30 alle 20.10.31.png"
+      ],
+      "models": [
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.ifc",
+          "bytes": 136179,
+          "ext": ".ifc"
+        },
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.rfa",
+          "bytes": 1249280,
+          "ext": ".rfa"
+        },
+        {
+          "path": "sliding_gate.igs",
+          "bytes": 5885878,
+          "ext": ".igs"
+        }
+      ],
+      "docs": [
+        "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.txt",
+        "dati utili "
+      ],
+      "photo_sample": [
+        "07d0df8d-19e4-4c88-9d92-72dd12c60a0b.JPG",
+        "1000048848.JPG",
+        "1000048862.JPG",
+        "1000048863.JPG",
+        "1000048870.JPG",
+        "1000048880.JPG",
+        "1000048883.JPG",
+        "1000048885.JPG",
+        "2ca143f5-eeea-45c8-a447-c9833495f2e2.JPG",
+        "42bfd74e-3523-4a94-95bc-a5cfdc44ecee.JPG",
+        "514672c7-1fa4-4241-a59a-0e73316c1083.JPG",
+        "ba38443b-89f2-48c8-8f42-84b4528dad8f.JPG"
+      ],
+      "photo_count": 14
+    },
+    {
+      "folder": "telescopic slidings gates",
+      "engine_gate_type": "telescopic_sliding",
+      "counts": {
+        "total": 7,
+        "photos_candidate_web_or_ref": 1,
+        "screenshots_configurator_only": 5,
+        "models_3d": 0,
+        "docs": 1
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.05.49.png",
+        "Screenshot 2026-07-30 alle 20.05.54.png",
+        "Screenshot 2026-07-30 alle 20.05.58.png",
+        "Screenshot 2026-07-30 alle 20.06.56.png",
+        "Screenshot 2026-07-30 alle 20.07.03.png"
+      ],
+      "models": [],
+      "docs": [
+        "dati utili "
+      ],
+      "photo_sample": [
+        "telescopic slidings gates.jpeg"
+      ],
+      "photo_count": 1
+    },
+    {
+      "folder": "traked sliding steel gate",
+      "engine_gate_type": "tracked_sliding",
+      "counts": {
+        "total": 48,
+        "photos_candidate_web_or_ref": 41,
+        "screenshots_configurator_only": 3,
+        "models_3d": 2,
+        "docs": 2
+      },
+      "screenshots": [
+        "Screenshot 2026-07-30 alle 20.00.12.png",
+        "Screenshot 2026-07-30 alle 20.00.34.png",
+        "Screenshot 2026-07-30 alle 20.00.42.png"
+      ],
+      "models": [
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.ifc",
+          "bytes": 136179,
+          "ext": ".ifc"
+        },
+        {
+          "path": "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.rfa",
+          "bytes": 1249280,
+          "ext": ".rfa"
+        }
+      ],
+      "docs": [
+        "63e0cf6e-d555-4b51-b151-058a.textClipping",
+        "BETAFENCE Egidia SC Sliding gate/NBS_Betafence_CrbStlGts_EgidiaSC.txt"
+      ],
+      "photo_sample": [
+        "076b3d8d-9eaa-4ead-b378-94d9e3a1a074.JPG",
+        "090d8520-8ebf-43b7-b3c9-80ef4123e9bd.JPG",
+        "1000048837.JPG",
+        "1000048842.JPG",
+        "1000048844.JPG",
+        "1000048847.JPG",
+        "1000048854.JPG",
+        "1000048856.JPG",
+        "1000048857.JPG",
+        "1000048858.JPG",
+        "1000048864.JPG",
+        "1000048866.JPG"
+      ],
+      "photo_count": 41
+    }
+  ],
+  "railhead_codes_from_filenames": [
+    "Rh1",
+    "RH10",
+    "RH100",
+    "RH102A",
+    "Rh108",
+    "Rh109",
+    "RH110",
+    "Rh111",
+    "RH112",
+    "RH113",
+    "Rh114",
+    "RH122",
+    "RH124",
+    "RH125",
+    "RH126",
+    "RH128",
+    "RH13",
+    "RH130",
+    "RH14",
+    "Rh149",
+    "Rh151",
+    "RH157",
+    "RH159",
+    "RH15W",
+    "RH16",
+    "RH160",
+    "RH17",
+    "Rh18",
+    "Rh19",
+    "Rh2",
+    "RH27",
+    "RH32",
+    "Rh36",
+    "RH37",
+    "RH38",
+    "RH39",
+    "RH3S",
+    "RH41",
+    "Rh42",
+    "RH43",
+    "RH45",
+    "RH47",
+    "RH51",
+    "Rh52",
+    "Rh55",
+    "RH56",
+    "RH59",
+    "RH6",
+    "Rh62",
+    "RH64",
+    "Rh6a",
+    "RH7",
+    "RH70",
+    "RH71",
+    "Rh73",
+    "RH75",
+    "RH79",
+    "RH81",
+    "Rh9"
+  ],
+  "cad_style_reference": {
+    "path": "docs/frontend/foto-intake/2d-style-reference-double-swing-cad.png",
+    "style": "orthographic front elevation, black linework, red dimension annotations, brick-pattern pillars, ground bar",
+    "example_dims_NOT_CLIENT": {
+      "gate_height_mm": 1400,
+      "ground_clearance_mm": 30,
+      "overall_height_mm": 1480,
+      "gate_width_mm": 3151,
+      "opening_between_pillars_mm": {
+        "min": 3171,
+        "max": 3211
+      },
+      "center_gap_mm": 10,
+      "side_gap_mm": {
+        "min": 10,
+        "max": 30
+      }
+    },
+    "rule": "Use STYLE only. Use Steelyes client dimensions for real numbers."
+  }
+}

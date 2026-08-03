@@ -168,6 +168,7 @@ Be specific and concrete.>
 | # | Title | Status | Date Accepted | Supersedes | Notes |
 |---|-------|--------|---------------|------------|-------|
 | [001](./001-supabase-eu-region.md) | Supabase EU Region | Accepted | 2026-04-22 | — | GDPR compliance, data residency requirement |
+| [002](./002-configurator-2d-first-on-demand-3d-ar.md) | Configurator 2D-first with on-demand 3D/AR | Accepted | 2026-05-19 | — | Faster MVP, shared model, AR only when requested |
 
 ---
 

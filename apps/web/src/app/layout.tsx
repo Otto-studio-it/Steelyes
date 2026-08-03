@@ -1,23 +1,28 @@
+import { Suspense } from 'react'
 import type { Metadata } from "next";
-import { Barlow_Condensed, Barlow, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 
-const barlowCondensed = Barlow_Condensed({
-  weight: ["700"],
-  subsets: ["latin"],
+const barlowCondensed = localFont({
+  src: "./fonts/GeistVF.woff",
   variable: "--font-barlow-condensed",
+  display: "swap",
+  weight: "700",
 });
 
-const barlow = Barlow({
-  weight: ["300", "400", "600"],
-  subsets: ["latin"],
+const barlow = localFont({
+  src: "./fonts/GeistVF.woff",
   variable: "--font-barlow",
+  display: "swap",
+  weight: "300 700",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ["400"],
-  subsets: ["latin"],
+const ibmPlexMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
   variable: "--font-ibm-plex-mono",
+  display: "swap",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -71,6 +76,9 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
+        <Suspense fallback={null}>
+          <PostHogProvider />
+        </Suspense>
         {children}
       </body>
     </html>

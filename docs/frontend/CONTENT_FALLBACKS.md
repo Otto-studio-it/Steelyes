@@ -3,7 +3,7 @@ title: Content Fallbacks
 description: Approved fallback rules while client assets and business data are pending
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-06
+last_updated: 2026-07-28
 ---
 
 # Steelyes — Content Fallbacks
@@ -63,24 +63,31 @@ Reference:
 
 ## Finish palette
 
-Missing:
+**No longer a fallback — the real palette arrived on 2026-07-28** ([CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge)).
 
-- final palette;
-- finish multipliers;
-- finish compatibility.
+Confirmed and live in `packages/gate-engine/src/finishes.ts`:
 
-Fallback:
+- black satin;
+- black matt;
+- black gloss;
+- anthracite RAL 7016;
+- custom RAL (customer-entered).
 
-- Use a small generic palette only where needed for UI continuity:
-  - matte black;
-  - zinc grey;
-  - bronze;
-  - pearl white.
-- Treat finish pricing as non-final.
+Still missing:
+
+- what the £55/m² + VAT rate applies to (base included or not, which area, Victorian vs composite);
+- finish compatibility per style.
+
+Fallback for the rate only:
+
+- Treat finish pricing as non-final; keep `provisional: true` in the catalog.
+- Do not put a colour line item on a quote until the rate base is confirmed.
+- Custom RAL shows **"+ extra charge — powder coating, quoted separately"**, never a figure. Marius sets the final price by email — this is his explicit instruction, not our caution.
 
 Do not:
 
-- imply these are the complete or official Steelyes finishes unless Marius confirms.
+- reintroduce **zinc grey**, **bronze** or **pearl white**. The client withdrew them on 2026-07-28. If you find them in code, copy, tests or seed data, remove them.
+- publish the internal £250–300 indication for custom colours on any customer-facing surface.
 
 ---
 
@@ -140,17 +147,23 @@ Do not:
 
 ## Company/legal details
 
+Confirmed 2026-07-28 ([CA-06](../client-answers/2026-07-28-marius.md#ca-06--official-sales-email), [CA-07](../client-answers/2026-07-28-marius.md#ca-07--social-profiles)):
+
+- public email `sales@steelyes.co.uk`;
+- Instagram, Facebook and TikTok profile URLs.
+
 Missing:
 
 - company number;
 - VAT;
 - final address;
-- final business phone/email if not confirmed.
+- final business phone.
 
 Fallback:
 
 - Keep legal details as a pre-launch blocker.
 - Use temporary contact details only if already agreed.
+- Never fall back to `steelyes@yahoo.com` — it is superseded.
 
 Do not:
 

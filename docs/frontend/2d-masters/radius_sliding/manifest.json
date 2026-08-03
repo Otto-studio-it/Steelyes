@@ -1,0 +1,103 @@
+{
+  "gateType": "radius_sliding",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Re-import silhouettes/ — Figma Starter page limit; local pack ready 2026-07-31",
+    "frames": {
+      "base": "RA / base",
+      "arched": "RA / arched",
+      "dog_bars": "RA / dog_bars",
+      "arched_dog_bars": "RA / arched_dog_bars",
+      "composite": "RA / composite"
+    },
+    "notes": "Local SVGs: articulated train + curved track. Import when a Figma page is available."
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "semantics": {
+    "customerWidthMm": "Clear opening between posts — articulated panels span this when closed.",
+    "travelPath": "Always curved (~90° round-the-corner park) — CA-12.",
+    "topology": "Articulated panel train (hinged end-to-end on one track). NOT telescopic overlap.",
+    "panelCount": "Photo-locked schematic: 4 / 5 (≥2200) / 6 (≥3000).",
+    "topProfile": "Straight or curved; arched_top curves EVERY panel crest."
+  },
+  "drawingCues": [
+    "Narrow articulated panels spanning post-to-post with hinge stiles",
+    "Curved ground track under opening",
+    "Plan path cue turning ~90° into park zone outside corner guide post",
+    "Receiver on latch post; guide + motor at curve apex",
+    "When arched: arch on every panel"
+  ],
+  "doNotMislead": [
+    "Do not draw telescopic overlapping panels (wrong product family).",
+    "Do not use a straight ground track (would read as tracked sliding).",
+    "Do not arch only the lead panel — all crests curve together.",
+    "Do not treat Screenshot 20.13.46 (telescopic misfile) as radius topology.",
+    "Live mm stay in the UI strip under the image."
+  ],
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer on/off)",
+    "railhead SKUs",
+    "exact picket or dog-bar count",
+    "widthMm / heightMm",
+    "exact curve radius / panel count (schematic)"
+  ],
+  "lookup": {
+    "description": "First matching rule wins. Topology always = articulated train + curved track + park cue.",
+    "rules": [
+      { "when": { "style": "composite_boards" }, "slug": "composite" },
+      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
+      { "when": { "options": ["arched_top"] }, "slug": "arched" },
+      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
+      { "when": {}, "slug": "base" }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite boards",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "plannedVariants": [],
+  "references": [
+    "references/linea-guida.png",
+    "references/photo-main.png",
+    "references/screenshot-corner.png",
+    "references/install-jpg.jpg"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-radius-sliding-variants.test.ts"
+}

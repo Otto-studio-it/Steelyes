@@ -6,36 +6,23 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
+import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates | Steelyes',
+  title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
   description:
     'Made-to-measure steel driveway, pedestrian, sliding and automated gates, designed around your entrance and built for long-term strength.',
+  alternates: { canonical: '/' },
 }
 
-const gateStyles = [
-  {
-    title: 'Modern',
-    body: 'Clean horizontal lines, strong geometry and a sharp architectural finish for contemporary homes.',
-    image: '/images/home/modern-diagonal-steel-gate.jpg',
-    imageAlt: 'Modern black steel driveway gate with diagonal slat infill between brick pillars',
-    tag: 'Architectural profile',
-  },
-  {
-    title: 'Classic',
-    body: 'Traditional proportions, heavier steel presence and timeless detailing for period homes and formal driveways.',
-    image: '/images/home/classic-ornate-driveway-gate.jpg',
-    imageAlt: 'Classic ornate black wrought-iron double driveway gate with arched top',
-    tag: 'Steel framed',
-  },
-  {
-    title: 'Privacy',
-    body: 'Closed and semi-closed designs for entrances that need screening, security and a quieter street-facing profile.',
-    image: '/images/home/privacy-horizontal-steel-gate.jpg',
-    imageAlt: 'Privacy sliding gate with horizontal composite infill panels in a black steel frame',
-    tag: 'Screened infill',
-  },
-]
+const RANGE_LINKS = [
+  { label: 'Driveway automated gates & railings', href: '/gates' },
+  { label: 'Glass balustrades & terraces', href: '/services/railings' },
+  { label: 'Metal & glass balconies', href: '/services/balconies' },
+  { label: 'Steel structures', href: '/services/structures' },
+  { label: 'Platforms & staircases', href: '/services/staircases' },
+  { label: 'Security grills', href: '/services/security' },
+] as const
 
 const processItems = [
   {
@@ -58,7 +45,7 @@ const processItems = [
     label: 'Installation',
     body: 'We coordinate delivery, fitting, alignment, handover and final adjustments so the gate works cleanly on site.',
   },
-]
+] as const
 
 const mosaicImages = [
   {
@@ -79,118 +66,105 @@ const mosaicImages = [
     tall: false,
   },
   { src: '/images/client-uploads/selected/1000051989.JPG', alt: 'Staircase and railing installation', tall: false },
-]
-
-const fabricationHighlights = [
-  {
-    title: 'Workshop fit-up',
-    body: 'Welding, alignment and steel preparation in our own workshop before finishing and installation — built by the same team that surveys your site.',
-    image: '/images/client-uploads/selected/1000052013.JPG',
-    alt: 'Steel frame under fabrication and fit-up in the workshop',
-  },
-  {
-    title: 'Detail work',
-    body: 'Finials, perforated steel and close-up metalwork finished to your specification — craftsmanship you can see in the detail.',
-    image: '/images/client-uploads/selected/1000048834.JPG',
-    alt: 'Ornamental steel detail showing finish quality',
-  },
-  {
-    title: 'Structural steel',
-    body: 'Balconies, frames and installed structural steel alongside our gates — one fabrication business for your whole property, not entrance work alone.',
-    image: '/images/client-uploads/selected/1000052209.JPG',
-    alt: 'Glass balcony and steel structure in an installed setting',
-  },
-]
+] as const
 
 export default function HomePage() {
   return (
     <MarketingShell pathname="/">
+      {/* 1 — Hero */}
       <HomeWeldingHero />
 
-      {/* ── Marquee ticker ── */}
-      <div className="overflow-hidden border-y border-zinc-200 bg-[#F5F3F0] py-3" aria-hidden="true">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[0, 1].map((pass) => (
-            <span key={pass} className="flex shrink-0 items-center gap-8 pr-8">
-              {[
-                'Bespoke steel gates',
-                'Made to measure',
-                'Survey-led specification',
-                'Driveway · Pedestrian · Sliding',
-                'Supply & install',
-                'Automated options',
-                'Steel fabrication London',
-                'Built to order',
-              ].map((item) => (
-                <span key={item} className="flex items-center gap-8">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#5C403D]">{item}</span>
-                  <span className="text-[#9E000C]" aria-hidden>✦</span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* 2 — Proof */}
+      <section className="bg-steel py-14 text-white md:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <Reveal className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">From workshop to entrance</p>
+              <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">Completed work</h2>
+            </div>
+            <Link
+              href="/gallery"
+              className="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/70 hover:text-white"
+            >
+              View full archive <ArrowRight className="h-3 w-3" aria-hidden />
+            </Link>
+          </Reveal>
 
-      {/* ── Editorial intro / what we build ── */}
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
+            {mosaicImages.map(({ src, alt, tall }, index) => (
+              <Reveal
+                key={src}
+                delay={index * 50}
+                className={`group relative overflow-hidden bg-[#2A2A2A] ${tall ? 'md:row-span-2' : ''}`}
+              >
+                <div
+                  className={`relative w-full ${
+                    tall ? 'aspect-[4/3] md:aspect-[2/3]' : 'aspect-[4/3] md:aspect-square'
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="mt-6" delay={80}>
+            <Link
+              href="/gallery"
+              className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/20 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 sm:w-auto"
+            >
+              View all projects
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 3 — Range (single index: gates + services) */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
-          {/* Left: large featured image — desktop only (hidden on phone & tablet) */}
           <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
-            {/* On mobile use 4/3 landscape; portrait on desktop */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB] md:aspect-[3/4]">
+            <div className="relative aspect-[3/4] overflow-hidden bg-paper">
               <Image
                 src="/images/client-uploads/selected/1000051998.JPG"
                 alt="Steelyes bespoke steel gate installed at a residential frontage"
                 fill
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                sizes="42vw"
                 className="object-cover"
-                loading="eager"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-5 md:p-6">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-6">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Installed project</p>
-                <p className="font-heading text-xl font-black uppercase text-white md:text-2xl">Residential frontage</p>
+                <p className="font-heading text-2xl font-black uppercase text-white">Residential frontage</p>
               </div>
-            </div>
-            {/* floating badge — sits over the image bottom-right */}
-            <div className="absolute bottom-4 right-4 bg-[#9E000C] px-4 py-3 text-white md:-bottom-4 md:right-0">
-              <p className="font-mono text-[10px] uppercase tracking-widest">Survey-led</p>
-              <p className="font-heading text-lg font-black uppercase md:text-xl">Made to order</p>
             </div>
           </Reveal>
 
-          {/* Right: headline + services list */}
           <Reveal className="flex flex-col justify-center lg:col-span-7 lg:pl-16" delay={80}>
-            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Steel fabrication</p>
-            <h2 className="font-heading text-3xl font-black uppercase leading-[0.9] sm:text-4xl md:text-5xl lg:text-6xl">
-              Everything your property needs —
-              <br />
-              <span className="text-[#9E000C]">from structural steel to front driveway or back garden.</span>
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">What we build</p>
+            <h2 className="font-heading text-3xl font-black uppercase leading-[0.9] sm:text-4xl md:text-5xl">
+              Gates, railings and structural steel —
+              <span className="text-primary"> one workshop.</span>
             </h2>
-            <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#5C403D] md:text-base">
-              Every project starts with the site. We survey, specify, fabricate and install across driveway gates,
-              glass balustrades, metal balconies, steel structures, staircases and security. The output is a broader
-              steel fabrication story, not a gate-only catalogue.
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-deep md:text-base">
+              Survey-led specification, fabrication and install across driveway gates, glass balustrades, balconies,
+              staircases and security steelwork.
             </p>
 
-            {/* Services list */}
             <ul className="mt-8 divide-y divide-zinc-200 border-t border-zinc-200">
-              {[
-                { label: 'Driveway automated gates & railings', href: '/gates' },
-                { label: 'Glass balustrades & terraces', href: '/services/railings' },
-                { label: 'Metal & glass balconies', href: '/services/balconies' },
-                { label: 'Steel structures', href: '/services/structures' },
-                { label: 'Platforms & staircases', href: '/services/staircases' },
-                { label: 'Security grills', href: '/services/security' },
-              ].map((item) => (
+              {RANGE_LINKS.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="group flex min-h-[56px] items-center justify-between gap-4 py-3 transition-colors hover:text-[#9E000C]"
+                    className="group flex min-h-[56px] items-center justify-between gap-4 py-3 transition-colors hover:text-primary"
                   >
                     <span className="font-heading text-base font-bold uppercase sm:text-lg">{item.label}</span>
                     <ArrowUpRight
-                      className="h-4 w-4 shrink-0 text-zinc-400 transition-all group-hover:text-[#9E000C] group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      className="h-4 w-4 shrink-0 text-zinc-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary"
                       aria-hidden
                     />
                   </Link>
@@ -198,130 +172,33 @@ export default function HomePage() {
               ))}
             </ul>
 
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-[#1B1C1A] px-8 py-3 font-heading text-base font-bold uppercase text-white transition-colors hover:bg-[#9E000C] sm:w-auto sm:self-start"
-            >
-              Request a quote <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Gate styles — editorial grid ── */}
-      <section className="border-t border-zinc-200 bg-[#F5F3F0] py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <Reveal className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#795916]">Gate styles</p>
-              <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">The steel range</h2>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/gates"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 border border-steel bg-steel px-6 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary"
+              >
+                Browse gates <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link
+                href="/services"
+                className="inline-flex min-h-[48px] items-center justify-center gap-2 border border-zinc-300 px-6 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-primary hover:text-primary"
+              >
+                Browse services
+              </Link>
             </div>
-            <Link
-              href="/gates"
-              className="hidden font-mono text-xs uppercase tracking-widest text-[#9E000C] underline underline-offset-4 hover:no-underline md:block"
-            >
-              All gate types →
-            </Link>
-          </Reveal>
-
-          {/* Mobile: horizontal scroll prevents stacked 500px-tall cards */}
-          <div className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
-            {gateStyles.map(({ title, body, image, imageAlt, tag }, index) => (
-              <Reveal key={title} delay={index * 90} className="w-72 shrink-0 md:w-auto">
-              <article className="group bg-white">
-                <Link href="/gates" className="block">
-                  {/* landscape on mobile scroll, portrait on md+ grid */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-[#E4E2DF] md:aspect-[3/4]">
-                    <Image
-                      src={image}
-                      alt={imageAlt}
-                      fill
-                      sizes="(max-width: 768px) 288px, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                </Link>
-                <div className="border-x border-b border-zinc-200 p-5 md:p-6">
-                  <p className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-[#9E000C]">{tag}</p>
-                  <h3 className="font-heading text-2xl font-black uppercase md:text-3xl">{title}</h3>
-                  <p className="mt-2 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
-                  <Link
-                    href="/gates"
-                    className="mt-4 inline-flex items-center gap-1 font-mono text-xs font-bold uppercase text-[#9E000C] hover:underline"
-                  >
-                    Browse {title.toLowerCase()} gates <ArrowRight className="h-3 w-3" aria-hidden />
-                  </Link>
-                </div>
-              </article>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-6 md:hidden" delay={120}>
-            <Link
-              href="/gates"
-              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-[#9E000C] font-heading text-sm font-bold uppercase text-[#9E000C]"
-            >
-              All gate types <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
           </Reveal>
         </div>
       </section>
 
-      {/* ── Fabrication focus ── */}
-      <section className="border-t border-zinc-200 bg-white py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-            <Reveal className="lg:col-span-4">
-              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Our workshop</p>
-              <h2 className="font-heading text-4xl font-black uppercase leading-none md:text-5xl">
-                More than
-                <br />
-                gates alone.
-              </h2>
-              <p className="mt-5 text-sm leading-relaxed text-[#5C403D] md:text-base">
-                Steelyes is a steel fabrication workshop — not only a gate supplier. In the same shop we cut, weld,
-                finish and install driveway gates alongside railings, glass balconies, staircases, platforms,
-                structural frames and security steelwork, all made to measure from your site brief.
-              </p>
-            </Reveal>
-
-            <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                {fabricationHighlights.map((item, index) => (
-                  <Reveal key={item.title} delay={index * 100}>
-                  <article className="overflow-hidden border border-zinc-200 bg-[#F5F3F0]">
-                    <div className="relative aspect-[4/3]">
-                      <Image
-                        src={item.image}
-                        alt={item.alt}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-heading text-2xl font-black uppercase">{item.title}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-[#5C403D]">{item.body}</p>
-                    </div>
-                  </article>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── The Process ── */}
-      <section className="bg-white py-16 md:py-24">
+      {/* 4 — Process / installation */}
+      <section className="border-t border-zinc-200 bg-canvas py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
-            {/* Left: process steps */}
             <Reveal>
-              <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">How it works</p>
-              <h2 className="mb-10 font-heading text-4xl font-black uppercase leading-none md:text-5xl">The process</h2>
+              <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">How it works</p>
+              <h2 className="mb-10 font-heading text-4xl font-black uppercase leading-none md:text-5xl">
+                Installation process
+              </h2>
               <ol className="divide-y divide-zinc-200 border-y border-zinc-200">
                 {processItems.map(({ n, label, body }) => (
                   <li key={label} className="flex gap-5 py-5">
@@ -330,34 +207,22 @@ export default function HomePage() {
                     </span>
                     <div>
                       <h3 className="font-heading text-lg font-bold uppercase md:text-xl">{label}</h3>
-                      <p className="mt-1.5 text-sm font-light leading-relaxed text-[#5C403D]">{body}</p>
+                      <p className="mt-1.5 text-sm font-light leading-relaxed text-muted-deep">{body}</p>
                     </div>
                   </li>
                 ))}
               </ol>
 
-              {/* Mobile-only visual break */}
-              <div className="relative mt-6 aspect-[4/3] overflow-hidden lg:hidden">
-                <Image
-                  src="/images/home/modern-perforated-gate-detail.jpg"
-                  alt="Close-up of modern perforated steel gate detail"
-                  fill
-                  sizes="100vw"
-                  className="object-cover"
-                />
-              </div>
-
               <Link
                 href="/installation"
-                className="mt-8 inline-flex min-h-[48px] items-center gap-2 font-heading text-sm font-bold uppercase text-[#9E000C] hover:underline"
+                className="mt-8 inline-flex min-h-[48px] items-center gap-2 font-heading text-sm font-bold uppercase text-primary hover:underline"
               >
-                How installation works <ArrowRight className="h-4 w-4" aria-hidden />
+                Full installation details <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </Reveal>
 
-            {/* Right: stacked real photos — hidden on mobile, shown lg+ */}
             <Reveal className="hidden flex-col gap-4 lg:flex" delay={120}>
-              <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEEEB]">
+              <div className="relative aspect-[4/3] overflow-hidden bg-paper">
                 <Image
                   src="/images/home/modern-perforated-gate-detail.jpg"
                   alt="Close-up of modern perforated steel gate detail"
@@ -367,7 +232,7 @@ export default function HomePage() {
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="relative aspect-square overflow-hidden bg-[#EFEEEB]">
+                <div className="relative aspect-square overflow-hidden bg-paper">
                   <Image
                     src="/images/home/steelwork-finial-detail.jpg"
                     alt="Close-up detail of black steel railings with decorative finials"
@@ -376,7 +241,7 @@ export default function HomePage() {
                     className="object-cover"
                   />
                 </div>
-                <div className="flex flex-col justify-center bg-[#1B1C1A] p-6 text-white">
+                <div className="flex flex-col justify-center bg-steel p-6 text-white">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">Each project</p>
                   <p className="mt-2 font-heading text-2xl font-black uppercase leading-none">
                     Survey
@@ -391,74 +256,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Photo mosaic ── */}
-      <section className="bg-[#1B1C1A] py-14 md:py-20">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <Reveal className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">
-                From workshop to entrance
-              </p>
-              <h2 className="font-heading text-4xl font-black uppercase text-white md:text-5xl">Completed work</h2>
-            </div>
-            <Link
-              href="/gallery"
-              className="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/60 hover:text-white"
-            >
-              View full archive <ArrowRight className="h-3 w-3" aria-hidden />
-            </Link>
-          </Reveal>
-
-          {/*
-            Mobile: 2-col grid, uniform aspect-[4/3] — no row-span.
-            md+: 3-col with row-span-2 for tall items.
-            lg+: 6-col editorial layout.
-          */}
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
-            {mosaicImages.map(({ src, alt, tall }, index) => (
-              <Reveal
-                key={src}
-                delay={index * 50}
-                className={`group relative overflow-hidden bg-[#2A2A2A] ${tall ? 'md:row-span-2' : ''}`}
-              >
-                {/* Mobile: uniform 4/3. Tall on md+: 2/3 portrait. Others: square. */}
-                <div
-                  className={`relative w-full ${
-                    tall ? 'aspect-[4/3] md:aspect-[2/3]' : 'aspect-[4/3] md:aspect-square'
-                  }`}
-                >
-                  <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                  />
-                  <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25" />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-6 flex flex-col gap-3 sm:flex-row" delay={80}>
-            <Link
-              href="/gallery"
-              className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/20 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 sm:w-auto"
-            >
-              View all projects
-            </Link>
-            <Link
-              href="/case-study"
-              className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/10 px-8 font-heading text-sm font-bold uppercase text-white/50 transition-colors hover:text-white sm:w-auto"
-            >
-              Case studies
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── Quote CTA — photo-backed ── */}
-      <section className="relative overflow-hidden bg-[#1B1C1A] py-20 text-white md:py-32">
+      {/* 5 — Final CTA */}
+      <section className="relative overflow-hidden bg-steel py-20 text-white md:py-28">
         <Image
           src="/images/gates/privacy-diagonal-gate-dusk.jpg"
           alt=""
@@ -467,14 +266,12 @@ export default function HomePage() {
           className="object-cover opacity-25"
           aria-hidden
         />
-        {/* strong vertical overlay on mobile so text stays legible across full width */}
         <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <Reveal className="max-w-2xl">
-            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Ready to start</p>
-            <h2 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-6xl lg:text-7xl">
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">Ready to start</p>
+            <h2 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-6xl">
               Plan your
               <br />
               entrance.
@@ -483,37 +280,15 @@ export default function HomePage() {
               Send photos, measurements or a rough idea of the steelwork you need. We will help turn it into a
               measured specification and a clear quote path.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8">
               <Link
                 href="/contact"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-[#9E000C] px-10 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#C41E1E] sm:w-auto"
+                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-10 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container sm:w-auto"
               >
                 Request a quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
               </Link>
-              <Link
-                href="/gates"
-                className="inline-flex min-h-[52px] w-full items-center justify-center border border-white/30 px-10 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 sm:w-auto"
-              >
-                Explore gate styles
-              </Link>
             </div>
-          </Reveal>
-
-          {/* stat strip */}
-          <Reveal className="mt-14 grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-8" delay={120}>
-            {[
-              ['100%', 'Made to order'],
-              ['Survey-led', 'Every project'],
-              ['Supply & install', 'One route'],
-            ].map(([stat, desc]) => (
-              <div key={desc} className="px-4 first:pl-0 last:pr-0 md:px-8">
-                <p className="font-heading text-lg font-black uppercase text-white md:text-2xl lg:text-3xl">{stat}</p>
-                <p className="mt-1 font-mono text-[9px] uppercase tracking-widest text-white/40 md:text-[10px]">
-                  {desc}
-                </p>
-              </div>
-            ))}
           </Reveal>
         </div>
       </section>
@@ -524,20 +299,29 @@ export default function HomePage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
-            name: 'Steelyes',
-            url: 'https://www.steelyes.co.uk',
-            telephone: '+44 7803 002145',
-            email: 'steelyes@yahoo.com',
+            name: BUSINESS.tradingName,
+            url: BUSINESS.website,
+            telephone: BUSINESS.phoneDisplay,
+            email: BUSINESS.email,
             description:
               'Bespoke steel driveway gates, electric gates, railings, balconies and security doors. Survey-led specification, supply and install across the UK.',
             address: {
               '@type': 'PostalAddress',
-              streetAddress: 'Unit 7, Meridian Industrial Estate',
-              addressLocality: 'Enfield',
-              addressRegion: 'London',
-              postalCode: 'EN3 7TW',
+              streetAddress: BUSINESS.address.line1,
+              addressLocality: BUSINESS.address.locality,
+              addressRegion: BUSINESS.address.region,
+              postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
+            // Postcode-district-level (EN3) approximation — replace with the exact
+            // surveyed coordinates for Unit 7, Meridian Industrial Estate when available.
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 51.6538,
+              longitude: -0.0342,
+            },
+            image: `${BUSINESS.website}/images/home/hero-modern-driveway-gate.jpg`,
+            sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {
               '@type': 'OfferCatalog',

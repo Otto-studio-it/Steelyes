@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "pages": {
+      "bases": "01 — CAD Elevation Bases",
+      "double_swing_variants": "02 — Double Swing Variants",
+      "single_swing_variants": "03 — Single Swing Variants",
+      "note": "Figma Starter max 3 pages — further type variants share page 01 or replace until plan upgrade."
+    }
+  },
+  "dimensionPolicy": "Client millimetres render in a UI strip below the 2D image. Never bake sample dims into silhouette SVGs.",
+  "packs": [
+    {
+      "gateType": "double_swing",
+      "status": "ready",
+      "path": "double_swing",
+      "manifest": "double_swing/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "single_swing",
+      "status": "ready",
+      "path": "single_swing",
+      "manifest": "single_swing/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "tracked_sliding",
+      "status": "ready",
+      "path": "tracked_sliding",
+      "manifest": "tracked_sliding/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "cantilever_sliding",
+      "status": "ready",
+      "path": "cantilever_sliding",
+      "manifest": "cantilever_sliding/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "bifolding_double_swing",
+      "status": "ready",
+      "path": "bifolding_double_swing",
+      "manifest": "bifolding_double_swing/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "single_bifolding",
+      "status": "ready",
+      "path": "single_bifolding",
+      "manifest": "single_bifolding/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "telescopic_sliding",
+      "status": "ready",
+      "path": "telescopic_sliding",
+      "manifest": "telescopic_sliding/manifest.json",
+      "silhouetteCount": 5
+    },
+    {
+      "gateType": "radius_sliding",
+      "status": "ready",
+      "path": "radius_sliding",
+      "manifest": "radius_sliding/manifest.json",
+      "silhouetteCount": 5
+    }
+  ],
+  "overlays": [
+    {
+      "kind": "railheads",
+      "status": "ready_for_figma_import",
+      "path": "railheads",
+      "manifest": "railheads/manifest.json",
+      "silhouetteCount": 6,
+      "note": "Overlay components — import silhouettes/*.svg into Figma as components."
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "gate_type_guess": "double_swing",
+  "confidence": 0.88,
+  "leaf_count": 2,
+  "style_guess": "traditional_victorian",
+  "topology": {
+    "posts": {
+      "count": 2,
+      "role": "external_support_with_hinges",
+      "material": "brick_or_stone_pillars_with_metal_hinges"
+    },
+    "frame": {
+      "top_rail": "arched_convex_swan_neck",
+      "upper_mid_rail": true,
+      "lower_mid_rail": true,
+      "bottom_rail": true,
+      "rail_count": 4,
+      "profile": "square_hollow_tube_black"
+    },
+    "infill": {
+      "upper_zone": "vertical_pickets_with_top_circle_band",
+      "middle_zone": "vertical_pickets_with_basket_twist_accents",
+      "spear_zone": "horizontal_row_of_spearheads_above_lower_mid_rail",
+      "lower_zone": "double_density_pickets_with_bottom_circle_band",
+      "bar_orientation": "vertical",
+      "kick_plate_density_multiplier": 2
+    },
+    "hardware": [
+      "wrap_around_hinges_top_and_bottom_per_leaf",
+      "center_meeting_stile_latch_plate",
+      "drop_bolt_on_one_leaf"
+    ],
+    "sliding_system": null
+  },
+  "visible_options": {
+    "middle_bar": true,
+    "top_railheads": true,
+    "dog_bars": true,
+    "dog_bar_railheads": true,
+    "arched_top": true,
+    "bushes": true,
+    "spirals": true
+  },
+  "composition_narrative": {
+    "how_parts_connect": "Each leaf is a welded frame of four horizontal rails and vertical pickets. Decorative bands (circles, basket twists, spears) attach between or on pickets. Leaves hinge on external posts and meet at a central latch plate. The arched top rail sets the silhouette; finials follow the curve on every picket.",
+    "why_layout": "Arched profile and finials express Victorian identity. The spear band and dense lower zone reduce perceived gap at the base (pets/security). Symmetric double leaves suit wide driveways. Decorative bands break up vertical repetition without closing the gate like composite panels.",
+    "distinctive_features": [
+      "Swan-neck arched top with peak at center meeting",
+      "Fleur-de-lis finial on every picket",
+      "Twin circle scroll bands (top and bottom)",
+      "Basket twist on selected pickets",
+      "Central spearhead row",
+      "Double-density kick plate zone",
+      "Shield-shaped center latch plate"
+    ]
+  },
+  "proportion_observations": {
+    "top_decorative_band_height_ratio": "approx_12_to_15_percent",
+    "main_body_height_ratio": "approx_45_to_50_percent",
+    "spear_band_height_ratio": "approx_8_to_10_percent",
+    "kick_plate_height_ratio": "approx_25_to_30_percent",
+    "visual_width_vs_client_catalog": "photos appear wider than 1900mm catalog band (est_3000_to_4000mm total)",
+    "visual_height_vs_client_catalog": "arch peak appears taller than 1000mm catalog band (est_1500_to_2000mm at center)",
+    "picket_spacing_estimate": "approx_100_to_120mm_center_to_center"
+  },
+  "uncertainties": [
+    "Exact tube size (40x40 vs 50x50 mm) not measurable from photos",
+    "Whether client height 900/1000mm includes arch rise",
+    "Mapping circle bands and basket twists to catalog options (bushes/spirals vs new SKUs)",
+    "Exact railhead count vs engine formula at 1800mm width",
+    "Photo 01 is composite sliding variant — excluded from this primary observed profile"
+  ],
+  "renderer_recommendations": [
+    "Draw four explicit horizontal rails per leaf, not two generic infill zones",
+    "Add center meeting stile with latch plate geometry",
+    "Render finials following arched top path when top_railheads enabled",
+    "Model kick plate as 2x picket density in bottom 25-30% height",
+    "Add circle band and spear row decorative layers",
+    "Use double-line tube profile for posts and frame",
+    "Validate geometry formulas against Marius-confirmed picket counts at 1800mm"
+  ],
+  "open_questions_for_client": [
+    "Do photos 02-04 represent the 1800x1000mm FROM band or larger custom installs?",
+    "Does catalog height include the arch or only rectangular field?",
+    "Which price line covers circle scroll bands and basket twists?",
+    "How many top railheads on a standard 1800mm double swing?",
+    "Is the central spear row a standard feature or optional?"
+  ],
+  "client_reference_alignment": {
+    "catalog_gate_type": "Double Swing Gates",
+    "catalog_style": "Traditional Victorian Style",
+    "catalog_height_mm": [900, 1000],
+    "catalog_width_mm": [1800, 1900],
+    "catalog_manual_from_gbp": 1800,
+    "catalog_automated_from_gbp": 3800,
+    "engine_preset_width_mm": 1800,
+    "engine_preset_height_mm": 1000,
+    "dimension_match_engine_vs_catalog": "MATCH",
+    "dimension_match_photos_vs_catalog": "REVIEW"
+  },
+  "photo_sources": [
+    "photos/02-victorian-arched-rural.png",
+    "photos/03-victorian-arched-brick-pillars.png",
+    "photos/04-victorian-arched-driveway.png"
+  ],
+  "excluded_photo": {
+    "path": "photos/01-composite-sliding-camelback.png",
+    "reason": "Composite panels on ground track — likely tracked_sliding + composite_boards, not primary double_swing Victorian reference"
+  }
+}

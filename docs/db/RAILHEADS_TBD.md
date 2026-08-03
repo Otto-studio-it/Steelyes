@@ -1,19 +1,36 @@
 # Railheads — schema and data TBD
 
-Railhead variants (decorative tops, dog-bar rows, etc.) **do not** have a dedicated first-class table yet. Shipping a proper `railhead_variants` (or similar) model **waits on real catalogue data** from the client.
+Railhead variants (decorative tops, dog-bar rows, etc.) **do not** have a dedicated first-class DB table yet.
+
+**Update 2026-07-30:** Marius Numbers workbook was exported to CSV and normalised into:
+
+- [`docs/frontend/foto-intake/railheads-catalog.json`](../frontend/foto-intake/railheads-catalog.json)
+- [`docs/frontend/foto-intake/railheads-catalog.csv`](../frontend/foto-intake/railheads-catalog.csv)
+
+**61 SKUs**, **54 with EX VAT unit prices** (£0.20–£3.50). Status = **provisional** (WhatsApp product cards).
+
+**2026-07-31:** Most-used **6 overlays** drawn for Figma + wired into `packages/gate-engine/src/catalog/railheads.ts` (RH32, RH7, RH7NP, RH6W/B, RH14, RH100). Pack: [`docs/frontend/2d-masters/railheads/`](../frontend/2d-masters/railheads/). Quote totals still survey-flagged until count rules + Marius sign-off.
+
+Still missing before “final”:
+
+- Count / compatibility rules (`open.railhead_count_rule`)
+- Confirmation prices are current listino
+- 7 SKUs with dims but no price in the export (RH122, RH45, RH55, RH56, RH62, RH70, RH79)
+
+See also [`docs/frontend/foto-intake/FOTO_DEEP_ANALYSIS_2026-07-30.md`](../frontend/foto-intake/FOTO_DEEP_ANALYSIS_2026-07-30.md).
 
 ---
 
 ## Owner input required (Marius)
 
-Marius must supply:
+Marius must still confirm / complete:
 
-- The **variant list** (what is sold, named, and priced).
-- **Unit prices** per variant (and whether they differ by gate type/size if applicable).
-- Any **compatibility / range rules** (which gates or size bands each variant applies to).
-- **Notes** for install or ordering constraints.
+- Sign-off that the Numbers sheet is the live sell list.
+- Prices for SKUs missing EX VAT in the export.
+- **Count rules** (how many top / dog-bar railheads vs width).
+- Compatibility (Victorian vs Composite; top row vs dog-bar row).
 
-Until that arrives, engineering should **not** add migrations solely to guess railhead structure.
+Until count rules land, engineering may show the variant picker with provisional unit prices but must not present a hard final railhead line total.
 
 ---
 
@@ -22,27 +39,34 @@ Until that arrives, engineering should **not** add migrations solely to guess ra
 Today, railheads are carried as rows in **`public.gate_options`** with:
 
 - `unit_type = 'per_railhead'` (and related slugs such as `railheads-top`, `railheads-dog-bars` in seed/migration scripts).
-- Placeholder or **non-final** `unit_price_gbp` / notes where the business has only rough guidance (e.g. wide per-railhead £ ranges called out in seed comments).
+- Placeholder or **non-final** `unit_price_gbp` / notes where the business has only rough guidance.
 
-Treat these rows as **staging placeholders**: good for wiring the admin UI and configurator flows, **not** as signed-off retail pricing.
+Treat seed rows as staging placeholders until replaced by the provisional catalog above.
+
+### Engine catalog module
+
+- `packages/gate-engine/src/catalog/railheads.ts` — next step: load provisional entries from `railheads-catalog.json`
+- `packages/gate-engine/src/catalog/variants.ts` — validation / listing / pricing hooks
+- `packages/gate-engine/src/catalog/types.ts` — shared types
+
+**When wiring the export:** populate `DEFAULT_RAILHEAD_VARIANT_CATALOG.entries` from the JSON, set `status` to `provisional`, keep survey disclaimer on totals.
 
 ---
 
-## Minimum fields to collect before a dedicated table
-
-When promoting railheads out of `gate_options`, plan for at least:
+## Minimum fields before a dedicated table
 
 | Field | Purpose |
 |-------|---------|
-| `slug` | Stable machine id for URLs, config JSON, and FKs. |
-| `name` | Human label in admin and configurator. |
-| `unit_price_gbp` | Confirmed GBP unit price (per railhead unless business defines another unit). |
-| `compatibility` / range | Which gate types, styles, or size bands may select this variant. |
-| `notes` | Survey, lead time, or upsell caveats. |
+| `slug` | Stable id (e.g. `rh32`) |
+| `name` | Human label |
+| `unit_price_gbp` | EX VAT per railhead |
+| `height_mm` / footprint | From catalog dims |
+| `compatibility` | Gate type / style / row |
+| `notes` | Survey / lead time |
 
 ---
 
 ## Dependencies
 
-- Final schema for railheads and migrations is **blocked on client data** above.
-- **RLS and admin write policies** on `gate_options` (and any future railhead tables) remain part of the Agent 1 security audit; this note does not certify policy completeness.
+- Final DB table still waits on count/compatibility sign-off.
+- RLS/admin policies on `gate_options` (and any future railhead table) are separate from this data note.

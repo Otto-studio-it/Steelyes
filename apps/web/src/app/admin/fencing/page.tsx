@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
 import { getServiceRoleClient } from '@/lib/supabase/server'
-import { AdminHeader } from '@/components/admin/AdminHeader'
 import { requireAdmin } from '@/lib/admin/require-admin'
 import { FencingCard } from './FencingCard'
 import { NewFencingForm } from './NewFencingForm'
@@ -20,7 +19,6 @@ export default async function FencingAdminPage() {
 
   return (
     <>
-      <AdminHeader />
       <main className="mx-auto max-w-2xl px-4 py-8 md:py-12">
         <p className="font-mono text-[10px] uppercase tracking-widest text-[#906f6b]">
           Gestione Prezzi

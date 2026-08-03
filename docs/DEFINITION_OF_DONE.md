@@ -102,7 +102,7 @@ A PR is **ready to merge** when:
 - [ ] No merge conflicts
 - [ ] Approver signed off (Ruben)
 - [ ] Auto-merge enabled, merges cleanly to main
-- [ ] Main branch deployment succeeded (Vercel)
+- [ ] Approved release deployment succeeded in Coolify
 
 ---
 
@@ -126,7 +126,7 @@ A phase is **complete** when:
 - [ ] Schema migrations `001_init.sql` applied (all tables, RLS enabled, no policies yet)
 - [ ] CI pipeline green (typecheck, lint, test, build, Lighthouse)
 - [ ] Sentry project created and receiving test errors
-- [ ] Vercel project linked to GitHub repo, three environments configured
+- [ ] Coolify production and staging applications linked to the intended Git branches
 - [ ] README.md rewritten (dev instructions, deploy info, architecture overview)
 
 ### Phase 1 — Marketing site (Weeks 2–5)
@@ -200,7 +200,7 @@ A phase is **complete** when:
 - [ ] DNS cutover plan documented and tested
 - [ ] Email DNS live: SPF + DKIM + DMARC passing, deliverability verified (Gmail, Apple, Outlook)
 - [ ] Backups verified: Supabase daily backups enabled, S3 versioning ON
-- [ ] Monitoring live: Sentry alerts active, Vercel Analytics enabled, Lighthouse CI configured
+- [ ] Monitoring live: Sentry alerts active, consent-gated PostHog enabled, Lighthouse CI configured
 - [ ] Handover doc created: `docs/handover-marius.md` (admin panel, catalogue updates, contact info)
 - [ ] Video tutorial recorded (Loom 5 min): Marius logs in and manages a quote start-to-finish
 - [ ] v2 backlog documented: `docs/v2-backlog.md` (CMS, accounts, Stripe, blog, PWA, etc.)
@@ -225,7 +225,7 @@ A phase is **complete** when:
 - [ ] Supabase daily backups enabled
 - [ ] S3 versioning ON, CloudFront cache cleared
 - [ ] Sentry releases configured, source maps uploaded
-- [ ] Vercel alerts configured (P0 error → Slack/email to Ruben + Marius)
+- [ ] Coolify and Sentry alerts configured (P0 error → Slack/email to Ruben + Marius)
 - [ ] DNS cutover plan ready, rollback strategy documented
 - [ ] CDN edge caching verified (headers, TTL)
 - [ ] All team members briefed on launch day SLA (Ruben + 48h monitoring)
@@ -236,7 +236,7 @@ A phase is **complete** when:
 
 ### First 48 hours
 - [ ] Monitor Sentry continuously (no new P0s)
-- [ ] Monitor Vercel Analytics (LCP, CLS, INP green)
+- [ ] Monitor PostHog/Web Vitals (LCP, CLS, INP green)
 - [ ] Check Core Web Vitals in Google Search Console (28-day window starts)
 - [ ] Email deliverability: send test quote, verify inbox (not spam)
 - [ ] Admin dashboard: any Kanban issues?

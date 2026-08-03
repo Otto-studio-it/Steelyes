@@ -1,0 +1,62 @@
+code,title,height_mm,width_mm,depth_mm,price_ex_vat_gbp,price_incl_vat_gbp,no_peg,with_ball
+RH1,RH1 Railhead 184 ł 4G,184.0,89.0,20.0,1.3,1.56,False,False
+RH10,RH10 Railhead 125 x 48 x 25mm,125.0,48.0,25.0,0.8,,False,False
+RH100,RH100 Railhead 160 × 70 x,160.0,70.0,28.0,0.6,0.72,False,False
+RH102A,RH102A Railhead 140 × 70 x,140.0,70.0,26.0,0.9,1.08,False,False
+RH108,RH108 Railhead 110 x 65 x 20mm,110.0,65.0,20.0,0.55,,False,False
+RH109,RH109 Railhead 160 x 62 x,160.0,62.0,16.0,0.95,1.14,False,False
+RH110,RH110 Railhead 250 x 102 x 25mm,250.0,102.0,25.0,2.0,,False,False
+RH111,RH111 Railhead 115 x 30 x,115.0,30.0,25.0,0.75,0.9,False,False
+RH112,RH112 Railhead 124 × 74 x,124.0,74.0,16.0,0.85,1.02,False,False
+RH113,RH113 Railhead 165 × 85 x,165.0,85.0,18.0,1.3,,False,False
+RH114,RH114 Railhead 140 x 65 x,140.0,65.0,16.0,0.8,0.96,False,False
+RH122,RH122 Railhead 160 x 65 x 16mm,160.0,65.0,16.0,,,False,False
+RH124,RH124 Railhead 205 x 60 x 20mm,205.0,60.0,20.0,2.95,,False,False
+RH125,RH125 Railhead 170 × 60 × 20mm,170.0,60.0,20.0,1.7,,False,False
+RH126,RH126 Railhead 130 x 25 x,130.0,25.0,20.0,0.99,1.19,False,False
+RH128,RH128 Railhead 180 x 65 x 20mm,180.0,65.0,20.0,1.3,1.92,False,False
+RH13,RH13 Railhead 125 × 40 x,125.0,40.0,18.0,0.99,1.19,False,False
+RH130,RH130 Railhead 100 × 44 x,100.0,44.0,12.0,0.75,0.9,False,False
+RH14,RH14 Railhead 95 x 25 x 12mm,95.0,25.0,12.0,0.5,0.6,False,False
+RH149,RH149 Railhead 130 x 60 x,130.0,60.0,12.0,0.45,0.54,False,False
+RH151,RH151 Railhead 162 × 36 x,162.0,36.0,22.0,1.8,,False,False
+RH157,RH157 Railhead 130mm High,130.0,,,0.65,0.78,False,False
+RH159,RH159 Railhead 130mm High,130.0,,,1.05,1.26,False,False
+RH15W/O,RH15W/O Railhead No Stub,124.0,26.0,18.0,0.45,0.54,False,False
+RH16,RH16 Railhead 157 × 38 x,157.0,38.0,30.0,1.6,1.92,False,False
+RH160,RH160 Railhead 160mm High 25 x 25mm Base,160.0,,,1.6,,False,False
+RH17,RH17 Railhead 188 x 50 x,188.0,50.0,40.0,1.5,1.8,False,False
+RH18,RH18 Railhead 80 x 46 x 20mm,80.0,46.0,20.0,0.35,0.42,False,False
+RH19,RH19 Railhead 120 x 65 x,120.0,65.0,25.0,0.55,0.66,False,False
+RH2,RH2 Railhead 150 x 70 x 16mm,150.0,70.0,16.0,0.5,,False,False
+RH27,RH27 Railhead 152 x 62 x,152.0,62.0,16.0,0.7,0.84,False,False
+RH32,RH32 Railhead 136 x 60 x,136.0,60.0,14.0,0.55,0.66,False,False
+RH36,RH36 Railhead 150 x 44 x,150.0,44.0,33.0,0.8,1.44,False,False
+RH37,RH37 Railhead 120 x 35 x,120.0,35.0,30.0,0.5,0.6,False,False
+RH38,RH38 Railhead 165 x 60 x,165.0,60.0,24.0,0.75,0.9,False,False
+RH39,RH39 Railhead 185 x 70 x,185.0,70.0,27.0,1.0,1.2,False,False
+RH3S,RH3S Railhead 113 x 55 x,113.0,55.0,12.0,0.2,0.36,False,False
+RH41,RH41 Railhead 120 x 60 x,120.0,60.0,25.0,0.75,0.9,False,False
+RH42,RH42 Railhead 158 x 93 x,158.0,93.0,30.0,1.75,2.1,False,False
+RH43,RH43 Railhead 200 x 118 x,200.0,118.0,40.0,3.5,4.2,False,False
+RH45,RH45 Railhead 134 x 40 x 25mm,134.0,40.0,25.0,,,False,False
+RH47,RH47 Railhead 162 × 90 x,162.0,90.0,16.0,1.2,1.44,False,False
+RH51,RH51 Railhead 145 x 48 × 26mm,145.0,48.0,26.0,0.6,,False,False
+RH52,RH52 Railhead 110 x 55 x 26mm,110.0,55.0,26.0,0.5,,False,False
+RH55,RH55 Railhead 133 x 72 x,133.0,72.0,20.0,,,False,False
+RH56,RH56 Railhead 125 x 59 x,125.0,59.0,30.0,,,False,False
+RH59,RH59 Railhead 194 x 108 x,194.0,108.0,30.0,0.5,0.6,False,False
+RH6,RH6 Railhead 153 x 24 x 24mm,153.0,24.0,24.0,0.7,0.84,False,False
+RH62,RH62 Railhead 60 x 33 x 24mm,60.0,33.0,24.0,,0.84,False,False
+RH64,RH64 Railhead 140 × 60 x,140.0,60.0,14.0,0.35,0.42,False,False
+RH6A,RH6A Railhead 146 × 40 x,146.0,40.0,40.0,1.4,1.68,False,False
+RH6W/B,RH6W/B Railhead With Ball,100.0,20.0,20.0,0.4,0.48,False,True
+RH7,RH7 Railhead 125 x 60 x 12mm,125.0,60.0,12.0,0.35,0.35,False,False
+RH70,RH70 Railhead 180 x 52 x 20mm,180.0,52.0,20.0,,,False,False
+RH71,RH71 Railhead 146 x 67 × 16mm,146.0,67.0,16.0,0.7,,False,False
+RH73,RH73 Railhead 138 x 60 x,138.0,60.0,12.0,0.65,0.78,False,False
+RH75,RH75 Railhead 110 x 48 x 18mm,110.0,48.0,18.0,0.8,0.96,False,False
+RH79,RH79 Railhead 153 x 70 x 16mm,153.0,70.0,16.0,,,False,False
+RH7NP,RH7NP Railhead No Peg 110 x,110.0,60.0,20.0,0.29,0.35,True,False
+RH81,RH81 Railhead 210 x 110 x,210.0,110.0,25.0,3.25,3.9,False,False
+RH9,RH9 Railhead 187 × 87 × 16mm,187.0,87.0,16.0,1.1,1.32,False,False

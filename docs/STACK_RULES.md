@@ -27,14 +27,14 @@ last_updated: 2026-04-20
 | 3D rendering         | Three.js                            | r165+      | Procedural geometry + AR export, dynamic import only            |
 | AR viewer            | Apple Quick Look + Google Scene     | native     | Zero install, platform-native, free                             |
 | Backend + DB         | Supabase                            | latest     | Postgres + Auth + Realtime + Storage, EU region (London/FRA)    |
-| Hosting              | Vercel                              | —          | Edge network + Next.js-native, auto-preview per PR              |
+| Hosting              | Coolify + Cloudflare                | —          | Self-hosted Next.js, managed deploys, proxy and CDN              |
 | Asset storage        | AWS S3 + CloudFront                 | eu-west-2  | Client requested, tooling maturity, IAM granularity             |
 | Content management   | MDX + JSON in repo                  | —          | No headless CMS in v1, content changes through git PR            |
 | Email                | Resend + React Email                | —          | Transactional email, typed templates, domain customization      |
 | Anti-bot             | Cloudflare Turnstile                | —          | Privacy-first CAPTCHA, no Google tracking                       |
 | Privacy/consent      | Iubenda                             | —          | CMP + Privacy/Cookie/ToS generator, UK-GDPR ready               |
-| CI/CD                | GitHub Actions + Vercel + Supabase  | —          | Type check, lint, test, preview, auto-merge, migrations         |
-| Monitoring           | Sentry + Vercel Analytics           | —          | Error tracking + Web Vitals                                      |
+| CI/CD                | GitHub Actions + Coolify + Supabase | —          | Type check, lint, test, deploys and migrations                  |
+| Monitoring           | Sentry + PostHog                    | —          | Error tracking, product analytics and Web Vitals                |
 | Build orchestration  | Turborepo (task caching only)       | latest     | Not multi-app architecture, only task parallelization           |
 | Package manager      | pnpm                                | 9.x        | Workspace support, lockfile discipline, `--frozen-lockfile`     |
 | Test framework       | Vitest                              | latest     | Unit tests only (gate-engine), fast, ESM-native                 |
@@ -58,7 +58,7 @@ The following are **explicitly NOT allowed** without an ADR:
 - **Feature flags / FF systems** — no LaunchDarkly, no feature gating; all features ship or don't
 - **User accounts / login** — share tokens only for config persistence
 - **Online payment** — quote funnel only, no Stripe/PayPal in v1
-- **Cloudflare Workers for application logic** — Vercel serverless only
+- **Cloudflare Workers for application logic** — Next.js application logic runs on Coolify
 - **R2 / any other object store** — AWS S3 only (client requested)
 
 ---
@@ -90,7 +90,7 @@ SENTRY_AUTH_TOKEN=[token]
 ADMIN_EMAIL_ALLOWLIST=marius@steelyes.co.uk
 ```
 
-Managed in Vercel project settings (separate values per environment). Never in git.
+Managed in separate Coolify applications per environment. Never in git.
 
 ---
 
@@ -248,7 +248,7 @@ Approval: Ruben ✅
 - **Sentry**: Enabled on all environments, errors sent with 10-second debounce
 - **Scrubbing**: Email, phone, postcode fields scrubbed before send
 - **Source maps**: Uploaded per release to Sentry for stack trace accuracy
-- **Analytics**: Vercel Analytics enabled, no third-party analytics (privacy-first)
+- **Analytics**: PostHog is consent-gated and configured for EU ingestion
 - **Logging**: No logs with PII; use IP hash for rate limiting
 
 ---
@@ -257,7 +257,7 @@ Approval: Ruben ✅
 
 - **Environments**: dev-local, staging (per PR), production
 - **Promotion**: `main` branch = production; no manual promotion workflow
-- **Supabase**: Migrations run via Supabase CLI in CI before Vercel deploys
+- **Supabase**: migrations are reviewed separately from application deploys; normal CI uses the versioned database types and no remote access token
 - **Secrets rotation**: Every 90 days for Resend, Turnstile, Sentry tokens
 - **Backups**: Supabase daily backups enabled, S3 versioning ON
 

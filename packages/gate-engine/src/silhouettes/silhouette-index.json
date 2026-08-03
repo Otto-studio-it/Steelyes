@@ -1,0 +1,753 @@
+{
+  "version": 1,
+  "updated": "2026-08-01",
+  "publicBasePath": "/2d-masters",
+  "policy": {
+    "technicalSource": "preloaded_master_only",
+    "neverInventCad": true,
+    "clientMutable": [
+      "widthMm",
+      "heightMm"
+    ],
+    "serving": "apps/web/public/2d-masters (Option A)"
+  },
+  "packs": {
+    "double_swing": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/double_swing/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/double_swing/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/double_swing/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/double_swing/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/double_swing/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "single_swing": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/single_swing/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/single_swing/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/single_swing/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/single_swing/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/single_swing/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "tracked_sliding": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite 3-bay",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "cantilever_sliding": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite 3-bay",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "bifolding_double_swing": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "single_bifolding": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "telescopic_sliding": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    },
+    "radius_sliding": {
+      "status": "ready",
+      "rules": [
+        {
+          "when": {
+            "style": "composite_boards"
+          },
+          "slug": "composite"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top",
+              "dog_bars"
+            ]
+          },
+          "slug": "arched_dog_bars"
+        },
+        {
+          "when": {
+            "options": [
+              "arched_top"
+            ]
+          },
+          "slug": "arched"
+        },
+        {
+          "when": {
+            "options": [
+              "dog_bars"
+            ]
+          },
+          "slug": "dog_bars"
+        },
+        {
+          "when": {},
+          "slug": "base"
+        }
+      ],
+      "silhouettes": {
+        "base": {
+          "slug": "base",
+          "title": "Base Victorian",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/base.svg",
+          "style": "traditional_victorian",
+          "options": []
+        },
+        "arched": {
+          "slug": "arched",
+          "title": "Arched top",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/arched.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ]
+        },
+        "dog_bars": {
+          "slug": "dog_bars",
+          "title": "Dog bars",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ]
+        },
+        "arched_dog_bars": {
+          "slug": "arched_dog_bars",
+          "title": "Arched + dog bars",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/arched_dog_bars.svg",
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
+        "composite": {
+          "slug": "composite",
+          "title": "Composite boards",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/composite.svg",
+          "style": "composite_boards",
+          "options": []
+        }
+      }
+    }
+  },
+  "railheads": {
+    "status": "ready_for_figma_import",
+    "silhouettes": {
+      "RH32": {
+        "slug": "RH32",
+        "code": "RH32",
+        "title": "Classic spear",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH32.svg",
+        "height_mm": 136,
+        "width_mm": 60,
+        "price_ex_vat_gbp": 0.55,
+        "optionKey": "top_railheads"
+      },
+      "RH7": {
+        "slug": "RH7",
+        "code": "RH7",
+        "title": "Fleur-de-lis (with peg)",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH7.svg",
+        "height_mm": 125,
+        "width_mm": 60,
+        "price_ex_vat_gbp": 0.35,
+        "optionKey": "top_railheads"
+      },
+      "RH7NP": {
+        "slug": "RH7NP",
+        "code": "RH7NP",
+        "title": "Fleur-de-lis (no peg)",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH7NP.svg",
+        "height_mm": 110,
+        "width_mm": 60,
+        "price_ex_vat_gbp": 0.29,
+        "optionKey": "top_railheads"
+      },
+      "RH6WB": {
+        "slug": "RH6WB",
+        "code": "RH6W/B",
+        "title": "Ball on taper",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH6WB.svg",
+        "height_mm": 100,
+        "width_mm": 20,
+        "price_ex_vat_gbp": 0.4,
+        "optionKey": "top_railheads"
+      },
+      "RH14": {
+        "slug": "RH14",
+        "code": "RH14",
+        "title": "Ball + collar",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH14.svg",
+        "height_mm": 95,
+        "width_mm": 25,
+        "price_ex_vat_gbp": 0.5,
+        "optionKey": "top_railheads"
+      },
+      "RH100": {
+        "slug": "RH100",
+        "code": "RH100",
+        "title": "Ornate fleur / spear",
+        "publicPath": "/2d-masters/railheads/silhouettes/RH100.svg",
+        "height_mm": 160,
+        "width_mm": 70,
+        "price_ex_vat_gbp": 0.6,
+        "optionKey": "top_railheads"
+      }
+    }
+  }
+}

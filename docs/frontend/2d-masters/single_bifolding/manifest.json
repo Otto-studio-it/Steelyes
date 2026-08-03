@@ -1,0 +1,95 @@
+{
+  "gateType": "single_bifolding",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Import silhouettes/ manually — MCP Starter rate-limited",
+    "frames": {
+      "base": "SB / base",
+      "arched": "SB / arched",
+      "dog_bars": "SB / dog_bars",
+      "arched_dog_bars": "SB / arched_dog_bars",
+      "composite": "SB / composite"
+    }
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "semantics": {
+    "photoSource": "foto /single bifloding gates",
+    "topologyLock": "Linea guida: 1 leaf × 2 panels (red), heavy hinge post (cyan). CA-09/10: 50/50 fold; stack on hinge side; L/R at quote.",
+    "notDoubleBifold": "Screenshot Wiki double-leaf marketing is NOT the single-bifold topology — use linea guida only for panel count."
+  },
+  "drawingCues": [
+    "Single leaf fills clear opening between posts",
+    "Mid-leaf fold stile + fold hinges (2 panels)",
+    "Hinges on left post (preview default); receiver slot on right post",
+    "Leading-edge bumper cue; stack pack outside hinge post only"
+  ],
+  "doNotMislead": [
+    "Do not draw 4 panels (that is bifolding_double_swing).",
+    "Do not put stack pack inside the clear opening.",
+    "Do not treat mesh screenshot as required infill SKU — Victorian/composite silhouettes cover style options.",
+    "Live mm stay in the UI strip under the image."
+  ],
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (actuators = later detail)",
+    "railhead SKUs",
+    "widthMm / heightMm",
+    "left vs right handing (quote-time)"
+  ],
+  "lookup": {
+    "description": "First matching rule wins.",
+    "rules": [
+      { "when": { "style": "composite_boards" }, "slug": "composite" },
+      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
+      { "when": { "options": ["arched_top"] }, "slug": "arched" },
+      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
+      { "when": {}, "slug": "base" }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite boards",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "references": [
+    "references/linea-guida.jpeg",
+    "references/support-wiki-style.png",
+    "references/support-mesh-variant.png"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-single-bifolding-variants.test.ts"
+}

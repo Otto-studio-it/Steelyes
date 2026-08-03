@@ -1,0 +1,17 @@
+gate_type: double_swing
+style_hint: traditional_victorian
+known_dimensions_mm:
+  width: 1800
+  height: 1000
+motorised_hint: false
+photos:
+  - path: photos/02-victorian-arched-rural.png
+    view: front_elevation
+  - path: photos/03-victorian-arched-brick-pillars.png
+    view: front_elevation
+  - path: photos/04-victorian-arched-driveway.png
+    view: front_elevation_hardware
+notes: >
+  Primary Victorian double swing reference (photos 02-04).
+  Photo 01 (composite sliding) documented separately in TOPOLOGY_COMPOSITE_VARIANT.md.
+  Dimensions 1800x1000 match engine preset and client FROM bands — photo visual scale REVIEW with Marius.

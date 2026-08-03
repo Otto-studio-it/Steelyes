@@ -3,7 +3,7 @@ title: Next Action Plan
 description: Ordered execution plan after DB/RLS hardening
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-09
+last_updated: 2026-06-12
 ---
 
 # Steelyes — Next Action Plan
@@ -13,6 +13,10 @@ This document controls what we do next. It separates work that can proceed now f
 ---
 
 ## Guiding decision
+
+**Authoritative configurator vision:** `docs/frontend/CONFIGURATOR_V1_VISION.md`  
+**Competitive benchmark:** `docs/frontend/MYCONFIGURATOR_COMPETITIVE_MATRIX.md`  
+**Platform extraction:** `docs/PLATFORM_ROADMAP.md`
 
 The database is in a controlled pause.
 
@@ -37,6 +41,8 @@ Deliverables:
 - [x] Create `docs/NEXT_ACTION_PLAN.md` as the operating plan.
 - [x] Create `docs/CHANGELOG_INTERNAL.md` as the verified work log.
 - [x] Create `docs/frontend/` planning docs for UI/content.
+- [x] Capture the configurator scope freeze in `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md`.
+- [x] Create `docs/frontend/CLIENT_CHANGELOG.md` as the structured client change intake and prioritized backlog.
 - [ ] Review whether stale phase docs should be archived or updated after the next UI/content audit.
 
 Closure condition:
@@ -47,7 +53,7 @@ Closure condition:
 
 ## Phase B — UI/Content Inventory
 
-**Status:** in progress
+**Status:** largely complete (route sync 2026-05-19)
 
 Goal: understand the visible product surface before editing design/content.
 
@@ -57,6 +63,7 @@ Work:
 - [x] Compare existing routes against intended marketing/configurator/admin pages.
 - [x] Identify pages with missing, placeholder, weak, or stale content.
 - [ ] Identify visual issues on mobile and desktop with browser screenshots.
+- [x] Sync `PAGE_INVENTORY.md` with implemented routes (`REPO_HEALTH.md` audit 2026-05-19).
 - [x] Identify where missing client assets need fallback states.
 - [x] Record findings in `docs/frontend/PAGE_INVENTORY.md`.
 - [x] Record detailed audit in `docs/frontend/MARKETING_SITE_AUDIT_2026-05-06.md`.
@@ -93,6 +100,31 @@ Closure condition:
 
 ---
 
+## Phase D0 — Configurator Foundation
+
+**Status:** ready to start
+
+Goal: harden the current `/configurator` entry into the first usable 2D-first configurator with on-demand 3D/AR export.
+
+Work:
+
+- [x] Treat `docs/frontend/CONFIGURATOR_MASTER_ROADMAP_2026-05-20.md` as the authoritative configurator execution order.
+- [ ] Evolve the current `/configurator` entry shell into the real configurator flow.
+- [ ] Define the shared config model in `packages/gate-engine`.
+- [ ] Implement validation for gate type, style, dimensions, and option compatibility.
+- [ ] Implement indicative pricing with explicit fallback states.
+- [ ] Build the first 2D renderer for the selected gate configuration.
+- [ ] Wire the preview, price summary, and option controls into one flow.
+- [ ] Add the save/share contract for the configurator state.
+- [ ] Keep 3D/AR export lazy-loaded and user-initiated only.
+- [ ] Add unit tests for the shared engine and preview contract.
+
+Closure condition:
+
+- A user can configure a gate, see a live 2D preview, get an indicative price, and proceed to quote or save.
+
+---
+
 ## Phase D — UI/Content Stabilization
 
 **Status:** pending after deployment alignment
@@ -104,7 +136,7 @@ Work:
 - [ ] Polish high-value public pages first:
   - homepage;
   - gates/catalogue;
-  - configurator entry;
+  - configurator entry and configurator summary screens;
   - services/installations;
   - about/contact.
 - [ ] Apply fallback copy consistently:
@@ -130,12 +162,13 @@ Resume when one of these becomes true:
 
 - Marius provides final pricing/catalogue data.
 - UI/content work requires a backend route or action.
-- We decide share-link is in current scope and implement `/configurator/[id]`.
+- We decide to extend share-link beyond `/quote/[shareToken]` and add an alternate public share route.
 - Quote requests admin dashboard becomes a current deliverable.
+- The configurator foundation is ready to extend into share links and AR handoff.
 
 Potential work:
 
-- [ ] Implement `/configurator/[id]` or revised share route.
+- [ ] Implement alternate share route only if the MVP route set is extended beyond `/quote/[shareToken]`.
 - [ ] Add share-link E2E.
 - [ ] Import final catalogue data.
 - [ ] Promote railheads from provisional `gate_options` only if real data justifies first-class schema.

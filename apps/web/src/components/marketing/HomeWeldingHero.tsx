@@ -10,37 +10,36 @@ export function HomeWeldingHero() {
         alt="Modern bespoke steel driveway gate installed at a residential entrance"
         fill
         priority
-        unoptimized
         sizes="100vw"
         className="object-cover object-center motion-safe:animate-hero-image-in motion-reduce:opacity-100"
       />
-      {/* layered overlays */}
-      <div className="absolute inset-0 bg-black/45" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/10 md:from-black/80 md:via-black/50" />
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/70 to-transparent md:h-32" />
+      {/* layered overlays — keep product photo visible while protecting left-side copy */}
+      <div className="absolute inset-0 bg-black/38 md:bg-black/32" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/12 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/55 to-transparent md:h-28" />
 
       {/* overline brand strip */}
       <div className="absolute left-0 right-0 top-0 flex items-center gap-6 px-4 pt-24 md:px-8 md:pt-8">
-        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 motion-safe:animate-hero-reveal motion-reduce:opacity-100">
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50 motion-safe:animate-hero-reveal motion-reduce:opacity-100">
           London
         </span>
         <span
           className="h-px flex-1 origin-left bg-white/15 motion-safe:animate-hero-line-draw motion-safe:[animation-delay:120ms] motion-reduce:scale-x-100"
           aria-hidden
         />
-        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 motion-safe:animate-hero-reveal motion-safe:[animation-delay:280ms] motion-reduce:opacity-100">
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50 motion-safe:animate-hero-reveal motion-safe:[animation-delay:280ms] motion-reduce:opacity-100">
           Steel fabrication
         </span>
       </div>
 
       {/* main content */}
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 pb-20 pt-40 md:min-h-[calc(100svh-4rem)] md:justify-center md:px-8 md:pb-16 md:pt-20">
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 pb-20 pt-40 supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))] md:min-h-[calc(100svh-4rem)] md:justify-center md:px-8 md:pb-16 md:pt-20">
         <p className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#9E000C] motion-safe:animate-hero-reveal motion-safe:[animation-delay:200ms] motion-reduce:opacity-100">
           Made to measure · Survey-led specification
         </p>
         <h1 className="max-w-[min(100%,42rem)] text-balance font-heading text-[clamp(1.75rem,4.2vw+0.35rem,3.75rem)] font-bold leading-[1.18] tracking-[-0.02em] text-white motion-safe:animate-hero-reveal motion-safe:[animation-delay:320ms] motion-reduce:opacity-100 sm:leading-[1.14] md:max-w-[48rem] md:text-[clamp(2rem,3.6vw+0.5rem,3.75rem)] md:leading-[1.12]">
-          Bespoke metalworks, glass balustrades and steel structures{' '}
-          <span className="text-white/88">to define your property.</span>
+          Bespoke metalworks, gates and railings, glass balustrades and structural steel{' '}
+          <span className="text-white/88">to define and upgrade your property.</span>
         </h1>
         <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/80 motion-safe:animate-hero-reveal motion-safe:[animation-delay:440ms] motion-reduce:opacity-100 md:text-base">
           Made to measure gates, railings, balconies and steelwork supplied and installed with care for long term
