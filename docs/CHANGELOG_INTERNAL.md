@@ -14,6 +14,16 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — CA-01 handle on Design masters + Quick Path limits
+
+Commit: _pending_
+
+- Design masters no longer bake leaf handles; overlay via `resolveHandleOverlay` only when `!motorised` (manual = handle, automatic = none)
+- Quick Path opening uses `getDimensionLimits(gateType)` so width chips/custom stay valid per type
+- Docs: Phase 3 handle note in CHANGELOG; masters stripped of `manual-handle-*`
+
+---
+
 ## 2026-08-03 — Phase 3 masters as primary preview
 
 Commit: _pending_

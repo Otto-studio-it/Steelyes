@@ -41,3 +41,10 @@ No separate configurator-UI Figma. No re-export of frames — packs under `docs/
 3. **Installation** tab → live coloured schematic
 4. Mobile chip shows master; sheet defaults to Design
 5. Missing master still errors (no invented CAD)
+6. **CA-01:** Manual → leaf handle overlay on Design; Motorised → no handle (masters never bake handles)
+
+## Follow-up (2026-08-03)
+
+- `resolveHandleOverlay()` + `TechnicalMasterPreview` compose the leaf handle when `!motorised`
+- Swing silhouette SVGs stripped of baked `manual-handle-*`
+- Quick Path opening dims use per-type `getDimensionLimits`

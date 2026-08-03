@@ -1,7 +1,8 @@
 'use client'
 
+import { getDimensionLimits } from '@steelyes/gate-engine'
 import { Pencil } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { CantileverSiteSpaceNote } from '@/components/configurator/CantileverSiteSpaceNote'
 import { DimensionControl } from '@/components/configurator/DimensionControl'
@@ -9,23 +10,78 @@ import { DimensionMeaningNote } from '@/components/configurator/DimensionMeaning
 import { MeasurementGuide } from '@/components/configurator/MeasurementGuide'
 import {
   HEIGHT_DIMENSION_PRESETS,
-  MAX_HEIGHT_MM,
-  MAX_WIDTH_MM,
-  MIN_HEIGHT_MM,
-  MIN_WIDTH_MM,
   MOBILE_QUICK_WIDTH_PRESETS,
   WIDTH_DIMENSION_PRESETS,
+  type MobileQuickWidthPreset,
 } from '@/lib/configurator/presentation'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value))
+}
+
+function widthPresetsForLimits(min: number, max: number): MobileQuickWidthPreset[] {
+  const curated = MOBILE_QUICK_WIDTH_PRESETS.filter((preset) => preset.mm >= min && preset.mm <= max)
+  if (curated.length > 0) return [...curated]
+
+  const mid = Math.round((min + max) / 2 / 50) * 50
+  const candidates = Array.from(
+    new Set([min, clamp(mid, min, max), max].filter((mm) => mm >= min && mm <= max)),
+  )
+  return candidates.map((mm, index) => ({
+    mm,
+    label: index === 0 ? 'Minimum opening' : index === candidates.length - 1 ? 'Maximum opening' : 'Typical opening',
+    sublabel: `${mm} mm for this gate type`,
+  }))
+}
 
 /** Quick Path screen 2 — opening: width and height only. Advanced install details stay in the studio. */
 export function QuickOpeningScreen() {
   const config = useConfiguratorConfig()
   const patchConfig = useConfiguratorStore((state) => state.patchConfig)
+  const limits = getDimensionLimits(config.gateType)
 
-  const matchesPreset = MOBILE_QUICK_WIDTH_PRESETS.some((preset) => preset.mm === config.widthMm)
+  const widthPresets = useMemo(
+    () => widthPresetsForLimits(limits.minWidthMm, limits.maxWidthMm),
+    [limits.minWidthMm, limits.maxWidthMm],
+  )
+
+  const heightPresets = useMemo(
+    () =>
+      HEIGHT_DIMENSION_PRESETS.filter(
+        (preset) => preset.mm >= limits.minHeightMm && preset.mm <= limits.maxHeightMm,
+      ),
+    [limits.minHeightMm, limits.maxHeightMm],
+  )
+
+  const widthPresetsList = WIDTH_DIMENSION_PRESETS.filter(
+    (preset) => preset.mm >= limits.minWidthMm && preset.mm <= limits.maxWidthMm,
+  )
+
+  const matchesPreset = widthPresets.some((preset) => preset.mm === config.widthMm)
   const [widthCustom, setWidthCustom] = useState(!matchesPreset)
   const [heightEdit, setHeightEdit] = useState(false)
+
+  // Keep opening dims inside per-type limits when the gate type changes.
+  useEffect(() => {
+    const nextWidth = clamp(config.widthMm, limits.minWidthMm, limits.maxWidthMm)
+    const nextHeight = clamp(config.heightMm, limits.minHeightMm, limits.maxHeightMm)
+    if (nextWidth !== config.widthMm || nextHeight !== config.heightMm) {
+      patchConfig({ widthMm: nextWidth, heightMm: nextHeight })
+    }
+  }, [
+    config.widthMm,
+    config.heightMm,
+    limits.minWidthMm,
+    limits.maxWidthMm,
+    limits.minHeightMm,
+    limits.maxHeightMm,
+    patchConfig,
+  ])
+
+  useEffect(() => {
+    setWidthCustom(!widthPresets.some((preset) => preset.mm === config.widthMm))
+  }, [config.gateType, config.widthMm, widthPresets])
 
   return (
     <div className="space-y-6">
@@ -35,7 +91,7 @@ export function QuickOpeningScreen() {
       <div className="space-y-2">
         <span className="block font-mono text-xs uppercase tracking-widest text-muted">Opening width</span>
         <div className="grid grid-cols-1 gap-2">
-          {MOBILE_QUICK_WIDTH_PRESETS.map((preset) => {
+          {widthPresets.map((preset) => {
             const selected = !widthCustom && config.widthMm === preset.mm
             return (
               <button
@@ -82,9 +138,9 @@ export function QuickOpeningScreen() {
           <DimensionControl
             label={config.gateType === 'cantilever_sliding' ? 'Clear opening width' : 'Width'}
             value={config.widthMm}
-            min={MIN_WIDTH_MM}
-            max={MAX_WIDTH_MM}
-            presets={WIDTH_DIMENSION_PRESETS}
+            min={limits.minWidthMm}
+            max={limits.maxWidthMm}
+            presets={widthPresetsList}
             onChange={(widthMm) => patchConfig({ widthMm })}
           />
         ) : null}
@@ -117,9 +173,9 @@ export function QuickOpeningScreen() {
           <DimensionControl
             label="Height"
             value={config.heightMm}
-            min={MIN_HEIGHT_MM}
-            max={MAX_HEIGHT_MM}
-            presets={HEIGHT_DIMENSION_PRESETS}
+            min={limits.minHeightMm}
+            max={limits.maxHeightMm}
+            presets={heightPresets}
             onChange={(heightMm) => patchConfig({ heightMm })}
           />
         ) : null}

@@ -3,10 +3,12 @@
 import { useMemo } from 'react'
 import {
   resolveFinishDefinition,
+  resolveHandleOverlay,
   resolveRailheadOverlays,
   resolveSilhouette,
   SilhouetteResolveError,
   type GateConfig,
+  type HandleOverlayInstance,
   type RailheadOverlayInstance,
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
@@ -54,6 +56,7 @@ export function TechnicalMasterPreview({
   }, [config])
 
   const overlays = useMemo(() => resolveRailheadOverlays(config), [config])
+  const handleOverlay = useMemo(() => resolveHandleOverlay(config), [config])
 
   const railheadCodes = useMemo(
     () => Array.from(new Set(overlays.instances.map((item) => item.code))),
@@ -128,6 +131,7 @@ export function TechnicalMasterPreview({
                 masterSrc={resolved.value.publicPath}
                 masterAlt=""
                 instances={overlays.instances}
+                handles={handleOverlay.instances}
                 heightMm={config.heightMm}
                 className="h-full w-full object-contain object-top p-1"
               />
@@ -158,6 +162,7 @@ export function TechnicalMasterPreview({
                 masterSrc={resolved.value.publicPath}
                 masterAlt={`${title} design master — ${resolved.value.title}`}
                 instances={overlays.instances}
+                handles={handleOverlay.instances}
                 heightMm={config.heightMm}
                 className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
               />
@@ -226,12 +231,14 @@ function MasterWithOverlays({
   masterSrc,
   masterAlt,
   instances,
+  handles,
   heightMm,
   className,
 }: {
   masterSrc: string
   masterAlt: string
   instances: RailheadOverlayInstance[]
+  handles: HandleOverlayInstance[]
   heightMm: number
   className: string
 }) {
@@ -239,7 +246,7 @@ function MasterWithOverlays({
     <div className={`relative inline-block max-w-full ${className.includes('w-full') ? 'w-full' : ''}`}>
       {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
       <img src={masterSrc} alt={masterAlt} className={className} />
-      {instances.length > 0 ? (
+      {instances.length > 0 || handles.length > 0 ? (
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           {instances.map((instance) => {
             // Scale head height vs gate height; floor so spears stay readable on small previews.
@@ -262,6 +269,39 @@ function MasterWithOverlays({
               />
             )
           })}
+          {handles.map((handle) => (
+            <svg
+              key={handle.id}
+              viewBox="0 0 14 56"
+              className="absolute overflow-visible"
+              style={{
+                left: `${handle.xRatio * 100}%`,
+                top: `${handle.yRatio * 100}%`,
+                width: '1.15%',
+                height: '6.5%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <rect
+                x="0.8"
+                y="0.8"
+                width="12.4"
+                height="54.4"
+                fill="none"
+                stroke="#1A1A1A"
+                strokeWidth="1.6"
+              />
+              <line
+                x1="7"
+                y1="10"
+                x2="7"
+                y2="46"
+                stroke="#1A1A1A"
+                strokeWidth="1.6"
+                strokeLinecap="square"
+              />
+            </svg>
+          ))}
         </div>
       ) : null}
     </div>

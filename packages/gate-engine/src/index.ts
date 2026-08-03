@@ -298,3 +298,11 @@ export type {
   RailheadOverlayPlan,
   RailheadOverlayRow,
 } from './silhouettes/resolve-railhead-overlays'
+export {
+  HANDLE_OVERLAY_LAYOUT,
+  resolveHandleOverlay,
+} from './silhouettes/resolve-handle-overlay'
+export type {
+  HandleOverlayInstance,
+  HandleOverlayPlan,
+} from './silhouettes/resolve-handle-overlay'
