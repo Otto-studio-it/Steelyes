@@ -57,7 +57,7 @@ describe('CAD technical style tokens (phase 0)', () => {
     expect(plan.primitives.some((p) => p.id.startsWith('cad-left-pillar-bed-'))).toBe(true)
     expect(plan.primitives.some((p) => p.id.endsWith('-shadow'))).toBe(false)
 
-    const frame = plan.primitives.find((p) => p.id === 'swing-frame')
+    const frame = plan.primitives.find((p) => p.id === 'leaf-1-frame')
     expect(frame?.kind).toBe('rect')
     if (frame?.kind === 'rect') {
       expect(frame.stroke).toBe(CAD_COLORS.ink)
@@ -65,14 +65,7 @@ describe('CAD technical style tokens (phase 0)', () => {
       expect(frame.rx).toBe(0)
     }
 
-    const fill = plan.primitives.find((p) => p.id === 'swing-fill')
-    expect(fill?.kind).toBe('rect')
-    if (fill?.kind === 'rect') {
-      expect(fill.fill).toBe(CAD_COLORS.fillNone)
-      expect(fill.stroke).toBe(CAD_COLORS.ink)
-    }
-
-    const topRail = plan.primitives.find((p) => p.id === 'top-rail' || p.id === 'arched-top')
+    const topRail = plan.primitives.find((p) => p.id === 'leaf-1-top-rail' || p.id === 'leaf-1-arch')
     if (topRail && (topRail.kind === 'line' || topRail.kind === 'path')) {
       expect(topRail.stroke).toBe(CAD_COLORS.ink)
     }

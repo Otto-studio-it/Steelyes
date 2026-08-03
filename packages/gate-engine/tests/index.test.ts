@@ -38,6 +38,7 @@ describe('gate-engine', () => {
       'arched_top',
       'bushes',
       'spirals',
+      'aluminium_panels',
     ])
   })
 

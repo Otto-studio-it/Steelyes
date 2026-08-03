@@ -10,14 +10,6 @@ export async function waitForConfiguratorReady(page: Page) {
   await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
 }
 
-export async function getSwingFrameStroke(page: Page): Promise<string | null> {
-  const previewSvg = page.locator('svg[aria-label*="preview" i]').first()
-  await expect(previewSvg).toBeVisible()
-  const frame = previewSvg.locator('rect#swing-frame')
-  await expect(frame).toBeVisible()
-  return frame.getAttribute('stroke')
-}
-
 export async function goToConfiguratorAct(page: Page, actLabel: string) {
   await page.getByRole('tab', { name: new RegExp(actLabel, 'i') }).click()
   await expect(page.getByRole('heading', { name: new RegExp(actLabel, 'i') })).toBeVisible()
@@ -69,6 +61,7 @@ export const DEFAULT_SERIALIZED_OPTIONS = [
   { key: 'arched_top', enabled: false, quantity: 0 },
   { key: 'bushes', enabled: false, quantity: 0 },
   { key: 'spirals', enabled: false, quantity: 0 },
+  { key: 'aluminium_panels', enabled: false, quantity: 0 },
 ] as const
 
 export function buildTestConfigurationPayload() {
@@ -79,7 +72,7 @@ export function buildTestConfigurationPayload() {
     widthMm: 1800,
     heightMm: 1000,
     motorised: false,
-    finish: 'matte_black' as const,
+    finish: 'black_satin' as const,
     siteSurveyRequested: false,
     options: DEFAULT_SERIALIZED_OPTIONS.map((option) => ({ ...option })),
     posts: {

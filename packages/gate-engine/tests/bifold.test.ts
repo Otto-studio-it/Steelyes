@@ -25,7 +25,7 @@ describe('bifold schematic rule (catalog provisional)', () => {
       const plan = buildGateRenderPlan(createGateConfig(createGatePreset(gateType)), {
         viewMode: 'technical',
       })
-      expect(plan.primitives.some((p) => p.id === 'bifold-fold-1')).toBe(true)
+      expect(plan.primitives.some((p) => p.id === 'bifold-fold-stile-1')).toBe(true)
       expect(plan.notes).toContain(bifoldSchematicNote(gateType))
       expect(plan.labels.some((l) => l.id === 'label-bifold-fold')).toBe(true)
     }

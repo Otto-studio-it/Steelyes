@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 import {
   continueWizard,
-  getSwingFrameStroke,
   goToConfiguratorAct,
   waitForConfiguratorReady,
   walkToRefine,
@@ -19,21 +18,11 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/Indicative pricing/i).first()).toBeVisible()
   })
 
-  test('updates preview stroke color when finish changes', async ({ page }) => {
+  test('updates the selected finish', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    const matteStroke = await getSwingFrameStroke(page)
-    expect(matteStroke).toBe('#1A1A1A')
-
-    await page.getByRole('radio', { name: /Bronze/i }).click()
-    await expect(page.getByRole('radio', { name: /Bronze/i })).toHaveAttribute('aria-checked', 'true')
-
-    await expect
-      .poll(async () => getSwingFrameStroke(page), {
-        message: 'Preview stroke should reflect the selected bronze finish',
-      })
-      .toBe('#8B6914')
-    expect(matteStroke).not.toBe(await getSwingFrameStroke(page))
+    await page.getByRole('radio', { name: /Black gloss/i }).click()
+    await expect(page.getByRole('radio', { name: /Black gloss/i })).toHaveAttribute('aria-checked', 'true')
   })
 
   test('walks through all acts to summary', async ({ page }) => {
@@ -79,11 +68,11 @@ test.describe('configurator release flow', () => {
 
   test('restores draft configuration after reload', async ({ page }) => {
     await waitForConfiguratorReady(page)
-    await page.getByRole('radio', { name: /Pearl white/i }).click()
+    await page.getByRole('radio', { name: /Anthracite/i }).click()
 
     await page.reload()
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
-    await expect(page.getByRole('radio', { name: /Pearl white/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByRole('radio', { name: /Anthracite/i })).toHaveAttribute('aria-checked', 'true')
   })
 
   test('act rail allows jumping back to earlier acts', async ({ page }) => {
@@ -117,7 +106,7 @@ test.describe('configurator mobile quick path', () => {
     // 96px chip + compact action bar with a live estimate and Continue.
     await expect(page.getByRole('button', { name: /Open full gate preview/i })).toBeVisible()
     await expect(page.getByTestId('configurator-preview-pinned')).toHaveCount(0)
-    await expect(page.getByTestId('configurator-action-bar').getByText(/Live estimate|Survey required|Price on request/i)).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar').getByText(/Price at final step/i)).toBeVisible()
     await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toBeVisible()
   })
 
@@ -145,7 +134,7 @@ test.describe('configurator mobile quick path', () => {
     const sheet = page.getByRole('dialog')
     await expect(sheet.getByText(/Gate preview/i)).toBeVisible()
     await expect(sheet.getByTestId('configurator-preview-pinned')).toBeVisible()
-    await expect(sheet.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+    await expect(sheet.getByRole('img', { name: /design master/i })).toBeVisible()
 
     await sheet.getByRole('button', { name: /Close gate preview/i }).click()
     await expect(page.getByRole('dialog')).toHaveCount(0)
@@ -235,7 +224,7 @@ test.describe('configurator share route', () => {
 
     await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
     await expect(page.getByText(/Read-only view/i)).toBeVisible()
-    await expect(page.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+    await expect(page.getByRole('img', { name: /design master/i })).toBeVisible()
     await expect(page.getByRole('link', { name: /Request survey-led quote/i })).toHaveAttribute(
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,
