@@ -33,12 +33,16 @@ Same AR pipeline for every type; fidelity improves later without changing the CT
 | `apps/web/src/components/configurator/ViewInYourSpace.tsx` | CTA + dialog |
 | `apps/web/src/components/configurator/PreviewCanvas.tsx` | Wires CTA on preview |
 
+## Desktop behaviour
+
+AR is phone-only. Desktop does **not** use QR. Instead it offers **Copy iPhone link (USDZ)** / **Copy Android link (GLB)** so the user can paste into Messages / WhatsApp and open on the phone (links expire ~15 min).
+
 ## Non-goals (later)
 
 - S3 signed URL cache (`ar_model_key`)
 - Photoreal materials / exact 2D SVG extrusion
 - Custom pillar-snap AR (would need WebXR / commercial SDK + ADR change)
-- Desktop QR deep-link to a hosted model file
+- Desktop QR deep-link (rejected — copy link is preferred)
 
 ## Verify
 

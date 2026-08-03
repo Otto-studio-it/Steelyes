@@ -2,7 +2,7 @@
 
 import * as Dialog from '@radix-ui/react-dialog'
 import type { GateConfig } from '@steelyes/gate-engine'
-import { Box, Download, ExternalLink, Loader2, Smartphone, X } from 'lucide-react'
+import { Box, Check, Copy, Download, Loader2, Smartphone, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
@@ -62,9 +62,21 @@ async function hostModel(blob: Blob, format: 'glb' | 'usdz'): Promise<string> {
   return payload.url
 }
 
+type CopiedLink = 'iphone' | 'android' | null
+
+async function copyText(value: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(value)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpaceProps) {
   const [open, setOpen] = useState(false)
   const [exportState, setExportState] = useState<ExportState>({ status: 'idle' })
+  const [copied, setCopied] = useState<CopiedLink>(null)
   const resultRef = useRef<GateArExportResult | null>(null)
 
   useEffect(() => {
@@ -152,6 +164,7 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
             resultRef.current?.revoke()
             resultRef.current = null
             setExportState({ status: 'idle' })
+            setCopied(null)
           }
         }}
       >
@@ -164,9 +177,8 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                   View in your space
                 </Dialog.Title>
                 <Dialog.Description className="mt-1 text-sm leading-6 text-muted-deep">
-                  Place this configured gate at real size with your phone camera. Tap the ground
-                  where the gate should start — Apple Quick Look (iPhone) or Google Scene Viewer
-                  (Android).
+                  AR works on a phone only. On iPhone or Android, open the model in the camera.
+                  On desktop, copy a link and open it on your phone — no QR code.
                 </Dialog.Description>
               </div>
               <Dialog.Close asChild>
@@ -227,15 +239,56 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                   ) : null}
 
                   {exportState.hosted && !ios && !android ? (
-                    <a
-                      href={exportState.hosted.usdzUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex min-h-[48px] items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
-                    >
-                      <ExternalLink className="h-4 w-4" aria-hidden />
-                      Open USDZ link on your phone
-                    </a>
+                    <div className="space-y-2">
+                      <p className="text-xs leading-5 text-muted-deep">
+                        Copy a link, paste it in Messages / WhatsApp / Notes, then open it on your
+                        phone. Links expire in about 15 minutes.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          void copyText(exportState.hosted!.usdzUrl).then((ok) => {
+                            if (!ok) return
+                            setCopied('iphone')
+                            window.setTimeout(() => setCopied(null), 2000)
+                            captureConfiguratorEvent('ar phone link copied', {
+                              gate_type: config.gateType,
+                              target: 'iphone',
+                            })
+                          })
+                        }}
+                        className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
+                      >
+                        {copied === 'iphone' ? (
+                          <Check className="h-4 w-4" aria-hidden />
+                        ) : (
+                          <Copy className="h-4 w-4" aria-hidden />
+                        )}
+                        {copied === 'iphone' ? 'Copied iPhone link' : 'Copy iPhone link (USDZ)'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          void copyText(exportState.hosted!.glbUrl).then((ok) => {
+                            if (!ok) return
+                            setCopied('android')
+                            window.setTimeout(() => setCopied(null), 2000)
+                            captureConfiguratorEvent('ar phone link copied', {
+                              gate_type: config.gateType,
+                              target: 'android',
+                            })
+                          })
+                        }}
+                        className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
+                      >
+                        {copied === 'android' ? (
+                          <Check className="h-4 w-4" aria-hidden />
+                        ) : (
+                          <Copy className="h-4 w-4" aria-hidden />
+                        )}
+                        {copied === 'android' ? 'Copied Android link' : 'Copy Android link (GLB)'}
+                      </button>
+                    </div>
                   ) : null}
 
                   {!exportState.hosted ? (

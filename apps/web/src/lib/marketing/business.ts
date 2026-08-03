@@ -6,8 +6,8 @@
 export const BUSINESS = {
   legalName: 'Steelyes Ltd',
   tradingName: 'Steelyes',
-  /** CA-06 — official sales inbox. */
-  email: 'sales@steelyes.co.uk',
+  /** Official public inbox — invoices, site enquiries, quote notifications. */
+  email: 'info@steelyes.co.uk',
   phone: '+447803002145',
   phoneDisplay: '+44 7803 002145',
   website: 'https://www.steelyes.co.uk',
@@ -55,7 +55,7 @@ export const GALLERY_CONSENT_NOTICE =
   'Gallery images show completed Steelyes work. Residential property photos are published only with owner consent. Some images may show workshop or in-progress fabrication.'
 
 export const LEGAL_DRAFT_NOTICE =
-  'Draft legal copy for pre-launch review. Company registration and VAT details will be added before go-live.'
+  'Legal pages are under final review. Company registration and VAT appear in the site footer.'
 
 export function formatBusinessAddress(multiline = true): string {
   const { line1, locality, region, postalCode, country } = BUSINESS.address

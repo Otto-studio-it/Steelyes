@@ -35,7 +35,7 @@ export function loadTenantBundle(tenantId: string): TenantBundle | null {
       ...partial.features,
     },
     leads: partial.leads ?? {
-      email: 'steelyes755@gmail.com',
+      email: 'info@steelyes.co.uk',
     },
   }
 }

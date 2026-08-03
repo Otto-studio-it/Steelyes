@@ -14,6 +14,23 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — P0 go-live: inbox, legal, Cookiebot, PostHog off
+
+- Public/workshop email → `info@steelyes.co.uk`; Resend from aligned
+- Removed legal draft banners; privacy/cookies/terms updated (Coolify + Cloudflare + Cookiebot)
+- PostHog client/server stubbed no-op; removed from root layout
+- Cookiebot script gated on `NEXT_PUBLIC_COOKIEBOT_ID` (fallback necessary-cookie banner)
+- Desktop AR: copy phone links (no QR)
+- Client sheet: `docs/frontend/GO_LIVE_LIMITATIONS.md`
+
+---
+
+- Public contact + workshop notification destination: `info@steelyes.co.uk` (replaces `sales@` / Gmail defaults)
+- `BUSINESS.email`, tenant leads email, `WORKSHOP_EMAIL` default aligned
+- Resend domain verified: default `RESEND_FROM=Steelyes <info@steelyes.co.uk>`; Coolify staging+prod env set
+
+---
+
 ## 2026-08-03 — Phase A AR View in your space
 
 Commit: _pending_
