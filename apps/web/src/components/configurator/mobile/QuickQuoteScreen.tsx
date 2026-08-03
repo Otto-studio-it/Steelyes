@@ -26,7 +26,7 @@ export function QuickQuoteScreen() {
     { label: 'Finish', value: finishLabel(config.finish, config.customFinishHex) },
     { label: 'Drive', value: config.motorised ? 'Motorised' : 'Manual only' },
     { label: 'Posts', value: postsSummaryLabel(config) },
-    { label: 'Indicative total', value: formatPricingBarAmount(pricing) },
+    { label: 'Estimated total', value: formatPricingBarAmount(pricing) },
   ]
 
   return (

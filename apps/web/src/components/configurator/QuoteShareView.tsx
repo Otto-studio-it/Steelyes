@@ -80,7 +80,7 @@ export function QuoteShareView({
             className="inline-flex min-h-[44px] w-full items-center justify-center rounded-xl border border-steel/12 bg-white px-5 font-heading text-sm font-bold uppercase tracking-tight text-steel transition hover:border-primary/30 hover:text-primary"
             download
           >
-            Download indicative PDF
+            Download estimate PDF
           </a>
 
           <Link

@@ -11,6 +11,7 @@ import {
   type GateArExportResult,
 } from '@/lib/configurator/ar/export-gate-ar-model'
 import { CONFIGURATOR_3D_PREVIEW_ENABLED } from '@/lib/configurator/features'
+import { gateTypeLabel } from '@/lib/configurator/labels'
 
 type ViewInYourSpaceProps = {
   config: GateConfig
@@ -211,7 +212,7 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                 <div className="space-y-3">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                     {exportState.result.fidelity === 'workshop' ? 'Workshop mesh' : 'Schematic mesh'} ·{' '}
-                    {config.widthMm} × {config.heightMm} mm · real scale · {config.gateType.replace(/_/g, ' ')}
+                    {config.widthMm} × {config.heightMm} mm · real scale · {gateTypeLabel(config.gateType)}
                   </p>
                   {exportState.result.notes[0] ? (
                     <p className="text-xs leading-5 text-muted-deep">{exportState.result.notes[0]}</p>

@@ -29,7 +29,6 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
   const selected = config.options.find((item) => item.key === option.key)
   const enabled = Boolean(selected?.enabled)
   const quantity = selected?.quantity ?? 0
-  const provisionalRailhead = option.key === 'top_railheads' || option.key === 'dog_bar_railheads'
   const enableDelta = estimateOptionEnableDelta(config, pricingCatalog, option.key)
   const deltaLabel = formatPriceDelta(enableDelta.deltaGbp)
 
@@ -88,11 +87,7 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
           option.key === 'spirals' ? (
             <ProvisionalCountNotice />
           ) : null}
-          <p className="text-xs leading-5 text-muted-deep">
-            {provisionalRailhead
-              ? 'Price confirmed at site survey — does not block your configuration.'
-              : 'Included in the indicative summary.'}
-          </p>
+          <p className="text-xs leading-5 text-muted-deep">Included in the estimated total.</p>
         </div>
       ) : null}
     </div>
