@@ -5,6 +5,9 @@ const nextConfig = {
   optimizeFonts: process.env.CI !== 'true',
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Avoid macOS AppleDouble sidecars corrupting Next's generated image cache
+    // when the development workspace lives on an external volume.
+    unoptimized: process.env.NODE_ENV === 'development',
   },
   transpilePackages: ['@steelyes/gate-engine'],
   poweredByHeader: false,
