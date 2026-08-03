@@ -13,9 +13,7 @@ export function MarketingShell({ pathname, children }: MarketingShellProps) {
   return (
     <div className="min-h-dvh bg-canvas text-ink">
       <SiteHeader pathname={pathname} />
-      <main id="main-content" className="pb-20 lg:pb-0">
-        {children}
-      </main>
+      <main id="main-content">{children}</main>
       <SiteFooter />
       <MarketingFloatingChrome enableQuoteBar={!pathname.startsWith('/configurator')} />
     </div>

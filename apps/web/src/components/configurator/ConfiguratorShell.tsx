@@ -105,7 +105,7 @@ function DesktopIntro() {
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">
           <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
-          Indicative pricing
+          Estimated pricing
         </span>
         <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted">
           <DraftingCompass className="h-3.5 w-3.5" aria-hidden />

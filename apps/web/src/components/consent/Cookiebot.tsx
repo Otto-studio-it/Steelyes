@@ -1,4 +1,4 @@
-import Script from 'next/script'
+/* eslint-disable @next/next/no-sync-scripts -- Cookiebot auto-blocking must execute first in head. */
 
 function cookiebotId(): string | null {
   const id = process.env.NEXT_PUBLIC_COOKIEBOT_ID?.trim()
@@ -18,10 +18,9 @@ export function CookiebotScript() {
   if (!id) return null
 
   return (
-    <Script
+    <script
       id="Cookiebot"
       src="https://consent.cookiebot.com/uc.js"
-      strategy="beforeInteractive"
       data-cbid={id}
       data-blockingmode="auto"
       type="text/javascript"

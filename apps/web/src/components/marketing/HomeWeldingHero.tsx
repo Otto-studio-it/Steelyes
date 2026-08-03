@@ -2,11 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+
 export function HomeWeldingHero() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-[#1B1C1A] md:min-h-[calc(100svh-4rem)]">
+    <section className="relative min-h-[100svh] overflow-hidden bg-steel md:min-h-[calc(100svh-4rem)]">
       <Image
-        src="/images/home/hero-modern-driveway-gate.jpg"
+        src={OFFICIAL_IMAGES.homepageHero}
         alt="Modern bespoke steel driveway gate installed at a residential entrance"
         fill
         priority
@@ -34,32 +36,39 @@ export function HomeWeldingHero() {
 
       {/* main content */}
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-4 pb-20 pt-40 supports-[padding:max(0px)]:pl-[max(1rem,env(safe-area-inset-left))] supports-[padding:max(0px)]:pr-[max(1rem,env(safe-area-inset-right))] md:min-h-[calc(100svh-4rem)] md:justify-center md:px-8 md:pb-16 md:pt-20">
-        <p className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-[#9E000C] motion-safe:animate-hero-reveal motion-safe:[animation-delay:200ms] motion-reduce:opacity-100">
+        <p className="mb-5 font-mono text-xs font-bold uppercase tracking-[0.2em] text-primary motion-safe:animate-hero-reveal motion-safe:[animation-delay:200ms] motion-reduce:opacity-100">
           Made to measure · Survey-led specification
         </p>
         <h1 className="max-w-[min(100%,42rem)] text-balance font-heading text-[clamp(1.75rem,4.2vw+0.35rem,3.75rem)] font-bold leading-[1.18] tracking-[-0.02em] text-white motion-safe:animate-hero-reveal motion-safe:[animation-delay:320ms] motion-reduce:opacity-100 sm:leading-[1.14] md:max-w-[48rem] md:text-[clamp(2rem,3.6vw+0.5rem,3.75rem)] md:leading-[1.12]">
-          Bespoke metalworks, gates and railings, glass balustrades and structural steel{' '}
-          <span className="text-white/88">to define and upgrade your property.</span>
+          Bespoke steel gates, designed around your entrance{' '}
+          <span className="text-white/88">and built to last.</span>
         </h1>
         <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/80 motion-safe:animate-hero-reveal motion-safe:[animation-delay:440ms] motion-reduce:opacity-100 md:text-base">
-          Made to measure gates, railings, balconies and steelwork supplied and installed with care for long term
-          durability and reliability.
+          Made-to-measure driveway, pedestrian, sliding and automated gates, specified from survey through fabrication
+          and installation. Railings and structural steelwork are available from the same workshop.
         </p>
-        <div className="mt-8 flex flex-col gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:flex-row">
+        <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:grid-cols-2">
+          <Link
+            href="/configurator"
+            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Configure your gate
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          </Link>
           <Link
             href="/contact"
-            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#C41E1E] sm:w-auto"
+            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Request a quote
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
           </Link>
-          <Link
-            href="/gallery"
-            className="inline-flex min-h-[52px] w-full items-center justify-center border border-white/40 px-8 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 sm:w-auto"
-          >
-            Explore full archive
-          </Link>
         </div>
+        <Link
+          href="/gates"
+          className="mt-4 inline-flex min-h-[44px] w-fit items-center gap-2 font-heading text-sm font-bold uppercase text-white/80 underline decoration-white/35 underline-offset-4 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-safe:animate-hero-reveal motion-safe:[animation-delay:640ms] motion-reduce:opacity-100"
+        >
+          Or browse gate types <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
       </div>
     </section>
   )

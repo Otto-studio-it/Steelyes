@@ -52,6 +52,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/services/structures`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/services/staircases`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${BASE_URL}/services/security`,
       lastModified: now,
       changeFrequency: 'monthly',
@@ -81,6 +93,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.5,
     },
+    {
+      url: `${BASE_URL}/configurator`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    ...['privacy-policy', 'cookie-policy', 'terms'].map((slug) => ({
+      url: `${BASE_URL}/legal/${slug}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.2,
+    })),
   ]
 
   return routes

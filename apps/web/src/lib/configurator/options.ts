@@ -44,7 +44,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'Decorative top row — mid-band unit price until SKU catalog confirmed.',
+    description: 'Decorative top row.',
     quantityLabel: 'Count',
   },
   {
@@ -62,7 +62,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'arched_top',
     label: 'Arched top',
-    description: 'Curved top rail / bolta treatment.',
+    description: 'Curved top rail.',
   },
   {
     key: 'aluminium_panels',

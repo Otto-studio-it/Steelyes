@@ -142,8 +142,8 @@ export function ConfiguratorPriceSummary({
                   <strong className="font-semibold text-steel">Preview:</strong> the 2D sketch updates immediately.
                 </li>
                 <li>
-                  <strong className="font-semibold text-steel">Price:</strong> indicative only until survey and final
-                  pricing are confirmed.
+                  <strong className="font-semibold text-steel">Price:</strong> confirmed pricing shown; final total is
+                  set once decorative option counts are confirmed at survey.
                 </li>
                 <li>
                   <strong className="font-semibold text-steel">Next step:</strong> use the survey-led quote flow

@@ -178,7 +178,7 @@ export function ConfiguratorQuoteRequestForm() {
       ) : null}
 
       <p className="text-xs leading-5 text-muted">
-        Indicative pricing only — the final quote is confirmed after a site survey. We only use your details to handle
+        Estimated pricing — the final quote is confirmed after a site survey. We only use your details to handle
         this request.
       </p>
     </form>

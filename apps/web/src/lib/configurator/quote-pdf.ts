@@ -140,7 +140,7 @@ export async function buildIndicativeQuotePdf(input: {
     }
   }
 
-  drawLine('Steelyes — Indicative gate quote', { bold: true, size: 18, gap: 24 })
+  drawLine('Steelyes — Estimated gate quote', { bold: true, size: 18, gap: 24 })
   drawLine(`Reference: ${shareToken}`, { size: 10, gap: 14 })
   drawLine(`View online: ${shareUrl}`, { size: 10, gap: 20 })
 
@@ -181,7 +181,7 @@ export async function buildIndicativeQuotePdf(input: {
   }
 
   y -= 8
-  drawLine(`${pricing.totalLabel} (${pricing.status === 'survey_required' ? 'survey required' : 'indicative'})`, {
+  drawLine(`${pricing.totalLabel} (${pricing.status === 'survey_required' ? 'survey required' : 'estimated'})`, {
     bold: true,
     size: 12,
     gap: 18,

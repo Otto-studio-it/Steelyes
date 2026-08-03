@@ -72,7 +72,7 @@ export function humanizeValidationMessage(message: string): string {
 }
 
 export function formatPricingHeadline(pricing: PricingResult): string {
-  return pricing.status === 'survey_required' ? 'Price on request' : 'Indicative total'
+  return pricing.status === 'survey_required' ? 'Price on request' : 'Estimated total'
 }
 
 export function formatPricingBarHeadline(pricing: PricingResult): string {
@@ -124,10 +124,10 @@ export function formatPricingLead(pricing: PricingResult): string {
   }
 
   if (pricing.assumptions.some((assumption) => assumption.toLowerCase().includes('composite boards'))) {
-    return 'Base price reflects the selected gate style. Size bands and confirmed add-ons remain indicative.'
+    return 'Base price reflects the selected gate style. Pricing is confirmed; decorative option counts are finalised at site survey.'
   }
 
-  return 'Base price, size bands, and confirmed add-ons are shown below. The total remains indicative.'
+  return 'Base price, size bands, and confirmed add-ons are shown below. Pricing is confirmed; decorative option counts are finalised at site survey.'
 }
 
 export function formatPricingValueLabel(item: PricingLineItem): string {

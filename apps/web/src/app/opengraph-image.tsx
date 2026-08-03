@@ -7,7 +7,9 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function Image() {
-  const imageData = await readFile(join(process.cwd(), 'public/images/home/hero-modern-driveway-gate.jpg'))
+  const imageData = await readFile(
+    join(process.cwd(), 'public/images/official/gates/double-swing-hero.jpg'),
+  )
   const imageBase64 = `data:image/jpeg;base64,${imageData.toString('base64')}`
 
   return new ImageResponse(

@@ -28,10 +28,10 @@ const SERVICE_LINKS = [
 ] as const
 
 const START_LINKS = [
-  { label: 'Request a quote', href: '/contact', primary: true },
-  { label: 'Configure a gate', href: '/configurator', primary: false },
-  { label: 'Installation', href: '/installation', primary: false },
-  { label: 'About', href: '/about', primary: false },
+  { label: 'Configure a gate', href: '/configurator', tone: 'steel' },
+  { label: 'Request a quote', href: '/contact', tone: 'primary' },
+  { label: 'Installation', href: '/installation', tone: 'link' },
+  { label: 'About', href: '/about', tone: 'link' },
 ] as const
 
 const LEGAL_LINKS = [
@@ -50,7 +50,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[#1B1C1A] text-white">
+    <footer className="bg-steel text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 text-left md:grid-cols-2 md:px-8 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
         <section>
           <h2 className="mb-5 font-heading text-3xl font-black uppercase">Steelyes Ltd</h2>
@@ -80,7 +80,7 @@ export function SiteFooter() {
         </section>
 
         <section>
-          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-[#C41E1E]">Gates</h3>
+          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Gates</h3>
           <ul className="space-y-1 text-sm text-zinc-400">
             {GATE_LINKS.map((link) => (
               <li key={link.href}>
@@ -91,7 +91,7 @@ export function SiteFooter() {
         </section>
 
         <section>
-          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-[#C41E1E]">Services</h3>
+          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Services</h3>
           <ul className="space-y-1 text-sm text-zinc-400">
             {SERVICE_LINKS.map((link) => (
               <li key={link.href}>
@@ -102,7 +102,7 @@ export function SiteFooter() {
         </section>
 
         <section>
-          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-[#C41E1E]">Start</h3>
+          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Start</h3>
           <p className="mb-5 text-sm font-light leading-relaxed text-zinc-400">
             Share photos, measurements, or a rough brief to begin a measured specification.
           </p>
@@ -111,11 +111,11 @@ export function SiteFooter() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={
-                    link.primary
-                      ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-[#9E000C] px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-[#9B1515]'
-                      : 'inline-flex min-h-[44px] items-center transition-colors hover:text-white'
-                  }
+                  className={link.tone === 'primary'
+                    ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                    : link.tone === 'steel'
+                      ? 'inline-flex min-h-[44px] w-full items-center justify-center border border-zinc-600 bg-zinc-800 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                      : 'inline-flex min-h-[44px] items-center transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
                 >
                   {link.label}
                 </Link>
@@ -130,20 +130,17 @@ export function SiteFooter() {
           <p className="font-mono text-xs uppercase tracking-widest text-zinc-400">
             (c) 2026 {BUSINESS.legalName}
           </p>
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <nav aria-label="Footer legal navigation">
-              <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">
-                {LEGAL_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <SocialLinks iconClassName="hover:text-white" />
-          </div>
+          <nav aria-label="Footer legal navigation">
+            <ul className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:gap-5">
+              {LEGAL_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="inline-flex min-h-[44px] items-center transition-colors hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>

@@ -14,6 +14,7 @@
     --color-steel-rgb: 27 28 26; /* #1B1C1A */
     --color-primary-rgb: 158 0 12; /* #9E000C */
     --color-primary-dark-rgb: 138 0 9; /* #8A0009 */
+    --color-primary-soft-rgb: 255 180 171; /* #FFB4AB */
     --color-muted-rgb: 109 97 93; /* #6D615D */
     --color-muted-deep-rgb: 91 81 77; /* #5B514D */
     --color-paper-rgb: 249 247 244; /* #F9F7F4 */
@@ -74,8 +75,4 @@
     transition: none;
   }
 
-  .animate-marquee,
-  .animate-chat-widget-in {
-    animation: none !important;
-  }
 }

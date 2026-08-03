@@ -7,6 +7,7 @@ import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
@@ -49,23 +50,35 @@ const processItems = [
 
 const mosaicImages = [
   {
-    src: '/images/client-uploads/selected/1000048883.JPG',
-    alt: 'Wide black steel gate and rail frontage',
+    src: OFFICIAL_IMAGES.gates.doubleSwing.hero,
+    alt: 'Double swing steel driveway gate',
     tall: true,
   },
-  { src: '/images/client-uploads/selected/1000051985.JPG', alt: 'Steel railings and stair landing', tall: false },
   {
-    src: '/images/client-uploads/selected/1000052004.JPG',
-    alt: 'Balcony and terrace steel structure',
-    tall: true,
-  },
-  { src: '/images/client-uploads/selected/1000052013.JPG', alt: 'Steel frame under fabrication', tall: false },
-  {
-    src: '/images/client-uploads/selected/1000052209.JPG',
-    alt: 'Glass balcony with steel fixing points',
+    src: OFFICIAL_IMAGES.services.staircases.primary,
+    alt: 'Steel staircase and landing',
     tall: false,
   },
-  { src: '/images/client-uploads/selected/1000051989.JPG', alt: 'Staircase and railing installation', tall: false },
+  {
+    src: OFFICIAL_IMAGES.services.balconies.glass,
+    alt: 'Glass balcony with steel structure',
+    tall: true,
+  },
+  {
+    src: OFFICIAL_IMAGES.about.teamWorkshop,
+    alt: 'Steelyes workshop team at fabrication',
+    tall: false,
+  },
+  {
+    src: OFFICIAL_IMAGES.services.balconies.metal,
+    alt: 'Metal balcony installation',
+    tall: false,
+  },
+  {
+    src: OFFICIAL_IMAGES.services.staircases.secondary,
+    alt: 'Staircase and railing installation',
+    tall: false,
+  },
 ] as const
 
 export default function HomePage() {
@@ -77,17 +90,11 @@ export default function HomePage() {
       {/* 2 — Proof */}
       <section className="bg-steel py-14 text-white md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <Reveal className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <Reveal className="mb-8">
             <div>
               <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">From workshop to entrance</p>
               <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">Completed work</h2>
             </div>
-            <Link
-              href="/gallery"
-              className="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/70 hover:text-white"
-            >
-              View full archive <ArrowRight className="h-3 w-3" aria-hidden />
-            </Link>
           </Reveal>
 
           <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
@@ -95,7 +102,7 @@ export default function HomePage() {
               <Reveal
                 key={src}
                 delay={index * 50}
-                className={`group relative overflow-hidden bg-[#2A2A2A] ${tall ? 'md:row-span-2' : ''}`}
+                className={`group relative overflow-hidden bg-steel ${tall ? 'md:row-span-2' : ''}`}
               >
                 <div
                   className={`relative w-full ${
@@ -117,9 +124,9 @@ export default function HomePage() {
           <Reveal className="mt-6" delay={80}>
             <Link
               href="/gallery"
-              className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/20 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 sm:w-auto"
+              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-white/30 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
             >
-              View all projects
+              View all projects <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
         </div>
@@ -131,8 +138,8 @@ export default function HomePage() {
           <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
             <div className="relative aspect-[3/4] overflow-hidden bg-paper">
               <Image
-                src="/images/client-uploads/selected/1000051998.JPG"
-                alt="Steelyes bespoke steel gate installed at a residential frontage"
+                src={OFFICIAL_IMAGES.gates.trackedSliding.hero}
+                alt="Tracked sliding steel gate installed at a residential frontage"
                 fill
                 sizes="42vw"
                 className="object-cover"
@@ -224,8 +231,8 @@ export default function HomePage() {
             <Reveal className="hidden flex-col gap-4 lg:flex" delay={120}>
               <div className="relative aspect-[4/3] overflow-hidden bg-paper">
                 <Image
-                  src="/images/home/modern-perforated-gate-detail.jpg"
-                  alt="Close-up of modern perforated steel gate detail"
+                  src={OFFICIAL_IMAGES.gates.cantilever.hero}
+                  alt="Cantilever sliding steel gate detail"
                   fill
                   sizes="50vw"
                   className="object-cover"
@@ -234,8 +241,8 @@ export default function HomePage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative aspect-square overflow-hidden bg-paper">
                   <Image
-                    src="/images/home/steelwork-finial-detail.jpg"
-                    alt="Close-up detail of black steel railings with decorative finials"
+                    src={OFFICIAL_IMAGES.gates.singleSwing.hero}
+                    alt="Single swing steel gate at side access"
                     fill
                     sizes="25vw"
                     className="object-cover"
@@ -259,7 +266,7 @@ export default function HomePage() {
       {/* 5 — Final CTA */}
       <section className="relative overflow-hidden bg-steel py-20 text-white md:py-28">
         <Image
-          src="/images/gates/privacy-diagonal-gate-dusk.jpg"
+          src={OFFICIAL_IMAGES.gates.doubleSwing.gallery[1]}
           alt=""
           fill
           sizes="100vw"
@@ -277,13 +284,20 @@ export default function HomePage() {
               entrance.
             </h2>
             <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/75 md:text-base">
-              Send photos, measurements or a rough idea of the steelwork you need. We will help turn it into a
-              measured specification and a clear quote path.
+              Start visually in the gate configurator, or send us photos, measurements and a rough brief for a direct
+              quote. Both paths lead to a survey-led specification.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 sm:grid-cols-2">
+              <Link
+                href="/configurator"
+                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Configure your gate
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+              </Link>
               <Link
                 href="/contact"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-10 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container sm:w-auto"
+                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request a quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
@@ -320,7 +334,7 @@ export default function HomePage() {
               latitude: 51.6538,
               longitude: -0.0342,
             },
-            image: `${BUSINESS.website}/images/home/hero-modern-driveway-gate.jpg`,
+            image: `${BUSINESS.website}${OFFICIAL_IMAGES.homepageHero}`,
             sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {

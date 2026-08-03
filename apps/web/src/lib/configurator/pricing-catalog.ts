@@ -73,7 +73,7 @@ export function mapGateOptionRowToPricingEntry(row: GateOptionPricingRow): {
         kind: 'flat_plus_units',
         flatGbp,
         unitGbp,
-        provisional: true,
+        provisional: false,
         note,
       },
     }
@@ -85,7 +85,7 @@ export function mapGateOptionRowToPricingEntry(row: GateOptionPricingRow): {
       entry: {
         kind: 'per_unit',
         unitGbp,
-        provisional: true,
+        provisional: false,
         note,
       },
     }
@@ -97,7 +97,7 @@ export function mapGateOptionRowToPricingEntry(row: GateOptionPricingRow): {
       entry: {
         kind: 'flat',
         flatGbp,
-        provisional: true,
+        provisional: false,
         note,
       },
     }

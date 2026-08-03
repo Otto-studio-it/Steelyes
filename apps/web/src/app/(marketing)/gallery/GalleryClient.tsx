@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 type GalleryItem = {
   src: string
@@ -13,113 +16,113 @@ type GalleryItem = {
 
 const GALLERY_ITEMS: GalleryItem[] = [
   {
-    src: '/images/client-uploads/selected/1000048883.JPG',
-    label: 'Wide black steel frontage',
+    src: OFFICIAL_IMAGES.gates.doubleSwing.hero,
+    label: 'Double swing driveway gate',
     ref: 'ST-3001',
     span: 'wide',
     category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000048866.JPG',
-    label: 'Residential gate with clean geometry',
+    src: OFFICIAL_IMAGES.gates.trackedSliding.hero,
+    label: 'Tracked sliding steel gate',
     ref: 'ST-3002',
     span: 'narrow',
     category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000051998.JPG',
-    label: 'Decorative driveway gate arch',
+    src: OFFICIAL_IMAGES.gates.cantilever.hero,
+    label: 'Cantilever sliding gate',
     ref: 'ST-3003',
     span: 'narrow',
     category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000052251.JPG',
-    label: 'Privacy gate with horizontal infill',
+    src: OFFICIAL_IMAGES.gates.bifoldDouble.hero,
+    label: 'Bifold double swing gate',
     ref: 'ST-3004',
     span: 'narrow',
     category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000051985.JPG',
-    label: 'Steel railings and stair landing',
+    src: OFFICIAL_IMAGES.gates.singleSwing.hero,
+    label: 'Single swing side gate',
     ref: 'ST-3005',
     span: 'narrow',
-    category: 'railings',
+    category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000051989.JPG',
-    label: 'Stair railing installation',
+    src: OFFICIAL_IMAGES.gates.telescopic.hero,
+    label: 'Telescopic sliding gate',
     ref: 'ST-3006',
     span: 'narrow',
-    category: 'railings',
+    category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000052203.JPG',
-    label: 'Balcony rail detail on townhouse frontage',
+    src: OFFICIAL_IMAGES.gates.radius.hero,
+    label: 'Radius sliding gate',
     ref: 'ST-3007',
     span: 'narrow',
-    category: 'railings',
+    category: 'gates',
   },
   {
-    src: '/images/client-uploads/selected/1000048813.JPG',
-    label: 'Ornamental railing detail',
+    src: OFFICIAL_IMAGES.services.staircases.glass,
+    label: 'Glass staircase balustrade',
     ref: 'ST-3008',
     span: 'narrow',
     category: 'railings',
   },
   {
-    src: '/images/client-uploads/selected/1000052004.JPG',
-    label: 'Terrace and balcony structure',
+    src: OFFICIAL_IMAGES.services.staircases.primary,
+    label: 'Steel staircase installation',
     ref: 'ST-3009',
-    span: 'wide',
-    category: 'balconies',
+    span: 'narrow',
+    category: 'railings',
   },
   {
-    src: '/images/client-uploads/selected/1000052209.JPG',
-    label: 'Glass balcony edge detail',
+    src: OFFICIAL_IMAGES.services.staircases.secondary,
+    label: 'Staircase and landing detail',
     ref: 'ST-3010',
     span: 'narrow',
+    category: 'railings',
+  },
+  {
+    src: OFFICIAL_IMAGES.services.balconies.glass,
+    label: 'Glass balcony terrace',
+    ref: 'ST-3011',
+    span: 'wide',
     category: 'balconies',
   },
   {
-    src: '/images/client-uploads/selected/1000052212.JPG',
-    label: 'Glass balcony under install',
-    ref: 'ST-3011',
+    src: OFFICIAL_IMAGES.services.balconies.metal,
+    label: 'Metal balcony structure',
+    ref: 'ST-3012',
     span: 'narrow',
     category: 'balconies',
   },
   {
-    src: '/images/client-uploads/selected/1000052013.JPG',
-    label: 'Structural frame during fabrication',
-    ref: 'ST-3012',
+    src: OFFICIAL_IMAGES.services.balconies.mixed,
+    label: 'Balcony frontage detail',
+    ref: 'ST-3013',
+    span: 'narrow',
+    category: 'balconies',
+  },
+  {
+    src: OFFICIAL_IMAGES.services.structures.hero,
+    label: 'Steel structure with glass enclosure',
+    ref: 'ST-3014',
     span: 'wide',
     category: 'fabrication',
   },
   {
-    src: '/images/client-uploads/selected/1000052007.JPG',
-    label: 'Workshop fit-up and frame build',
-    ref: 'ST-3013',
-    span: 'narrow',
-    category: 'fabrication',
-  },
-  {
-    src: '/images/client-uploads/selected/1000052032.JPG',
-    label: 'Fabrication detail in progress',
-    ref: 'ST-3014',
-    span: 'narrow',
-    category: 'fabrication',
-  },
-  {
-    src: '/images/client-uploads/selected/1000052181.JPG',
-    label: 'Detail of panel and edge finish',
+    src: OFFICIAL_IMAGES.about.teamWorkshop,
+    label: 'Workshop fabrication team',
     ref: 'ST-3015',
     span: 'narrow',
     category: 'fabrication',
   },
   {
-    src: '/images/client-uploads/selected/1000048834.JPG',
-    label: 'Ornamental finish detail',
+    src: OFFICIAL_IMAGES.services.securityGrills[0],
+    label: 'Security grille installation',
     ref: 'ST-3016',
     span: 'narrow',
     category: 'fabrication',
@@ -148,7 +151,7 @@ export function GalleryClient() {
       <section className="mx-auto mb-10 max-w-7xl border-b border-zinc-200 px-4 pb-8 md:px-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#795916]">Project filters</p>
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-foundry-gold">Project filters</p>
             <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gallery by category">
               {FILTERS.map(({ label, value }) => (
                 <button
@@ -158,8 +161,8 @@ export function GalleryClient() {
                   aria-pressed={activeFilter === value}
                   className={`min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight transition-colors ${
                     activeFilter === value
-                      ? 'border-[#1B1C1A] bg-[#1B1C1A] text-white'
-                      : 'border-zinc-200 bg-[#F5F3F0] text-zinc-700 hover:border-zinc-400'
+                      ? 'border-steel bg-steel text-white'
+                      : 'border-zinc-200 bg-canvas text-zinc-700 hover:border-zinc-400'
                   }`}
                 >
                   {label}
@@ -178,7 +181,7 @@ export function GalleryClient() {
           {filtered.map((item, index) => (
             <div
               key={item.ref}
-              className={`group relative overflow-hidden bg-[#EFEEEB] ${
+              className={`group relative overflow-hidden bg-paper ${
                 item.span === 'wide' ? 'lg:col-span-8' : 'lg:col-span-4'
               }`}
             >
@@ -192,11 +195,22 @@ export function GalleryClient() {
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-black/0 p-4 text-white">
-                <p className="font-mono text-[10px] uppercase text-[#FFB4AB]">{item.ref}</p>
+                <p className="font-mono text-[10px] uppercase text-primary-soft">{item.ref}</p>
                 <p className="font-heading text-xl font-bold uppercase">{item.label}</p>
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-12 flex flex-col items-start justify-between gap-5 border-t border-zinc-200 pt-8 sm:flex-row sm:items-center">
+          <p className="max-w-xl text-sm leading-relaxed text-muted-deep">
+            Have a gate, railing or fabrication project in mind? Share the site details and the type of work you need.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+          >
+            Request a quote
+          </Link>
         </div>
       </section>
     </>

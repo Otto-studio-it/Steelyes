@@ -7,9 +7,15 @@ import { DimensionsStep } from '@/components/configurator/steps/DimensionsStep'
 import { PostsStep } from '@/components/configurator/steps/PostsStep'
 import { FencePanelsStep } from '@/components/configurator/steps/FencePanelsStep'
 import { cn } from '@/lib/utils'
+import { useConfiguratorActValidationIssues } from '@/store/configuratorStore'
 
 export function DefineActPanel() {
   const [advancedOpen, setAdvancedOpen] = useState(false)
+  const actValidationIssues = useConfiguratorActValidationIssues()
+  const hasInstallIssue = actValidationIssues.some(
+    (issue) => issue.field.startsWith('posts') || issue.field.startsWith('fencePanels'),
+  )
+  const showAdvanced = advancedOpen || hasInstallIssue
 
   return (
     <div className="space-y-6">
@@ -28,7 +34,7 @@ export function DefineActPanel() {
       <div className="border border-steel/10 bg-white">
         <button
           type="button"
-          aria-expanded={advancedOpen}
+          aria-expanded={showAdvanced}
           aria-controls="define-advanced-install"
           onClick={() => setAdvancedOpen((open) => !open)}
           className="flex min-h-[52px] w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
@@ -37,15 +43,19 @@ export function DefineActPanel() {
             <span className="block font-heading text-sm font-bold uppercase tracking-tight text-steel">
               Advanced install
             </span>
-            <span className="mt-0.5 block text-sm text-muted-deep">Mounting posts and matching fence panels</span>
+            <span className="mt-0.5 block text-sm text-muted-deep">
+              {hasInstallIssue
+                ? 'Needs your attention before you can continue.'
+                : 'Mounting posts and matching fence panels'}
+            </span>
           </span>
           <ChevronDown
-            className={cn('h-4 w-4 shrink-0 text-muted transition-transform', advancedOpen && 'rotate-180')}
+            className={cn('h-4 w-4 shrink-0 text-muted transition-transform', showAdvanced && 'rotate-180')}
             aria-hidden
           />
         </button>
 
-        {advancedOpen ? (
+        {showAdvanced ? (
           <div id="define-advanced-install" className="space-y-8 border-t border-steel/10 px-4 py-5">
             <section className="space-y-4">
               <div className="border-l-4 border-steel/20 pl-4">

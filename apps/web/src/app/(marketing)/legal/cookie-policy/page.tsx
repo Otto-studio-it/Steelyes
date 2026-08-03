@@ -14,11 +14,11 @@ export default function CookiePolicyPage() {
   return (
     <MarketingShell pathname="/legal/cookie-policy">
       <section className="mx-auto max-w-4xl px-4 py-10 md:px-8 md:py-14">
-        <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Legal</p>
+        <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">Legal</p>
         <h1 className="font-heading text-4xl font-black uppercase sm:text-5xl">Cookie Policy</h1>
         <p className="mt-4 font-mono text-xs text-zinc-500">Last updated: August 2026</p>
 
-        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-[#3A3A3A] [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-[#1B1C1A] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
+        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-muted-deep [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-steel [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
           <h2>1. What are cookies</h2>
           <p>
             Cookies are small text files placed on your device when you visit a website. They are widely used to
@@ -47,7 +47,7 @@ export default function CookiePolicyPage() {
           <CookiebotDeclaration />
         </div>
 
-        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-[#3A3A3A] [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-[#1B1C1A] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
+        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-muted-deep [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-steel [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
           <h2>4. Cookies we use</h2>
           <p>
             We do <strong>not</strong> use PostHog, Google Analytics, advertising pixels, or session-replay tools.
@@ -115,7 +115,7 @@ export default function CookiePolicyPage() {
                 href="https://support.google.com/chrome/answer/95647"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#9E000C] hover:underline"
+                className="text-primary hover:underline"
               >
                 Google Chrome
               </a>
@@ -125,7 +125,7 @@ export default function CookiePolicyPage() {
                 href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#9E000C] hover:underline"
+                className="text-primary hover:underline"
               >
                 Mozilla Firefox
               </a>
@@ -135,7 +135,7 @@ export default function CookiePolicyPage() {
                 href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#9E000C] hover:underline"
+                className="text-primary hover:underline"
               >
                 Apple Safari
               </a>
@@ -145,7 +145,7 @@ export default function CookiePolicyPage() {
                 href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#9E000C] hover:underline"
+                className="text-primary hover:underline"
               >
                 Microsoft Edge
               </a>
@@ -165,7 +165,7 @@ export default function CookiePolicyPage() {
           <h2>9. Contact</h2>
           <p>
             If you have questions about our use of cookies, please contact us at{' '}
-            <a href={`mailto:${BUSINESS.email}`} className="text-[#9E000C] hover:underline">
+            <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">
               {BUSINESS.email}
             </a>
             .
@@ -173,7 +173,7 @@ export default function CookiePolicyPage() {
 
           <p className="mt-8 border-t border-zinc-200 pt-6 text-xs text-zinc-400">
             For information on how we handle personal data, see our{' '}
-            <a href="/legal/privacy-policy" className="text-[#9E000C] hover:underline">
+            <a href="/legal/privacy-policy" className="text-primary hover:underline">
               Privacy Policy
             </a>
             .

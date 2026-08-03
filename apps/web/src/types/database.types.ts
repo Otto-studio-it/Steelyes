@@ -404,6 +404,42 @@ export type Database = {
           },
         ]
       }
+      inbound_emails: {
+        Row: {
+          id: string
+          gmail_thread_id: string
+          from_email: string
+          subject: string
+          snippet: string
+          category: string
+          received_at: string
+          handled: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          gmail_thread_id: string
+          from_email: string
+          subject?: string
+          snippet?: string
+          category?: string
+          received_at: string
+          handled?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          gmail_thread_id?: string
+          from_email?: string
+          subject?: string
+          snippet?: string
+          category?: string
+          received_at?: string
+          handled?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string

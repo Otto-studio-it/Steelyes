@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Steel Security Doors & Grilles | Perimeter Hardening',
@@ -28,24 +29,25 @@ const SPEC_ITEMS = [
 export default function SecurityServicePage() {
   return (
     <MarketingShell pathname="/services/security">
-      <section className="mx-auto max-w-7xl border-l-4 border-[#9E000C] px-4 py-10 md:px-8 md:py-16">
-        <p className="font-mono text-xs uppercase tracking-widest text-[#9E000C]">Service</p>
+      <section className="mx-auto max-w-7xl border-l-4 border-primary px-4 py-10 md:px-8 md:py-16">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">Service</p>
         <h1 className="mt-3 font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
           Perimeter
           <br />
-          <span className="text-[#9E000C]">Security</span>
+          <span className="text-primary">Security</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
+        <p className="mt-5 max-w-2xl text-base font-light leading-relaxed text-muted-deep md:text-lg">
           Steel security doors, grilles, access enclosures, and protective screens built for high-wear use and
           serviceability. Where client specification is pending, the page intentionally stays conservative.
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-[#EFEEEB]">
+      <section className="bg-steel py-12 text-white md:py-16">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 md:px-8 lg:grid-cols-2">
+        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src="/images/gates/sliding-gate-anthracite-residential.jpg"
-            alt="Steel security gate installation"
+            src={OFFICIAL_IMAGES.services.securityGrills[0]}
+            alt="Steel security grille installation"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
@@ -55,48 +57,49 @@ export default function SecurityServicePage() {
             <p className="font-heading text-xl font-bold uppercase">Steel security fabrication</p>
           </div>
         </div>
-        <article className="border border-zinc-200 bg-white p-6 md:p-8">
-          <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
+        <article className="border border-white/15 bg-white/5 p-6 md:p-8">
+          <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-white/55">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
             Built for
             <br />
-            <span className="text-[#9E000C]">duty.</span>
+            <span className="text-primary">duty.</span>
           </h2>
-          <p className="mt-4 text-sm font-light leading-relaxed text-[#5C403D]">
+          <p className="mt-4 text-sm font-light leading-relaxed text-white/75">
             We fabricate security steelwork for commercial and residential perimeters. The work is specified around
             access patterns, opening dimensions, and hardware requirements, with compliance confirmed during
             specification rather than assumed upfront.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {SPEC_ITEMS.map((item) => (
-              <div key={item.label} className="border border-zinc-200 bg-[#F5F3F0] p-4">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{item.label}</p>
-                <p className="mt-2 font-heading text-sm font-bold uppercase tracking-tight text-[#1B1C1A]">{item.value}</p>
+              <div key={item.label} className="border border-white/15 bg-black/10 p-4">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">{item.label}</p>
+                <p className="mt-2 font-heading text-sm font-bold uppercase tracking-tight text-white">{item.value}</p>
               </div>
             ))}
           </div>
         </article>
+        </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Capabilities</p>
-        <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What we build</h2>
+        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>
+        <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">Protective systems</h2>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           {CAPABILITIES.map((capability) => (
             <article key={capability.title} className="border border-zinc-200 bg-white p-6">
               <h3 className="font-heading text-xl font-bold uppercase">{capability.title}</h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-[#5C403D]">{capability.detail}</p>
-              <div className="mt-5 h-0.5 w-14 bg-[#9E000C]" />
+              <p className="mt-3 text-sm font-light leading-relaxed text-muted-deep">{capability.detail}</p>
+              <div className="mt-5 h-0.5 w-14 bg-primary" />
             </article>
           ))}
         </div>
       </section>
 
-      <section className="bg-[#F6F6F6] py-16 md:py-20">
+      <section className="bg-canvas py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Workflow</p>
-          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From brief to handover</h2>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
+          <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Workflow</p>
+          <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From threat brief to install</h2>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {[
               {
                 step: 'Site review',
@@ -115,21 +118,23 @@ export default function SecurityServicePage() {
                 body: 'On-site fitting, alignment, and hardware commissioning coordinated around site access.',
               },
             ].map((item, index) => (
-              <article key={item.step} className="border border-zinc-200 bg-white p-6">
-                <p className="mb-4 font-heading text-5xl font-black text-zinc-200">0{index + 1}</p>
-                <h3 className="mb-2 font-heading text-xl font-bold uppercase">{item.step}</h3>
-                <p className="text-sm font-light leading-relaxed text-[#5C403D]">{item.body}</p>
-                <div className="mt-5 h-0.5 w-14 bg-[#9E000C]" />
+              <article key={item.step} className="grid grid-cols-[4rem_1fr] gap-5 border border-zinc-200 bg-white p-6">
+                <p className="font-heading text-5xl font-black leading-none text-zinc-200">0{index + 1}</p>
+                <div>
+                  <h3 className="mb-2 font-heading text-xl font-bold uppercase">{item.step}</h3>
+                  <p className="text-sm font-light leading-relaxed text-muted-deep">{item.body}</p>
+                  <div className="mt-5 h-0.5 w-14 bg-primary" />
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#101010] py-16 text-white md:py-20">
+      <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <div className="absolute inset-0 opacity-25">
           <Image
-            src="/images/railings/railings-victorian-spear-london.jpg"
+            src={OFFICIAL_IMAGES.services.securityGrills[2]}
             alt=""
             fill
             sizes="100vw"
@@ -141,7 +146,7 @@ export default function SecurityServicePage() {
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
             Send your brief.
             <br />
-            We will <span className="text-[#9E000C]">confirm fit.</span>
+            We will <span className="text-primary">confirm fit.</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light text-white/85 md:text-base">
             Share plans, photos, or a rough idea of the opening. We will outline what is feasible before hardware or
@@ -150,7 +155,7 @@ export default function SecurityServicePage() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/contact"
-              className="inline-flex min-h-[48px] items-center justify-center bg-[#9E000C] px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white"
+              className="inline-flex min-h-[48px] items-center justify-center bg-primary px-8 py-3 font-heading text-sm font-bold uppercase tracking-[0.08em] text-white"
             >
               Request a quote
             </Link>

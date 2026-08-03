@@ -116,7 +116,7 @@ export type OptionPricingResult = {
   missingData: string[]
 }
 
-const DEFAULT_DISCLAIMER = 'Indicative, subject to survey'
+const DEFAULT_DISCLAIMER = 'Estimated, subject to survey'
 const SITE_SURVEY_ASSUMPTION = 'Customer requested a site survey; the final quote follows the survey.'
 
 /**

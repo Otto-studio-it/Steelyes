@@ -16,7 +16,7 @@ test.describe('configurator release flow', () => {
 
     await expect(page.getByRole('heading', { name: /Design your gate installation/i })).toBeVisible()
     await expect(page.getByRole('radiogroup', { name: 'Gate finish' })).toBeVisible()
-    await expect(page.getByText(/Indicative pricing/i).first()).toBeVisible()
+    await expect(page.getByText(/Estimated pricing/i).first()).toBeVisible()
   })
 
   test('updates preview stroke color when finish changes', async ({ page }) => {
@@ -240,7 +240,7 @@ test.describe('configurator share route', () => {
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,
     )
-    await expect(page.getByRole('link', { name: /Download indicative PDF/i })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: /Download estimate PDF/i })).toHaveAttribute(
       'href',
       `/api/quote/${encodeURIComponent(shareToken)}/pdf`,
     )
@@ -254,7 +254,7 @@ test.describe('configurator share route', () => {
     expect(response.status()).toBe(403)
   })
 
-  test('serves an indicative PDF for a shared configuration', async ({ request }) => {
+  test('serves an estimate PDF for a shared configuration', async ({ request }) => {
     const response = await request.get(`/api/quote/${shareToken}/pdf`)
     expect(response.ok()).toBeTruthy()
     expect(response.headers()['content-type']).toContain('application/pdf')

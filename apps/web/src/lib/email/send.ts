@@ -24,8 +24,32 @@ function emailShell(heading: string, bodyHtml: string): string {
   `
 }
 
+/** Shell for internal ops notices (workshop inbox) — no customer pricing disclaimer. */
+function internalEmailShell(heading: string, bodyHtml: string): string {
+  return `
+  <h2 style="font-family:sans-serif">${heading}</h2>
+  ${bodyHtml}
+  <p style="color:#999;font-size:11px;margin-top:24px;font-family:sans-serif">Submitted via steelyes.co.uk</p>
+  `
+}
+
+/**
+ * Short uppercase reference derived from a share/intake URL's last path segment,
+ * so a lead/intake email can be found by ref code instead of opening it.
+ */
+function shortRef(url: string): string {
+  const last = url.split('/').filter(Boolean).pop()?.split('?')[0] ?? ''
+  return last.length >= 6 ? last.slice(0, 6).toUpperCase() : ''
+}
+
 /** Fire-and-log send; email failures must never fail the enclosing request. */
-async function sendEmail(options: { to: string; subject: string; html: string }): Promise<boolean> {
+async function sendEmail(options: {
+  to: string
+  subject: string
+  html: string
+  text: string
+  replyTo?: string
+}): Promise<boolean> {
   try {
     const resend = new Resend(env.RESEND_API_KEY)
     const { error } = await resend.emails.send({ from: EMAIL_FROM, ...options })
@@ -68,23 +92,40 @@ export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Prom
     input.hasConfiguration
       ? tableRow(
           'Configuration',
-          `${input.shareUrl}${input.configurationSummary ? `<br>${input.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}`,
+          `${input.shareUrl}${input.configurationSummary ? `<br>${input.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}`,
           false,
         )
       : '',
     tableRow('Details', input.message || '—', true),
   ].join('')
 
+  const tag = input.hasConfiguration ? '[PREVENTIVO]' : '[LEAD]'
+  const base = input.hasConfiguration
+    ? `New configurator quote — ${input.name}`
+    : `New enquiry — ${input.name} (${input.projectType || 'Steel project'})`
+  const ref = shortRef(input.shareUrl)
+
   return sendEmail({
     to: WORKSHOP_EMAIL,
-    subject: input.hasConfiguration
-      ? `New configurator quote — ${input.name}`
-      : `New enquiry — ${input.name} (${input.projectType || 'Steel project'})`,
-    html: `
-    <h2 style="font-family:sans-serif">${input.hasConfiguration ? 'New configurator quote request' : 'New project enquiry'}</h2>
-    <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">${rows}</table>
-    <p style="color:#999;font-size:11px;margin-top:24px;font-family:sans-serif">Submitted via steelyes.co.uk</p>
-    `,
+    replyTo: input.email,
+    subject: `${tag} ${base}${ref ? ` #${ref}` : ''}`,
+    html: internalEmailShell(
+      input.hasConfiguration ? 'New configurator quote request' : 'New project enquiry',
+      `<table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">${rows}</table>`,
+    ),
+    text: [
+      input.hasConfiguration ? 'New configurator quote request' : 'New project enquiry',
+      `Name: ${input.name}`,
+      `Email: ${input.email}`,
+      `Phone: ${input.phone || '—'}`,
+      `Project type: ${input.projectType || '—'}`,
+      `Postcode: ${input.postcode || '—'}`,
+      input.hasConfiguration ? `Configuration: ${input.shareUrl}` : '',
+      input.hasConfiguration && input.pdfUrl ? `PDF: ${input.pdfUrl}` : '',
+      `Details: ${input.message || '—'}`,
+    ]
+      .filter(Boolean)
+      .join('\n'),
   })
 }
 
@@ -104,6 +145,7 @@ export async function sendCustomerConfirmationEmail(
   const firstName = input.name.split(' ')[0] || input.name
   return sendEmail({
     to: input.email,
+    replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes gate configuration',
     html: emailShell(
       `Thank you, ${firstName}`,
@@ -115,11 +157,23 @@ export async function sendCustomerConfirmationEmail(
       ${input.pricingSummary ? `<p style="${BODY_STYLE}"><strong>Indicative estimate:</strong> ${input.pricingSummary}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved configuration</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       ${input.message ? `<p style="${BODY_STYLE}">Your message:<br>${input.message.replace(/\n/g, '<br>')}</p>` : ''}
       `,
     ),
+    text: [
+      `Thank you, ${firstName}`,
+      'We received your quote request. Our workshop will review your configuration and follow up after any site survey needed.',
+      input.configurationSummary ? `Configuration: ${input.configurationSummary}` : '',
+      input.pricingSummary ? `Indicative estimate: ${input.pricingSummary}` : '',
+      `View your saved configuration: ${input.shareUrl}`,
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
+      input.message ? `Your message:\n${input.message}` : '',
+      `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
   })
 }
 
@@ -133,6 +187,7 @@ export type QuoteReadyEmailInput = {
 export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<boolean> {
   return sendEmail({
     to: input.email,
+    replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes quote is ready',
     html: emailShell(
       `Good news, ${input.firstName}`,
@@ -143,7 +198,7 @@ export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<
       </p>
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your configuration</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       <p style="${BODY_STYLE}">
         Questions or ready to go ahead? Call us on <a href="tel:${BUSINESS.phone}">${BUSINESS.phoneDisplay}</a>
@@ -151,6 +206,16 @@ export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<
       </p>
       `,
     ),
+    text: [
+      `Good news, ${input.firstName}`,
+      'We have reviewed your gate configuration and your quote is on its way. If it has not arrived alongside this message, it will follow shortly from our workshop.',
+      `View your configuration: ${input.shareUrl}`,
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
+      `Questions or ready to go ahead? Call us on ${BUSINESS.phoneDisplay} or simply reply to this email.`,
+      `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
   })
 }
 
@@ -164,6 +229,7 @@ export type DesignSaveEmailInput = {
 export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<boolean> {
   return sendEmail({
     to: input.email,
+    replyTo: WORKSHOP_EMAIL,
     subject: 'Your saved Steelyes gate design',
     html: emailShell(
       'Your gate design is saved',
@@ -175,10 +241,20 @@ export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<
       ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${input.configurationSummary}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved design</a>
-        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download indicative PDF</a>` : ''}
+        ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
       `,
     ),
+    text: [
+      'Your gate design is saved',
+      'Here is your saved gate design. Open the link below any time to review it, keep editing, or request a quote when you are ready.',
+      input.configurationSummary ? `Configuration: ${input.configurationSummary}` : '',
+      `View your saved design: ${input.shareUrl}`,
+      input.pdfUrl ? `Download estimate PDF: ${input.pdfUrl}` : '',
+      `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
   })
 }
 
@@ -192,6 +268,7 @@ export async function sendAbandonedReminderEmail(
 ): Promise<boolean> {
   return sendEmail({
     to: input.email,
+    replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes gate design is waiting',
     html: emailShell(
       'Still thinking it over?',
@@ -209,6 +286,15 @@ export async function sendAbandonedReminderEmail(
       </p>
       `,
     ),
+    text: [
+      'Still thinking it over?',
+      'You saved a gate design with us recently. It is still here whenever you want to pick it up again — review it, tweak it, or request a survey-led quote in a couple of clicks.',
+      `Open your saved design: ${input.shareUrl}`,
+      `Prefer to talk it through? Call ${BUSINESS.phoneDisplay} and we will help you get the measurements and options right.`,
+      `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
+    ]
+      .filter(Boolean)
+      .join('\n\n'),
   })
 }
 
@@ -225,19 +311,31 @@ export type ClientIntakeUpdateEmailInput = {
 export async function sendClientIntakeUpdateEmail(
   input: ClientIntakeUpdateEmailInput,
 ): Promise<boolean> {
+  const ref = shortRef(input.intakeUrl)
   return sendEmail({
     to: WORKSHOP_EMAIL,
-    subject: `Client intake update — ${input.clientName}`,
-    html: `
-    <h2 style="font-family:sans-serif">Client intake aggiornato</h2>
-    <p style="${BODY_STYLE}"><strong>${input.clientName}</strong> ha aggiornato una risposta.</p>
-    <p style="${BODY_STYLE}"><strong>Domanda:</strong> ${input.questionLabel}</p>
-    <p style="${BODY_STYLE}"><strong>Stato:</strong> ${input.status}</p>
-    <p style="${BODY_STYLE}"><strong>Progresso:</strong> ${input.progressSummary}</p>
-    <p style="${BODY_STYLE}">
-      <a href="${input.adminUrl}">Apri pannello dati cliente</a>
-      · <a href="${input.intakeUrl}">Apri link intake</a>
-    </p>
-    `,
+    subject: `[INTAKE] Client intake update — ${input.clientName}${ref ? ` #${ref}` : ''}`,
+    html: internalEmailShell(
+      'Client intake aggiornato',
+      `
+      <p style="${BODY_STYLE}"><strong>${input.clientName}</strong> ha aggiornato una risposta.</p>
+      <p style="${BODY_STYLE}"><strong>Domanda:</strong> ${input.questionLabel}</p>
+      <p style="${BODY_STYLE}"><strong>Stato:</strong> ${input.status}</p>
+      <p style="${BODY_STYLE}"><strong>Progresso:</strong> ${input.progressSummary}</p>
+      <p style="${BODY_STYLE}">
+        <a href="${input.adminUrl}">Apri pannello dati cliente</a>
+        · <a href="${input.intakeUrl}">Apri link intake</a>
+      </p>
+      `,
+    ),
+    text: [
+      'Client intake aggiornato',
+      `${input.clientName} ha aggiornato una risposta.`,
+      `Domanda: ${input.questionLabel}`,
+      `Stato: ${input.status}`,
+      `Progresso: ${input.progressSummary}`,
+      `Pannello dati cliente: ${input.adminUrl}`,
+      `Link intake: ${input.intakeUrl}`,
+    ].join('\n'),
   })
 }

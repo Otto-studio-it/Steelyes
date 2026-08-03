@@ -39,7 +39,7 @@ export const BUSINESS_SAME_AS = [
 ] as const
 
 export const PRICING_DISCLAIMER =
-  'Indicative pricing only. Final quotation confirmed after site survey.'
+  'Estimated pricing. Final quotation confirmed after site survey.'
 
 export const COVERAGE_COPY = {
   headline: 'UK projects',
