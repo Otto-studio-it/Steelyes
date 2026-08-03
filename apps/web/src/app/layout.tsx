@@ -74,8 +74,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB">
-      <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
+      <head>
+        {/* Cookiebot: first script in HEAD (required by Cookiebot install guide) */}
         <CookiebotScript />
+      </head>
+      <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
         {children}
       </body>
     </html>
