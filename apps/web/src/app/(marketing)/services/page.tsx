@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Steel Fabrication Services | Gates, Railings, Balconies & Security',
@@ -54,7 +55,7 @@ export default function ServicesPage() {
     <MarketingShell pathname="/services">
       <section className="relative overflow-hidden bg-steel py-14 md:py-24">
         <Image
-          src="/images/home-welding.jpg"
+          src={OFFICIAL_IMAGES.about.teamWorkshop}
           alt="Steel fabrication in the Steelyes workshop"
           fill
           className="object-cover opacity-50"
@@ -116,7 +117,7 @@ export default function ServicesPage() {
         </article>
         <div className="relative min-h-[340px] overflow-hidden border border-zinc-200">
           <Image
-            src="/images/home-welding.jpg"
+            src={OFFICIAL_IMAGES.about.teamWorkshop}
             alt="Steelyes workshop — steel fabrication in progress"
             fill
             className="object-cover"

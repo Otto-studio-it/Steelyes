@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Glass Balustrades & Terraces | Bespoke Steel & Glass',
@@ -42,10 +43,10 @@ export default function RailingsServicePage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src="/images/railings/railings-black-cross-london.jpg"
+            src={OFFICIAL_IMAGES.services.staircases.glass}
             alt="Glass balustrade and steel terrace enclosure installed"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -56,23 +57,23 @@ export default function RailingsServicePage() {
             <p className="font-heading text-xl font-bold uppercase">Bespoke glass balustrade</p>
           </div>
         </div>
-        <article className="border border-zinc-200 bg-white p-6 md:p-8">
-          <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
+        <article className="border border-steel bg-steel p-6 text-white md:p-8">
+          <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-white/55">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
             Open views.
             <br />
             Safe <span className="text-primary">edges.</span>
           </h2>
-          <p className="mt-4 text-sm font-light leading-relaxed text-muted-deep">
+          <p className="mt-4 text-sm font-light leading-relaxed text-white/75">
             We fabricate glass balustrade and terrace enclosure systems for residential and commercial settings.
             The work is defined by precise steel base channels, glass selection matched to the survey, and fixing
             conditions confirmed before production.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-3">
             {SPEC_ITEMS.map((item) => (
-              <div key={item.label} className="border border-zinc-200 bg-canvas p-4">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{item.label}</p>
-                <p className="mt-2 font-heading text-sm font-bold uppercase tracking-tight text-steel">{item.value}</p>
+              <div key={item.label} className="border border-white/15 bg-white/5 p-4">
+                <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">{item.label}</p>
+                <p className="mt-2 font-heading text-sm font-bold uppercase tracking-tight text-white">{item.value}</p>
               </div>
             ))}
           </div>
@@ -131,7 +132,7 @@ export default function RailingsServicePage() {
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <div className="absolute inset-0 opacity-25">
           <Image
-            src="/images/railings/railings-ornate-copper-scroll.jpg"
+            src={OFFICIAL_IMAGES.services.staircases.primary}
             alt=""
             fill
             sizes="100vw"

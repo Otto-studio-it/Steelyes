@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Steel Platforms & Staircases | Bespoke Fabrication',
@@ -42,10 +43,10 @@ export default function StaircasesServicePage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper lg:order-2 lg:aspect-[4/5]">
           <Image
-            src="/images/client-uploads/selected/1000051984.JPG"
+            src={OFFICIAL_IMAGES.services.staircases.primary}
             alt="Steel staircase and landing installation in a residential interior"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -56,7 +57,7 @@ export default function StaircasesServicePage() {
             <p className="font-heading text-xl font-bold uppercase">Bespoke steel staircase</p>
           </div>
         </div>
-        <article className="border border-zinc-200 bg-white p-6 md:p-8">
+        <article className="border border-zinc-200 bg-white p-6 md:p-8 lg:order-1 lg:self-center">
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
             Precise.
@@ -68,9 +69,9 @@ export default function StaircasesServicePage() {
             fixing substrate outward — tread geometry, riser heights, and structural connections confirmed before
             production is committed.
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-3">
+          <div className="mt-6 grid grid-cols-1 gap-px border border-zinc-200 bg-zinc-200">
             {SPEC_ITEMS.map((item) => (
-              <div key={item.label} className="border border-zinc-200 bg-canvas p-4">
+              <div key={item.label} className="grid grid-cols-[6rem_1fr] gap-3 bg-canvas p-4">
                 <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">{item.label}</p>
                 <p className="mt-2 font-heading text-sm font-bold uppercase tracking-tight text-steel">{item.value}</p>
               </div>
@@ -82,12 +83,13 @@ export default function StaircasesServicePage() {
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>
         <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">Access geometry</h2>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {CAPABILITIES.map((capability) => (
-            <article key={capability.title} className="border border-zinc-200 bg-white p-6">
-              <h3 className="font-heading text-xl font-bold uppercase">{capability.title}</h3>
+        <div className="grid grid-cols-1 gap-0 border-l-2 border-primary md:grid-cols-2">
+          {CAPABILITIES.map((capability, index) => (
+            <article key={capability.title} className="relative border-b border-zinc-200 p-6 md:min-h-[12rem]">
+              <span className="absolute -left-[9px] top-7 h-4 w-4 bg-primary" aria-hidden />
+              <p className="font-mono text-[10px] uppercase tracking-widest text-primary">Level 0{index + 1}</p>
+              <h3 className="mt-2 font-heading text-xl font-bold uppercase">{capability.title}</h3>
               <p className="mt-3 text-sm font-light leading-relaxed text-muted-deep">{capability.detail}</p>
-              <div className="mt-5 h-0.5 w-14 bg-primary" />
             </article>
           ))}
         </div>

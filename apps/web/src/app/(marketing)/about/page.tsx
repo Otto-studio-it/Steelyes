@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'About | UK Steel Gate Manufacturer & Fabricator',
@@ -48,8 +49,8 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 gap-4">
           <div className="relative aspect-[4/5] w-full overflow-hidden">
             <Image
-              src="/images/home-welding.jpg"
-              alt="Steelyes workshop — steel fabrication in progress"
+              src={OFFICIAL_IMAGES.about.teamWorkshop}
+              alt="Steelyes workshop team at fabrication"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 50vw, 25vw"
@@ -57,8 +58,8 @@ export default function AboutPage() {
           </div>
           <div className="relative aspect-[4/5] w-full overflow-hidden md:translate-y-10">
             <Image
-              src="/images/home/steelwork-finial-detail.jpg"
-              alt="Steel finial detail — Steelyes fabrication quality"
+              src={OFFICIAL_IMAGES.gates.doubleSwing.gallery[1]}
+              alt="Double swing steel gate — Steelyes fabrication quality"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 50vw, 25vw"
@@ -113,8 +114,8 @@ export default function AboutPage() {
         </div>
         <div className="relative aspect-[4/3] w-full overflow-hidden border border-zinc-200">
           <Image
-            src="/images/home/modern-perforated-gate-detail.jpg"
-            alt="Perforated steel gate detail — Steelyes fabrication"
+            src={OFFICIAL_IMAGES.gates.trackedSliding.hero}
+            alt="Tracked sliding steel gate — Steelyes installation"
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"

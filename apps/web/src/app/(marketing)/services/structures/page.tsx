@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Steel Structures | Bespoke Structural Steelwork',
@@ -42,10 +43,10 @@ export default function StructuresServicePage() {
         </p>
       </section>
 
-      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
-        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
+      <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper lg:order-2 lg:aspect-auto lg:min-h-[34rem]">
           <Image
-            src="/images/balconies/balcony-steel-structure.jpg"
+            src={OFFICIAL_IMAGES.services.structures.hero}
             alt="Bespoke steel structure fabricated and installed"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -56,7 +57,7 @@ export default function StructuresServicePage() {
             <p className="font-heading text-xl font-bold uppercase">Bespoke steel structure</p>
           </div>
         </div>
-        <article className="border border-zinc-200 bg-white p-6 md:p-8">
+        <article className="border border-zinc-200 bg-canvas p-6 md:p-8 lg:order-1 lg:flex lg:flex-col lg:justify-center">
           <p className="mb-2 font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">Core brief</p>
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
             Engineered.
@@ -81,12 +82,17 @@ export default function StructuresServicePage() {
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>
         <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">Load-bearing scope</h2>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {CAPABILITIES.map((capability) => (
-            <article key={capability.title} className="border border-zinc-200 bg-white p-6">
-              <h3 className="font-heading text-xl font-bold uppercase">{capability.title}</h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-muted-deep">{capability.detail}</p>
-              <div className="mt-5 h-0.5 w-14 bg-primary" />
+        <div className="grid grid-cols-1 border-t border-zinc-200 md:grid-cols-2">
+          {CAPABILITIES.map((capability, index) => (
+            <article
+              key={capability.title}
+              className="grid grid-cols-[3rem_1fr] gap-4 border-b border-zinc-200 py-6 md:px-6 md:odd:border-r"
+            >
+              <p className="font-heading text-3xl font-black text-zinc-200">0{index + 1}</p>
+              <div>
+                <h3 className="font-heading text-xl font-bold uppercase">{capability.title}</h3>
+                <p className="mt-2 text-sm font-light leading-relaxed text-muted-deep">{capability.detail}</p>
+              </div>
             </article>
           ))}
         </div>

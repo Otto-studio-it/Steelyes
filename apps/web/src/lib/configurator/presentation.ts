@@ -1,4 +1,4 @@
-import { GLOBAL_DIMENSION_LIMITS, type GateStyle, type GateType } from '@steelyes/gate-engine'
+import { GLOBAL_DIMENSION_LIMITS } from '@steelyes/gate-engine'
 
 export type DimensionPreset = {
   mm: number
@@ -23,21 +23,7 @@ export const HEIGHT_DIMENSION_PRESETS: DimensionPreset[] = [
   { mm: 1500, label: 'High security (1.5 m)' },
 ]
 
-export const GATE_TYPE_IMAGES: Partial<Record<GateType, string>> = {
-  double_swing: '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-  single_swing: '/images/gates/pedestrian-gate-ornate-brick.jpg',
-  tracked_sliding: '/images/gates/sliding-gate-anthracite-residential.jpg',
-  cantilever_sliding: '/images/gates/sliding-gate-spear-finials.jpg',
-  bifolding_double_swing: '/images/home/modern-diagonal-steel-gate.jpg',
-  single_bifolding: '/images/home/privacy-horizontal-steel-gate.jpg',
-  telescopic_sliding: '/images/gates/sliding-gate-automated-open.jpg',
-  radius_sliding: '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
-}
-
-export const STYLE_IMAGES: Record<GateStyle, string> = {
-  traditional_victorian: '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-  composite_boards: '/images/home/privacy-horizontal-steel-gate.jpg',
-}
+export { GATE_TYPE_IMAGES, STYLE_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const WIDTH_PRESETS_MM = [900, 1200, 1500, 1800, 2000, 2400, 3000] as const
 export const HEIGHT_PRESETS_MM = [900, 1000, 1100, 1200, 1500] as const

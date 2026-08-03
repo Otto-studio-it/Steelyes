@@ -2,11 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+
 export function HomeWeldingHero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-steel md:min-h-[calc(100svh-4rem)]">
       <Image
-        src="/images/home/hero-modern-driveway-gate.jpg"
+        src={OFFICIAL_IMAGES.homepageHero}
         alt="Modern bespoke steel driveway gate installed at a residential entrance"
         fill
         priority
@@ -45,21 +47,28 @@ export function HomeWeldingHero() {
           Made-to-measure driveway, pedestrian, sliding and automated gates, specified from survey through fabrication
           and installation. Railings and structural steelwork are available from the same workshop.
         </p>
-        <div className="mt-8 flex flex-col gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:flex-row">
+        <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:grid-cols-2">
+          <Link
+            href="/configurator"
+            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Configure your gate
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          </Link>
           <Link
             href="/contact"
-            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-8 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
+            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Request a quote
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
           </Link>
-          <Link
-            href="/gates"
-            className="inline-flex min-h-[52px] w-full items-center justify-center border border-white/40 px-8 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
-          >
-            Browse gate types
-          </Link>
         </div>
+        <Link
+          href="/gates"
+          className="mt-4 inline-flex min-h-[44px] w-fit items-center gap-2 font-heading text-sm font-bold uppercase text-white/80 underline decoration-white/35 underline-offset-4 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-safe:animate-hero-reveal motion-safe:[animation-delay:640ms] motion-reduce:opacity-100"
+        >
+          Or browse gate types <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
       </div>
     </section>
   )

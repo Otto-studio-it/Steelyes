@@ -4,6 +4,8 @@
  * Prices stay indicative; enquire types do not pretend the configurator can finish them.
  */
 
+import { GATE_SLUG_IMAGES } from '@/lib/marketing/marketing-images'
+
 export type GateSlug =
   | 'double-swing'
   | 'single-swing'
@@ -43,14 +45,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     tagline: 'The gate most UK drives still ask for.',
     availability: 'configure',
     ctaLabel: 'Configure this gate',
-    ctaHref: '/configurator',
-    heroImage: '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-    detailImages: [
-      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-      '/images/components/component-finial-spear.jpg',
-      '/images/gates/pedestrian-gate-ornate-brick.jpg',
-      '/images/components/component-finial-ball.jpg',
-    ],
+    ctaHref: '/configurator?gate=double_swing',
+    heroImage: GATE_SLUG_IMAGES['double-swing'].hero,
+    detailImages: [...GATE_SLUG_IMAGES['double-swing'].gallery],
     customerVoice:
       '“We want proper driveway gates that open in the middle — look smart from the road, match the house, and still let the car in without drama. Prefer Victorian spears if it suits, or solid boards for privacy. Manual is fine for now; we might motorise later.”',
     description:
@@ -79,14 +76,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     tagline: 'A proper side gate — not an afterthought.',
     availability: 'configure',
     ctaLabel: 'Configure this gate',
-    ctaHref: '/configurator',
-    heroImage: '/images/gates/pedestrian-gate-ornate-brick.jpg',
-    detailImages: [
-      '/images/gates/pedestrian-gate-ornate-brick.jpg',
-      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-      '/images/components/component-finial-star.jpg',
-      '/images/railings/railings-ornate-bronze-driveway.jpg',
-    ],
+    ctaHref: '/configurator?gate=single_swing',
+    heroImage: GATE_SLUG_IMAGES['single-swing'].hero,
+    detailImages: [...GATE_SLUG_IMAGES['single-swing'].gallery],
     customerVoice:
       '“We need a personnel gate for the side path — something that matches the main drive gates, locks properly, and doesn’t look cheap next to the brickwork. Narrow opening, but we still want it made to measure.”',
     description:
@@ -115,14 +107,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     tagline: 'When the car stays and the leaf slides aside.',
     availability: 'configure',
     ctaLabel: 'Explore in configurator',
-    ctaHref: '/configurator',
-    heroImage: '/images/gates/sliding-gate-automated-open.jpg',
-    detailImages: [
-      '/images/gates/sliding-gate-anthracite-residential.jpg',
-      '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
-      '/images/components/component-finial-diamond.jpg',
-      '/images/components/component-finial-spear.jpg',
-    ],
+    ctaHref: '/configurator?gate=tracked_sliding',
+    heroImage: GATE_SLUG_IMAGES['tracked-sliding'].hero,
+    detailImages: [...GATE_SLUG_IMAGES['tracked-sliding'].gallery],
     customerVoice:
       '“We haven’t got room for two big leaves to swing into the drive — there’s a parked car or the path is too short. We need the gate to slide along the fence line. Happy with a track in the ground if it means it runs clean every day.”',
     description:
@@ -151,14 +138,9 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     tagline: 'Slide without a rail across the entrance.',
     availability: 'configure',
     ctaLabel: 'Explore in configurator',
-    ctaHref: '/configurator',
-    heroImage: '/images/gates/sliding-gate-anthracite-residential.jpg',
-    detailImages: [
-      '/images/gates/sliding-gate-spear-finials.jpg',
-      '/images/gates/sliding-gate-automated-open.jpg',
-      '/images/components/component-finial-spear.jpg',
-      '/images/components/component-finial-ball.jpg',
-    ],
+    ctaHref: '/configurator?gate=cantilever_sliding',
+    heroImage: GATE_SLUG_IMAGES.cantilever.hero,
+    detailImages: [...GATE_SLUG_IMAGES.cantilever.gallery],
     customerVoice:
       '“I don’t want a track cut through the tarmac — we have block paving / a slope / a shared drive. The gate has to hang and slide without something in the middle of the entrance. Tell me honestly how much space I need beside the opening.”',
     description:
@@ -188,13 +170,8 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     availability: 'configure',
     ctaLabel: 'Configure this gate',
     ctaHref: '/configurator?gate=bifolding_double_swing',
-    heroImage: '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
-    detailImages: [
-      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-      '/images/components/component-finial-acorn.jpg',
-      '/images/gates/sliding-gate-spear-finials.jpg',
-      '/images/components/component-finial-diamond.jpg',
-    ],
+    heroImage: GATE_SLUG_IMAGES.bifold.hero,
+    detailImages: [...GATE_SLUG_IMAGES.bifold.gallery],
     customerVoice:
       '“The drive is short — if a swing leaf opens, it hits the car. We still want a wide entrance when it’s open. Something that folds back against the wall or pier would solve it.”',
     description:
@@ -224,13 +201,8 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     availability: 'configure',
     ctaLabel: 'Configure this gate',
     ctaHref: '/configurator?gate=single_bifolding',
-    heroImage: '/images/home/privacy-horizontal-steel-gate.jpg',
-    detailImages: [
-      '/images/gates/pedestrian-gate-ornate-brick.jpg',
-      '/images/home/modern-diagonal-steel-gate.jpg',
-      '/images/components/component-finial-star.jpg',
-      '/images/components/component-finial-ball.jpg',
-    ],
+    heroImage: GATE_SLUG_IMAGES['single-bifold'].hero,
+    detailImages: [...GATE_SLUG_IMAGES['single-bifold'].gallery],
     customerVoice:
       '“Side gate is tight against a wall — a normal swing leaf would hit the bin store. Can it fold so it stacks neatly?”',
     description:
@@ -260,13 +232,8 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     availability: 'configure',
     ctaLabel: 'Configure this gate',
     ctaHref: '/configurator?gate=telescopic_sliding',
-    heroImage: '/images/gates/sliding-gate-spear-finials.jpg',
-    detailImages: [
-      '/images/gates/sliding-gate-anthracite-residential.jpg',
-      '/images/components/component-finial-spear.jpg',
-      '/images/gates/privacy-diagonal-gate-dusk.jpg',
-      '/images/components/component-finial-acorn.jpg',
-    ],
+    heroImage: GATE_SLUG_IMAGES.telescopic.hero,
+    detailImages: [...GATE_SLUG_IMAGES.telescopic.gallery],
     customerVoice:
       '“The opening is wide but the run-back along the fence is short. A single long sliding leaf won’t fit. We need panels that telescope so the stack is shorter.”',
     description:
@@ -296,13 +263,8 @@ export const GATE_DATA: Record<GateSlug, GateData> = {
     availability: 'configure',
     ctaLabel: 'Configure this gate',
     ctaHref: '/configurator?gate=radius_sliding',
-    heroImage: '/images/gates/sliding-gate-classic-ornate-tudor.jpg',
-    detailImages: [
-      '/images/gates/privacy-diagonal-gate-dusk.jpg',
-      '/images/gates/classic-ornate-driveway-gate-arch.jpg',
-      '/images/components/component-finial-star.jpg',
-      '/images/components/component-finial-acorn.jpg',
-    ],
+    heroImage: GATE_SLUG_IMAGES.radius.hero,
+    detailImages: [...GATE_SLUG_IMAGES.radius.gallery],
     customerVoice:
       '“The entrance is on a curve — posts aren’t parallel in a simple rectangle. We need the gate to follow the radius, not fight it.”',
     description:

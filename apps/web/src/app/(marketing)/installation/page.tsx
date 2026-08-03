@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Gate Installation | Supply & Install Steel Gates UK',
@@ -17,7 +18,7 @@ export default function InstallationPage() {
     <MarketingShell pathname="/installation">
       <section className="relative overflow-hidden bg-steel py-14 md:py-24">
         <Image
-          src="/images/gates/sliding-gate-automated-open.jpg"
+          src={OFFICIAL_IMAGES.gates.trackedSliding.hero}
           alt="Steelyes gate installation"
           fill
           sizes="100vw"
@@ -78,7 +79,7 @@ export default function InstallationPage() {
         <div className="relative overflow-hidden border border-zinc-200">
           <div className="relative h-full min-h-[340px] w-full">
             <Image
-              src="/images/gates/sliding-gate-anthracite-residential.jpg"
+              src={OFFICIAL_IMAGES.gates.doubleSwing.hero}
               alt="Steelyes gate installation on site"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -173,7 +174,7 @@ export default function InstallationPage() {
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <div className="absolute inset-0 opacity-25">
           <Image
-            src="/images/gates/privacy-diagonal-gate-dusk.jpg"
+            src={OFFICIAL_IMAGES.gates.cantilever.hero}
             alt=""
             fill
             sizes="100vw"

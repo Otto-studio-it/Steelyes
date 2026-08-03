@@ -3,12 +3,7 @@
 import { useMemo } from 'react'
 import { buildGateRenderPlan, type GateConfig, type GateRenderPrimitive } from '@steelyes/gate-engine'
 
-const PHOTO_BACKGROUNDS: Partial<Record<string, string>> = {
-  double_swing: '/images/home/classic-ornate-driveway-gate.jpg',
-  single_swing: '/images/gates/pedestrian-gate-ornate-brick.jpg',
-  tracked_sliding: '/images/gates/sliding-gate-automated-open.jpg',
-  cantilever_sliding: '/images/gates/sliding-gate-anthracite-residential.jpg',
-}
+import { CONFIGURATOR_PHOTO_BACKGROUNDS, OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 function renderPrimitive(primitive: GateRenderPrimitive) {
   switch (primitive.kind) {
@@ -76,7 +71,8 @@ type ConfiguratorPhotoPreviewProps = {
 
 export function ConfiguratorPhotoPreview({ config, compact = false, studio = false }: ConfiguratorPhotoPreviewProps) {
   const plan = useMemo(() => buildGateRenderPlan(config, { viewMode: 'installation' }), [config])
-  const backgroundSrc = PHOTO_BACKGROUNDS[config.gateType] ?? '/images/home/installed-classic-frontage-gate.jpg'
+  const backgroundSrc =
+    CONFIGURATOR_PHOTO_BACKGROUNDS[config.gateType] ?? OFFICIAL_IMAGES.homepageHero
 
   return (
     <div

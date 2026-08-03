@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
 export const metadata: Metadata = {
   title: 'Metal & Glass Balconies | Bespoke Structural Steelwork',
@@ -45,7 +46,7 @@ export default function BalconiesServicePage() {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src="/images/balconies/balcony-juliet-glass-london.jpg"
+            src={OFFICIAL_IMAGES.services.balconies.glass}
             alt="Steel balcony fabricated and installed in London"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -81,7 +82,7 @@ export default function BalconiesServicePage() {
       <section className="mx-auto max-w-7xl px-4 pb-10 md:px-8">
         <div className="relative aspect-[21/6] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src="/images/balconies/balcony-steel-structure.jpg"
+            src={OFFICIAL_IMAGES.services.balconies.metal}
             alt="Raw steel balcony frame structure mid-fabrication"
             fill
             sizes="100vw"
@@ -148,7 +149,7 @@ export default function BalconiesServicePage() {
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <div className="absolute inset-0 opacity-25">
           <Image
-            src="/images/balconies/balcony-rooftop-glass-london.jpg"
+            src={OFFICIAL_IMAGES.services.balconies.mixed}
             alt=""
             fill
             sizes="100vw"
