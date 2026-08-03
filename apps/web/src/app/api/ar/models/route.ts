@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { getArModel, putArModel } from '@/lib/configurator/ar/ar-model-store'
+import { putArModel } from '@/lib/configurator/ar/ar-model-store'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
