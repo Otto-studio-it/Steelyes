@@ -14,6 +14,19 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — Phase A AR View in your space
+
+Commit: _pending_
+
+- CTA **View in your space** on configurator preview (all 8 gate types)
+- Client export GLB + USDZ from `buildGateMeshPlan` at real mm→m scale
+- Ephemeral `/api/ar/models` HTTPS handoff → Quick Look / Scene Viewer
+- camera Permissions-Policy allows self for AR
+- Radius sliding gets schematic articulated mesh segments; mesh `fidelity` flag
+- Doc: `docs/frontend/2d-masters/PHASE_A_AR_VIEW_IN_SPACE.md`
+
+---
+
 ## 2026-08-03 — CA-01 handle on Design masters + Quick Path limits
 
 Commit: _pending_

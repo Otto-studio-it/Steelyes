@@ -253,6 +253,7 @@ export type {
   GateMeshBox,
   GateMeshBoxRole,
   GateMeshCylinder,
+  GateMeshFidelity,
   GateMeshPlan,
 } from './mesh/types'
 export type {

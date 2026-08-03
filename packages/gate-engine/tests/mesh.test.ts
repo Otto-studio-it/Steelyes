@@ -70,6 +70,39 @@ describe('gate-engine mesh', () => {
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-4')).toBe(false)
   })
 
+  it('builds a mesh plan for every gate type', () => {
+    const types = [
+      'double_swing',
+      'single_swing',
+      'tracked_sliding',
+      'cantilever_sliding',
+      'bifolding_double_swing',
+      'single_bifolding',
+      'telescopic_sliding',
+      'radius_sliding',
+    ] as const
+
+    for (const gateType of types) {
+      const plan = buildGateMeshPlan(createGateConfig(createGatePreset(gateType)))
+      expect(plan.gateType).toBe(gateType)
+      expect(plan.boxes.length).toBeGreaterThan(0)
+      expect(plan.fidelity === 'workshop' || plan.fidelity === 'schematic').toBe(true)
+    }
+  })
+
+  it('builds a schematic articulated mesh for radius sliding', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('radius_sliding')))
+    expect(plan.boxes.some((box) => box.id === 'radius-segment-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'radius-segment-3')).toBe(true)
+    expect(plan.fidelity).toBe('schematic')
+  })
+
+  it('marks Victorian swing mesh as workshop fidelity', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('double_swing')))
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.length).toBeGreaterThan(0)
+  })
+
   it('rejects invalid configs before mesh generation', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),

@@ -6,6 +6,7 @@ import { Maximize2, MoreHorizontal, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { ViewInYourSpaceButton } from '@/components/configurator/ViewInYourSpace'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { CONFIGURATOR_3D_PREVIEW_ENABLED } from '@/lib/configurator/features'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
@@ -283,6 +284,11 @@ export function PreviewCanvas({
           >
             {config.widthMm} × {config.heightMm} mm
           </button>
+        ) : null}
+        {CONFIGURATOR_3D_PREVIEW_ENABLED ? (
+          <div className="absolute bottom-3 right-3 z-10">
+            <ViewInYourSpaceButton config={config} className="shadow-sm" />
+          </div>
         ) : null}
       </div>
     </div>

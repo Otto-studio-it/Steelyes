@@ -16,7 +16,7 @@ import {
 } from './types'
 
 export { MM_TO_SCENE_UNITS, mmToSceneUnits }
-export type { GateMeshBox, GateMeshBoxRole, GateMeshCylinder, GateMeshPlan } from './types'
+export type { GateMeshBox, GateMeshBoxRole, GateMeshCylinder, GateMeshFidelity, GateMeshPlan } from './types'
 
 const FRAME_DEPTH_MM = scaleVisualBoldness(45)
 const POST_WIDTH_MM = scaleVisualBoldness(90)
@@ -87,9 +87,16 @@ function buildSwingMesh(config: GateConfig, leafCount: number): { boxes: GateMes
 function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
   const isCantilever = config.gateType === 'cantilever_sliding'
   const isTelescopic = config.gateType === 'telescopic_sliding'
+  const isRadius = config.gateType === 'radius_sliding'
   const tailRatio = getCantileverTailRatio(config.widthMm)
   const tailWidth = isCantilever ? config.widthMm * tailRatio : 0
-  const panelWidth = isCantilever ? config.widthMm * 0.64 : isTelescopic ? config.widthMm * 0.78 : config.widthMm * 0.88
+  const panelWidth = isCantilever
+    ? config.widthMm * 0.64
+    : isTelescopic
+      ? config.widthMm * 0.78
+      : isRadius
+        ? config.widthMm * 0.72
+        : config.widthMm * 0.88
   const panelHeight = config.heightMm - 56
 
   const boxes: GateMeshBox[] = [
@@ -100,7 +107,7 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
       widthMm: config.widthMm,
       heightMm: 24,
       depthMm: FRAME_DEPTH_MM,
-      positionMm: [0, 12, 0],
+      positionMm: [0, 12, isRadius ? FRAME_DEPTH_MM * 0.4 : 0],
       role: 'rail',
     },
   ]
@@ -117,15 +124,41 @@ function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
     })
   }
 
-  boxes.push({
-    kind: 'box',
-    id: 'sliding-panel',
-    widthMm: panelWidth,
-    heightMm: panelHeight,
-    depthMm: FRAME_DEPTH_MM,
-    positionMm: [isCantilever ? tailWidth + panelWidth / 2 - 24 : config.widthMm * 0.04, panelHeight / 2 + 28, 0],
-    role: config.style === 'composite_boards' ? 'panel' : 'frame',
-  })
+  if (isRadius) {
+    // Schematic articulated train (~90°) — three leaf boxes stepped in X/Z.
+    const segmentCount = 3
+    const segmentWidth = panelWidth / segmentCount
+    for (let index = 0; index < segmentCount; index += 1) {
+      const t = index / Math.max(segmentCount - 1, 1)
+      boxes.push({
+        kind: 'box',
+        id: `radius-segment-${index + 1}`,
+        widthMm: segmentWidth * 0.92,
+        heightMm: panelHeight - index * scaleVisualBoldness(4),
+        depthMm: FRAME_DEPTH_MM,
+        positionMm: [
+          -config.widthMm * 0.28 + index * segmentWidth * 0.95,
+          panelHeight / 2 + 28,
+          Math.sin(t * Math.PI * 0.5) * config.widthMm * 0.18,
+        ],
+        role: config.style === 'composite_boards' ? 'panel' : 'frame',
+      })
+    }
+  } else {
+    boxes.push({
+      kind: 'box',
+      id: 'sliding-panel',
+      widthMm: panelWidth,
+      heightMm: panelHeight,
+      depthMm: FRAME_DEPTH_MM,
+      positionMm: [
+        isCantilever ? tailWidth + panelWidth / 2 - 24 : config.widthMm * 0.04,
+        panelHeight / 2 + 28,
+        0,
+      ],
+      role: config.style === 'composite_boards' ? 'panel' : 'frame',
+    })
+  }
 
   if (isTelescopic) {
     const segmentCount = getTelescopicPanelCount()
@@ -164,16 +197,26 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
     : buildSwingMesh(config, getLeafCount(config.gateType))
   const boxes = swingMesh ? swingMesh.boxes : buildSlidingMeshBoxes(config)
   const cylinders = swingMesh?.cylinders ?? []
+  const fidelity =
+    !isSlidingGate(config.gateType) &&
+    config.style === 'traditional_victorian' &&
+    cylinders.length > 0
+      ? 'workshop'
+      : 'schematic'
 
   const notes = [
-    'Procedural 3D mesh derived from the same GateConfig and geometry recipe as the 2D preview.',
-    cylinders.length > 0
-      ? `${cylinders.length} tube pickets rendered as cylinders for Victorian swing layouts.`
-      : 'Frame and panel boxes represent sliding or composite layouts schematically.',
+    'Procedural 3D mesh derived from the same GateConfig as Design / Installation previews.',
+    fidelity === 'workshop'
+      ? `${cylinders.length} tube pickets as cylinders — workshop-level swing mesh for AR scale checks.`
+      : 'Schematic frame/panel mesh for AR placement at real millimetre scale (not photoreal CAD).',
   ]
 
   if (config.gateType === 'cantilever_sliding') {
     notes.unshift(cantileverTailNote(config.widthMm))
+  }
+
+  if (config.gateType === 'radius_sliding') {
+    notes.unshift('Radius sliding shown as a schematic articulated train on a curved footprint.')
   }
 
   if (isBifoldGate(config.gateType)) {
@@ -186,6 +229,7 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
     material,
     boxes,
     cylinders,
+    fidelity,
     notes,
   }
 }
