@@ -14,6 +14,16 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — Email UX P2 (unified inbox admin panel)
+
+- New `inbound_emails` table (`supabase/migrations/20260803140000_inbound_emails.sql`) — service-role only, not yet applied to the linked project (needs `supabase db push`, blocked by auto-mode classifier pending explicit go-ahead).
+- New `/api/inbox/ingest` route (`INBOX_INGEST_SECRET` bearer auth) — upserts a row per Gmail thread.
+- New `/admin/inbox` panel ("Posta in arrivo" in the Clienti nav group) — lists direct emails alongside `/admin/quotes`, with a handled/unhandled toggle.
+- `scripts/gmail-inbox-autoack.gs` now POSTs thread + category to the ingest route after acking (optional — blank `SITE_INGEST_URL`/`SITE_INGEST_SECRET` keeps existing installs working unchanged until updated).
+- Still needed before this is live end-to-end: apply the migration, set `INBOX_INGEST_SECRET` on both Coolify apps, fill the two constants in the already-installed Apps Script.
+
+---
+
 ## 2026-08-03 — Email UX P0 + P1 (inbox classification, inbound auto-ack)
 
 - P0 (`apps/web/src/lib/email/send.ts`): subject tags `[LEAD]` / `[PREVENTIVO]` / `[INTAKE]` + short ref code, explicit `replyTo` on all 6 templates, plain-text fallback, `internalEmailShell()` for ops-facing mail
