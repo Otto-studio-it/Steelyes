@@ -76,7 +76,8 @@ export default function PrivacyPolicyPage() {
           <ul>
             <li><strong>Supabase Inc.</strong> — cloud database provider (enquiry storage). Data is processed in the EU.</li>
             <li><strong>Resend Inc.</strong> — transactional email provider (notification emails). Data is processed in the US under appropriate safeguards.</li>
-            <li><strong>Vercel Inc.</strong> — hosting and CDN provider.</li>
+            <li><strong>Hetzner Online GmbH.</strong> — server infrastructure provider. Website traffic is proxied through Cloudflare.</li>
+            <li><strong>Cloudflare, Inc.</strong> — DNS, security and content delivery provider.</li>
           </ul>
           <p>Each sub-processor is bound by appropriate data processing agreements.</p>
 

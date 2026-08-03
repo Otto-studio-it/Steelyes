@@ -24,7 +24,7 @@ Start here when resuming the project.
 | [`frontend/CLIENT_CHANGELOG.md`](./frontend/CLIENT_CHANGELOG.md) | Prioritized backlog of client-requested site changes. |
 | [`HANDOFF.md`](./HANDOFF.md) | Senior developer 30-minute onboarding. |
 | [`REPO_HEALTH.md`](./REPO_HEALTH.md) | CI status, hygiene audit, deploy readiness. |
-| [`DEPLOY.md`](./DEPLOY.md) | Vercel monorepo deployment checklist. |
+| [`DEPLOY.md`](./DEPLOY.md) | Current Coolify deployment and scheduled-job runbook. |
 
 ---
 

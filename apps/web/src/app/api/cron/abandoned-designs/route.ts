@@ -17,7 +17,7 @@ function absoluteSiteUrl(path: string): string {
 }
 
 /**
- * Daily job (Vercel Cron): email a single reminder to customers who saved a
+ * Daily scheduled job: email a single reminder to customers who saved a
  * design via "email me my design" but never requested a quote. Skips anyone
  * who has since submitted a quote request with the same email.
  */

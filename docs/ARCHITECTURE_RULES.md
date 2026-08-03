@@ -25,7 +25,7 @@ last_updated: 2026-04-20
             │ HTTPS / Server Actions                       │ Realtime (WebSocket)
             ▼                                              ▼
 ┌───────────────────────────┐   ┌──────────────────────────────────────┐
-│  Vercel Edge + Node.js    │   │         Supabase (EU region)         │
+│ Coolify + Next.js Node.js │   │         Supabase (EU region)         │
 │  ─ Next.js Server Actions │   │  ─ Postgres (operational data)       │
 │  ─ API route handlers     │◄──┤  ─ Auth (admin only, JWT)            │
 │  ─ ISR revalidation       │   │  ─ Realtime (postgres_changes)       │
@@ -65,7 +65,8 @@ DATA LAYER
   MDX/JSON in repo  — marketing copy, FAQ, legal
 
 INFRASTRUCTURE LAYER
-  Vercel      — hosting, edge, CDN for Next.js
+  Coolify     — Next.js build, deployment and container lifecycle
+  Cloudflare  — DNS, edge proxy and CDN
   AWS S3      — binary assets (photos, 3D exports)
   CloudFront  — CDN in front of S3 public assets
   Resend      — email
@@ -382,7 +383,7 @@ apps/web/content/
 - ✅ Retention: quote_requests auto-purged at 24 months
 - ✅ Right to erasure: admin panel "Delete customer data" action (soft-delete + PII-null)
 - ✅ DPA: signed and active
-- ✅ Subprocessors: Supabase, Vercel, AWS, Resend, Cloudflare, Iubenda, Sentry
+- ✅ Subprocessors: Supabase, Hetzner, AWS, Resend, Cloudflare, Iubenda, Sentry, PostHog
 - ✅ Incident response: Sentry alert → Ruben + Marius within 1h → ICO within 72h if PII breach
 
 ---
@@ -394,7 +395,7 @@ apps/web/content/
 | Env         | Purpose     | URL                      | Supabase             | S3 bucket        |
 | ----------- | ----------- | ------------------------ | -------------------- | ---------------- |
 | **Local**   | Dev machine | `localhost:3000`         | `supabase start`     | `steelyes-dev-*` |
-| **Preview** | Per PR      | `steelyes-<br>.vercel…` | `steelyes-staging`   | `steelyes-staging` |
+| **Staging** | Pre-release | `staging.steelyes.co.uk` | `steelyes-staging` | `steelyes-staging` |
 | **Prod**    | Live        | `steelyes.co.uk`         | `steelyes-prod`      | `steelyes-prod`  |
 
 ### CI/CD pipeline
@@ -412,19 +413,19 @@ GitHub Actions:
   └── pnpm test:e2e --project=chromium (Playwright smoke)
   │
   ▼ (green)
-Vercel: preview deploy → preview URL
+Coolify: staging deploy → staging URL
   │
   ▼
 gh pr create --auto-merge
   │
   ▼ (auto-merge after CI)
 Main branch push:
-  ├── Vercel: production deploy
+  ├── Coolify: production deploy
   ├── Supabase: apply new migrations via CLI
   └── Sentry: upload source maps for release
 ```
 
-**Every push to `main` is a production deploy. No manual "release" step. Rollback = `git revert` + push.**
+**Production deployment follows the branch configured in Coolify. Before launch, pin this to the approved release branch. Rollback uses the previous known-good Coolify deployment or a reviewed git revert.**
 
 ### Database migrations
 
