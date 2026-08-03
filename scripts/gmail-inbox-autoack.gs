@@ -17,15 +17,23 @@
  *      confirming receipt, then applies a colour-codable label based on
  *      keyword match (Preventivo / Reclamo / Fattura / Garanzia / Generico).
  *   4. Marks the thread "Steelyes/Acked" so it is never re-processed.
+ *   5. If SITE_INGEST_URL/SITE_INGEST_SECRET below are filled in, also logs
+ *      the thread to the site's /admin/inbox panel via a POST to
+ *      apps/web/src/app/api/inbox/ingest/route.ts — so Marius sees direct
+ *      emails and site leads in one place. Safe to leave blank: the script
+ *      still auto-acks and labels in Gmail either way, it just skips logging.
  *
  * SETUP (one-time, ~5 min):
  *   1. Log into script.google.com AS info@steelyes.co.uk (the Workspace
  *      account that owns the mailbox), not a personal account.
  *   2. New project → paste this whole file in → save.
- *   3. Run the `installTrigger` function once from the editor toolbar.
+ *   3. Fill in SITE_INGEST_URL and SITE_INGEST_SECRET below (ask Ruben for
+ *      the value of INBOX_INGEST_SECRET from Coolify env vars) — or leave
+ *      both blank to skip admin-panel logging entirely.
+ *   4. Run the `installTrigger` function once from the editor toolbar.
  *      Google will prompt for Gmail authorization — accept (it only needs
  *      access to this account's own mailbox).
- *   4. Done. `autoAckInbox` now runs automatically every 10 minutes.
+ *   5. Done. `autoAckInbox` now runs automatically every 10 minutes.
  *
  * TUNING:
  *   - Edit ACK_BODY to change the auto-reply wording.
@@ -40,6 +48,11 @@
  */
 
 const ACKED_LABEL = 'Steelyes/Acked'
+
+// Fill these in to also log inbound emails to /admin/inbox on the site.
+// Leave both blank ('') to skip that step — Gmail auto-ack/labelling still works.
+const SITE_INGEST_URL = '' // e.g. 'https://steelyes.co.uk/api/inbox/ingest'
+const SITE_INGEST_SECRET = '' // value of INBOX_INGEST_SECRET (Coolify env var)
 
 const LABELS = {
   preventivo: 'Steelyes/Preventivo',
@@ -56,12 +69,12 @@ const INTERNAL_SUBJECT_TAGS = ['[LEAD]', '[PREVENTIVO]', '[INTAKE]']
 
 const KEYWORD_RULES = [
   {
-    label: LABELS.reclamo,
+    key: 'reclamo',
     keywords: ['complaint', 'reclamo', 'refund', 'broken', 'damaged', 'problem', 'issue', 'not happy', 'unhappy'],
   },
-  { label: LABELS.fattura, keywords: ['invoice', 'fattura', 'payment', 'receipt', 'vat'] },
-  { label: LABELS.garanzia, keywords: ['warranty', 'garanzia', 'guarantee'] },
-  { label: LABELS.preventivo, keywords: ['quote', 'preventivo', 'price', 'cost', 'estimate'] },
+  { key: 'fattura', keywords: ['invoice', 'fattura', 'payment', 'receipt', 'vat'] },
+  { key: 'garanzia', keywords: ['warranty', 'garanzia', 'guarantee'] },
+  { key: 'preventivo', keywords: ['quote', 'preventivo', 'price', 'cost', 'estimate'] },
 ]
 
 const ACK_BODY = [
@@ -90,13 +103,45 @@ function autoAckInbox() {
 
     thread.reply(ACK_BODY)
 
-    const bodySnippet = (firstMessage.getPlainBody() || '').toLowerCase()
-    const haystack = `${subject} ${bodySnippet}`.toLowerCase()
+    const plainBody = firstMessage.getPlainBody() || ''
+    const haystack = `${subject} ${plainBody}`.toLowerCase()
     const matchedRule = KEYWORD_RULES.find((rule) => rule.keywords.some((kw) => haystack.indexOf(kw) !== -1))
+    const categoryKey = matchedRule ? matchedRule.key : 'generico'
 
-    thread.addLabel(getOrCreateLabel_(matchedRule ? matchedRule.label : LABELS.generico))
+    thread.addLabel(getOrCreateLabel_(LABELS[categoryKey]))
     thread.addLabel(ackedLabel)
+
+    postToIngest_(thread, firstMessage, fromHeader, subject, plainBody, categoryKey)
   })
+}
+
+function postToIngest_(thread, firstMessage, fromHeader, subject, plainBody, categoryKey) {
+  if (!SITE_INGEST_URL || !SITE_INGEST_SECRET) return
+
+  const emailMatch = /<([^>]+)>/.exec(fromHeader || '')
+  const fromEmail = emailMatch ? emailMatch[1] : fromHeader
+
+  const payload = {
+    gmailThreadId: thread.getId(),
+    fromEmail: fromEmail,
+    subject: subject,
+    snippet: plainBody.slice(0, 200),
+    category: categoryKey,
+    receivedAt: new Date(firstMessage.getDate()).toISOString(),
+  }
+
+  try {
+    UrlFetchApp.fetch(SITE_INGEST_URL, {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: `Bearer ${SITE_INGEST_SECRET}` },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true,
+    })
+  } catch (err) {
+    // Never let a logging failure block the Gmail-side ack/label, which already happened.
+    console.error('inbox ingest failed', err)
+  }
 }
 
 function shouldSkip_(fromHeader, subject) {

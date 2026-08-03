@@ -33,6 +33,13 @@ Serve farlo **una sola volta**, da fatto in poi funziona da solo.
    tutto quel testo e cancellalo.
 4. Incolla al suo posto tutto il contenuto del file
    `scripts/gmail-inbox-autoack.gs`.
+4bis. (Opzionale ma consigliato) Vicino all'inizio del file trovi due righe:
+   `SITE_INGEST_URL` e `SITE_INGEST_SECRET`, entrambe vuote (`''`). Se le
+   riempi, ogni email diretta comparirà anche nel pannello
+   **Admin → Posta in arrivo** del sito, non solo su Gmail. Chiedi a Ruben
+   l'URL giusto (es. `https://steelyes.co.uk/api/inbox/ingest`) e il valore
+   di `INBOX_INGEST_SECRET`. Se le lasci vuote, va bene lo stesso: l'auto-
+   risposta e le etichette su Gmail funzionano comunque.
 5. Salva (icona a forma di dischetto, o Ctrl+S / Cmd+S).
 6. Poco sopra l'editor c'è un menu a tendina con scritto il nome di una
    funzione (probabilmente `autoAckInbox`). Aprilo e scegli
@@ -78,3 +85,17 @@ Se in futuro si vuole fermare: script.google.com → apri il progetto →
 icona a forma di orologio (**Trigger**) nel menu a sinistra → clicca i tre
 puntini sulla riga `autoAckInbox` → **Elimina trigger**. La posta torna a
 comportarsi esattamente come prima, senza altre modifiche da fare.
+
+## Se l'hai già installato prima (aggiornamento)
+
+Se avevi già fatto questi passi in precedenza (solo auto-risposta + etichette,
+senza il pannello Admin), per aggiungere il collegamento al pannello:
+
+1. script.google.com → apri lo stesso progetto di prima.
+2. Seleziona tutto il codice esistente e sostituiscilo con il contenuto
+   aggiornato di `scripts/gmail-inbox-autoack.gs`.
+3. Riempi `SITE_INGEST_URL` e `SITE_INGEST_SECRET` come al punto 4bis sopra.
+4. Salva. **Non serve rieseguire `installTrigger`** — il trigger esiste già
+   e userà il codice nuovo dal prossimo giro (max 10 minuti).
+5. Da questo momento, le email dirette compaiono anche in
+   **Admin → Posta in arrivo** sul sito.
