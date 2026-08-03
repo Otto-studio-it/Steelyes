@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import { ArrowDown, ArrowRight } from 'lucide-react'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
@@ -43,30 +44,74 @@ export default function GatesPage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-canvas py-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 md:grid-cols-4 md:px-8">
-          {[
-            ['01. Gate type', 'Swing, slide, fold, radius'],
-            ['02. Finish direction', 'Colour confirmed in specification'],
-            ['03. Automation', 'Manual or automated, subject to survey'],
-          ].map(([label, value]) => (
-            <div key={label}>
-              <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-muted-deep">{label}</p>
-              <div className="min-h-[48px] border border-zinc-300 bg-white px-3 py-3 font-heading text-sm font-bold uppercase leading-snug">
-                {value}
-              </div>
+      <section className="border-y border-zinc-200 bg-canvas py-10 md:py-14" aria-labelledby="gate-decisions-title">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div>
+              <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">A clearer way to choose</p>
+              <h2 id="gate-decisions-title" className="font-heading text-3xl font-black uppercase leading-none md:text-4xl">
+                Two decisions,
+                <br />
+                in the right order.
+              </h2>
             </div>
-          ))}
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[48px] items-center justify-center self-end bg-steel px-8 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          >
-            Request a quote
-          </Link>
+
+            <ol className="grid gap-px border border-zinc-200 bg-zinc-200 md:grid-cols-2">
+              <li className="bg-white p-5 md:p-6">
+                <p className="font-mono text-xs font-bold uppercase tracking-widest text-primary">01 · Opening mechanism</p>
+                <h3 className="mt-3 font-heading text-xl font-black uppercase">How it moves</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-deep">
+                  Swing, sliding, folding or radius is determined by the opening, parking space, ground and side run.
+                </p>
+                <a
+                  href="#gate-mechanisms"
+                  className="mt-4 inline-flex min-h-[44px] items-center gap-2 font-heading text-sm font-bold uppercase text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  Compare mechanisms <ArrowDown className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+              <li className="bg-white p-5 md:p-6">
+                <p className="font-mono text-xs font-bold uppercase tracking-widest text-primary">02 · Appearance</p>
+                <h3 className="mt-3 font-heading text-xl font-black uppercase">How it looks</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-deep">
+                  Choose Victorian steelwork or composite boards, then adjust privacy, colour, dimensions and options.
+                </p>
+                <Link
+                  href="/configurator"
+                  className="mt-4 inline-flex min-h-[44px] items-center gap-2 font-heading text-sm font-bold uppercase text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                >
+                  Explore appearance <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </li>
+            </ol>
+          </div>
+
+          <div className="mt-8 grid w-full gap-3 sm:max-w-xl sm:grid-cols-2 lg:ml-auto">
+            <Link
+              href="/configurator"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 border border-zinc-300 bg-white px-6 py-3 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            >
+              Configure your gate <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Request a quote <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+      <section id="gate-mechanisms" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 md:px-8 md:py-16">
+        <div className="mb-8 max-w-2xl">
+          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">Opening mechanisms</p>
+          <h2 className="font-heading text-3xl font-black uppercase leading-none md:text-4xl">Compare the movement</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted-deep md:text-base">
+            These are engineering layouts, not visual styles. Open a type to understand the space it needs and where
+            survey decisions begin.
+          </p>
+        </div>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           {GATE_SLUGS.map((slug) => {
             const gate = GATE_DATA[slug]
@@ -101,27 +146,43 @@ export default function GatesPage() {
                     <span className="font-heading text-xs font-bold uppercase tracking-wide text-zinc-400">
                       Indicative, subject to survey
                     </span>
-                    <Link
-                      href={`/gates/${slug}`}
-                      className="font-heading text-sm font-bold uppercase tracking-wide text-primary hover:underline"
-                    >
-                      Read brief
-                    </Link>
+                    <div className="flex shrink-0 items-center gap-4 pl-3">
+                      <Link
+                        href={`/gates/${slug}`}
+                        className="inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-wide text-muted-deep hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      >
+                        Read brief
+                      </Link>
+                      <Link
+                        href={gate.ctaHref}
+                        className="inline-flex min-h-[44px] items-center gap-1 font-heading text-sm font-bold uppercase tracking-wide text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                      >
+                        Configure <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </article>
             )
           })}
         </div>
-        <div className="mt-16 flex flex-col items-center gap-3">
-          <Link
-            href="/configurator"
-            className="inline-flex min-h-[48px] items-center border border-zinc-300 px-10 py-3 font-heading text-sm font-bold uppercase tracking-widest transition-colors hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-          >
-            Explore configurator
-          </Link>
+        <div className="mt-16 flex flex-col items-center gap-4 border-t border-zinc-200 pt-10 text-center">
+          <div className="grid w-full gap-3 sm:max-w-xl sm:grid-cols-2">
+            <Link
+              href="/configurator"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 border border-zinc-300 bg-white px-6 py-3 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            >
+              Configure your gate <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Request a quote <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
           <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-            Double &amp; single swing and all other types — full configure · indicative totals
+            All mechanisms can be explored online · Preview detail varies by type · Final specification follows survey
           </p>
         </div>
       </section>

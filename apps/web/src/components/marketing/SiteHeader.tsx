@@ -178,7 +178,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
         <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/configurator"
-            className="inline-flex min-h-[44px] items-center justify-center bg-steel px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            className="inline-flex min-h-[44px] items-center justify-center border border-zinc-300 px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-steel transition-colors duration-100 hover:border-steel hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
           >
             Configure a gate
           </Link>
@@ -210,18 +210,18 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
         >
           <div className="grid grid-cols-1 gap-2 px-4 py-4 sm:grid-cols-2">
             <Link
-              href="/configurator"
-              onClick={closeMenu}
-              className="inline-flex min-h-[52px] w-full items-center justify-center bg-steel px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
-            >
-              Configure a gate
-            </Link>
-            <Link
               href="/contact"
               onClick={closeMenu}
               className="inline-flex min-h-[52px] w-full items-center justify-center bg-primary px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Request a quote
+            </Link>
+            <Link
+              href="/configurator"
+              onClick={closeMenu}
+              className="inline-flex min-h-[52px] w-full items-center justify-center border border-zinc-300 px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-steel focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            >
+              Configure a gate
             </Link>
           </div>
 
