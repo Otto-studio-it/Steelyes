@@ -77,8 +77,9 @@ export default function RootLayout({
     <html lang="en-GB">
       <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
         <Suspense fallback={null}>
-          <PostHogProvider>{children}</PostHogProvider>
+          <PostHogProvider />
         </Suspense>
+        {children}
       </body>
     </html>
   );

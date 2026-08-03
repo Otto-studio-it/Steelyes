@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'Bespoke Steel Gates | Driveway, Electric & Automatic Gates',
   description:
     'Made-to-measure steel driveway gates — double swing, sliding, cantilever, bifold and more. Surveyed, fabricated and installed across the UK.',
+  alternates: { canonical: '/gates' },
 }
 
 function badgeFor(availability: (typeof GATE_DATA)[keyof typeof GATE_DATA]['availability']): string {

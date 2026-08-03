@@ -9,9 +9,10 @@ import { Reveal } from '@/components/marketing/Reveal'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates | Steelyes',
+  title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
   description:
     'Made-to-measure steel driveway, pedestrian, sliding and automated gates, designed around your entrance and built for long-term strength.',
+  alternates: { canonical: '/' },
 }
 
 const RANGE_LINKS = [
@@ -312,6 +313,14 @@ export default function HomePage() {
               postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
+            // Postcode-district-level (EN3) approximation — replace with the exact
+            // surveyed coordinates for Unit 7, Meridian Industrial Estate when available.
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 51.6538,
+              longitude: -0.0342,
+            },
+            image: `${BUSINESS.website}/images/home/hero-modern-driveway-gate.jpg`,
             sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {

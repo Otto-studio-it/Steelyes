@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Steel Fabrication Services | Gates, Railings, Balconies & Security',
   description:
     'Steel fabrication beyond gates — bespoke railings, balustrades, structural balconies and security doors. Fabricated and installed to survey-led specification across the UK.',
+  alternates: { canonical: '/services' },
 }
 
 const SERVICES = [

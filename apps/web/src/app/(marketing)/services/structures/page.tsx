@@ -5,9 +5,10 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
 export const metadata: Metadata = {
-  title: 'Steel Structures | Bespoke Structural Steelwork | Steelyes',
+  title: 'Steel Structures | Bespoke Structural Steelwork',
   description:
     'Bespoke steel structures designed and fabricated to survey-led specification. Structural frames, supports, and custom steel fabrication across residential and commercial projects.',
+  alternates: { canonical: '/services/structures' },
 }
 
 const CAPABILITIES = [

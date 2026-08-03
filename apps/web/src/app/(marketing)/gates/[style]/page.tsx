@@ -21,8 +21,9 @@ export function generateMetadata({ params }: { params: { style: string } }) {
   const gate = resolved ? GATE_DATA[resolved] : null
   if (!gate) return {}
   return {
-    title: `${gate.title} Gates | Bespoke Steel Gates | Steelyes`,
+    title: `${gate.title} Gates | Bespoke Steel Gates`,
     description: gate.description,
+    alternates: { canonical: `/gates/${resolved}` },
   }
 }
 

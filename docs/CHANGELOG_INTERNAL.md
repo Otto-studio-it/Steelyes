@@ -14,6 +14,27 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — Phase 3 masters as primary preview
+
+Commit: _pending_
+
+- Configurator default preview = Design (`technical` id) with preloaded 2D masters
+- Tab order: Design → Installation; Installation remains for colour / fit
+- Mobile Quick Path chip uses `resolveSilhouette` master thumbnail (no live-CAD fallback)
+- Doc: `docs/frontend/2d-masters/PHASE3_MASTERS_PRIMARY.md`
+
+---
+
+## 2026-07-31 — Photo-guided CAD base elevations (2D masters)
+
+Commit: _pending_
+
+- Copied linea guida from `foto /` → `docs/frontend/2d-masters/{type}/references/`
+- Topology notes: `docs/frontend/2d-masters/TOPOLOGY.md`
+- Technical view uses `rendering/cad-base-elevation.ts` (CAD ink, posts hatch; live dims still overlay)
+
+---
+
 ## 2026-07-31 — Configurator gate-first chrome + custom hex finish
 
 Commit: _pending_

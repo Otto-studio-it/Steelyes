@@ -5,8 +5,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Steelyes',
+  title: 'Privacy Policy',
   description: 'How Steelyes collects, uses and protects your personal data in accordance with UK GDPR.',
+  alternates: { canonical: '/legal/privacy-policy' },
 }
 
 export default function PrivacyPolicyPage() {

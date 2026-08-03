@@ -12,9 +12,10 @@ import { GATE_DATA, resolveGateSlug } from '@/app/(marketing)/gates/gate-marketi
 import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Request a Steel Gate Quote | Contact Steelyes',
+  title: 'Request a Steel Gate Quote | Contact Us',
   description:
     'Get a quote for bespoke steel gates, electric gates, railings or security steelwork. Share your brief, measurements or photos to start a survey-led specification.',
+  alternates: { canonical: '/contact' },
 }
 
 type ContactPageProps = {

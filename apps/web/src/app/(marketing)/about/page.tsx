@@ -4,9 +4,10 @@ import Image from 'next/image'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
 export const metadata: Metadata = {
-  title: 'About Steelyes | UK Steel Gate Manufacturer & Fabricator',
+  title: 'About | UK Steel Gate Manufacturer & Fabricator',
   description:
     'Steelyes is a UK steel fabrication specialist. Bespoke driveway gates, railings and structural steelwork designed and built around each site and brief.',
+  alternates: { canonical: '/about' },
 }
 
 export default function AboutPage() {

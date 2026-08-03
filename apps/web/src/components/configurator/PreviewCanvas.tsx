@@ -47,10 +47,10 @@ type PreviewCanvasProps = {
   showSecondaryModes?: boolean
 }
 
-// Installation first so finish colour is visible; Technical for CAD dims.
+// Design (preloaded masters) first; Installation remains for colour / fit schematic.
 const PRIMARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
+  { id: 'technical', label: 'Design' },
   { id: 'installation', label: 'Installation' },
-  { id: 'technical', label: 'Technical' },
 ]
 
 const SECONDARY_MODES: { id: ConfiguratorPreviewMode; label: string }[] = [
@@ -214,7 +214,7 @@ export function PreviewCanvas({
   onDimensionOverlayClick,
   showSecondaryModes = true,
 }: PreviewCanvasProps) {
-  const [mode, setMode] = useState<ConfiguratorPreviewMode>('installation')
+  const [mode, setMode] = useState<ConfiguratorPreviewMode>('technical')
   const [menuOpen, setMenuOpen] = useState(false)
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
   const [load3dChunk, setLoad3dChunk] = useState(false)

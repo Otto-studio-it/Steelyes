@@ -5,7 +5,17 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import { captureConfiguratorEvent, initPostHog } from '@/lib/analytics/posthog'
 
-export function PostHogProvider({ children }: { children: React.ReactNode }) {
+/**
+ * Tracks pageviews only — renders nothing.
+ *
+ * Must be mounted as a SIBLING of page content, never a parent/wrapper.
+ * useSearchParams() forces the nearest Suspense boundary to resolve
+ * client-side on statically-rendered routes; wrapping {children} in this
+ * component previously meant the whole page's server-rendered HTML was
+ * replaced by the Suspense fallback (effectively shipping an empty shell
+ * until hydration) instead of just this invisible tracker.
+ */
+export function PostHogProvider() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -24,5 +34,5 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     })
   }, [pathname, searchParams])
 
-  return children
+  return null
 }

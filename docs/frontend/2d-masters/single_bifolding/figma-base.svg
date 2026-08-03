@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <title>single bifolding preview</title>
-  <desc>1600 mm opening · 1000 mm high · traditional victorian · Black satin. Figma CAD silhouette — no baked millimetres on the drawing. Single bifold: 1 leaf × 2 panels (50/50). Hinge-left preview; L/R at quote (CA-10). Leaf fills clear opening; stack pack outside hinge post; receiver on free post.</desc>
+  <desc>1600 mm opening · 1000 mm high · traditional victorian · Black satin. Figma-importable CAD base — no sample dimensions.</desc>
   <rect id="cad-paper" x="0" y="0" width="1200" height="860" fill="#FFFFFF" stroke="none" />
   <rect id="cad-ground-bar" x="0" y="698" width="1200" height="18" fill="#2A2A2A" stroke="none" />
   <rect id="cad-left-pillar" x="46" y="114" width="56" height="584" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
@@ -280,5 +280,7 @@
   <rect id="bifold-receiver-slot" x="1096" y="295.6" width="8" height="208" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
   <rect id="bifold-leading-bumper" x="1074" y="162" width="5" height="496" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
   <line id="swing-ground-clearance" x1="144" y1="682" x2="1056" y2="682" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  
+  <text id="label-title" x="120" y="104" text-anchor="start" font-size="18" fill="#1A1A1A" font-weight="600">single bifolding preview</text>
+  <text id="label-finish" x="1080" y="132" text-anchor="end" font-size="12" fill="#5C5C5C" font-weight="600">Black satin</text>
+  <text id="label-bifold-fold" x="600" y="186" text-anchor="middle" font-size="12" fill="#C62828" font-weight="600">Fold stile (schematic — confirm panels with workshop)</text>
 </svg>

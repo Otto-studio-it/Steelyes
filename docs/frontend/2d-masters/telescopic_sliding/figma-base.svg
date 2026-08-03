@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
   <title>telescopic sliding preview</title>
-  <desc>4000 mm opening · 1000 mm high · traditional victorian · Black satin. Figma CAD silhouette — no baked millimetres on the drawing. Telescopic LOCKED = 3 overlapping panels (CA-11). N parallel tracks; front = motor-side leaf. Depth stagger + plan cue show stacked planes; stack zone outside parking post.</desc>
+  <desc>4000 mm opening · 1000 mm high · traditional victorian · Black satin. Figma-importable CAD base — no sample dimensions.</desc>
   <rect id="cad-paper" x="0" y="0" width="1200" height="860" fill="#FFFFFF" stroke="none" />
   <rect id="cad-ground-bar" x="0" y="698" width="1200" height="18" fill="#2A2A2A" stroke="none" />
   <rect id="cad-left-pillar" x="46" y="114" width="56" height="584" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
@@ -320,5 +320,8 @@
   <rect id="telescopic-plan-leaf-2" x="688" y="727" width="392" height="7" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.4" opacity="1" />
   <rect id="telescopic-plan-leaf-1" x="404" y="716" width="392" height="7" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.4" opacity="1" />
   <rect id="telescopic-plan-leaf-0" x="120" y="705" width="392" height="7" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.4" opacity="1" />
-  
+  <text id="label-title" x="120" y="104" text-anchor="start" font-size="18" fill="#1A1A1A" font-weight="600">telescopic sliding preview</text>
+  <text id="label-finish" x="1080" y="132" text-anchor="end" font-size="12" fill="#5C5C5C" font-weight="600">Black satin</text>
+  <text id="label-track" x="142" y="702" text-anchor="start" font-size="13" fill="#5C5C5C" font-weight="500">Telescopic stack (schematic)</text>
+  <text id="label-telescopic" x="600" y="186" text-anchor="middle" font-size="12" fill="#C62828" font-weight="600">3 panels · ~100 mm overlap · motor-side front</text>
 </svg>

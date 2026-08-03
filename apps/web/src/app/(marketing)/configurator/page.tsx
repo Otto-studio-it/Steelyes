@@ -7,9 +7,10 @@ import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { ConfiguratorClient } from './ConfiguratorClient'
 
 export const metadata: Metadata = {
-  title: 'Gate configurator',
+  title: 'Gate Configurator | Get Your Indicative Price Online',
   description:
     'Configure a steel gate in 2D, compare indicative pricing, and prepare a survey-led quote with a live schematic preview.',
+  alternates: { canonical: '/configurator' },
 }
 
 export const dynamic = 'force-dynamic'

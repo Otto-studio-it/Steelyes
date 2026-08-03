@@ -5,8 +5,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS, formatBusinessAddress } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions | Steelyes',
+  title: 'Terms & Conditions',
   description: 'Terms and conditions for Steelyes steel fabrication, gate supply and installation services.',
+  alternates: { canonical: '/legal/terms' },
 }
 
 export default function TermsPage() {

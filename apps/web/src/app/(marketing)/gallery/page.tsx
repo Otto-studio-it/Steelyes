@@ -6,9 +6,10 @@ import { GALLERY_CONSENT_NOTICE } from '@/lib/marketing/business'
 import { GalleryClient } from './GalleryClient'
 
 export const metadata: Metadata = {
-  title: 'Workshop Gallery | Steelyes Fabrication',
+  title: 'Workshop Gallery | Fabrication Projects',
   description:
     'Workshop and consented project photos from Steelyes fabrication — not a full residential portfolio until owner consent is confirmed.',
+  alternates: { canonical: '/gallery' },
 }
 
 export default function GalleryPage() {

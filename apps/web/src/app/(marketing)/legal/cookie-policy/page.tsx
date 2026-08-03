@@ -5,8 +5,9 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy | Steelyes',
+  title: 'Cookie Policy',
   description: 'How Steelyes uses cookies on its website.',
+  alternates: { canonical: '/legal/cookie-policy' },
 }
 
 export default function CookiePolicyPage() {

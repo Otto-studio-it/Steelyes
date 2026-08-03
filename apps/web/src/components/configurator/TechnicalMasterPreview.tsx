@@ -24,8 +24,9 @@ type TechnicalMasterPreviewProps = {
 }
 
 /**
- * Phase 1 — Technical preview from preloaded 2D masters only.
+ * Design preview from preloaded 2D masters only (Phase 1–3).
  * Phase 2 — railhead SKU overlays composed on top of the master.
+ * Phase 3 — default customer preview (label Design; id remains `technical`).
  * Never invents live CAD. Client mm render in the strip under the image.
  */
 export function TechnicalMasterPreview({
@@ -47,7 +48,7 @@ export function TechnicalMasterPreview({
       const message =
         error instanceof SilhouetteResolveError
           ? error.message
-          : 'Preloaded technical master is unavailable for this configuration.'
+          : 'Preloaded design master is unavailable for this configuration.'
       return { ok: false as const, message }
     }
   }, [config])
@@ -79,7 +80,7 @@ export function TechnicalMasterPreview({
         className={`flex items-center justify-between border-b border-steel/10 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
       >
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">Technical drawing</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">Design drawing</p>
           <h2
             className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
               pinned ? 'text-base sm:text-lg' : 'text-sm lg:mt-1 lg:text-lg'
@@ -91,7 +92,7 @@ export function TechnicalMasterPreview({
         <div className="flex items-center gap-2">
           <div
             className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
-            title="Colour appears in Installation view"
+            title="Colour fill appears in Installation view"
           >
             <span
               className="h-3.5 w-3.5 shrink-0 border border-black/20"
@@ -119,7 +120,7 @@ export function TechnicalMasterPreview({
           type="button"
           onClick={togglePreviewExpanded}
           className="flex w-full items-center gap-3 bg-gradient-to-b from-paper to-canvas px-3 py-3 text-left transition hover:from-white hover:to-paper"
-          aria-label="Expand technical master preview"
+          aria-label="Expand design master preview"
         >
           <div className="relative flex h-[72px] w-[112px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-steel/10 bg-white">
             {resolved.ok ? (
@@ -135,7 +136,7 @@ export function TechnicalMasterPreview({
             )}
           </div>
           <div className="min-w-0">
-            <p className="font-heading text-xs font-bold uppercase tracking-tight text-steel">Technical master</p>
+            <p className="font-heading text-xs font-bold uppercase tracking-tight text-steel">Design master</p>
             <p className="mt-1 font-mono text-xs tabular-nums text-muted-deep">
               {config.widthMm} × {config.heightMm} mm
             </p>
@@ -155,7 +156,7 @@ export function TechnicalMasterPreview({
             {resolved.ok ? (
               <MasterWithOverlays
                 masterSrc={resolved.value.publicPath}
-                masterAlt={`${title} technical master — ${resolved.value.title}`}
+                masterAlt={`${title} design master — ${resolved.value.title}`}
                 instances={overlays.instances}
                 heightMm={config.heightMm}
                 className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
@@ -166,11 +167,11 @@ export function TechnicalMasterPreview({
                 className="w-full border border-steel/15 bg-paper px-4 py-6 text-center"
               >
                 <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel">
-                  Technical master missing
+                  Design master missing
                 </p>
                 <p className="mt-2 font-mono text-xs leading-5 text-muted">{resolved.message}</p>
                 <p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-muted">
-                  Live CAD is disabled for Technical view
+                  Live CAD is disabled for Design view
                 </p>
               </div>
             )}

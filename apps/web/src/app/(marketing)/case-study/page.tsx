@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Case Studies | Coming Soon',
   description: 'Steelyes project case studies will be published with client-approved content.',
   robots: { index: false, follow: true },
+  alternates: { canonical: '/case-study' },
 }
 
 /** Hidden until Marius supplies approved case-study content (roadmap D2). */
