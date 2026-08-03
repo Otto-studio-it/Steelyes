@@ -14,6 +14,14 @@ It is not a public product changelog.
 
 ---
 
+## 2026-08-03 — Email UX P0 + P1 (inbox classification, inbound auto-ack)
+
+- P0 (`apps/web/src/lib/email/send.ts`): subject tags `[LEAD]` / `[PREVENTIVO]` / `[INTAKE]` + short ref code, explicit `replyTo` on all 6 templates, plain-text fallback, `internalEmailShell()` for ops-facing mail
+- P1 (`scripts/gmail-inbox-autoack.gs`): Google Apps Script bound to the info@ Workspace mailbox — auto-acks genuine customer emails ("received, team is reviewing"), applies triage labels (Preventivo/Reclamo/Fattura/Garanzia/Generico), skips the site's own `[LEAD]`/`[PREVENTIVO]`/`[INTAKE]` notifications to avoid a self-reply loop. No DNS/MX change — Resend stays outbound-only.
+- Found but not adopted: Resend SDK 6.12.3 (already in `node_modules`) supports native inbound receiving (`emails.receiving`, `email.received` webhook). Would let a future rebuild move inbound handling in-app, but requires moving MX off Google Workspace — deferred, flagged for a later decision.
+
+---
+
 ## 2026-08-03 — P0 go-live: inbox, legal, Cookiebot, PostHog off
 
 - Public/workshop email → `info@steelyes.co.uk`; Resend from aligned

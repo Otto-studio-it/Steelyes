@@ -53,6 +53,7 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 - Production app: Coolify → `steelyes.co.uk` (+ www), behind Cloudflare.
 - Staging: `staging.steelyes.co.uk`.
 - Email: Resend domain verified; `RESEND_FROM` / `WORKSHOP_EMAIL` → info@steelyes.co.uk.
+- Inbox: direct emails to info@ now get an auto-reply ("received, team reviewing") + a triage label (Preventivo/Reclamo/Fattura/Garanzia/Generico), via `scripts/gmail-inbox-autoack.gs` on a 10-min Gmail trigger. Colour the labels in Gmail settings for visual triage.
 
 ## Open Marius questions (do not invent answers)
 
