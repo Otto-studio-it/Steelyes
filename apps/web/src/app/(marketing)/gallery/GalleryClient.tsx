@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type GalleryItem = {
   src: string
@@ -148,7 +149,7 @@ export function GalleryClient() {
       <section className="mx-auto mb-10 max-w-7xl border-b border-zinc-200 px-4 pb-8 md:px-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-[#795916]">Project filters</p>
+            <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-foundry-gold">Project filters</p>
             <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gallery by category">
               {FILTERS.map(({ label, value }) => (
                 <button
@@ -158,8 +159,8 @@ export function GalleryClient() {
                   aria-pressed={activeFilter === value}
                   className={`min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight transition-colors ${
                     activeFilter === value
-                      ? 'border-[#1B1C1A] bg-[#1B1C1A] text-white'
-                      : 'border-zinc-200 bg-[#F5F3F0] text-zinc-700 hover:border-zinc-400'
+                      ? 'border-steel bg-steel text-white'
+                      : 'border-zinc-200 bg-canvas text-zinc-700 hover:border-zinc-400'
                   }`}
                 >
                   {label}
@@ -178,7 +179,7 @@ export function GalleryClient() {
           {filtered.map((item, index) => (
             <div
               key={item.ref}
-              className={`group relative overflow-hidden bg-[#EFEEEB] ${
+              className={`group relative overflow-hidden bg-paper ${
                 item.span === 'wide' ? 'lg:col-span-8' : 'lg:col-span-4'
               }`}
             >
@@ -192,11 +193,22 @@ export function GalleryClient() {
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-black/0 p-4 text-white">
-                <p className="font-mono text-[10px] uppercase text-[#FFB4AB]">{item.ref}</p>
+                <p className="font-mono text-[10px] uppercase text-primary-soft">{item.ref}</p>
                 <p className="font-heading text-xl font-bold uppercase">{item.label}</p>
               </div>
             </div>
           ))}
+        </div>
+        <div className="mt-12 flex flex-col items-start justify-between gap-5 border-t border-zinc-200 pt-8 sm:flex-row sm:items-center">
+          <p className="max-w-xl text-sm leading-relaxed text-muted-deep">
+            Have a gate, railing or fabrication project in mind? Share the site details and the type of work you need.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+          >
+            Request a quote
+          </Link>
         </div>
       </section>
     </>

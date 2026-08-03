@@ -38,11 +38,11 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   return (
     <MarketingShell pathname="/contact">
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
-        <p className="mb-3 inline-block border-l-2 border-[#9E000C] bg-[#EFEEEB] px-3 py-1 font-mono text-xs uppercase tracking-widest text-[#9E000C]">
+        <p className="mb-3 inline-block border-l-2 border-primary bg-paper px-3 py-1 font-mono text-xs uppercase tracking-widest text-primary">
           Start your project
         </p>
         <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-7xl">Contact the workshop</h1>
-        <p className="mt-3 max-w-xl font-mono text-sm text-[#5C403D]">
+        <p className="mt-3 max-w-xl font-mono text-sm text-muted-deep">
           {gateInterest
             ? `Enquiry focused on ${gateInterest.title.toLowerCase()} gates.`
             : 'Direct line to our fabrication team.'}
@@ -58,7 +58,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         />
 
         <div className="space-y-8">
-          <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-[#1B1C1A] p-8">
+          <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-steel p-8">
             <div className="text-center">
               <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Coverage</p>
               <p className="mt-3 font-heading text-4xl font-black uppercase text-white">{COVERAGE_COPY.headline}</p>
@@ -67,34 +67,34 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-[#9E000C]">The Workshop</h2>
-              <p className="text-sm text-[#5C403D]">{BUSINESS.address.line1}</p>
-              <p className="text-sm text-[#5C403D]">
+              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-primary">The Workshop</h2>
+              <p className="text-sm text-muted-deep">{BUSINESS.address.line1}</p>
+              <p className="text-sm text-muted-deep">
                 {BUSINESS.address.locality}, {BUSINESS.address.region}, {BUSINESS.address.postalCode}
               </p>
-              <p className="text-sm text-[#5C403D]">{BUSINESS.address.country}</p>
+              <p className="text-sm text-muted-deep">{BUSINESS.address.country}</p>
             </div>
             <div>
-              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-[#9E000C]">Direct contact</h2>
+              <h2 className="mb-2 font-heading text-sm font-bold uppercase tracking-widest text-primary">Direct contact</h2>
               <a
                 href={`tel:${BUSINESS.phone}`}
-                className="block text-sm text-[#5C403D] transition-colors hover:text-[#9E000C]"
+                className="block text-sm text-muted-deep transition-colors hover:text-primary"
               >
                 T: {BUSINESS.phoneDisplay}
               </a>
               <a
                 href={`mailto:${BUSINESS.email}`}
-                className="block text-sm text-[#5C403D] transition-colors hover:text-[#9E000C]"
+                className="block text-sm text-muted-deep transition-colors hover:text-primary"
               >
                 E: {BUSINESS.email}
               </a>
-              <SocialLinks className="mt-3 -ml-2.5" iconClassName="text-[#5C403D] hover:text-[#9E000C]" />
+              <SocialLinks className="mt-3 -ml-2.5" iconClassName="text-muted-deep hover:text-primary" />
             </div>
           </div>
-          <div className="border border-zinc-200 bg-[#F6F6F6] p-6">
+          <div className="border border-zinc-200 bg-canvas p-6">
             <p className="font-heading text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">{SURVEY_COPY.headline}</p>
             <p className="mt-2 font-heading text-xl font-black uppercase">Enquiry response</p>
-            <p className="mt-3 text-sm text-[#5C403D]">{SURVEY_COPY.body}</p>
+            <p className="mt-3 text-sm text-muted-deep">{SURVEY_COPY.body}</p>
           </div>
         </div>
       </section>

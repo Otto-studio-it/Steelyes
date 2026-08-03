@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { SocialLinks } from '@/components/marketing/SocialLinks'
 
 type SiteHeaderProps = {
   pathname: string
@@ -66,10 +65,7 @@ function groupIsActive(pathname: string, group: NavGroup) {
 export function SiteHeader({ pathname }: SiteHeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [openGroup, setOpenGroup] = useState<string | null>(null)
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    Gates: true,
-    Services: isActive(pathname, '/services'),
-  })
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     if (!isOpen) return
@@ -93,7 +89,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:bg-[#1A1A1A] focus:px-3 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:bg-ink focus:px-3 focus:py-2 focus:text-sm focus:text-white"
       >
         Skip to main content
       </a>
@@ -121,13 +117,15 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                   if (!e.currentTarget.contains(e.relatedTarget)) setOpenGroup(null)
                 }}
               >
-                <Link
-                  href={group.href}
+                <button
+                  type="button"
                   aria-haspopup="menu"
                   aria-expanded={openGroup === group.label}
+                  aria-controls={`desktop-${group.label.toLowerCase()}-menu`}
+                  onClick={() => setOpenGroup((current) => (current === group.label ? null : group.label))}
                   className={cn(
-                    'inline-flex min-h-[44px] items-center gap-1 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]',
-                    active && 'text-[#9E000C]',
+                    'inline-flex min-h-[44px] items-center gap-1 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+                    active && 'text-primary',
                   )}
                 >
                   {group.label}
@@ -135,8 +133,9 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                     className={cn('h-4 w-4 transition-transform', openGroup === group.label && 'rotate-180')}
                     aria-hidden
                   />
-                </Link>
+                </button>
                 <div
+                  id={`desktop-${group.label.toLowerCase()}-menu`}
                   className={cn(
                     'absolute left-0 top-full min-w-[260px] pt-3 transition-all',
                     openGroup === group.label ? 'visible opacity-100' : 'invisible opacity-0',
@@ -148,8 +147,8 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                         <Link
                           href={link.href}
                           className={cn(
-                            'flex min-h-[42px] items-center px-3 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 transition-colors hover:bg-[#F5F3F0] hover:text-[#9E000C] focus-visible:bg-[#F5F3F0] focus-visible:outline-none',
-                            isActive(pathname, link.href) && 'bg-[#F5F3F0] text-[#9E000C]',
+                            'flex min-h-[42px] items-center px-3 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 transition-colors hover:bg-canvas hover:text-primary focus-visible:bg-canvas focus-visible:outline-none',
+                            isActive(pathname, link.href) && 'bg-canvas text-primary',
                           )}
                         >
                           {link.label}
@@ -167,8 +166,8 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
               key={link.href}
               href={link.href}
               className={cn(
-                'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]',
-                isActive(pathname, link.href) && 'text-[#9E000C]',
+                'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+                isActive(pathname, link.href) && 'text-primary',
               )}
             >
               {link.label}
@@ -176,18 +175,16 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <SocialLinks iconClassName="text-zinc-500 hover:text-[#9E000C]" />
-          {/* Secondary exploration — quote is the only primary CTA */}
+        <div className="hidden items-center gap-2 lg:flex">
           <Link
             href="/configurator"
-            className="inline-flex min-h-[44px] items-center justify-center px-2 font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E000C]"
+            className="inline-flex min-h-[44px] items-center justify-center bg-steel px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
           >
-            Configure
+            Configure a gate
           </Link>
           <Link
             href="/contact"
-            className="inline-flex min-h-[44px] items-center justify-center bg-[#9E000C] px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-[#9B1515] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
+            className="inline-flex min-h-[44px] items-center justify-center bg-primary px-5 py-2 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors duration-100 hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             Request a quote
           </Link>
@@ -199,7 +196,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-zinc-300 text-[#1B1C1A] transition-colors hover:border-[#9E000C] hover:text-[#9E000C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C] lg:hidden"
+          className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center border border-zinc-300 text-steel transition-colors hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
         >
           {isOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
         </button>
@@ -211,20 +208,20 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
           aria-label="Mobile primary navigation"
           className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-zinc-200 bg-white lg:hidden"
         >
-          <div className="space-y-2 px-4 py-4">
-            <Link
-              href="/contact"
-              onClick={closeMenu}
-              className="inline-flex min-h-[52px] w-full items-center justify-center bg-[#9E000C] px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9E000C]"
-            >
-              Request a quote
-            </Link>
+          <div className="grid grid-cols-1 gap-2 px-4 py-4 sm:grid-cols-2">
             <Link
               href="/configurator"
               onClick={closeMenu}
-              className="inline-flex min-h-[44px] w-full items-center justify-center font-heading text-xs font-bold uppercase tracking-tight text-zinc-600 underline-offset-4 hover:text-[#9E000C] hover:underline"
+              className="inline-flex min-h-[52px] w-full items-center justify-center bg-steel px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             >
-              Or configure a gate
+              Configure a gate
+            </Link>
+            <Link
+              href="/contact"
+              onClick={closeMenu}
+              className="inline-flex min-h-[52px] w-full items-center justify-center bg-primary px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Request a quote
             </Link>
           </div>
 
@@ -241,7 +238,7 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                     aria-expanded={open}
                     className={cn(
                       'flex min-h-[54px] w-full items-center justify-between font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
-                      active && 'text-[#9E000C]',
+                      active && 'text-primary',
                     )}
                   >
                     {group.label}
@@ -255,8 +252,8 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                             href={link.href}
                             onClick={closeMenu}
                             className={cn(
-                              'flex min-h-[46px] items-center border-l-2 border-zinc-200 px-4 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 hover:border-[#9E000C] hover:bg-[#F5F3F0]',
-                              isActive(pathname, link.href) && 'border-[#9E000C] bg-[#F5F3F0] text-[#9E000C]',
+                              'flex min-h-[46px] items-center border-l-2 border-zinc-200 px-4 font-heading text-xs font-bold uppercase tracking-tight text-zinc-700 hover:border-primary hover:bg-canvas',
+                              isActive(pathname, link.href) && 'border-primary bg-canvas text-primary',
                             )}
                           >
                             {link.label}
@@ -276,30 +273,14 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
                   onClick={closeMenu}
                   className={cn(
                     'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
-                    isActive(pathname, link.href) && 'text-[#9E000C]',
+                    isActive(pathname, link.href) && 'text-primary',
                   )}
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
-
-            <li className="border-b border-zinc-100">
-              <Link
-                href="/contact"
-                onClick={closeMenu}
-                className={cn(
-                  'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
-                  isActive(pathname, '/contact') && 'text-[#9E000C]',
-                )}
-              >
-                Contact
-              </Link>
-            </li>
           </ul>
-          <div className="border-t border-zinc-100 px-0 py-2">
-            <SocialLinks iconClassName="text-zinc-500 hover:text-[#9E000C]" />
-          </div>
         </nav>
       ) : null}
     </header>

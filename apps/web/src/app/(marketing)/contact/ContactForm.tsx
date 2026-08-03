@@ -17,7 +17,7 @@ function SubmitButton({ disabled = false }: { disabled?: boolean }) {
     <button
       type="submit"
       disabled={pending || disabled}
-      className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-[#9E000C] px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white disabled:opacity-60"
+      className="inline-flex min-h-[44px] w-full items-center justify-center gap-2 bg-primary px-8 py-3 font-heading text-base font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-60"
     >
       {pending ? (
         <>
@@ -35,7 +35,7 @@ function SubmitButton({ disabled = false }: { disabled?: boolean }) {
 }
 
 const fieldClassName =
-  'mt-2 min-h-[44px] w-full border-b-2 border-zinc-300 bg-transparent px-0 transition-[border-color] focus:border-[#9E000C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#9E000C] focus-visible:ring-offset-2'
+  'mt-2 min-h-[44px] w-full border-b-2 border-zinc-300 bg-transparent px-0 transition-[border-color] focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
 
 type ContactFormProps = {
   shareToken?: string
@@ -63,13 +63,13 @@ export function ContactForm({
   if (state.status === 'success') {
     return (
       <div className="flex min-h-[400px] flex-col items-start justify-center space-y-4 border border-zinc-200 bg-white p-8">
-        <div className="flex h-12 w-12 items-center justify-center bg-[#1B1C1A]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9E000C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <div className="flex h-12 w-12 items-center justify-center bg-steel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary" aria-hidden="true">
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
         <h2 className="font-heading text-2xl font-black uppercase">Enquiry received</h2>
-        <p className="max-w-sm text-sm font-light leading-relaxed text-[#5C403D]">
+        <p className="max-w-sm text-sm font-light leading-relaxed text-muted-deep">
           We&apos;ll review your brief and come back to you within 24–48 hours to discuss next steps and arrange a site survey if relevant.
         </p>
         <p className="font-mono text-xs uppercase tracking-widest text-zinc-400">
@@ -91,9 +91,9 @@ export function ContactForm({
         />
       ) : null}
 
-      <div className="inline-flex items-center gap-3 border border-[#9E000C]/20 bg-[#9E000C]/5 px-4 py-2">
-        <span className="h-2 w-2 animate-pulse bg-[#9E000C]" />
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#9E000C]">
+      <div className="inline-flex items-center gap-3 border border-primary/20 bg-primary/5 px-4 py-2">
+        <span className="h-2 w-2 bg-primary motion-safe:animate-pulse" aria-hidden="true" />
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
           We respond within 1 business day
         </span>
       </div>
@@ -118,7 +118,7 @@ export function ContactForm({
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <label className="block text-sm font-medium">
-          Full name <span aria-hidden="true" className="text-[#9E000C]">*</span>
+          Full name <span aria-hidden="true" className="text-primary">*</span>
           <input
             name="name"
             required
@@ -127,7 +127,7 @@ export function ContactForm({
           />
         </label>
         <label className="block text-sm font-medium">
-          Email <span aria-hidden="true" className="text-[#9E000C]">*</span>
+          Email <span aria-hidden="true" className="text-primary">*</span>
           <input
             name="email"
             type="email"
@@ -187,7 +187,7 @@ export function ContactForm({
       </label>
 
       <label className="block text-sm font-medium">
-        Project details <span aria-hidden="true" className="text-[#9E000C]">*</span>
+        Project details <span aria-hidden="true" className="text-primary">*</span>
         <textarea
           name="message"
           required

@@ -77,17 +77,11 @@ export default function HomePage() {
       {/* 2 — Proof */}
       <section className="bg-steel py-14 text-white md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
-          <Reveal className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <Reveal className="mb-8">
             <div>
               <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">From workshop to entrance</p>
               <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">Completed work</h2>
             </div>
-            <Link
-              href="/gallery"
-              className="inline-flex min-h-[44px] items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/70 hover:text-white"
-            >
-              View full archive <ArrowRight className="h-3 w-3" aria-hidden />
-            </Link>
           </Reveal>
 
           <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
@@ -95,7 +89,7 @@ export default function HomePage() {
               <Reveal
                 key={src}
                 delay={index * 50}
-                className={`group relative overflow-hidden bg-[#2A2A2A] ${tall ? 'md:row-span-2' : ''}`}
+                className={`group relative overflow-hidden bg-steel ${tall ? 'md:row-span-2' : ''}`}
               >
                 <div
                   className={`relative w-full ${
@@ -117,9 +111,9 @@ export default function HomePage() {
           <Reveal className="mt-6" delay={80}>
             <Link
               href="/gallery"
-              className="inline-flex min-h-[48px] w-full items-center justify-center border border-white/20 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 sm:w-auto"
+              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-white/30 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
             >
-              View all projects
+              View all projects <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
         </div>

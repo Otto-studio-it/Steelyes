@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 
@@ -14,20 +15,20 @@ export default function AboutPage() {
   return (
     <MarketingShell pathname="/about">
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
-        <p className="mb-3 inline-block border-l-2 border-[#9E000C] bg-[#EFEEEB] px-3 py-1 font-mono text-xs uppercase tracking-widest text-[#9E000C]">
+        <p className="mb-3 inline-block border-l-2 border-primary bg-paper px-3 py-1 font-mono text-xs uppercase tracking-widest text-primary">
           British Engineering Excellence
         </p>
         <h1 className="font-heading text-4xl font-black uppercase leading-[0.9] sm:text-5xl md:text-8xl">
           Forged with
           <br />
-          <span className="text-[#9E000C]">intent.</span>
+          <span className="text-primary">intent.</span>
         </h1>
       </section>
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pb-16 md:px-8 lg:grid-cols-2">
         <div className="space-y-6">
           <h2 className="font-heading text-3xl font-black uppercase sm:text-4xl">The workshop ethos</h2>
-          <p className="text-base font-light leading-relaxed text-[#5C403D] md:text-lg">
+          <p className="text-base font-light leading-relaxed text-muted-deep md:text-lg">
             Every gate we build starts with the same question: what does this entrance actually need? Not a catalogue
             answer — a measured one. We survey the site, understand the substrate, the access requirements, the finish
             direction, and we fabricate around that reality. No approximations shipped to site and adjusted in the
@@ -36,11 +37,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 gap-4 pt-4">
             <div>
               <p className="font-heading text-3xl font-black uppercase">Survey-led</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">Every project</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">Every project</p>
             </div>
             <div>
               <p className="font-heading text-3xl font-black uppercase">Made to order</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#9E000C]">No stock gates</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">No stock gates</p>
             </div>
           </div>
         </div>
@@ -66,7 +67,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[#1B1C1A] py-16 text-white md:py-20">
+      <section className="bg-steel py-16 text-white md:py-20">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What defines our craft</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
@@ -88,7 +89,7 @@ export default function AboutPage() {
               ],
             ].map(([step, title, body]) => (
               <article key={step} className="border border-white/20 bg-white/5 p-6">
-                <p className="font-mono text-xs uppercase tracking-widest text-[#FFB4AB]">{step}</p>
+                <p className="font-mono text-xs uppercase tracking-widest text-primary-soft">{step}</p>
                 <h3 className="mt-3 font-heading text-2xl font-bold uppercase">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/80">{body}</p>
               </article>
@@ -102,9 +103,9 @@ export default function AboutPage() {
           <h2 className="font-heading text-4xl font-black uppercase md:text-5xl">
             UK fabrication,
             <br />
-            <span className="text-[#9E000C]">survey-led delivery</span>
+            <span className="text-primary">survey-led delivery</span>
           </h2>
-          <p className="mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#5C403D] md:text-base">
+          <p className="mt-5 max-w-2xl text-sm font-light leading-relaxed text-muted-deep md:text-base">
             We work on commissions across the United Kingdom, with our workshop based in Enfield, London. Projects range
             from single residential entrances to multi-gate commercial perimeters — each surveyed, drawn, fabricated and
             installed by the same team where our scope includes installation.
@@ -118,6 +119,23 @@ export default function AboutPage() {
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
+        </div>
+      </section>
+
+      <section className="bg-steel py-16 text-white md:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 md:px-8 lg:flex-row lg:items-end">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary-container">Start with the site</p>
+            <h2 className="mt-3 max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
+              Tell us what your entrance needs.
+            </h2>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex min-h-[52px] w-full shrink-0 items-center justify-center bg-primary px-8 font-heading text-base font-bold uppercase text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
+          >
+            Request a quote
+          </Link>
         </div>
       </section>
     </MarketingShell>
