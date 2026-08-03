@@ -9,6 +9,15 @@
     --color-primary: #9E000C;
     --color-primary-container: #C41E1E;
     --color-foundry-gold: #795916;
+
+    /* RGB triplets so Tailwind opacity modifiers (e.g. border-steel/10) work. */
+    --color-steel-rgb: 27 28 26; /* #1B1C1A */
+    --color-primary-rgb: 158 0 12; /* #9E000C */
+    --color-primary-dark-rgb: 138 0 9; /* #8A0009 */
+    --color-primary-soft-rgb: 255 180 171; /* #FFB4AB */
+    --color-muted-rgb: 109 97 93; /* #6D615D */
+    --color-muted-deep-rgb: 91 81 77; /* #5B514D */
+    --color-paper-rgb: 249 247 244; /* #F9F7F4 */
   }
 
   body {
@@ -22,4 +31,48 @@
   [role="button"] {
     touch-action: manipulation;
   }
+}
+
+/* Mobile preview bottom sheet — spatial slide from bottom (modal-motion). */
+@keyframes cfg-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes cfg-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cfg-sheet-content[data-state='open'] {
+  animation: cfg-sheet-in 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.cfg-sheet-overlay[data-state='open'] {
+  animation: cfg-overlay-in 200ms ease-out;
+}
+
+/* Swipe-to-dismiss spring-back: only applies when the finger is released. */
+.cfg-sheet-draggable {
+  transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cfg-sheet-content[data-state='open'],
+  .cfg-sheet-overlay[data-state='open'] {
+    animation: none;
+  }
+
+  .cfg-sheet-draggable {
+    transition: none;
+  }
+
 }

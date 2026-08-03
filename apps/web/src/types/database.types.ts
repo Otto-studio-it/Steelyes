@@ -210,6 +210,236 @@ export type Database = {
         }
         Relationships: []
       }
+      client_intake_answers: {
+        Row: {
+          id: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json: Json | null
+          status: string
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json?: Json | null
+          status?: string
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          question_id?: string
+          section?: string
+          value_json?: Json | null
+          status?: string
+          source?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "client_intake_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_intake_answer_history: {
+        Row: {
+          id: string
+          answer_id: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json: Json | null
+          status: string
+          source: string
+          change_kind: string
+          changed_at: string
+        }
+        Insert: {
+          id?: string
+          answer_id: string
+          session_id: string
+          question_id: string
+          section: string
+          value_json?: Json | null
+          status: string
+          source: string
+          change_kind: string
+          changed_at?: string
+        }
+        Update: {
+          id?: string
+          answer_id?: string
+          session_id?: string
+          question_id?: string
+          section?: string
+          value_json?: Json | null
+          status?: string
+          source?: string
+          change_kind?: string
+          changed_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_answer_history_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "client_intake_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_intake_events: {
+        Row: {
+          id: string
+          session_id: string
+          event_type: string
+          actor: string
+          question_id: string | null
+          meta: Json | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          session_id: string
+          event_type: string
+          actor: string
+          question_id?: string | null
+          meta?: Json | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          session_id?: string
+          event_type?: string
+          actor?: string
+          question_id?: string | null
+          meta?: Json | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_intake_events_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "client_intake_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_intake_sessions: {
+        Row: {
+          id: string
+          access_token: string
+          client_name: string
+          status: string
+          created_at: string
+          updated_at: string
+          last_client_activity_at: string | null
+          last_notified_at: string | null
+        }
+        Insert: {
+          id?: string
+          access_token: string
+          client_name?: string
+          status?: string
+          created_at?: string
+          updated_at?: string
+          last_client_activity_at?: string | null
+          last_notified_at?: string | null
+        }
+        Update: {
+          id?: string
+          access_token?: string
+          client_name?: string
+          status?: string
+          created_at?: string
+          updated_at?: string
+          last_client_activity_at?: string | null
+          last_notified_at?: string | null
+        }
+        Relationships: []
+      }
+      design_captures: {
+        Row: {
+          configuration_id: string | null
+          created_at: string
+          email: string
+          id: string
+          reminder_sent_at: string | null
+          share_token: string
+        }
+        Insert: {
+          configuration_id?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          reminder_sent_at?: string | null
+          share_token: string
+        }
+        Update: {
+          configuration_id?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          reminder_sent_at?: string | null
+          share_token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_captures_configuration_id_fkey"
+            columns: ["configuration_id"]
+            isOneToOne: false
+            referencedRelation: "configurations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inbound_emails: {
+        Row: {
+          id: string
+          gmail_thread_id: string
+          from_email: string
+          subject: string
+          snippet: string
+          category: string
+          received_at: string
+          handled: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          gmail_thread_id: string
+          from_email: string
+          subject?: string
+          snippet?: string
+          category?: string
+          received_at: string
+          handled?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          gmail_thread_id?: string
+          from_email?: string
+          subject?: string
+          snippet?: string
+          category?: string
+          received_at?: string
+          handled?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
@@ -217,6 +447,7 @@ export type Database = {
           id: string
           message: string | null
           name: string
+          phone: string | null
           postcode: string | null
           project_type: string | null
           status: string
@@ -227,6 +458,7 @@ export type Database = {
           id?: string
           message?: string | null
           name: string
+          phone?: string | null
           postcode?: string | null
           project_type?: string | null
           status?: string
@@ -237,6 +469,7 @@ export type Database = {
           id?: string
           message?: string | null
           name?: string
+          phone?: string | null
           postcode?: string | null
           project_type?: string | null
           status?: string
@@ -252,6 +485,7 @@ export type Database = {
           first_name: string
           id: string
           last_name: string
+          phone: string | null
           postcode: string
           status: Database["public"]["Enums"]["quote_status"]
           turnstile_verified: boolean
@@ -265,6 +499,7 @@ export type Database = {
           first_name: string
           id?: string
           last_name: string
+          phone?: string | null
           postcode: string
           status?: Database["public"]["Enums"]["quote_status"]
           turnstile_verified?: boolean
@@ -278,6 +513,7 @@ export type Database = {
           first_name?: string
           id?: string
           last_name?: string
+          phone?: string | null
           postcode?: string
           status?: Database["public"]["Enums"]["quote_status"]
           turnstile_verified?: boolean

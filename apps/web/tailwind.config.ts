@@ -11,8 +11,14 @@ const config: Config = {
       colors: {
         canvas: "var(--color-canvas)",
         ink: "var(--color-ink)",
+        steel: "rgb(var(--color-steel-rgb) / <alpha-value>)",
+        muted: "rgb(var(--color-muted-rgb) / <alpha-value>)",
+        "muted-deep": "rgb(var(--color-muted-deep-rgb) / <alpha-value>)",
+        paper: "rgb(var(--color-paper-rgb) / <alpha-value>)",
         primary: {
-          DEFAULT: "var(--color-primary)",
+          DEFAULT: "rgb(var(--color-primary-rgb) / <alpha-value>)",
+          dark: "rgb(var(--color-primary-dark-rgb) / <alpha-value>)",
+          soft: "rgb(var(--color-primary-soft-rgb) / <alpha-value>)",
           container: "var(--color-primary-container)",
         },
         foundry: {
@@ -25,10 +31,6 @@ const config: Config = {
         mono: ["var(--font-ibm-plex-mono)"],
       },
       keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
         'hero-reveal': {
           from: { opacity: '0', transform: 'translateY(10px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
@@ -43,7 +45,6 @@ const config: Config = {
         },
       },
       animation: {
-        marquee: 'marquee 32s linear infinite',
         'hero-reveal': 'hero-reveal 450ms ease-out both',
         'hero-line-draw': 'hero-line-draw 600ms ease-out both',
         'hero-image-in': 'hero-image-in 900ms ease-out both',

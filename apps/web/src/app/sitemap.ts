@@ -18,42 +18,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
-    {
-      url: `${BASE_URL}/gates/sliding`,
+    ...[
+      'double-swing',
+      'single-swing',
+      'tracked-sliding',
+      'cantilever',
+      'bifold',
+      'single-bifold',
+      'telescopic',
+      'radius',
+    ].map((slug) => ({
+      url: `${BASE_URL}/gates/${slug}`,
       lastModified: now,
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/gates/cantilever`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/gates/bifold`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/gates/pedestrian`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/gates/telescopic`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/gates/architectural`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
+    })),
     {
       url: `${BASE_URL}/services`,
       lastModified: now,
@@ -68,6 +47,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/services/balconies`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/services/structures`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/services/staircases`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.7,
@@ -91,12 +82,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
-      url: `${BASE_URL}/case-study`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
       url: `${BASE_URL}/about`,
       lastModified: now,
       changeFrequency: 'yearly',
@@ -108,6 +93,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.5,
     },
+    {
+      url: `${BASE_URL}/configurator`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    ...['privacy-policy', 'cookie-policy', 'terms'].map((slug) => ({
+      url: `${BASE_URL}/legal/${slug}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.2,
+    })),
   ]
 
   return routes

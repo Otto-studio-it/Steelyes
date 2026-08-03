@@ -18,8 +18,8 @@ last_updated: 2026-04-20
 **Steelyes Ltd** is a UK manufacturer and installer of bespoke steel gates. We're building a digital platform to:
 
 1. **Phase 1 — Marketing site**: SEO-optimised storefront (gates catalogue, services, gallery, about, contact, quote request)
-2. **Phase 2 — 3D Configurator**: Real-time parametric configurator for all 6 gate types. Generates live price + shareable configuration
-3. **Phase 3 — AR Preview**: "View in your driveway" — generates GLB+USDZ, hands off to Apple Quick Look / Google Scene Viewer
+2. **Phase 2 — Configurator**: Real-time parametric configurator for all 6 gate types. 2D preview by default, live indicative price, shareable configuration, and on-demand 3D/AR export
+3. **Phase 3 — AR Preview**: "View in your driveway" — generates GLB+USDZ on demand, hands off to Apple Quick Look / Google Scene Viewer
 
 **Timeline**: 13 weeks from kickoff (20 April 2026) to post-launch stabilisation.
 
@@ -51,7 +51,7 @@ last_updated: 2026-04-20
 |-------|-------|------|------|
 | **Phase 0** | 1 | Setup: repo, Supabase, CI/CD | Preview URL + styled skeleton live |
 | **Phase 1** | 2–5 | Marketing site + quote funnel | 16 pages live, quote E2E works |
-| **Phase 2** | 6–9 | 3D Configurator for 6 gate types | All types configurable, price golden tests pass |
+| **Phase 2** | 6–9 | Configurator for 6 gate types | 2D preview works, price golden tests pass, 3D/AR handoff available |
 | **Phase 3** | 10–11 | AR "View in your driveway" | iPhone + Android, scale accurate |
 | **Phase 4** | 12–13 | Polish + launch | DNS live, Lighthouse green, client sign-off |
 
@@ -92,11 +92,11 @@ Stabilise:                                                     █████�
 
 1. **Phase 0 (Week 1)**: Repo scaffold, Supabase EU, CI/CD live
 2. **Phase 1 (Weeks 2–5)**: Marketing site + quote funnel
-3. **Phase 2 (Weeks 6–9)**: Gate engine (pricing + all 6 mesh builders) → configurator
+3. **Phase 2 (Weeks 6–9)**: Gate engine (pricing + 2D renderer + on-demand 3D export) → configurator
 4. **Phase 3 (Weeks 10–11)**: AR export + frontend integration
 5. **Stabilise (Weeks 12–13)**: Polish, performance, launch
 
-**Bottleneck**: gate-engine mesh builders (Weeks 6–8). Any delay here delays AR and stabilisation.
+**Bottleneck**: shared configurator model + 2D renderer foundation (Weeks 6–8). Any delay here slows the usable configurator and the later AR handoff.
 
 ---
 

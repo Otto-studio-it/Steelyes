@@ -1,0 +1,98 @@
+{
+  "gateType": "tracked_sliding",
+  "status": "ready",
+  "updated": "2026-07-31",
+  "figma": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
+    "page": "Re-import silhouettes/ into page 4 — geometry updated 2026-07-31",
+    "frames": {
+      "base": "TS / base",
+      "arched": "TS / arched",
+      "dog_bars": "TS / dog_bars",
+      "arched_dog_bars": "TS / arched_dog_bars",
+      "composite": "TS / composite"
+    },
+    "notes": "Local SVGs regenerated post-to-post. Replace older Figma imports."
+  },
+  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "semantics": {
+    "customerWidthMm": "Clear opening between posts — leaf fills this 100% on closed elevation.",
+    "groundTrack": "Under the clear opening (tracked differentiator vs cantilever).",
+    "runback": "Schematic zone OUTSIDE beyond parking post — never empty space inside the posts."
+  },
+  "drawingCues": [
+    "Leaf spans post-to-post with no misleading gap",
+    "3-bay horizontal boards when composite (linea guida)",
+    "Ground rail + wheel ticks under opening",
+    "Receiver slot on latch post; guide rollers on parking post",
+    "Dashed runback + motor pad beyond parking post"
+  ],
+  "doNotMislead": [
+    "Do not leave empty space between posts that looks like missing gate.",
+    "Do not draw runback as a hole inside the clear opening.",
+    "Do not omit the ground track (would read as cantilever).",
+    "Live mm stay in the UI strip under the image."
+  ],
+  "notSeparateSilhouettes": [
+    "finish / RAL / custom hex",
+    "motorised vs manual (handle layer on/off)",
+    "railhead SKUs",
+    "exact picket or dog-bar count",
+    "widthMm / heightMm",
+    "runback exact length (shown schematically)"
+  ],
+  "lookup": {
+    "description": "First matching rule wins. Topology always includes ground track + outside runback.",
+    "rules": [
+      { "when": { "style": "composite_boards" }, "slug": "composite" },
+      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
+      { "when": { "options": ["arched_top"] }, "slug": "arched" },
+      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
+      { "when": {}, "slug": "base" }
+    ]
+  },
+  "silhouettes": [
+    {
+      "slug": "base",
+      "title": "Base Victorian",
+      "file": "silhouettes/base.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top"]
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["dog_bars"]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": ["arched_top", "dog_bars"]
+    },
+    {
+      "slug": "composite",
+      "title": "Composite 3-bay",
+      "file": "silhouettes/composite.svg",
+      "style": "composite_boards",
+      "options": []
+    }
+  ],
+  "references": [
+    "references/linea-guida.jpg",
+    "references/support-render-closed.png",
+    "references/support-product-render.jpg"
+  ],
+  "exportTest": "packages/gate-engine/tests/export-figma-tracked-sliding-variants.test.ts"
+}

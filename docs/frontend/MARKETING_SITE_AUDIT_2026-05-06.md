@@ -36,13 +36,7 @@ Approved style characteristics:
 - rectangular controls and cards, not soft rounded SaaS cards;
 - placeholder media via `MediaPlaceholder` until real assets are approved.
 
-Reference prototypes exist locally in:
-
-```text
-stitch_steelyes_digital_platform 3/
-```
-
-Those files are currently untracked. Treat them as visual reference only unless Ruben explicitly decides to import assets or commit them.
+Reference prototypes were previously kept in a local export folder outside the product tree. Keep any future visual reference material out of source control unless Ruben explicitly decides to import assets or commit them.
 
 ---
 

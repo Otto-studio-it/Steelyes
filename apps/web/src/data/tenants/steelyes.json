@@ -1,0 +1,21 @@
+{
+  "id": "steelyes",
+  "branding": {
+    "companyName": "Steelyes",
+    "primaryColor": "#9E000C",
+    "accentColor": "#1B1C1A",
+    "logoUrl": "/images/home/hero-modern-driveway-gate.jpg"
+  },
+  "locale": "en-GB",
+  "currency": "GBP",
+  "features": {
+    "enable3d": true,
+    "enablePlanView": true,
+    "enablePhotoOverlay": true,
+    "enableFencePanels": true,
+    "enableMotorCatalog": true
+  },
+  "leads": {
+    "email": "info@steelyes.co.uk"
+  }
+}

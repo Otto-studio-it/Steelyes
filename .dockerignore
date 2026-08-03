@@ -1,0 +1,21 @@
+# Coolify / Docker ignore for Steelyes monorepo
+node_modules
+**/node_modules
+.next
+**/.next
+.git
+.turbo
+**/dist
+**/.env*
+!.env.example
+apps/web/test-results
+apps/web/playwright-report
+coverage
+*.md
+!README.md
+docs
+assets-raw
+steelyes
+.claude
+.cursor
+graphify-out

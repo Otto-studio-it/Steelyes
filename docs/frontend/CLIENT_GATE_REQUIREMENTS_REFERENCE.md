@@ -3,8 +3,8 @@ title: Client Gate Requirements Reference
 description: Working reference for client-supplied gate categories, provisional prices, decorative options, fencing panels, and related products
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-05-06
-source: Client messages supplied by Ruben
+last_updated: 2026-07-28
+source: Client messages supplied by Ruben — verbatim record in docs/client-answers/
 ---
 
 # Steelyes - Client Gate Requirements Reference
@@ -17,6 +17,20 @@ Important:
 - The client explicitly said prices may still change.
 - Public marketing pages should avoid presenting these as final.
 - Configurator/admin work may use this as a planning reference, but final production pricing requires confirmation.
+- **Verbatim client text lives in [`../client-answers/`](../client-answers/README.md).** This file carries the interpretation; cite `CA-NN` ids rather than re-quoting messages.
+
+---
+
+## Confirmed Build Rules
+
+Rules the client has stated unambiguously. These are constraints, not defaults — the customer cannot override them in the configurator.
+
+| Rule | Statement | Source |
+|---|---|---|
+| Handle presence | Automated gates have **no handle**. Only manual gates carry a handle. Not a priced option — part of the base build. | [CA-01](../client-answers/2026-07-28-marius.md#ca-01--handle-only-on-manual-gates) |
+| Cantilever tail | Tail = **1/3 of the clear opening between posts, minimum**. Total assembly = opening + tail. Worked example: 4000mm opening → 1333mm tail → 5333mm total. | [CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum) |
+| Cantilever width input | The width the customer enters is the **clear opening only**. The tail is additional and must be shown on top of it. | [CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum) |
+| Custom colour pricing | Custom RAL shows **"+ extra charge — powder coating, quoted separately"**, never a number. Marius sets the final figure by email. | [CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge) |
 
 ---
 
@@ -130,6 +144,58 @@ Possible internal mapping:
 | `composite_boards` | Composite Boards |
 
 Do not add additional first-class styles until confirmed by the client.
+
+### Composite Boards — aluminium panel upgrade
+
+The client asked for composite panels to be **swappable for aluminium panels** while keeping the composite appearance. This is a material substitution inside `composite_boards`, not a new style.
+
+Stated uplifts:
+
+- **+ GBP 12.75** per panel, over standard composite;
+- **+ GBP 12.00** per horizontal bar converted from composite to aluminium.
+
+Possible internal key:
+
+```txt
+aluminium_panel_upgrade
+```
+
+Status: **not priceable yet.** The source message was truncated and four parameters are missing — whether the rate is per panel or per m², whether the two uplifts are additive, whether the figures include VAT, and how the panel/bar count is derived from gate size. The option may be modelled and shown, but its total must render as "quoted after survey" until those land. See [CA-02](../client-answers/2026-07-28-marius.md#ca-02--aluminium-panel-upgrade-on-composite-boards).
+
+Incompatible with `traditional_victorian` — there are no panels to swap.
+
+---
+
+## Finishes / Colours
+
+The client replaced the earlier generic palette. **`zinc grey`, `bronze` and `pearl white` are withdrawn — do not reintroduce them anywhere, including fallback copy.**
+
+Standard palette (four finishes, all at the same rate):
+
+| Internal code | Client name |
+|---|---|
+| `black_satin` | Satin black |
+| `black_gloss` | Gloss black |
+| `black_matt` | Matt black |
+| `anthracite_ral7016` | Anthracite RAL 7016 |
+
+Plus a customer-entered custom colour:
+
+| Internal code | Behaviour |
+|---|---|
+| `other_ral` | Free-text RAL box. Shows **"+ extra charge — powder coating, quoted separately"**. No number on any public surface. |
+
+Rate: **GBP 55/m² plus VAT** for the standard finishes.
+
+Internal note, never to be published: Marius indicated the custom-colour extra sits around GBP 250–300, but explicitly asked to keep it out of the configurator and settle it by email. Treat the range as a sanity check for our own quoting, not as a value to display or store on a quote.
+
+Open on the rate (blocking, `open.finish_uplift_rule`):
+
+- Does the `FROM` price already include one finish, with the others at +GBP 55/m²? Or is every finish +GBP 55/m² on a bare galvanised base?
+- What area is the m² — gate face (`width × height`), both faces, or actual painted surface?
+- Does the same rate apply to Traditional Victorian? Open bars have a fraction of the painted area of a solid composite panel at the same face dimensions.
+
+Source: [CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge).
 
 ---
 
@@ -431,6 +497,19 @@ Interpretation:
 
 ## Open Questions for Client
 
+Answered on 2026-07-28 — do not ask again:
+
+- What board colours/finishes exist? → four blacks + RAL 7016, see **Finishes / Colours** above ([CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge)).
+- What is the cantilever tail ratio? → 1/3 of the clear opening, minimum ([CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum)).
+- Is the cantilever configurator width the opening or opening + tail? → opening only ([CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum)).
+- Official contact email? → `sales@steelyes.co.uk` ([CA-06](../client-answers/2026-07-28-marius.md#ca-06--official-sales-email)).
+
+New questions raised by the 2026-07-28 batch:
+
+- Finishes: does the `FROM` price include a colour, what area is the m², and does the rate apply to open-bar Victorian?
+- Aluminium panels: panel/bar count rule, whether the two uplifts are additive, VAT treatment.
+- Handle: side/position on single swing, and whether manual sliding gates use the same part.
+
 Pricing:
 
 - Are all listed prices still valid?
@@ -456,7 +535,7 @@ Bushes and spirals:
 Composite boards:
 
 - Are composite board prices always the same as Traditional Victorian for each gate type, except where listed differently?
-- What board colours/finishes exist?
+- How is a composite panel built (thickness, reinforcement, how many horizontal members)? Still unanswered, and it blocks the aluminium upgrade count rule.
 
 Fencing panels:
 

@@ -11,5 +11,5 @@ test('homepage responde e mostra il wordmark', async ({ page }) => {
 
   // Requisito Phase 0: la preview deve mostrare il wordmark STEELYES.
   // Il copy hero puo' cambiare, il brand "Steelyes" deve restare stabile.
-  await expect(page.getByRole('link', { name: /Steelyes/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Steelyes Ltd', exact: true })).toBeVisible();
 });

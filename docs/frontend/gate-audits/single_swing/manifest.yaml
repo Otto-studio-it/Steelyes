@@ -1,0 +1,15 @@
+gate_type: single_swing
+style_hint: traditional_victorian
+known_dimensions_mm:
+  width: 900
+  height: 1000
+motorised_hint: false
+photos:
+  - path: photos/02-victorian-single-panel-driveway.png
+    view: front_elevation
+  - path: photos/04-composite-single-swing-privacy.png
+    view: composite_privacy_reference
+notes: >
+  Primary Victorian reference: photo 02 (single leaf, tri-rail, staggered finials).
+  Composite reference: photo 04. Photos 01 and 03 are sliding variants —
+  see TOPOLOGY_SLIDING_VARIANTS.md; move to tracked_sliding audit later.

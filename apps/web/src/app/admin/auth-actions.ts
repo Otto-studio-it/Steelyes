@@ -31,6 +31,14 @@ export async function loginAdmin(
   const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error || !data.user) {
+    // Network / paused project surfaces as fetch failure — don't pretend it's bad credentials.
+    const msg = (error?.message || '').toLowerCase()
+    if (msg.includes('fetch') || msg.includes('network') || error?.name === 'AuthRetryableFetchError') {
+      return {
+        error:
+          'Impossibile raggiungere Supabase (progetto pausato o rete). Controlla NEXT_PUBLIC_SUPABASE_URL e lo stato del progetto.',
+      }
+    }
     return { error: 'Email o password errati.' }
   }
 

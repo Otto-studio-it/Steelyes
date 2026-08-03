@@ -1,20 +1,23 @@
 import type { Metadata } from 'next'
+
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { BUSINESS } from '@/lib/marketing/business'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Steelyes',
+  title: 'Privacy Policy',
   description: 'How Steelyes collects, uses and protects your personal data in accordance with UK GDPR.',
+  alternates: { canonical: '/legal/privacy-policy' },
 }
 
 export default function PrivacyPolicyPage() {
   return (
     <MarketingShell pathname="/legal/privacy-policy">
       <section className="mx-auto max-w-4xl px-4 py-10 md:px-8 md:py-14">
-        <p className="mb-4 font-mono text-xs uppercase tracking-widest text-[#9E000C]">Legal</p>
+        <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary">Legal</p>
         <h1 className="font-heading text-4xl font-black uppercase sm:text-5xl">Privacy Policy</h1>
-        <p className="mt-4 font-mono text-xs text-zinc-500">Last updated: May 2026</p>
+        <p className="mt-4 font-mono text-xs text-zinc-500">Last updated: August 2026</p>
 
-        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-[#3A3A3A] [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-[#1B1C1A] [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
+        <div className="prose prose-zinc mt-10 max-w-none text-sm leading-relaxed text-muted-deep [&_h2]:mb-3 [&_h2]:mt-10 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:text-steel [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:font-heading [&_h3]:text-base [&_h3]:font-bold [&_h3]:uppercase [&_li]:mb-1 [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5">
 
           <h2>1. Who we are</h2>
           <p>
@@ -23,10 +26,10 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             <strong>Contact:</strong><br />
-            Steelyes<br />
-            Unit 7, Meridian Industrial Estate, Enfield, London EN3 7TW<br />
-            Email: <a href="mailto:steelyes@yahoo.com" className="text-[#9E000C] hover:underline">steelyes@yahoo.com</a><br />
-            Phone: +44 7803 002145
+            {BUSINESS.legalName}<br />
+            {BUSINESS.address.line1}, {BUSINESS.address.locality}, {BUSINESS.address.region} {BUSINESS.address.postalCode}<br />
+            Email: <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">{BUSINESS.email}</a><br />
+            Phone: {BUSINESS.phoneDisplay}
           </p>
 
           <h2>2. Data we collect and why</h2>
@@ -71,7 +74,9 @@ export default function PrivacyPolicyPage() {
           <ul>
             <li><strong>Supabase Inc.</strong> — cloud database provider (enquiry storage). Data is processed in the EU.</li>
             <li><strong>Resend Inc.</strong> — transactional email provider (notification emails). Data is processed in the US under appropriate safeguards.</li>
-            <li><strong>Vercel Inc.</strong> — hosting and CDN provider.</li>
+            <li><strong>Coolify / hosting provider</strong> — application hosting for this website.</li>
+            <li><strong>Cloudflare, Inc.</strong> — DNS, CDN and edge security in front of the site.</li>
+            <li><strong>Usercentrics A/S (Cookiebot)</strong> — cookie consent management, when enabled on this domain.</li>
           </ul>
           <p>Each sub-processor is bound by appropriate data processing agreements.</p>
 
@@ -87,7 +92,7 @@ export default function PrivacyPolicyPage() {
           </ul>
           <p>
             To exercise any of these rights, email us at{' '}
-            <a href="mailto:steelyes@yahoo.com" className="text-[#9E000C] hover:underline">steelyes@yahoo.com</a>.
+            <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">{BUSINESS.email}</a>.
             We will respond within one calendar month.
           </p>
 
@@ -97,14 +102,15 @@ export default function PrivacyPolicyPage() {
             Information Commissioner&apos;s Office (ICO), the UK supervisory authority for data protection.
           </p>
           <p>
-            ICO website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-[#9E000C] hover:underline">ico.org.uk</a><br />
+            ICO website: <a href="https://ico.org.uk" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">ico.org.uk</a><br />
             ICO helpline: 0303 123 1113
           </p>
 
           <h2>8. Cookies</h2>
           <p>
-            This website uses a small number of strictly necessary cookies to operate correctly. For full details see
-            our <a href="/legal/cookie-policy" className="text-[#9E000C] hover:underline">Cookie Policy</a>.
+            We use cookies as described in our{' '}
+            <a href="/legal/cookie-policy" className="text-primary hover:underline">Cookie Policy</a>.
+            Consent preferences (when Cookiebot is active) are managed through the Cookiebot dialog.
           </p>
 
           <h2>9. Changes to this policy</h2>
