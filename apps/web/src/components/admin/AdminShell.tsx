@@ -29,6 +29,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: 'Dati Cliente', href: '/admin/client-data' },
       { label: 'Preventivi', href: '/admin/quotes' },
+      { label: 'Posta in arrivo', href: '/admin/inbox' },
     ],
   },
 ]
