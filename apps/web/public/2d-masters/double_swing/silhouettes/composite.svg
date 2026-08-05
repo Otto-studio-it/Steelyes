@@ -1,307 +1,312 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" width="1200" height="860">
-  <title>double swing preview</title>
-  <desc>1800 mm opening · 1000 mm high · composite boards · Black satin. Figma CAD silhouette — dimensions live in UI strip below, not on drawing.</desc>
-  <rect id="cad-paper" x="0" y="0" width="1200" height="860" fill="#FFFFFF" stroke="none" />
-  <rect id="cad-ground-bar" x="0" y="698" width="1200" height="18" fill="#2A2A2A" stroke="none" />
-  <rect id="cad-left-pillar" x="46" y="114" width="56" height="584" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
-  <rect id="cad-left-pillar-cap" x="43" y="104" width="62" height="10" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
-  <line id="cad-left-pillar-bed-0" x1="49" y1="117" x2="99" y2="117" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-1" x1="49" y1="129" x2="99" y2="129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-2" x1="49" y1="141" x2="99" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-3" x1="49" y1="153" x2="99" y2="153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-4" x1="49" y1="165" x2="99" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-5" x1="49" y1="177" x2="99" y2="177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-6" x1="49" y1="189" x2="99" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-7" x1="49" y1="201" x2="99" y2="201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-8" x1="49" y1="213" x2="99" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-9" x1="49" y1="225" x2="99" y2="225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-10" x1="49" y1="237" x2="99" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-11" x1="49" y1="249" x2="99" y2="249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-12" x1="49" y1="261" x2="99" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-13" x1="49" y1="273" x2="99" y2="273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-14" x1="49" y1="285" x2="99" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-15" x1="49" y1="297" x2="99" y2="297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-16" x1="49" y1="309" x2="99" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-17" x1="49" y1="321" x2="99" y2="321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-18" x1="49" y1="333" x2="99" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-19" x1="49" y1="345" x2="99" y2="345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-20" x1="49" y1="357" x2="99" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-21" x1="49" y1="369" x2="99" y2="369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-22" x1="49" y1="381" x2="99" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-23" x1="49" y1="393" x2="99" y2="393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-24" x1="49" y1="405" x2="99" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-25" x1="49" y1="417" x2="99" y2="417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-26" x1="49" y1="429" x2="99" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-27" x1="49" y1="441" x2="99" y2="441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-28" x1="49" y1="453" x2="99" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-29" x1="49" y1="465" x2="99" y2="465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-30" x1="49" y1="477" x2="99" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-31" x1="49" y1="489" x2="99" y2="489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-32" x1="49" y1="501" x2="99" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-33" x1="49" y1="513" x2="99" y2="513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-34" x1="49" y1="525" x2="99" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-35" x1="49" y1="537" x2="99" y2="537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-36" x1="49" y1="549" x2="99" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-37" x1="49" y1="561" x2="99" y2="561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-38" x1="49" y1="573" x2="99" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-39" x1="49" y1="585" x2="99" y2="585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-40" x1="49" y1="597" x2="99" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-41" x1="49" y1="609" x2="99" y2="609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-42" x1="49" y1="621" x2="99" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-43" x1="49" y1="633" x2="99" y2="633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-44" x1="49" y1="645" x2="99" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-45" x1="49" y1="657" x2="99" y2="657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-46" x1="49" y1="669" x2="99" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-47" x1="49" y1="681" x2="99" y2="681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-bed-48" x1="49" y1="693" x2="99" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-1" x1="63" y1="129" x2="63" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-3" x1="63" y1="153" x2="63" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-5" x1="63" y1="177" x2="63" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-7" x1="63" y1="201" x2="63" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-9" x1="63" y1="225" x2="63" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-11" x1="63" y1="249" x2="63" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-13" x1="63" y1="273" x2="63" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-15" x1="63" y1="297" x2="63" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-17" x1="63" y1="321" x2="63" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-19" x1="63" y1="345" x2="63" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-21" x1="63" y1="369" x2="63" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-23" x1="63" y1="393" x2="63" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-25" x1="63" y1="417" x2="63" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-27" x1="63" y1="441" x2="63" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-29" x1="63" y1="465" x2="63" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-31" x1="63" y1="489" x2="63" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-33" x1="63" y1="513" x2="63" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-35" x1="63" y1="537" x2="63" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-37" x1="63" y1="561" x2="63" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-39" x1="63" y1="585" x2="63" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-41" x1="63" y1="609" x2="63" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-43" x1="63" y1="633" x2="63" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-45" x1="63" y1="657" x2="63" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-0-47" x1="63" y1="681" x2="63" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-0" x1="77" y1="117" x2="77" y2="129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-1" x1="91" y1="129" x2="91" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-2" x1="77" y1="141" x2="77" y2="153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-3" x1="91" y1="153" x2="91" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-4" x1="77" y1="165" x2="77" y2="177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-5" x1="91" y1="177" x2="91" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-6" x1="77" y1="189" x2="77" y2="201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-7" x1="91" y1="201" x2="91" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-8" x1="77" y1="213" x2="77" y2="225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-9" x1="91" y1="225" x2="91" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-10" x1="77" y1="237" x2="77" y2="249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-11" x1="91" y1="249" x2="91" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-12" x1="77" y1="261" x2="77" y2="273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-13" x1="91" y1="273" x2="91" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-14" x1="77" y1="285" x2="77" y2="297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-15" x1="91" y1="297" x2="91" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-16" x1="77" y1="309" x2="77" y2="321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-17" x1="91" y1="321" x2="91" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-18" x1="77" y1="333" x2="77" y2="345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-19" x1="91" y1="345" x2="91" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-20" x1="77" y1="357" x2="77" y2="369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-21" x1="91" y1="369" x2="91" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-22" x1="77" y1="381" x2="77" y2="393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-23" x1="91" y1="393" x2="91" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-24" x1="77" y1="405" x2="77" y2="417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-25" x1="91" y1="417" x2="91" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-26" x1="77" y1="429" x2="77" y2="441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-27" x1="91" y1="441" x2="91" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-28" x1="77" y1="453" x2="77" y2="465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-29" x1="91" y1="465" x2="91" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-30" x1="77" y1="477" x2="77" y2="489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-31" x1="91" y1="489" x2="91" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-32" x1="77" y1="501" x2="77" y2="513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-33" x1="91" y1="513" x2="91" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-34" x1="77" y1="525" x2="77" y2="537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-35" x1="91" y1="537" x2="91" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-36" x1="77" y1="549" x2="77" y2="561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-37" x1="91" y1="561" x2="91" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-38" x1="77" y1="573" x2="77" y2="585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-39" x1="91" y1="585" x2="91" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-40" x1="77" y1="597" x2="77" y2="609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-41" x1="91" y1="609" x2="91" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-42" x1="77" y1="621" x2="77" y2="633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-43" x1="91" y1="633" x2="91" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-44" x1="77" y1="645" x2="77" y2="657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-45" x1="91" y1="657" x2="91" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-46" x1="77" y1="669" x2="77" y2="681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-47" x1="91" y1="681" x2="91" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-left-pillar-head-1-48" x1="77" y1="693" x2="77" y2="695" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <rect id="cad-right-pillar" x="1098" y="114" width="56" height="584" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
-  <rect id="cad-right-pillar-cap" x="1095" y="104" width="62" height="10" rx="0" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2" />
-  <line id="cad-right-pillar-bed-0" x1="1101" y1="117" x2="1151" y2="117" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-1" x1="1101" y1="129" x2="1151" y2="129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-2" x1="1101" y1="141" x2="1151" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-3" x1="1101" y1="153" x2="1151" y2="153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-4" x1="1101" y1="165" x2="1151" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-5" x1="1101" y1="177" x2="1151" y2="177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-6" x1="1101" y1="189" x2="1151" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-7" x1="1101" y1="201" x2="1151" y2="201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-8" x1="1101" y1="213" x2="1151" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-9" x1="1101" y1="225" x2="1151" y2="225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-10" x1="1101" y1="237" x2="1151" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-11" x1="1101" y1="249" x2="1151" y2="249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-12" x1="1101" y1="261" x2="1151" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-13" x1="1101" y1="273" x2="1151" y2="273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-14" x1="1101" y1="285" x2="1151" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-15" x1="1101" y1="297" x2="1151" y2="297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-16" x1="1101" y1="309" x2="1151" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-17" x1="1101" y1="321" x2="1151" y2="321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-18" x1="1101" y1="333" x2="1151" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-19" x1="1101" y1="345" x2="1151" y2="345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-20" x1="1101" y1="357" x2="1151" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-21" x1="1101" y1="369" x2="1151" y2="369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-22" x1="1101" y1="381" x2="1151" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-23" x1="1101" y1="393" x2="1151" y2="393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-24" x1="1101" y1="405" x2="1151" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-25" x1="1101" y1="417" x2="1151" y2="417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-26" x1="1101" y1="429" x2="1151" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-27" x1="1101" y1="441" x2="1151" y2="441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-28" x1="1101" y1="453" x2="1151" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-29" x1="1101" y1="465" x2="1151" y2="465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-30" x1="1101" y1="477" x2="1151" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-31" x1="1101" y1="489" x2="1151" y2="489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-32" x1="1101" y1="501" x2="1151" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-33" x1="1101" y1="513" x2="1151" y2="513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-34" x1="1101" y1="525" x2="1151" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-35" x1="1101" y1="537" x2="1151" y2="537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-36" x1="1101" y1="549" x2="1151" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-37" x1="1101" y1="561" x2="1151" y2="561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-38" x1="1101" y1="573" x2="1151" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-39" x1="1101" y1="585" x2="1151" y2="585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-40" x1="1101" y1="597" x2="1151" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-41" x1="1101" y1="609" x2="1151" y2="609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-42" x1="1101" y1="621" x2="1151" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-43" x1="1101" y1="633" x2="1151" y2="633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-44" x1="1101" y1="645" x2="1151" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-45" x1="1101" y1="657" x2="1151" y2="657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-46" x1="1101" y1="669" x2="1151" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-47" x1="1101" y1="681" x2="1151" y2="681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-bed-48" x1="1101" y1="693" x2="1151" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-1" x1="1115" y1="129" x2="1115" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-3" x1="1115" y1="153" x2="1115" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-5" x1="1115" y1="177" x2="1115" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-7" x1="1115" y1="201" x2="1115" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-9" x1="1115" y1="225" x2="1115" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-11" x1="1115" y1="249" x2="1115" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-13" x1="1115" y1="273" x2="1115" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-15" x1="1115" y1="297" x2="1115" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-17" x1="1115" y1="321" x2="1115" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-19" x1="1115" y1="345" x2="1115" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-21" x1="1115" y1="369" x2="1115" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-23" x1="1115" y1="393" x2="1115" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-25" x1="1115" y1="417" x2="1115" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-27" x1="1115" y1="441" x2="1115" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-29" x1="1115" y1="465" x2="1115" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-31" x1="1115" y1="489" x2="1115" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-33" x1="1115" y1="513" x2="1115" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-35" x1="1115" y1="537" x2="1115" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-37" x1="1115" y1="561" x2="1115" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-39" x1="1115" y1="585" x2="1115" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-41" x1="1115" y1="609" x2="1115" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-43" x1="1115" y1="633" x2="1115" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-45" x1="1115" y1="657" x2="1115" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-0-47" x1="1115" y1="681" x2="1115" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-0" x1="1129" y1="117" x2="1129" y2="129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-1" x1="1143" y1="129" x2="1143" y2="141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-2" x1="1129" y1="141" x2="1129" y2="153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-3" x1="1143" y1="153" x2="1143" y2="165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-4" x1="1129" y1="165" x2="1129" y2="177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-5" x1="1143" y1="177" x2="1143" y2="189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-6" x1="1129" y1="189" x2="1129" y2="201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-7" x1="1143" y1="201" x2="1143" y2="213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-8" x1="1129" y1="213" x2="1129" y2="225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-9" x1="1143" y1="225" x2="1143" y2="237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-10" x1="1129" y1="237" x2="1129" y2="249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-11" x1="1143" y1="249" x2="1143" y2="261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-12" x1="1129" y1="261" x2="1129" y2="273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-13" x1="1143" y1="273" x2="1143" y2="285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-14" x1="1129" y1="285" x2="1129" y2="297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-15" x1="1143" y1="297" x2="1143" y2="309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-16" x1="1129" y1="309" x2="1129" y2="321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-17" x1="1143" y1="321" x2="1143" y2="333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-18" x1="1129" y1="333" x2="1129" y2="345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-19" x1="1143" y1="345" x2="1143" y2="357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-20" x1="1129" y1="357" x2="1129" y2="369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-21" x1="1143" y1="369" x2="1143" y2="381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-22" x1="1129" y1="381" x2="1129" y2="393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-23" x1="1143" y1="393" x2="1143" y2="405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-24" x1="1129" y1="405" x2="1129" y2="417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-25" x1="1143" y1="417" x2="1143" y2="429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-26" x1="1129" y1="429" x2="1129" y2="441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-27" x1="1143" y1="441" x2="1143" y2="453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-28" x1="1129" y1="453" x2="1129" y2="465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-29" x1="1143" y1="465" x2="1143" y2="477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-30" x1="1129" y1="477" x2="1129" y2="489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-31" x1="1143" y1="489" x2="1143" y2="501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-32" x1="1129" y1="501" x2="1129" y2="513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-33" x1="1143" y1="513" x2="1143" y2="525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-34" x1="1129" y1="525" x2="1129" y2="537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-35" x1="1143" y1="537" x2="1143" y2="549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-36" x1="1129" y1="549" x2="1129" y2="561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-37" x1="1143" y1="561" x2="1143" y2="573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-38" x1="1129" y1="573" x2="1129" y2="585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-39" x1="1143" y1="585" x2="1143" y2="597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-40" x1="1129" y1="597" x2="1129" y2="609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-41" x1="1143" y1="609" x2="1143" y2="621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-42" x1="1129" y1="621" x2="1129" y2="633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-43" x1="1143" y1="633" x2="1143" y2="645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-44" x1="1129" y1="645" x2="1129" y2="657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-45" x1="1143" y1="657" x2="1143" y2="669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-46" x1="1129" y1="669" x2="1129" y2="681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-47" x1="1143" y1="681" x2="1143" y2="693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <line id="cad-right-pillar-head-1-48" x1="1129" y1="693" x2="1129" y2="695" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square" opacity="0.55" />
-  <rect id="leaf-1-frame" x="120" y="150" width="476" height="520" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="2.2" opacity="1" />
-  <line id="leaf-1-top-rail" x1="128" y1="162" x2="588" y2="162" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-bottom-rail" x1="128" y1="658" x2="588" y2="658" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-mid-rail" x1="128" y1="410" x2="588" y2="410" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-1" x1="143.8" y1="164" x2="143.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-2" x1="167.6" y1="164" x2="167.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-3" x1="191.4" y1="164" x2="191.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-4" x1="215.2" y1="164" x2="215.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-5" x1="239" y1="164" x2="239" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-6" x1="262.8" y1="164" x2="262.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-7" x1="286.6" y1="164" x2="286.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-8" x1="310.4" y1="164" x2="310.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-9" x1="334.2" y1="164" x2="334.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-10" x1="358" y1="164" x2="358" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-11" x1="381.8" y1="164" x2="381.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-12" x1="405.6" y1="164" x2="405.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-13" x1="429.4" y1="164" x2="429.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-14" x1="453.2" y1="164" x2="453.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-15" x1="477" y1="164" x2="477" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-16" x1="500.8" y1="164" x2="500.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-17" x1="524.6" y1="164" x2="524.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-18" x1="548.4" y1="164" x2="548.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-1-board-19" x1="572.2" y1="164" x2="572.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <rect id="hinge-left-0" x="110" y="206.4" width="10" height="12" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
-  <rect id="hinge-left-1" x="110" y="601.6" width="10" height="12" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
-  <rect id="leaf-2-frame" x="604" y="150" width="476" height="520" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="2.2" opacity="1" />
-  <line id="leaf-2-top-rail" x1="612" y1="162" x2="1072" y2="162" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-bottom-rail" x1="612" y1="658" x2="1072" y2="658" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-mid-rail" x1="612" y1="410" x2="1072" y2="410" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-1" x1="627.8" y1="164" x2="627.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-2" x1="651.6" y1="164" x2="651.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-3" x1="675.4" y1="164" x2="675.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-4" x1="699.2" y1="164" x2="699.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-5" x1="723" y1="164" x2="723" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-6" x1="746.8" y1="164" x2="746.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-7" x1="770.6" y1="164" x2="770.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-8" x1="794.4" y1="164" x2="794.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-9" x1="818.2" y1="164" x2="818.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-10" x1="842" y1="164" x2="842" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-11" x1="865.8" y1="164" x2="865.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-12" x1="889.6" y1="164" x2="889.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-13" x1="913.4" y1="164" x2="913.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-14" x1="937.2" y1="164" x2="937.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-15" x1="961" y1="164" x2="961" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-16" x1="984.8" y1="164" x2="984.8" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-17" x1="1008.6" y1="164" x2="1008.6" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-18" x1="1032.4" y1="164" x2="1032.4" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <line id="leaf-2-board-19" x1="1056.2" y1="164" x2="1056.2" y2="656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  <rect id="hinge-right-0" x="1080" y="206.4" width="10" height="12" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
-  <rect id="hinge-right-1" x="1080" y="601.6" width="10" height="12" rx="0" fill="none" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
-  <rect id="center-latch-plate" x="590" y="332" width="20" height="156" rx="2" fill="#FFFFFF" fill-opacity="1" stroke="#1A1A1A" stroke-width="1.6" opacity="1" />
-  <line id="swing-ground-clearance" x1="144" y1="682" x2="1056" y2="682" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square" opacity="1" />
-  
+<svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_1215)">
+<path d="M1200 0H0V860H1200V0Z" fill="white"/>
+<path d="M1200 698H0V716H1200V698Z" fill="#2A2A2A"/>
+<path d="M102 114H46V698H102V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
+<path d="M105 104H43V114H105V104Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
+<path opacity="0.55" d="M49 117H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 129H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 141H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 153H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 165H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 177H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 189H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 201H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 213H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 225H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 237H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 249H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 261H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 273H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 285H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 297H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 309H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 321H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 333H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 345H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 357H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 369H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 381H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 393H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 405H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 417H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 429H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 441H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 453H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 465H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 477H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 489H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 501H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 513H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 525H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 537H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 549H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 561H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 573H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 585H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 597H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 609H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 621H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 633H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 645H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 657H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 669H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 681H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M49 693H99" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 129V141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 153V165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 177V189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 201V213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 225V237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 249V261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 273V285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 297V309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 321V333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 345V357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 369V381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 393V405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 417V429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 441V453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 465V477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 489V501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 513V525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 537V549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 561V573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 585V597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 609V621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 633V645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 657V669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M63 681V693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 117V129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 129V141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 141V153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 153V165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 165V177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 177V189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 189V201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 201V213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 213V225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 225V237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 237V249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 249V261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 261V273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 273V285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 285V297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 297V309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 309V321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 321V333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 333V345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 345V357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 357V369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 369V381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 381V393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 393V405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 405V417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 417V429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 429V441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 441V453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 453V465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 465V477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 477V489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 489V501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 501V513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 513V525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 525V537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 537V549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 549V561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 561V573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 573V585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 585V597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 597V609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 609V621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 621V633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 633V645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 645V657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 657V669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 669V681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M91 681V693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M77 693V695" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path d="M1154 114H1098V698H1154V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
+<path d="M1157 104H1095V114H1157V104Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
+<path opacity="0.55" d="M1101 117H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 129H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 141H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 153H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 165H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 177H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 189H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 201H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 213H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 225H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 237H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 249H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 261H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 273H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 285H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 297H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 309H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 321H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 333H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 345H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 357H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 369H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 381H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 393H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 405H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 417H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 429H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 441H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 453H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 465H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 477H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 489H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 501H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 513H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 525H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 537H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 549H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 561H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 573H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 585H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 597H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 609H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 621H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 633H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 645H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 657H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 669H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 681H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1101 693H1151" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 129V141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 153V165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 177V189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 201V213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 225V237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 249V261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 273V285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 297V309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 321V333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 345V357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 369V381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 393V405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 417V429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 441V453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 465V477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 489V501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 513V525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 537V549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 561V573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 585V597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 609V621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 633V645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 657V669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1115 681V693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 117V129" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 129V141" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 141V153" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 153V165" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 165V177" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 177V189" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 189V201" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 201V213" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 213V225" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 225V237" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 237V249" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 249V261" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 261V273" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 273V285" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 285V297" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 297V309" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 309V321" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 321V333" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 333V345" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 345V357" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 357V369" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 369V381" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 381V393" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 393V405" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 405V417" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 417V429" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 429V441" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 441V453" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 453V465" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 465V477" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 477V489" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 489V501" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 501V513" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 513V525" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 525V537" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 537V549" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 549V561" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 561V573" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 573V585" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 585V597" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 597V609" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 609V621" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 621V633" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 633V645" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 645V657" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 657V669" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 669V681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1143 681V693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path opacity="0.55" d="M1129 693V695" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
+<path d="M596 150H120V670H596V150Z" stroke="#1A1A1A" stroke-width="2.2"/>
+<path d="M128 162H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M128 658H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M128 410H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M143.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M167.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M191.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M215.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M239 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M262.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M286.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M310.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M334.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M358 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M381.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M405.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M429.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M453.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M477 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M500.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M524.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M548.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M572.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M120 206.4H110V218.4H120V206.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M120 601.6H110V613.6H120V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M1080 150H604V670H1080V150Z" stroke="#1A1A1A" stroke-width="2.2"/>
+<path d="M612 162H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M612 658H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M612 410H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M627.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M651.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M675.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M699.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M723 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M746.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M770.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M794.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M818.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M842 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M865.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M889.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M913.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M937.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M961 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M984.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M1008.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M1032.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M1056.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M1090 206.4H1080V218.4H1090V206.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M1090 601.6H1080V613.6H1090V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M607 382H593V438H607V382Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M600 392V428" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="square"/>
+<path d="M144 682H1056" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+</g>
+<defs>
+<clipPath id="clip0_6_1215">
+<rect width="1200" height="860" fill="white"/>
+</clipPath>
+</defs>
 </svg>
