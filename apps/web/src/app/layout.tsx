@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { CookiebotScript } from '@/components/consent/Cookiebot';
+import { organizationSchema } from '@/lib/marketing/schema';
 
 const barlowCondensed = localFont({
   src: "./fonts/GeistVF.woff",
@@ -77,6 +78,10 @@ export default function RootLayout({
       <head>
         {/* Cookiebot: first script in HEAD (required by Cookiebot install guide) */}
         <CookiebotScript />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+        />
       </head>
       <body className={`${barlow.variable} ${barlowCondensed.variable} ${ibmPlexMono.variable} font-body antialiased`}>
         {children}

@@ -58,6 +58,7 @@ describe('cantilever tail rule (CA-05 / CL-705)', () => {
     const tail = meshPlan.boxes.find((box) => box.id === 'counterbalance-tail')
 
     expect(tail).toBeDefined()
-    expect(tail?.widthMm).toBeCloseTo(4000 * CANTILEVER_TAIL_RATIO)
+    expect(tail?.widthMm).toBe(getCantileverTailMm(4000))
+    expect(tail?.widthMm).toBe(1333)
   })
 })

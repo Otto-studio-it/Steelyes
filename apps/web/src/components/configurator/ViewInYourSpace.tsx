@@ -2,10 +2,16 @@
 
 import * as Dialog from '@radix-ui/react-dialog'
 import type { GateConfig } from '@steelyes/gate-engine'
-import { Box, Check, Copy, Download, Loader2, Smartphone, X } from 'lucide-react'
+import { AlertTriangle, Box, Check, Copy, Download, Loader2, Smartphone, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
+import {
+  buildQuickLookHref,
+  buildSceneViewerHttpsHref,
+  buildSceneViewerIntentHref,
+  formatArExpiryLabel,
+} from '@/lib/configurator/ar/ar-handoff'
 import {
   exportGateArModel,
   type GateArExportResult,
@@ -18,16 +24,33 @@ type ViewInYourSpaceProps = {
   className?: string
 }
 
+type HostedModel = {
+  url: string
+  expiresAt: number
+  phoneReachable: boolean
+}
+
 type HostedUrls = {
-  glbUrl: string
-  usdzUrl: string
+  glb: HostedModel | null
+  usdz: HostedModel | null
 }
 
 type ExportState =
   | { status: 'idle' }
   | { status: 'loading' }
-  | { status: 'ready'; result: GateArExportResult; hosted: HostedUrls | null }
+  | { status: 'ready'; result: GateArExportResult; hosted: HostedUrls }
   | { status: 'error'; message: string }
+
+/** Minimal poster so iOS shows the Quick Look AR badge (`rel="ar"` requires an <img>). */
+const QUICK_LOOK_POSTER =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="80" viewBox="0 0 120 80">
+      <rect width="120" height="80" fill="#1f2933"/>
+      <rect x="18" y="16" width="84" height="52" fill="none" stroke="#e8ece6" stroke-width="3"/>
+      <line x1="60" y1="16" x2="60" y2="68" stroke="#e8ece6" stroke-width="2"/>
+    </svg>`,
+  )
 
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob)
@@ -40,8 +63,10 @@ function downloadBlob(blob: Blob, filename: string) {
 
 function isLikelyIos(): boolean {
   if (typeof navigator === 'undefined') return false
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  return (
+    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  )
 }
 
 function isLikelyAndroid(): boolean {
@@ -49,18 +74,33 @@ function isLikelyAndroid(): boolean {
   return /Android/i.test(navigator.userAgent)
 }
 
-async function hostModel(blob: Blob, format: 'glb' | 'usdz'): Promise<string> {
+async function hostModel(blob: Blob, format: 'glb' | 'usdz'): Promise<HostedModel> {
   const response = await fetch('/api/ar/models', {
     method: 'POST',
     headers: { 'x-ar-format': format },
     body: blob,
   })
   if (!response.ok) {
-    throw new Error(`Could not host ${format.toUpperCase()} model (${response.status})`)
+    let detail = `HTTP ${response.status}`
+    try {
+      const payload = (await response.json()) as { error?: string }
+      if (payload.error) detail = payload.error
+    } catch {
+      // ignore
+    }
+    throw new Error(`Could not host ${format.toUpperCase()}: ${detail}`)
   }
-  const payload = (await response.json()) as { url?: string }
-  if (!payload.url) throw new Error(`Missing hosted ${format} URL`)
-  return payload.url
+  const payload = (await response.json()) as {
+    url?: string
+    expiresAt?: number
+    phoneReachable?: boolean
+  }
+  if (!payload.url) throw new Error(`Missing hosted ${format.toUpperCase()} URL`)
+  return {
+    url: payload.url,
+    expiresAt: payload.expiresAt ?? Date.now() + 15 * 60 * 1000,
+    phoneReachable: payload.phoneReachable !== false,
+  }
 }
 
 type CopiedLink = 'iphone' | 'android' | null
@@ -74,10 +114,19 @@ async function copyText(value: string): Promise<boolean> {
   }
 }
 
+function earliestExpiry(hosted: HostedUrls): number | null {
+  const times = [hosted.glb?.expiresAt, hosted.usdz?.expiresAt].filter(
+    (value): value is number => typeof value === 'number',
+  )
+  if (times.length === 0) return null
+  return Math.min(...times)
+}
+
 export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpaceProps) {
   const [open, setOpen] = useState(false)
   const [exportState, setExportState] = useState<ExportState>({ status: 'idle' })
   const [copied, setCopied] = useState<CopiedLink>(null)
+  const [nowMs, setNowMs] = useState(() => Date.now())
   const resultRef = useRef<GateArExportResult | null>(null)
 
   useEffect(() => {
@@ -103,20 +152,19 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
         }
         resultRef.current = result
 
-        let hosted: HostedUrls | null = null
-        try {
-          const [glbUrl, usdzUrl] = await Promise.all([
-            hostModel(result.glbBlob, 'glb'),
-            hostModel(result.usdzBlob, 'usdz'),
-          ])
-          hosted = { glbUrl, usdzUrl }
-        } catch {
-          hosted = null
-        }
+        const [glbSettled, usdzSettled] = await Promise.allSettled([
+          hostModel(result.glbBlob, 'glb'),
+          hostModel(result.usdzBlob, 'usdz'),
+        ])
 
         if (cancelled) {
           result.revoke()
           return
+        }
+
+        const hosted: HostedUrls = {
+          glb: glbSettled.status === 'fulfilled' ? glbSettled.value : null,
+          usdz: usdzSettled.status === 'fulfilled' ? usdzSettled.value : null,
         }
 
         setExportState({ status: 'ready', result, hosted })
@@ -125,7 +173,10 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
           fidelity: result.fidelity,
           width_mm: config.widthMm,
           height_mm: config.heightMm,
-          hosted: Boolean(hosted),
+          hosted_glb: Boolean(hosted.glb),
+          hosted_usdz: Boolean(hosted.usdz),
+          phone_reachable:
+            (hosted.glb?.phoneReachable ?? true) && (hosted.usdz?.phoneReachable ?? true),
         })
       })
       .catch((error: unknown) => {
@@ -141,10 +192,24 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
     }
   }, [open, config])
 
+  useEffect(() => {
+    if (exportState.status !== 'ready') return
+    if (!exportState.hosted.glb && !exportState.hosted.usdz) return
+    const timer = window.setInterval(() => setNowMs(Date.now()), 1000)
+    return () => window.clearInterval(timer)
+  }, [exportState])
+
   if (!CONFIGURATOR_3D_PREVIEW_ENABLED) return null
 
   const ios = isLikelyIos()
   const android = isLikelyAndroid()
+  const hosted = exportState.status === 'ready' ? exportState.hosted : null
+  const expiresAt = hosted ? earliestExpiry(hosted) : null
+  const expired = expiresAt !== null && nowMs >= expiresAt
+  const showLocalhostWarning = Boolean(
+    (hosted?.glb && !hosted.glb.phoneReachable) ||
+      (hosted?.usdz && !hosted.usdz.phoneReachable),
+  )
 
   return (
     <>
@@ -178,8 +243,9 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                   View in your space
                 </Dialog.Title>
                 <Dialog.Description className="mt-1 text-sm leading-6 text-muted-deep">
-                  AR works on a phone only. On iPhone or Android, open the model in the camera.
-                  On desktop, copy a link and open it on your phone — no QR code.
+                  AR works on a phone only. The model is real scale — tape the clear opening (
+                  {config.widthMm} × {config.heightMm} mm, ground to top rail). Scale is locked in
+                  Quick Look / Scene Viewer. Posts and cantilever tails sit outside that check.
                 </Dialog.Description>
               </div>
               <Dialog.Close asChild>
@@ -211,27 +277,68 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
               {exportState.status === 'ready' ? (
                 <div className="space-y-3">
                   <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
-                    {exportState.result.fidelity === 'workshop' ? 'Workshop mesh' : 'Schematic mesh'} ·{' '}
-                    {config.widthMm} × {config.heightMm} mm · real scale · {gateTypeLabel(config.gateType)}
+                    {exportState.result.fidelity === 'workshop' ? 'Workshop mesh' : 'Schematic mesh'} ·
+                    clear opening {config.widthMm} × {config.heightMm} mm · real scale ·{' '}
+                    {gateTypeLabel(config.gateType)}
                   </p>
                   {exportState.result.notes[0] ? (
                     <p className="text-xs leading-5 text-muted-deep">{exportState.result.notes[0]}</p>
                   ) : null}
 
-                  {exportState.hosted && ios ? (
+                  {expiresAt && !expired ? (
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                      {formatArExpiryLabel(expiresAt, nowMs)}
+                    </p>
+                  ) : null}
+
+                  {expired ? (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-2 border border-steel/15 bg-paper px-3 py-2 text-sm text-muted-deep"
+                    >
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-steel" aria-hidden />
+                      <p>
+                        AR links expired. Close this dialog and open <strong>View in your space</strong>{' '}
+                        again, or download GLB / USDZ below.
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {showLocalhostWarning ? (
+                    <div
+                      role="status"
+                      className="flex items-start gap-2 border border-steel/15 bg-paper px-3 py-2 text-sm text-muted-deep"
+                    >
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-steel" aria-hidden />
+                      <p>
+                        This link is on localhost / a private network — it will not open on your
+                        phone. Use a public HTTPS deploy, or download the model and AirDrop / share
+                        the file.
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {!expired && hosted?.usdz && ios ? (
                     <a
                       rel="ar"
-                      href={exportState.hosted.usdzUrl}
+                      href={buildQuickLookHref(hosted.usdz.url)}
                       className="flex min-h-[48px] items-center justify-center gap-2 bg-steel px-4 font-mono text-xs uppercase tracking-widest text-white"
                     >
-                      <Smartphone className="h-4 w-4" aria-hidden />
+                      {/* eslint-disable-next-line @next/next/no-img-element -- data URI poster required by Quick Look */}
+                      <img
+                        src={QUICK_LOOK_POSTER}
+                        alt=""
+                        width={40}
+                        height={28}
+                        className="h-7 w-10 border border-white/20 object-cover"
+                      />
                       Open in AR (Quick Look)
                     </a>
                   ) : null}
 
-                  {exportState.hosted && android ? (
+                  {!expired && hosted?.glb && android ? (
                     <a
-                      href={`intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(exportState.hosted.glbUrl)}&mode=ar_preferred#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;end;`}
+                      href={buildSceneViewerIntentHref(hosted.glb.url)}
                       className="flex min-h-[48px] items-center justify-center gap-2 bg-steel px-4 font-mono text-xs uppercase tracking-widest text-white"
                     >
                       <Smartphone className="h-4 w-4" aria-hidden />
@@ -239,63 +346,76 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                     </a>
                   ) : null}
 
-                  {exportState.hosted && !ios && !android ? (
+                  {!expired && hosted && (hosted.glb || hosted.usdz) && !ios && !android ? (
                     <div className="space-y-2">
                       <p className="text-xs leading-5 text-muted-deep">
                         Copy a link, paste it in Messages / WhatsApp / Notes, then open it on your
                         phone. Links expire in about 15 minutes.
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          void copyText(exportState.hosted!.usdzUrl).then((ok) => {
-                            if (!ok) return
-                            setCopied('iphone')
-                            window.setTimeout(() => setCopied(null), 2000)
-                            captureConfiguratorEvent('ar phone link copied', {
-                              gate_type: config.gateType,
-                              target: 'iphone',
+                      {hosted.usdz ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            void copyText(buildQuickLookHref(hosted.usdz!.url)).then((ok) => {
+                              if (!ok) return
+                              setCopied('iphone')
+                              window.setTimeout(() => setCopied(null), 2000)
+                              captureConfiguratorEvent('ar phone link copied', {
+                                gate_type: config.gateType,
+                                target: 'iphone',
+                              })
                             })
-                          })
-                        }}
-                        className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
-                      >
-                        {copied === 'iphone' ? (
-                          <Check className="h-4 w-4" aria-hidden />
-                        ) : (
-                          <Copy className="h-4 w-4" aria-hidden />
-                        )}
-                        {copied === 'iphone' ? 'Copied iPhone link' : 'Copy iPhone link (USDZ)'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          void copyText(exportState.hosted!.glbUrl).then((ok) => {
-                            if (!ok) return
-                            setCopied('android')
-                            window.setTimeout(() => setCopied(null), 2000)
-                            captureConfiguratorEvent('ar phone link copied', {
-                              gate_type: config.gateType,
-                              target: 'android',
+                          }}
+                          className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
+                        >
+                          {copied === 'iphone' ? (
+                            <Check className="h-4 w-4" aria-hidden />
+                          ) : (
+                            <Copy className="h-4 w-4" aria-hidden />
+                          )}
+                          {copied === 'iphone' ? 'Copied iPhone link' : 'Copy iPhone link (USDZ)'}
+                        </button>
+                      ) : (
+                        <p className="text-xs text-muted-deep">
+                          iPhone USDZ hosting failed — download USDZ below.
+                        </p>
+                      )}
+                      {hosted.glb ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            // Copy the Scene Viewer HTTPS URL so Android opens AR when possible.
+                            void copyText(buildSceneViewerHttpsHref(hosted.glb!.url)).then((ok) => {
+                              if (!ok) return
+                              setCopied('android')
+                              window.setTimeout(() => setCopied(null), 2000)
+                              captureConfiguratorEvent('ar phone link copied', {
+                                gate_type: config.gateType,
+                                target: 'android',
+                              })
                             })
-                          })
-                        }}
-                        className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
-                      >
-                        {copied === 'android' ? (
-                          <Check className="h-4 w-4" aria-hidden />
-                        ) : (
-                          <Copy className="h-4 w-4" aria-hidden />
-                        )}
-                        {copied === 'android' ? 'Copied Android link' : 'Copy Android link (GLB)'}
-                      </button>
+                          }}
+                          className="flex min-h-[48px] w-full items-center justify-center gap-2 border border-steel/15 bg-paper px-4 font-mono text-xs uppercase tracking-widest text-steel"
+                        >
+                          {copied === 'android' ? (
+                            <Check className="h-4 w-4" aria-hidden />
+                          ) : (
+                            <Copy className="h-4 w-4" aria-hidden />
+                          )}
+                          {copied === 'android' ? 'Copied Android link' : 'Copy Android link (GLB)'}
+                        </button>
+                      ) : (
+                        <p className="text-xs text-muted-deep">
+                          Android GLB hosting failed — download GLB below.
+                        </p>
+                      )}
                     </div>
                   ) : null}
 
-                  {!exportState.hosted ? (
+                  {!hosted?.glb && !hosted?.usdz ? (
                     <p className="text-xs leading-5 text-muted-deep">
                       Hosting the temporary AR link failed — download the model below and open it on
-                      your phone (Files / Scene Viewer).
+                      your phone (Files → Quick Look, or Scene Viewer).
                     </p>
                   ) : null}
                 </div>

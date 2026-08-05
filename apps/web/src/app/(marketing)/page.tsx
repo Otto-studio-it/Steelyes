@@ -4,10 +4,13 @@ import type { Metadata } from 'next'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
+import { ConfiguratorProductPreview } from '@/components/marketing/ConfiguratorProductPreview'
+import { InstallationProcessTimeline } from '@/components/marketing/InstallationProcessTimeline'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { howToSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
@@ -114,7 +117,7 @@ export default function HomePage() {
                     alt={alt}
                     fill
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                    className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-[1.06]"
                   />
                 </div>
               </Reveal>
@@ -132,7 +135,55 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3 — Range (single index: gates + services) */}
+      {/* 3 — Configurator product */}
+      <section aria-labelledby="home-configurator-title" className="border-b border-zinc-200 bg-canvas py-16 md:py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 md:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+          <Reveal>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
+            <h2
+              id="home-configurator-title"
+              className="mt-3 max-w-xl font-heading text-4xl font-black uppercase leading-[0.92] text-steel sm:text-5xl md:text-6xl"
+            >
+              Design the entrance before the survey.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-deep">
+              Choose how the gate moves, set your opening size and compare finishes in a live visual tool. You will see
+              an estimated price as you work; Steelyes confirms the final specification on site before fabrication.
+            </p>
+
+            <ol className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {[
+                ['01', 'Choose a mechanism', 'Swing, sliding, bifold and specialist layouts.'],
+                ['02', 'Set size and finish', 'Tune the opening, style, colour and automation.'],
+                ['03', 'Prepare your quote', 'Save the design and send it with the project brief.'],
+              ].map(([number, title, body]) => (
+                <li key={number} className="grid grid-cols-[2.5rem_1fr] gap-3 border-t border-steel/12 pt-4">
+                  <span className="font-mono text-xs font-bold text-primary">{number}</span>
+                  <span>
+                    <span className="block font-heading text-sm font-bold uppercase text-steel">{title}</span>
+                    <span className="mt-1 block text-sm leading-6 text-muted-deep">{body}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+
+            <Link
+              href="/configurator"
+              data-configurator-placement="home-product-section"
+              className="tap-feedback group mt-8 inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-base font-bold uppercase tracking-tight text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+            >
+              Open the configurator
+              <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <ConfiguratorProductPreview />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 4 — Range (single index: gates + services) */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
           <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
@@ -197,7 +248,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4 — Process / installation */}
+      {/* 5 — Process / installation */}
       <section className="border-t border-zinc-200 bg-canvas py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
@@ -206,19 +257,7 @@ export default function HomePage() {
               <h2 className="mb-10 font-heading text-4xl font-black uppercase leading-none md:text-5xl">
                 Installation process
               </h2>
-              <ol className="divide-y divide-zinc-200 border-y border-zinc-200">
-                {processItems.map(({ n, label, body }) => (
-                  <li key={label} className="flex gap-5 py-5">
-                    <span className="w-10 shrink-0 font-heading text-3xl font-black leading-none text-zinc-200 md:text-4xl">
-                      {n}
-                    </span>
-                    <div>
-                      <h3 className="font-heading text-lg font-bold uppercase md:text-xl">{label}</h3>
-                      <p className="mt-1.5 text-sm font-light leading-relaxed text-muted-deep">{body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <InstallationProcessTimeline items={processItems} />
 
               <Link
                 href="/installation"
@@ -263,7 +302,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5 — Final CTA */}
+      {/* 6 — Final CTA */}
       <section className="relative overflow-hidden bg-steel py-20 text-white md:py-28">
         <Image
           src={OFFICIAL_IMAGES.gates.doubleSwing.gallery[1]}
@@ -289,18 +328,19 @@ export default function HomePage() {
             </p>
             <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 sm:grid-cols-2">
               <Link
-                href="/configurator"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Configure your gate
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-              </Link>
-              <Link
                 href="/contact"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request a quote
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+                <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+              </Link>
+              <Link
+                href="/configurator"
+                data-configurator-placement="home-closing-cta"
+                className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Configure a gate
+                <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
               </Link>
             </div>
           </Reveal>
@@ -313,7 +353,7 @@ export default function HomePage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
-            name: BUSINESS.tradingName,
+            name: BUSINESS.legalName,
             url: BUSINESS.website,
             telephone: BUSINESS.phoneDisplay,
             email: BUSINESS.email,
@@ -335,6 +375,7 @@ export default function HomePage() {
               longitude: -0.0342,
             },
             image: `${BUSINESS.website}${OFFICIAL_IMAGES.homepageHero}`,
+            logo: `${BUSINESS.website}/apple-icon`,
             sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {
@@ -349,6 +390,19 @@ export default function HomePage() {
               ],
             },
           }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes builds a bespoke steel gate',
+              description: metadata.description!,
+              path: '/',
+              steps: processItems.map(({ label, body }) => ({ name: label, text: body })),
+            }),
+          ),
         }}
       />
     </MarketingShell>

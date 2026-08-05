@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema, howToSchema, serviceSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Glass Balustrades & Terraces | Bespoke Steel & Glass',
@@ -26,6 +27,13 @@ const SPEC_ITEMS = [
   { label: 'Compliance', value: 'Confirmed during specification; no public claims pre-approval' },
 ] as const
 
+const WORKFLOW_STEPS = [
+  { step: 'Site survey', body: 'We confirm fixing substrates, edge conditions, and the dimensions that drive the build.' },
+  { step: 'Drawings', body: 'Fabrication drawings are prepared for review; changes are locked before production.' },
+  { step: 'Fabrication', body: 'Sections are cut, welded, dressed, and prepared for finishing with consistent junction details.' },
+  { step: 'Install', body: 'On-site install and alignment are coordinated around access and protection of finished surfaces.' },
+] as const
+
 export default function RailingsServicePage() {
   return (
     <MarketingShell pathname="/services/railings">
@@ -46,15 +54,15 @@ export default function RailingsServicePage() {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src={OFFICIAL_IMAGES.services.staircases.glass}
-            alt="Glass balustrade and steel terrace enclosure installed"
+            src={OFFICIAL_IMAGES.services.railings.garden}
+            alt="Steel cable balustrade on a garden terrace"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
-            <p className="font-heading text-xl font-bold uppercase">Bespoke glass balustrade</p>
+            <p className="font-heading text-xl font-bold uppercase">Bespoke garden balustrade</p>
           </div>
         </div>
         <article className="border border-steel bg-steel p-6 text-white md:p-8">
@@ -100,24 +108,7 @@ export default function RailingsServicePage() {
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Workflow</p>
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From survey to safe edge</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
-            {[
-              {
-                step: 'Site survey',
-                body: 'We confirm fixing substrates, edge conditions, and the dimensions that drive the build.',
-              },
-              {
-                step: 'Drawings',
-                body: 'Fabrication drawings are prepared for review; changes are locked before production.',
-              },
-              {
-                step: 'Fabrication',
-                body: 'Sections are cut, welded, dressed, and prepared for finishing with consistent junction details.',
-              },
-              {
-                step: 'Install',
-                body: 'On-site install and alignment are coordinated around access and protection of finished surfaces.',
-              },
-            ].map((item, index) => (
+            {WORKFLOW_STEPS.map((item, index) => (
               <article key={item.step} className="border border-zinc-200 bg-white p-6">
                 <p className="mb-4 font-heading text-5xl font-black text-zinc-200">0{index + 1}</p>
                 <h3 className="mb-2 font-heading text-xl font-bold uppercase">{item.step}</h3>
@@ -166,6 +157,46 @@ export default function RailingsServicePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: 'Home', path: '/' },
+              { name: 'Services', path: '/services' },
+              { name: 'Glass Balustrades & Terraces', path: '/services/railings' },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            serviceSchema({
+              name: 'Glass Balustrades & Terraces',
+              description: metadata.description!,
+              path: '/services/railings',
+              serviceType: 'Glass balustrade and terrace enclosure fabrication',
+              image: OFFICIAL_IMAGES.services.railings.garden,
+            }),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes fabricates glass balustrades and terraces',
+              description: metadata.description!,
+              path: '/services/railings',
+              steps: WORKFLOW_STEPS.map(({ step, body }) => ({ name: step, text: body })),
+            }),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

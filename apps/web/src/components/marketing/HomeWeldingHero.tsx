@@ -9,15 +9,15 @@ export function HomeWeldingHero() {
     <section className="relative min-h-[100svh] overflow-hidden bg-steel md:min-h-[calc(100svh-4rem)]">
       <Image
         src={OFFICIAL_IMAGES.homepageHero}
-        alt="Modern bespoke steel driveway gate installed at a residential entrance"
+        alt="Tracked sliding steel driveway gate with matching railings at a residential entrance"
         fill
         priority
         sizes="100vw"
-        className="object-cover object-center motion-safe:animate-hero-image-in motion-reduce:opacity-100"
+        className="object-cover object-[58%_center] motion-safe:animate-hero-image-in motion-reduce:opacity-100 md:object-center"
       />
       {/* layered overlays — keep product photo visible while protecting left-side copy */}
-      <div className="absolute inset-0 bg-black/38 md:bg-black/32" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/12 to-transparent" />
+      <div className="absolute inset-0 bg-black/60 md:bg-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 md:from-black/80 md:via-black/40 md:to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/55 to-transparent md:h-28" />
 
       {/* overline brand strip */}
@@ -49,18 +49,19 @@ export function HomeWeldingHero() {
         </p>
         <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 motion-safe:animate-hero-reveal motion-safe:[animation-delay:560ms] motion-reduce:opacity-100 sm:grid-cols-2">
           <Link
-            href="/configurator"
-            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
-            Configure your gate
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
-          </Link>
-          <Link
             href="/contact"
-            className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Request a quote
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
+          </Link>
+          <Link
+            href="/configurator"
+            data-configurator-placement="home-hero"
+            className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            Configure a gate
+            <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
           </Link>
         </div>
         <Link
