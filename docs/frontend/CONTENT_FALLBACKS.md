@@ -149,7 +149,7 @@ Do not:
 
 Confirmed 2026-07-28 ([CA-06](../client-answers/2026-07-28-marius.md#ca-06--official-sales-email), [CA-07](../client-answers/2026-07-28-marius.md#ca-07--social-profiles)):
 
-- public email `sales@steelyes.co.uk`;
+- public email `info@steelyes.co.uk`;
 - Instagram, Facebook and TikTok profile URLs.
 
 Missing:

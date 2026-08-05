@@ -4,6 +4,7 @@ import { Check, LoaderCircle, Mail } from 'lucide-react'
 import { useState } from 'react'
 
 import { emailMyDesign, type EmailMyDesignState } from '@/app/actions'
+import { TurnstileWidget } from '@/components/security/TurnstileWidget'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -18,12 +19,19 @@ export function EmailMyDesignPanel() {
   const ensureSavedConfiguration = useConfiguratorStore((state) => state.ensureSavedConfiguration)
   const [state, setState] = useState<EmailMyDesignState>({ status: 'idle' })
   const [submitting, setSubmitting] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (submitting) return
 
     const formData = new FormData(event.currentTarget)
+    if (turnstileRequired && !turnstileToken) {
+      setState({ status: 'error', message: 'Please complete the security check and try again.' })
+      return
+    }
+    if (turnstileToken) formData.set('turnstile_token', turnstileToken)
     setSubmitting(true)
     setState({ status: 'idle' })
 
@@ -106,6 +114,7 @@ export function EmailMyDesignPanel() {
           )}
         </button>
       </div>
+      {turnstileRequired ? <div className="mt-3"><TurnstileWidget onToken={setTurnstileToken} /></div> : null}
     </form>
   )
 }
