@@ -257,6 +257,9 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
 
   if (isBifoldGate(config.gateType)) {
     notes.unshift(bifoldSchematicNote(config.gateType))
+    notes.push(
+      'Bifold: 50/50 panels per leaf with fold stile + hinge knuckles; stack pack outside hinge post(s).',
+    )
   }
 
   return {

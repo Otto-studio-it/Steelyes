@@ -74,12 +74,36 @@ describe('gate-engine mesh', () => {
     expect(plan.cylinders.some((cylinder) => cylinder.role === 'bar')).toBe(true)
   })
 
-  it('adds fold detail boxes for bifolding swing gates', () => {
+  it('adds fold stile, hinge knuckles, and stack packs for bifolding swing gates', () => {
     const config = createGateConfig(createGatePreset('bifolding_double_swing'))
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'leaf-fold-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-2')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-hinge-1-0')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'leaf-frame-1-outer')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-frame-2-outer')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-left')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-right')).toBe(true)
+  })
+
+  it('puts victorian pickets on both bifold panels per leaf', () => {
+    const config = createGateConfig(createGatePreset('bifolding_double_swing'))
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-picket-upper-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-outer-picket-upper-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-2-outer-picket-upper-'))).toBe(true)
+  })
+
+  it('single bifold has one fold stile and left stack only', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('single_bifolding')))
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-2')).toBe(false)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-left')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-right')).toBe(false)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-outer-'))).toBe(true)
   })
 
   it('adds telescopic segment boxes for telescopic sliding gates', () => {
