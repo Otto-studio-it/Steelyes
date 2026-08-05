@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { putArModel } from '@/lib/configurator/ar/ar-model-store'
+import { putArModel, arModelStoreBackendLabel } from '@/lib/configurator/ar/ar-model-store'
 import {
   AR_MODEL_TTL_SECONDS,
   isLocalOrPrivateArUrl,
@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 export async function GET() {
   return NextResponse.json({
     ok: true,
-    store: 'ephemeral',
+    store: arModelStoreBackendLabel(),
     ttlSeconds: AR_MODEL_TTL_SECONDS,
   })
 }

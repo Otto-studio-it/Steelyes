@@ -3,6 +3,7 @@ import { getLeafCount } from '../internal/shared'
 import { getBifoldPanelsPerLeaf, isBifoldGate } from '../rules/bifold'
 import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
+import { pushDogBarRailheads, pushTopRailheads } from './railheads'
 import type { GateMeshBox, GateMeshCylinder } from './types'
 
 /** Frame depth — boldness OK (cross-section only). */
@@ -574,6 +575,24 @@ export function buildSwingProceduralMembers(
         depthOffsetMm,
       })
     }
+
+    // Railheads once per leaf (not per bifold panel) — decorative above top rail.
+    pushTopRailheads(boxes, {
+      config,
+      idPrefix: `leaf-${leafIndex + 1}`,
+      centerX: leafCenterX,
+      widthMm: leafInnerWidth,
+      leafHeightMm,
+      countWidthMm: config.widthMm,
+    })
+    pushDogBarRailheads(boxes, {
+      config,
+      idPrefix: `leaf-${leafIndex + 1}`,
+      centerX: leafCenterX,
+      widthMm: leafInnerWidth,
+      leafHeightMm,
+      countWidthMm: config.widthMm,
+    })
   }
 
   if (bifoldActive) {

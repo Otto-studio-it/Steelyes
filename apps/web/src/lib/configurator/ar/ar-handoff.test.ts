@@ -64,6 +64,6 @@ describe('ar-handoff', () => {
     const now = 1_000_000
     expect(formatArExpiryLabel(now - 1, now)).toBe('Link expired')
     expect(formatArExpiryLabel(now + 90_000, now)).toBe('Expires in 1m 30s')
-    expect(AR_MODEL_TTL_SECONDS).toBe(900)
+    expect(AR_MODEL_TTL_SECONDS).toBe(3600)
   })
 })

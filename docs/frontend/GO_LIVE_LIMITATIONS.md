@@ -3,7 +3,7 @@ title: Go-live limitations (client handoff)
 description: Honest scope for public launch — what works, what is indicative, what is schematic
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-08-03
+last_updated: 2026-08-05
 ---
 
 # Steelyes — Go-live limitations
@@ -37,12 +37,13 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 
 - Available on phone via Apple Quick Look (USDZ) or Google Scene Viewer (GLB).
 - Scale is **locked** in native viewers (`allowsContentScaling=0` / `resizable=false`) so tape checks match typed mm.
-- Desktop: **copy link** for phone (no QR). Links expire ~**15 minutes**; expired links return 410.
+- Desktop: **copy link** for phone (no QR). Links expire ~**60 minutes**; expired links return 410.
 - Localhost / private origins warn that phone links will not reach the device — use public HTTPS or file download.
 - Scale is real millimetres → metres from the same `GateConfig` envelope (clear opening × ground-to-top-rail).
-- Mesh fidelity: swing Victorian is **workshop** (tube pickets; arched top + dog bars when selected; composite = vertical boards). Tracked + cantilever Victorian are also **workshop** (leaf fills opening; tracked has ground track; cantilever has counterbalance tail and **no** driveway track). Telescopic / radius / bifold remain more schematic.
+- Mesh fidelity: all eight gate types build **workshop** Victorian meshes when style is traditional Victorian (tube pickets; arched / dog bars / composite boards when selected). Bifold = 50/50 fold stile; telescopic = overlapping leaves; radius = articulated train on a curved footprint.
+- Top / dog-bar **railheads** appear as decorative finials above the top rail (excluded from typed height).
 - Manual configs show a latch-side handle in 3D/AR; motorised omits handle and motor kit (same CA-01 rule as Design).
-- AR model store is **ephemeral** (in-memory) — fine for single-instance staging/prod; not a permanent download library.
+- AR model store is **memory + disk** on the Coolify host (survives process restart within TTL). Not a permanent download library / multi-node S3 yet.
 
 ## Marketing honesty
 

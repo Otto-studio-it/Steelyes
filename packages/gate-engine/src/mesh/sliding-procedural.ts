@@ -13,6 +13,7 @@ import {
 } from '../rules/telescopic'
 import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
+import { pushDogBarRailheads, pushTopRailheads } from './railheads'
 import type { GateMeshBox, GateMeshCylinder } from './types'
 
 const FRAME_DEPTH_MM = scaleVisualBoldness(45)
@@ -426,6 +427,21 @@ export function buildTrackedOrCantileverMesh(
     })
   }
 
+  pushTopRailheads(boxes, {
+    config,
+    idPrefix: isCantilever ? 'cantilever-leaf' : 'tracked-leaf',
+    centerX: 0,
+    widthMm: panelWidth,
+    leafHeightMm: panelHeight,
+  })
+  pushDogBarRailheads(boxes, {
+    config,
+    idPrefix: isCantilever ? 'cantilever-leaf' : 'tracked-leaf',
+    centerX: 0,
+    widthMm: panelWidth,
+    leafHeightMm: panelHeight,
+  })
+
   if (!config.motorised) {
     boxes.push({
       kind: 'box',
@@ -560,6 +576,24 @@ function buildTelescopicMesh(
     depthMm: FRAME_DEPTH_MM * 0.45,
     positionMm: [stackCenterX, panelCenterY, FRAME_DEPTH_MM * 0.2],
     role: 'rail',
+  })
+
+  // Finials on the front (motor-side) leaf only — avoids triple-stacked ornaments.
+  pushTopRailheads(boxes, {
+    config,
+    idPrefix: 'telescopic-segment-1',
+    centerX: -halfSpan + segmentWidth / 2,
+    widthMm: segmentWidth,
+    leafHeightMm: panelHeight,
+    depthOffsetMm: 0,
+  })
+  pushDogBarRailheads(boxes, {
+    config,
+    idPrefix: 'telescopic-segment-1',
+    centerX: -halfSpan + segmentWidth / 2,
+    widthMm: segmentWidth,
+    leafHeightMm: panelHeight,
+    depthOffsetMm: 0,
   })
 
   if (!config.motorised) {
@@ -714,6 +748,22 @@ function buildRadiusMesh(
       role: 'rail',
     })
   }
+
+  // One finial row across the articulated train (count from full opening).
+  pushTopRailheads(boxes, {
+    config,
+    idPrefix: 'radius-leaf',
+    centerX: 0,
+    widthMm: config.widthMm,
+    leafHeightMm: panelHeight,
+  })
+  pushDogBarRailheads(boxes, {
+    config,
+    idPrefix: 'radius-leaf',
+    centerX: 0,
+    widthMm: config.widthMm,
+    leafHeightMm: panelHeight,
+  })
 
   if (!config.motorised) {
     const leadCenterX = halfSpan - leafWidth / 2

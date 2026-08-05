@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import {
+  AR_MODEL_TTL_SECONDS,
   buildQuickLookHref,
   buildSceneViewerHttpsHref,
   buildSceneViewerIntentHref,
@@ -98,7 +99,7 @@ async function hostModel(blob: Blob, format: 'glb' | 'usdz'): Promise<HostedMode
   if (!payload.url) throw new Error(`Missing hosted ${format.toUpperCase()} URL`)
   return {
     url: payload.url,
-    expiresAt: payload.expiresAt ?? Date.now() + 15 * 60 * 1000,
+    expiresAt: payload.expiresAt ?? Date.now() + AR_MODEL_TTL_SECONDS * 1000,
     phoneReachable: payload.phoneReachable !== false,
   }
 }
@@ -350,7 +351,7 @@ export function ViewInYourSpaceButton({ config, className = '' }: ViewInYourSpac
                     <div className="space-y-2">
                       <p className="text-xs leading-5 text-muted-deep">
                         Copy a link, paste it in Messages / WhatsApp / Notes, then open it on your
-                        phone. Links expire in about 15 minutes.
+                        phone. Links expire in about {Math.round(AR_MODEL_TTL_SECONDS / 60)} minutes.
                       </p>
                       {hosted.usdz ? (
                         <button

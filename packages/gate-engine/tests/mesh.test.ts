@@ -255,6 +255,18 @@ describe('gate-engine mesh', () => {
     expect(check?.withinTolerance).toBe(true)
   })
 
+  it('adds top railheads above typed height without breaking the envelope', () => {
+    const config = enableOption(createGateConfig(createGatePreset('double_swing')), 'top_railheads', 8)
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+    const finial = plan.boxes.find((box) => box.id === 'leaf-1-top-railhead-0')
+
+    expect(finial).toBeDefined()
+    expect(finial!.role).toBe('rail')
+    expect(finial!.positionMm[1]).toBeGreaterThan(config.heightMm)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
   it('shows a manual handle only when not motorised (CA-01)', () => {
     const manual = createGateConfig(createGatePreset('double_swing'))
     expect(manual.motorised).toBe(false)
