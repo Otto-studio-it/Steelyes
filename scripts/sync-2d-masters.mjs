@@ -83,6 +83,7 @@ function buildIndex() {
         publicPath,
         style: entry.style ?? null,
         options: entry.options ?? [],
+        includesMotorKit: Boolean(entry.includesMotorKit),
       }
     }
 

@@ -15,9 +15,9 @@ export type BuildGateThreeGroupOptions = {
 }
 
 function roleOpacity(role: string): number {
-  if (role === 'panel') return 0.92
-  if (role === 'rail') return 0.75
-  if (role === 'bar') return 0.88
+  if (role === 'panel') return 0.94
+  if (role === 'rail') return 0.82
+  if (role === 'bar') return 0.95
   if (role === 'counterweight') return 0.88
   return 1
 }
@@ -31,8 +31,9 @@ function isDarkFinish(baseHex: string): boolean {
 
 function roleColor(role: string, baseHex: string, studio: boolean): THREE.Color {
   const color = new THREE.Color(baseHex)
-  if (role === 'post') color.offsetHSL(0, -0.08, -0.12)
-  if (role === 'rail') color.offsetHSL(0, -0.2, 0.08)
+  if (role === 'post') color.offsetHSL(0, -0.06, -0.1)
+  if (role === 'rail') color.offsetHSL(0, -0.12, 0.06)
+  if (role === 'bar') color.offsetHSL(0, 0.02, 0.04)
   if (role === 'counterweight') color.offsetHSL(0, -0.05, -0.05)
   if (studio && isDarkFinish(baseHex)) {
     color.offsetHSL(0, -0.04, 0.34)
@@ -45,10 +46,27 @@ function buildMaterial(
   role: string,
   studio: boolean,
 ): THREE.MeshStandardMaterial {
+  const metalness =
+    role === 'post'
+      ? plan.material.metalness * 0.65
+      : role === 'bar'
+        ? Math.min(1, plan.material.metalness * 1.08)
+        : role === 'rail'
+          ? plan.material.metalness * 0.92
+          : plan.material.metalness
+  const roughness =
+    role === 'panel'
+      ? Math.min(1, plan.material.roughness + 0.1)
+      : role === 'bar'
+        ? Math.max(0.12, plan.material.roughness * 0.85)
+        : role === 'post'
+          ? Math.min(1, plan.material.roughness + 0.06)
+          : plan.material.roughness
+
   return new THREE.MeshStandardMaterial({
     color: roleColor(role, plan.material.colorHex, studio),
-    metalness: role === 'post' ? plan.material.metalness * 0.7 : plan.material.metalness,
-    roughness: role === 'panel' ? plan.material.roughness + 0.08 : plan.material.roughness,
+    metalness,
+    roughness,
     transparent: role === 'panel' || role === 'counterweight',
     opacity: roleOpacity(role),
     emissive: studio && isDarkFinish(plan.material.colorHex) ? new THREE.Color('#c8c2b8') : undefined,

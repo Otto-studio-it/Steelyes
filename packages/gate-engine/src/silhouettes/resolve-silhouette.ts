@@ -4,6 +4,8 @@ import silhouetteIndex from './silhouette-index.json'
 export type SilhouetteLookupWhen = {
   style?: GateStyle | string
   options?: GateOptionKey[] | string[]
+  /** When set, rule only matches that motorised state. */
+  motorised?: boolean
 }
 
 export type SilhouetteLookupRule = {
@@ -17,6 +19,8 @@ export type SilhouetteIndexEntry = {
   publicPath: string
   style: string | null
   options: string[]
+  /** True when the master SVG itself draws a motor kit (rare — product lock usually omits it). */
+  includesMotorKit?: boolean
 }
 
 export type SilhouettePackIndex = {
@@ -54,7 +58,7 @@ export type SilhouetteIndex = {
   } | null
 }
 
-export type SilhouetteResolveInput = Pick<GateConfig, 'gateType' | 'style' | 'options'>
+export type SilhouetteResolveInput = Pick<GateConfig, 'gateType' | 'style' | 'options' | 'motorised'>
 
 export type SilhouetteResolution = {
   gateType: GateType
@@ -63,6 +67,8 @@ export type SilhouetteResolution = {
   /** Public URL path under apps/web/public (Option A). */
   publicPath: string
   matchedRule: SilhouetteLookupRule
+  /** True when the resolved master SVG itself includes motor artwork. */
+  masterIncludesMotor: boolean
   /** Fields that may change without swapping the master SVG. */
   clientMutable: readonly string[]
 }
@@ -91,6 +97,9 @@ function enabledOptionKeys(config: SilhouetteResolveInput): Set<string> {
 function ruleMatches(rule: SilhouetteLookupRule, config: SilhouetteResolveInput): boolean {
   const when = rule.when ?? {}
   if (when.style && when.style !== config.style) return false
+  if (typeof when.motorised === 'boolean' && when.motorised !== Boolean(config.motorised)) {
+    return false
+  }
   if (when.options?.length) {
     const enabled = enabledOptionKeys(config)
     for (const key of when.options) {
@@ -140,6 +149,7 @@ export function resolveSilhouette(
     title: entry.title,
     publicPath: entry.publicPath,
     matchedRule,
+    masterIncludesMotor: Boolean(entry.includesMotorKit),
     clientMutable: index.policy.clientMutable,
   }
 }

@@ -314,3 +314,8 @@ export type {
   HandleOverlayInstance,
   HandleOverlayPlan,
 } from './silhouettes/resolve-handle-overlay'
+export { resolveMotorOverlay } from './silhouettes/resolve-motor-overlay'
+export type {
+  MotorOverlayInstance,
+  MotorOverlayPlan,
+} from './silhouettes/resolve-motor-overlay'

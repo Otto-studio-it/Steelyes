@@ -3,7 +3,7 @@
  * Keep scale locked — Phase 1 envelope is meaningless if the user can pinch-resize.
  */
 
-export const AR_MODEL_TTL_SECONDS = 15 * 60
+export const AR_MODEL_TTL_SECONDS = 60 * 60
 
 export type ArModelFormat = 'glb' | 'usdz'
 

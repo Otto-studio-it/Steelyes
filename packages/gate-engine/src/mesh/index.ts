@@ -1,12 +1,17 @@
 import { resolveFinishDefinition } from '../finishes'
 import { getLeafCount, isSlidingGate } from '../internal/shared'
 import { bifoldSchematicNote, isBifoldGate } from '../rules/bifold'
-import { cantileverTailNote, getCantileverTailMm } from '../rules/cantilever'
-import { getTelescopicOverlapMm, getTelescopicPanelCount } from '../rules/telescopic'
+import { cantileverTailNote } from '../rules/cantilever'
+import { radiusSchematicNote } from '../rules/radius'
+import { telescopicSchematicNote } from '../rules/telescopic'
 import type { GateConfig } from '../types'
 import { validateGateConfig } from '../validation'
 import { scaleVisualBoldness } from '../visual-scale'
 import { buildMeshOpening } from './envelope'
+import {
+  buildTelescopicOrRadiusMesh,
+  buildTrackedOrCantileverMesh,
+} from './sliding-procedural'
 import { buildSwingProceduralMembers } from './swing-procedural'
 import {
   type GateMeshBox,
@@ -102,106 +107,6 @@ function buildSwingMesh(config: GateConfig, leafCount: number): { boxes: GateMes
   return buildSwingProceduralMembers(config, posts)
 }
 
-function buildSlidingMeshBoxes(config: GateConfig): GateMeshBox[] {
-  const isCantilever = config.gateType === 'cantilever_sliding'
-  const isTelescopic = config.gateType === 'telescopic_sliding'
-  const isRadius = config.gateType === 'radius_sliding'
-  const halfSpan = config.widthMm / 2
-  // Tail is extra site run beyond the clear opening (CA-05) — never part of widthMm.
-  const tailWidth = isCantilever ? getCantileverTailMm(config.widthMm) : 0
-  // Opening leaf fills clear opening × ground-to-top-rail (true mm).
-  const panelWidth = config.widthMm
-  const panelHeight = config.heightMm
-  const panelCenterY = panelHeight / 2
-
-  const boxes: GateMeshBox[] = [
-    ...buildMountingPostMeshBoxes(config),
-    {
-      kind: 'box',
-      id: 'sliding-track',
-      widthMm: config.widthMm,
-      heightMm: 24,
-      depthMm: FRAME_DEPTH_MM,
-      positionMm: [0, 12, isRadius ? FRAME_DEPTH_MM * 0.4 : 0],
-      role: 'rail',
-    },
-  ]
-
-  if (isCantilever) {
-    // Counterbalance sits after the parking-side post — outside the clear opening.
-    const postWidth =
-      config.posts.enabled && config.posts.material !== 'none'
-        ? config.posts.material === 'brick' || config.posts.material === 'stone'
-          ? POST_WIDTH_MM * 1.15
-          : POST_WIDTH_MM
-        : 0
-    const tailCenterX = halfSpan + postWidth * 0.65 + postWidth / 2 + tailWidth / 2
-    boxes.push({
-      kind: 'box',
-      id: 'counterbalance-tail',
-      widthMm: tailWidth,
-      heightMm: panelHeight,
-      depthMm: FRAME_DEPTH_MM * 0.85,
-      positionMm: [tailCenterX, panelCenterY, 0],
-      role: 'counterweight',
-    })
-  }
-
-  if (isRadius) {
-    // Schematic articulated train (~90°) — segments still span clear opening in X.
-    const segmentCount = 3
-    const segmentWidth = panelWidth / segmentCount
-    for (let index = 0; index < segmentCount; index += 1) {
-      const t = index / Math.max(segmentCount - 1, 1)
-      boxes.push({
-        kind: 'box',
-        id: `radius-segment-${index + 1}`,
-        widthMm: segmentWidth,
-        heightMm: panelHeight,
-        depthMm: FRAME_DEPTH_MM,
-        positionMm: [
-          -halfSpan + segmentWidth * (index + 0.5),
-          panelCenterY,
-          Math.sin(t * Math.PI * 0.5) * config.widthMm * 0.18,
-        ],
-        role: config.style === 'composite_boards' ? 'panel' : 'frame',
-      })
-    }
-  } else if (!isTelescopic) {
-    boxes.push({
-      kind: 'box',
-      id: 'sliding-panel',
-      widthMm: panelWidth,
-      heightMm: panelHeight,
-      depthMm: FRAME_DEPTH_MM,
-      positionMm: [0, panelCenterY, 0],
-      role: config.style === 'composite_boards' ? 'panel' : 'frame',
-    })
-  }
-
-  if (isTelescopic) {
-    const segmentCount = getTelescopicPanelCount()
-    const overlapMm = getTelescopicOverlapMm(config.widthMm)
-    // Closed pack spans the clear opening; overlaps are internal (CA-11 schematic).
-    const segmentWidth =
-      (panelWidth + overlapMm * (segmentCount - 1)) / Math.max(segmentCount, 1)
-    for (let index = 0; index < segmentCount; index += 1) {
-      const left = -halfSpan + index * (segmentWidth - overlapMm)
-      boxes.push({
-        kind: 'box',
-        id: `telescopic-segment-${index + 1}`,
-        widthMm: segmentWidth,
-        heightMm: panelHeight,
-        depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
-        positionMm: [left + segmentWidth / 2, panelCenterY, index * 1.5],
-        role: config.style === 'composite_boards' ? 'panel' : 'frame',
-      })
-    }
-  }
-
-  return boxes
-}
-
 export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
   const validation = validateGateConfig(config)
   if (!validation.ok) {
@@ -209,18 +114,49 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
   }
 
   const material = resolveFinishDefinition(config).material
-  const swingMesh = isSlidingGate(config.gateType)
-    ? null
-    : buildSwingMesh(config, getLeafCount(config.gateType))
-  const boxes = swingMesh ? swingMesh.boxes : buildSlidingMeshBoxes(config)
-  const cylinders = swingMesh?.cylinders ?? []
-  const fidelity =
-    !isSlidingGate(config.gateType) &&
+  const posts = buildMountingPostMeshBoxes(config)
+
+  let boxes: GateMeshBox[]
+  let cylinders: GateMeshCylinder[] = []
+
+  if (
+    config.gateType === 'tracked_sliding' ||
+    config.gateType === 'cantilever_sliding'
+  ) {
+    const sliding = buildTrackedOrCantileverMesh(config, posts)
+    boxes = sliding.boxes
+    cylinders = sliding.cylinders
+  } else if (
+    config.gateType === 'telescopic_sliding' ||
+    config.gateType === 'radius_sliding'
+  ) {
+    const sliding = buildTelescopicOrRadiusMesh(config, posts)
+    boxes = sliding.boxes
+    cylinders = sliding.cylinders
+  } else if (isSlidingGate(config.gateType)) {
+    // Fallback — all sliding types should be handled above.
+    boxes = posts
+  } else {
+    const swingMesh = buildSwingMesh(config, getLeafCount(config.gateType))
+    boxes = swingMesh.boxes
+    cylinders = swingMesh.cylinders
+  }
+
+  const workshopEligible =
     config.style === 'traditional_victorian' &&
-    cylinders.length > 0
-      ? 'workshop'
-      : 'schematic'
+    cylinders.length > 0 &&
+    (config.gateType === 'double_swing' ||
+      config.gateType === 'single_swing' ||
+      config.gateType === 'bifolding_double_swing' ||
+      config.gateType === 'single_bifolding' ||
+      config.gateType === 'tracked_sliding' ||
+      config.gateType === 'cantilever_sliding' ||
+      config.gateType === 'telescopic_sliding' ||
+      config.gateType === 'radius_sliding')
+
+  const fidelity = workshopEligible ? 'workshop' : 'schematic'
   const opening = buildMeshOpening(config)
+  const archedTop = config.options.some((o) => o.key === 'arched_top' && o.enabled)
 
   const notes = [
     `AR envelope: clear opening ${opening.clearOpeningMm} × ${opening.heightMm} mm (ground to top rail). Posts and counterbalance sit outside that tape check.`,
@@ -229,30 +165,65 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
 
   if (fidelity === 'workshop') {
     notes.push(
-      `${cylinders.length} tube members — Victorian swing workshop mesh (arched / dog bars when selected).`,
+      `${cylinders.length} tube members — workshop mesh (swing / sliding Victorian with options).`,
     )
   } else if (!isSlidingGate(config.gateType) && config.style === 'composite_boards') {
     notes.push('Composite swing mesh: panel leaf with vertical board subdivision (schematic, real mm).')
+  } else if (
+    (config.gateType === 'tracked_sliding' ||
+      config.gateType === 'cantilever_sliding' ||
+      config.gateType === 'telescopic_sliding' ||
+      config.gateType === 'radius_sliding') &&
+    config.style === 'composite_boards'
+  ) {
+    notes.push('Composite sliding mesh: opening leaf with board subdivision (schematic, real mm).')
   } else {
     notes.push(
       'Schematic frame/panel mesh for AR placement at real millimetre scale (not photoreal CAD).',
     )
   }
 
-  if (!isSlidingGate(config.gateType) && !config.motorised) {
+  if (
+    (config.gateType === 'tracked_sliding' ||
+      config.gateType === 'cantilever_sliding' ||
+      config.gateType === 'telescopic_sliding' ||
+      config.gateType === 'radius_sliding' ||
+      !isSlidingGate(config.gateType)) &&
+    !config.motorised
+  ) {
     notes.push('Manual handle shown on latch side (CA-01). Motorised configs omit handle and motor kit.')
+  }
+
+  if (config.gateType === 'tracked_sliding') {
+    notes.unshift(
+      'Tracked: ground track under clear opening; leaf fills post-to-post; runback outside parking post.',
+    )
   }
 
   if (config.gateType === 'cantilever_sliding') {
     notes.unshift(cantileverTailNote(config.widthMm))
+    notes.push('Cantilever: no ground track under the driveway opening — counterbalance tail after parking post.')
+  }
+
+  if (config.gateType === 'telescopic_sliding') {
+    notes.unshift(telescopicSchematicNote(config.widthMm))
+    notes.push(
+      'Telescopic: overlapping panels with depth stagger; parallel tracks; stack zone outside parking post.',
+    )
   }
 
   if (config.gateType === 'radius_sliding') {
-    notes.unshift('Radius sliding shown as a schematic articulated train on a curved footprint.')
+    notes.unshift(radiusSchematicNote(archedTop))
+    notes.push(
+      'Radius: articulated hinged train on curved footprint; park stubs outside guide post (not telescopic overlap).',
+    )
   }
 
   if (isBifoldGate(config.gateType)) {
     notes.unshift(bifoldSchematicNote(config.gateType))
+    notes.push(
+      'Bifold: 50/50 panels per leaf with fold stile + hinge knuckles; stack pack outside hinge post(s).',
+    )
   }
 
   return {

@@ -74,12 +74,36 @@ describe('gate-engine mesh', () => {
     expect(plan.cylinders.some((cylinder) => cylinder.role === 'bar')).toBe(true)
   })
 
-  it('adds fold detail boxes for bifolding swing gates', () => {
+  it('adds fold stile, hinge knuckles, and stack packs for bifolding swing gates', () => {
     const config = createGateConfig(createGatePreset('bifolding_double_swing'))
     const plan = buildGateMeshPlan(config)
 
     expect(plan.boxes.some((box) => box.id === 'leaf-fold-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-2')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-hinge-1-0')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'leaf-frame-1-outer')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-frame-2-outer')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-left')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-right')).toBe(true)
+  })
+
+  it('puts victorian pickets on both bifold panels per leaf', () => {
+    const config = createGateConfig(createGatePreset('bifolding_double_swing'))
+    const plan = buildGateMeshPlan(config)
+
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-picket-upper-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-outer-picket-upper-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-2-outer-picket-upper-'))).toBe(true)
+  })
+
+  it('single bifold has one fold stile and left stack only', () => {
+    const plan = buildGateMeshPlan(createGateConfig(createGatePreset('single_bifolding')))
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'leaf-fold-2')).toBe(false)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-left')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'bifold-stack-right')).toBe(false)
+    expect(plan.cylinders.some((c) => c.id.startsWith('leaf-1-outer-'))).toBe(true)
   })
 
   it('adds telescopic segment boxes for telescopic sliding gates', () => {
@@ -90,6 +114,21 @@ describe('gate-engine mesh', () => {
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-2')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-3')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-4')).toBe(false)
+  })
+
+  it('builds workshop telescopic mesh with overlap stiles and stack outside opening', () => {
+    const config = createGateConfig(createGatePreset('telescopic_sliding'))
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.some((c) => c.id.startsWith('telescopic-segment-1-picket-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('telescopic-segment-3-picket-'))).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-2-overlap-stile')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-stack-zone')).toBe(true)
+    const stack = plan.boxes.find((box) => box.id === 'telescopic-stack-zone')!
+    expect(stack.positionMm[0]).toBeGreaterThan(config.widthMm / 2)
+    expect(check?.withinTolerance).toBe(true)
   })
 
   it('builds a mesh plan for every gate type', () => {
@@ -112,11 +151,17 @@ describe('gate-engine mesh', () => {
     }
   })
 
-  it('builds a schematic articulated mesh for radius sliding', () => {
+  it('builds a workshop articulated mesh for radius sliding', () => {
     const plan = buildGateMeshPlan(createGateConfig(createGatePreset('radius_sliding')))
+    const check = checkMeshOpeningEnvelope(plan, createGateConfig(createGatePreset('radius_sliding')))
+
     expect(plan.boxes.some((box) => box.id === 'radius-segment-1')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'radius-segment-3')).toBe(true)
-    expect(plan.fidelity).toBe('schematic')
+    expect(plan.boxes.some((box) => box.id === 'radius-hinge-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'radius-park-leaf-0')).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('radius-segment-1-picket-'))).toBe(true)
+    expect(plan.fidelity).toBe('workshop')
+    expect(check?.withinTolerance).toBe(true)
   })
 
   it('marks Victorian swing mesh as workshop fidelity', () => {
@@ -210,6 +255,18 @@ describe('gate-engine mesh', () => {
     expect(check?.withinTolerance).toBe(true)
   })
 
+  it('adds top railheads above typed height without breaking the envelope', () => {
+    const config = enableOption(createGateConfig(createGatePreset('double_swing')), 'top_railheads', 8)
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+    const finial = plan.boxes.find((box) => box.id === 'leaf-1-top-railhead-0')
+
+    expect(finial).toBeDefined()
+    expect(finial!.role).toBe('rail')
+    expect(finial!.positionMm[1]).toBeGreaterThan(config.heightMm)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
   it('shows a manual handle only when not motorised (CA-01)', () => {
     const manual = createGateConfig(createGatePreset('double_swing'))
     expect(manual.motorised).toBe(false)
@@ -220,6 +277,58 @@ describe('gate-engine mesh', () => {
     const motorPlan = buildGateMeshPlan(motorised)
     expect(motorPlan.boxes.some((box) => box.id === 'manual-handle-plate')).toBe(false)
     expect(motorPlan.cylinders.some((cylinder) => cylinder.id === 'manual-handle-grip')).toBe(false)
+  })
+
+  it('builds tracked sliding with ground track, Victorian pickets, and no false opening gap', () => {
+    const config = createGateConfig(createGatePreset('tracked_sliding'))
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.boxes.some((box) => box.id === 'sliding-track')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'sliding-panel')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'tracked-runback-zone')).toBe(true)
+    expect(plan.cylinders.some((cylinder) => cylinder.id.startsWith('tracked-leaf-picket-'))).toBe(
+      true,
+    )
+    expect(plan.fidelity).toBe('workshop')
+    expect(check?.withinTolerance).toBe(true)
+    expect(plan.notes.some((note) => note.includes('ground track'))).toBe(true)
+  })
+
+  it('builds cantilever without driveway ground track and keeps tail outside the opening', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('cantilever_sliding')),
+      widthMm: 4000,
+    }
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+    const tail = plan.boxes.find((box) => box.id === 'counterbalance-tail')
+
+    expect(plan.boxes.some((box) => box.id === 'sliding-track')).toBe(false)
+    expect(plan.boxes.some((box) => box.id === 'cantilever-tail-diag')).toBe(true)
+    expect(tail).toBeDefined()
+    expect(tail!.positionMm[0]).toBeGreaterThan(config.widthMm / 2)
+    expect(plan.cylinders.length).toBeGreaterThan(0)
+    expect(plan.fidelity).toBe('workshop')
+    expect(check?.leafSpanMm).toBeCloseTo(4000, 5)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
+  it('applies arched and dog_bars options on tracked sliding within envelope', () => {
+    const config = enableOption(
+      enableOption(createGateConfig(createGatePreset('tracked_sliding')), 'arched_top'),
+      'dog_bars',
+      12,
+    )
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.boxes.some((box) => box.id.startsWith('tracked-leaf-arch-seg-'))).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'tracked-leaf-dog-rail')).toBe(true)
+    expect(plan.cylinders.some((cylinder) => cylinder.id.startsWith('tracked-leaf-dog-bar-'))).toBe(
+      true,
+    )
+    expect(check?.withinTolerance).toBe(true)
   })
 
   it('rejects invalid configs before mesh generation', () => {
