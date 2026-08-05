@@ -9,15 +9,15 @@ export function HomeWeldingHero() {
     <section className="relative min-h-[100svh] overflow-hidden bg-steel md:min-h-[calc(100svh-4rem)]">
       <Image
         src={OFFICIAL_IMAGES.homepageHero}
-        alt="Modern bespoke steel driveway gate installed at a residential entrance"
+        alt="Tracked sliding steel driveway gate with matching railings at a residential entrance"
         fill
         priority
         sizes="100vw"
-        className="object-cover object-center motion-safe:animate-hero-image-in motion-reduce:opacity-100"
+        className="object-cover object-[58%_center] motion-safe:animate-hero-image-in motion-reduce:opacity-100 md:object-center"
       />
       {/* layered overlays — keep product photo visible while protecting left-side copy */}
-      <div className="absolute inset-0 bg-black/38 md:bg-black/32" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/12 to-transparent" />
+      <div className="absolute inset-0 bg-black/60 md:bg-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/20 md:from-black/80 md:via-black/40 md:to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/55 to-transparent md:h-28" />
 
       {/* overline brand strip */}

@@ -92,8 +92,8 @@ export const OFFICIAL_IMAGES = {
   about: {
     teamWorkshop: '/images/official/about/team-workshop.jpg',
   },
-  /** Homepage hero — double swing as primary product. */
-  homepageHero: gates.doubleSwing.hero,
+  /** Homepage hero — client-selected tracked sliding installation with clear copy space. */
+  homepageHero: '/images/home/hero-tracked-sliding-gate.jpg',
 } as const
 
 export const GATE_SLUG_IMAGES = {
