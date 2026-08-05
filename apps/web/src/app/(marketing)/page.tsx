@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 import { HomeWeldingHero } from '@/components/marketing/HomeWeldingHero'
+import { ConfiguratorProductPreview } from '@/components/marketing/ConfiguratorProductPreview'
+import { InstallationProcessTimeline } from '@/components/marketing/InstallationProcessTimeline'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
@@ -167,46 +169,15 @@ export default function HomePage() {
             <Link
               href="/configurator"
               data-configurator-placement="home-product-section"
-              className="group mt-8 inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+              className="tap-feedback group mt-8 inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-base font-bold uppercase tracking-tight text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
             >
               Open the configurator
               <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
             </Link>
           </Reveal>
 
-          <Reveal delay={100} className="relative border border-steel/12 bg-white p-3 sm:p-5">
-            <div className="flex items-center justify-between border-b border-steel/10 pb-3">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-muted">Live design preview</span>
-              <span className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
-                Estimated price
-              </span>
-            </div>
-            <div className="relative mt-3 aspect-[4/3] overflow-hidden bg-paper sm:aspect-[16/10]">
-              <Image
-                src={OFFICIAL_IMAGES.gates.doubleSwing.hero}
-                alt="Double swing steel gate shown as an example of the online configurator"
-                fill
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-steel/75 via-transparent to-transparent" />
-              <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 text-white">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Current design</p>
-                  <p className="mt-1 font-heading text-xl font-black uppercase sm:text-2xl">Double swing · Victorian</p>
-                </div>
-                <span className="hidden border border-white/40 bg-black/30 px-3 py-2 font-mono text-xs uppercase sm:inline-flex">
-                  Live preview
-                </span>
-              </div>
-            </div>
-            <div className="mt-3 grid grid-cols-3 divide-x divide-steel/10 border border-steel/10 bg-paper py-3 text-center">
-              {['Mechanism', 'Dimensions', 'Finish'].map((label) => (
-                <span key={label} className="font-mono text-[10px] uppercase tracking-widest text-muted-deep">
-                  {label}
-                </span>
-              ))}
-            </div>
+          <Reveal delay={100}>
+            <ConfiguratorProductPreview />
           </Reveal>
         </div>
       </section>
@@ -285,19 +256,7 @@ export default function HomePage() {
               <h2 className="mb-10 font-heading text-4xl font-black uppercase leading-none md:text-5xl">
                 Installation process
               </h2>
-              <ol className="divide-y divide-zinc-200 border-y border-zinc-200">
-                {processItems.map(({ n, label, body }) => (
-                  <li key={label} className="flex gap-5 py-5">
-                    <span className="w-10 shrink-0 font-heading text-3xl font-black leading-none text-zinc-200 md:text-4xl">
-                      {n}
-                    </span>
-                    <div>
-                      <h3 className="font-heading text-lg font-bold uppercase md:text-xl">{label}</h3>
-                      <p className="mt-1.5 text-sm font-light leading-relaxed text-muted-deep">{body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <InstallationProcessTimeline items={processItems} />
 
               <Link
                 href="/installation"
@@ -369,7 +328,7 @@ export default function HomePage() {
             <div className="mt-8 grid w-full max-w-xl grid-cols-1 gap-3 sm:grid-cols-2">
               <Link
                 href="/contact"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:bg-primary-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Request a quote
                 <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
@@ -377,7 +336,7 @@ export default function HomePage() {
               <Link
                 href="/configurator"
                 data-configurator-placement="home-closing-cta"
-                className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="tap-feedback group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Configure a gate
                 <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />

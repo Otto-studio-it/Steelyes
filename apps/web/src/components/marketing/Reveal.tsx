@@ -42,10 +42,10 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
     <div
       ref={ref}
       className={cn(
-        'motion-safe:transition-[opacity,transform] motion-safe:duration-700 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'motion-safe:transition-[opacity,transform] motion-safe:duration-[420ms] motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]',
         visible
           ? 'motion-safe:translate-y-0 motion-safe:opacity-100'
-          : 'motion-safe:translate-y-6 motion-safe:opacity-0',
+          : 'motion-safe:translate-y-4 motion-safe:opacity-0',
         'motion-reduce:translate-y-0 motion-reduce:opacity-100',
         className,
       )}

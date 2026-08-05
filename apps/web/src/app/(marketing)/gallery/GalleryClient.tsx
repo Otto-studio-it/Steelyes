@@ -160,7 +160,7 @@ export function GalleryClient() {
                   type="button"
                   onClick={() => setActiveFilter(value)}
                   aria-pressed={activeFilter === value}
-                  className={`min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight transition-colors ${
+                  className={`tap-feedback min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight ${
                     activeFilter === value
                       ? 'border-steel bg-steel text-white'
                       : 'border-zinc-200 bg-canvas text-zinc-700 hover:border-zinc-400'
@@ -171,20 +171,21 @@ export function GalleryClient() {
               ))}
             </div>
           </div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400" role="status" aria-live="polite">
             {filtered.length} project{filtered.length !== 1 ? 's' : ''}
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
+        <div key={activeFilter} className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
           {filtered.map((item, index) => (
             <div
               key={item.ref}
-              className={`group relative overflow-hidden bg-paper ${
+              className={`marketing-gallery-item group relative overflow-hidden bg-paper ${
                 item.span === 'wide' ? 'lg:col-span-8' : 'lg:col-span-4'
               }`}
+              style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
             >
               <div className={`relative w-full ${item.span === 'wide' ? 'aspect-[16/9]' : index % 3 === 0 ? 'aspect-[4/5]' : 'aspect-square'}`}>
                 <Image
@@ -217,14 +218,14 @@ export function GalleryClient() {
             <Link
               href="/configurator"
               data-configurator-placement="gallery-footer"
-              className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="tap-feedback group inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-sm font-bold uppercase text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               Design your gate
               <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex min-h-[48px] w-full items-center justify-center border border-steel/25 px-8 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+              className="tap-feedback inline-flex min-h-[48px] w-full items-center justify-center border border-steel/25 px-8 font-heading text-sm font-bold uppercase text-steel hover:border-steel hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             >
               Request a quote
             </Link>

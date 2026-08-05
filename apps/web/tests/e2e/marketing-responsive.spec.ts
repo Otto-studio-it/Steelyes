@@ -52,6 +52,7 @@ for (const viewport of VIEWPORTS) {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Steelyes Ltd', exact: true })).toBeVisible()
+    await expect(page.getByTestId('page-scroll-progress')).toHaveCount(1)
 
     const hero = page.locator('main section').first()
     await expect(hero.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
@@ -102,6 +103,8 @@ for (const viewport of VIEWPORTS) {
       'href',
       '/configurator',
     )
+    await configuratorProduct.getByRole('button', { name: 'Finish' }).click()
+    await expect(configuratorProduct.getByText('Anthracite grey', { exact: true })).toBeVisible()
     const closingCta = page.getByRole('heading', { name: 'Plan your entrance.' }).locator('..')
     await expect(closingCta.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
     await expect(closingCta.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
@@ -132,6 +135,10 @@ for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
     }
 
     await revealFullPage(page, viewport.height)
+    const projectCount = page.getByRole('status')
+    const initialProjectCount = await projectCount.textContent()
+    await page.getByRole('group', { name: 'Filter gallery by category' }).getByRole('button', { name: 'Gates' }).click()
+    await expect(projectCount).not.toHaveText(initialProjectCount ?? '')
     const designCta = page.getByRole('link', { name: 'Design your gate' })
     await expect(designCta).toBeVisible()
     await expect(designCta).toHaveAttribute('href', '/configurator')
@@ -143,6 +150,17 @@ for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
     expect(horizontalOverflow).toBe(false)
   })
 }
+
+test('marketing motion respects reduced-motion preference', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.setViewportSize({ width: 375, height: 812 })
+  await page.goto('/gallery')
+
+  await page.getByRole('group', { name: 'Filter gallery by category' }).getByRole('button', { name: 'Gates' }).click()
+  const firstCard = page.locator('.marketing-gallery-item').first()
+  await expect(firstCard).toBeVisible()
+  expect(await firstCard.evaluate((element) => getComputedStyle(element).animationName)).toBe('none')
+})
 
 for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
   test(`gate taxonomy — ${viewport.name} ${viewport.width}px`, async ({ page }) => {
