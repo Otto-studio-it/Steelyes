@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildGateMeshPlan, createGateConfig, createGatePreset } from '../src/index'
+import {
+  buildGateMeshPlan,
+  checkMeshOpeningEnvelope,
+  createGateConfig,
+  createGatePreset,
+  MESH_ENVELOPE_TOLERANCE_MM,
+} from '../src/index'
 
 describe('gate-engine mesh', () => {
   it('builds a schematic mesh plan for double swing gates', () => {
@@ -13,6 +19,11 @@ describe('gate-engine mesh', () => {
     expect(plan.boxes.some((box) => box.id === 'leaf-frame-2')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'left-mount-post')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'right-mount-post')).toBe(true)
+    expect(plan.opening).toEqual({
+      clearOpeningMm: config.widthMm,
+      heightMm: config.heightMm,
+      datum: 'clear_opening_ground_to_top_rail',
+    })
   })
 
   it('uses finish material tokens from the shared catalog', () => {
@@ -101,6 +112,58 @@ describe('gate-engine mesh', () => {
     const plan = buildGateMeshPlan(createGateConfig(createGatePreset('double_swing')))
     expect(plan.fidelity).toBe('workshop')
     expect(plan.cylinders.length).toBeGreaterThan(0)
+  })
+
+  it('keeps opening leaf span and height within AR tape tolerance for every gate type', () => {
+    const types = [
+      'double_swing',
+      'single_swing',
+      'tracked_sliding',
+      'cantilever_sliding',
+      'bifolding_double_swing',
+      'single_bifolding',
+      'telescopic_sliding',
+      'radius_sliding',
+    ] as const
+
+    for (const gateType of types) {
+      // Use catalog preset dims — each gate type has different width/height limits.
+      const config = createGateConfig(createGatePreset(gateType))
+      const plan = buildGateMeshPlan(config)
+      const check = checkMeshOpeningEnvelope(plan, config)
+
+      expect(check, gateType).not.toBeNull()
+      expect(Math.abs(check!.widthErrorMm), `${gateType} width`).toBeLessThanOrEqual(
+        MESH_ENVELOPE_TOLERANCE_MM,
+      )
+      expect(Math.abs(check!.heightErrorMm), `${gateType} height`).toBeLessThanOrEqual(
+        MESH_ENVELOPE_TOLERANCE_MM,
+      )
+      expect(check!.withinTolerance, gateType).toBe(true)
+    }
+  })
+
+  it('does not let visual boldness shrink swing leaf height below typed height', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const plan = buildGateMeshPlan(config)
+    const leaf = plan.boxes.find((box) => box.id === 'leaf-frame-1')
+
+    expect(leaf?.heightMm).toBe(config.heightMm)
+  })
+
+  it('excludes cantilever counterbalance from the clear-opening envelope', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('cantilever_sliding')),
+      widthMm: 4000,
+      heightMm: 1800,
+    }
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+    const tail = plan.boxes.find((box) => box.id === 'counterbalance-tail')
+
+    expect(tail).toBeDefined()
+    expect(check?.leafSpanMm).toBeCloseTo(4000, 5)
+    expect(tail!.positionMm[0]).toBeGreaterThan(config.widthMm / 2)
   })
 
   it('rejects invalid configs before mesh generation', () => {

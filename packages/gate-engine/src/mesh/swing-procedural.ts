@@ -5,7 +5,15 @@ import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
 import type { GateMeshBox, GateMeshCylinder } from './types'
 
+/** Frame depth — boldness OK (cross-section only). */
 const FRAME_DEPTH_MM = scaleVisualBoldness(45)
+
+/**
+ * True-mm clearances inside the clear opening. Do NOT run these through
+ * scaleVisualBoldness — they shrink the AR tape envelope.
+ */
+const MEETING_GAP_MM = 6
+const BIFOLD_GAP_MM = 10
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
@@ -18,11 +26,14 @@ export function buildSwingProceduralMembers(
   const geometry = buildGateGeometryPlan(config)
   const leafCount = getLeafCount(config.gateType)
   const halfSpan = config.widthMm / 2
-  const leafWidth = config.widthMm / leafCount
+  const bayWidth = config.widthMm / leafCount
   const boxes: GateMeshBox[] = [...mountingPosts]
   const cylinders: GateMeshCylinder[] = []
 
+  // Member thickness may use boldness; opening height is exact typed mm.
   const tubeRadius = geometry ? geometry.tubeProfile.outer / 2 : scaleVisualBoldness(20) / 2
+  const leafHeightMm = config.heightMm
+  const leafCenterY = leafHeightMm / 2
   const rails = geometry?.rails ?? {
     top: 0,
     upperMid: 0.14,
@@ -32,22 +43,26 @@ export function buildSwingProceduralMembers(
   }
 
   for (let leafIndex = 0; leafIndex < leafCount; leafIndex += 1) {
-    const leafCenterX = -halfSpan + leafWidth * (leafIndex + 0.5)
-    const leafInnerWidth = leafWidth - scaleVisualBoldness(24)
+    const bayLeft = -halfSpan + bayWidth * leafIndex
+    const meetingInsetLeft = leafIndex > 0 ? MEETING_GAP_MM / 2 : 0
+    const meetingInsetRight = leafIndex < leafCount - 1 ? MEETING_GAP_MM / 2 : 0
+    const leafInnerWidth = bayWidth - meetingInsetLeft - meetingInsetRight
+    const leafCenterX = bayLeft + meetingInsetLeft + leafInnerWidth / 2
+
     const panelsPerLeaf = getBifoldPanelsPerLeaf(config.gateType)
     const bifoldActive = isBifoldGate(config.gateType) && panelsPerLeaf >= 2
-    const bifoldGap = bifoldActive ? scaleVisualBoldness(14) : 0
+    const bifoldGap = bifoldActive ? BIFOLD_GAP_MM : 0
     const bifoldPanelWidth = bifoldActive ? (leafInnerWidth - bifoldGap) / panelsPerLeaf : leafInnerWidth
 
     boxes.push({
       kind: 'box',
       id: `leaf-frame-${leafIndex + 1}`,
       widthMm: bifoldActive ? bifoldPanelWidth : leafInnerWidth,
-      heightMm: config.heightMm - 48,
+      heightMm: leafHeightMm,
       depthMm: FRAME_DEPTH_MM * 0.75,
       positionMm: [
         bifoldActive ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
-        config.heightMm / 2,
+        leafCenterY,
         0,
       ],
       role: config.style === 'composite_boards' ? 'panel' : 'frame',
@@ -58,20 +73,20 @@ export function buildSwingProceduralMembers(
         kind: 'box',
         id: `leaf-fold-${leafIndex + 1}`,
         widthMm: bifoldGap,
-        heightMm: config.heightMm - 30,
+        heightMm: leafHeightMm - 20,
         depthMm: FRAME_DEPTH_MM * 0.56,
-        positionMm: [leafCenterX, config.heightMm / 2, FRAME_DEPTH_MM * 0.1],
+        positionMm: [leafCenterX, leafCenterY, FRAME_DEPTH_MM * 0.1],
         role: 'rail',
       })
       boxes.push({
         kind: 'box',
         id: `leaf-frame-${leafIndex + 1}-outer`,
         widthMm: bifoldPanelWidth,
-        heightMm: config.heightMm - 48,
+        heightMm: leafHeightMm,
         depthMm: FRAME_DEPTH_MM * 0.75,
         positionMm: [
           leafCenterX + (bifoldPanelWidth + bifoldGap) / 2,
-          config.heightMm / 2,
+          leafCenterY,
           0,
         ],
         role: config.style === 'composite_boards' ? 'panel' : 'frame',
@@ -94,7 +109,7 @@ export function buildSwingProceduralMembers(
         depthMm: FRAME_DEPTH_MM * 0.65,
         positionMm: [
           bifoldActive ? leafCenterX - (bifoldPanelWidth + bifoldGap) / 2 : leafCenterX,
-          config.heightMm * rail.ratio,
+          leafHeightMm * rail.ratio,
           0,
         ],
         role: 'rail',
@@ -105,13 +120,13 @@ export function buildSwingProceduralMembers(
       continue
     }
 
-    const picketCount = geometry?.pickets.upperCount ?? clamp(Math.round(leafWidth / 110), 6, 14)
+    const picketCount = geometry?.pickets.upperCount ?? clamp(Math.round(bayWidth / 110), 6, 14)
     const lowerCount = geometry?.pickets.lowerCount ?? clamp(Math.round(config.widthMm / 90), 12, 20)
-    const upperBottomY = config.heightMm * rails.spearBand
-    const upperTopY = config.heightMm * (rails.upperMid + 0.02)
+    const upperBottomY = leafHeightMm * rails.spearBand
+    const upperTopY = leafHeightMm * (rails.upperMid + 0.02)
     const upperHeight = Math.max(40, upperBottomY - upperTopY)
-    const lowerTopY = config.heightMm * rails.lowerMid
-    const lowerBottomY = config.heightMm * rails.bottom
+    const lowerTopY = leafHeightMm * rails.lowerMid
+    const lowerBottomY = leafHeightMm * rails.bottom
     const lowerHeight = Math.max(40, lowerBottomY - lowerTopY)
 
     for (let picketIndex = 0; picketIndex < picketCount; picketIndex += 1) {

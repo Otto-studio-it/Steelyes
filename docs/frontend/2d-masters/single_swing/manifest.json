@@ -1,11 +1,11 @@
 {
   "gateType": "single_swing",
   "status": "ready",
-  "updated": "2026-07-31",
+  "updated": "2026-08-05",
   "figma": {
     "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
     "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
-    "page": "03 — Single Swing Variants",
+    "page": "03 \u2014 Single Swing Variants",
     "frames": {
       "base": "SS / base",
       "arched": "SS / arched",
@@ -14,32 +14,89 @@
       "composite": "SS / composite"
     }
   },
-  "dimensionPolicy": "UI strip below image only — never bake client mm into SVG.",
+  "dimensionPolicy": "UI strip below image only \u2014 never bake client mm into SVG.",
+  "sourceIntake": "foto /double swing gates/esport per ora /SS/single_swing_* manual+automatic. Handles stripped from manuals.",
   "notSeparateSilhouettes": [
     "finish / RAL / custom hex",
-    "motorised vs manual (handle layer on/off)",
+    "leaf handle (always overlay when manual)",
     "top_railheads / dog_bar_railheads SKUs",
     "exact picket or dog-bar count",
     "widthMm / heightMm"
   ],
   "lookup": {
-    "description": "First matching rule wins.",
+    "description": "First matching rule wins. Motorised-specific rules before manual/shared fallbacks.",
     "rules": [
       {
-        "when": { "style": "composite_boards" },
+        "when": {
+          "style": "composite_boards",
+          "motorised": true
+        },
+        "slug": "composite_motorised"
+      },
+      {
+        "when": {
+          "style": "composite_boards"
+        },
         "slug": "composite"
       },
       {
-        "when": { "options": ["arched_top", "dog_bars"] },
+        "when": {
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_dog_bars_motorised"
+      },
+      {
+        "when": {
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ]
+        },
         "slug": "arched_dog_bars"
       },
       {
-        "when": { "options": ["arched_top"] },
+        "when": {
+          "options": [
+            "arched_top"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_motorised"
+      },
+      {
+        "when": {
+          "options": [
+            "arched_top"
+          ]
+        },
         "slug": "arched"
       },
       {
-        "when": { "options": ["dog_bars"] },
+        "when": {
+          "options": [
+            "dog_bars"
+          ],
+          "motorised": true
+        },
+        "slug": "dog_bars_motorised"
+      },
+      {
+        "when": {
+          "options": [
+            "dog_bars"
+          ]
+        },
         "slug": "dog_bars"
+      },
+      {
+        "when": {
+          "motorised": true
+        },
+        "slug": "base_motorised"
       },
       {
         "when": {},
@@ -56,25 +113,71 @@
       "options": []
     },
     {
+      "slug": "base_motorised",
+      "title": "Base Victorian (motorised)",
+      "file": "silhouettes/base_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [],
+      "includesMotorKit": false
+    },
+    {
       "slug": "arched",
       "title": "Arched top",
       "file": "silhouettes/arched.svg",
       "style": "traditional_victorian",
-      "options": ["arched_top"]
+      "options": [
+        "arched_top"
+      ]
+    },
+    {
+      "slug": "arched_motorised",
+      "title": "Arched top (motorised)",
+      "file": "silhouettes/arched_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top"
+      ],
+      "includesMotorKit": false
     },
     {
       "slug": "dog_bars",
       "title": "Dog bars",
       "file": "silhouettes/dog_bars.svg",
       "style": "traditional_victorian",
-      "options": ["dog_bars"]
+      "options": [
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "dog_bars_motorised",
+      "title": "Dog bars (motorised)",
+      "file": "silhouettes/dog_bars_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars"
+      ],
+      "includesMotorKit": false
     },
     {
       "slug": "arched_dog_bars",
       "title": "Arched + dog bars",
       "file": "silhouettes/arched_dog_bars.svg",
       "style": "traditional_victorian",
-      "options": ["arched_top", "dog_bars"]
+      "options": [
+        "arched_top",
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_motorised",
+      "title": "Arched + dog bars (motorised)",
+      "file": "silhouettes/arched_dog_bars_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars"
+      ],
+      "includesMotorKit": false
     },
     {
       "slug": "composite",
@@ -82,6 +185,14 @@
       "file": "silhouettes/composite.svg",
       "style": "composite_boards",
       "options": []
+    },
+    {
+      "slug": "composite_motorised",
+      "title": "Composite boards (motorised)",
+      "file": "silhouettes/composite_motorised.svg",
+      "style": "composite_boards",
+      "options": [],
+      "includesMotorKit": false
     }
   ],
   "references": [

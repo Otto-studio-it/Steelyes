@@ -24,6 +24,15 @@ export type GateMeshCylinder = {
 
 export type GateMeshFidelity = 'workshop' | 'schematic'
 
+export type GateMeshOpeningDatum = 'clear_opening_ground_to_top_rail'
+
+/** Declared AR / tape-check envelope (true mm — not visual-boldness). */
+export type GateMeshOpening = {
+  clearOpeningMm: number
+  heightMm: number
+  datum: GateMeshOpeningDatum
+}
+
 export type GateMeshPlan = {
   gateType: GateType
   finish: FinishCode
@@ -32,6 +41,8 @@ export type GateMeshPlan = {
   cylinders: GateMeshCylinder[]
   /** workshop = swing Victorian with tube pickets; schematic = sliding / coarse layouts */
   fidelity: GateMeshFidelity
+  /** Clear opening × ground-to-top-rail — matches typed GateConfig mm (CA-08). */
+  opening: GateMeshOpening
   notes: string[]
 }
 

@@ -36,8 +36,10 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 ## Mesh / AR (“View in your space”)
 
 - Available on phone via Apple Quick Look (USDZ) or Google Scene Viewer (GLB).
-- Desktop: **copy link** for phone (no QR). Links expire ~**15 minutes**.
-- Scale is real millimetres → metres from the same `GateConfig`.
+- Scale is **locked** in native viewers (`allowsContentScaling=0` / `resizable=false`) so tape checks match typed mm.
+- Desktop: **copy link** for phone (no QR). Links expire ~**15 minutes**; expired links return 410.
+- Localhost / private origins warn that phone links will not reach the device — use public HTTPS or file download.
+- Scale is real millimetres → metres from the same `GateConfig` envelope (clear opening × ground-to-top-rail).
 - Mesh fidelity: swing Victorian closer to workshop; sliding / bifold / telescopic / radius are **schematic**.
 - AR model store is **ephemeral** (in-memory) — fine for single-instance staging/prod; not a permanent download library.
 

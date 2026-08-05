@@ -1,46 +1,15 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { buildGateMeshPlan, mmToSceneUnits, type GateConfig } from '@steelyes/gate-engine'
+import { mmToSceneUnits, type GateConfig } from '@steelyes/gate-engine'
 import * as THREE from 'three'
+
+import { buildGateThreeGroup } from '@/lib/configurator/ar/build-gate-three-group'
 
 type ConfiguratorPreview3DProps = {
   config: GateConfig
   compact?: boolean
   studio?: boolean
-}
-
-function roleOpacity(role: string): number {
-  if (role === 'panel') return 0.92
-  if (role === 'rail') return 0.75
-  if (role === 'bar') return 0.88
-  if (role === 'counterweight') return 0.88
-  if (role === 'post') return 1
-  return 1
-}
-
-function isDarkFinish(baseHex: string): boolean {
-  const color = new THREE.Color(baseHex)
-  const hsl = { h: 0, s: 0, l: 0 }
-  color.getHSL(hsl)
-  return hsl.l < 0.42
-}
-
-function roleColor(role: string, baseHex: string, studio: boolean): THREE.Color {
-  const color = new THREE.Color(baseHex)
-  if (role === 'post') {
-    color.offsetHSL(0, -0.08, -0.12)
-  }
-  if (role === 'rail') {
-    color.offsetHSL(0, -0.2, 0.08)
-  }
-  if (role === 'counterweight') {
-    color.offsetHSL(0, -0.05, -0.05)
-  }
-  if (studio && isDarkFinish(baseHex)) {
-    color.offsetHSL(0, -0.04, 0.34)
-  }
-  return color
 }
 
 function disposeMaterial(material: THREE.Material | THREE.Material[]): void {
@@ -76,9 +45,9 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     const host = hostRef.current
     if (!host) return
 
-    let plan
+    let built
     try {
-      plan = buildGateMeshPlan(config)
+      built = buildGateThreeGroup(config, { studio, castShadow: true, snapToFloor: true })
     } catch {
       setFallbackMessage('3D preview unavailable for this configuration.')
       host.textContent = ''
@@ -88,6 +57,7 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     setFallbackMessage(null)
 
     if (typeof WebGLRenderingContext === 'undefined') {
+      built.dispose()
       setFallbackMessage('3D preview unavailable in this browser.')
       host.textContent = ''
       return
@@ -97,66 +67,19 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
     } catch {
+      built.dispose()
       setFallbackMessage('3D preview unavailable in this browser.')
       host.textContent = ''
       return
     }
 
+    const { group, dispose: disposeGate } = built
     const scene = new THREE.Scene()
     const studioBackground = '#5c5852'
     scene.background = new THREE.Color(studio ? studioBackground : '#eef2ea')
     scene.fog = new THREE.Fog(studio ? studioBackground : '#eef2ea', 8, 24)
 
     const camera = new THREE.PerspectiveCamera(36, 1, 0.01, 100)
-    const group = new THREE.Group()
-
-    const buildMaterial = (role: string) =>
-      new THREE.MeshStandardMaterial({
-        color: roleColor(role, plan.material.colorHex, studio),
-        metalness: role === 'post' ? plan.material.metalness * 0.7 : plan.material.metalness,
-        roughness: role === 'panel' ? plan.material.roughness + 0.08 : plan.material.roughness,
-        transparent: role === 'panel' || role === 'counterweight',
-        opacity: roleOpacity(role),
-        emissive: studio && isDarkFinish(plan.material.colorHex) ? new THREE.Color('#c8c2b8') : undefined,
-        emissiveIntensity: studio && isDarkFinish(plan.material.colorHex) ? 0.14 : 0,
-      })
-
-    for (const box of plan.boxes) {
-      const geometry = new THREE.BoxGeometry(
-        mmToSceneUnits(box.widthMm),
-        mmToSceneUnits(box.heightMm),
-        mmToSceneUnits(box.depthMm),
-      )
-      const mesh = new THREE.Mesh(geometry, buildMaterial(box.role))
-      mesh.castShadow = true
-      mesh.receiveShadow = true
-      mesh.position.set(
-        mmToSceneUnits(box.positionMm[0]),
-        mmToSceneUnits(box.positionMm[1]),
-        mmToSceneUnits(box.positionMm[2]),
-      )
-      mesh.name = box.id
-      group.add(mesh)
-    }
-
-    for (const cylinder of plan.cylinders) {
-      const geometry = new THREE.CylinderGeometry(
-        mmToSceneUnits(cylinder.radiusMm),
-        mmToSceneUnits(cylinder.radiusMm),
-        mmToSceneUnits(cylinder.heightMm),
-        12,
-      )
-      const mesh = new THREE.Mesh(geometry, buildMaterial(cylinder.role))
-      mesh.castShadow = true
-      mesh.receiveShadow = true
-      mesh.position.set(
-        mmToSceneUnits(cylinder.positionMm[0]),
-        mmToSceneUnits(cylinder.positionMm[1]),
-        mmToSceneUnits(cylinder.positionMm[2]),
-      )
-      mesh.name = cylinder.id
-      group.add(mesh)
-    }
     scene.add(group)
 
     const ambient = new THREE.AmbientLight(0xffffff, studio ? 0.95 : 0.65)
@@ -236,16 +159,11 @@ export function ConfiguratorPreview3D({ config, compact = false, studio = false 
       destroyed = true
       window.cancelAnimationFrame(frameId)
       observer.disconnect()
-      group.traverse((object) => {
-        if (object instanceof THREE.Mesh) {
-          object.geometry.dispose()
-          disposeMaterial(object.material)
-        }
-      })
+      disposeGate()
       groundGeo.dispose()
       groundMat.dispose()
       drivewayGeo.dispose()
-      ;(driveway.material as THREE.Material).dispose()
+      disposeMaterial(driveway.material)
       renderer.dispose()
       host.replaceChildren()
     }

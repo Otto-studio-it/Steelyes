@@ -162,8 +162,22 @@ export type { CadDimensionLayer, CadDimensionLayerInput } from './rendering/cad-
 export { normalizeGatePosts } from './posts'
 export {
   buildGateMeshPlan,
+  buildMeshOpening,
+  checkMeshOpeningEnvelope,
+  measureMeshOpening,
   mmToSceneUnits,
+  MESH_ENVELOPE_TOLERANCE_MM,
   MM_TO_SCENE_UNITS,
+} from './mesh'
+export type {
+  GateMeshBox,
+  GateMeshBoxRole,
+  GateMeshCylinder,
+  GateMeshFidelity,
+  GateMeshOpening,
+  GateMeshOpeningCheck,
+  GateMeshOpeningMeasurement,
+  GateMeshPlan,
 } from './mesh'
 export {
   FINISH_CATALOG,
@@ -249,13 +263,6 @@ export type {
   GateRenderPlan,
   GateRenderPrimitive,
 } from './rendering'
-export type {
-  GateMeshBox,
-  GateMeshBoxRole,
-  GateMeshCylinder,
-  GateMeshFidelity,
-  GateMeshPlan,
-} from './mesh/types'
 export type {
   FinishDefinition,
   FinishMaterialTokens,
