@@ -46,15 +46,15 @@ export default function RailingsServicePage() {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper">
           <Image
-            src={OFFICIAL_IMAGES.services.staircases.glass}
-            alt="Glass balustrade and steel terrace enclosure installed"
+            src={OFFICIAL_IMAGES.services.railings.garden}
+            alt="Steel cable balustrade on a garden terrace"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority
           />
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-black/0 p-4 text-white">
-            <p className="font-heading text-xl font-bold uppercase">Bespoke glass balustrade</p>
+            <p className="font-heading text-xl font-bold uppercase">Bespoke garden balustrade</p>
           </div>
         </div>
         <article className="border border-steel bg-steel p-6 text-white md:p-8">

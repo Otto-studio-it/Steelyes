@@ -8,9 +8,9 @@ export const contentType = 'image/png'
 
 export default async function Image() {
   const imageData = await readFile(
-    join(process.cwd(), 'public/images/official/gates/double-swing-hero.jpg'),
+    join(process.cwd(), 'public/images/official/gates/double-swing-hero.webp'),
   )
-  const imageBase64 = `data:image/jpeg;base64,${imageData.toString('base64')}`
+  const imageBase64 = `data:image/webp;base64,${imageData.toString('base64')}`
 
   return new ImageResponse(
     (

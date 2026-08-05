@@ -52,6 +52,13 @@ const GALLERY_ITEMS: GalleryItem[] = [
     category: 'gates',
   },
   {
+    src: OFFICIAL_IMAGES.gates.telescopic.hero,
+    label: 'Telescopic sliding gate',
+    ref: 'ST-3006',
+    span: 'narrow',
+    category: 'gates',
+  },
+  {
     src: OFFICIAL_IMAGES.services.staircases.glass,
     label: 'Glass staircase balustrade',
     ref: 'ST-3008',
@@ -113,6 +120,13 @@ const GALLERY_ITEMS: GalleryItem[] = [
     ref: 'ST-3016',
     span: 'narrow',
     category: 'fabrication',
+  },
+  {
+    src: OFFICIAL_IMAGES.services.railings.garden,
+    label: 'Garden terrace balustrade',
+    ref: 'ST-3017',
+    span: 'narrow',
+    category: 'railings',
   },
 ]
 
