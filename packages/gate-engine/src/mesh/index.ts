@@ -225,10 +225,23 @@ export function buildGateMeshPlan(config: GateConfig): GateMeshPlan {
   const notes = [
     `AR envelope: clear opening ${opening.clearOpeningMm} × ${opening.heightMm} mm (ground to top rail). Posts and counterbalance sit outside that tape check.`,
     'Procedural 3D mesh derived from the same GateConfig as Design / Installation previews.',
-    fidelity === 'workshop'
-      ? `${cylinders.length} tube pickets as cylinders — workshop-level swing mesh for AR scale checks.`
-      : 'Schematic frame/panel mesh for AR placement at real millimetre scale (not photoreal CAD).',
   ]
+
+  if (fidelity === 'workshop') {
+    notes.push(
+      `${cylinders.length} tube members — Victorian swing workshop mesh (arched / dog bars when selected).`,
+    )
+  } else if (!isSlidingGate(config.gateType) && config.style === 'composite_boards') {
+    notes.push('Composite swing mesh: panel leaf with vertical board subdivision (schematic, real mm).')
+  } else {
+    notes.push(
+      'Schematic frame/panel mesh for AR placement at real millimetre scale (not photoreal CAD).',
+    )
+  }
+
+  if (!isSlidingGate(config.gateType) && !config.motorised) {
+    notes.push('Manual handle shown on latch side (CA-01). Motorised configs omit handle and motor kit.')
+  }
 
   if (config.gateType === 'cantilever_sliding') {
     notes.unshift(cantileverTailNote(config.widthMm))

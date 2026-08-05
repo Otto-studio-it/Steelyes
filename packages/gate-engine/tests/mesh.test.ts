@@ -6,7 +6,18 @@ import {
   createGateConfig,
   createGatePreset,
   MESH_ENVELOPE_TOLERANCE_MM,
+  type GateConfig,
+  type GateOptionKey,
 } from '../src/index'
+
+function enableOption(config: GateConfig, key: GateOptionKey, quantity = 1): GateConfig {
+  return {
+    ...config,
+    options: config.options.map((option) =>
+      option.key === key ? { ...option, enabled: true, quantity } : option,
+    ),
+  }
+}
 
 describe('gate-engine mesh', () => {
   it('builds a schematic mesh plan for double swing gates', () => {
@@ -164,6 +175,51 @@ describe('gate-engine mesh', () => {
     expect(tail).toBeDefined()
     expect(check?.leafSpanMm).toBeCloseTo(4000, 5)
     expect(tail!.positionMm[0]).toBeGreaterThan(config.widthMm / 2)
+  })
+
+  it('builds arched top rail segments within the typed height envelope', () => {
+    const config = enableOption(createGateConfig(createGatePreset('double_swing')), 'arched_top')
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.boxes.some((box) => box.id.startsWith('leaf-1-arch-seg-'))).toBe(true)
+    expect(plan.boxes.some((box) => box.id.startsWith('leaf-2-arch-seg-'))).toBe(true)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
+  it('builds dog rail + short dog bars for dog_bars option', () => {
+    const config = enableOption(createGateConfig(createGatePreset('single_swing')), 'dog_bars', 10)
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.boxes.some((box) => box.id === 'leaf-1-dog-rail')).toBe(true)
+    expect(plan.cylinders.some((cylinder) => cylinder.id.startsWith('leaf-1-dog-bar-'))).toBe(true)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
+  it('subdivides composite swing leaves into vertical boards', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+    }
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.boxes.some((box) => box.id === 'leaf-1-board-1')).toBe(true)
+    expect(plan.fidelity).toBe('schematic')
+    expect(check?.withinTolerance).toBe(true)
+  })
+
+  it('shows a manual handle only when not motorised (CA-01)', () => {
+    const manual = createGateConfig(createGatePreset('double_swing'))
+    expect(manual.motorised).toBe(false)
+    const manualPlan = buildGateMeshPlan(manual)
+    expect(manualPlan.boxes.some((box) => box.id === 'manual-handle-plate')).toBe(true)
+
+    const motorised = { ...manual, motorised: true }
+    const motorPlan = buildGateMeshPlan(motorised)
+    expect(motorPlan.boxes.some((box) => box.id === 'manual-handle-plate')).toBe(false)
+    expect(motorPlan.cylinders.some((cylinder) => cylinder.id === 'manual-handle-grip')).toBe(false)
   })
 
   it('rejects invalid configs before mesh generation', () => {
