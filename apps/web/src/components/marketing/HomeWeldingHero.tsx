@@ -57,6 +57,7 @@ export function HomeWeldingHero() {
           </Link>
           <Link
             href="/configurator"
+            data-configurator-placement="home-hero"
             className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             Configure a gate

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
@@ -47,20 +48,6 @@ const GALLERY_ITEMS: GalleryItem[] = [
     src: OFFICIAL_IMAGES.gates.singleSwing.hero,
     label: 'Single swing side gate',
     ref: 'ST-3005',
-    span: 'narrow',
-    category: 'gates',
-  },
-  {
-    src: OFFICIAL_IMAGES.gates.telescopic.hero,
-    label: 'Telescopic sliding gate',
-    ref: 'ST-3006',
-    span: 'narrow',
-    category: 'gates',
-  },
-  {
-    src: OFFICIAL_IMAGES.gates.radius.hero,
-    label: 'Radius sliding gate',
-    ref: 'ST-3007',
     span: 'narrow',
     category: 'gates',
   },
@@ -201,16 +188,33 @@ export function GalleryClient() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col items-start justify-between gap-5 border-t border-zinc-200 pt-8 sm:flex-row sm:items-center">
-          <p className="max-w-xl text-sm leading-relaxed text-muted-deep">
-            Have a gate, railing or fabrication project in mind? Share the site details and the type of work you need.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
-          >
-            Request a quote
-          </Link>
+        <div className="mt-12 grid gap-6 border-t border-zinc-200 pt-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-foundry-gold">From inspiration to design</p>
+            <h2 className="mt-2 max-w-2xl font-heading text-3xl font-black uppercase leading-none text-steel sm:text-4xl">
+              Found a direction for your gate?
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-deep">
+              Explore the mechanism, proportions, finish and estimated price online. Final dimensions and specification
+              are confirmed after site survey.
+            </p>
+          </div>
+          <div className="grid w-full gap-3 sm:grid-cols-2 lg:w-auto">
+            <Link
+              href="/configurator"
+              data-configurator-placement="gallery-footer"
+              className="group inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Design your gate
+              <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex min-h-[48px] w-full items-center justify-center border border-steel/25 px-8 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            >
+              Request a quote
+            </Link>
+          </div>
         </div>
       </section>
     </>

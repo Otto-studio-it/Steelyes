@@ -87,11 +87,21 @@ for (const viewport of VIEWPORTS) {
       await expect(conversionBar.getByRole('link')).toHaveCount(1)
     } else {
       const header = page.locator('header')
-      await expect(header.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
+      await expect(header.getByRole('link', { name: 'Configurator', exact: true })).toBeVisible()
+      await expect(header.getByRole('link', { name: 'Configurator', exact: true })).toHaveAttribute(
+        'data-configurator-placement',
+        'desktop-primary-nav',
+      )
       await expect(header.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
     }
 
     await revealFullPage(page, viewport.height)
+    const configuratorProduct = page.locator('section[aria-labelledby="home-configurator-title"]')
+    await expect(configuratorProduct.getByRole('heading', { name: 'Design the entrance before the survey.' })).toBeVisible()
+    await expect(configuratorProduct.getByRole('link', { name: 'Open the configurator' })).toHaveAttribute(
+      'href',
+      '/configurator',
+    )
     const closingCta = page.getByRole('heading', { name: 'Plan your entrance.' }).locator('..')
     await expect(closingCta.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
     await expect(closingCta.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
@@ -108,6 +118,29 @@ for (const viewport of VIEWPORTS) {
       path: `${screenshotDir}/homepage-${viewport.width}.png`,
       fullPage: true,
     })
+  })
+}
+
+for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
+  test(`gallery exposes the configurator — ${viewport.name} ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height })
+    await page.goto('/gallery')
+
+    const cookieDialog = page.getByRole('dialog', { name: 'Cookie notice' })
+    if (await cookieDialog.isVisible()) {
+      await cookieDialog.getByRole('button', { name: 'Got it' }).click()
+    }
+
+    await revealFullPage(page, viewport.height)
+    const designCta = page.getByRole('link', { name: 'Design your gate' })
+    await expect(designCta).toBeVisible()
+    await expect(designCta).toHaveAttribute('href', '/configurator')
+    await expect(designCta).toHaveAttribute('data-configurator-placement', 'gallery-footer')
+
+    const horizontalOverflow = await page.evaluate(() =>
+      document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+    )
+    expect(horizontalOverflow).toBe(false)
   })
 }
 

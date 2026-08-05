@@ -132,7 +132,86 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3 — Range (single index: gates + services) */}
+      {/* 3 — Configurator product */}
+      <section aria-labelledby="home-configurator-title" className="border-b border-zinc-200 bg-canvas py-16 md:py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 md:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+          <Reveal>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">Gate configurator</p>
+            <h2
+              id="home-configurator-title"
+              className="mt-3 max-w-xl font-heading text-4xl font-black uppercase leading-[0.92] text-steel sm:text-5xl md:text-6xl"
+            >
+              Design the entrance before the survey.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-muted-deep">
+              Choose how the gate moves, set your opening size and compare finishes in a live visual tool. You will see
+              an estimated price as you work; Steelyes confirms the final specification on site before fabrication.
+            </p>
+
+            <ol className="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {[
+                ['01', 'Choose a mechanism', 'Swing, sliding, bifold and specialist layouts.'],
+                ['02', 'Set size and finish', 'Tune the opening, style, colour and automation.'],
+                ['03', 'Prepare your quote', 'Save the design and send it with the project brief.'],
+              ].map(([number, title, body]) => (
+                <li key={number} className="grid grid-cols-[2.5rem_1fr] gap-3 border-t border-steel/12 pt-4">
+                  <span className="font-mono text-xs font-bold text-primary">{number}</span>
+                  <span>
+                    <span className="block font-heading text-sm font-bold uppercase text-steel">{title}</span>
+                    <span className="mt-1 block text-sm leading-6 text-muted-deep">{body}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+
+            <Link
+              href="/configurator"
+              data-configurator-placement="home-product-section"
+              className="group mt-8 inline-flex min-h-[52px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
+            >
+              Open the configurator
+              <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+            </Link>
+          </Reveal>
+
+          <Reveal delay={100} className="relative border border-steel/12 bg-white p-3 sm:p-5">
+            <div className="flex items-center justify-between border-b border-steel/10 pb-3">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-muted">Live design preview</span>
+              <span className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
+                Estimated price
+              </span>
+            </div>
+            <div className="relative mt-3 aspect-[4/3] overflow-hidden bg-paper sm:aspect-[16/10]">
+              <Image
+                src={OFFICIAL_IMAGES.gates.doubleSwing.hero}
+                alt="Double swing steel gate shown as an example of the online configurator"
+                fill
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-steel/75 via-transparent to-transparent" />
+              <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 text-white">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-white/70">Current design</p>
+                  <p className="mt-1 font-heading text-xl font-black uppercase sm:text-2xl">Double swing · Victorian</p>
+                </div>
+                <span className="hidden border border-white/40 bg-black/30 px-3 py-2 font-mono text-xs uppercase sm:inline-flex">
+                  Live preview
+                </span>
+              </div>
+            </div>
+            <div className="mt-3 grid grid-cols-3 divide-x divide-steel/10 border border-steel/10 bg-paper py-3 text-center">
+              {['Mechanism', 'Dimensions', 'Finish'].map((label) => (
+                <span key={label} className="font-mono text-[10px] uppercase tracking-widest text-muted-deep">
+                  {label}
+                </span>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 4 — Range (single index: gates + services) */}
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24">
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
           <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
@@ -197,7 +276,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4 — Process / installation */}
+      {/* 5 — Process / installation */}
       <section className="border-t border-zinc-200 bg-canvas py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-24">
@@ -263,7 +342,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5 — Final CTA */}
+      {/* 6 — Final CTA */}
       <section className="relative overflow-hidden bg-steel py-20 text-white md:py-28">
         <Image
           src={OFFICIAL_IMAGES.gates.doubleSwing.gallery[1]}
@@ -297,6 +376,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/configurator"
+                data-configurator-placement="home-closing-cta"
                 className="group inline-flex min-h-[52px] w-full items-center justify-center gap-2 border border-white/60 bg-black/20 px-6 py-3 font-heading text-base font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Configure a gate
