@@ -3,7 +3,8 @@
  *
  * Serving: Option A — files under `/2d-masters/...` (apps/web/public).
  * Policy: Design preview (mode id `technical`) uses these masters only — never invent CAD.
- * UI: `TechnicalMasterPreview` (masters + railhead overlays + CA-01 handle overlay).
+ * UI: `TechnicalMasterPreview` (official masters + optional railhead overlays).
+ * Handle is baked into *manual*/*manuale* masters when present — never UI-composited.
  */
 
 export {

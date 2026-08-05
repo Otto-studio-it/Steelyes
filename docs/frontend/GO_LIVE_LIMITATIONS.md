@@ -29,7 +29,7 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 
 - **Design** tab shows CAD masters (photo-locked silhouettes) with live mm strip under the drawing.
 - Finish colour is selected in **Installation**; masters stay line-art with a finish swatch cue.
-- Handle overlay only when **manual** (`!motorised`).
+- Handle is **baked into** official `manual`/`manuale` masters when present; otherwise omitted by design — no UI handle overlay.
 - Railhead overlays use provisional picket spacing / count guidance.
 - Dimension meaning (clear opening vs overall) is still partially open with the client — cantilever is treated as **clear opening** with site-space note.
 
