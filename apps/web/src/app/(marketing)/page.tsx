@@ -10,6 +10,7 @@ import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { howToSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
@@ -352,7 +353,7 @@ export default function HomePage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
-            name: BUSINESS.tradingName,
+            name: BUSINESS.legalName,
             url: BUSINESS.website,
             telephone: BUSINESS.phoneDisplay,
             email: BUSINESS.email,
@@ -374,6 +375,7 @@ export default function HomePage() {
               longitude: -0.0342,
             },
             image: `${BUSINESS.website}${OFFICIAL_IMAGES.homepageHero}`,
+            logo: `${BUSINESS.website}/apple-icon`,
             sameAs: [...BUSINESS_SAME_AS],
             areaServed: { '@type': 'Country', name: 'United Kingdom' },
             hasOfferCatalog: {
@@ -388,6 +390,19 @@ export default function HomePage() {
               ],
             },
           }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes builds a bespoke steel gate',
+              description: metadata.description!,
+              path: '/',
+              steps: processItems.map(({ label, body }) => ({ name: label, text: body })),
+            }),
+          ),
         }}
       />
     </MarketingShell>

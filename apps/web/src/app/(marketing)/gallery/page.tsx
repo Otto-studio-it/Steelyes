@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { GALLERY_CONSENT_NOTICE } from '@/lib/marketing/business'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 import { GalleryClient } from './GalleryClient'
 
@@ -31,6 +32,15 @@ export default function GalleryPage() {
       </section>
 
       <GalleryClient />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Gallery', path: '/gallery' }]),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 import { GATE_DATA, GATE_SLUGS } from './gate-marketing-data'
+import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates | Driveway, Electric & Automatic Gates',
@@ -186,6 +187,27 @@ export default function GatesPage() {
           </p>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Gates', path: '/gates' }])),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListSchema(
+              GATE_SLUGS.map((slug) => ({
+                name: `${GATE_DATA[slug].title} Gates`,
+                path: `/gates/${slug}`,
+                description: GATE_DATA[slug].tagline,
+              })),
+            ),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

@@ -1,0 +1,40 @@
+# Steelyes
+
+> Steelyes is a UK steel fabrication and installation company (Enfield, London), specialising in bespoke, made-to-measure steel driveway gates, electric/automatic gate automation, glass balustrades, metal and glass balconies, structural steelwork, staircases and security doors/grilles. Every project is survey-led: online pages give indicative sizing, style and price; final specification is confirmed after a site survey. No stock gates — everything is made to order.
+
+## Company
+- Legal name: Steelyes Ltd
+- Workshop: Unit 7, Meridian Industrial Estate, Enfield, London, EN3 7TW, United Kingdom
+- Coverage: commissions across the United Kingdom
+- Contact: info@steelyes.co.uk / +44 7803 002145
+
+## Gates (by opening mechanism)
+- [Gates overview](https://www.steelyes.co.uk/gates): all 8 gate mechanisms compared, choosing swing vs sliding vs folding vs radius
+- [Double swing gates](https://www.steelyes.co.uk/gates/double-swing): two-leaf driveway gate, the standard UK driveway gate
+- [Single swing gates](https://www.steelyes.co.uk/gates/single-swing): one-leaf pedestrian/side-access gate
+- [Tracked sliding gates](https://www.steelyes.co.uk/gates/tracked-sliding): single leaf on a ground track, for sites with side space but no swing clearance
+- [Cantilever sliding gates](https://www.steelyes.co.uk/gates/cantilever): slides without a ground track in the opening, needs a counterbalance tail
+- [Bifold gates](https://www.steelyes.co.uk/gates/bifold): wide double-leaf fold, short swing footprint
+- [Single bifold gates](https://www.steelyes.co.uk/gates/single-bifold): folding single leaf for tight side access
+- [Telescopic sliding gates](https://www.steelyes.co.uk/gates/telescopic): multi-panel overlapping slide for wide openings with a short side run
+- [Radius sliding gates](https://www.steelyes.co.uk/gates/radius): curved-path sliding gate for non-rectilinear entrances
+- [Gate configurator](https://www.steelyes.co.uk/configurator): online tool to design a gate and see an estimated price before survey
+
+## Other fabrication services
+- [Services overview](https://www.steelyes.co.uk/services)
+- [Glass balustrades & terraces](https://www.steelyes.co.uk/services/railings)
+- [Metal & glass balconies](https://www.steelyes.co.uk/services/balconies)
+- [Steel structures](https://www.steelyes.co.uk/services/structures)
+- [Platforms & staircases](https://www.steelyes.co.uk/services/staircases)
+- [Security grilles & doors](https://www.steelyes.co.uk/services/security)
+
+## Process & company
+- [Installation](https://www.steelyes.co.uk/installation): survey, fabrication, wiring and commissioning process
+- [About](https://www.steelyes.co.uk/about): workshop, approach, engineering-first philosophy
+- [Gallery](https://www.steelyes.co.uk/gallery): workshop and consented project photos
+- [Contact](https://www.steelyes.co.uk/contact): quote requests
+
+## Legal
+- [Privacy policy](https://www.steelyes.co.uk/legal/privacy-policy)
+- [Cookie policy](https://www.steelyes.co.uk/legal/cookie-policy)
+- [Terms & conditions](https://www.steelyes.co.uk/legal/terms)

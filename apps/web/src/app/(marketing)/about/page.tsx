@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'About | UK Steel Gate Manufacturer & Fabricator',
@@ -139,6 +140,13 @@ export default function AboutPage() {
           </Link>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])),
+        }}
+      />
     </MarketingShell>
   )
 }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS } from '@/lib/marketing/business'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -120,6 +121,15 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Privacy Policy', path: '/legal/privacy-policy' }]),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

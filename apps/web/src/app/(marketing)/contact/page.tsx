@@ -8,6 +8,7 @@ import { isValidShareToken } from '@/lib/configurator/share-token'
 
 import { BUSINESS, COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
 import { GATE_DATA, resolveGateSlug } from '@/app/(marketing)/gates/gate-marketing-data'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 import { ContactForm } from './ContactForm'
 
@@ -102,6 +103,14 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
@@ -109,6 +118,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             url: BUSINESS.website,
             telephone: BUSINESS.phoneDisplay,
             email: BUSINESS.email,
+            logo: `${BUSINESS.website}/apple-icon`,
             address: {
               '@type': 'PostalAddress',
               streetAddress: BUSINESS.address.line1,
