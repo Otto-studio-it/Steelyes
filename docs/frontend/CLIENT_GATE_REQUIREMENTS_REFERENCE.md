@@ -502,7 +502,7 @@ Answered on 2026-07-28 — do not ask again:
 - What board colours/finishes exist? → four blacks + RAL 7016, see **Finishes / Colours** above ([CA-03](../client-answers/2026-07-28-marius.md#ca-03--finish-palette-and-colour-charge)).
 - What is the cantilever tail ratio? → 1/3 of the clear opening, minimum ([CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum)).
 - Is the cantilever configurator width the opening or opening + tail? → opening only ([CA-05](../client-answers/2026-07-28-marius.md#ca-05--cantilever-tail--13-of-the-clear-opening-minimum)).
-- Official contact email? → `sales@steelyes.co.uk` ([CA-06](../client-answers/2026-07-28-marius.md#ca-06--official-sales-email)).
+- Official contact email? → `info@steelyes.co.uk` (confirmed 2026-08-05; supersedes [CA-06](../client-answers/2026-07-28-marius.md#ca-06--official-sales-email)).
 
 New questions raised by the 2026-07-28 batch:
 

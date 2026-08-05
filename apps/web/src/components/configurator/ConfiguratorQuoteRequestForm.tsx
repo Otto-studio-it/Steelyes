@@ -85,8 +85,10 @@ export function ConfiguratorQuoteRequestForm() {
           We&rsquo;ll be in touch
         </h3>
         <p className="mt-2 text-sm leading-6 text-muted-deep">
-          Your design and details are with the workshop. We respond within 1 business day, and we&rsquo;ve emailed you
-          a copy of your configuration.
+          Your design and details are saved for the workshop. We respond within 1 business day.
+          {state.status === 'success' && state.customerEmailSent
+            ? ' We’ve emailed you a copy of your configuration.'
+            : ' If the confirmation email does not arrive, your request is still safely recorded.'}
         </p>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <a
