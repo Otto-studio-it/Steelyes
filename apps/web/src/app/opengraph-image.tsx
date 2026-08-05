@@ -7,10 +7,11 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 export default async function Image() {
+  // JPEG required: Satori / ImageResponse cannot decode WebP data URLs at build time.
   const imageData = await readFile(
-    join(process.cwd(), 'public/images/official/gates/double-swing-hero.webp'),
+    join(process.cwd(), 'public/images/official/gates/double-swing-2.jpg'),
   )
-  const imageBase64 = `data:image/webp;base64,${imageData.toString('base64')}`
+  const imageBase64 = `data:image/jpeg;base64,${imageData.toString('base64')}`
 
   return new ImageResponse(
     (
