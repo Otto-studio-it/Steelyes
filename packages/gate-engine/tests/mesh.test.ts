@@ -116,6 +116,21 @@ describe('gate-engine mesh', () => {
     expect(plan.boxes.some((box) => box.id === 'telescopic-segment-4')).toBe(false)
   })
 
+  it('builds workshop telescopic mesh with overlap stiles and stack outside opening', () => {
+    const config = createGateConfig(createGatePreset('telescopic_sliding'))
+    const plan = buildGateMeshPlan(config)
+    const check = checkMeshOpeningEnvelope(plan, config)
+
+    expect(plan.fidelity).toBe('workshop')
+    expect(plan.cylinders.some((c) => c.id.startsWith('telescopic-segment-1-picket-'))).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('telescopic-segment-3-picket-'))).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-segment-2-overlap-stile')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'telescopic-stack-zone')).toBe(true)
+    const stack = plan.boxes.find((box) => box.id === 'telescopic-stack-zone')!
+    expect(stack.positionMm[0]).toBeGreaterThan(config.widthMm / 2)
+    expect(check?.withinTolerance).toBe(true)
+  })
+
   it('builds a mesh plan for every gate type', () => {
     const types = [
       'double_swing',
@@ -136,11 +151,17 @@ describe('gate-engine mesh', () => {
     }
   })
 
-  it('builds a schematic articulated mesh for radius sliding', () => {
+  it('builds a workshop articulated mesh for radius sliding', () => {
     const plan = buildGateMeshPlan(createGateConfig(createGatePreset('radius_sliding')))
+    const check = checkMeshOpeningEnvelope(plan, createGateConfig(createGatePreset('radius_sliding')))
+
     expect(plan.boxes.some((box) => box.id === 'radius-segment-1')).toBe(true)
     expect(plan.boxes.some((box) => box.id === 'radius-segment-3')).toBe(true)
-    expect(plan.fidelity).toBe('schematic')
+    expect(plan.boxes.some((box) => box.id === 'radius-hinge-1')).toBe(true)
+    expect(plan.boxes.some((box) => box.id === 'radius-park-leaf-0')).toBe(true)
+    expect(plan.cylinders.some((c) => c.id.startsWith('radius-segment-1-picket-'))).toBe(true)
+    expect(plan.fidelity).toBe('workshop')
+    expect(check?.withinTolerance).toBe(true)
   })
 
   it('marks Victorian swing mesh as workshop fidelity', () => {
