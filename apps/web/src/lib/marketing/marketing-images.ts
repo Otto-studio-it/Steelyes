@@ -123,7 +123,7 @@ export const GATE_TYPE_IMAGES: Partial<Record<GateType, string>> = {
 
 export const STYLE_IMAGES: Record<GateStyle, string> = {
   traditional_victorian: gates.doubleSwing.hero,
-  composite_boards: gates.singleBifold.hero,
+  composite_boards: '/images/official/gates/composite-boards-hero.jpg',
 }
 
 export const CONFIGURATOR_PHOTO_BACKGROUNDS: Partial<Record<GateType, string>> = {
