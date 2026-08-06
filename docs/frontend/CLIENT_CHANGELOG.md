@@ -105,7 +105,7 @@ Verbatim source and full analysis: [`../client-answers/2026-07-28-marius.md`](..
 
 **CL-705 shipped 2026-07-30:** `CANTILEVER_TAIL_RATIO = 1/3` at every width; `CantileverSiteSpaceNote` on dimensions (4000 → 5333 mm run).
 
-**CL-706 shipped 2026-07-30:** `BUSINESS.email` + contact/JSON-LD use `sales@steelyes.co.uk`.
+**CL-706 shipped 2026-07-30:** initially used `sales@steelyes.co.uk`; superseded on 2026-08-05 by the confirmed official address `info@steelyes.co.uk`.
 
 **Intake copy follow-up (CL-708 / CA-04):** Marius said he could not parse the cantilever question, then answered it correctly in his own terms — millimetres and a worked example. Rewrite the remaining 13 blocking intake questions the same way: plain sentence, worked example, expected unit. Do this before the next intake send.
 
@@ -116,7 +116,7 @@ Verbatim source and full analysis: [`../client-answers/2026-07-28-marius.md`](..
 | ID | Route / area | Type | Request | Depends on | Status | Source |
 |---|---|---|---|---|---|---|
 | CL-001 | Vercel + `steelyes.co.uk` | deploy | Put Next app live; point domain away from GoDaddy legacy site | Marius DNS / Vercel project | in_progress | `docs/DEPLOY.md`, `apps/web/vercel.json` |
-| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | Email ✅ `sales@steelyes.co.uk` (CA-06); company no./VAT/phone/address still pending in `business.ts` |
+| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | Email ✅ `info@steelyes.co.uk` (confirmed 2026-08-05); company no./VAT/phone/address still pending in `business.ts` |
 | CL-003 | `/legal/*` | legal | Final privacy, cookie, terms copy + CMP alignment (Iubenda) | legal review | in_progress | Draft notice + quotation-based warranty |
 | CL-004 | Pricing surfaces | copy | All public prices must say indicative / subject to survey; no invented motorised prices | Marius price list | done | Gates/services/installation copy audited |
 | CL-005 | `/gallery` | asset | Publish only photos with property-owner consent | Marius consent | blocked | `CLIENT_BLOCKERS.md` |

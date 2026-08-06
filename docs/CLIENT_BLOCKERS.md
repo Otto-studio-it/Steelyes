@@ -22,7 +22,7 @@ Current execution note:
 Partial unblock on 2026-07-28 (batch [`docs/client-answers/2026-07-28-marius.md`](./client-answers/2026-07-28-marius.md)):
 
 - **Finish palette received** — four blacks + RAL 7016 + custom RAL. The rate (£55/m² + VAT) arrived without its base or area definition, so finishes are palette-unblocked but still pricing-blocked.
-- **Sales email received** — `sales@steelyes.co.uk`. Company number, VAT, address and phone are still missing, so the footer legal block stays incomplete.
+- **Official email confirmed** — `info@steelyes.co.uk`. Company number, VAT, address and phone are still missing, so the footer legal block stays incomplete.
 - **Social profiles received** — Instagram, Facebook, TikTok.
 - **Cantilever geometry received** — tail = 1/3 of the clear opening, minimum. This unblocks cantilever preview work.
 - 16 blocking intake questions were open; **3 are now closed, 13 remain.**
@@ -43,7 +43,7 @@ Partial unblock on 2026-07-28 (batch [`docs/client-answers/2026-07-28-marius.md`
 | **Case Study content ("the dream gate")** | Week 3 | Phase 1 | Case study page not published | ⏳ pending | Page hidden from nav, redirect to `/` | Marius |
 | **Telescopic install video** | Week 12 | Phase 4 | Gallery missing showcase video | ⏳ pending | Video slot empty, add post-launch | Marius |
 | **Company Number + VAT** | Week 4 | Phase 1 | Footer legal block incomplete | ⏳ pending | Blank, flag for pre-launch checklist | Marius |
-| **Business email** | Week 4 | Phase 1 | Contact page showed a Yahoo placeholder | ✅ received 2026-07-28 | n/a — `sales@steelyes.co.uk` (CA-06) | Marius |
+| **Business email** | Week 4 | Phase 1 | Contact page showed a Yahoo placeholder | ✅ confirmed 2026-08-05 | n/a — `info@steelyes.co.uk` (supersedes CA-06) | Marius |
 | **Business phone + registered address** | Week 4 | Phase 1 | Contact page still shows unconfirmed values | ⏳ pending | Current phone/address in `business.ts`, verify pre-launch | Marius |
 | **Social profile URLs** | Week 4 | Phase 1 | Footer/header social row incomplete | ✅ received 2026-07-28 | n/a — Instagram, Facebook, TikTok (CA-07) | Marius |
 | **Photo consent from property owners** | Week 12 | Phase 4 | Gallery cannot publish | ⏳ pending | Workshop/in-progress photos only | Marius |
@@ -223,7 +223,7 @@ Before DNS cutover, verify:
 - [ ] Railheads either priced per confirmed variant list or still clearly marked non-final / survey-required
 - [ ] Finishes show the confirmed palette only — no `zinc-grey` / `bronze` / `pearl-white` anywhere in code or copy
 - [ ] Custom RAL shows "+ extra charge — powder coating, quoted separately" and never a figure
-- [ ] Contact email is `sales@steelyes.co.uk`, not the Yahoo placeholder
+- [x] Contact email is `info@steelyes.co.uk`, not the Yahoo placeholder
 - [ ] Social row carries Instagram + Facebook + TikTok, tracking parameters stripped
 - [ ] Photo consent either obtained or using workshop photos only
 - [ ] DNS registrar access confirmed, TTL lowered for fast propagation

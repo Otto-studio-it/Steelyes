@@ -131,13 +131,17 @@ function postToIngest_(thread, firstMessage, fromHeader, subject, plainBody, cat
   }
 
   try {
-    UrlFetchApp.fetch(SITE_INGEST_URL, {
+    const response = UrlFetchApp.fetch(SITE_INGEST_URL, {
       method: 'post',
       contentType: 'application/json',
       headers: { Authorization: `Bearer ${SITE_INGEST_SECRET}` },
       payload: JSON.stringify(payload),
       muteHttpExceptions: true,
     })
+    const status = response.getResponseCode()
+    if (status < 200 || status >= 300) {
+      console.error(`inbox ingest returned HTTP ${status}`)
+    }
   } catch (err) {
     // Never let a logging failure block the Gmail-side ack/label, which already happened.
     console.error('inbox ingest failed', err)

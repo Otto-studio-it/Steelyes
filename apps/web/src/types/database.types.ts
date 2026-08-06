@@ -404,6 +404,48 @@ export type Database = {
           },
         ]
       }
+      email_deliveries: {
+        Row: {
+          id: string
+          resend_email_id: string | null
+          kind: string
+          recipient: string
+          subject: string
+          status: string
+          error_message: string | null
+          metadata: Json
+          last_event_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          resend_email_id?: string | null
+          kind: string
+          recipient: string
+          subject: string
+          status?: string
+          error_message?: string | null
+          metadata?: Json
+          last_event_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          resend_email_id?: string | null
+          kind?: string
+          recipient?: string
+          subject?: string
+          status?: string
+          error_message?: string | null
+          metadata?: Json
+          last_event_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       inbound_emails: {
         Row: {
           id: string

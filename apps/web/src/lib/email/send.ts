@@ -2,6 +2,8 @@ import { Resend } from 'resend'
 
 import { BUSINESS, PRICING_DISCLAIMER } from '@/lib/marketing/business'
 import { env } from '@/lib/env'
+import { escapeEmailHtml } from '@/lib/email/html'
+import { getServiceRoleClient } from '@/lib/supabase/server'
 
 /**
  * Single place for all transactional email. Sender/workshop addresses are
@@ -42,24 +44,56 @@ function shortRef(url: string): string {
   return last.length >= 6 ? last.slice(0, 6).toUpperCase() : ''
 }
 
-/** Fire-and-log send; email failures must never fail the enclosing request. */
+/** Send and record the provider result; callers decide whether failure blocks their workflow. */
 async function sendEmail(options: {
+  kind: string
   to: string
   subject: string
   html: string
   text: string
   replyTo?: string
+  idempotencyKey?: string
 }): Promise<boolean> {
+  const supabase = getServiceRoleClient()
+  const subject = options.subject.replace(/[\r\n]+/g, ' ').slice(0, 200)
+  const { data: delivery } = await supabase
+    .from('email_deliveries')
+    .insert({ kind: options.kind, recipient: options.to.toLowerCase(), subject })
+    .select('id')
+    .maybeSingle()
+
   try {
     const resend = new Resend(env.RESEND_API_KEY)
-    const { error } = await resend.emails.send({ from: EMAIL_FROM, ...options })
+    const emailOptions = {
+      to: options.to,
+      subject,
+      html: options.html,
+      text: options.text,
+      replyTo: options.replyTo,
+    }
+    const { data, error } = await resend.emails.send(
+      { from: EMAIL_FROM, ...emailOptions },
+      options.idempotencyKey ? { idempotencyKey: options.idempotencyKey } : undefined,
+    )
     if (error) {
       console.error(`Resend error (${options.subject}):`, error)
+      if (delivery) {
+        await supabase.from('email_deliveries').update({ status: 'failed', error_message: error.message }).eq('id', delivery.id)
+      }
       return false
+    }
+    if (delivery) {
+      await supabase.from('email_deliveries').update({ status: 'sent', resend_email_id: data?.id ?? null }).eq('id', delivery.id)
     }
     return true
   } catch (err) {
     console.error(`Resend threw (${options.subject}):`, err)
+    if (delivery) {
+      await supabase.from('email_deliveries').update({
+        status: 'failed',
+        error_message: err instanceof Error ? err.message : 'Unknown provider error',
+      }).eq('id', delivery.id)
+    }
     return false
   }
 }
@@ -83,20 +117,29 @@ function tableRow(label: string, valueHtml: string, shaded: boolean): string {
 }
 
 export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Promise<boolean> {
+  const safe = {
+    name: escapeEmailHtml(input.name),
+    email: escapeEmailHtml(input.email),
+    phone: escapeEmailHtml(input.phone),
+    projectType: escapeEmailHtml(input.projectType),
+    postcode: escapeEmailHtml(input.postcode),
+    message: escapeEmailHtml(input.message),
+    configurationSummary: escapeEmailHtml(input.configurationSummary),
+  }
   const rows = [
-    tableRow('Name', input.name, true),
-    tableRow('Email', `<a href="mailto:${input.email}">${input.email}</a>`, false),
-    tableRow('Phone', input.phone || '—', true),
-    tableRow('Project type', input.projectType || '—', false),
-    tableRow('Postcode', input.postcode || '—', true),
+    tableRow('Name', safe.name, true),
+    tableRow('Email', `<a href="mailto:${safe.email}">${safe.email}</a>`, false),
+    tableRow('Phone', safe.phone || '—', true),
+    tableRow('Project type', safe.projectType || '—', false),
+    tableRow('Postcode', safe.postcode || '—', true),
     input.hasConfiguration
       ? tableRow(
           'Configuration',
-          `${input.shareUrl}${input.configurationSummary ? `<br>${input.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}`,
+          `${input.shareUrl}${safe.configurationSummary ? `<br>${safe.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}`,
           false,
         )
       : '',
-    tableRow('Details', input.message || '—', true),
+    tableRow('Details', safe.message || '—', true),
   ].join('')
 
   const tag = input.hasConfiguration ? '[PREVENTIVO]' : '[LEAD]'
@@ -106,6 +149,7 @@ export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Prom
   const ref = shortRef(input.shareUrl)
 
   return sendEmail({
+    kind: input.hasConfiguration ? 'workshop_quote' : 'workshop_lead',
     to: WORKSHOP_EMAIL,
     replyTo: input.email,
     subject: `${tag} ${base}${ref ? ` #${ref}` : ''}`,
@@ -139,27 +183,52 @@ export type CustomerConfirmationEmailInput = {
   pricingSummary: string
 }
 
+export async function sendContactConfirmationEmail(input: {
+  name: string
+  email: string
+}): Promise<boolean> {
+  const firstName = input.name.split(/\s+/)[0] || input.name
+  return sendEmail({
+    kind: 'customer_contact_confirmation',
+    to: input.email,
+    replyTo: WORKSHOP_EMAIL,
+    subject: 'We received your Steelyes enquiry',
+    html: emailShell(
+      `Thank you, ${escapeEmailHtml(firstName)}`,
+      `<p style="${BODY_STYLE}">We have received your project enquiry. Our workshop will review it and respond within one business day.</p>
+       <p style="${BODY_STYLE}">If you need to add anything, simply reply to this email.</p>`,
+    ),
+    text: [
+      `Thank you, ${firstName}`,
+      'We have received your project enquiry. Our workshop will review it and respond within one business day.',
+      'If you need to add anything, simply reply to this email.',
+      `Steelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
+    ].join('\n\n'),
+  })
+}
+
 export async function sendCustomerConfirmationEmail(
   input: CustomerConfirmationEmailInput,
 ): Promise<boolean> {
   const firstName = input.name.split(' ')[0] || input.name
   return sendEmail({
+    kind: 'customer_quote_confirmation',
     to: input.email,
     replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes gate configuration',
     html: emailShell(
-      `Thank you, ${firstName}`,
+      `Thank you, ${escapeEmailHtml(firstName)}`,
       `
       <p style="${BODY_STYLE}">
         We received your quote request. Our workshop will review your configuration and follow up after any site survey needed.
       </p>
-      ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${input.configurationSummary}</p>` : ''}
-      ${input.pricingSummary ? `<p style="${BODY_STYLE}"><strong>Indicative estimate:</strong> ${input.pricingSummary}</p>` : ''}
+      ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${escapeEmailHtml(input.configurationSummary)}</p>` : ''}
+      ${input.pricingSummary ? `<p style="${BODY_STYLE}"><strong>Indicative estimate:</strong> ${escapeEmailHtml(input.pricingSummary)}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved configuration</a>
         ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
       </p>
-      ${input.message ? `<p style="${BODY_STYLE}">Your message:<br>${input.message.replace(/\n/g, '<br>')}</p>` : ''}
+      ${input.message ? `<p style="${BODY_STYLE}">Your message:<br>${escapeEmailHtml(input.message).replace(/\n/g, '<br>')}</p>` : ''}
       `,
     ),
     text: [
@@ -178,6 +247,7 @@ export async function sendCustomerConfirmationEmail(
 }
 
 export type QuoteReadyEmailInput = {
+  quoteRequestId: string
   firstName: string
   email: string
   shareUrl: string
@@ -186,11 +256,13 @@ export type QuoteReadyEmailInput = {
 
 export async function sendQuoteReadyEmail(input: QuoteReadyEmailInput): Promise<boolean> {
   return sendEmail({
+    kind: 'customer_quote_ready',
+    idempotencyKey: `quote-ready/${input.quoteRequestId}`,
     to: input.email,
     replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes quote is ready',
     html: emailShell(
-      `Good news, ${input.firstName}`,
+      `Good news, ${escapeEmailHtml(input.firstName)}`,
       `
       <p style="${BODY_STYLE}">
         We have reviewed your gate configuration and your quote is on its way. If it has not arrived alongside this
@@ -228,6 +300,7 @@ export type DesignSaveEmailInput = {
 
 export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<boolean> {
   return sendEmail({
+    kind: 'customer_design_saved',
     to: input.email,
     replyTo: WORKSHOP_EMAIL,
     subject: 'Your saved Steelyes gate design',
@@ -238,7 +311,7 @@ export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<
         Here is your saved gate design. Open the link below any time to review it, keep editing, or request a quote
         when you are ready.
       </p>
-      ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${input.configurationSummary}</p>` : ''}
+      ${input.configurationSummary ? `<p style="${BODY_STYLE}"><strong>Configuration:</strong> ${escapeEmailHtml(input.configurationSummary)}</p>` : ''}
       <p style="${BODY_STYLE}">
         <a href="${input.shareUrl}">View your saved design</a>
         ${input.pdfUrl ? ` · <a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}
@@ -267,6 +340,7 @@ export async function sendAbandonedReminderEmail(
   input: AbandonedReminderEmailInput,
 ): Promise<boolean> {
   return sendEmail({
+    kind: 'customer_design_reminder',
     to: input.email,
     replyTo: WORKSHOP_EMAIL,
     subject: 'Your Steelyes gate design is waiting',
@@ -313,15 +387,16 @@ export async function sendClientIntakeUpdateEmail(
 ): Promise<boolean> {
   const ref = shortRef(input.intakeUrl)
   return sendEmail({
+    kind: 'workshop_intake_update',
     to: WORKSHOP_EMAIL,
     subject: `[INTAKE] Client intake update — ${input.clientName}${ref ? ` #${ref}` : ''}`,
     html: internalEmailShell(
       'Client intake aggiornato',
       `
-      <p style="${BODY_STYLE}"><strong>${input.clientName}</strong> ha aggiornato una risposta.</p>
-      <p style="${BODY_STYLE}"><strong>Domanda:</strong> ${input.questionLabel}</p>
-      <p style="${BODY_STYLE}"><strong>Stato:</strong> ${input.status}</p>
-      <p style="${BODY_STYLE}"><strong>Progresso:</strong> ${input.progressSummary}</p>
+      <p style="${BODY_STYLE}"><strong>${escapeEmailHtml(input.clientName)}</strong> ha aggiornato una risposta.</p>
+      <p style="${BODY_STYLE}"><strong>Domanda:</strong> ${escapeEmailHtml(input.questionLabel)}</p>
+      <p style="${BODY_STYLE}"><strong>Stato:</strong> ${escapeEmailHtml(input.status)}</p>
+      <p style="${BODY_STYLE}"><strong>Progresso:</strong> ${escapeEmailHtml(input.progressSummary)}</p>
       <p style="${BODY_STYLE}">
         <a href="${input.adminUrl}">Apri pannello dati cliente</a>
         · <a href="${input.intakeUrl}">Apri link intake</a>
