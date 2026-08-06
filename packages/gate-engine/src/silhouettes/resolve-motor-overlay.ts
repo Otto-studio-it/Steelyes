@@ -1,12 +1,18 @@
+/**
+ * Motorised Design masters — product lock.
+ *
+ * When a pack has `*_motorised` SVGs, resolveSilhouette picks them via
+ * `when.motorised: true`. Manual/manuale masters already include the handle
+ * when the client drew one. Shared packs (tracked / cantilever / …) use one
+ * CAD for both states — no handle overlay, no motor kit drawn.
+ */
+
 import type { GateConfig } from '../types'
 
 export type MotorOverlayInstance = {
   id: string
-  /** 0–1 across the full master image width (centre of motor kit marker). */
   xRatio: number
-  /** 0–1 from top of the master image (centre of motor kit marker). */
   yRatio: number
-  kind: 'post_operator' | 'track_operator'
 }
 
 export type MotorOverlayPlan = {
@@ -14,25 +20,18 @@ export type MotorOverlayPlan = {
   notes: string[]
 }
 
-/**
- * Product lock (PHASE_MOTOR_MANUAL): Design never draws a motor kit.
- * Motorised = dedicated `*_motorised` master (no handle); manual = handle overlay only.
- */
-export function resolveMotorOverlay(
-  config: Pick<GateConfig, 'gateType' | 'motorised'>,
-  _opts?: { masterIncludesMotor?: boolean },
-): MotorOverlayPlan {
-  if (!config.motorised) {
-    return {
-      instances: [],
-      notes: ['Manual — no motor kit on Design masters.'],
-    }
-  }
+export type ResolveMotorOverlayOptions = {
+  /** Ignored — masters never get a composited motor kit. */
+  masterIncludesMotor?: boolean
+}
 
+/** Always empty — motor kits are not drawn on Design masters. */
+export function resolveMotorOverlay(
+  _config: Pick<GateConfig, 'gateType' | 'motorised'>,
+  _options: ResolveMotorOverlayOptions = {},
+): MotorOverlayPlan {
   return {
     instances: [],
-    notes: [
-      'Motorised — Design uses *_motorised masters without motor artwork (operator not shown).',
-    ],
+    notes: ['Motor kit never drawn on Design masters (product lock).'],
   }
 }

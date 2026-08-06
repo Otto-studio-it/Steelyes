@@ -300,6 +300,7 @@
 <path d="M847 571.4H837V581.4H847V571.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M1090 206.4H1080V218.4H1090V206.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M1090 601.6H1080V613.6H1090V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M608 332H592C590.895 332 590 332.895 590 334V486C590 487.105 590.895 488 592 488H608C609.105 488 610 487.105 610 486V334C610 332.895 609.105 332 608 332Z" fill="white" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M144 682H1056" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 </g>
 <defs>

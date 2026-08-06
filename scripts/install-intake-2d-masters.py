@@ -1,52 +1,60 @@
+#!/usr/bin/env python3
+"""
+Install official Design masters from the client export folder into docs/frontend/2d-masters.
+
+Source of truth (exact filenames):
+  foto /double swing gates/esport per ora /
+  foto /DS   ← double_swing only (esport/DS/ is empty)
+
+Product lock (2026-08-05):
+  - Copy SVG bytes as-is — do NOT strip geometry.
+  - Filenames with manual/manuale already bake the leaf handle.
+  - Filenames without manual/automatic = one shared CAD; design has no handle
+    regardless of motorised (no UI handle overlay).
+  - Filenames with automatic/motorised = dedicated motorised master (no handle).
+"""
+
+from __future__ import annotations
+
 from pathlib import Path
-import re, base64, json
+import base64
 from io import BytesIO
+
 from PIL import Image
 
 ROOT = Path('.')
 EXPORT = Path('foto /double swing gates/esport per ora ')
-DS_FALLBACK = Path('foto /DS')  # DS subfolder in esport is empty
+DS_FALLBACK = Path('foto /DS')  # esport/DS is empty; official DS set lives here
 
-HANDLE_PATS = [
-    re.compile(r'<path d="M608 332H592[^"]*"[^/]*/>\s*'),
-    re.compile(r'<path d="M607 372H593V428H607V372Z"[^/]*/>\s*'),
-    re.compile(r'<path d="M600 382V418"[^/]*/>\s*'),
-    re.compile(r'<path d="M1051 382H1037V438H1051V382Z"[^/]*/>\s*'),
-    re.compile(r'<path d="M1044 392V428"[^/]*/>\s*'),
-]
 
-def strip_handles(text: str) -> tuple[str, int]:
-    n = 0
-    for pat in HANDLE_PATS:
-        text, c = pat.subn('', text)
-        n += c
-    return text, n
-
-def clean_dir(dst: Path):
+def clean_dir(dst: Path) -> None:
     dst.mkdir(parents=True, exist_ok=True)
     for p in dst.glob('._*'):
         p.unlink(missing_ok=True)
 
-def write_svg(dst: Path, text: str):
+
+def write_svg(dst: Path, text: str) -> None:
     clean_dir(dst.parent)
     dst.write_text(text, encoding='utf-8')
 
-def install_from_map(gate: str, mapping: dict[str, Path], strip: bool):
+
+def install_from_map(gate: str, mapping: dict[str, Path]) -> None:
     dst_dir = ROOT / f'docs/frontend/2d-masters/{gate}/silhouettes'
     clean_dir(dst_dir)
     for dest_name, src in mapping.items():
+        if not src.exists():
+            raise SystemExit(f'Missing source for {gate}/{dest_name}: {src}')
         text = src.read_text(encoding='utf-8')
-        n = 0
-        if strip:
-            text, n = strip_handles(text)
         write_svg(dst_dir / dest_name, text)
-        print(f'{gate}: {src.name} → {dest_name} (strip={n})')
-    # figma-base
+        print(f'{gate}: {src.name} → {dest_name} (verbatim)')
+    # figma-base mirrors base
     (ROOT / f'docs/frontend/2d-masters/{gate}/figma-base.svg').write_text(
-        (dst_dir / 'base.svg').read_text(encoding='utf-8'), encoding='utf-8'
+        (dst_dir / 'base.svg').read_text(encoding='utf-8'),
+        encoding='utf-8',
     )
 
-def png_wrap(png: Path, out: Path, paper=(1200, 860)):
+
+def png_wrap(png: Path, out: Path, paper=(1200, 860)) -> None:
     im = Image.open(png).convert('RGBA')
     pw, ph = paper
     iw, ih = im.size
@@ -54,8 +62,9 @@ def png_wrap(png: Path, out: Path, paper=(1200, 860)):
     nw, nh = int(iw * scale), int(ih * scale)
     canvas = Image.new('RGBA', paper, (255, 255, 255, 255))
     resized = im.resize((nw, nh), Image.Resampling.LANCZOS)
-    canvas.paste(resized, ((pw - nw)//2, (ph - nh)//2), resized)
-    buf = BytesIO(); canvas.save(buf, format='PNG', optimize=True)
+    canvas.paste(resized, ((pw - nw) // 2, (ph - nh) // 2), resized)
+    buf = BytesIO()
+    canvas.save(buf, format='PNG', optimize=True)
     b64 = base64.b64encode(buf.getvalue()).decode('ascii')
     svg = (
         f'<svg width="{pw}" height="{ph}" viewBox="0 0 {pw} {ph}" fill="none" '
@@ -65,7 +74,8 @@ def png_wrap(png: Path, out: Path, paper=(1200, 860)):
     )
     write_svg(out, svg)
 
-# --- double_swing from foto /DS (esport/DS empty) ---
+
+# --- double_swing from foto /DS ---
 ds_map = {
     'base.svg': DS_FALLBACK / 'double_swing_base_manual.svg',
     'arched.svg': DS_FALLBACK / 'double_swing_arched_manual.svg',
@@ -76,13 +86,20 @@ ds_map = {
     'arched_motorised.svg': DS_FALLBACK / 'double_swing_autoamaticarched.svg',
     'arched_dog_bars_motorised.svg': DS_FALLBACK / 'double_swing_autoamaticarched_dog_bars.svg',
 }
-# dog_bars motorised from png or derived
-install_from_map('double_swing', ds_map, strip=True)
-# dog_bars_motorised + composite_motorised derived
+install_from_map('double_swing', ds_map)
+
 dd = ROOT / 'docs/frontend/2d-masters/double_swing/silhouettes'
-write_svg(dd / 'dog_bars_motorised.svg', (dd / 'dog_bars.svg').read_text(encoding='utf-8'))
+dog_png = DS_FALLBACK / 'double_swing_autoamaticdog_bars.png'
+if dog_png.exists():
+    png_wrap(dog_png, dd / 'dog_bars_motorised.svg')
+    print('double_swing: dog_bars_motorised.svg ← PNG wrap (no vector in export)')
+else:
+    write_svg(dd / 'dog_bars_motorised.svg', (dd / 'dog_bars.svg').read_text(encoding='utf-8'))
+    print('double_swing: dog_bars_motorised.svg ← copy of manual dog_bars (PNG missing)')
+
+# No dedicated composite automatic — reuse composite CAD (no handle in design for auto).
 write_svg(dd / 'composite_motorised.svg', (dd / 'composite.svg').read_text(encoding='utf-8'))
-print('double_swing: derived dog_bars_motorised + composite_motorised')
+print('double_swing: composite_motorised.svg ← composite (no separate automatic file)')
 
 # --- single_swing from esport/SS ---
 ss = EXPORT / 'SS'
@@ -98,9 +115,9 @@ ss_map = {
     'arched_dog_bars_motorised.svg': ss / 'single_swing_automaticarched_dog_bars.svg',
     'composite_motorised.svg': ss / 'single_swing_automaticcomposite.svg',
 }
-install_from_map('single_swing', ss_map, strip=True)
+install_from_map('single_swing', ss_map)
 
-# --- bifolding manual+auto ---
+# --- bifolding manual + automatic ---
 bf_map = {
     'base.svg': EXPORT / 'bifloding_double_swing_manual_base 1.svg',
     'arched.svg': EXPORT / 'bifloding_double_swing_manual_arched 1.svg',
@@ -113,59 +130,73 @@ bf_map = {
     'arched_dog_bars_motorised.svg': EXPORT / 'bifloding_double_swing_automatic_arched_dog_bars 1.svg',
     'composite_motorised.svg': EXPORT / 'bifloding_double_swing_automatic_composite 1.svg',
 }
-install_from_map('bifolding_double_swing', bf_map, strip=True)
+install_from_map('bifolding_double_swing', bf_map)
 
-# --- shared packs (manual==auto, handle overlay only) ---
-def shared5(gate: str, prefix: str, typo_prefix: str | None = None):
-    p = typo_prefix or prefix
+
+# --- shared packs (one CAD; no handle overlay — design does not place a handle) ---
+def shared5(gate: str, prefix: str) -> None:
     mapping = {
-        'base.svg': EXPORT / f'{p}_base 1.svg',
-        'arched.svg': EXPORT / f'{p}_arched 1.svg',
-        'dog_bars.svg': EXPORT / f'{p}_dog_bars 1.svg',
-        'arched_dog_bars.svg': EXPORT / f'{p}_arched_dog_bars 1.svg',
-        'composite.svg': EXPORT / f'{p}_composite 1.svg',
+        'base.svg': EXPORT / f'{prefix}_base 1.svg',
+        'arched.svg': EXPORT / f'{prefix}_arched 1.svg',
+        'dog_bars.svg': EXPORT / f'{prefix}_dog_bars 1.svg',
+        'arched_dog_bars.svg': EXPORT / f'{prefix}_arched_dog_bars 1.svg',
+        'composite.svg': EXPORT / f'{prefix}_composite 1.svg',
     }
-    # radius has no composite
     if gate == 'radius_sliding':
         mapping.pop('composite.svg')
-        install_from_map(gate, mapping, strip=True)
+        install_from_map(gate, mapping)
         dst = ROOT / f'docs/frontend/2d-masters/{gate}/silhouettes'
         write_svg(dst / 'composite.svg', (dst / 'base.svg').read_text(encoding='utf-8'))
         print(f'{gate}: composite.svg ← base (missing in export)')
         return
-    install_from_map(gate, mapping, strip=True)
+    install_from_map(gate, mapping)
+
 
 shared5('tracked_sliding', 'tracked_sliding')
-shared5('cantilever_sliding', 'cantiliver_sliding')  # typo in filenames
-shared5('telescopic_sliding', 'telescopis_sliding')  # typo in filenames
+shared5('cantilever_sliding', 'cantiliver_sliding')  # typo in client filenames
+shared5('telescopic_sliding', 'telescopis_sliding')  # typo in client filenames
 shared5('radius_sliding', 'radius_sliding')
 
-# single_bifolding — mostly svg, arched is png
+# single_bifolding — shared CAD (no manual/automatic split in export)
 sb_map = {
     'base.svg': EXPORT / 'single_bifolding_base 1.svg',
     'dog_bars.svg': EXPORT / 'single_bifolding_dog_bars 1.svg',
     'arched_dog_bars.svg': EXPORT / 'single_bifolding_arched_dog_bars 1.svg',
     'composite.svg': EXPORT / 'single_bifolding_composite 1.svg',
 }
-install_from_map('single_bifolding', sb_map, strip=True)
+install_from_map('single_bifolding', sb_map)
 arched_svg = EXPORT / 'single_bifolding_arched 1.svg'
 arched_png = EXPORT / 'single_bifolding_arched 1.png'
 arched_out = ROOT / 'docs/frontend/2d-masters/single_bifolding/silhouettes/arched.svg'
 if arched_svg.exists() and arched_svg.stat().st_size > 5000:
-    text, n = strip_handles(arched_svg.read_text(encoding='utf-8'))
-    write_svg(arched_out, text)
-    print(f'single_bifolding: arched.svg ← vector SVG (strip={n})')
+    write_svg(arched_out, arched_svg.read_text(encoding='utf-8'))
+    print('single_bifolding: arched.svg ← vector SVG (verbatim)')
 elif arched_png.exists():
     png_wrap(arched_png, arched_out)
-    print('single_bifolding: arched.svg ← PNG wrap (vector missing)')
+    print('single_bifolding: arched.svg ← PNG wrap')
 else:
     raise SystemExit('single_bifolding arched asset missing')
 (ROOT / 'docs/frontend/2d-masters/single_bifolding/figma-base.svg').write_text(
-    (ROOT / 'docs/frontend/2d-masters/single_bifolding/silhouettes/base.svg').read_text(encoding='utf-8'),
+    (ROOT / 'docs/frontend/2d-masters/single_bifolding/silhouettes/base.svg').read_text(
+        encoding='utf-8'
+    ),
     encoding='utf-8',
 )
 
 print('\n=== SUMMARY ===')
-for gate in ['double_swing','single_swing','tracked_sliding','cantilever_sliding','bifolding_double_swing','single_bifolding','telescopic_sliding','radius_sliding']:
-    files = sorted(p.name for p in (ROOT/f'docs/frontend/2d-masters/{gate}/silhouettes').glob('*.svg') if not p.name.startswith('._'))
+for gate in [
+    'double_swing',
+    'single_swing',
+    'tracked_sliding',
+    'cantilever_sliding',
+    'bifolding_double_swing',
+    'single_bifolding',
+    'telescopic_sliding',
+    'radius_sliding',
+]:
+    files = sorted(
+        p.name
+        for p in (ROOT / f'docs/frontend/2d-masters/{gate}/silhouettes').glob('*.svg')
+        if not p.name.startswith('._')
+    )
     print(f'{gate}: {len(files)} → {files}')
