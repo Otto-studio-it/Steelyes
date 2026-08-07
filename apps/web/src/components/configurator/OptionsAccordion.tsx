@@ -4,11 +4,8 @@ import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 import { ProvisionalCountNotice } from '@/components/configurator/ProvisionalCountNotice'
-import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
-import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
 import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
-import { isRailheadOptionKey } from '@steelyes/gate-engine'
 import { OPTION_GROUPS, OPTION_META, type OptionGroupId } from '@/lib/configurator/options'
 import { SITE_SURVEY_FIELD_LABEL } from '@/lib/configurator/labels'
 import { estimateOptionEnableDelta, formatPriceDelta } from '@/lib/configurator/price-delta'
@@ -78,13 +75,7 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
               }}
             />
           </label>
-          {isRailheadOptionKey(option.key) ? <RailheadVariantPicker optionKey={option.key} /> : null}
-          <VariantCatalogNotice optionKey={option.key} />
-          {option.key === 'top_railheads' ||
-          option.key === 'dog_bars' ||
-          option.key === 'dog_bar_railheads' ||
-          option.key === 'bushes' ||
-          option.key === 'spirals' ? (
+          {option.key === 'dog_bars' || option.key === 'bushes' || option.key === 'spirals' ? (
             <ProvisionalCountNotice />
           ) : null}
           <p className="text-xs leading-5 text-muted-deep">Included in the estimated total.</p>

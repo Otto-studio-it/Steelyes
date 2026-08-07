@@ -14,13 +14,13 @@ type MobilePreviewSheetProps = {
   tenant?: TenantBundle
   showDimensionOverlay?: boolean
   onDimensionOverlayClick?: () => void
+  /** @deprecated Secondary schematic modes removed. */
   showSecondaryModes?: boolean
 }
 
 /**
- * Full-resolution gate preview presented as a bottom sheet (85dvh).
- * Replaces the always-on 28vh strip — the heavy 3D/photo chunks only load here,
- * keeping the in-flow chip lightweight.
+ * Full-resolution Design preview as a bottom sheet (85dvh).
+ * Shows the official 2D master only — no Installation / schematic modes.
  */
 export function MobilePreviewSheet({
   open,
@@ -29,7 +29,6 @@ export function MobilePreviewSheet({
   tenant,
   showDimensionOverlay = false,
   onDimensionOverlayClick,
-  showSecondaryModes = true,
 }: MobilePreviewSheetProps) {
   const swipe = useSheetSwipeDismiss(() => onOpenChange(false))
 
@@ -48,7 +47,7 @@ export function MobilePreviewSheet({
             />
             <div className="flex-1 py-2" {...swipe.handleProps}>
               <Dialog.Title className="font-mono text-xs uppercase tracking-widest text-white/70">
-                Gate preview
+                Design preview
               </Dialog.Title>
             </div>
             <Dialog.Close asChild>
@@ -68,7 +67,6 @@ export function MobilePreviewSheet({
               tenant={tenant}
               showDimensionOverlay={showDimensionOverlay}
               onDimensionOverlayClick={onDimensionOverlayClick}
-              showSecondaryModes={showSecondaryModes}
             />
           </div>
         </Dialog.Content>

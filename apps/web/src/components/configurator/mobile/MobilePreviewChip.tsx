@@ -89,7 +89,6 @@ export function MobilePreviewChip({
         onOpenChange={setOpen}
         config={config}
         tenant={tenant}
-        showSecondaryModes={false}
         showDimensionOverlay={showDimensionOverlay}
         onDimensionOverlayClick={() => {
           setOpen(false)

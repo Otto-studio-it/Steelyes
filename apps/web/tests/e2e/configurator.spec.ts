@@ -14,7 +14,7 @@ test.describe('configurator release flow', () => {
   test('loads the design studio on choose act', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    await expect(page.getByRole('heading', { name: /Design your gate installation/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Design your gate/i })).toBeVisible()
     await expect(page.getByRole('radiogroup', { name: 'Gate finish' })).toBeVisible()
     await expect(page.getByText(/Estimated pricing/i).first()).toBeVisible()
   })
@@ -44,16 +44,22 @@ test.describe('configurator release flow', () => {
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
   })
 
-  test('shows survey-required pricing when top railheads are enabled', async ({ page }) => {
+  test('railhead chooser stores SKU for summary without Design overlays', async ({ page }) => {
     await walkToRefine(page)
 
-    // Accordion keeps one group open at a time; railheads live under Decoration.
-    await page.getByRole('button', { name: /Decoration/i }).click()
-    const railheadsSwitch = page.getByRole('switch', { name: /Top railheads/i })
-    await railheadsSwitch.click()
-    await expect(railheadsSwitch).toHaveAttribute('aria-checked', 'true')
+    const chooser = page.getByTestId('railhead-chooser')
+    await expect(chooser).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Choose your railheads/i })).toBeVisible()
+    await chooser.getByRole('radio', { name: /RH32/i }).click()
+    await expect(chooser.getByRole('radio', { name: /RH32/i })).toHaveAttribute('aria-checked', 'true')
 
-    await expect(page.getByText(/Price on request|Survey required/i).first()).toBeVisible()
+    // Design drawing must not composite railhead SVGs on the master (chooser previews are OK).
+    await expect(page.locator('img[src*="/2d-masters/railheads/"][class*="absolute"]')).toHaveCount(0)
+
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
+    await expect(page.getByText(/^Railheads$/i).first()).toBeVisible()
+    await expect(page.getByText(/^RH32$/i).filter({ visible: true }).first()).toBeVisible()
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {

@@ -97,10 +97,11 @@ function DesktopIntro() {
     <div className="max-w-3xl">
       <p className="font-mono text-xs uppercase tracking-widest text-muted">Gate configurator</p>
       <h1 className="mt-2 text-balance font-heading text-[clamp(1.85rem,5vw,3.5rem)] font-black uppercase leading-[0.92] tracking-[-0.03em] text-steel">
-        Design your gate installation.
+        Design your gate.
       </h1>
       <p className="mt-3 max-w-2xl text-base leading-7 text-muted-deep lg:text-lg">
-        Choose any mechanism, then tune size, finish and options. The preview stays neutral so the gate reads first.
+        Choose any mechanism, then tune size, finish and options. The Design drawing shows the official 2D master for
+        your selection.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">
@@ -109,7 +110,7 @@ function DesktopIntro() {
         </span>
         <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-muted">
           <DraftingCompass className="h-3.5 w-3.5" aria-hidden />
-          Live installation preview
+          Official 2D design
         </span>
       </div>
     </div>
