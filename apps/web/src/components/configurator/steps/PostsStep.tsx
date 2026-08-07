@@ -99,7 +99,7 @@ export function PostsStep() {
         </div>
       ) : (
         <p className="border border-dashed border-steel/12 bg-white px-4 py-3 text-sm text-muted-deep">
-          Posts hidden — only the gate leaf/panel is shown in the installation preview.
+          Posts hidden — only the gate leaf/panel is shown in the Design drawing.
         </p>
       )}
     </div>

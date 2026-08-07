@@ -17,8 +17,8 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'Railheads, dog bars, and ornamental inserts.',
-    keys: ['top_railheads', 'dog_bars', 'dog_bar_railheads', 'bushes', 'spirals'],
+    description: 'Dog bars and ornamental inserts.',
+    keys: ['dog_bars', 'bushes', 'spirals'],
   },
   {
     id: 'site',

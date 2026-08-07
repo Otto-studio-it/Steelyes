@@ -1,24 +1,31 @@
 # Phase 2 — Railhead overlays on Technical masters (2026-08-01)
 
-## Done
+## Product note (current)
+
+Railhead SKUs are chosen in Refine (`RailheadChooserSection`) for quote / email / PDF.
+**Design drawing and 3D/AR mesh do not composite or draw finials.** Catalogue selection only.
+
+`resolveRailheadOverlays` remains in the engine for placement math / assets; the Design UI no longer calls it.
+
+## Historical (overlay composition — retired from Design UI)
 
 - Engine `resolveRailheadOverlays(config)` places preloaded SKU SVGs along top / dog rails
 - Count uses the same provisional divisors as `getExpectedTopRailheadCount` / dog-bar twin
 - Dog catalogue slugs (`RH32-dog`) map to shared overlay files (`RH32.svg`)
 - Default SKU when option is on but picker empty: **RH32**
-- `TechnicalMasterPreview` composites overlays on the master (never invents CAD geometry)
-- Strip under the drawing shows selected railhead code(s) when overlays are active
+- Strip under the drawing previously showed selected railhead code(s) when overlays were active
 
 ## Files
 
 | File | Role |
 |------|------|
-| `packages/gate-engine/src/silhouettes/resolve-railhead-overlays.ts` | Placement plan |
-| `apps/web/src/components/configurator/TechnicalMasterPreview.tsx` | Composite UI |
-| `apps/web/public/2d-masters/railheads/silhouettes/*.svg` | Overlay assets |
-| `packages/gate-engine/tests/resolve-railhead-overlays.test.ts` | Tests |
+| `packages/gate-engine/src/silhouettes/resolve-railhead-overlays.ts` | Placement plan (engine helper) |
+| `apps/web/src/components/configurator/RailheadChooserSection.tsx` | Catalogue chooser (Refine) |
+| `apps/web/src/components/configurator/TechnicalMasterPreview.tsx` | Design master only — no overlays |
+| `apps/web/public/2d-masters/railheads/silhouettes/*.svg` | Catalogue / asset SVGs |
+| `packages/gate-engine/tests/resolve-railhead-overlays.test.ts` | Engine placement tests |
 
-## Layout (provisional)
+## Layout (provisional — for engine helper)
 
 Masters share a 1200×860 paper. Anchors match Victorian elevation rails:
 
@@ -36,7 +43,6 @@ Masters share a 1200×860 paper. Anchors match Victorian elevation rails:
 
 ## Verify
 
-1. Configurator → Technical
-2. Enable **Top railheads** + pick RH7 / RH32 / …
-3. Heads appear on the top rail; mm strip still client-driven
-4. Enable dog bars + dog bar railheads → second row mid/lower
+1. Configurator → Refine → **Choose your railheads** grid
+2. Pick RH7 / RH32 / … — selection stored on config
+3. Design drawing has no railhead overlays; Summary / email / PDF show **Railheads: RH32**

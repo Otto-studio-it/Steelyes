@@ -3,11 +3,9 @@
 import { useMemo } from 'react'
 import {
   resolveFinishDefinition,
-  resolveRailheadOverlays,
   resolveSilhouette,
   SilhouetteResolveError,
   type GateConfig,
-  type RailheadOverlayInstance,
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -25,8 +23,7 @@ type TechnicalMasterPreviewProps = {
 
 /**
  * Design preview from preloaded 2D masters only (Phase 1–3).
- * Phase 2 — railhead SKU overlays composed on top of the master.
- * Phase 3 — default customer preview (label Design; id remains `technical`).
+ * Railhead SKUs are chosen in Refine for quote/email — not composited on the drawing.
  * Never invents live CAD. Client mm render in the strip under the image.
  */
 export function TechnicalMasterPreview({
@@ -53,13 +50,7 @@ export function TechnicalMasterPreview({
     }
   }, [config])
 
-  const overlays = useMemo(() => resolveRailheadOverlays(config), [config])
   // Handle is baked into official *manual* masters — never composited in UI.
-
-  const railheadCodes = useMemo(
-    () => Array.from(new Set(overlays.instances.map((item) => item.code))),
-    [overlays.instances],
-  )
 
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
@@ -125,13 +116,13 @@ export function TechnicalMasterPreview({
         >
           <div className="relative flex h-[72px] w-[112px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-steel/10 bg-white">
             {resolved.ok ? (
-              <MasterWithOverlays
-                masterSrc={resolved.value.publicPath}
-                masterAlt=""
-                instances={overlays.instances}
-                heightMm={config.heightMm}
+              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
+              <img
+                src={resolved.value.publicPath}
+                alt=""
                 className="h-full w-full object-contain object-top p-1"
-              />            ) : (
+              />
+            ) : (
               <span className="px-2 font-mono text-[10px] text-muted">Master</span>
             )}
           </div>
@@ -154,11 +145,10 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              <MasterWithOverlays
-                masterSrc={resolved.value.publicPath}
-                masterAlt={`${title} design master — ${resolved.value.title}`}
-                instances={overlays.instances}
-                heightMm={config.heightMm}
+              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
+              <img
+                src={resolved.value.publicPath}
+                alt={`${title} design master — ${resolved.value.title}`}
                 className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
               />
             ) : (
@@ -199,69 +189,12 @@ export function TechnicalMasterPreview({
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
-                {railheadCodes.length > 0 ? (
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted">
-                    Railheads · {railheadCodes.join(' · ')}
-                    <span className="ml-1 normal-case tracking-normal text-muted/80">
-                      ({overlays.instances.length} provisional)
-                    </span>
-                  </p>
-                ) : null}
               </div>
             </div>
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
               Dimensions are client inputs — not baked into the drawing.
-              {railheadCodes.length > 0
-                ? ' Railhead count/spacing remain provisional until survey sign-off.'
-                : null}
             </p>
           </div>
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-function MasterWithOverlays({
-  masterSrc,
-  masterAlt,
-  instances,
-  heightMm,
-  className,
-}: {
-  masterSrc: string
-  masterAlt: string
-  instances: RailheadOverlayInstance[]
-  heightMm: number
-  className: string
-}) {
-  return (
-    <div className={`relative inline-block max-w-full ${className.includes('w-full') ? 'w-full' : ''}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-      <img src={masterSrc} alt={masterAlt} className={className} />
-      {instances.length > 0 ? (
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          {instances.map((instance) => {
-            // Scale head height vs gate height; floor so spears stay readable on small previews.
-            const heightPct = Math.max(4.5, Math.min(18, (instance.heightMm / Math.max(heightMm, 1)) * 100))
-            const widthPct = heightPct * (instance.widthMm / Math.max(instance.heightMm, 1))
-            return (
-              // eslint-disable-next-line @next/next/no-img-element -- static public railhead SVG
-              <img
-                key={instance.id}
-                src={instance.publicPath}
-                alt=""
-                className="absolute object-contain object-bottom"
-                style={{
-                  left: `${instance.xRatio * 100}%`,
-                  top: `${instance.anchorYRatio * 100}%`,
-                  width: `${widthPct}%`,
-                  height: `${heightPct}%`,
-                  transform: 'translate(-50%, -100%)',
-                }}
-              />
-            )
-          })}
         </div>
       ) : null}
     </div>
