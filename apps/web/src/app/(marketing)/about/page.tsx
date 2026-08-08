@@ -108,7 +108,7 @@ export default function AboutPage() {
             <span className="text-primary">survey-led delivery</span>
           </h2>
           <p className="mt-5 max-w-2xl text-sm font-light leading-relaxed text-muted-deep md:text-base">
-            We work on commissions across the United Kingdom, with our workshop based in Enfield, London. Projects range
+            We work on commissions across the United Kingdom, with our workshop based in Sydenham, London. Projects range
             from single residential entrances to multi-gate commercial perimeters — each surveyed, drawn, fabricated and
             installed by the same team where our scope includes installation.
           </p>
