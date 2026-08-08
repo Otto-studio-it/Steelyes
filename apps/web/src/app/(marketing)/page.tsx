@@ -8,6 +8,7 @@ import { ConfiguratorProductPreview } from '@/components/marketing/ConfiguratorP
 import { InstallationProcessTimeline } from '@/components/marketing/InstallationProcessTimeline'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
+import { SocialFollowStrip } from '@/components/marketing/SocialFollowStrip'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { howToSchema } from '@/lib/marketing/schema'
@@ -125,12 +126,20 @@ export default function HomePage() {
           </div>
 
           <Reveal className="mt-6" delay={80}>
-            <Link
-              href="/gallery"
-              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-white/30 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
-            >
-              View all projects <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <Link
+                href="/gallery"
+                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 border border-white/30 bg-white/5 px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto"
+              >
+                View all projects <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <SocialFollowStrip
+                tone="dark"
+                className="sm:max-w-sm sm:flex-col sm:items-end sm:text-right"
+                title="Want more examples?"
+                body="Follow the workshop on Instagram and TikTok."
+              />
+            </div>
           </Reveal>
         </div>
       </section>

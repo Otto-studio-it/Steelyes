@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
+import { SocialFollowStrip } from '@/components/marketing/SocialFollowStrip'
 import { cn } from '@/lib/utils'
 
 type SiteHeaderProps = {
@@ -278,6 +279,8 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
               </li>
             ))}
           </ul>
+
+          <SocialFollowStrip compact />
         </nav>
       ) : null}
     </header>
