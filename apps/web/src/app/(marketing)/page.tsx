@@ -376,12 +376,11 @@ export default function HomePage() {
               postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
-            // Postcode-district-level (EN3) approximation — replace with the exact
-            // surveyed coordinates for Unit 7, Meridian Industrial Estate when available.
+            // Postcode-level approximation for SE26 5NB (Newlands Park, Sydenham).
             geo: {
               '@type': 'GeoCoordinates',
-              latitude: 51.6538,
-              longitude: -0.0342,
+              latitude: 51.424679,
+              longitude: -0.051821,
             },
             image: `${BUSINESS.website}${OFFICIAL_IMAGES.homepageHero}`,
             logo: `${BUSINESS.website}/apple-icon`,
