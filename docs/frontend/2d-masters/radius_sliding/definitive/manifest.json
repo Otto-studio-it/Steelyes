@@ -1,0 +1,173 @@
+{
+  "family": "radius_sliding",
+  "status": "definitive_prototypes_2026-08-13",
+  "source_folder_was": "radius sliding",
+  "motorised_policy": "same_images_as_manual_no_motorised_variants",
+  "notes": [
+    "Hand-tuned Figma prototypes \u2014 single flat set for manual and motorised.",
+    "No manual/motorised filename split in source; same policy as tracked/cantilever/telescopic.",
+    "Typos fixed in slugs: colars/colalrs\u2192collars; trailing '+' on base circles cleaned.",
+    "Kept larger of duplicate circles(+collar) exports; smaller parked in _review.",
+    "composite carried from prior silhouettes (not in Aug13 dump).",
+    "Missing vs full matrix: arched_collar_1, dog_bars_collar_1 (overlay fallback OK)."
+  ],
+  "missing_slugs": [
+    "arched_collar_1",
+    "dog_bars_collar_1"
+  ],
+  "entries": [
+    {
+      "was": "base 1.svg",
+      "slug": "base",
+      "file": "GATE__radius_sliding__base.svg",
+      "note": "Tipologica base Victorian, flat top, mid-rail, no deco",
+      "bytes": 30771,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + circles +.svg",
+      "slug": "base_circles",
+      "file": "GATE__radius_sliding__base_circles.svg",
+      "note": "Base + cerchi (trailing '+' cleaned)",
+      "bytes": 37014,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2  + collars.svg",
+      "slug": "base_collar_1",
+      "file": "GATE__radius_sliding__base_collar_1.svg",
+      "note": "Base + collar ogni picket",
+      "bytes": 34955,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + circles + collars.svg",
+      "slug": "base_circles_collar_1",
+      "file": "GATE__radius_sliding__base_circles_collar_1.svg",
+      "note": "Base + cerchi + collar",
+      "bytes": 41437,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 1.svg",
+      "slug": "arched",
+      "file": "GATE__radius_sliding__arched.svg",
+      "note": "Arched top Victorian, no deco",
+      "bytes": 31764,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 2 + circles.svg",
+      "slug": "arched_circles",
+      "file": "GATE__radius_sliding__arched_circles.svg",
+      "note": "Arched + cerchi",
+      "bytes": 38375,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 2 colars + circles.svg",
+      "slug": "arched_circles_collar_1",
+      "file": "GATE__radius_sliding__arched_circles_collar_1.svg",
+      "note": "Arched + cerchi + collar (typo colars\u2192collars; kept larger)",
+      "bytes": 42798,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 2 colars + circles-1.svg",
+      "slug": "arched_circles_collar_1",
+      "file": "_review/DUPLICATE__arched_2_colars_+_circles-1__smaller.svg",
+      "note": "DUPLICATE smaller; parked in _review",
+      "bytes": 35849,
+      "promote_runtime": false,
+      "action": "quarantined_duplicate"
+    },
+    {
+      "was": "dog_bars 1.svg",
+      "slug": "dog_bars",
+      "file": "GATE__radius_sliding__dog_bars.svg",
+      "note": "Dog bars Victorian flat",
+      "bytes": 34215,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 2 + circles-1.svg",
+      "slug": "dog_bars_circles",
+      "file": "GATE__radius_sliding__dog_bars_circles.svg",
+      "note": "Dog bars + cerchi (kept larger of -1 vs plain)",
+      "bytes": 40871,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 2 + circles.svg",
+      "slug": "dog_bars_circles",
+      "file": "_review/DUPLICATE__dog_bars_2_+_circles__smaller.svg",
+      "note": "DUPLICATE smaller; parked in _review",
+      "bytes": 38812,
+      "promote_runtime": false,
+      "action": "quarantined_duplicate"
+    },
+    {
+      "was": "dog_bars 2 + circles _ colalrs.svg",
+      "slug": "dog_bars_circles_collar_1",
+      "file": "GATE__radius_sliding__dog_bars_circles_collar_1.svg",
+      "note": "Dog bars + cerchi + collar (typo colalrs\u2192collars)",
+      "bytes": 45294,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 1.svg",
+      "slug": "arched_dog_bars",
+      "file": "GATE__radius_sliding__arched_dog_bars.svg",
+      "note": "Arched + dog bars",
+      "bytes": 34860,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 2 + circles.svg",
+      "slug": "arched_dog_bars_circles",
+      "file": "GATE__radius_sliding__arched_dog_bars_circles.svg",
+      "note": "Arched + dog bars + cerchi",
+      "bytes": 41674,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 3 + colalrs.svg",
+      "slug": "arched_dog_bars_collar_1",
+      "file": "GATE__radius_sliding__arched_dog_bars_collar_1.svg",
+      "note": "Arched + dog bars + collar (typo colalrs\u2192collars)",
+      "bytes": 39285,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 2 + circles + collars.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "file": "GATE__radius_sliding__arched_dog_bars_circles_collar_1.svg",
+      "note": "Arched + dog bars + cerchi + collar",
+      "bytes": 46097,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "silhouettes/composite.svg (prior; not in Aug13 dump)",
+      "slug": "composite",
+      "file": "GATE__radius_sliding__composite.svg",
+      "note": "Composite boards \u2014 carried from prior silhouettes (absent from radius sliding dump)",
+      "bytes": 56549,
+      "promote_runtime": true,
+      "action": "carried_prior"
+    }
+  ]
+}

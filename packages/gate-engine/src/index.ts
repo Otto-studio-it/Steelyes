@@ -307,6 +307,24 @@ export type {
   RailheadOverlayRow,
 } from './silhouettes/resolve-railhead-overlays'
 export {
+  CIRCLE_OVERLAY_PATHS,
+  resolveCircleOverlays,
+} from './silhouettes/resolve-circle-overlays'
+export type {
+  CircleBandOverlay,
+  CircleOverlayPlan,
+} from './silhouettes/resolve-circle-overlays'
+export {
+  COLLAR_OVERLAY_PATHS,
+  COLLAR_SPACING_VARIANTS,
+  resolveCollarOverlays,
+} from './silhouettes/resolve-collar-overlays'
+export type {
+  CollarOverlay,
+  CollarOverlayPlan,
+  CollarSpacingVariant,
+} from './silhouettes/resolve-collar-overlays'
+export {
   HANDLE_OVERLAY_LAYOUT,
   resolveHandleOverlay,
 } from './silhouettes/resolve-handle-overlay'

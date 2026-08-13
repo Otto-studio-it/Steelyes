@@ -10,13 +10,17 @@ export type RuleIssue = {
 }
 
 /**
- * Invented layout helpers used only for schematic preview density.
- * None of these divisors are client-confirmed workshop rules.
+ * Layout helpers for decorative density.
  *
- * Open intake questions:
- * - open.railhead_count_rule
- * - open.dog_bars_count_rule
- * - open.circles_count_rule (bushes / spirals capacity)
+ * Locked 2026-08-11 (CA-14 / CA-15): railheads and dog-bar rows use
+ * **one per picket bay** — replace these provisional divisors when the
+ * polish batch lands. Until then they remain schematic guidance only.
+ *
+ * Still open commercially: dog-bar £ formula worked example; circles unit £.
+ * Circles as on/off bands: CA-16. Design does not draw railheads: CA-17.
+ *
+ * Open intake leftovers:
+ * - open.railhead_variants (SKU £ sign-off)
  */
 export const PROVISIONAL_COUNT_RULES = {
   topRailheadDivisorMm: 190,
@@ -36,29 +40,26 @@ export const PROVISIONAL_COUNT_RULES = {
   decorativeSlidingMin: 6,
   decorativeSlidingMax: 14,
   intakeQuestions: [
-    'open.railhead_count_rule',
-    'open.dog_bars_count_rule',
-    'open.circles_count_rule',
+    'open.railhead_variants',
   ] as const,
-  status: 'provisional' as const,
+  status: 'provisional_pending_bay_impl' as const,
 }
 
 const R = PROVISIONAL_COUNT_RULES
 
 export function getExpectedTopRailheadCount(widthMm: number): number {
-  return clamp(Math.round(widthMm / R.topRailheadDivisorMm), R.topRailheadMin, R.topRailheadMax)
+  // CA-14: one finial per picket bay. Bay ≈ picket spacing 100 mm (ship default).
+  const bayMm = 100
+  return clamp(Math.max(1, Math.round(widthMm / bayMm) - 1), 4, 40)
 }
 
 export function getExpectedDogBarRailheadCount(widthMm: number): number {
-  return clamp(
-    Math.round(widthMm / R.dogBarRailheadDivisorMm),
-    R.dogBarRailheadMin,
-    R.dogBarRailheadMax,
-  )
+  return getExpectedTopRailheadCount(widthMm)
 }
 
 export function getExpectedDogBarCount(widthMm: number): number {
-  return clamp(R.dogBarBase + Math.round(widthMm / R.dogBarDivisorMm), R.dogBarMin, R.dogBarMax)
+  // CA-15: density automatic — schematic still uses bay fill; UI is on/off only.
+  return clamp(Math.max(2, Math.round(widthMm / 100) - 1), 2, 28)
 }
 
 export function getDecorativeBarCapacity(config: GateConfig): number {

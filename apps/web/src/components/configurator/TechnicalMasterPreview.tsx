@@ -2,6 +2,8 @@
 
 import { useMemo } from 'react'
 import {
+  resolveCircleOverlays,
+  resolveCollarOverlays,
   resolveFinishDefinition,
   resolveSilhouette,
   SilhouetteResolveError,
@@ -50,7 +52,24 @@ export function TechnicalMasterPreview({
     }
   }, [config])
 
+  const circleOverlay = useMemo(() => {
+    if (!resolved.ok) return { bands: [], notes: [] as string[] }
+    if (resolved.value.bakedOptions.includes('circles')) {
+      return { bands: [], notes: ['Circles baked into master SVG'] }
+    }
+    return resolveCircleOverlays(config)
+  }, [config, resolved])
+
+  const collarOverlay = useMemo(() => {
+    if (!resolved.ok) return { overlays: [], notes: [] as string[] }
+    if (resolved.value.bakedOptions.includes('picket_collars')) {
+      return { overlays: [], notes: ['Collars baked into master SVG'] }
+    }
+    return resolveCollarOverlays(config)
+  }, [config, resolved])
+
   // Handle is baked into official *manual* masters — never composited in UI.
+  // Railheads: model picker only (CA-17). Circles/collars: baked master when available, else overlay.
 
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
@@ -145,12 +164,34 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
-              <img
-                src={resolved.value.publicPath}
-                alt={`${title} design master — ${resolved.value.title}`}
-                className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
-              />
+              <div className={`relative w-full ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
+                <img
+                  src={resolved.value.publicPath}
+                  alt={`${title} design master — ${resolved.value.title}`}
+                  className="h-full w-full bg-white object-contain"
+                />
+                {circleOverlay.bands.map((band) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                  <img
+                    key={band.id}
+                    src={band.publicPath}
+                    alt=""
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                  />
+                ))}
+                {collarOverlay.overlays.map((overlay) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                  <img
+                    key={overlay.id}
+                    src={overlay.publicPath}
+                    alt=""
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                  />
+                ))}
+              </div>
             ) : (
               <div
                 role="alert"

@@ -51,7 +51,12 @@ const MIN_FENCE_PANEL_LENGTH_MM = 900
 const MAX_FENCE_PANEL_LENGTH_MM = 1000
 
 /** Options priced as a single flat add-on: quantity above 1 has no meaning. */
-const SINGLE_INSTANCE_OPTION_KEYS: readonly GateOptionKey[] = ['middle_bar', 'arched_top']
+const SINGLE_INSTANCE_OPTION_KEYS: readonly GateOptionKey[] = [
+  'middle_bar',
+  'arched_top',
+  'circles',
+  'picket_collars',
+]
 const VALIDATION_DRAFT_MODE = 'draft'
 const VALIDATION_SERIALIZED_MODE = 'serialized'
 

@@ -1,0 +1,153 @@
+{
+  "family": "tracked_sliding",
+  "status": "definitive_prototypes_2026-08-13",
+  "source_folder_was": "tracked sliding ",
+  "motorised_policy": "same_images_as_manual_no_motorised_variants",
+  "notes": [
+    "Hand-tuned Figma prototypes \u2014 single flat set for manual and motorised.",
+    "Kept larger of duplicate circles+collar exports; smaller parked in _review.",
+    "Missing vs full matrix: base_circles, arched_circles (overlay fallback OK)."
+  ],
+  "missing_slugs": [
+    "base_circles",
+    "arched_circles"
+  ],
+  "entries": [
+    {
+      "was": "base 1.svg",
+      "slug": "base",
+      "file": "GATE__tracked_sliding__base.svg",
+      "note": "Tipologica base Victorian, flat top, mid-rail, no deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base collar.svg",
+      "slug": "base_collar_1",
+      "file": "GATE__tracked_sliding__base_collar_1.svg",
+      "note": "Base + collar ogni 1. No cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base collar + circles.svg",
+      "slug": "base_circles_collar_1",
+      "file": "GATE__tracked_sliding__base_circles_collar_1.svg",
+      "note": "Base + cerchi + collar (kept larger)",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base collar + circles-1.svg",
+      "slug": "base_circles_collar_1",
+      "file": "_review/DUPLICATE__base_collar_+_circles-1__smaller.svg",
+      "note": "DUPLICATE smaller; parked in _review",
+      "promote_runtime": false,
+      "action": "quarantined_duplicate"
+    },
+    {
+      "was": "arched 1.svg",
+      "slug": "arched",
+      "file": "GATE__tracked_sliding__arched.svg",
+      "note": "Arched top Victorian, no deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched collars.svg",
+      "slug": "arched_collar_1",
+      "file": "GATE__tracked_sliding__arched_collar_1.svg",
+      "note": "Arched + collar ogni 1. No cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched collars + circles.svg",
+      "slug": "arched_circles_collar_1",
+      "file": "GATE__tracked_sliding__arched_circles_collar_1.svg",
+      "note": "Arched + cerchi + collar (kept larger)",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched collars + circles-1.svg",
+      "slug": "arched_circles_collar_1",
+      "file": "_review/DUPLICATE__arched_collars_+_circles-1__smaller.svg",
+      "note": "DUPLICATE smaller; parked in _review",
+      "promote_runtime": false,
+      "action": "quarantined_duplicate"
+    },
+    {
+      "was": "dog_bars 1.svg",
+      "slug": "dog_bars",
+      "file": "GATE__tracked_sliding__dog_bars.svg",
+      "note": "Dog bars Victorian flat",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars circles.svg",
+      "slug": "dog_bars_circles",
+      "file": "GATE__tracked_sliding__dog_bars_circles.svg",
+      "note": "Dog bars + cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars collars.svg",
+      "slug": "dog_bars_collar_1",
+      "file": "GATE__tracked_sliding__dog_bars_collar_1.svg",
+      "note": "Dog bars + collar",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars collars + circles.svg",
+      "slug": "dog_bars_circles_collar_1",
+      "file": "GATE__tracked_sliding__dog_bars_circles_collar_1.svg",
+      "note": "Dog bars + cerchi + collar",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 1.svg",
+      "slug": "arched_dog_bars",
+      "file": "GATE__tracked_sliding__arched_dog_bars.svg",
+      "note": "Arched + dog bars",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars + circles.svg",
+      "slug": "arched_dog_bars_circles",
+      "file": "GATE__tracked_sliding__arched_dog_bars_circles.svg",
+      "note": "Arched + dog bars + cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars collars.svg",
+      "slug": "arched_dog_bars_collar_1",
+      "file": "GATE__tracked_sliding__arched_dog_bars_collar_1.svg",
+      "note": "Arched + dog bars + collar",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars collars + circles.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "file": "GATE__tracked_sliding__arched_dog_bars_circles_collar_1.svg",
+      "note": "Arched + dog bars + cerchi + collar",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "composite 1.svg",
+      "slug": "composite",
+      "file": "GATE__tracked_sliding__composite.svg",
+      "note": "Composite boards (horizontal slats)",
+      "promote_runtime": true,
+      "action": "renamed"
+    }
+  ]
+}

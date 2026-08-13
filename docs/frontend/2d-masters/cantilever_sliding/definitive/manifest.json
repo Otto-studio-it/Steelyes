@@ -1,0 +1,168 @@
+{
+  "family": "cantilever_sliding",
+  "status": "definitive_prototypes_2026-08-13",
+  "source_folder_was": "cantiliver sliding",
+  "motorised_policy": "same_images_as_manual_no_motorised_variants",
+  "notes": [
+    "Hand-tuned Figma prototypes \u2014 single flat set for manual and motorised.",
+    "No manual/motorised filename split; same policy as tracked_sliding/telescopic.",
+    "Typos fixed in slugs: circels\u2192circles; source folder typo cantiliver ignored.",
+    "Full 17/17 tipology\u00d7deco matrix present; no duplicates parked."
+  ],
+  "missing_slugs": [],
+  "entries": [
+    {
+      "was": "base 1.svg",
+      "slug": "base",
+      "file": "GATE__cantilever_sliding__base.svg",
+      "note": "Tipologica base Victorian, flat top, mid-rail, no deco",
+      "bytes": 28067,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + circles.svg",
+      "slug": "base_circles",
+      "file": "GATE__cantilever_sliding__base_circles.svg",
+      "note": "Base + cerchi, no collar",
+      "bytes": 32433,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + collars.svg",
+      "slug": "base_collar_1",
+      "file": "GATE__cantilever_sliding__base_collar_1.svg",
+      "note": "Base + collar ogni 1. No cerchi",
+      "bytes": 34704,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + circles + collars.svg",
+      "slug": "base_circles_collar_1",
+      "file": "GATE__cantilever_sliding__base_circles_collar_1.svg",
+      "note": "Base + cerchi + collar",
+      "bytes": 39066,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 1.svg",
+      "slug": "arched",
+      "file": "GATE__cantilever_sliding__arched.svg",
+      "note": "Arched top Victorian, no deco",
+      "bytes": 28312,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 2 + circles.svg",
+      "slug": "arched_circles",
+      "file": "GATE__cantilever_sliding__arched_circles.svg",
+      "note": "Arched + cerchi, no collar",
+      "bytes": 40148,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 3 collars.svg",
+      "slug": "arched_collar_1",
+      "file": "GATE__cantilever_sliding__arched_collar_1.svg",
+      "note": "Arched + collar ogni 1. No cerchi",
+      "bytes": 34504,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 3 + collars+ circels.svg",
+      "slug": "arched_circles_collar_1",
+      "file": "GATE__cantilever_sliding__arched_circles_collar_1.svg",
+      "note": "Arched + cerchi + collar (typo circels\u2192circles)",
+      "bytes": 46341,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 1.svg",
+      "slug": "dog_bars",
+      "file": "GATE__cantilever_sliding__dog_bars.svg",
+      "note": "Dog bars Victorian flat",
+      "bytes": 30108,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 2 + circles.svg",
+      "slug": "dog_bars_circles",
+      "file": "GATE__cantilever_sliding__dog_bars_circles.svg",
+      "note": "Dog bars + cerchi",
+      "bytes": 34474,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 2 + collars.svg",
+      "slug": "dog_bars_collar_1",
+      "file": "GATE__cantilever_sliding__dog_bars_collar_1.svg",
+      "note": "Dog bars + collar",
+      "bytes": 36300,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "dog_bars 2 + circles + collars.svg",
+      "slug": "dog_bars_circles_collar_1",
+      "file": "GATE__cantilever_sliding__dog_bars_circles_collar_1.svg",
+      "note": "Dog bars + cerchi + collar",
+      "bytes": 40662,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 1.svg",
+      "slug": "arched_dog_bars",
+      "file": "GATE__cantilever_sliding__arched_dog_bars.svg",
+      "note": "Arched + dog bars",
+      "bytes": 30349,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 2 + circles.svg",
+      "slug": "arched_dog_bars_circles",
+      "file": "GATE__cantilever_sliding__arched_dog_bars_circles.svg",
+      "note": "Arched + dog bars + cerchi",
+      "bytes": 42190,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 3 + collars.svg",
+      "slug": "arched_dog_bars_collar_1",
+      "file": "GATE__cantilever_sliding__arched_dog_bars_collar_1.svg",
+      "note": "Arched + dog bars + collar",
+      "bytes": 36545,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 3 + collars+ circels.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "file": "GATE__cantilever_sliding__arched_dog_bars_circles_collar_1.svg",
+      "note": "Arched + dog bars + cerchi + collar (typo circels\u2192circles)",
+      "bytes": 48381,
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "composite 1.svg",
+      "slug": "composite",
+      "file": "GATE__cantilever_sliding__composite.svg",
+      "note": "Composite boards (horizontal slats)",
+      "bytes": 26714,
+      "promote_runtime": true,
+      "action": "renamed"
+    }
+  ]
+}
