@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
-import { ProvisionalCountNotice } from '@/components/configurator/ProvisionalCountNotice'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
 import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
 import { OPTION_GROUPS, OPTION_META, type OptionGroupId } from '@/lib/configurator/options'
@@ -97,7 +96,6 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
               }}
             />
           </label>
-          {option.key === 'bushes' || option.key === 'spirals' ? <ProvisionalCountNotice /> : null}
           <p className="text-xs leading-5 text-muted-deep">Included in the estimated total.</p>
         </div>
       ) : null}
