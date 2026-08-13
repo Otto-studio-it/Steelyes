@@ -1,4 +1,4 @@
-import type { GateConfig, PricingResult } from '@steelyes/gate-engine'
+import { findRailheadVariant, type GateConfig, type PricingResult } from '@steelyes/gate-engine'
 
 import {
   finishLabel,
@@ -15,6 +15,20 @@ export type ConfigurationSummaryLine = {
   value: string
 }
 
+function railheadsSummaryValue(config: GateConfig): string | null {
+  const option = config.options.find((item) => item.key === 'top_railheads')
+  if (!option?.enabled) {
+    return null
+  }
+
+  if (!option.variant) {
+    return 'selected (SKU TBC)'
+  }
+
+  const entry = findRailheadVariant(option.variant)
+  return entry?.slug ?? option.variant
+}
+
 export function buildConfigurationSummaryLines(
   config: GateConfig,
   pricing?: PricingResult,
@@ -26,8 +40,17 @@ export function buildConfigurationSummaryLines(
     { label: 'Finish', value: finishLabel(config.finish, config.customFinishHex) },
     { label: 'Motorised', value: config.motorised ? 'Yes' : 'No' },
     { label: 'Mounting posts', value: postsSummaryLabel(config) },
-    { label: SITE_SURVEY_FIELD_LABEL, value: siteSurveyLabel(config.siteSurveyRequested) },
   ]
+
+  const railheads = railheadsSummaryValue(config)
+  if (railheads) {
+    lines.push({ label: 'Railheads', value: railheads })
+  }
+
+  lines.push({
+    label: SITE_SURVEY_FIELD_LABEL,
+    value: siteSurveyLabel(config.siteSurveyRequested),
+  })
 
   if (pricing) {
     lines.push({
@@ -49,13 +72,20 @@ export function formatConfigurationSummaryText(
 }
 
 export function formatConfigurationSummaryInline(config: GateConfig): string {
-  return [
+  const parts = [
     gateTypeLabel(config.gateType),
     styleLabel(config.style),
     `${config.widthMm} × ${config.heightMm} mm`,
     finishLabel(config.finish, config.customFinishHex),
     config.motorised ? 'Motorised' : 'Manual',
     postsSummaryLabel(config),
-    `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(config.siteSurveyRequested)}`,
-  ].join(' · ')
+  ]
+
+  const railheads = railheadsSummaryValue(config)
+  if (railheads) {
+    parts.push(`Railheads: ${railheads}`)
+  }
+
+  parts.push(`${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(config.siteSurveyRequested)}`)
+  return parts.join(' · ')
 }

@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 import { GATE_DATA, GATE_SLUGS } from './gate-marketing-data'
+import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates | Driveway, Electric & Automatic Gates',
@@ -91,7 +92,7 @@ export default function GatesPage() {
               href="/configurator"
               className="inline-flex min-h-[52px] items-center justify-center gap-2 border border-zinc-300 bg-white px-6 py-3 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             >
-              Configure your gate <ArrowRight className="h-4 w-4" aria-hidden />
+              Configure a gate <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <Link
               href="/contact"
@@ -123,7 +124,7 @@ export default function GatesPage() {
                       src={gate.heroImage}
                       alt={`${gate.title} steel gate`}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <span className="absolute left-3 top-3 bg-steel px-2 py-1 font-mono text-[10px] uppercase text-white">
@@ -172,7 +173,7 @@ export default function GatesPage() {
               href="/configurator"
               className="inline-flex min-h-[52px] items-center justify-center gap-2 border border-zinc-300 bg-white px-6 py-3 font-heading text-sm font-bold uppercase text-steel transition-colors hover:border-steel hover:bg-canvas focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             >
-              Configure your gate <ArrowRight className="h-4 w-4" aria-hidden />
+              Configure a gate <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <Link
               href="/contact"
@@ -186,6 +187,27 @@ export default function GatesPage() {
           </p>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Gates', path: '/gates' }])),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListSchema(
+              GATE_SLUGS.map((slug) => ({
+                name: `${GATE_DATA[slug].title} Gates`,
+                path: `/gates/${slug}`,
+                description: GATE_DATA[slug].tagline,
+              })),
+            ),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

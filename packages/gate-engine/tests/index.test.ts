@@ -36,8 +36,11 @@ describe('gate-engine', () => {
       'dog_bars',
       'dog_bar_railheads',
       'arched_top',
+      'circles',
+      'picket_collars',
       'bushes',
       'spirals',
+      'aluminium_panels',
     ])
   })
 

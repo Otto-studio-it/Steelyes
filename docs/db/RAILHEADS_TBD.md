@@ -11,11 +11,13 @@ Railhead variants (decorative tops, dog-bar rows, etc.) **do not** have a dedica
 
 **2026-07-31:** Most-used **6 overlays** drawn for Figma + wired into `packages/gate-engine/src/catalog/railheads.ts` (RH32, RH7, RH7NP, RH6W/B, RH14, RH100). Pack: [`docs/frontend/2d-masters/railheads/`](../frontend/2d-masters/railheads/). Quote totals still survey-flagged until count rules + Marius sign-off.
 
-Still missing before “final”:
+**2026-08-11 (CA-14 / CA-17):** Count rule **locked** — one railhead per picket bay, auto (no manual qty). Design 2D does **not** draw finials; UI selects SKU/model only.
 
-- Count / compatibility rules (`open.railhead_count_rule`)
+Still missing before “final” money:
+
 - Confirmation prices are current listino
 - 7 SKUs with dims but no price in the export (RH122, RH45, RH55, RH56, RH62, RH70, RH79)
+- Compatibility (Victorian vs Composite; same SKU on top vs dog row — assumed same model until told otherwise)
 
 See also [`docs/frontend/foto-intake/FOTO_DEEP_ANALYSIS_2026-07-30.md`](../frontend/foto-intake/FOTO_DEEP_ANALYSIS_2026-07-30.md).
 
@@ -27,10 +29,10 @@ Marius must still confirm / complete:
 
 - Sign-off that the Numbers sheet is the live sell list.
 - Prices for SKUs missing EX VAT in the export.
-- **Count rules** (how many top / dog-bar railheads vs width).
+- ~~Count rules (how many top / dog-bar railheads vs width).~~ → **CA-14:** one per picket bay, automatic.
 - Compatibility (Victorian vs Composite; top row vs dog-bar row).
 
-Until count rules land, engineering may show the variant picker with provisional unit prices but must not present a hard final railhead line total.
+Until the polish batch ships, engineering may still show a legacy qty control; do not present a hard final railhead line total.
 
 ---
 

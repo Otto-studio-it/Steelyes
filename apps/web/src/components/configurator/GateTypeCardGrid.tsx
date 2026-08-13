@@ -92,14 +92,14 @@ export function GateTypeCardGrid() {
                     : 'border-steel/12 bg-white hover:border-primary/30'
                 }`}
               >
-                <div className="relative h-20 w-full bg-steel/5">
+                <div className="relative aspect-[16/10] w-full bg-steel/5">
                   {imageSrc ? (
                     <Image
                       src={imageSrc}
                       alt=""
                       fill
-                      className="object-cover"
-                      sizes="160px"
+                      className="object-contain object-center p-1"
+                      sizes="(min-width: 1280px) 20vw, (min-width: 640px) 40vw, 160px"
                       aria-hidden
                     />
                   ) : (
@@ -108,7 +108,7 @@ export function GateTypeCardGrid() {
                     </div>
                   )}
                   <span
-                    className={`absolute left-2 top-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${
+                    className={`absolute left-2 top-2 z-10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${
                       primary
                         ? 'bg-primary text-white'
                         : availability === 'enquire'
@@ -118,6 +118,14 @@ export function GateTypeCardGrid() {
                   >
                     {badge}
                   </span>
+                  {imageSrc ? (
+                    <span
+                      className="pointer-events-none absolute bottom-1.5 right-1.5 z-10 rounded-sm bg-steel/55 px-1.5 py-0.5 font-heading text-[8px] font-bold uppercase tracking-[0.14em] text-white/90"
+                      aria-hidden
+                    >
+                      Steelyes
+                    </span>
+                  ) : null}
                 </div>
                 <div className="flex flex-1 flex-col justify-center px-3 py-2">
                   <span className="font-heading text-xs font-bold uppercase tracking-tight text-steel sm:text-sm">

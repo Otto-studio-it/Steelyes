@@ -67,6 +67,8 @@ export const DEFAULT_SERIALIZED_OPTIONS = [
   { key: 'dog_bars', enabled: false, quantity: 0 },
   { key: 'dog_bar_railheads', enabled: false, quantity: 0 },
   { key: 'arched_top', enabled: false, quantity: 0 },
+  { key: 'circles', enabled: false, quantity: 0 },
+  { key: 'picket_collars', enabled: false, quantity: 0 },
   { key: 'bushes', enabled: false, quantity: 0 },
   { key: 'spirals', enabled: false, quantity: 0 },
 ] as const

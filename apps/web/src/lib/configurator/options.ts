@@ -17,8 +17,8 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'Railheads, dog bars, and ornamental inserts.',
-    keys: ['top_railheads', 'dog_bars', 'dog_bar_railheads', 'bushes', 'spirals'],
+    description: 'On/off only — Design swaps the matching 2D master.',
+    keys: ['dog_bars', 'circles', 'picket_collars', 'top_railheads'],
   },
   {
     id: 'site',
@@ -44,20 +44,17 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'Decorative top row.',
-    quantityLabel: 'Count',
+    description: 'On/off. Count is automatic (one per bay). Not drawn on Design (CA-17).',
   },
   {
     key: 'dog_bars',
     label: 'Dog bars',
-    description: 'Lower reinforcement bars (£75 base).',
-    quantityLabel: 'Count',
+    description: 'On/off. Density is automatic (CA-15). Unavailable on Composite.',
   },
   {
     key: 'dog_bar_railheads',
     label: 'Dog bar railheads',
-    description: 'Second decorative row on the dog bars.',
-    quantityLabel: 'Count',
+    description: 'Second decorative row on the dog bars — model only; count automatic.',
   },
   {
     key: 'arched_top',
@@ -68,6 +65,17 @@ export const OPTION_META: OptionMeta[] = [
     key: 'aluminium_panels',
     label: 'Aluminium panels',
     description: 'Composite only — replace boards with aluminium (£250 + per panel/bar).',
+  },
+  {
+    key: 'circles',
+    label: 'Circles',
+    description: 'On/off — upper + lower bands together (Q1). Unavailable on Composite.',
+  },
+  {
+    key: 'picket_collars',
+    label: 'Picket collars',
+    description:
+      'On/off — mid-height boss on long pickets, spacing every picket (never on dog bars). Unavailable on Composite.',
   },
   {
     key: 'bushes',

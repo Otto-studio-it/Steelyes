@@ -1,0 +1,283 @@
+{
+  "family": "single_bifolding",
+  "source": "/Volumes/SSDRubb/Steelyes/docs/frontend/2d-masters/single_bifolding/single bifolding",
+  "archived_to": "/Volumes/SSDRubb/Steelyes/docs/frontend/2d-masters/single_bifolding/_archive_single_bifolding_raw/single bifolding",
+  "rule": "filename starts with manual/manua/manau/manaul \u2192 manual; else \u2192 motorised",
+  "missing_manual": [],
+  "missing_motorised": [
+    "dog_bars_collar_1",
+    "arched_dog_bars_circles_collar_1"
+  ],
+  "entries": [
+    {
+      "was": "manual arched 1.svg",
+      "drive": "manual",
+      "slug": "arched",
+      "action": "ok",
+      "bytes": 27718,
+      "file": "GATE__single_bifolding__arched.svg"
+    },
+    {
+      "was": "manual arched 2+ circles.svg",
+      "drive": "manual",
+      "slug": "arched_circles",
+      "action": "ok",
+      "bytes": 49790,
+      "file": "GATE__single_bifolding__arched_circles.svg"
+    },
+    {
+      "was": "manual arched 3 + circles _ collars.svg",
+      "drive": "manual",
+      "slug": "arched_circles_collar_1",
+      "action": "ok",
+      "bytes": 53326,
+      "file": "GATE__single_bifolding__arched_circles_collar_1.svg"
+    },
+    {
+      "was": "manual arched 2+ collars.svg",
+      "drive": "manual",
+      "slug": "arched_collar_1",
+      "action": "ok",
+      "bytes": 31258,
+      "file": "GATE__single_bifolding__arched_collar_1.svg"
+    },
+    {
+      "was": "manual arched_dog_bars 1.svg",
+      "drive": "manual",
+      "slug": "arched_dog_bars",
+      "action": "ok",
+      "bytes": 29151,
+      "file": "GATE__single_bifolding__arched_dog_bars.svg"
+    },
+    {
+      "was": "manual arched_dog_bars 2 + circles.svg",
+      "drive": "manual",
+      "slug": "arched_dog_bars_circles",
+      "action": "ok",
+      "bytes": 51135,
+      "file": "GATE__single_bifolding__arched_dog_bars_circles.svg"
+    },
+    {
+      "was": "manual arched_dog_bars 3 + cricles + collars.svg",
+      "drive": "manual",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "action": "ok",
+      "bytes": 54526,
+      "file": "GATE__single_bifolding__arched_dog_bars_circles_collar_1.svg"
+    },
+    {
+      "was": "manual arched_dog_bars 3  + collars.svg",
+      "drive": "manual",
+      "slug": "arched_dog_bars_collar_1",
+      "action": "ok",
+      "bytes": 32458,
+      "file": "GATE__single_bifolding__arched_dog_bars_collar_1.svg"
+    },
+    {
+      "was": "manua lbase 1.svg",
+      "drive": "manual",
+      "slug": "base",
+      "action": "ok",
+      "bytes": 27497,
+      "file": "GATE__single_bifolding__base.svg"
+    },
+    {
+      "was": "manau lbase 2 + circles.svg",
+      "drive": "manual",
+      "slug": "base_circles",
+      "action": "ok",
+      "bytes": 59479,
+      "file": "GATE__single_bifolding__base_circles.svg"
+    },
+    {
+      "was": "manaul base 2 + circles + collars.svg",
+      "drive": "manual",
+      "slug": "base_circles_collar_1",
+      "action": "ok",
+      "bytes": 64784,
+      "file": "GATE__single_bifolding__base_circles_collar_1.svg"
+    },
+    {
+      "was": "manaul base 2 + collars.svg",
+      "drive": "manual",
+      "slug": "base_collar_1",
+      "action": "ok",
+      "bytes": 32809,
+      "file": "GATE__single_bifolding__base_collar_1.svg"
+    },
+    {
+      "was": "manual composite 1.svg",
+      "drive": "manual",
+      "slug": "composite",
+      "action": "ok",
+      "bytes": 27778,
+      "file": "GATE__single_bifolding__composite.svg"
+    },
+    {
+      "was": "manual dog_bars 1.svg",
+      "drive": "manual",
+      "slug": "dog_bars",
+      "action": "ok",
+      "bytes": 29011,
+      "file": "GATE__single_bifolding__dog_bars.svg"
+    },
+    {
+      "was": "manual dog_bars 2 +circles.svg",
+      "drive": "manual",
+      "slug": "dog_bars_circles",
+      "action": "ok",
+      "bytes": 60924,
+      "file": "GATE__single_bifolding__dog_bars_circles.svg"
+    },
+    {
+      "was": "manual dog_bars 2 +circles + collars.svg",
+      "drive": "manual",
+      "slug": "dog_bars_circles_collar_1",
+      "action": "ok",
+      "bytes": 64461,
+      "file": "GATE__single_bifolding__dog_bars_circles_collar_1.svg"
+    },
+    {
+      "was": "manual dog_bars 2 + collars.svg",
+      "drive": "manual",
+      "slug": "dog_bars_collar_1",
+      "action": "ok",
+      "bytes": 32551,
+      "file": "GATE__single_bifolding__dog_bars_collar_1.svg"
+    },
+    {
+      "was": "arched 4.svg",
+      "drive": "motorised",
+      "slug": "arched",
+      "action": "ok",
+      "bytes": 27645,
+      "file": "GATE__single_bifolding__arched_motorised.svg"
+    },
+    {
+      "was": "arched 2+ circles.svg",
+      "drive": "motorised",
+      "slug": "arched_circles",
+      "action": "ok",
+      "bytes": 49647,
+      "file": "GATE__single_bifolding__arched_circles_motorised.svg"
+    },
+    {
+      "was": "arched 3 + circles _ collars.svg",
+      "drive": "motorised",
+      "slug": "arched_circles_collar_1",
+      "action": "ok",
+      "bytes": 53260,
+      "file": "GATE__single_bifolding__arched_circles_collar_1_motorised.svg"
+    },
+    {
+      "was": "arched 2+ collars.svg",
+      "drive": "motorised",
+      "slug": "arched_collar_1",
+      "action": "ok",
+      "bytes": 31181,
+      "file": "GATE__single_bifolding__arched_collar_1_motorised.svg"
+    },
+    {
+      "was": "arched_dog_bars 4.svg",
+      "drive": "motorised",
+      "slug": "arched_dog_bars",
+      "action": "ok",
+      "bytes": 29078,
+      "file": "GATE__single_bifolding__arched_dog_bars_motorised.svg"
+    },
+    {
+      "was": "arched_dog_bars 2 + circles.svg",
+      "drive": "motorised",
+      "slug": "arched_dog_bars_circles",
+      "action": "ok",
+      "bytes": 51069,
+      "file": "GATE__single_bifolding__arched_dog_bars_circles_motorised.svg"
+    },
+    {
+      "was": "arched_dog_bars 3  + collars.svg",
+      "drive": "motorised",
+      "slug": "arched_dog_bars_collar_1",
+      "action": "ok",
+      "bytes": 32381,
+      "file": "GATE__single_bifolding__arched_dog_bars_collar_1_motorised.svg"
+    },
+    {
+      "was": "base 2.svg",
+      "drive": "motorised",
+      "slug": "base",
+      "action": "ok",
+      "bytes": 27428,
+      "file": "GATE__single_bifolding__base_motorised.svg"
+    },
+    {
+      "was": "lbase 2 + circles.svg",
+      "drive": "motorised",
+      "slug": "base_circles",
+      "action": "ok",
+      "bytes": 59385,
+      "file": "GATE__single_bifolding__base_circles_motorised.svg"
+    },
+    {
+      "was": "base 2 + circles + collars.svg",
+      "drive": "motorised",
+      "slug": "base_circles_collar_1",
+      "action": "ok",
+      "bytes": 64689,
+      "file": "GATE__single_bifolding__base_circles_collar_1_motorised.svg"
+    },
+    {
+      "was": "base 2 + collars.svg",
+      "drive": "motorised",
+      "slug": "base_collar_1",
+      "action": "ok",
+      "bytes": 32809,
+      "file": "GATE__single_bifolding__base_collar_1_motorised.svg"
+    },
+    {
+      "was": "composite 2.svg",
+      "drive": "motorised",
+      "slug": "composite",
+      "action": "ok",
+      "bytes": 27703,
+      "file": "GATE__single_bifolding__composite_motorised.svg"
+    },
+    {
+      "was": "dog_bars 3.svg",
+      "drive": "motorised",
+      "slug": "dog_bars",
+      "action": "ok",
+      "bytes": 28938,
+      "file": "GATE__single_bifolding__dog_bars_motorised.svg"
+    },
+    {
+      "was": "dog_bars 2 +circles.svg",
+      "drive": "motorised",
+      "slug": "dog_bars_circles",
+      "action": "ok",
+      "bytes": 60830,
+      "file": "GATE__single_bifolding__dog_bars_circles_motorised.svg"
+    },
+    {
+      "was": "dog_bars 2 +circles + collars.svg",
+      "drive": "motorised",
+      "slug": "dog_bars_circles_collar_1",
+      "action": "ok",
+      "bytes": 64366,
+      "file": "GATE__single_bifolding__dog_bars_circles_collar_1_motorised.svg"
+    },
+    {
+      "was": "arched_dog_bars 2 + circles-1.svg",
+      "drive": "review",
+      "action": "review",
+      "tag": "DUPLICATE__motorised__arched_dog_bars_circles__arched_dog_bars_2_circles-1",
+      "bytes": 51069
+    },
+    {
+      "was": "dog_bars 2 +circles + collars-1.svg",
+      "drive": "review",
+      "action": "review",
+      "tag": "DUPLICATE__motorised__dog_bars_circles_collar_1__dog_bars_2_circles_collars-1",
+      "bytes": 64366
+    }
+  ]
+}

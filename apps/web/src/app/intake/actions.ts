@@ -80,7 +80,7 @@ export async function saveIntakeAnswer(input: {
   if (shouldNotify(session)) {
     const answers = await getIntakeAnswers(session.id)
     const progress = computeProgress(answers)
-    await sendClientIntakeUpdateEmail({
+    const sent = await sendClientIntakeUpdateEmail({
       clientName: session.client_name,
       questionLabel: question.label,
       status: parsed.data.status,
@@ -88,7 +88,7 @@ export async function saveIntakeAnswer(input: {
       intakeUrl: absoluteUrl(`/intake/${session.access_token}`),
       progressSummary: `${progress.confirmed} confermati · ${progress.provisional} provvisori · ${progress.blockingMissing} bloccanti aperti`,
     })
-    await touchSessionNotified(session.id)
+    if (sent) await touchSessionNotified(session.id)
   }
 
   return { ok: true, status: row.status, updatedAt: row.updated_at }
@@ -109,7 +109,7 @@ export async function submitIntakeSession(token: string): Promise<IntakeSaveResu
 
   const answers = await getIntakeAnswers(session.id)
   const progress = computeProgress(answers)
-  await sendClientIntakeUpdateEmail({
+  const sent = await sendClientIntakeUpdateEmail({
     clientName: session.client_name,
     questionLabel: 'Sessione segnata come completata',
     status: 'submitted',
@@ -117,7 +117,7 @@ export async function submitIntakeSession(token: string): Promise<IntakeSaveResu
     intakeUrl: absoluteUrl(`/intake/${session.access_token}`),
     progressSummary: `${progress.confirmed}/${progress.total} confermati · ${progress.blockingMissing} bloccanti ancora aperti`,
   })
-  await touchSessionNotified(session.id)
+  if (sent) await touchSessionNotified(session.id)
 
   return { ok: true, status: 'confirmed', updatedAt: new Date().toISOString() }
 }

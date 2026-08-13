@@ -26,6 +26,25 @@ test.beforeAll(async () => {
   await mkdir(screenshotDir, { recursive: true })
 })
 
+test('floating conversion chrome never stacks with cookie consent', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 })
+  await page.goto('/')
+
+  const cookieDialog = page.getByRole('dialog', { name: 'Cookie notice' })
+  await expect(cookieDialog).toBeVisible()
+  await expect(page.getByTestId('mobile-conversion-bar')).toHaveCount(0)
+
+  await cookieDialog.getByRole('button', { name: 'Got it' }).click()
+  await page.evaluate(() => window.scrollTo(0, 700))
+
+  const conversionBar = page.getByTestId('mobile-conversion-bar')
+  await expect(conversionBar).toBeVisible()
+  await expect(conversionBar.getByRole('link')).toHaveCount(1)
+
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
+  await expect(conversionBar).toHaveCount(0)
+})
+
 for (const viewport of VIEWPORTS) {
   test(`homepage responsive — ${viewport.name} ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height })
@@ -33,9 +52,10 @@ for (const viewport of VIEWPORTS) {
 
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Steelyes Ltd', exact: true })).toBeVisible()
+    await expect(page.getByTestId('page-scroll-progress')).toHaveCount(1)
 
     const hero = page.locator('main section').first()
-    await expect(hero.getByRole('link', { name: 'Configure your gate', exact: true })).toBeVisible()
+    await expect(hero.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
     await expect(hero.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
 
     const horizontalOverflow = await page.evaluate(() =>
@@ -68,13 +88,25 @@ for (const viewport of VIEWPORTS) {
       await expect(conversionBar.getByRole('link')).toHaveCount(1)
     } else {
       const header = page.locator('header')
-      await expect(header.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
+      await expect(header.getByRole('link', { name: 'Configurator', exact: true })).toBeVisible()
+      await expect(header.getByRole('link', { name: 'Configurator', exact: true })).toHaveAttribute(
+        'data-configurator-placement',
+        'desktop-primary-nav',
+      )
       await expect(header.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
     }
 
     await revealFullPage(page, viewport.height)
+    const configuratorProduct = page.locator('section[aria-labelledby="home-configurator-title"]')
+    await expect(configuratorProduct.getByRole('heading', { name: 'Design the entrance before the survey.' })).toBeVisible()
+    await expect(configuratorProduct.getByRole('link', { name: 'Open the configurator' })).toHaveAttribute(
+      'href',
+      '/configurator',
+    )
+    await configuratorProduct.getByRole('button', { name: 'Finish' }).click()
+    await expect(configuratorProduct.getByText('Anthracite grey', { exact: true })).toBeVisible()
     const closingCta = page.getByRole('heading', { name: 'Plan your entrance.' }).locator('..')
-    await expect(closingCta.getByRole('link', { name: 'Configure your gate', exact: true })).toBeVisible()
+    await expect(closingCta.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
     await expect(closingCta.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
 
     const failedImages = await page.locator('img').evaluateAll((images: HTMLImageElement[]) =>
@@ -93,6 +125,44 @@ for (const viewport of VIEWPORTS) {
 }
 
 for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
+  test(`gallery exposes the configurator — ${viewport.name} ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height })
+    await page.goto('/gallery')
+
+    const cookieDialog = page.getByRole('dialog', { name: 'Cookie notice' })
+    if (await cookieDialog.isVisible()) {
+      await cookieDialog.getByRole('button', { name: 'Got it' }).click()
+    }
+
+    await revealFullPage(page, viewport.height)
+    const projectCount = page.getByRole('status')
+    const initialProjectCount = await projectCount.textContent()
+    await page.getByRole('group', { name: 'Filter gallery by category' }).getByRole('button', { name: 'Gates' }).click()
+    await expect(projectCount).not.toHaveText(initialProjectCount ?? '')
+    const designCta = page.getByRole('link', { name: 'Design your gate' })
+    await expect(designCta).toBeVisible()
+    await expect(designCta).toHaveAttribute('href', '/configurator')
+    await expect(designCta).toHaveAttribute('data-configurator-placement', 'gallery-footer')
+
+    const horizontalOverflow = await page.evaluate(() =>
+      document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+    )
+    expect(horizontalOverflow).toBe(false)
+  })
+}
+
+test('marketing motion respects reduced-motion preference', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.setViewportSize({ width: 375, height: 812 })
+  await page.goto('/gallery')
+
+  await page.getByRole('group', { name: 'Filter gallery by category' }).getByRole('button', { name: 'Gates' }).click()
+  const firstCard = page.locator('.marketing-gallery-item').first()
+  await expect(firstCard).toBeVisible()
+  expect(await firstCard.evaluate((element) => getComputedStyle(element).animationName)).toBe('none')
+})
+
+for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
   test(`gate taxonomy — ${viewport.name} ${viewport.width}px`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height })
     await page.goto('/gates')
@@ -107,7 +177,7 @@ for (const viewport of [VIEWPORTS[0], VIEWPORTS[3]]) {
     const decisionGuide = page.locator('section[aria-labelledby="gate-decisions-title"]')
     await expect(decisionGuide.getByRole('heading', { name: 'How it moves' })).toBeVisible()
     await expect(decisionGuide.getByRole('heading', { name: 'How it looks' })).toBeVisible()
-    await expect(decisionGuide.getByRole('link', { name: 'Configure your gate', exact: true })).toBeVisible()
+    await expect(decisionGuide.getByRole('link', { name: 'Configure a gate', exact: true })).toBeVisible()
     await expect(decisionGuide.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
 
     await decisionGuide.getByRole('link', { name: 'Compare mechanisms' }).click()

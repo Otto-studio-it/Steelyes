@@ -2,12 +2,14 @@
 
 import type { FinishCode, GateStyle, GateType, SerializedGateConfigV1 } from '@steelyes/gate-engine'
 import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
+import { z } from 'zod'
 
 import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { captureServerEvent } from '@/lib/analytics/posthog-server'
 import {
   sendCustomerConfirmationEmail,
+  sendContactConfirmationEmail,
   sendDesignSaveEmail,
   sendWorkshopLeadEmail,
 } from '@/lib/email/send'
@@ -21,10 +23,21 @@ import { env } from '@/lib/env'
 
 export type ContactFormState =
   | { status: 'idle' }
-  | { status: 'success' }
+  | { status: 'success'; customerEmailSent?: boolean }
   | { status: 'error'; message: string }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const EmailSchema = z.string().trim().toLowerCase().email().max(254)
+const QuoteSubmissionSchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  email: EmailSchema,
+  phone: z.string().trim().max(40),
+  projectType: z.string().trim().max(120),
+  postcode: z.string().trim().max(20),
+  message: z.string().trim().max(5000),
+  shareToken: z.string().trim().max(128),
+  turnstileToken: z.string().trim().max(2048),
+  source: z.enum(['contact_form', 'configurator']),
+})
 
 function splitName(name: string): { firstName: string; lastName: string } {
   const parts = name.trim().split(/\s+/)
@@ -125,17 +138,11 @@ type QuoteSubmissionInput = {
 }
 
 async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<ContactFormState> {
-  const { name, email, phone, projectType, postcode, message, shareToken, source } = input
+  const parsed = QuoteSubmissionSchema.safeParse(input)
+  if (!parsed.success) return { status: 'error', message: 'Please check the details and try again.' }
+  const { name, email, phone, projectType, postcode, message, shareToken, source } = parsed.data
 
-  if (!name || !email) {
-    return { status: 'error', message: 'Name and email are required.' }
-  }
-
-  if (!EMAIL_REGEX.test(email)) {
-    return { status: 'error', message: 'Please enter a valid email address.' }
-  }
-
-  const turnstileVerified = await verifyTurnstileToken(input.turnstileToken)
+  const turnstileVerified = await verifyTurnstileToken(parsed.data.turnstileToken)
   if (!turnstileVerified) {
     return { status: 'error', message: 'Please complete the security check and try again.' }
   }
@@ -180,7 +187,7 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     return { status: 'error', message: 'Something went wrong. Please try again or email us directly.' }
   }
 
-  await sendWorkshopLeadEmail({
+  const workshopEmailSent = await sendWorkshopLeadEmail({
     name,
     email,
     phone,
@@ -193,8 +200,9 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     hasConfiguration: Boolean(configurationId),
   })
 
+  let customerEmailSent: boolean | undefined
   if (configurationId && shareUrl) {
-    await sendCustomerConfirmationEmail({
+    customerEmailSent = await sendCustomerConfirmationEmail({
       name,
       email,
       message,
@@ -203,6 +211,8 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
       configurationSummary,
       pricingSummary,
     })
+  } else {
+    customerEmailSent = await sendContactConfirmationEmail({ name, email })
   }
 
   await dispatchTenantLeadWebhook(loadTenantBundle('steelyes'), {
@@ -219,7 +229,11 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     turnstile_verified: turnstileVerified,
   })
 
-  return { status: 'success' }
+  if (!workshopEmailSent) {
+    console.error('Lead persisted but workshop notification failed')
+  }
+
+  return { status: 'success', customerEmailSent }
 }
 
 function readField(formData: FormData, key: string): string {
@@ -296,11 +310,16 @@ export async function emailMyDesign(formData: FormData): Promise<EmailMyDesignSt
     return { status: 'success' }
   }
 
-  const email = readField(formData, 'email')
+  const emailResult = EmailSchema.safeParse(readField(formData, 'email'))
   const shareToken = readField(formData, 'share_token')
 
-  if (!EMAIL_REGEX.test(email)) {
+  if (!emailResult.success) {
     return { status: 'error', message: 'Please enter a valid email address.' }
+  }
+  const email = emailResult.data
+
+  if (!await verifyTurnstileToken(readField(formData, 'turnstile_token'))) {
+    return { status: 'error', message: 'Please complete the security check and try again.' }
   }
 
   if (!shareToken || !isValidShareToken(shareToken)) {

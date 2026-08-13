@@ -237,6 +237,19 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
       provisional: false,
       note: 'Intake-confirmed arched top (all gate types).',
     },
+    circles: {
+      kind: 'flat_plus_units',
+      flatGbp: 275,
+      unitGbp: 2.5,
+      provisional: true,
+      note: 'CA-16 / Q1: upper+lower together. Marius: +£275 rail + £2.50/circle; qty auto per bay (survey).',
+    },
+    picket_collars: {
+      kind: 'flat',
+      flatGbp: 95,
+      provisional: true,
+      note: 'Q2–Q4: collar/boss on long pickets only (every 1 or 2). Mid-height. £ TBD — provisional flat.',
+    },
     bushes: {
       kind: 'per_unit',
       unitGbp: 2.5,

@@ -18,8 +18,19 @@ Same AR pipeline for every type; fidelity improves later without changing the CT
 
 1. Client builds `buildGateMeshPlan(config)` → Three.js group in **metres** (`mm × 0.001`)
 2. Export **GLB** + **USDZ** (Three `GLTFExporter` / `USDZExporter`)
-3. Client hosts GLB/USDZ on ephemeral `/api/ar/models/{id}` (15 min TTL)
-4. iPhone → `rel="ar"` Quick Look; Android → Scene Viewer intent; desktop → link/download
+3. Client hosts GLB/USDZ on ephemeral `/api/ar/models/{id}` (15 min TTL, magic-byte validated)
+4. iPhone → `rel="ar"` Quick Look (`#allowsContentScaling=0`); Android → Scene Viewer intent (`resizable=false` + HTTPS fallback); desktop → copy link / download
+5. GET serves models with CORS so Scene Viewer can fetch; expired models return **410**
+
+## Phase 2 harden (2026-08-05)
+
+| Risk | Fix |
+|------|-----|
+| User pinch-rescales → tape check lies | Scale lock on Quick Look + Scene Viewer |
+| Scene Viewer blocked by CORS | `Access-Control-Allow-Origin: *` on model GET |
+| Hosting all-or-nothing | Partial host (GLB and/or USDZ) + download fallback |
+| Localhost demo on phone | `phoneReachable` warning when origin is private |
+| Silent expiry | Countdown + clear regenerate message |
 
 ## Files
 

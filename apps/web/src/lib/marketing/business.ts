@@ -12,10 +12,10 @@ export const BUSINESS = {
   phoneDisplay: '+44 7803 002145',
   website: 'https://www.steelyes.co.uk',
   address: {
-    line1: 'Unit 7, Meridian Industrial Estate',
-    locality: 'Enfield',
+    line1: '106 Newlands Park Road',
+    locality: 'Sydenham',
     region: 'London',
-    postalCode: 'EN3 7TW',
+    postalCode: 'SE26 5NB',
     country: 'United Kingdom',
   },
   /**

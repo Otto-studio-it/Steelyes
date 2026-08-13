@@ -103,9 +103,25 @@ Verbatim source and full analysis: [`../client-answers/2026-07-28-marius.md`](..
 | CL-708 | `client-intake/questions.ts` | copy | Rewrite the 13 remaining blocking questions in plain language with worked examples | P1 | none | triaged | CA-04 |
 | CL-709 | `tests/e2e/configurator.spec.ts` | quality | E2E finish tests still click `Bronze` / `Pearl white` radios that no longer exist — broken since the palette change | P1 | none | triaged | found during CA-03 propagation |
 
+### Batch 2026-08-11 — Decorative lock (CA-14…CA-17)
+
+Source: [`../client-answers/2026-08-11-marius.md`](../client-answers/2026-08-11-marius.md).
+
+| ID | Route / area | Type | Request | Priority | Depends on | Status | Source |
+|---|---|---|---|---|---|---|---|
+| CL-710 | `geometry.ts` + railhead options UI | functionality | Railheads qty **auto = one per picket bay** (top / middle / dog); remove manual qty | P1 | none — rule CA-14 | done | CA-14 |
+| CL-711 | dog_bars option UI + engine | functionality | Dog bars density **automatic**; on/off only | P1 | none — rule CA-15 | done | CA-15 |
+| CL-712 | catalog + masters | functionality | Add **circles** on/off band option (top/bottom) | P1 | Phase 1 SVG/Figma | done | CA-16 |
+| CL-713 | Design 2D preview | functionality | Railheads = **model picker only**; do not draw finials on Design masters | P1 | none — rule CA-17 | done | CA-17 |
+| CL-714 | Victorian masters | asset | Fix arched top fidelity (Marius complaint 10/08) | P1 | Phase 1 Figma | done | WhatsApp 2026-08-10 |
+| CL-715 | Circles overlays + Design | functionality | Circles = **upper+lower together** (Q1); arched upper follows curve | P1 | overlays/circles | done | Q1 2026-08-12 |
+| CL-716 | Picket collars | functionality | Collar/boss every **1 or 2** long pickets @ ~50%; never dog bars | P1 | overlays/collar | done | Q2–Q4 |
+| CL-717 | Railhead catalog | asset + UI | Crop **61** product photos + expand picker/listino | P1 | foto /railhead | done | Q5 |
+| CL-718 | Figma Decorative System | asset | New file `SiMiEXobtyfuHpXOs5RDRe`; page skeleton pending MCP rate limit | P2 | MCP | in progress | plan 2026-08-12 |
+
 **CL-705 shipped 2026-07-30:** `CANTILEVER_TAIL_RATIO = 1/3` at every width; `CantileverSiteSpaceNote` on dimensions (4000 → 5333 mm run).
 
-**CL-706 shipped 2026-07-30:** `BUSINESS.email` + contact/JSON-LD use `sales@steelyes.co.uk`.
+**CL-706 shipped 2026-07-30:** initially used `sales@steelyes.co.uk`; superseded on 2026-08-05 by the confirmed official address `info@steelyes.co.uk`.
 
 **Intake copy follow-up (CL-708 / CA-04):** Marius said he could not parse the cantilever question, then answered it correctly in his own terms — millimetres and a worked example. Rewrite the remaining 13 blocking intake questions the same way: plain sentence, worked example, expected unit. Do this before the next intake send.
 
@@ -116,7 +132,7 @@ Verbatim source and full analysis: [`../client-answers/2026-07-28-marius.md`](..
 | ID | Route / area | Type | Request | Depends on | Status | Source |
 |---|---|---|---|---|---|---|
 | CL-001 | Vercel + `steelyes.co.uk` | deploy | Put Next app live; point domain away from GoDaddy legacy site | Marius DNS / Vercel project | in_progress | `docs/DEPLOY.md`, `apps/web/vercel.json` |
-| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | Email ✅ `sales@steelyes.co.uk` (CA-06); company no./VAT/phone/address still pending in `business.ts` |
+| CL-002 | Footer + `/contact` | legal | Company number, VAT, real business email, phone, registered address | Marius | in_progress | Email ✅ `info@steelyes.co.uk` (confirmed 2026-08-05); company no./VAT/phone/address still pending in `business.ts` |
 | CL-003 | `/legal/*` | legal | Final privacy, cookie, terms copy + CMP alignment (Iubenda) | legal review | in_progress | Draft notice + quotation-based warranty |
 | CL-004 | Pricing surfaces | copy | All public prices must say indicative / subject to survey; no invented motorised prices | Marius price list | done | Gates/services/installation copy audited |
 | CL-005 | `/gallery` | asset | Publish only photos with property-owner consent | Marius consent | blocked | `CLIENT_BLOCKERS.md` |

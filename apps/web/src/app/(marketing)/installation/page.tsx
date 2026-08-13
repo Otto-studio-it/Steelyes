@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { COVERAGE_COPY, SURVEY_COPY } from '@/lib/marketing/business'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema, faqSchema, howToSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Gate Installation | Supply & Install Steel Gates UK',
@@ -12,6 +13,40 @@ export const metadata: Metadata = {
     'Steelyes handles the full installation path — site survey, fabrication, electric gate wiring, delivery and fitting across the UK.',
   alternates: { canonical: '/installation' },
 }
+
+const INSTALLATION_STEPS = [
+  {
+    step: 'Technical Survey',
+    body: 'Site survey — laser measure, substrate check, access and drainage assessment. Survey scope and timing are confirmed before booking.',
+  },
+  {
+    step: 'Frame Setting',
+    body: 'Gate posts set and packed to tolerance. Leaf hanging verified against the fabrication drawing. Set-out confirmed before any fixings are committed.',
+  },
+  {
+    step: 'On-site Wiring',
+    body: 'For automated gates, supply cable routing, control board installation and safety device wiring are handled by qualified electricians within our installation scope.',
+  },
+  {
+    step: 'Final Tuning',
+    body: 'Closing force, speed settings, obstacle detection and manual override tested to manufacturer specification before handover. Documentation left on-site.',
+  },
+] as const
+
+const INSTALLATION_FAQS = [
+  {
+    q: 'Do you handle electrical connections for automation?',
+    a: 'Yes, where automation is included in scope. Electrical work is carried out by qualified electricians as part of the agreed installation package.',
+  },
+  {
+    q: 'How long does a typical driveway install take?',
+    a: 'Duration depends on gate type, automation, and site conditions. We confirm programme length in your written quotation after survey.',
+  },
+  {
+    q: 'Can you install onto existing stone pillars?',
+    a: 'Often yes, subject to structural review during survey. Post condition, fixing centres and load paths must be verified before fabrication.',
+  },
+] as const
 
 export default function InstallationPage() {
   return (
@@ -101,24 +136,7 @@ export default function InstallationPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-10 text-center font-heading text-4xl font-black uppercase md:text-5xl">The installation blueprint</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
-            {[
-              {
-                step: 'Technical Survey',
-                body: 'Site survey — laser measure, substrate check, access and drainage assessment. Survey scope and timing are confirmed before booking.',
-              },
-              {
-                step: 'Frame Setting',
-                body: 'Gate posts set and packed to tolerance. Leaf hanging verified against the fabrication drawing. Set-out confirmed before any fixings are committed.',
-              },
-              {
-                step: 'On-site Wiring',
-                body: 'For automated gates, supply cable routing, control board installation and safety device wiring are handled by qualified electricians within our installation scope.',
-              },
-              {
-                step: 'Final Tuning',
-                body: 'Closing force, speed settings, obstacle detection and manual override tested to manufacturer specification before handover. Documentation left on-site.',
-              },
-            ].map(({ step, body }, index) => (
+            {INSTALLATION_STEPS.map(({ step, body }, index) => (
               <article key={step} className="border border-zinc-200 bg-white p-6">
                 <p className="mb-4 font-heading text-5xl font-black text-zinc-200">0{index + 1}</p>
                 <h3 className="mb-2 font-heading text-xl font-bold uppercase">{step}</h3>
@@ -135,29 +153,8 @@ export default function InstallationPage() {
           Technical <span className="text-primary">clarification</span>
         </h2>
         <div className="space-y-3">
-          <details className="group border border-zinc-200 bg-white p-5" open>
-            <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 font-heading text-sm font-bold uppercase tracking-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
-              Do you handle electrical connections for automation?
-              <span className="shrink-0 font-mono text-lg text-zinc-500" aria-hidden="true">
-                <span className="group-open:hidden">+</span>
-                <span className="hidden group-open:inline">−</span>
-              </span>
-            </summary>
-            <p className="mt-4 text-sm font-light text-muted-deep">
-              Yes, where automation is included in scope. Electrical work is carried out by qualified electricians as part of the agreed installation package.
-            </p>
-          </details>
-          {[
-            {
-              q: 'How long does a typical driveway install take?',
-              a: 'Duration depends on gate type, automation, and site conditions. We confirm programme length in your written quotation after survey.',
-            },
-            {
-              q: 'Can you install onto existing stone pillars?',
-              a: 'Often yes, subject to structural review during survey. Post condition, fixing centres and load paths must be verified before fabrication.',
-            },
-          ].map(({ q, a }) => (
-            <details key={q} className="group border border-zinc-200 bg-white p-5">
+          {INSTALLATION_FAQS.map(({ q, a }, index) => (
+            <details key={q} className="group border border-zinc-200 bg-white p-5" open={index === 0}>
               <summary className="flex min-h-[44px] cursor-pointer list-none items-center justify-between gap-4 font-heading text-sm font-bold uppercase tracking-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
                 {q}
                 <span className="shrink-0 font-mono text-lg text-zinc-500" aria-hidden="true">
@@ -197,6 +194,36 @@ export default function InstallationPage() {
           </Link>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Installation', path: '/installation' }]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes installs a steel gate',
+              description: metadata.description!,
+              path: '/installation',
+              steps: INSTALLATION_STEPS.map(({ step, body }) => ({ name: step, text: body })),
+            }),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            faqSchema(INSTALLATION_FAQS.map(({ q, a }) => ({ question: q, answer: a }))),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

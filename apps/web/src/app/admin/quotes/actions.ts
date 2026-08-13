@@ -42,27 +42,26 @@ export async function updateQuoteRequest(formData: FormData): Promise<AdminActio
     .eq('id', parsed.data.id)
     .maybeSingle()
 
-  const { error } = await client
-    .from('quote_requests')
-    .update({
-      status: parsed.data.status,
-      admin_notes: parsed.data.admin_notes || null,
-    })
-    .eq('id', parsed.data.id)
-
-  if (error) return { error: error.message }
-
-  // Notify the customer once when the quote goes out. Email failure is
-  // logged but never blocks the status update.
+  // Do not mark a quote as sent unless Resend accepted the notification.
+  // Keeping the previous status makes a failed send safely retryable.
   if (parsed.data.status === 'quote_sent' && existing && existing.status !== 'quote_sent') {
     const shareToken = existing.configurations?.share_token
-    await sendQuoteReadyEmail({
+    const sent = await sendQuoteReadyEmail({
+      quoteRequestId: parsed.data.id,
       firstName: existing.first_name,
       email: existing.email,
       shareUrl: shareToken ? absoluteSiteUrl(buildQuoteSharePath(shareToken)) : absoluteSiteUrl('/configurator'),
       pdfUrl: shareToken ? absoluteSiteUrl(buildQuotePdfPath(shareToken)) : '',
     })
+    if (!sent) return { error: 'Email non inviata. Lo stato non è stato modificato; puoi riprovare.' }
   }
+
+  const { error } = await client
+    .from('quote_requests')
+    .update({ status: parsed.data.status, admin_notes: parsed.data.admin_notes || null })
+    .eq('id', parsed.data.id)
+
+  if (error) return { error: error.message }
 
   revalidatePath('/admin/quotes')
   return { success: true }

@@ -14,6 +14,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { buildLookupRules } from './lib/silhouette-lookup.mjs'
+
 const here = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(here, '..')
 const sourceRoot = path.join(root, 'docs/frontend/2d-masters')
@@ -59,6 +61,41 @@ function readManifest(gateType) {
   return JSON.parse(fs.readFileSync(file, 'utf8'))
 }
 
+function titleFromSlug(slug) {
+  return slug
+    .replace(/_motorised$/, '')
+    .split('_')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
+}
+
+/** Derive option keys baked into a master from its slug (tipology + deco). */
+function optionsFromSlug(slug) {
+  if (slug.startsWith('composite')) return []
+  let rest = slug.replace(/_motorised$/, '')
+  /** @type {string[]} */
+  const options = []
+  if (rest.endsWith('_circles_collar_1')) {
+    options.push('circles', 'picket_collars')
+    rest = rest.slice(0, -'_circles_collar_1'.length)
+  } else if (rest.endsWith('_circles')) {
+    options.push('circles')
+    rest = rest.slice(0, -'_circles'.length)
+  } else if (rest.endsWith('_collar_1')) {
+    options.push('picket_collars')
+    rest = rest.slice(0, -'_collar_1'.length)
+  }
+  if (rest.includes('arched')) options.unshift('arched_top')
+  if (rest.includes('dog_bars')) options.push('dog_bars')
+  // Keep arched_top before dog_bars when both — unshift then push may disorder; normalize:
+  const ordered = []
+  if (options.includes('arched_top')) ordered.push('arched_top')
+  if (options.includes('dog_bars')) ordered.push('dog_bars')
+  if (options.includes('circles')) ordered.push('circles')
+  if (options.includes('picket_collars')) ordered.push('picket_collars')
+  return ordered
+}
+
 function buildIndex() {
   /** @type {Record<string, unknown>} */
   const packs = {}
@@ -70,25 +107,42 @@ function buildIndex() {
     }
 
     const silhouettes = {}
-    for (const entry of manifest.silhouettes ?? []) {
-      const rel = entry.file
+    const bySlug = new Map((manifest.silhouettes ?? []).map((entry) => [entry.slug, entry]))
+    const silDir = path.join(sourceRoot, gateType, 'silhouettes')
+    const svgFiles = fs
+      .readdirSync(silDir)
+      .filter((name) => name.endsWith('.svg') && !name.startsWith('._'))
+
+    for (const fileName of svgFiles) {
+      const slug = fileName.replace(/\.svg$/i, '')
+      const entry = bySlug.get(slug)
+      const rel = `silhouettes/${fileName}`
       const abs = path.join(sourceRoot, gateType, rel)
       if (!fs.existsSync(abs)) {
-        throw new Error(`Missing silhouette file for ${gateType}/${entry.slug}: ${abs}`)
+        throw new Error(`Missing silhouette file for ${gateType}/${slug}: ${abs}`)
       }
       const publicPath = `/2d-masters/${gateType}/${rel.replace(/\\/g, '/')}`
-      silhouettes[entry.slug] = {
-        slug: entry.slug,
-        title: entry.title ?? entry.slug,
+      const options = entry?.options ?? optionsFromSlug(slug)
+      const style =
+        entry?.style ??
+        (slug.startsWith('composite') ? 'composite_boards' : 'traditional_victorian')
+      silhouettes[slug] = {
+        slug,
+        title: entry?.title ?? titleFromSlug(slug),
         publicPath,
-        style: entry.style ?? null,
-        options: entry.options ?? [],
+        style,
+        options,
+        includesMotorKit: Boolean(entry?.includesMotorKit),
       }
     }
 
+    // Always rebuild tipology-preserving rules from available SVG slugs
+    // (manifest.lookup may be stale vs definitive decorative masters).
+    const rules = buildLookupRules(Object.keys(silhouettes))
+
     packs[gateType] = {
       status: manifest.status,
-      rules: manifest.lookup?.rules ?? [{ when: {}, slug: 'base' }],
+      rules,
       silhouettes,
     }
   }

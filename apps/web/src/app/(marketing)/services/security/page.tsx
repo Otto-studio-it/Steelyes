@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema, howToSchema, serviceSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Steel Security Doors & Grilles | Perimeter Hardening',
@@ -24,6 +25,13 @@ const SPEC_ITEMS = [
   { label: 'Finish', value: 'Powder coat / paint system (palette pending)' },
   { label: 'Hardware', value: 'Locking and access hardware confirmed per spec' },
   { label: 'Compliance', value: 'Confirmed during specification; no public claims pre-approval' },
+] as const
+
+const WORKFLOW_STEPS = [
+  { step: 'Site review', body: 'Opening dimensions, substrate, and access conditions confirmed before any drawing work.' },
+  { step: 'Specification', body: 'Hardware, gauge, and locking approach locked before production is committed.' },
+  { step: 'Fabrication', body: 'Frames and leaves cut, welded, and prepared for finishing with hardware provisions in place.' },
+  { step: 'Install', body: 'On-site fitting, alignment, and hardware commissioning coordinated around site access.' },
 ] as const
 
 export default function SecurityServicePage() {
@@ -100,24 +108,7 @@ export default function SecurityServicePage() {
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Workflow</p>
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From threat brief to install</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {[
-              {
-                step: 'Site review',
-                body: 'Opening dimensions, substrate, and access conditions confirmed before any drawing work.',
-              },
-              {
-                step: 'Specification',
-                body: 'Hardware, gauge, and locking approach locked before production is committed.',
-              },
-              {
-                step: 'Fabrication',
-                body: 'Frames and leaves cut, welded, and prepared for finishing with hardware provisions in place.',
-              },
-              {
-                step: 'Install',
-                body: 'On-site fitting, alignment, and hardware commissioning coordinated around site access.',
-              },
-            ].map((item, index) => (
+            {WORKFLOW_STEPS.map((item, index) => (
               <article key={item.step} className="grid grid-cols-[4rem_1fr] gap-5 border border-zinc-200 bg-white p-6">
                 <p className="font-heading text-5xl font-black leading-none text-zinc-200">0{index + 1}</p>
                 <div>
@@ -168,6 +159,46 @@ export default function SecurityServicePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: 'Home', path: '/' },
+              { name: 'Services', path: '/services' },
+              { name: 'Perimeter Security', path: '/services/security' },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            serviceSchema({
+              name: 'Perimeter Security',
+              description: metadata.description!,
+              path: '/services/security',
+              serviceType: 'Steel security doors and grilles fabrication',
+              image: OFFICIAL_IMAGES.services.securityGrills[0],
+            }),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes fabricates steel security doors and grilles',
+              description: metadata.description!,
+              path: '/services/security',
+              steps: WORKFLOW_STEPS.map(({ step, body }) => ({ name: step, text: body })),
+            }),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

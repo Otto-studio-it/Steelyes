@@ -11,6 +11,7 @@ import {
   resolveGateSlug,
   type GateSlug,
 } from '../gate-marketing-data'
+import { breadcrumbSchema, serviceSchema } from '@/lib/marketing/schema'
 
 export function generateStaticParams() {
   return GATE_SLUGS.map((style) => ({ style }))
@@ -191,6 +192,33 @@ export default function GateDetailPage({ params }: { params: { style: string } }
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: 'Home', path: '/' },
+              { name: 'Gates', path: '/gates' },
+              { name: gate.title, path: `/gates/${resolved}` },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            serviceSchema({
+              name: `${gate.title} Gates`,
+              description: gate.description,
+              path: `/gates/${resolved}`,
+              serviceType: `${gate.title} steel gate fabrication and installation`,
+              image: gate.heroImage,
+            }),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

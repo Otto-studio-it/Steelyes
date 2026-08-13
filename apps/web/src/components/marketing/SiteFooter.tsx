@@ -28,10 +28,8 @@ const SERVICE_LINKS = [
 ] as const
 
 const START_LINKS = [
-  { label: 'Configure a gate', href: '/configurator', tone: 'steel' },
   { label: 'Request a quote', href: '/contact', tone: 'primary' },
-  { label: 'Installation', href: '/installation', tone: 'link' },
-  { label: 'About', href: '/about', tone: 'link' },
+  { label: 'Open gate configurator', href: '/configurator', tone: 'secondary' },
 ] as const
 
 const LEGAL_LINKS = [
@@ -104,18 +102,17 @@ export function SiteFooter() {
         <section>
           <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Start</h3>
           <p className="mb-5 text-sm font-light leading-relaxed text-zinc-400">
-            Share photos, measurements, or a rough brief to begin a measured specification.
+            Design a gate online, or share photos and measurements for a direct, survey-led specification.
           </p>
           <ul className="space-y-2 text-sm text-zinc-400">
             {START_LINKS.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
+                  data-configurator-placement={link.href === '/configurator' ? 'footer' : undefined}
                   className={link.tone === 'primary'
                     ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-                    : link.tone === 'steel'
-                      ? 'inline-flex min-h-[44px] w-full items-center justify-center border border-zinc-600 bg-zinc-800 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-                      : 'inline-flex min-h-[44px] items-center transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
+                    : 'inline-flex min-h-[44px] w-full items-center justify-center border border-white/35 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
                 >
                   {link.label}
                 </Link>

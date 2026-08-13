@@ -1,34 +1,17 @@
 # Bifolding double swing — 2D pack
 
-**Status:** `ready`  
-**Manifest:** [`manifest.json`](./manifest.json)
+**Status:** `ready` (definitive decorative masters, 2026-08-13)  
+**Definitive:** [`definitive/`](./definitive/) — split manual / motorised  
+**Manifest:** [`definitive/manifest.json`](./definitive/manifest.json)  
+**Checklist:** [`definitive/CHECKLIST.md`](./definitive/CHECKLIST.md)
 
-## How many silhouettes?
+## Policy
 
-**5** — same option families as double swing, with bifold topology:
+Export filenames with `manual` / `manua` prefix → **manual** (`{slug}.svg`).  
+No prefix → **motorised** (`{slug}_motorised.svg`).
 
-| # | Slug | Maps to |
-|---|------|---------|
-| 1 | `base` | Victorian + 4 panels (2×2) |
-| 2 | `arched` | `arched_top` |
-| 3 | `dog_bars` | `dog_bars` |
-| 4 | `arched_dog_bars` | both |
-| 5 | `composite` | `composite_boards` |
+Runtime: `apps/web/public/2d-masters/bifolding_double_swing/silhouettes/` (31 SVG).  
+Raw intake archived under `_archive_bifolding_double_swing_raw/`.
 
-## Topology lock (CA-09/10)
-
-```txt
-[stack] [post] [panel|panel] [panel|panel] [post] [stack]
-              └── leaf L ──┘  └── leaf R ──┘
-```
-
-- 2 panels per leaf, 50/50  
-- Fold stile mid-leaf  
-- Leaves fill clear opening  
-- Stack pack outside posts  
-
-## Regenerate
-
-```bash
-pnpm --filter @steelyes/gate-engine exec vitest run tests/export-figma-bifolding-double-swing-variants.test.ts
-```
+Missing masters (resolve falls back to tipology):  
+`arched_dog_bars_collar_1` (both drives), `arched_dog_bars_circles` (motorised only).

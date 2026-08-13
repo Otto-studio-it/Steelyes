@@ -93,7 +93,8 @@ export function buildSwingVictorianGeometryPlan(config: GateConfig): SwingVictor
     },
     features: {
       archedTop: hasOption(config, 'arched_top'),
-      circleBands: hasOption(config, 'bushes'),
+      // CA-16 circles = ring bands; legacy bushes still lights the same CAD feature.
+      circleBands: hasOption(config, 'circles') || hasOption(config, 'bushes'),
       spearRow: hasOption(config, 'dog_bar_railheads'),
       basketTwists: hasOption(config, 'spirals'),
       centerLatch: getLeafCount(config.gateType) > 1,

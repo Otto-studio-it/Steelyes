@@ -1,7 +1,7 @@
 {
   "gateType": "single_bifolding",
   "status": "ready",
-  "updated": "2026-07-31",
+  "updated": "2026-08-13",
   "figma": {
     "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
     "url": "https://www.figma.com/design/HW4O7VfFiRKKyBjQCk8y9Y",
@@ -34,22 +34,581 @@
   ],
   "notSeparateSilhouettes": [
     "finish / RAL / custom hex",
-    "motorised vs manual (actuators = later detail)",
+    "motorised vs manual — same CAD for manual/auto; leaf handle overlay only when manual (CA-01); operator not drawn",
     "railhead SKUs",
     "widthMm / heightMm",
     "left vs right handing (quote-time)"
   ],
   "lookup": {
-    "description": "First matching rule wins.",
+    "description": "Most-specific matching rule wins (engine scores options/withoutOptions). Baked deco first; tipology fallbacks preserve arched/dog_bars when deco masters are missing.",
     "rules": [
-      { "when": { "style": "composite_boards" }, "slug": "composite" },
-      { "when": { "options": ["arched_top", "dog_bars"] }, "slug": "arched_dog_bars" },
-      { "when": { "options": ["arched_top"] }, "slug": "arched" },
-      { "when": { "options": ["dog_bars"] }, "slug": "dog_bars" },
-      { "when": {}, "slug": "base" }
+      {
+        "when": {
+          "style": "composite_boards",
+          "motorised": true
+        },
+        "slug": "composite_motorised"
+      },
+      {
+        "when": {
+          "style": "composite_boards"
+        },
+        "slug": "composite"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars",
+            "circles"
+          ],
+          "withoutOptions": [
+            "picket_collars"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_dog_bars_circles_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "circles"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_dog_bars_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars",
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "dog_bars_circles_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars",
+            "circles"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "picket_collars"
+          ],
+          "motorised": true
+        },
+        "slug": "dog_bars_circles_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "dog_bars"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_circles_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "circles"
+          ],
+          "withoutOptions": [
+            "dog_bars",
+            "picket_collars"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_circles_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "dog_bars",
+            "circles"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "base_circles_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "circles"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars",
+            "picket_collars"
+          ],
+          "motorised": true
+        },
+        "slug": "base_circles_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars",
+            "circles"
+          ],
+          "motorised": true,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "base_collar_1_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars",
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_dog_bars_circles_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars",
+            "circles"
+          ],
+          "withoutOptions": [
+            "picket_collars"
+          ],
+          "motorised": false
+        },
+        "slug": "arched_dog_bars_circles"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "circles"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_dog_bars_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars",
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "dog_bars_circles_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars",
+            "circles"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "picket_collars"
+          ],
+          "motorised": false
+        },
+        "slug": "dog_bars_circles"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "circles"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "dog_bars_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "dog_bars"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_circles_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "circles"
+          ],
+          "withoutOptions": [
+            "dog_bars",
+            "picket_collars"
+          ],
+          "motorised": false
+        },
+        "slug": "arched_circles"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "dog_bars",
+            "circles"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "arched_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "circles",
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "base_circles_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "circles"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars",
+            "picket_collars"
+          ],
+          "motorised": false
+        },
+        "slug": "base_circles"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "picket_collars"
+          ],
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars",
+            "circles"
+          ],
+          "motorised": false,
+          "optionVariants": {
+            "picket_collars": "every_1"
+          }
+        },
+        "slug": "base_collar_1"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_dog_bars_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ],
+          "withoutOptions": [
+            "arched_top"
+          ],
+          "motorised": true
+        },
+        "slug": "dog_bars_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ],
+          "withoutOptions": [
+            "dog_bars"
+          ],
+          "motorised": true
+        },
+        "slug": "arched_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": true
+        },
+        "slug": "base_motorised"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": false
+        },
+        "slug": "arched_dog_bars"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "dog_bars"
+          ],
+          "withoutOptions": [
+            "arched_top"
+          ],
+          "motorised": false
+        },
+        "slug": "dog_bars"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "options": [
+            "arched_top"
+          ],
+          "withoutOptions": [
+            "dog_bars"
+          ],
+          "motorised": false
+        },
+        "slug": "arched"
+      },
+      {
+        "when": {
+          "style": "traditional_victorian",
+          "withoutOptions": [
+            "arched_top",
+            "dog_bars"
+          ],
+          "motorised": false
+        },
+        "slug": "base"
+      }
     ]
   },
   "silhouettes": [
+    {
+      "slug": "arched",
+      "title": "Arched top",
+      "file": "silhouettes/arched.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top"
+      ]
+    },
+    {
+      "slug": "arched_circles",
+      "title": "Arched Circles",
+      "file": "silhouettes/arched_circles.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "circles"
+      ]
+    },
+    {
+      "slug": "arched_circles_collar_1",
+      "title": "Arched Circles Collar 1",
+      "file": "silhouettes/arched_circles_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "circles",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_collar_1",
+      "title": "Arched Collar 1",
+      "file": "silhouettes/arched_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars",
+      "title": "Arched + dog bars",
+      "file": "silhouettes/arched_dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_circles",
+      "title": "Arched Dog Bars Circles",
+      "file": "silhouettes/arched_dog_bars_circles.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars",
+        "circles"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_circles_collar_1",
+      "title": "Arched Dog Bars Circles Collar 1",
+      "file": "silhouettes/arched_dog_bars_circles_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars",
+        "circles",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_collar_1",
+      "title": "Arched Dog Bars Collar 1",
+      "file": "silhouettes/arched_dog_bars_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars",
+        "picket_collars"
+      ]
+    },
     {
       "slug": "base",
       "title": "Base Victorian",
@@ -58,25 +617,32 @@
       "options": []
     },
     {
-      "slug": "arched",
-      "title": "Arched top",
-      "file": "silhouettes/arched.svg",
+      "slug": "base_circles",
+      "title": "Base Circles",
+      "file": "silhouettes/base_circles.svg",
       "style": "traditional_victorian",
-      "options": ["arched_top"]
+      "options": [
+        "circles"
+      ]
     },
     {
-      "slug": "dog_bars",
-      "title": "Dog bars",
-      "file": "silhouettes/dog_bars.svg",
+      "slug": "base_circles_collar_1",
+      "title": "Base Circles Collar 1",
+      "file": "silhouettes/base_circles_collar_1.svg",
       "style": "traditional_victorian",
-      "options": ["dog_bars"]
+      "options": [
+        "circles",
+        "picket_collars"
+      ]
     },
     {
-      "slug": "arched_dog_bars",
-      "title": "Arched + dog bars",
-      "file": "silhouettes/arched_dog_bars.svg",
+      "slug": "base_collar_1",
+      "title": "Base Collar 1",
+      "file": "silhouettes/base_collar_1.svg",
       "style": "traditional_victorian",
-      "options": ["arched_top", "dog_bars"]
+      "options": [
+        "picket_collars"
+      ]
     },
     {
       "slug": "composite",
@@ -84,6 +650,190 @@
       "file": "silhouettes/composite.svg",
       "style": "composite_boards",
       "options": []
+    },
+    {
+      "slug": "dog_bars",
+      "title": "Dog bars",
+      "file": "silhouettes/dog_bars.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "dog_bars_circles",
+      "title": "Dog Bars Circles",
+      "file": "silhouettes/dog_bars_circles.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars",
+        "circles"
+      ]
+    },
+    {
+      "slug": "dog_bars_circles_collar_1",
+      "title": "Dog Bars Circles Collar 1",
+      "file": "silhouettes/dog_bars_circles_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars",
+        "circles",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "dog_bars_collar_1",
+      "title": "Dog Bars Collar 1",
+      "file": "silhouettes/dog_bars_collar_1.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_motorised",
+      "title": "Arched top (motorised)",
+      "file": "silhouettes/arched_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top"
+      ]
+    },
+    {
+      "slug": "arched_circles_motorised",
+      "title": "Arched Circles (motorised)",
+      "file": "silhouettes/arched_circles_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "circles"
+      ]
+    },
+    {
+      "slug": "arched_circles_collar_1_motorised",
+      "title": "Arched Circles Collar 1 (motorised)",
+      "file": "silhouettes/arched_circles_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "circles",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_collar_1_motorised",
+      "title": "Arched Collar 1 (motorised)",
+      "file": "silhouettes/arched_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_motorised",
+      "title": "Arched + dog bars (motorised)",
+      "file": "silhouettes/arched_dog_bars_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_circles_motorised",
+      "title": "Arched Dog Bars Circles (motorised)",
+      "file": "silhouettes/arched_dog_bars_circles_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars",
+        "circles"
+      ]
+    },
+    {
+      "slug": "arched_dog_bars_collar_1_motorised",
+      "title": "Arched Dog Bars Collar 1 (motorised)",
+      "file": "silhouettes/arched_dog_bars_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "arched_top",
+        "dog_bars",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "base_motorised",
+      "title": "Base Victorian (motorised)",
+      "file": "silhouettes/base_motorised.svg",
+      "style": "traditional_victorian",
+      "options": []
+    },
+    {
+      "slug": "base_circles_motorised",
+      "title": "Base Circles (motorised)",
+      "file": "silhouettes/base_circles_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "circles"
+      ]
+    },
+    {
+      "slug": "base_circles_collar_1_motorised",
+      "title": "Base Circles Collar 1 (motorised)",
+      "file": "silhouettes/base_circles_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "circles",
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "base_collar_1_motorised",
+      "title": "Base Collar 1 (motorised)",
+      "file": "silhouettes/base_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "picket_collars"
+      ]
+    },
+    {
+      "slug": "composite_motorised",
+      "title": "Composite boards (motorised)",
+      "file": "silhouettes/composite_motorised.svg",
+      "style": "composite_boards",
+      "options": []
+    },
+    {
+      "slug": "dog_bars_motorised",
+      "title": "Dog bars (motorised)",
+      "file": "silhouettes/dog_bars_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars"
+      ]
+    },
+    {
+      "slug": "dog_bars_circles_motorised",
+      "title": "Dog Bars Circles (motorised)",
+      "file": "silhouettes/dog_bars_circles_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars",
+        "circles"
+      ]
+    },
+    {
+      "slug": "dog_bars_circles_collar_1_motorised",
+      "title": "Dog Bars Circles Collar 1 (motorised)",
+      "file": "silhouettes/dog_bars_circles_collar_1_motorised.svg",
+      "style": "traditional_victorian",
+      "options": [
+        "dog_bars",
+        "circles",
+        "picket_collars"
+      ]
     }
   ],
   "references": [
@@ -91,5 +841,6 @@
     "references/support-wiki-style.png",
     "references/support-mesh-variant.png"
   ],
-  "exportTest": "packages/gate-engine/tests/export-figma-single-bifolding-variants.test.ts"
+  "exportTest": "packages/gate-engine/tests/export-figma-single-bifolding-variants.test.ts",
+  "sourceIntake": "foto /double swing gates/esport per ora /single_bifolding_* (arched from user PNG 2026-08-05 wrapped to 1200×860). same CAD for manual/auto; leaf handle overlay only when manual (CA-01); operator not drawn."
 }

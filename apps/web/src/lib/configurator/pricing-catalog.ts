@@ -33,6 +33,8 @@ const SLUG_TO_OPTION_KEY: Record<string, GateOptionKey> = {
   'dog-bars': 'dog_bars',
   'railheads-dog-bars': 'dog_bar_railheads',
   'arch-bow-top': 'arched_top',
+  circles: 'circles',
+  'picket-collars': 'picket_collars',
   bushes: 'bushes',
   spirals: 'spirals',
 }

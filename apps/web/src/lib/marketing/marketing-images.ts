@@ -7,9 +7,9 @@ import type { GateType, GateStyle } from '@steelyes/gate-engine'
 
 const gates = {
   doubleSwing: {
-    hero: '/images/official/gates/double-swing-hero.jpg',
+    hero: '/images/official/gates/double-swing-hero.webp',
     gallery: [
-      '/images/official/gates/double-swing-hero.jpg',
+      '/images/official/gates/double-swing-hero.webp',
       '/images/official/gates/double-swing-2.jpg',
       '/images/official/gates/double-swing-3.jpg',
       '/images/official/gates/double-swing-4.jpg',
@@ -52,16 +52,16 @@ const gates = {
     gallery: ['/images/official/gates/single-bifold-hero.png'],
   },
   telescopic: {
-    hero: '/images/official/gates/telescopic-hero.jpg',
+    hero: '/images/official/gates/telescopic-hero.png',
     gallery: [
-      '/images/official/gates/telescopic-hero.jpg',
+      '/images/official/gates/telescopic-hero.png',
       '/images/official/gates/telescopic-2.png',
     ],
   },
   radius: {
-    hero: '/images/official/gates/radius-hero.webp',
+    hero: '/images/official/gates/radius-hero.jpg',
     gallery: [
-      '/images/official/gates/radius-hero.webp',
+      '/images/official/gates/radius-hero.jpg',
       '/images/official/gates/radius-2.jpg',
     ],
   },
@@ -85,6 +85,9 @@ export const OFFICIAL_IMAGES = {
       secondary: '/images/official/services/staircase-2.jpg',
       glass: '/images/official/services/staircase-glass.jpg',
     },
+    railings: {
+      garden: '/images/official/services/garden-railing.jpg',
+    },
     structures: {
       hero: '/images/official/services/steel-structure-hero.png',
     },
@@ -92,8 +95,8 @@ export const OFFICIAL_IMAGES = {
   about: {
     teamWorkshop: '/images/official/about/team-workshop.jpg',
   },
-  /** Homepage hero — double swing as primary product. */
-  homepageHero: gates.doubleSwing.hero,
+  /** Homepage hero — client-selected tracked sliding installation with clear copy space. */
+  homepageHero: '/images/home/hero-tracked-sliding-gate.jpg',
 } as const
 
 export const GATE_SLUG_IMAGES = {
@@ -120,7 +123,7 @@ export const GATE_TYPE_IMAGES: Partial<Record<GateType, string>> = {
 
 export const STYLE_IMAGES: Record<GateStyle, string> = {
   traditional_victorian: gates.doubleSwing.hero,
-  composite_boards: gates.singleBifold.hero,
+  composite_boards: '/images/official/gates/composite-boards-hero.jpg',
 }
 
 export const CONFIGURATOR_PHOTO_BACKGROUNDS: Partial<Record<GateType, string>> = {

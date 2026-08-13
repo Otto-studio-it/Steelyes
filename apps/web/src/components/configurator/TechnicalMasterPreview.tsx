@@ -2,14 +2,12 @@
 
 import { useMemo } from 'react'
 import {
+  resolveCircleOverlays,
+  resolveCollarOverlays,
   resolveFinishDefinition,
-  resolveHandleOverlay,
-  resolveRailheadOverlays,
   resolveSilhouette,
   SilhouetteResolveError,
   type GateConfig,
-  type HandleOverlayInstance,
-  type RailheadOverlayInstance,
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
@@ -27,8 +25,7 @@ type TechnicalMasterPreviewProps = {
 
 /**
  * Design preview from preloaded 2D masters only (Phase 1–3).
- * Phase 2 — railhead SKU overlays composed on top of the master.
- * Phase 3 — default customer preview (label Design; id remains `technical`).
+ * Railhead SKUs are chosen in Refine for quote/email — not composited on the drawing.
  * Never invents live CAD. Client mm render in the strip under the image.
  */
 export function TechnicalMasterPreview({
@@ -55,13 +52,24 @@ export function TechnicalMasterPreview({
     }
   }, [config])
 
-  const overlays = useMemo(() => resolveRailheadOverlays(config), [config])
-  const handleOverlay = useMemo(() => resolveHandleOverlay(config), [config])
+  const circleOverlay = useMemo(() => {
+    if (!resolved.ok) return { bands: [], notes: [] as string[] }
+    if (resolved.value.bakedOptions.includes('circles')) {
+      return { bands: [], notes: ['Circles baked into master SVG'] }
+    }
+    return resolveCircleOverlays(config)
+  }, [config, resolved])
 
-  const railheadCodes = useMemo(
-    () => Array.from(new Set(overlays.instances.map((item) => item.code))),
-    [overlays.instances],
-  )
+  const collarOverlay = useMemo(() => {
+    if (!resolved.ok) return { overlays: [], notes: [] as string[] }
+    if (resolved.value.bakedOptions.includes('picket_collars')) {
+      return { overlays: [], notes: ['Collars baked into master SVG'] }
+    }
+    return resolveCollarOverlays(config)
+  }, [config, resolved])
+
+  // Handle is baked into official *manual* masters — never composited in UI.
+  // Railheads: model picker only (CA-17). Circles/collars: baked master when available, else overlay.
 
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
@@ -95,7 +103,7 @@ export function TechnicalMasterPreview({
         <div className="flex items-center gap-2">
           <div
             className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
-            title="Colour fill appears in Installation view"
+            title="Selected finish colour"
           >
             <span
               className="h-3.5 w-3.5 shrink-0 border border-black/20"
@@ -127,12 +135,10 @@ export function TechnicalMasterPreview({
         >
           <div className="relative flex h-[72px] w-[112px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-steel/10 bg-white">
             {resolved.ok ? (
-              <MasterWithOverlays
-                masterSrc={resolved.value.publicPath}
-                masterAlt=""
-                instances={overlays.instances}
-                handles={handleOverlay.instances}
-                heightMm={config.heightMm}
+              // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
+              <img
+                src={resolved.value.publicPath}
+                alt=""
                 className="h-full w-full object-contain object-top p-1"
               />
             ) : (
@@ -158,14 +164,34 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              <MasterWithOverlays
-                masterSrc={resolved.value.publicPath}
-                masterAlt={`${title} design master — ${resolved.value.title}`}
-                instances={overlays.instances}
-                handles={handleOverlay.instances}
-                heightMm={config.heightMm}
-                className={`w-full bg-white object-contain ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}
-              />
+              <div className={`relative w-full ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
+                <img
+                  src={resolved.value.publicPath}
+                  alt={`${title} design master — ${resolved.value.title}`}
+                  className="h-full w-full bg-white object-contain"
+                />
+                {circleOverlay.bands.map((band) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                  <img
+                    key={band.id}
+                    src={band.publicPath}
+                    alt=""
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                  />
+                ))}
+                {collarOverlay.overlays.map((overlay) => (
+                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                  <img
+                    key={overlay.id}
+                    src={overlay.publicPath}
+                    alt=""
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                  />
+                ))}
+              </div>
             ) : (
               <div
                 role="alert"
@@ -204,104 +230,12 @@ export function TechnicalMasterPreview({
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
-                {railheadCodes.length > 0 ? (
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-muted">
-                    Railheads · {railheadCodes.join(' · ')}
-                    <span className="ml-1 normal-case tracking-normal text-muted/80">
-                      ({overlays.instances.length} provisional)
-                    </span>
-                  </p>
-                ) : null}
               </div>
             </div>
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
               Dimensions are client inputs — not baked into the drawing.
-              {railheadCodes.length > 0
-                ? ' Railhead count/spacing remain provisional until survey sign-off.'
-                : null}
             </p>
           </div>
-        </div>
-      ) : null}
-    </div>
-  )
-}
-
-function MasterWithOverlays({
-  masterSrc,
-  masterAlt,
-  instances,
-  handles,
-  heightMm,
-  className,
-}: {
-  masterSrc: string
-  masterAlt: string
-  instances: RailheadOverlayInstance[]
-  handles: HandleOverlayInstance[]
-  heightMm: number
-  className: string
-}) {
-  return (
-    <div className={`relative inline-block max-w-full ${className.includes('w-full') ? 'w-full' : ''}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-      <img src={masterSrc} alt={masterAlt} className={className} />
-      {instances.length > 0 || handles.length > 0 ? (
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
-          {instances.map((instance) => {
-            // Scale head height vs gate height; floor so spears stay readable on small previews.
-            const heightPct = Math.max(4.5, Math.min(18, (instance.heightMm / Math.max(heightMm, 1)) * 100))
-            const widthPct = heightPct * (instance.widthMm / Math.max(instance.heightMm, 1))
-            return (
-              // eslint-disable-next-line @next/next/no-img-element -- static public railhead SVG
-              <img
-                key={instance.id}
-                src={instance.publicPath}
-                alt=""
-                className="absolute object-contain object-bottom"
-                style={{
-                  left: `${instance.xRatio * 100}%`,
-                  top: `${instance.anchorYRatio * 100}%`,
-                  width: `${widthPct}%`,
-                  height: `${heightPct}%`,
-                  transform: 'translate(-50%, -100%)',
-                }}
-              />
-            )
-          })}
-          {handles.map((handle) => (
-            <svg
-              key={handle.id}
-              viewBox="0 0 14 56"
-              className="absolute overflow-visible"
-              style={{
-                left: `${handle.xRatio * 100}%`,
-                top: `${handle.yRatio * 100}%`,
-                width: '1.15%',
-                height: '6.5%',
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <rect
-                x="0.8"
-                y="0.8"
-                width="12.4"
-                height="54.4"
-                fill="none"
-                stroke="#1A1A1A"
-                strokeWidth="1.6"
-              />
-              <line
-                x1="7"
-                y1="10"
-                x2="7"
-                y2="46"
-                stroke="#1A1A1A"
-                strokeWidth="1.6"
-                strokeLinecap="square"
-              />
-            </svg>
-          ))}
         </div>
       ) : null}
     </div>

@@ -3,7 +3,7 @@ title: Client Answers — index
 description: Canonical, dated record of every answer batch received from Marius, with normalized rules and downstream impact
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-07-28
+last_updated: 2026-08-11
 ---
 
 # Client Answers
@@ -25,6 +25,7 @@ Client answers arrive as raw multilingual messages (Italian / Romanian / English
 | 2026-07-28 | [`2026-07-28-marius.md`](./2026-07-28-marius.md) | CA-01 … CA-07 | `gate.cantilever.tail_ratio`, `gate.cantilever.width_meaning`, `open.finish_palette` |
 | 2026-07-31 | [`2026-07-31-ruben.md`](./2026-07-31-ruben.md) | CA-08 … CA-12 | `open.width_meaning`, `open.height_meaning`, bifold / telescopic / radius |
 | 2026-07-31 | [`2026-07-31-intake-ship.md`](./2026-07-31-intake-ship.md) | CA-13 | Intake PDF FROM prices + size uplift + ship inventions |
+| 2026-08-11 | [`2026-08-11-marius.md`](./2026-08-11-marius.md) | CA-14 … CA-17 | `open.railhead_count_rule`, `open.dog_bars_count_rule` (layout); circles option; Design railhead policy |
 
 Outbound (answered 2026-07-31):
 

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 
@@ -54,13 +55,6 @@ const GALLERY_ITEMS: GalleryItem[] = [
     src: OFFICIAL_IMAGES.gates.telescopic.hero,
     label: 'Telescopic sliding gate',
     ref: 'ST-3006',
-    span: 'narrow',
-    category: 'gates',
-  },
-  {
-    src: OFFICIAL_IMAGES.gates.radius.hero,
-    label: 'Radius sliding gate',
-    ref: 'ST-3007',
     span: 'narrow',
     category: 'gates',
   },
@@ -127,6 +121,13 @@ const GALLERY_ITEMS: GalleryItem[] = [
     span: 'narrow',
     category: 'fabrication',
   },
+  {
+    src: OFFICIAL_IMAGES.services.railings.garden,
+    label: 'Garden terrace balustrade',
+    ref: 'ST-3017',
+    span: 'narrow',
+    category: 'railings',
+  },
 ]
 
 const FILTERS = [
@@ -159,7 +160,7 @@ export function GalleryClient() {
                   type="button"
                   onClick={() => setActiveFilter(value)}
                   aria-pressed={activeFilter === value}
-                  className={`min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight transition-colors ${
+                  className={`tap-feedback min-h-[44px] border px-4 font-heading text-xs font-bold uppercase tracking-tight ${
                     activeFilter === value
                       ? 'border-steel bg-steel text-white'
                       : 'border-zinc-200 bg-canvas text-zinc-700 hover:border-zinc-400'
@@ -170,20 +171,21 @@ export function GalleryClient() {
               ))}
             </div>
           </div>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-zinc-400" role="status" aria-live="polite">
             {filtered.length} project{filtered.length !== 1 ? 's' : ''}
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
+        <div key={activeFilter} className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-12">
           {filtered.map((item, index) => (
             <div
               key={item.ref}
-              className={`group relative overflow-hidden bg-paper ${
+              className={`marketing-gallery-item group relative overflow-hidden bg-paper ${
                 item.span === 'wide' ? 'lg:col-span-8' : 'lg:col-span-4'
               }`}
+              style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
             >
               <div className={`relative w-full ${item.span === 'wide' ? 'aspect-[16/9]' : index % 3 === 0 ? 'aspect-[4/5]' : 'aspect-square'}`}>
                 <Image
@@ -191,7 +193,7 @@ export function GalleryClient() {
                   alt={item.label}
                   fill
                   sizes={item.span === 'wide' ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-black/0 p-4 text-white">
@@ -201,16 +203,33 @@ export function GalleryClient() {
             </div>
           ))}
         </div>
-        <div className="mt-12 flex flex-col items-start justify-between gap-5 border-t border-zinc-200 pt-8 sm:flex-row sm:items-center">
-          <p className="max-w-xl text-sm leading-relaxed text-muted-deep">
-            Have a gate, railing or fabrication project in mind? Share the site details and the type of work you need.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[48px] w-full shrink-0 items-center justify-center bg-primary px-8 font-heading text-sm font-bold uppercase text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:w-auto"
-          >
-            Request a quote
-          </Link>
+        <div className="mt-12 grid gap-6 border-t border-zinc-200 pt-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-foundry-gold">From inspiration to design</p>
+            <h2 className="mt-2 max-w-2xl font-heading text-3xl font-black uppercase leading-none text-steel sm:text-4xl">
+              Found a direction for your gate?
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-deep">
+              Explore the mechanism, proportions, finish and estimated price online. Final dimensions and specification
+              are confirmed after site survey.
+            </p>
+          </div>
+          <div className="grid w-full gap-3 sm:grid-cols-2 lg:w-auto">
+            <Link
+              href="/configurator"
+              data-configurator-placement="gallery-footer"
+              className="tap-feedback group inline-flex min-h-[48px] w-full items-center justify-center gap-2 bg-primary px-8 font-heading text-sm font-bold uppercase text-white hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Design your gate
+              <ArrowRight className="h-4 w-4 motion-safe:transition-transform motion-safe:group-hover:translate-x-1" aria-hidden />
+            </Link>
+            <Link
+              href="/contact"
+              className="tap-feedback inline-flex min-h-[48px] w-full items-center justify-center border border-steel/25 px-8 font-heading text-sm font-bold uppercase text-steel hover:border-steel hover:bg-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
+            >
+              Request a quote
+            </Link>
+          </div>
         </div>
       </section>
     </>

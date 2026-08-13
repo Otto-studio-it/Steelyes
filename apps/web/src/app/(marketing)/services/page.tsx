@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Steel Fabrication Services | Gates, Railings, Balconies & Security',
@@ -145,6 +146,29 @@ export default function ServicesPage() {
           </Link>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Services', path: '/services' }]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            itemListSchema(
+              SERVICES.map((service) => ({
+                name: service.title,
+                path: service.href,
+                description: service.description,
+              })),
+            ),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

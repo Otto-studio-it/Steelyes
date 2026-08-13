@@ -162,8 +162,22 @@ export type { CadDimensionLayer, CadDimensionLayerInput } from './rendering/cad-
 export { normalizeGatePosts } from './posts'
 export {
   buildGateMeshPlan,
+  buildMeshOpening,
+  checkMeshOpeningEnvelope,
+  measureMeshOpening,
   mmToSceneUnits,
+  MESH_ENVELOPE_TOLERANCE_MM,
   MM_TO_SCENE_UNITS,
+} from './mesh'
+export type {
+  GateMeshBox,
+  GateMeshBoxRole,
+  GateMeshCylinder,
+  GateMeshFidelity,
+  GateMeshOpening,
+  GateMeshOpeningCheck,
+  GateMeshOpeningMeasurement,
+  GateMeshPlan,
 } from './mesh'
 export {
   FINISH_CATALOG,
@@ -250,13 +264,6 @@ export type {
   GateRenderPrimitive,
 } from './rendering'
 export type {
-  GateMeshBox,
-  GateMeshBoxRole,
-  GateMeshCylinder,
-  GateMeshFidelity,
-  GateMeshPlan,
-} from './mesh/types'
-export type {
   FinishDefinition,
   FinishMaterialTokens,
   FinishSchematicTokens,
@@ -300,6 +307,24 @@ export type {
   RailheadOverlayRow,
 } from './silhouettes/resolve-railhead-overlays'
 export {
+  CIRCLE_OVERLAY_PATHS,
+  resolveCircleOverlays,
+} from './silhouettes/resolve-circle-overlays'
+export type {
+  CircleBandOverlay,
+  CircleOverlayPlan,
+} from './silhouettes/resolve-circle-overlays'
+export {
+  COLLAR_OVERLAY_PATHS,
+  COLLAR_SPACING_VARIANTS,
+  resolveCollarOverlays,
+} from './silhouettes/resolve-collar-overlays'
+export type {
+  CollarOverlay,
+  CollarOverlayPlan,
+  CollarSpacingVariant,
+} from './silhouettes/resolve-collar-overlays'
+export {
   HANDLE_OVERLAY_LAYOUT,
   resolveHandleOverlay,
 } from './silhouettes/resolve-handle-overlay'
@@ -307,3 +332,8 @@ export type {
   HandleOverlayInstance,
   HandleOverlayPlan,
 } from './silhouettes/resolve-handle-overlay'
+export { resolveMotorOverlay } from './silhouettes/resolve-motor-overlay'
+export type {
+  MotorOverlayInstance,
+  MotorOverlayPlan,
+} from './silhouettes/resolve-motor-overlay'

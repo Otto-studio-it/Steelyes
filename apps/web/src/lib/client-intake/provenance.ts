@@ -317,11 +317,12 @@ export const PROVENANCE_DOCS: ProvenanceDoc[] = [
     origin: 'Messaggio Marius — Victorian Metal',
     receivedAs: 'Range esempio, catalogo non chiuso',
     summary:
-      'Punte / finials solo in cima. Il prezzo dipende dalla variante: esempio da £1.25 a £25 pezzo. Marius vuole somiglianza ~70/80% rispetto alle foto. Catalogo ufficiale ancora da chiudere.',
+      'Punte / finials solo in cima (e su dog bars se scelti). Prezzo dipende dalla variante. CA-14: qty = uno per baia picket, automatico. CA-17: Design 2D sceglie solo il modello, non disegna i finials. Catalogo SKU £ ancora da firmare.',
     facts: [
-      { label: 'Range esempio', value: '£1.25 – £25 / pezzo' },
-      { label: 'Target visuale', value: '~70/80% come in foto' },
-      { label: 'Catalogo', value: 'Non elencato nel messaggio' },
+      { label: 'Range esempio', value: '£1.25 – £25 / pezzo (storico); listino Numbers provisional' },
+      { label: 'Count rule', value: 'CA-14 — one per picket bay, auto' },
+      { label: 'Design 2D', value: 'CA-17 — model picker only' },
+      { label: 'Catalogo', value: '6 SVG ready; full 61 SKU £ sign-off pending' },
     ],
     originalExcerpt:
       'Capuri (railheads) pe poarta doar sus £….gen one railhead poate sa coste £25 si altul £1.25….si daca fiecare cap poate sa apara pe poarta sa zicem chiar si 70/80% de cum este in poza…',
@@ -337,12 +338,13 @@ export const PROVENANCE_DOCS: ProvenanceDoc[] = [
     id: 'deco.dog_bars',
     title: 'Opzione: Dog bars (bari duble jos)',
     origin: 'Messaggio Marius — Victorian Metal',
-    receivedAs: 'Base + extra per larghezza',
+    receivedAs: 'Base + extra per larghezza; layout locked CA-15',
     summary:
-      'Doppie barre in basso. Extra standard FROM £75; poi ogni barra in più allargando costa £4.50. La regola esatta di conteggio va ancora confermata.',
+      'Doppie barre in basso. Extra standard FROM £75; poi ogni barra in più allargando costa £4.50. CA-15: densità layout automatica (solo on/off). Formula £ ancora survey.',
     facts: [
       { label: 'Base', value: 'FROM £75' },
       { label: 'Extra', value: '£4.50 per barra aumentando la larghezza' },
+      { label: 'Layout', value: 'CA-15 — auto densità' },
     ],
     originalExcerpt:
       'bari duble in partea de jos al porti care se numesc “DOG BARS”…. Extra £….from standard £75 si apoi fiecare bara marind largimea extra £4.50',
@@ -381,11 +383,11 @@ export const PROVENANCE_DOCS: ProvenanceDoc[] = [
     origin: 'Messaggio Marius + foto inviate',
     receivedAs: 'Barra extra + pezzo cerchio',
     summary:
-      'Cerchi tra le barre (visibili in molte foto). Serve 1 barra orizzontale in più (£275) + £2.50 per cerchio; il numero cresce con la larghezza. Formula di conteggio ancora aperta.',
+      'Cerchi tra le barre (visibili in molte foto). Serve 1 barra orizzontale in più (£275) + £2.50 per cerchio. CA-16: opzione sì/no a bande (sus/jos); densità layout auto. £ unitario ancora da trattare in quote.',
     facts: [
       { label: 'Barra extra', value: '£275' },
       { label: 'Cerchio', value: '£2.50 / pezzo' },
-      { label: 'Quantità', value: 'Cresce con la larghezza' },
+      { label: 'Option', value: 'CA-16 — on/off bands' },
     ],
     originalExcerpt:
       'cercuri intre barile verticale…necesita de 1 bara in plus…£275 plus valoarea cercului…£2.50 si va creste numarul in functie de latimea porti',

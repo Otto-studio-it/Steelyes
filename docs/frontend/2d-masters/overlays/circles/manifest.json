@@ -1,0 +1,31 @@
+{
+  "kind": "circle_band_overlay_pack",
+  "status": "ready",
+  "updated": "2026-08-11",
+  "source": "CA-16 Marius lock — on/off ring bands; auto density per bay",
+  "paper": { "width": 1200, "height": 860, "opening": [126, 1074] },
+  "usage": "Stack over Victorian Design masters when Circles (or legacy Bushes) is enabled. Do not bake into every gate master.",
+  "silhouettes": [
+    {
+      "slug": "band_upper",
+      "file": "band_upper.svg",
+      "publicPath": "/2d-masters/overlays/circles/band_upper.svg",
+      "cy": 280
+    },
+    {
+      "slug": "band_lower",
+      "file": "band_lower.svg",
+      "publicPath": "/2d-masters/overlays/circles/band_lower.svg",
+      "cy": 470
+    },
+    {
+      "slug": "bands_combined",
+      "file": "bands_combined.svg",
+      "publicPath": "/2d-masters/overlays/circles/bands_combined.svg"
+    }
+  ],
+  "figmaImport": {
+    "fileKey": "HW4O7VfFiRKKyBjQCk8y9Y",
+    "suggestedPage": "Overlays — Circles + Railheads"
+  }
+}

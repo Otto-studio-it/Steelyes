@@ -2,8 +2,12 @@ import { MetadataRoute } from 'next'
 
 const BASE_URL = 'https://www.steelyes.co.uk'
 
+// Bump when marketing page content actually changes — not on every build/deploy,
+// which would make every lastmod identical and Google discounts that as a fake signal.
+const CONTENT_LAST_UPDATED = new Date('2026-08-05')
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
+  const now = CONTENT_LAST_UPDATED
 
   const routes: MetadataRoute.Sitemap = [
     {

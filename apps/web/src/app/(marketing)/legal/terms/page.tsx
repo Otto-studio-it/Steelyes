@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS, formatBusinessAddress } from '@/lib/marketing/business'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions',
@@ -126,6 +127,15 @@ export default function TermsPage() {
           </p>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Terms & Conditions', path: '/legal/terms' }]),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

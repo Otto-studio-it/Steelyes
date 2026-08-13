@@ -38,10 +38,10 @@ describe('Phase 2 railhead overlays', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const plan = resolveRailheadOverlays(config)
     expect(plan.instances).toEqual([])
-    expect(plan.countRuleStatus).toBe('provisional')
+    expect(plan.countRuleStatus).toBe('bay_locked_ca14')
   })
 
-  it('places top railheads from preloaded SKU SVG with provisional count', () => {
+  it('places top railheads from preloaded SKU SVG with bay-locked count', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
     const expected = getExpectedTopRailheadCount(base.widthMm)
     const config = enable(base, 'top_railheads', expected, 'RH7')

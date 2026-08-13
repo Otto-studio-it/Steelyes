@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
+import { breadcrumbSchema, howToSchema, serviceSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Steel Structures | Bespoke Structural Steelwork',
@@ -24,6 +25,13 @@ const SPEC_ITEMS = [
   { label: 'Finish', value: 'Powder coat / paint system — see finish palette' },
   { label: 'Fixings', value: 'Verified on site before fabrication sign-off' },
   { label: 'Compliance', value: 'Confirmed during specification; no public claims pre-approval' },
+] as const
+
+const WORKFLOW_STEPS = [
+  { step: 'Site survey', body: 'Fixing substrates, floor levels, and structural constraints are confirmed before design is locked.' },
+  { step: 'Drawings', body: 'Fabrication drawings reviewed and signed off before production starts.' },
+  { step: 'Fabrication', body: 'Frame sections cut, welded, and prepared for finishing with consistent edge and corner details.' },
+  { step: 'Install', body: 'On-site fixing and alignment coordinated around access windows and building protection.' },
 ] as const
 
 export default function StructuresServicePage() {
@@ -103,24 +111,7 @@ export default function StructuresServicePage() {
           <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Workflow</p>
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">From design to erection</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-4">
-            {[
-              {
-                step: 'Site survey',
-                body: 'Fixing substrates, floor levels, and structural constraints are confirmed before design is locked.',
-              },
-              {
-                step: 'Drawings',
-                body: 'Fabrication drawings reviewed and signed off before production starts.',
-              },
-              {
-                step: 'Fabrication',
-                body: 'Frame sections cut, welded, and prepared for finishing with consistent edge and corner details.',
-              },
-              {
-                step: 'Install',
-                body: 'On-site fixing and alignment coordinated around access windows and building protection.',
-              },
-            ].map((item, index) => (
+            {WORKFLOW_STEPS.map((item, index) => (
               <article key={item.step} className="border border-zinc-200 bg-white p-6">
                 <p className="mb-4 font-heading text-5xl font-black text-zinc-200">0{index + 1}</p>
                 <h3 className="mb-2 font-heading text-xl font-bold uppercase">{item.step}</h3>
@@ -159,6 +150,46 @@ export default function StructuresServicePage() {
           </div>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([
+              { name: 'Home', path: '/' },
+              { name: 'Services', path: '/services' },
+              { name: 'Steel Structures', path: '/services/structures' },
+            ]),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            serviceSchema({
+              name: 'Steel Structures',
+              description: metadata.description!,
+              path: '/services/structures',
+              serviceType: 'Structural steel fabrication',
+              image: OFFICIAL_IMAGES.services.structures.hero,
+            }),
+          ),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            howToSchema({
+              name: 'How Steelyes fabricates steel structures',
+              description: metadata.description!,
+              path: '/services/structures',
+              steps: WORKFLOW_STEPS.map(({ step, body }) => ({ name: step, text: body })),
+            }),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

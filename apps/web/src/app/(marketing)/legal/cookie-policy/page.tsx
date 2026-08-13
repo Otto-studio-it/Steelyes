@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { CookiebotDeclaration } from '@/components/consent/CookiebotDeclaration'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { BUSINESS } from '@/lib/marketing/business'
+import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy',
@@ -180,6 +181,15 @@ export default function CookiePolicyPage() {
           </p>
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Cookie Policy', path: '/legal/cookie-policy' }]),
+          ),
+        }}
+      />
     </MarketingShell>
   )
 }

@@ -4,14 +4,12 @@ import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
 import { ProvisionalCountNotice } from '@/components/configurator/ProvisionalCountNotice'
-import { VariantCatalogNotice } from '@/components/configurator/VariantCatalogNotice'
-import { RailheadVariantPicker } from '@/components/configurator/RailheadVariantPicker'
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
 import { PriceDeltaChip } from '@/components/configurator/PriceDeltaChip'
-import { isRailheadOptionKey } from '@steelyes/gate-engine'
 import { OPTION_GROUPS, OPTION_META, type OptionGroupId } from '@/lib/configurator/options'
 import { SITE_SURVEY_FIELD_LABEL } from '@/lib/configurator/labels'
 import { estimateOptionEnableDelta, formatPriceDelta } from '@/lib/configurator/price-delta'
+import { COMPOSITE_DISABLED_OPTION_KEYS } from '@/lib/configurator/style-actions'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 import { cn } from '@/lib/utils'
 
@@ -25,17 +23,37 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
   if (option.key === 'aluminium_panels' && config.style !== 'composite_boards') {
     return null
   }
+  if (option.key === 'bushes' || option.key === 'spirals') {
+    // Legacy inserts — superseded by Circles / Collar for Victorian Design masters
+    return null
+  }
+
+  const isCompositeBlocked =
+    config.style === 'composite_boards' && COMPOSITE_DISABLED_OPTION_KEYS.includes(option.key)
 
   const selected = config.options.find((item) => item.key === option.key)
-  const enabled = Boolean(selected?.enabled)
+  const enabled = Boolean(selected?.enabled) && !isCompositeBlocked
   const quantity = selected?.quantity ?? 0
   const enableDelta = estimateOptionEnableDelta(config, pricingCatalog, option.key)
   const deltaLabel = formatPriceDelta(enableDelta.deltaGbp)
 
+  // Quantity UI only for legacy countable inserts — never for dog bars / circles / collars / railheads.
+  const showQuantity =
+    enabled &&
+    Boolean(option.quantityLabel) &&
+    option.key !== 'dog_bars' &&
+    option.key !== 'circles' &&
+    option.key !== 'picket_collars' &&
+    option.key !== 'top_railheads'
+
   return (
     <div
       className={`border p-4 transition ${
-        enabled ? 'border-primary/30 bg-primary/5' : 'border-steel/10 bg-paper'
+        isCompositeBlocked
+          ? 'border-steel/8 bg-paper/60 opacity-60'
+          : enabled
+            ? 'border-primary/30 bg-primary/5'
+            : 'border-steel/10 bg-paper'
       }`}
     >
       <div className="flex items-start justify-between gap-3">
@@ -44,20 +62,21 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
             checked={enabled}
             onCheckedChange={(checked) => toggleOption(option.key, checked)}
             label={option.label}
-            description={option.description}
+            description={
+              isCompositeBlocked
+                ? 'Not available on Composite Boards — only Victorian tipologies include this decoration.'
+                : option.description
+            }
             id={`option-${option.key}`}
+            disabled={isCompositeBlocked}
           />
         </div>
-        {deltaLabel ? (
-          <PriceDeltaChip
-            label={deltaLabel}
-            tone="hint"
-            className="mt-1 shrink-0"
-          />
+        {!isCompositeBlocked && deltaLabel ? (
+          <PriceDeltaChip label={deltaLabel} tone="hint" className="mt-1 shrink-0" />
         ) : null}
       </div>
 
-      {enabled && option.quantityLabel ? (
+      {showQuantity ? (
         <div className="mt-4 space-y-3 border-t border-steel/8 pt-4">
           <label className="block space-y-2">
             <span className="block font-mono text-xs uppercase tracking-widest text-muted">
@@ -78,15 +97,7 @@ function OptionRow({ optionKey }: { optionKey: (typeof OPTION_META)[number]['key
               }}
             />
           </label>
-          {isRailheadOptionKey(option.key) ? <RailheadVariantPicker optionKey={option.key} /> : null}
-          <VariantCatalogNotice optionKey={option.key} />
-          {option.key === 'top_railheads' ||
-          option.key === 'dog_bars' ||
-          option.key === 'dog_bar_railheads' ||
-          option.key === 'bushes' ||
-          option.key === 'spirals' ? (
-            <ProvisionalCountNotice />
-          ) : null}
+          {option.key === 'bushes' || option.key === 'spirals' ? <ProvisionalCountNotice /> : null}
           <p className="text-xs leading-5 text-muted-deep">Included in the estimated total.</p>
         </div>
       ) : null}
