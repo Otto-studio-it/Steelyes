@@ -1,0 +1,101 @@
+{
+  "family": "telescopic_sliding",
+  "status": "definitive_prototypes_2026-08-12",
+  "source_folder_was": "telescopic sliding variants",
+  "notes": [
+    "Hand-tuned Figma prototypes \u2014 prefer these over auto-baked overlay merges.",
+    "composite_dog_bars filename was wrong: file is Victorian dog_bars.",
+    "GATE__\u2026dog_bars_circles_collar_1 filename was wrong: no circles/collar in file.",
+    "Missing vs full matrix (not in this pack yet): base_circles, dog_bars_circles, dog_bars_collar, arched_circles_collar, *_collar_2, composite_dog_bars (real composite+dog if needed)."
+  ],
+  "entries": [
+    {
+      "was": "base 1.svg",
+      "slug": "base",
+      "file": "GATE__telescopic_sliding__base.svg",
+      "note": "Tipologica base Victorian, flat top, mid-rail, no deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "base 2 + collar.svg",
+      "slug": "base_collar_1",
+      "file": "GATE__telescopic_sliding__base_collar_1.svg",
+      "note": "Base + collar su picket lunghi (ogni 1). No cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched 1.svg",
+      "slug": "arched",
+      "file": "GATE__telescopic_sliding__arched.svg",
+      "note": "Arched top Victorian, no deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched +collar.svg",
+      "slug": "arched_collar_1",
+      "file": "GATE__telescopic_sliding__arched_collar_1.svg",
+      "note": "Arched + collar ogni 1. No cerchi",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched + circles.svg",
+      "slug": "arched_circles",
+      "file": "GATE__telescopic_sliding__arched_circles.svg",
+      "note": "Arched + cerchi upper (segue arco) + lower \u2014 Q1",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars 1.svg",
+      "slug": "arched_dog_bars",
+      "file": "GATE__telescopic_sliding__arched_dog_bars.svg",
+      "note": "Arched + dog bars, no deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars + collar.svg",
+      "slug": "arched_dog_bars_collar_1",
+      "file": "GATE__telescopic_sliding__arched_dog_bars_collar_1.svg",
+      "note": "Arched + dog bars + collar (verificare densit\u00e0 every-1 vs every-2 in Figma)",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "arched_dog_bars + collar + circles.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "file": "GATE__telescopic_sliding__arched_dog_bars_circles_collar_1.svg",
+      "note": "Arched + dog bars + cerchi Q1 + collar",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "composite 1.svg",
+      "slug": "composite",
+      "file": "GATE__telescopic_sliding__composite.svg",
+      "note": "Composite boards (horizontal slats). No Victorian deco",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "composite_dog_bars 1.svg",
+      "slug": "dog_bars",
+      "file": "GATE__telescopic_sliding__dog_bars.svg",
+      "note": "CORRETTO: era mal-nominato composite_dog_bars \u2014 \u00e8 dog_bars Victorian flat",
+      "promote_runtime": true,
+      "action": "renamed"
+    },
+    {
+      "was": "GATE__telescopic_sliding__dog_bars_circles_collar_1 1.svg",
+      "slug": "dog_bars",
+      "file": "_review_duplicates/QUARANTINE__was_misnamed_dog_bars_circles_collar_1__almost_dup_of_dog_bars.svg",
+      "note": "CORRETTO: nome mentiva circles/collar \u2014 \u00e8 dog_bars; near-dup del precedente",
+      "promote_runtime": false,
+      "action": "quarantined_duplicate"
+    }
+  ]
+}

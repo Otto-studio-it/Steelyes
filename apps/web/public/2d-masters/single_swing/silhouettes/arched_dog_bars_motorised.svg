@@ -1,5 +1,5 @@
 <svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_47_2358)">
+<g clip-path="url(#clip0_77_42583)">
 <path d="M1200 0H0V860H1200V0Z" fill="white"/>
 <path d="M1200 698H0V716H1200V698Z" fill="#2A2A2A"/>
 <path d="M102 114H46V698H102V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
@@ -250,7 +250,6 @@
 <path opacity="0.55" d="M1129 669V681" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
 <path opacity="0.55" d="M1143 681V693" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
 <path opacity="0.55" d="M1129 693V695" stroke="#1A1A1A" stroke-width="0.9" stroke-linecap="square"/>
-<path d="M1080 150H120V670H1080V150Z" stroke="#1A1A1A" stroke-width="2.2"/>
 <path d="M126 178C442 144.667 758 144.667 1074 178" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M130 186C443.333 158 756.667 158 1070 186" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M126 656H1074" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
@@ -284,9 +283,11 @@
 <path d="M120 206.4H110V218.4H120V206.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M120 601.6H110V613.6H120V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M144 682H1056" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M1074 178V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M126 178V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 </g>
 <defs>
-<clipPath id="clip0_47_2358">
+<clipPath id="clip0_77_42583">
 <rect width="1200" height="860" fill="white"/>
 </clipPath>
 </defs>

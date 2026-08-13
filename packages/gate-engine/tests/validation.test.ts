@@ -24,7 +24,7 @@ describe('gate-engine validation', () => {
     expect(config.heightMm).toBe(1000)
     expect(config.finish).toBe('black_satin')
     expect(config.fencePanels.quantity).toBe(0)
-    expect(config.options).toHaveLength(8)
+    expect(config.options).toHaveLength(9)
   })
 
   it('accepts a valid preset-based config', () => {
@@ -198,7 +198,8 @@ describe('gate-engine validation', () => {
           ? {
               ...option,
               enabled: true,
-              quantity: 15,
+              // Above CA-14 bay guide (~17 at 1800 mm)
+              quantity: 40,
             }
           : option,
       ),

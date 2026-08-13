@@ -3,7 +3,7 @@ title: Go-live limitations (client handoff)
 description: Honest scope for public launch — what works, what is indicative, what is schematic
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-08-05
+last_updated: 2026-08-11
 ---
 
 # Steelyes — Go-live limitations
@@ -30,7 +30,7 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 - **Design** tab shows CAD masters (photo-locked silhouettes) with live mm strip under the drawing.
 - Finish colour is selected in **Installation**; masters stay line-art with a finish swatch cue.
 - Handle is **baked into** official `manual`/`manuale` masters when present; otherwise omitted by design — no UI handle overlay.
-- Railhead overlays use provisional picket spacing / count guidance.
+- Railheads: count rule locked **CA-14** (one per picket bay, auto). Design tab shows **model picker only** (**CA-17**) — finials are not drawn on 2D masters. Engine/UI may still show legacy qty until the polish batch ships.
 - Dimension meaning (clear opening vs overall) is still partially open with the client — cantilever is treated as **clear opening** with site-space note.
 
 ## Mesh / AR (“View in your space”)
@@ -63,7 +63,8 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 
 - Final base prices + size uplift formula
 - Finish uplift base / measured area
-- Railhead + dog-bar + circles **count rules**
+- ~~Railhead + dog-bar layout count rules~~ → closed **CA-14 / CA-15** (auto per bay). Still open: full railhead SKU £ sign-off, dog-bar **money** worked example, circles **unit price**
+- Circles option confirmed **CA-16** (on/off bands) — implement under maintenance polish
 - Aluminium panel/bar counts on a worked example
 - Exact width/height datum worked example
 - Facebook vanity URL (share link is temporary)

@@ -1,0 +1,42 @@
+# Tracked Sliding — definitive prototypes
+
+Fonte originale: cartella `tracked sliding ` (trailing space; export Figma).
+Organizzati 2026-08-13 con slug canonici `GATE__tracked_sliding__{slug}.svg`.
+
+## Policy
+
+- **Single flat set**: manual and motorised use the same images.
+- Do **not** create or promote `*_motorised` silhouette variants for this gate type.
+
+## Inventario
+
+| Slug | Cosa è |
+|---|---|
+| `base` | Victorian flat, mid-rail |
+| `base_collar_1` | base + collar ogni picket |
+| `base_circles_collar_1` | base + cerchi + collar |
+| `arched` | arched top |
+| `arched_collar_1` | arched + collar |
+| `arched_circles_collar_1` | arched + cerchi + collar |
+| `dog_bars` | Victorian flat + dog bars |
+| `dog_bars_circles` | dog bars + cerchi |
+| `dog_bars_collar_1` | dog bars + collar |
+| `dog_bars_circles_collar_1` | dog bars + cerchi + collar |
+| `arched_dog_bars` | arched + dog bars |
+| `arched_dog_bars_circles` | arched + dog bars + cerchi |
+| `arched_dog_bars_collar_1` | arched + dog bars + collar |
+| `arched_dog_bars_circles_collar_1` | arched + dog bars + cerchi + collar |
+| `composite` | boards orizzontali |
+
+## Mancanti (overlay OK)
+
+- `base_circles`, `arched_circles`
+
+## Runtime
+
+File `promote_runtime=true` copiati in:
+
+- `apps/web/public/2d-masters/tracked_sliding/silhouettes/{slug}.svg`
+- `docs/frontend/2d-masters/tracked_sliding/silhouettes/{slug}.svg`
+
+Resolver: tipology fallbacks without `withoutOptions` so missing deco combos still resolve to the tipology master.

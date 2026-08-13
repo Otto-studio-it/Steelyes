@@ -27,8 +27,8 @@ export type RailheadOverlayInstance = {
 
 export type RailheadOverlayPlan = {
   instances: RailheadOverlayInstance[]
-  /** Count rule is still provisional until Marius signs open.railhead_count_rule. */
-  countRuleStatus: 'provisional'
+  /** CA-14 locked bay rule; Design still does not composite finials (CA-17). */
+  countRuleStatus: 'bay_locked_ca14' | 'provisional'
   notes: string[]
 }
 
@@ -168,12 +168,12 @@ export function resolveRailheadOverlays(
   )
 
   if (top.length || dog.length) {
-    notes.push('Railhead count and spacing are provisional until Marius signs the count rule.')
+    notes.push('Railhead count = one per picket bay (CA-14). Design does not draw finials (CA-17).')
   }
 
   return {
     instances: [...top, ...dog],
-    countRuleStatus: 'provisional',
+    countRuleStatus: 'bay_locked_ca14',
     notes,
   }
 }

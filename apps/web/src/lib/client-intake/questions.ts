@@ -651,22 +651,25 @@ export const INTAKE_QUESTIONS: IntakeQuestion[] = [
     id: 'open.railhead_count_rule',
     section: 'open_decorations',
     label: 'Come si contano i railheads in base alla larghezza?',
-    context: 'Es. uno ogni X mm, oppure N fissi per anta, ecc.',
+    context:
+      'ANSWERED CA-14 (2026-08-11): uno automatico in ogni spazio tra picket/bare; niente qty manuale. Top, middle bar e dog bars stessa regola.',
     input: 'textarea',
-    blocking: true,
+    blocking: false,
   },
   {
     id: 'open.dog_bars_count_rule',
     section: 'open_decorations',
     label: 'Regola esatta per dog bars (£75 e £4.50)',
-    context: '£4.50 è per ogni barra in più, per ogni 100 mm, o altro?',
+    context:
+      'Layout ANSWERED CA-15: densità automatica, solo on/off. Formula £75 / £4.50 ancora da firmare con esempio monetario.',
     input: 'textarea',
   },
   {
     id: 'open.circles_count_rule',
     section: 'open_decorations',
     label: 'Formula conteggio cerchi in base alla larghezza',
-    context: '',
+    context:
+      'Option ANSWERED CA-16: cerchi = opzione sì/no a bande (sus/jos). Prezzo unitario ancora aperto; densità layout = auto per baia salvo diversa indicazione.',
     input: 'textarea',
   },
   {

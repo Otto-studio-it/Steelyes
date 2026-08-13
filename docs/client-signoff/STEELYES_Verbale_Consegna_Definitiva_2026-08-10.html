@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <title>Steelyes Ltd — Verbale di consegna definitiva e chiusura Accordo di Collaborazione</title>
+  <style>
+    @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    h1 {
+      font-size: 16pt;
+      letter-spacing: 0.02em;
+      margin: 0 0 4pt;
+      text-transform: uppercase;
+    }
+    h2 {
+      font-size: 11.5pt;
+      margin: 18pt 0 6pt;
+      padding-bottom: 3pt;
+      border-bottom: 1.5pt solid #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    h3 {
+      font-size: 10.5pt;
+      margin: 12pt 0 4pt;
+    }
+    p { margin: 0 0 8pt; }
+    .meta { font-size: 9pt; color: #444; margin-bottom: 14pt; }
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12pt;
+      margin-bottom: 14pt;
+      padding-bottom: 10pt;
+      border-bottom: 2pt solid #1a1a1a;
+    }
+    .party strong { display: block; font-size: 11pt; margin-bottom: 2pt; }
+    .party span { display: block; font-size: 9pt; color: #444; }
+    .eyebrow {
+      font-size: 8.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #666;
+      margin-bottom: 6pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8pt 0 12pt;
+      font-size: 9.5pt;
+    }
+    th, td {
+      border: 0.75pt solid #ccc;
+      padding: 5pt 7pt;
+      vertical-align: top;
+      text-align: left;
+    }
+    th { background: #f3f3f3; font-weight: 700; }
+    .ok { color: #0b6b2f; font-weight: 700; }
+    .note { font-size: 9pt; color: #333; }
+    ul { margin: 4pt 0 10pt; padding-left: 16pt; }
+    li { margin-bottom: 3pt; }
+    .box {
+      border: 1.25pt solid #1a1a1a;
+      padding: 10pt 12pt;
+      margin: 10pt 0 14pt;
+      background: #fafafa;
+    }
+    .box h3 { margin-top: 0; }
+    .money { font-variant-numeric: tabular-nums; }
+    .signatures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28pt;
+      margin-top: 28pt;
+    }
+    .sig-block {
+      border-top: 1pt solid #1a1a1a;
+      padding-top: 8pt;
+      min-height: 70pt;
+    }
+    .sig-block .role { font-size: 9pt; color: #555; }
+    .footer {
+      margin-top: 22pt;
+      padding-top: 8pt;
+      border-top: 0.75pt solid #bbb;
+      font-size: 8pt;
+      color: #666;
+    }
+    .small { font-size: 9pt; }
+    em.legal { font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <div class="eyebrow">Otto Studio · Documento riservato — ad uso esclusivo delle parti</div>
+  <h1>Verbale di consegna definitiva<br/>e chiusura dell’Accordo di Collaborazione</h1>
+  <p class="meta">
+    Documento di redazione finale · Versione 1.0 · Data: <strong>10 agosto 2026</strong><br/>
+    Riferimento: <em>Lettera di Accordo — Accordo di Collaborazione Otto Studio / Steelyes Ltd</em>, Versione 1.0 — Aprile 2026
+  </p>
+
+  <div class="header-grid">
+    <div class="party">
+      <strong>FORNITORE</strong>
+      <span>Otto Studio</span>
+      <span>amministrazione@otto-studio.it · otto-studio.it</span>
+    </div>
+    <div class="party">
+      <strong>CLIENTE</strong>
+      <span>Steelyes Ltd</span>
+      <span>info@steelyes.co.uk · steelyes.co.uk</span>
+      <span>Company no. 13415956 · VAT 392 1130 22</span>
+    </div>
+  </div>
+
+  <h2>1. Oggetto</h2>
+  <p>
+    Con il presente verbale le Parti attestano che Otto Studio ha progettato, sviluppato, integrato
+    e messo in produzione la piattaforma digitale di Steelyes Ltd, comprensiva di tutti i moduli
+    previsti dalla Sezione 2 dell’Accordo di Collaborazione del aprile 2026, nonché di ulteriori
+    attività e componenti realizzati in corso d’opera oltre lo scope originario, come descritto
+    nelle Sezioni 3 e 4 del presente documento.
+  </p>
+  <p>
+    La piattaforma è pubblicamente raggiungibile su <strong>https://steelyes.co.uk</strong>
+    (e www), con ambiente di staging su <strong>https://staging.steelyes.co.uk</strong>.
+    Casella ufficiale operativa: <strong>info@steelyes.co.uk</strong>.
+  </p>
+
+  <h2>2. Verifica dei deliverable contrattuali</h2>
+  <p class="small">
+    Riscontro rispetto alla Sezione 2 dell’Accordo («Deliverable inclusi»). Stato al 10/08/2026.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28%">Modulo contrattuale</th>
+        <th>Cosa è stato consegnato</th>
+        <th style="width:14%">Stato</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>01 — Landing page / Sito vetrina</strong></td>
+        <td>
+          Homepage multi-sezione; Chi siamo; Prodotti/cancelli (8 tipologie); Servizi
+          (ringhiere, balconi, sicurezza, strutture, scale); Installazione; Gallery; Contatti;
+          pagine legali (privacy, cookie, termini). SEO tecnico base incluso (vedi riga 06).
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+      <tr>
+        <td><strong>02 — Gate Configurator</strong></td>
+        <td>
+          Applicazione web interattiva: selezione stile/tipologia, dimensioni (mm), profilo/finitura,
+          anteprima 2D (master CAD foto-guidati), prezzo indicativo soggetto a survey, salvataggio
+          configurazione e link condivisibile pubblico (<code>/quote/[shareToken]</code>).
+          Otto (8) tipologie di cancello configurabili.
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+      <tr>
+        <td><strong>03 — Sistema preventivi</strong></td>
+        <td>
+          Form di richiesta preventivo integrato nel configuratore e nel sito (contatti);
+          salvataggio a database; notifica email a cliente e workshop su
+          <strong>info@steelyes.co.uk</strong> via Resend; gestione lato admin.
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+      <tr>
+        <td><strong>04 — Admin Panel</strong></td>
+        <td>
+          Pannello autenticato per dashboard, listino master, prezzi cancelli, addon, recinzioni,
+          dati cliente, gestione preventivi e posta in arrivo. Accesso produzione verificato.
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+      <tr>
+        <td><strong>05 — AR Preview</strong></td>
+        <td>
+          Anteprima in realtà aumentata del cancello configurato da browser mobile:
+          export GLB/USDZ a scala reale (mm→m), apertura nativa Apple Quick Look (iOS) e
+          Google Scene Viewer (Android), CTA «View in your space», handoff HTTPS temporaneo.
+          Su desktop: copia link per telefono.
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+      <tr>
+        <td><strong>06 — SEO + Analytics setup</strong></td>
+        <td>
+          Sitemap XML dinamica, robots.txt, markup schema.org / JSON-LD, meta/OG, canonical.
+          Consent management Cookiebot (Usercentrics). Analytics di prodotto/terze parti
+          (es. GA4/PostHog) non attivati in produzione per scelta privacy-first; attivabili
+          in manutenzione su richiesta del Cliente, con consenso cookie adeguato.
+        </td>
+        <td class="ok">CONSEGNATO</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">
+    Tutti i moduli elencati nella Sezione 2 dell’Accordo risultano <strong>consegnati e operativi</strong>
+    alla data del presente verbale. Nessun costo aggiuntivo è stato addebitato per tali moduli
+    rispetto al prezzo di progetto di €&nbsp;5.500,00 (IVA esclusa).
+  </p>
+
+  <h2>3. Infrastruttura tecnica effettivamente in esercizio</h2>
+  <p>
+    In luogo di ipotesi iniziali di hosting esclusivamente su Vercel, l’architettura di produzione
+    è stata consolidata come segue (concordata operativamente e già riflessa nelle informative privacy del sito):
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28%">Componente</th>
+        <th>Provider / soluzione</th>
+        <th>Ruolo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>VPS / server</strong></td>
+        <td><strong>DigitalOcean</strong></td>
+        <td>Macchina virtuale dedicata su cui gira l’infrastruttura applicativa.</td>
+      </tr>
+      <tr>
+        <td><strong>Orchestrazione deploy</strong></td>
+        <td><strong>Coolify</strong> (sul VPS DigitalOcean, in sostituzione di Vercel)</td>
+        <td>
+          Deploy e gestione di produzione (<code>steelyes.co.uk</code> / www) e staging
+          (<code>staging.steelyes.co.uk</code>).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Backend as a Service + Database</strong></td>
+        <td><strong>Supabase</strong> (progetti EU: staging + production)</td>
+        <td>
+          Postgres, Auth admin, RLS, storage dati preventivi/catalogo/configurazioni.
+          Backend gestito come servizio (BaaS), non self-hosted sul VPS.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Email transazionale</strong></td>
+        <td><strong>Resend</strong></td>
+        <td>
+          Invio notifiche lead/preventivo/intake da/verso
+          <strong>info@steelyes.co.uk</strong> (dominio verificato; SPF/DKIM).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>DNS / CDN / edge</strong></td>
+        <td><strong>Cloudflare</strong></td>
+        <td>DNS, protezione e edge davanti all’app Coolify.</td>
+      </tr>
+      <tr>
+        <td><strong>Consent cookie</strong></td>
+        <td><strong>Cookiebot (Usercentrics)</strong></td>
+        <td>Gestione consenso cookie su dominio di produzione.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">
+    I costi operativi fissi di infrastruttura (hosting VPS, database Supabase, Resend, licenze e simili),
+    ai sensi della Sezione 6 dell’Accordo, restano a carico del Cliente e saranno rendicontati in modo
+    trasparente nell’ambito del piano di manutenzione, ove non già direttamente intestate al Cliente.
+  </p>
+
+  <h2>4. Lavori e funzionalità aggiuntivi rispetto al contratto</h2>
+  <p>
+    Oltre ai sei moduli contrattuali, Otto Studio ha realizzato e consegnato — senza addebito di
+    change request formale aggiuntiva sul prezzo di progetto di €&nbsp;5.500,00 — le seguenti
+    attività e componenti, maturati in corso d’opera per elevare qualità, operatività e onestà commerciale del prodotto:
+  </p>
+  <ul>
+    <li><strong>Migrazione hosting da Vercel a Coolify su VPS DigitalOcean</strong>, con cutover DNS su Cloudflare e ambienti prod/staging separati.</li>
+    <li><strong>Configuratore esteso a 8 tipologie</strong> (oltre lo scope minimo): double swing, single swing, tracked sliding, cantilever, bifolding double, single bifolding, telescopic sliding, radius sliding — con master 2D CAD foto-guidati e mesh AR coerenti.</li>
+    <li><strong>Motore di dominio dedicato (<code>gate-engine</code>)</strong>: validazione geometrica, pricing indicativo condiviso client/server, rendering 2D/3D, export AR.</li>
+    <li><strong>Pannello admin ampliato</strong>: Listino Master, prezzi cancelli, addon, recinzioni, dati cliente, preventivi, <em>Posta in arrivo</em>.</li>
+    <li><strong>Pipeline email operativa</strong>: template Resend con tag <code>[LEAD]</code>/<code>[PREVENTIVO]</code>/<code>[INTAKE]</code>, reply-To su info@, fallback plain-text; script Gmail auto-ack + triage etichette sulla casella Workspace info@.</li>
+    <li><strong>Sito servizi multi-pagina</strong> (railings, balconies, security, structures, staircases) e pagine prodotto per ciascuna tipologia di cancello.</li>
+    <li><strong>Pagine legali complete</strong> (privacy, cookie, termini) allineate allo stack reale (Supabase, Resend, Coolify, Cloudflare, Cookiebot).</li>
+    <li><strong>Hardening DB/RLS</strong> su Supabase (staging e production), auth admin ripristinata e verificata in produzione.</li>
+    <li><strong>Social e brand ops</strong>: Instagram, Facebook, TikTok; email ufficiale info@steelyes.co.uk; dati societari in footer (company no. / VAT).</li>
+    <li><strong>Documentazione di go-live e limitazioni oneste</strong> (prezzi indicativi soggetti a survey; AR a scala reale; scope 2D/AR chiarito) per uso commerciale del Cliente.</li>
+  </ul>
+  <p class="note">
+    Eventuali evoluzioni future (nuovi moduli, CRM, Google Ads, analytics avanzati, cataloghi definitivi
+    di prezzo non ancora firmati dal Cliente, ecc.) restano fuori dal presente verbale e saranno
+    gestite tramite change request o nell’ambito del piano di manutenzione mensile, secondo Accordo.
+  </p>
+
+  <h2>5. Condizioni economiche — chiusura progetto</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Voce</th>
+        <th>Importo (EUR, IVA esclusa)</th>
+        <th>Stato al 10/08/2026</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Progetto completo (tutti i moduli) — Accordo Sez. 3</td>
+        <td class="money"><strong>5.500,00</strong></td>
+        <td>Lavoro <strong>definitivamente concluso</strong></td>
+      </tr>
+      <tr>
+        <td>1ª rata — Acconto 30%</td>
+        <td class="money">1.650,00</td>
+        <td>Come da piano di pagamento Accordo</td>
+      </tr>
+      <tr>
+        <td>2ª rata — Milestone 30%</td>
+        <td class="money">1.650,00</td>
+        <td>Come da piano di pagamento Accordo</td>
+      </tr>
+      <tr>
+        <td><strong>3ª rata — Saldo 40% (consegna finale)</strong></td>
+        <td class="money"><strong>2.200,00</strong></td>
+        <td><strong>Dovuta — da corrispondere al più presto</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <h3>Saldo residuo</h3>
+    <p style="margin:0">
+      Alla data del presente verbale rimane dovuto a Otto Studio l’importo di
+      <strong class="money">€&nbsp;2.200,00 (duemiladuecento/00)</strong>, IVA esclusa, a titolo di
+      saldo del progetto da €&nbsp;5.500,00. Il Cliente si impegna a provvedere al pagamento
+      <strong>il prima possibile</strong>. Ai sensi dell’Accordo, al completamento del pagamento
+      integrale il Cliente diventa proprietario del codice sorgente e di tutti i materiali prodotti
+      per il progetto.
+    </p>
+  </div>
+
+  <h2>6. Avvio del piano di manutenzione mensile</h2>
+  <p>
+    A partire dalla chiusura del progetto di sviluppo, le Parti danno atto dell’avvio del
+    <strong>Piano di manutenzione mensile</strong> di cui alla Sezione 4 dell’Accordo:
+  </p>
+  <ul>
+    <li><strong>Canone:</strong> €&nbsp;300,00 / mese (IVA esclusa), piano iniziale scalabile di comune accordo.</li>
+    <li><strong>Decorrenza / rinnovo:</strong> rinnovo ogni <strong>1° del mese</strong>, come accordato tra le Parti.</li>
+    <li><strong>Prima validità operativa:</strong> dal <strong>10 agosto 2026</strong> (chiusura progetto); fatturazione/rinnovo canone secondo cadenza mensile al 1° di ogni mese.</li>
+    <li><strong>Include</strong> (come da Accordo): SEO ongoing; monitoraggio Analytics ove attivato; manutenzione tecnica (dipendenze, bug fix, uptime/performance); aggiornamenti AR post-update iOS/Android; supporto contenuti (foto, testi, nuovi modelli su richiesta).</li>
+  </ul>
+
+  <h2>7. Clausola di proroga della timeline e liberatoria di chiusura</h2>
+  <div class="box">
+    <p>
+      <em class="legal">
+        Le Parti riconoscono e dichiarano quanto segue. La timeline di sviluppo originariamente
+        indicata nella Sezione 5 dell’Accordo di Collaborazione (consegna finale prevista al termine
+        del ciclo di settimane contrattualmente delineato) ha subito uno slittamento rispetto alla
+        data originariamente stabilita. Tale prolungamento è stato determinato, in misura prevalente
+        e non imputabile a inadempimento di Otto Studio, dalla difficoltà oggettiva di reperire in
+        tempi utili — e dal ricevimento reiteratamente tardivo o frammentario — di documenti, asset,
+        dati di listino, accessi e informazioni tecniche e commerciali di esclusiva disponibilità del
+        Cliente, elementi questi che l’Accordo stesso (Sezione 6 — Responsabilità cliente) individuava
+        come presupposto per il rispetto della timeline, prevedendo espressamente che i ritardi nella
+        consegna degli asset potessero comportare uno slittamento proporzionale senza responsabilità
+        di Otto Studio.
+      </em>
+    </p>
+    <p>
+      <em class="legal">
+        Otto Studio dà atto, con soddisfazione, di aver infine ricevuto dal Cliente il materiale
+        necessario al completamento e alla messa in produzione della piattaforma, e di aver portato
+        a termine in modo definitivo le prestazioni di progettazione, sviluppo, integrazione e
+        deploy oggetto dell’Accordo. Il Cliente, dal canto suo, prende atto che tutte le attività
+        contrattualmente dovute risultano eseguite alla data odierna.
+      </em>
+    </p>
+    <p style="margin-bottom:0">
+      <em class="legal">
+        Pertanto, con effetto dalla data del <strong>10 agosto 2026</strong>, le Parti convengono
+        che l’Accordo di Collaborazione stipulato per il progetto a forfait di
+        <strong>€&nbsp;5.500,00</strong> (IVA esclusa) — della cui corrispettività residua restano
+        dovuti €&nbsp;2.200,00 da saldare tempestivamente — <strong>cessa di produrre effetti
+        quanto all’obbligo di ulteriori prestazioni di sviluppo</strong> a carico di Otto Studio.
+        Otto Studio è sin d’ora <strong>legalmente liberata da ogni ulteriore impegno di
+        realizzazione</strong> relativo al presente Accordo di progetto, fatto salvo esclusivamente:
+        (i) il diritto di credito al saldo di €&nbsp;2.200,00; (ii) le obbligazioni di riservatezza
+        e di proprietà intellettuale previste dall’Accordo; (iii) l’esecuzione del Piano di
+        manutenzione mensile a €&nbsp;300,00/mese con rinnovo ogni 1° del mese, che decorre
+        contestualmente alla presente chiusura. Qualsiasi nuova funzionalità, ampliamento di scope
+        o intervento non compreso nel piano di manutenzione costituirà oggetto di separato accordo
+        o change request.
+      </em>
+    </p>
+  </div>
+
+  <h2>8. Dichiarazioni finali</h2>
+  <p>
+    Con la sottoscrizione (anche via conferma email / accettazione digitale) del presente verbale,
+    le Parti attestano:
+  </p>
+  <ul>
+    <li>l’avvenuta consegna definitiva di tutti i deliverable della Sezione 2 dell’Accordo;</li>
+    <li>la presa d’atto dello stack infrastrutturale in esercizio (DigitalOcean, Coolify, Supabase, Resend, Cloudflare, Cookiebot) e dell’indirizzo operativo <strong>info@steelyes.co.uk</strong>;</li>
+    <li>la presa d’atto dei lavori aggiuntivi di cui alla Sezione 4, inclusi nel prezzo di progetto senza surcharges;</li>
+    <li>la chiusura dell’Accordo di progetto alla data del 10/08/2026 e l’avvio della manutenzione mensile;</li>
+    <li>l’obbligo del Cliente di corrispondere il saldo residuo di €&nbsp;2.200,00 nel più breve tempo possibile.</li>
+  </ul>
+
+  <div class="signatures">
+    <div class="sig-block">
+      <strong>Per Otto Studio</strong><br/>
+      <span class="role">Fornitore · Data _______________</span><br/><br/>
+      Firma / conferma: _______________________________
+    </div>
+    <div class="sig-block">
+      <strong>Per Steelyes Ltd</strong><br/>
+      <span class="role">Cliente · Data _______________</span><br/><br/>
+      Firma / conferma: _______________________________
+    </div>
+  </div>
+
+  <div class="footer">
+    Otto Studio · amministrazione@otto-studio.it · otto-studio.it<br/>
+    Verbale di consegna definitiva — Steelyes Ltd — 10 agosto 2026 — Documento riservato.<br/>
+    Allegato di riferimento: Accordo di Collaborazione Otto Studio / Steelyes Ltd, Versione 1.0 — Aprile 2026.
+  </div>
+
+</body>
+</html>

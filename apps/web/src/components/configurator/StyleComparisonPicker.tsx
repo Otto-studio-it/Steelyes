@@ -5,11 +5,12 @@ import { GATE_STYLES, type GateStyle } from '@steelyes/gate-engine'
 
 import { STYLE_IMAGES } from '@/lib/configurator/presentation'
 import { styleLabel } from '@/lib/configurator/labels'
+import { applyGateStyle } from '@/lib/configurator/style-actions'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 export function StyleComparisonPicker() {
   const config = useConfiguratorConfig()
-  const patchConfig = useConfiguratorStore((state) => state.patchConfig)
+  const setConfig = useConfiguratorStore((state) => state.setConfig)
 
   return (
     <div className="space-y-2">
@@ -24,7 +25,7 @@ export function StyleComparisonPicker() {
               type="button"
               role="radio"
               aria-checked={selected}
-              onClick={() => patchConfig({ style: style as GateStyle })}
+              onClick={() => setConfig(applyGateStyle(config, style as GateStyle))}
               className={`overflow-hidden border text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                 selected
                   ? 'border-primary bg-primary/5 ring-1 ring-primary/20'

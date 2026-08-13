@@ -1,0 +1,250 @@
+{
+  "family": "double_swing",
+  "source": "/Volumes/SSDRubb/Steelyes/docs/frontend/2d-masters/double_swing/Double Swing Variants ",
+  "rule": "filename starts with manual/manua \u2192 manual; else \u2192 motorised",
+  "missing_manual": [
+    "arched_dog_bars_collar_1"
+  ],
+  "missing_motorised": [],
+  "entries": [
+    {
+      "was": "arched+ circles.svg",
+      "slug": "arched_circles",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_circles_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched+ collars + circles.svg",
+      "slug": "arched_circles_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_circles_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched+ collars.svg",
+      "slug": "arched_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched.svg",
+      "slug": "arched",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched_dog_bars +  collars + circles.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_dog_bars_circles_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched_dog_bars + circles.svg",
+      "slug": "arched_dog_bars_circles",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_dog_bars_circles_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched_dog_bars + collars.svg",
+      "slug": "arched_dog_bars_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_dog_bars_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "arched_dog_bars.svg",
+      "slug": "arched_dog_bars",
+      "drive": "motorised",
+      "file": "GATE__double_swing__arched_dog_bars_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "base + circles.svg",
+      "slug": "base_circles",
+      "drive": "motorised",
+      "file": "GATE__double_swing__base_circles_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "base + colars _ circles.svg",
+      "slug": "base_circles_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__base_circles_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "base + collars.svg",
+      "slug": "base_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__base_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "base.svg",
+      "slug": "base",
+      "drive": "motorised",
+      "file": "GATE__double_swing__base_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "composite.svg",
+      "slug": "composite",
+      "drive": "motorised",
+      "file": "GATE__double_swing__composite_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "dog_bars  + circles.svg",
+      "slug": "dog_bars_circles",
+      "drive": "motorised",
+      "file": "GATE__double_swing__dog_bars_circles_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "dog_bars + collars + circles.svg",
+      "slug": "dog_bars_circles_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__dog_bars_circles_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "dog_bars + collars.svg",
+      "slug": "dog_bars_collar_1",
+      "drive": "motorised",
+      "file": "GATE__double_swing__dog_bars_collar_1_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "dog_bars.svg",
+      "slug": "dog_bars",
+      "drive": "motorised",
+      "file": "GATE__double_swing__dog_bars_motorised.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manua  arched+ collars.svg",
+      "slug": "arched_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manua  base + colars _ circles.svg",
+      "slug": "base_circles_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__base_circles_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual  arched_dog_bars +  collars + circles.svg",
+      "slug": "arched_dog_bars_circles_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_dog_bars_circles_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual  arched_dog_bars.svg",
+      "slug": "arched_dog_bars",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_dog_bars.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual  base.svg",
+      "slug": "base",
+      "drive": "manual",
+      "file": "GATE__double_swing__base.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual arched+ circles.svg",
+      "slug": "arched_circles",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_circles.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual arched+ collars + circles.svg",
+      "slug": "arched_circles_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_circles_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual arched.svg",
+      "slug": "arched",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual arched_dog_bars + circles.svg",
+      "slug": "arched_dog_bars_circles",
+      "drive": "manual",
+      "file": "GATE__double_swing__arched_dog_bars_circles.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual arched_dog_bars.svg",
+      "slug": "arched_dog_bars",
+      "drive": "manual",
+      "action": "duplicate",
+      "kept": "GATE__double_swing__arched_dog_bars.svg"
+    },
+    {
+      "was": "manual base + circles.svg",
+      "slug": "base_circles",
+      "drive": "manual",
+      "file": "GATE__double_swing__base_circles.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual base + collars.svg",
+      "slug": "base_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__base_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual composite.svg",
+      "slug": "composite",
+      "drive": "manual",
+      "file": "GATE__double_swing__composite.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual dog_bars  + circles.svg",
+      "slug": "dog_bars_circles",
+      "drive": "manual",
+      "file": "GATE__double_swing__dog_bars_circles.svg",
+      "action": "ok"
+    },
+    {
+      "was": "Manual dog_bars + collars + circles.svg",
+      "slug": "dog_bars_circles_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__dog_bars_circles_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual dog_bars + collars.svg",
+      "slug": "dog_bars_collar_1",
+      "drive": "manual",
+      "file": "GATE__double_swing__dog_bars_collar_1.svg",
+      "action": "ok"
+    },
+    {
+      "was": "manual dog_bars.svg",
+      "slug": "dog_bars",
+      "drive": "manual",
+      "file": "GATE__double_swing__dog_bars.svg",
+      "action": "ok"
+    }
+  ],
+  "complete": false
+}
