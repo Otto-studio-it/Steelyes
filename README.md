@@ -47,6 +47,10 @@ Variabili d'ambiente richieste per i flussi completi (vedi `apps/web/src/lib/env
 `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`.
 Senza Supabase il configuratore funziona comunque con il catalogo prezzi di default.
 
+### Site hold (pausa pubblica)
+
+Per mettere il sito in pausa senza buttare l'indicizzazione: in `apps/web` (o nel host) imposta `SITE_HOLD=true`, più opzionali `SITE_HOLD_BYPASS_TOKEN` e `SITE_HOLD_CONTACT_EMAIL`. Il pubblico vede `/hold` con HTTP 503; `robots.txt` / `sitemap.xml` / `/admin` restano raggiungibili. Preview: `/?hold_bypass=<token>`. Spegnere: `SITE_HOLD=false` (o rimuovere) e redeploy.
+
 ## 💻 Comandi
 
 | Comando | Effetto |

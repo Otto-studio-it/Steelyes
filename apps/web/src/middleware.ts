@@ -1,9 +1,90 @@
 import { userIsAdmin } from '@/lib/admin/user-is-admin'
+import {
+  SITE_HOLD_COOKIE,
+  SITE_HOLD_QUERY,
+  SITE_HOLD_RETRY_AFTER_SECONDS,
+  getSiteHoldBypassToken,
+  isSiteHoldEnabled,
+} from '@/lib/site-hold'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-export async function middleware(request: NextRequest) {
+const HOLD_HEADERS = {
+  'Retry-After': String(SITE_HOLD_RETRY_AFTER_SECONDS),
+  'Cache-Control': 'no-store, must-revalidate',
+} as const
+
+function isHoldExemptPath(pathname: string): boolean {
+  if (pathname === '/hold' || pathname.startsWith('/hold/')) return true
+  if (pathname === '/robots.txt' || pathname === '/sitemap.xml') return true
+  if (pathname.startsWith('/admin')) return true
+  if (pathname.startsWith('/_next')) return true
+  if (pathname === '/favicon.ico' || pathname === '/icon' || pathname === '/apple-icon') return true
+  return false
+}
+
+function applyHoldBypass(request: NextRequest): NextResponse | null {
+  const token = getSiteHoldBypassToken()
+  if (!token) return null
+
+  const value = request.nextUrl.searchParams.get(SITE_HOLD_QUERY)
+  if (value === null) return null
+
+  const url = request.nextUrl.clone()
+  url.searchParams.delete(SITE_HOLD_QUERY)
+
+  const response = NextResponse.redirect(url)
+  if (value === token) {
+    response.cookies.set(SITE_HOLD_COOKIE, token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30,
+    })
+  } else {
+    response.cookies.set(SITE_HOLD_COOKIE, '', {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 0,
+    })
+  }
+  return response
+}
+
+function handleSiteHold(request: NextRequest): NextResponse | null {
+  if (!isSiteHoldEnabled()) return null
+
+  const bypassRedirect = applyHoldBypass(request)
+  if (bypassRedirect) return bypassRedirect
+
   const { pathname } = request.nextUrl
+  if (isHoldExemptPath(pathname)) return null
+
+  const token = getSiteHoldBypassToken()
+  if (token && request.cookies.get(SITE_HOLD_COOKIE)?.value === token) return null
+
+  if (pathname.startsWith('/api/')) {
+    return NextResponse.json(
+      { error: 'Service temporarily unavailable' },
+      { status: 503, headers: HOLD_HEADERS }
+    )
+  }
+
+  const holdUrl = request.nextUrl.clone()
+  holdUrl.pathname = '/hold'
+  holdUrl.search = ''
+  return NextResponse.rewrite(holdUrl, { status: 503, headers: HOLD_HEADERS })
+}
+
+export async function middleware(request: NextRequest) {
+  const hold = handleSiteHold(request)
+  if (hold) return hold
+
+  const { pathname } = request.nextUrl
+  if (!pathname.startsWith('/admin')) return NextResponse.next()
 
   if (pathname === '/admin/login' || pathname.startsWith('/admin/login/')) return NextResponse.next()
 
@@ -47,5 +128,11 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: [
+    /*
+     * Match all paths except static assets under /_next/static and common image extensions.
+     * Site hold + admin auth both run here; non-admin paths exit early after hold check.
+     */
+    '/((?!_next/static|_next/image|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?)$).*)',
+  ],
 }
