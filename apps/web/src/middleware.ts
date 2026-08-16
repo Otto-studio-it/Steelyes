@@ -16,6 +16,7 @@ const HOLD_HEADERS = {
 
 function isHoldExemptPath(pathname: string): boolean {
   if (pathname === '/hold' || pathname.startsWith('/hold/')) return true
+  if (pathname === '/healthz') return true
   if (pathname === '/robots.txt' || pathname === '/sitemap.xml') return true
   if (pathname.startsWith('/admin')) return true
   if (pathname.startsWith('/_next')) return true
