@@ -1,4 +1,4 @@
-/** Temporary public site pause (unpaid / ops hold). Toggle with SITE_HOLD=true. */
+/** Temporary public site pause. Hard-off: live again; do not honor SITE_HOLD env. */
 
 export const SITE_HOLD_COOKIE = 'steelyes_hold_bypass'
 export const SITE_HOLD_QUERY = 'hold_bypass'
@@ -6,7 +6,7 @@ export const SITE_HOLD_QUERY = 'hold_bypass'
 export const SITE_HOLD_RETRY_AFTER_SECONDS = 60 * 60 * 24 * 7
 
 export function isSiteHoldEnabled(): boolean {
-  return process.env.SITE_HOLD === 'true'
+  return false
 }
 
 export function getSiteHoldBypassToken(): string | undefined {
