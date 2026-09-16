@@ -271,4 +271,62 @@ describe('gate-engine rendering', () => {
     expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-1')).toBe(true)
     expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-2')).toBe(true)
   })
+
+  it('draws circle scroll bands on installation CAD when circles are on', () => {
+    const swingBase = createGateConfig(createGatePreset('double_swing'))
+    const swing = {
+      ...swingBase,
+      options: swingBase.options.map((option) =>
+        option.key === 'circles' ? { ...option, enabled: true, quantity: 1 } : option,
+      ),
+    }
+    const swingPlan = buildGateRenderPlan(swing, { viewMode: 'installation' })
+    expect(swingPlan.primitives.some((p) => p.id.startsWith('top-circle-band'))).toBe(true)
+    expect(swingPlan.primitives.some((p) => p.id.startsWith('bottom-circle-band'))).toBe(true)
+    expect(swingPlan.notes.some((n) => n.includes('Circle bands'))).toBe(true)
+
+    const slidingBase = createGateConfig(createGatePreset('tracked_sliding'))
+    const sliding = {
+      ...slidingBase,
+      options: slidingBase.options.map((option) =>
+        option.key === 'circles' ? { ...option, enabled: true, quantity: 1 } : option,
+      ),
+    }
+    const slidingPlan = buildGateRenderPlan(sliding, { viewMode: 'installation' })
+    expect(slidingPlan.primitives.some((p) => p.id.startsWith('sliding-top-circle-band'))).toBe(true)
+    expect(slidingPlan.primitives.some((p) => p.id.startsWith('sliding-bottom-circle-band'))).toBe(true)
+    expect(slidingPlan.primitives.some((p) => p.id.startsWith('sliding-bush-'))).toBe(false)
+  })
+
+  it('draws picket collars on long pickets, never on dog bars, and thins every_2', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const withCollars = (variant: 'every_1' | 'every_2', dogBars: boolean) => ({
+      ...base,
+      options: base.options.map((option) => {
+        if (option.key === 'picket_collars') {
+          return { ...option, enabled: true, quantity: 1, variant }
+        }
+        if (option.key === 'dog_bars') {
+          return { ...option, enabled: dogBars, quantity: dogBars ? 1 : 0 }
+        }
+        return option
+      }),
+    })
+
+    const every1 = buildGateRenderPlan(withCollars('every_1', false), { viewMode: 'installation' })
+    const every2 = buildGateRenderPlan(withCollars('every_2', false), { viewMode: 'installation' })
+    const dog = buildGateRenderPlan(withCollars('every_1', true), { viewMode: 'installation' })
+
+    const count = (plan: ReturnType<typeof buildGateRenderPlan>) =>
+      plan.primitives.filter((p) => p.kind === 'circle' && p.id.startsWith('picket-collar-')).length
+
+    expect(count(every1)).toBeGreaterThan(count(every2))
+    expect(count(every2)).toBeGreaterThan(0)
+    expect(count(dog)).toBeGreaterThan(0)
+    expect(dog.primitives.some((p) => p.id.startsWith('picket-collar-') && p.id.includes('dog'))).toBe(
+      false,
+    )
+    expect(every1.notes.some((n) => n.includes('every long picket'))).toBe(true)
+    expect(every2.notes.some((n) => n.includes('every 2nd long picket'))).toBe(true)
+  })
 })

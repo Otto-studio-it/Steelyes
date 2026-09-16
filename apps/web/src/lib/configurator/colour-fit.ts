@@ -17,12 +17,14 @@ export type ColourFitDrawing = {
   tipology: VictorianTipology
   motorised: boolean
   hasHandle: boolean
+  hasCircles: boolean
+  hasCollars: boolean
 }
 
 /**
  * Live CAD elevation for the customer Design preview (installation view).
- * Finish, millimetres, Victorian shape, middle bar and the CA-01 handle follow GateConfig.
- * Circles, collars and railheads stay on the workshop master until CAD draws them.
+ * Finish, millimetres, Victorian shape, circles, collars, middle bar and the CA-01 handle follow GateConfig.
+ * Railhead SKUs stay on the workshop plate / quote (CA-17).
  */
 export function buildColourFitDrawing(config: GateConfig): ColourFitDrawing {
   const plan = buildGateRenderPlan(config, { viewMode: 'installation' })
@@ -38,5 +40,7 @@ export function buildColourFitDrawing(config: GateConfig): ColourFitDrawing {
     tipology: getVictorianTipology(config),
     motorised: config.motorised,
     hasHandle: svg.includes('manual-handle'),
+    hasCircles: plan.primitives.some((primitive) => primitive.id.includes('circle-band')),
+    hasCollars: plan.primitives.some((primitive) => primitive.id.startsWith('picket-collar-')),
   }
 }

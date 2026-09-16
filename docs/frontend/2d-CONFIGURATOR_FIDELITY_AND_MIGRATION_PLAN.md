@@ -189,10 +189,10 @@ One `GateConfig` continues to drive price, share, PDF, mesh. Preview is a **func
 **Slice B — live CAD behind a Design tab, masters remain default.** Shipped, then inverted in Slice C.
 
 **Slice C — live CAD becomes the customer preview (this change).**  
-Design drawing is `buildGateRenderPlan` installation SVG. Official masters move to a **Workshop drawing** disclosure (slug + SVG). Quote PDF and share use the same live CAD PNG. Circles, collars and railheads stay on the workshop plate until CAD draws them (Slice E). E2e asserts CAD `data-tipology` / `data-finish` / handle, not master `img[src]` as the customer drawing.
+Design drawing is `buildGateRenderPlan` installation SVG. Official masters move to a **Workshop drawing** disclosure (slug + SVG). Quote PDF and share use the same live CAD PNG. Circles and collars are drawn on Design CAD (Slice E). Railheads stay on the workshop plate / quote (CA-17). E2e asserts CAD `data-tipology` / `data-finish` / handle / circles / collars, not master `img[src]` as the customer drawing.
 
 **Slice D — masters become golden tests, not runtime.**  
-For each `GateConfig` in `audit-2d-matrix`, render CAD, compare to the definitive SVG (perceptual or path-hash). Missing telescopic cells are generated from CAD, then art-directed in Figma only if Marius rejects the line weight. `resolveSilhouette` stays for workshop export.
+For each `GateConfig` in `audit-2d-matrix`, render installation CAD without throw, assert circle/collar primitive ids when those options are on, and keep `resolveSilhouette` for the workshop plate. Do not perceptually compare CAD to Figma masters — they are different drawing languages.
 
 **Slice E — retire overlay fallbacks.**  
 Once CAD draws circles + collars + arch + dog bars per type, delete generic overlay compositing from `TechnicalMasterPreview`. Keep overlay SVGs in git as reference.
@@ -220,6 +220,7 @@ Secure here means **the drawing is a pure function of `GateConfig`**, fail-close
 1. ~~P1 missing cells + collar chooser + e2e rewrite~~ — done (204 baked silhouettes; overlay fallback only for collar `every_2`).
 2. ~~Slice B: Colour fit live CAD as a second view~~ — done, then inverted.
 3. ~~Slice C: live CAD is the customer Design drawing~~ — done. Workshop plate keeps the official SVG. Quote PDF matches Design CAD.
-4. Slice D: masters become golden tests. Slice E: CAD draws circles/collars natively.
+4. ~~Slice D: CAD goldens (render without throw + workshop still resolves + circle/collar primitive ids).~~  
+5. ~~Slice E: CAD draws circles + collars natively on Design.~~ Railhead SKUs remain workshop / quote (CA-17). Overlay compositing stays for every_2 workshop plates.
 
-Until Slice E, treat circles, collars and railheads as **workshop / quote metadata** on Design CAD, and keep that labelled in the UI.
+Until railhead SKUs are drawn, treat **railheads** as workshop / quote metadata on Design CAD.

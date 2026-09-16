@@ -42,4 +42,28 @@ describe('buildColourFitDrawing', () => {
     expect(wideDraw.svg).toContain('3200')
     expect(wideDraw.svg).toContain('1400')
   })
+
+  it('draws circles and collars on Design CAD', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const decorated = {
+      ...base,
+      options: base.options.map((option) => {
+        if (option.key === 'circles') return { ...option, enabled: true, quantity: 1 }
+        if (option.key === 'picket_collars') {
+          return { ...option, enabled: true, quantity: 1, variant: 'every_1' as const }
+        }
+        return option
+      }),
+    }
+
+    const plain = buildColourFitDrawing(base)
+    const deco = buildColourFitDrawing(decorated)
+
+    expect(plain.hasCircles).toBe(false)
+    expect(plain.hasCollars).toBe(false)
+    expect(deco.hasCircles).toBe(true)
+    expect(deco.hasCollars).toBe(true)
+    expect(deco.svg).toContain('top-circle-band')
+    expect(deco.svg).toContain('picket-collar-')
+  })
 })

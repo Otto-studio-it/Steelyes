@@ -17,7 +17,7 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'On/off — Design CAD follows Victorian shape. Circles swap the workshop master.',
+    description: 'On/off — Design CAD follows Victorian shape, circles and collars.',
     keys: ['dog_bars', 'circles', 'top_railheads'],
   },
   {
@@ -71,13 +71,14 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'circles',
     label: 'Circles',
-    description: 'On/off — upper + lower bands together (Q1). Drawn on the workshop plate, not yet on Design CAD. Unavailable on Composite.',
+    description:
+      'On/off — upper + lower bands together (CA-16). Drawn on Design CAD. Unavailable on Composite.',
   },
   {
     key: 'picket_collars',
     label: 'Picket collars',
     description:
-      'On/off — mid-height boss on long pickets (never on dog bars). Drawn on the workshop plate, not yet on Design CAD. Unavailable on Composite.',
+      'On/off — mid-height boss on long pickets (never on dog bars). Drawn on Design CAD. Unavailable on Composite.',
   },
   {
     key: 'bushes',

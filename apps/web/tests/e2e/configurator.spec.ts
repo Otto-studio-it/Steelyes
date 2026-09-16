@@ -90,15 +90,26 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/^RH32$/i).filter({ visible: true }).first()).toBeVisible()
   })
 
-  test('collar spacing swaps the workshop master', async ({ page }) => {
+  test('collar spacing draws on Design CAD and swaps the workshop master', async ({ page }) => {
     await walkToRefine(page)
 
     const chooser = page.getByTestId('collar-chooser')
     await expect(chooser).toBeVisible()
     await chooser.getByRole('radio', { name: /Every picket/i }).click()
     await expect(chooser.getByRole('radio', { name: /Every picket/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-cad-preview')).toHaveAttribute('data-collars', 'true')
     await expect(page.getByTestId('design-master-slug')).toContainText(/collar/i)
-    await expect(page.getByTestId('design-workshop-deco-note')).toBeVisible()
+    await expect(page.getByTestId('design-workshop-deco-note')).toHaveCount(0)
+  })
+
+  test('circles draw on Design CAD and swap the workshop master', async ({ page }) => {
+    await walkToRefine(page)
+
+    await page.getByRole('button', { name: /^Decoration/i }).click()
+    await page.getByRole('switch', { name: /Circles/i }).click()
+    await expect(page.getByRole('switch', { name: /Circles/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-cad-preview')).toHaveAttribute('data-circles', 'true')
+    await expect(page.getByTestId('design-master-slug')).toContainText(/circles/i)
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {

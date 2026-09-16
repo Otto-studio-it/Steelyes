@@ -27,10 +27,8 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
     }
   }, [config])
 
-  const decoOn = config.options.some(
-    (option) =>
-      option.enabled &&
-      (option.key === 'circles' || option.key === 'picket_collars' || option.key === 'top_railheads'),
+  const railheadsOn = config.options.some(
+    (option) => option.enabled && (option.key === 'top_railheads' || option.key === 'dog_bar_railheads'),
   )
 
   return (
@@ -40,6 +38,8 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
       data-tipology={drawing.ok ? drawing.value.tipology : undefined}
       data-motorised={drawing.ok ? String(drawing.value.motorised) : undefined}
       data-handle={drawing.ok ? String(drawing.value.hasHandle) : undefined}
+      data-circles={drawing.ok ? String(drawing.value.hasCircles) : undefined}
+      data-collars={drawing.ok ? String(drawing.value.hasCollars) : undefined}
     >
       <div className={`flex items-center justify-between border-b border-steel/10 px-4 ${compact ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}>
         <div className="min-w-0">
@@ -87,11 +87,12 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
           <span className="ml-2 text-sm font-normal text-muted">mm</span>
         </p>
         <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
-          Live CAD — finish, size, Victorian shape, middle bar and the leaf handle follow this drawing.
+          Live CAD — finish, size, Victorian shape, circle bands, picket collars, middle bar and the
+          leaf handle follow this drawing.
         </p>
-        {decoOn ? (
+        {railheadsOn ? (
           <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-workshop-deco-note">
-            Circles, collars and railheads stay on the workshop plate until CAD draws them.
+            Railhead SKUs stay on the workshop plate and quote (CA-17).
           </p>
         ) : null}
       </div>
