@@ -47,7 +47,8 @@ export function RailheadModelPicker() {
           Railhead model
         </h3>
         <p className="mt-1 text-sm leading-6 text-muted-deep">
-          Optional — pick the SKU for the quote. Count stays automatic. Not drawn on Design.
+          Optional — pick the SKU. The photo appears beside the Design drawing. Count stays
+          automatic. Not drawn onto the pickets.
         </p>
       </div>
 

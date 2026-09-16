@@ -16,6 +16,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { usePrefetchPackMasters } from '@/lib/configurator/prefetch-pack-masters'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import { useConfiguratorStore } from '@/store/configuratorStore'
+import { DesignRailheadCallout, selectedRailheadSlug } from '@/components/configurator/DesignRailheadCallout'
 
 type TechnicalMasterPreviewProps = {
   config: GateConfig
@@ -28,7 +29,8 @@ type TechnicalMasterPreviewProps = {
 
 /**
  * Customer Design preview: official 2D masters only (the client-approved visual).
- * Menu changes swap the matching file immediately. Railhead SKUs stay quote-only (CA-17).
+ * Menu changes swap the matching file immediately.
+ * Selected railhead SKU is shown as a photo beside the drawing, not on the pickets.
  */
 export function TechnicalMasterPreview({
   config,
@@ -80,6 +82,7 @@ export function TechnicalMasterPreview({
   const tipology = getVictorianTipology(config)
   const circlesOn = config.options.some((option) => option.key === 'circles' && option.enabled)
   const collarsOn = config.options.some((option) => option.key === 'picket_collars' && option.enabled)
+  const railheadSku = selectedRailheadSlug(config.options)
 
   const shellClass = studio
     ? 'border-steel/10 bg-[#F3F2EF] text-steel'
@@ -98,6 +101,7 @@ export function TechnicalMasterPreview({
       data-circles={String(circlesOn)}
       data-collars={String(collarsOn)}
       data-motorised={String(config.motorised)}
+      data-railhead={railheadSku ?? undefined}
     >
       <div
         className={`flex items-center justify-between border-b border-steel/10 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
@@ -184,37 +188,40 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              <div className={`relative w-full ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-                <img
-                  key={resolved.value.publicPath}
-                  data-testid="design-master-img"
-                  src={resolved.value.publicPath}
-                  alt={`${title} design master — ${resolved.value.title}`}
-                  decoding="sync"
-                  fetchPriority="high"
-                  className="h-full w-full bg-white object-contain"
-                />
-                {circleOverlay.bands.map((band) => (
-                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+              <div className="flex w-full items-center gap-3">
+                <div className={`relative min-w-0 flex-1 ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
                   <img
-                    key={band.id}
-                    src={band.publicPath}
-                    alt=""
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    key={resolved.value.publicPath}
+                    data-testid="design-master-img"
+                    src={resolved.value.publicPath}
+                    alt={`${title} design master — ${resolved.value.title}`}
+                    decoding="sync"
+                    fetchPriority="high"
+                    className="h-full w-full bg-white object-contain"
                   />
-                ))}
-                {collarOverlay.overlays.map((overlay) => (
-                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
-                  <img
-                    key={overlay.id}
-                    src={overlay.publicPath}
-                    alt=""
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
-                  />
-                ))}
+                  {circleOverlay.bands.map((band) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                    <img
+                      key={band.id}
+                      src={band.publicPath}
+                      alt=""
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    />
+                  ))}
+                  {collarOverlay.overlays.map((overlay) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                    <img
+                      key={overlay.id}
+                      src={overlay.publicPath}
+                      alt=""
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    />
+                  ))}
+                </div>
+                {railheadSku ? <DesignRailheadCallout slug={railheadSku} /> : null}
               </div>
             ) : (
               <div
@@ -266,13 +273,10 @@ export function TechnicalMasterPreview({
                 shape still matches your selection.
               </p>
             ) : null}
-            {described.channels.some(
-              (item) =>
-                item.selected &&
-                (item.key === 'top_railheads' || item.key === 'dog_bar_railheads'),
-            ) ? (
+            {railheadSku ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Railhead SKUs stay on the quote (CA-17) and are not composited on this drawing.
+                Selected railhead {railheadSku} is shown beside the drawing. It is not drawn onto the
+                pickets (safe on arched and sliding masters).
               </p>
             ) : null}
           </div>

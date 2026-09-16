@@ -84,8 +84,10 @@ test.describe('configurator release flow', () => {
     await chooser.getByRole('radio', { name: /RH32/i }).click()
     await expect(chooser.getByRole('radio', { name: /RH32/i })).toHaveAttribute('aria-checked', 'true')
 
-    // Design drawing must not composite railhead SVGs on the master (chooser previews are OK).
-    await expect(page.locator('img[src*="/2d-masters/railheads/"][class*="absolute"]')).toHaveCount(0)
+    // Design drawing must not composite railhead SVGs on the master (chooser + side chip photos are OK).
+    await expect(page.getByTestId('design-railhead-chip')).toHaveAttribute('data-sku', 'RH32')
+    await expect(page.getByTestId('design-railhead-chip').locator('img')).toHaveAttribute('src', /RH32/)
+    await expect(page.locator('img[src*="/2d-masters/railheads/silhouettes/"]')).toHaveCount(0)
 
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
