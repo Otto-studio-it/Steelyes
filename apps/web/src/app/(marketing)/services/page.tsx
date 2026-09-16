@@ -164,6 +164,15 @@ export default function ServicesPage() {
       </section>
 
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
+        <Image
+          src="/images/backgrounds/steel-industrial.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-40"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
             Need steelwork
