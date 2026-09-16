@@ -13,10 +13,11 @@ import { breadcrumbSchema } from '@/lib/marketing/schema'
 import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Request a Steel Gate Quote | Contact Us',
+  title: 'Request a Steel Gate Quote London | Contact Steelyes',
   description:
-    'Get a quote for bespoke steel gates, electric gates, railings or security steelwork. Share your brief, measurements or photos to start a survey-led specification.',
+    'Get a quote for bespoke steel gates in London. Contact our Sydenham workshop for driveway gates, electric gates, railings or security steelwork. Free site survey available.',
   alternates: { canonical: '/contact' },
+  keywords: ['steel gates quote london', 'gate fabricator contact', 'driveway gates south london', 'steelyes contact'],
 }
 
 type ContactPageProps = {
@@ -114,7 +115,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
+            '@id': `${BUSINESS.website}/#business`,
             name: BUSINESS.legalName,
+            alternateName: 'Steelyes',
             url: BUSINESS.website,
             telephone: BUSINESS.phoneDisplay,
             email: BUSINESS.email,
@@ -127,7 +130,25 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
               postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
-            areaServed: { '@type': 'Country', name: 'United Kingdom' },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 51.4285,
+              longitude: -0.0485,
+            },
+            areaServed: [
+              { '@type': 'City', name: 'London' },
+              { '@type': 'AdministrativeArea', name: 'South East London' },
+              { '@type': 'AdministrativeArea', name: 'Surrey' },
+              { '@type': 'AdministrativeArea', name: 'Kent' },
+              { '@type': 'Country', name: 'United Kingdom' },
+            ],
+            priceRange: '££££',
+            openingHoursSpecification: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              opens: '08:00',
+              closes: '17:00',
+            },
             contactPoint: {
               '@type': 'ContactPoint',
               telephone: BUSINESS.phoneDisplay,

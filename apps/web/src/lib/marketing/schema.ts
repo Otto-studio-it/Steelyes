@@ -12,6 +12,12 @@ function absoluteUrl(path: string): string {
 /** PNG, 180×180 — Google's logo structured data does not support SVG. */
 const LOGO_URL = `${BUSINESS.website}/apple-icon`
 
+/** Geo coordinates for Sydenham workshop (106 Newlands Park Road, SE26 5NB) */
+const GEO = {
+  latitude: 51.4285,
+  longitude: -0.0485,
+}
+
 const PROVIDER = {
   '@type': ['LocalBusiness', 'GeneralContractor'],
   name: BUSINESS.legalName,
@@ -37,6 +43,68 @@ export function organizationSchema() {
     telephone: BUSINESS.phoneDisplay,
     email: BUSINESS.email,
     sameAs: [...BUSINESS_SAME_AS],
+  }
+}
+
+/**
+ * LocalBusiness schema with full address, geo, and service areas.
+ * Use on homepage and contact page for local SEO signals.
+ */
+export function localBusinessSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'GeneralContractor'],
+    '@id': `${BUSINESS.website}/#business`,
+    name: BUSINESS.legalName,
+    alternateName: BUSINESS.tradingName,
+    description: 'Bespoke steel gates and fabrication in London. Survey-led specification, fabrication and installation of driveway gates, railings, balconies and structural steelwork.',
+    url: BUSINESS.website,
+    logo: LOGO_URL,
+    image: LOGO_URL,
+    telephone: BUSINESS.phoneDisplay,
+    email: BUSINESS.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: BUSINESS.address.line1,
+      addressLocality: BUSINESS.address.locality,
+      addressRegion: BUSINESS.address.region,
+      postalCode: BUSINESS.address.postalCode,
+      addressCountry: 'GB',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: GEO.latitude,
+      longitude: GEO.longitude,
+    },
+    areaServed: [
+      { '@type': 'City', name: 'London' },
+      { '@type': 'AdministrativeArea', name: 'South East England' },
+      { '@type': 'AdministrativeArea', name: 'Surrey' },
+      { '@type': 'AdministrativeArea', name: 'Kent' },
+      { '@type': 'Country', name: 'United Kingdom' },
+    ],
+    priceRange: '££££',
+    currenciesAccepted: 'GBP',
+    paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '17:00',
+    },
+    sameAs: [...BUSINESS_SAME_AS],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Steel Fabrication Services',
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Bespoke Driveway Gates' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Automated Electric Gates' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Railings' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Glass Balustrades' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Metal Balconies' } },
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Steel Staircases' } },
+      ],
+    },
   }
 }
 

@@ -7,10 +7,11 @@ import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
-  title: 'Steel Fabrication Services | Gates, Railings, Balconies & Security',
+  title: 'Steel Fabrication Services London | Gates, Railings, Balconies & Security',
   description:
-    'Steel fabrication beyond gates — bespoke railings, balustrades, structural balconies and security doors. Fabricated and installed to survey-led specification across the UK.',
+    'London steel fabrication specialists. Bespoke railings, balustrades, structural balconies and security doors. Survey-led fabrication from our Sydenham workshop.',
   alternates: { canonical: '/services' },
+  keywords: ['steel fabrication london', 'metal railings london', 'balconies fabrication', 'steel staircases london', 'security grilles london'],
 }
 
 const SERVICES = [

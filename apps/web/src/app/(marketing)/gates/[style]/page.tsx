@@ -22,9 +22,10 @@ export function generateMetadata({ params }: { params: { style: string } }) {
   const gate = resolved ? GATE_DATA[resolved] : null
   if (!gate) return {}
   return {
-    title: `${gate.title} Gates | Bespoke Steel Gates`,
-    description: gate.description,
+    title: `${gate.title} Gates London | Bespoke Steel Gates UK`,
+    description: `${gate.description} Made-to-measure ${gate.title.toLowerCase()} gates fabricated in our London workshop.`,
     alternates: { canonical: `/gates/${resolved}` },
+    keywords: [`${gate.title.toLowerCase()} gates london`, 'bespoke steel gates', 'made to measure gates uk'],
   }
 }
 
