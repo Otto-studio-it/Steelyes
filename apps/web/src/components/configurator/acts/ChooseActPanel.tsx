@@ -16,8 +16,8 @@ export function ChooseActPanel() {
     <div className="space-y-6">
       <p className="text-sm leading-6 text-muted-deep">
         Start from double swing — the primary production path — then change mechanism and Victorian
-        shape. The Design drawing must swap when you change type or shape. Finish stays a swatch;
-        motor updates the drawing on swing and bifold packs.
+        shape. The Design drawing is live CAD: type, shape, finish, size and drive follow your
+        selection. Circles, collars and railheads stay on the workshop plate.
       </p>
 
       <QuickGateScreen />

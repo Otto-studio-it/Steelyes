@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { createGateConfig, createGatePreset } from '@steelyes/gate-engine'
+import { createGateConfig, createGatePreset, DEFAULT_PRICING_CATALOG } from '@steelyes/gate-engine'
 
 import { rasterizeDesignMaster } from '@/lib/configurator/design-master-pdf'
+import { rasterizeLiveCad } from '@/lib/configurator/live-cad-pdf'
 import { buildIndicativeQuotePdf, calculateQuotePricing } from '@/lib/configurator/quote-pdf'
-import { DEFAULT_PRICING_CATALOG } from '@steelyes/gate-engine'
 
 describe('rasterizeDesignMaster', () => {
   it('renders the official double-swing base master as PNG', () => {
@@ -27,8 +27,22 @@ describe('rasterizeDesignMaster', () => {
   })
 })
 
+describe('rasterizeLiveCad', () => {
+  it('rasterizes the same installation CAD the Design preview shows', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      finish: 'anthracite_ral7016' as const,
+    }
+    const raster = rasterizeLiveCad(config)
+    expect(raster.finishHex).toBe('#383E42')
+    expect(raster.tipology).toBe('base')
+    expect(raster.png.byteLength).toBeGreaterThan(2_000)
+    expect(Buffer.from(raster.png).subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
+  })
+})
+
 describe('buildIndicativeQuotePdf', () => {
-  it('embeds the Design master instead of a mismatched CAD elevation', async () => {
+  it('embeds live CAD so the quote matches the Design preview', async () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const pdf = await buildIndicativeQuotePdf({
       config,

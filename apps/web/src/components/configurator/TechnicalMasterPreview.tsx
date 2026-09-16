@@ -237,7 +237,7 @@ export function TechnicalMasterPreview({
               </div>
               <div className="text-right">
                 {resolved.ok ? (
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted" data-testid="design-master-slug">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
@@ -261,8 +261,8 @@ export function TechnicalMasterPreview({
                   (item.key === 'motorised' && item.visual === 'same_drawing')),
             ) ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Finish is the swatch above. Railheads stay on the quote. Middle bar and sliding
-                drive follow Colour fit — they do not redraw this master.
+                Finish, size, middle bar and drive follow the Design CAD above. This plate keeps the
+                official workshop line-art. Railheads stay on the quote (CA-17).
               </p>
             ) : null}
           </div>

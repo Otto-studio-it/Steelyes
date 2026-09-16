@@ -5,11 +5,8 @@ import { Maximize2, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { ColourFitPreview } from '@/components/configurator/ColourFitPreview'
-import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
-import { cn } from '@/lib/utils'
+import { WorkshopDrawingDisclosure } from '@/components/configurator/WorkshopDrawingDisclosure'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
-
-type PreviewMode = 'design' | 'colour_fit'
 
 type PreviewCanvasProps = {
   config: GateConfig
@@ -20,15 +17,14 @@ type PreviewCanvasProps = {
   tenant?: TenantBundle
   showDimensionOverlay?: boolean
   onDimensionOverlayClick?: () => void
-  /** @deprecated Use allowColourFit. */
+  /** @deprecated Secondary schematic modes removed. */
   showSecondaryModes?: boolean
-  /** Colour fit is a configurator helper. Share/quote stays on the official master. */
+  /** @deprecated Colour fit is now the default Design drawing. */
   allowColourFit?: boolean
 }
 
 /**
- * Default customer preview is the official Design master.
- * Colour fit is live CAD (finish / mm / middle bar) and does not replace the master.
+ * Customer preview is live CAD (installation). Official masters sit under Workshop drawing.
  */
 export function PreviewCanvas({
   config,
@@ -37,11 +33,8 @@ export function PreviewCanvas({
   className = '',
   showDimensionOverlay = false,
   onDimensionOverlayClick,
-  allowColourFit = true,
 }: PreviewCanvasProps) {
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
-  const [mode, setMode] = useState<PreviewMode>('design')
-  const previewMode: PreviewMode = allowColourFit ? mode : 'design'
 
   const previewCompact = strip || compact
   const minHeight = strip ? 'min-h-[28vh]' : 'min-h-[clamp(280px,44vh,520px)]'
@@ -52,36 +45,7 @@ export function PreviewCanvas({
       data-testid="configurator-preview-pinned"
     >
       <div className={`flex items-center justify-between gap-2 ${strip ? 'px-3 py-2' : 'px-4 pt-4'}`}>
-        {allowColourFit ? (
-          <div className="flex gap-1" role="tablist" aria-label="Preview drawing">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={previewMode === 'design'}
-              onClick={() => setMode('design')}
-              className={cn(
-                'min-h-[36px] px-3 font-mono text-xs uppercase tracking-widest transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30',
-                previewMode === 'design' ? 'bg-steel text-white' : 'text-steel hover:bg-white',
-              )}
-            >
-              Design
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={previewMode === 'colour_fit'}
-              onClick={() => setMode('colour_fit')}
-              className={cn(
-                'min-h-[36px] px-3 font-mono text-xs uppercase tracking-widest transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30',
-                previewMode === 'colour_fit' ? 'bg-steel text-white' : 'text-steel hover:bg-white',
-              )}
-            >
-              Colour fit
-            </button>
-          </div>
-        ) : (
-          <span className="font-mono text-xs uppercase tracking-widest text-steel">Design</span>
-        )}
+        <span className="font-mono text-xs uppercase tracking-widest text-steel">Design</span>
         {strip ? (
           <button
             type="button"
@@ -95,30 +59,20 @@ export function PreviewCanvas({
       </div>
 
       <div className="relative">
-        {previewMode === 'colour_fit' ? (
-          <ColourFitPreview config={config} compact={previewCompact} />
-        ) : (
-          <ConfiguratorPreview
-            config={config}
-            viewMode="technical"
-            compact={previewCompact}
-            collapsible={false}
-            pinned
-            studio
-            className="rounded-none border-0 shadow-none"
-          />
-        )}
+        <ColourFitPreview config={config} compact={previewCompact} />
         {showDimensionOverlay ? (
           <button
             type="button"
             onClick={onDimensionOverlayClick}
-            className="absolute bottom-3 left-3 border border-white/20 bg-steel/90 px-3 py-2 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+            className="absolute bottom-3 left-3 z-10 border border-white/20 bg-steel/90 px-3 py-2 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             aria-label={`Opening size ${config.widthMm} by ${config.heightMm} millimetres. Click to edit dimensions.`}
           >
             {config.widthMm} × {config.heightMm} mm
           </button>
         ) : null}
       </div>
+
+      <WorkshopDrawingDisclosure config={config} />
     </div>
   )
 
@@ -132,7 +86,7 @@ export function PreviewCanvas({
           <Dialog.Content className="fixed inset-0 z-50 flex flex-col bg-steel focus:outline-none">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
               <Dialog.Title className="font-mono text-xs uppercase tracking-widest text-white/70">
-                {previewMode === 'colour_fit' ? 'Colour fit preview' : 'Design preview'}
+                Design preview
               </Dialog.Title>
               <Dialog.Close asChild>
                 <button
@@ -144,20 +98,9 @@ export function PreviewCanvas({
                 </button>
               </Dialog.Close>
             </div>
-            <div className="flex-1 overflow-hidden bg-[#F3F2EF]">
-              {previewMode === 'colour_fit' ? (
-                <ColourFitPreview config={config} compact={false} />
-              ) : (
-                <ConfiguratorPreview
-                  config={config}
-                  viewMode="technical"
-                  compact={false}
-                  collapsible={false}
-                  pinned
-                  studio
-                  className="rounded-none border-0 shadow-none"
-                />
-              )}
+            <div className="flex-1 overflow-auto bg-[#F3F2EF]">
+              <ColourFitPreview config={config} compact={false} />
+              <WorkshopDrawingDisclosure config={config} />
             </div>
           </Dialog.Content>
         </Dialog.Portal>

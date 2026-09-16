@@ -17,7 +17,7 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'On/off only — Design swaps the matching 2D master.',
+    description: 'On/off — Design CAD follows Victorian shape. Circles swap the workshop master.',
     keys: ['dog_bars', 'circles', 'top_railheads'],
   },
   {
@@ -40,12 +40,12 @@ export const OPTION_META: OptionMeta[] = [
     key: 'middle_bar',
     label: 'Middle bar',
     description:
-      'Priced extra. Colour fit draws it. The official Design master already has a mid rail and does not swap.',
+      'Priced extra. Design CAD draws it. The workshop Victorian master already has a mid rail and does not swap.',
   },
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'On/off. Count is automatic (one per bay). Not drawn on Design (CA-17).',
+    description: 'On/off. Count is automatic (one per bay). Workshop / quote only (CA-17).',
   },
   {
     key: 'dog_bars',
@@ -61,7 +61,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'arched_top',
     label: 'Arched top',
-    description: 'Curved top rail — same control as Gate shape on Choose. Swaps the Design master.',
+    description: 'Curved top rail — same control as Gate shape on Choose. Design CAD follows it.',
   },
   {
     key: 'aluminium_panels',
@@ -71,13 +71,13 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'circles',
     label: 'Circles',
-    description: 'On/off — upper + lower bands together (Q1). Unavailable on Composite.',
+    description: 'On/off — upper + lower bands together (Q1). Drawn on the workshop plate, not yet on Design CAD. Unavailable on Composite.',
   },
   {
     key: 'picket_collars',
     label: 'Picket collars',
     description:
-      'On/off — mid-height boss on long pickets, spacing every picket (never on dog bars). Unavailable on Composite.',
+      'On/off — mid-height boss on long pickets (never on dog bars). Drawn on the workshop plate, not yet on Design CAD. Unavailable on Composite.',
   },
   {
     key: 'bushes',

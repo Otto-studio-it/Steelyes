@@ -186,11 +186,10 @@ One `GateConfig` continues to drive price, share, PDF, mesh. Preview is a **func
 **P1 — matrix + collar + PDF + e2e (this change).**  
 16 missing every_1 cells are baked from tipology SVG + official overlays. Collar chooser is on Refine. Quote PDF embeds the same Design master (PNG via resvg), not a separate CAD elevation. Playwright asserts master slugs, not live-CAD `swing-frame` / Bronze. Sliding packs show a Manual/Motorised recorded badge. Middle bar is quote-only (no Design toggle).
 
-**Slice B — live CAD behind a Design tab, masters remain default (this change).**  
-`PreviewCanvas` offers Design (official master, default) and Colour fit (`buildGateRenderPlan` installation SVG). Finish, millimetres and middle bar follow Colour fit. Quote/share stay on the official master. No remote flag — the tab is the switch.
+**Slice B — live CAD behind a Design tab, masters remain default.** Shipped, then inverted in Slice C.
 
-**Slice C — live CAD becomes the customer preview.**  
-Masters move to a “Workshop drawing” disclosure (slug + SVG). Quote PDF uses the **same** live plan the customer saw. E2e asserts CAD primitives again, with the real finish catalogue.
+**Slice C — live CAD becomes the customer preview (this change).**  
+Design drawing is `buildGateRenderPlan` installation SVG. Official masters move to a **Workshop drawing** disclosure (slug + SVG). Quote PDF and share use the same live CAD PNG. Circles, collars and railheads stay on the workshop plate until CAD draws them (Slice E). E2e asserts CAD `data-tipology` / `data-finish` / handle, not master `img[src]` as the customer drawing.
 
 **Slice D — masters become golden tests, not runtime.**  
 For each `GateConfig` in `audit-2d-matrix`, render CAD, compare to the definitive SVG (perceptual or path-hash). Missing telescopic cells are generated from CAD, then art-directed in Figma only if Marius rejects the line weight. `resolveSilhouette` stays for workshop export.
@@ -219,7 +218,8 @@ Secure here means **the drawing is a pure function of `GateConfig`**, fail-close
 ## 8. How to proceed from here
 
 1. ~~P1 missing cells + collar chooser + e2e rewrite~~ — done (204 baked silhouettes; overlay fallback only for collar `every_2`).
-2. ~~Slice B: Colour fit live CAD as a second view~~ — done. Finish, size and middle bar move on Colour fit; Design stays the official master.
-3. Only then promote live CAD to the default customer drawing (Slice C) and keep every current SVG as the workshop/QA pack.
+2. ~~Slice B: Colour fit live CAD as a second view~~ — done, then inverted.
+3. ~~Slice C: live CAD is the customer Design drawing~~ — done. Workshop plate keeps the official SVG. Quote PDF matches Design CAD.
+4. Slice D: masters become golden tests. Slice E: CAD draws circles/collars natively.
 
-Until Slice C, treat any control that does not change `resolveSilhouette().slug` or an overlay as **quote metadata**, and label it that way in the UI.
+Until Slice E, treat circles, collars and railheads as **workshop / quote metadata** on Design CAD, and keep that labelled in the UI.

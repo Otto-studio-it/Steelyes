@@ -86,9 +86,11 @@ export function QuickGateScreen() {
           description={
             motorSplit
               ? config.motorised
-                ? 'Automated opening. Design swaps the motorised master — no leaf handle on the drawing.'
-                : 'Manual operation. Design swaps the manual master for this mechanism.'
-              : 'Sliding packs use the same 2D drawing for manual and motorised. Design shows Manual recorded or Motorised recorded; the quote still stores your drive choice.'
+                ? 'Automated opening. Design CAD drops the leaf handle (CA-01).'
+                : 'Manual operation. Design CAD shows the leaf handle.'
+              : config.motorised
+                ? 'Automated opening. Design CAD drops the pull handle; sliding hardware stays schematic.'
+                : 'Manual operation. Design CAD shows the pull handle on the leading edge.'
           }
           id="quick-motorised"
         />

@@ -1,8 +1,10 @@
 import {
   buildGateRenderPlan,
+  getVictorianTipology,
   resolveFinishDefinition,
   serializeGateRenderPlanToSvg,
   type GateConfig,
+  type VictorianTipology,
 } from '@steelyes/gate-engine'
 
 export type ColourFitDrawing = {
@@ -12,11 +14,15 @@ export type ColourFitDrawing = {
   finishLabel: string
   widthMm: number
   heightMm: number
+  tipology: VictorianTipology
+  motorised: boolean
+  hasHandle: boolean
 }
 
 /**
- * Live CAD elevation used by the Colour fit preview.
- * Finish, millimetres and middle bar follow GateConfig; this is not the official master.
+ * Live CAD elevation for the customer Design preview (installation view).
+ * Finish, millimetres, Victorian shape, middle bar and the CA-01 handle follow GateConfig.
+ * Circles, collars and railheads stay on the workshop master until CAD draws them.
  */
 export function buildColourFitDrawing(config: GateConfig): ColourFitDrawing {
   const plan = buildGateRenderPlan(config, { viewMode: 'installation' })
@@ -29,5 +35,8 @@ export function buildColourFitDrawing(config: GateConfig): ColourFitDrawing {
     finishLabel: finish.label,
     widthMm: config.widthMm,
     heightMm: config.heightMm,
+    tipology: getVictorianTipology(config),
+    motorised: config.motorised,
+    hasHandle: svg.includes('manual-handle'),
   }
 }

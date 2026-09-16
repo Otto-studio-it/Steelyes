@@ -12,8 +12,8 @@ type ColourFitPreviewProps = {
 }
 
 /**
- * Live CAD colour/fit view. Follows finish, millimetres and middle bar.
- * Official workshop masters stay on the Design tab.
+ * Customer Design preview: live CAD (installation view).
+ * Official SVG masters live on the Workshop drawing disclosure.
  */
 export function ColourFitPreview({ config, compact = false }: ColourFitPreviewProps) {
   const finish = resolveFinishDefinition(config)
@@ -22,16 +22,28 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
       return { ok: true as const, value: buildColourFitDrawing(config) }
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : 'Colour fit schematic is unavailable for this configuration.'
+        error instanceof Error ? error.message : 'Design drawing is unavailable for this configuration.'
       return { ok: false as const, message }
     }
   }, [config])
 
+  const decoOn = config.options.some(
+    (option) =>
+      option.enabled &&
+      (option.key === 'circles' || option.key === 'picket_collars' || option.key === 'top_railheads'),
+  )
+
   return (
-    <div data-testid="colour-fit-preview" data-finish={drawing.ok ? drawing.value.finishHex : undefined}>
+    <div
+      data-testid="design-cad-preview"
+      data-finish={drawing.ok ? drawing.value.finishHex : undefined}
+      data-tipology={drawing.ok ? drawing.value.tipology : undefined}
+      data-motorised={drawing.ok ? String(drawing.value.motorised) : undefined}
+      data-handle={drawing.ok ? String(drawing.value.hasHandle) : undefined}
+    >
       <div className={`flex items-center justify-between border-b border-steel/10 px-4 ${compact ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}>
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">Colour fit</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">Design drawing</p>
           <h2
             className={`mt-0.5 truncate font-heading font-black uppercase tracking-tight text-steel ${
               compact ? 'text-base sm:text-lg' : 'text-sm lg:mt-1 lg:text-lg'
@@ -57,7 +69,7 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
         // eslint-disable-next-line @next/next/no-img-element -- live CAD SVG as data URI
         <img
           src={drawing.value.dataUri}
-          alt={`${gateTypeLabel(config.gateType)} colour fit schematic, ${config.widthMm} by ${config.heightMm} millimetres, ${finish.label}`}
+          alt={`${gateTypeLabel(config.gateType)} design drawing, ${config.widthMm} by ${config.heightMm} millimetres, ${finish.label}`}
           className={`w-full bg-white object-contain object-top ${compact ? 'max-h-[240px]' : 'max-h-[min(52vh,520px)]'}`}
         />
       ) : (
@@ -75,9 +87,13 @@ export function ColourFitPreview({ config, compact = false }: ColourFitPreviewPr
           <span className="ml-2 text-sm font-normal text-muted">mm</span>
         </p>
         <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
-          Schematic CAD — finish, size and middle bar follow this drawing. The official workshop master stays on
-          Design.
+          Live CAD — finish, size, Victorian shape, middle bar and the leaf handle follow this drawing.
         </p>
+        {decoOn ? (
+          <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-workshop-deco-note">
+            Circles, collars and railheads stay on the workshop plate until CAD draws them.
+          </p>
+        ) : null}
       </div>
     </div>
   )

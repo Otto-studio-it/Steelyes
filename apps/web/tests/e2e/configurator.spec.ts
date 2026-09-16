@@ -18,60 +18,46 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/Estimated pricing/i).first()).toBeVisible()
   })
 
-  test('swaps the Design master when Victorian shape changes', async ({ page }) => {
+  test('swaps the Design CAD when Victorian shape changes', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
+    const cad = page.getByTestId('design-cad-preview')
+    await expect(cad).toHaveAttribute('data-tipology', 'base')
     await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
 
     await page.getByRole('radio', { name: /^Arched top/i }).click()
     await expect(page.getByRole('radio', { name: /^Arched top/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(cad).toHaveAttribute('data-tipology', 'arched')
     await expect(page.getByTestId('design-master-slug')).toContainText(/arched/i)
-    await expect(page.locator('img[src*="/2d-masters/double_swing/silhouettes/arched"]')).toBeVisible()
 
     await page.getByRole('radio', { name: /^Dog bars/i }).click()
+    await expect(cad).toHaveAttribute('data-tipology', 'dog_bars')
     await expect(page.getByTestId('design-master-slug')).toContainText(/dog bars/i)
   })
 
-  test('records finish on the Design swatch', async ({ page }) => {
+  test('paints the selected finish on the Design CAD', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
     await page.getByRole('radio', { name: /Anthracite/i }).click()
     await expect(page.getByRole('radio', { name: /Anthracite/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-cad-preview')).toHaveAttribute('data-finish', '#383E42')
     await expect(page.getByTestId('configurator-preview-pinned').getByText(/Anthracite/i)).toBeVisible()
   })
 
-  test('Colour fit paints the selected finish without replacing the Design master', async ({ page }) => {
-    await waitForConfiguratorReady(page)
-
-    await expect(page.getByTestId('design-master-slug')).toBeVisible()
-    await page.getByRole('tab', { name: /Colour fit/i }).click()
-    await expect(page.getByRole('tab', { name: /Colour fit/i })).toHaveAttribute('aria-selected', 'true')
-
-    const colourFit = page.getByTestId('colour-fit-preview')
-    await expect(colourFit).toBeVisible()
-    const satinHex = await colourFit.getAttribute('data-finish')
-    expect(satinHex).toBeTruthy()
-
-    await page.getByRole('radio', { name: /Anthracite/i }).click()
-    await expect(colourFit).toHaveAttribute('data-finish', '#383E42')
-    expect(satinHex).not.toBe('#383E42')
-
-    await page.getByRole('tab', { name: /^Design$/i }).click()
-    await expect(page.getByTestId('design-master-slug')).toBeVisible()
-    await expect(page.locator('img[src*="/2d-masters/double_swing/silhouettes/"]').first()).toBeVisible()
-  })
-
-  test('records sliding drive on the Design badge without swapping the master', async ({ page }) => {
+  test('sliding drive drops the CAD handle without swapping the workshop plate', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
     await page.getByRole('button', { name: /^Change$/i }).click()
     await page.getByRole('radio', { name: /Tracked sliding/i }).click()
+    const cad = page.getByTestId('design-cad-preview')
+    await expect(cad).toHaveAttribute('data-motorised', 'true')
+    await expect(cad).toHaveAttribute('data-handle', 'false')
     await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
-    await expect(page.getByTestId('design-drive-badge')).toContainText(/Motorised recorded/i)
 
     await page.getByRole('switch', { name: /Motorised/i }).click()
     await expect(page.getByRole('switch', { name: /Manual only/i })).toHaveAttribute('aria-checked', 'false')
-    await expect(page.getByTestId('design-drive-badge')).toContainText(/Manual recorded/i)
+    await expect(cad).toHaveAttribute('data-motorised', 'false')
+    await expect(cad).toHaveAttribute('data-handle', 'true')
     await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
   })
 
@@ -104,7 +90,7 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/^RH32$/i).filter({ visible: true }).first()).toBeVisible()
   })
 
-  test('collar spacing swaps the Design master', async ({ page }) => {
+  test('collar spacing swaps the workshop master', async ({ page }) => {
     await walkToRefine(page)
 
     const chooser = page.getByTestId('collar-chooser')
@@ -112,6 +98,7 @@ test.describe('configurator release flow', () => {
     await chooser.getByRole('radio', { name: /Every picket/i }).click()
     await expect(chooser.getByRole('radio', { name: /Every picket/i })).toHaveAttribute('aria-checked', 'true')
     await expect(page.getByTestId('design-master-slug')).toContainText(/collar/i)
+    await expect(page.getByTestId('design-workshop-deco-note')).toBeVisible()
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {
@@ -203,8 +190,8 @@ test.describe('configurator mobile quick path', () => {
     const sheet = page.getByRole('dialog')
     await expect(sheet.getByText(/Gate preview/i)).toBeVisible()
     await expect(sheet.getByTestId('configurator-preview-pinned')).toBeVisible()
+    await expect(sheet.getByTestId('design-cad-preview')).toBeVisible()
     await expect(sheet.getByTestId('design-master-slug')).toBeVisible()
-    await expect(sheet.locator('img[src*="/2d-masters/"]').first()).toBeVisible()
 
     await sheet.getByRole('button', { name: /Close gate preview/i }).click()
     await expect(page.getByRole('dialog')).toHaveCount(0)
@@ -294,8 +281,8 @@ test.describe('configurator share route', () => {
 
     await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
     await expect(page.getByText(/Read-only view/i)).toBeVisible()
+    await expect(page.getByTestId('design-cad-preview')).toBeVisible()
     await expect(page.getByTestId('design-master-slug')).toBeVisible()
-    await expect(page.locator('img[src*="/2d-masters/"]').first()).toBeVisible()
     await expect(page.getByRole('link', { name: /Request survey-led quote/i })).toHaveAttribute(
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,
