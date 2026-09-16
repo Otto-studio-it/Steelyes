@@ -4,7 +4,27 @@ const BASE_URL = 'https://www.steelyes.co.uk'
 
 // Bump when marketing page content actually changes — not on every build/deploy,
 // which would make every lastmod identical and Google discounts that as a fake signal.
-const CONTENT_LAST_UPDATED = new Date('2026-08-05')
+const CONTENT_LAST_UPDATED = new Date('2026-09-16')
+
+// Area slugs for local SEO pages
+const AREA_SLUGS = [
+  'south-london',
+  'sydenham',
+  'lewisham',
+  'bromley',
+  'greenwich',
+  'croydon',
+  'surrey',
+  'kent',
+] as const
+
+// Blog post slugs for content marketing
+const BLOG_SLUGS = [
+  'steel-gate-costs-london-2026',
+  'swing-vs-sliding-gates',
+  'automating-existing-gates',
+  'planning-permission-driveway-gates',
+] as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = CONTENT_LAST_UPDATED
@@ -73,6 +93,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    // Area pages for local SEO
+    {
+      url: `${BASE_URL}/areas`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    ...AREA_SLUGS.map((slug) => ({
+      url: `${BASE_URL}/areas/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    // Blog for content marketing
+    {
+      url: `${BASE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
+    ...BLOG_SLUGS.map((slug) => ({
+      url: `${BASE_URL}/blog/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     {
       url: `${BASE_URL}/installation`,
       lastModified: now,

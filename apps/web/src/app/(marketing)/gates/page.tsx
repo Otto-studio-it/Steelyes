@@ -9,10 +9,11 @@ import { GATE_DATA, GATE_SLUGS } from './gate-marketing-data'
 import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
-  title: 'Bespoke Steel Gates | Driveway, Electric & Automatic Gates',
+  title: 'Bespoke Steel Gates London | Driveway, Electric & Automatic Gates',
   description:
-    'Made-to-measure steel driveway gates — double swing, sliding, cantilever, bifold and more. Surveyed, fabricated and installed across the UK.',
+    'Made-to-measure steel driveway gates in London — double swing, sliding, cantilever, bifold and more. Survey-led fabrication from our Sydenham workshop, installed across London and the UK.',
   alternates: { canonical: '/gates' },
+  keywords: ['steel gates london', 'driveway gates london', 'electric gates london', 'automatic gates south london', 'bespoke gates uk'],
 }
 
 function badgeFor(availability: (typeof GATE_DATA)[keyof typeof GATE_DATA]['availability']): string {

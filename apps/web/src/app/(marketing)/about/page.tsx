@@ -7,10 +7,11 @@ import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
-  title: 'About | UK Steel Gate Manufacturer & Fabricator',
+  title: 'About Steelyes | London Steel Gate Manufacturer & Fabricator',
   description:
-    'Steelyes is a UK steel fabrication specialist. Bespoke driveway gates, railings and structural steelwork designed and built around each site and brief.',
+    'Steelyes is a London-based steel fabrication specialist in Sydenham, SE26. Bespoke driveway gates, railings and structural steelwork designed and built around each site.',
   alternates: { canonical: '/about' },
+  keywords: ['steel gate manufacturer london', 'steel fabricator sydenham', 'bespoke gates SE26', 'london metalwork specialist'],
 }
 
 export default function AboutPage() {
