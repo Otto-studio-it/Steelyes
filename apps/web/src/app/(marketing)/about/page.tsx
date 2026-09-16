@@ -72,14 +72,14 @@ export default function AboutPage() {
 
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <Image
-          src="/images/backgrounds/uk-coverage.jpg"
+          src="/images/backgrounds/metalwork-sparks.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-30"
+          className="object-cover"
           aria-hidden
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/60" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What defines our craft</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
