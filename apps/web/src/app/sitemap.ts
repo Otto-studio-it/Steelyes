@@ -26,6 +26,13 @@ const BLOG_SLUGS = [
   'planning-permission-driveway-gates',
 ] as const
 
+// Case study slugs for project portfolio
+const CASE_STUDY_SLUGS = [
+  'victorian-gates-dulwich',
+  'automated-sliding-gate-bromley',
+  'security-gates-commercial-greenwich',
+] as const
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = CONTENT_LAST_UPDATED
 
@@ -119,6 +126,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
+    // Case studies for E-E-A-T signals
+    {
+      url: `${BASE_URL}/case-study`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    ...CASE_STUDY_SLUGS.map((slug) => ({
+      url: `${BASE_URL}/case-study/${slug}`,
+      lastModified: now,
+      changeFrequency: 'yearly' as const,
+      priority: 0.6,
+    })),
+    // Reviews for trust signals
+    {
+      url: `${BASE_URL}/reviews`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     {
       url: `${BASE_URL}/installation`,
       lastModified: now,

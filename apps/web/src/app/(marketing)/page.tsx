@@ -8,6 +8,7 @@ import { ConfiguratorProductPreview } from '@/components/marketing/ConfiguratorP
 import { InstallationProcessTimeline } from '@/components/marketing/InstallationProcessTimeline'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { Reveal } from '@/components/marketing/Reveal'
+import { ReviewsWidget } from '@/components/marketing/ReviewsWidget'
 import { SocialFollowStrip } from '@/components/marketing/SocialFollowStrip'
 import { BUSINESS, BUSINESS_SAME_AS } from '@/lib/marketing/business'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
@@ -319,7 +320,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6 — Final CTA */}
+      {/* 6 — Reviews */}
+      <section className="border-t border-zinc-200 bg-canvas py-14 md:py-20">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <Reveal>
+            <ReviewsWidget variant="light" showCTA={true} maxReviews={3} />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 7 — Final CTA */}
       <section className="relative overflow-hidden bg-steel py-20 text-white md:py-28">
         <Image
           src={OFFICIAL_IMAGES.gates.doubleSwing.gallery[1]}
