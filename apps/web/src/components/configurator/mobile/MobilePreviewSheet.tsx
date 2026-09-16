@@ -19,8 +19,8 @@ type MobilePreviewSheetProps = {
 }
 
 /**
- * Full-resolution Design preview as a bottom sheet (85dvh).
- * Shows the official 2D master only — no Installation / schematic modes.
+ * Full-resolution preview as a bottom sheet (85dvh).
+ * Official 2D master is the Design drawing.
  */
 export function MobilePreviewSheet({
   open,

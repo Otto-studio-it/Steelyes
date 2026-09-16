@@ -76,6 +76,18 @@ export function collectVariantCatalogIssues(
       continue
     }
 
+    // Collar spacing is a first-class Design CAD variant (every picket vs every 2nd).
+    if (option.key === 'picket_collars') {
+      if (option.variant !== 'every_1' && option.variant !== 'every_2') {
+        issues.push({
+          field: 'options.picket_collars.variant',
+          code: 'unknown_variant',
+          message: 'Picket collar spacing must be every picket or every 2nd picket.',
+        })
+      }
+      continue
+    }
+
     if (!isRailheadOptionKey(option.key)) {
       issues.push({
         field: `options.${option.key}.variant`,

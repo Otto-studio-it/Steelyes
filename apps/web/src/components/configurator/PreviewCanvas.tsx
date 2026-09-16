@@ -12,17 +12,18 @@ type PreviewCanvasProps = {
   compact?: boolean
   strip?: boolean
   className?: string
-  /** @deprecated Tenant feature flags for schematic modes are unused — Design only. */
+  /** @deprecated Tenant feature flags for schematic modes are unused. */
   tenant?: TenantBundle
   showDimensionOverlay?: boolean
   onDimensionOverlayClick?: () => void
-  /** @deprecated Secondary schematic modes removed — Design masters only. */
+  /** @deprecated Secondary schematic modes removed. */
   showSecondaryModes?: boolean
+  /** @deprecated Colour-fit CAD is not the customer Design drawing. */
+  allowColourFit?: boolean
 }
 
 /**
- * Customer preview is Design only — preloaded 2D masters.
- * Live Installation / plan / photo / 3D schematic modes are not offered in the UI.
+ * Customer preview is the official 2D master SVG. Menu changes swap that file immediately.
  */
 export function PreviewCanvas({
   config,
@@ -59,7 +60,6 @@ export function PreviewCanvas({
       <div className="relative">
         <ConfiguratorPreview
           config={config}
-          viewMode="technical"
           compact={previewCompact}
           collapsible={false}
           pinned
@@ -70,7 +70,7 @@ export function PreviewCanvas({
           <button
             type="button"
             onClick={onDimensionOverlayClick}
-            className="absolute bottom-3 left-3 border border-white/20 bg-steel/90 px-3 py-2 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+            className="absolute bottom-3 left-3 z-10 border border-white/20 bg-steel/90 px-3 py-2 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             aria-label={`Opening size ${config.widthMm} by ${config.heightMm} millimetres. Click to edit dimensions.`}
           >
             {config.widthMm} × {config.heightMm} mm
@@ -102,10 +102,9 @@ export function PreviewCanvas({
                 </button>
               </Dialog.Close>
             </div>
-            <div className="flex-1 overflow-hidden bg-[#F3F2EF]">
+            <div className="flex-1 overflow-auto bg-[#F3F2EF]">
               <ConfiguratorPreview
                 config={config}
-                viewMode="technical"
                 compact={false}
                 collapsible={false}
                 pinned

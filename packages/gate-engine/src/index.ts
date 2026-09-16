@@ -34,6 +34,12 @@ export {
   collectCompatibilityIssues,
 } from './rules/compatibility'
 export {
+  VICTORIAN_TIPOLOGIES,
+  applyVictorianTipology,
+  getVictorianTipology,
+} from './rules/tipology'
+export type { VictorianTipology } from './rules/tipology'
+export {
   PROVISIONAL_COUNT_RULES,
   collectGeometryIssues,
   getDecorativeBarCapacity,
@@ -337,3 +343,13 @@ export type {
   MotorOverlayInstance,
   MotorOverlayPlan,
 } from './silhouettes/resolve-motor-overlay'
+export {
+  describeDesignPreview,
+  designPreviewMismatchNotes,
+  packHasMotorSplit,
+} from './silhouettes/preview-response'
+export type {
+  DesignPreviewResponse,
+  DesignSelectionChannel,
+  DesignVisualChannel,
+} from './silhouettes/preview-response'

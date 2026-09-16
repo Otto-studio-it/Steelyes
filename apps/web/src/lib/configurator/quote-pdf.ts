@@ -14,7 +14,9 @@ import {
   buildConfigurationSummaryLines,
   formatConfigurationSummaryText,
 } from '@/lib/configurator/configuration-summary'
+import { rasterizeDesignMaster } from '@/lib/configurator/design-master-pdf'
 import { formatLabelText } from '@/lib/configurator/labels'
+import { selectedRailheadSlug } from '@/lib/configurator/railhead'
 
 const PAGE_WIDTH = 595
 const PAGE_HEIGHT = 842
@@ -196,16 +198,79 @@ export async function buildIndicativeQuotePdf(input: {
 
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT])
   y = PAGE_HEIGHT - MARGIN
-  drawLine('Technical drawing (schematic)', { bold: true, size: 16, gap: 22 })
+  drawLine('Design drawing', { bold: true, size: 16, gap: 22 })
   drawLine(`${config.widthMm} mm × ${config.heightMm} mm · ${config.gateType.split('_').join(' ')}`, { size: 10, gap: 16 })
 
-  const renderPlan = buildGateRenderPlan(config, { viewMode: 'technical' })
-  drawRenderPlanPreview(page, renderPlan, {
-    x: MARGIN,
-    y: MARGIN + 40,
-    width: PAGE_WIDTH - MARGIN * 2,
-    height: PAGE_HEIGHT - MARGIN * 2 - 80,
-  })
+  try {
+    const master = rasterizeDesignMaster(config)
+    const pngImage = await pdf.embedPng(master.png)
+    const railheadSku = selectedRailheadSlug(config.options)
+    const maxWidth = PAGE_WIDTH - MARGIN * 2
+    const maxHeight = PAGE_HEIGHT - MARGIN * 2 - 90
+    const railheadColumn = railheadSku ? 118 : 0
+    const drawingMaxWidth = maxWidth - railheadColumn
+    const scale = Math.min(drawingMaxWidth / pngImage.width, maxHeight / pngImage.height)
+    const drawWidth = pngImage.width * scale
+    const drawHeight = pngImage.height * scale
+    page.drawImage(pngImage, {
+      x: MARGIN,
+      y: MARGIN + 28,
+      width: drawWidth,
+      height: drawHeight,
+    })
+    if (railheadSku) {
+      const columnX = MARGIN + drawingMaxWidth + 8
+      page.drawText('Railhead', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 12,
+        size: 8,
+        font: fontBold,
+        color: rgb(0.2, 0.2, 0.2),
+      })
+      page.drawText(railheadSku, {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 28,
+        size: 11,
+        font: fontBold,
+        color: rgb(0.12, 0.12, 0.12),
+      })
+      page.drawText('Catalogue photo', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 44,
+        size: 8,
+        font,
+        color: rgb(0.35, 0.35, 0.35),
+      })
+      page.drawText('beside Design', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 56,
+        size: 8,
+        font,
+        color: rgb(0.35, 0.35, 0.35),
+      })
+    }
+    page.drawText(
+      railheadSku
+        ? `Design drawing · official master · ${master.slug.replace(/_/g, ' ')} · railhead ${railheadSku} beside the gate`
+        : `Design drawing · official master · ${master.slug.replace(/_/g, ' ')}`,
+      {
+        x: MARGIN,
+        y: MARGIN + 10,
+        size: 8,
+        font,
+        color: rgb(0.35, 0.35, 0.35),
+      },
+    )
+  } catch {
+    drawLine('Official master unavailable — schematic fallback.', { size: 9, gap: 14 })
+    const renderPlan = buildGateRenderPlan(config, { viewMode: 'installation' })
+    drawRenderPlanPreview(page, renderPlan, {
+      x: MARGIN,
+      y: MARGIN + 40,
+      width: PAGE_WIDTH - MARGIN * 2,
+      height: PAGE_HEIGHT - MARGIN * 2 - 80,
+    })
+  }
 
   return pdf.save()
 }

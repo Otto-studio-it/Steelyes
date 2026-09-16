@@ -257,6 +257,35 @@ function pushCircleScrollBand(
   }
 }
 
+function getPicketCollarSpacing(config: GateConfig): 0 | 1 | 2 {
+  const option = config.options.find((item) => item.key === 'picket_collars' && item.enabled)
+  if (!option) return 0
+  return option.variant === 'every_2' ? 2 : 1
+}
+
+/** Q2–Q4: boss on long pickets only at mid-height — never on dog bars. */
+function pushPicketCollars(
+  primitives: GateRenderPrimitive[],
+  palette: RenderPalette,
+  xs: number[],
+  y: number,
+  spacing: 1 | 2,
+): void {
+  xs.forEach((x, index) => {
+    if (index % spacing !== 0) return
+    primitives.push({
+      kind: 'circle',
+      id: `picket-collar-${index}`,
+      cx: x,
+      cy: y,
+      r: scaleVisual(5.5),
+      fill: palette.panel,
+      stroke: palette.ink,
+      strokeWidth: scaleVisual(1.6),
+    })
+  })
+}
+
 function pushSpearRow(
   primitives: GateRenderPrimitive[],
   palette: RenderPalette,
@@ -577,10 +606,14 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
   }
 
   if (config.style === 'traditional_victorian') {
+    const longBarTop = arch ? topY + 34 : upperMidY + 6
+    const longBarBottom = spearBandY - 4
+    const longPicketXs: number[] = []
     for (let index = 0; index < upperBars; index += 1) {
       const x = FRAME_X + barGap * (index + 1)
-      const barTop = arch ? topY + 34 : upperMidY + 6
-      const barBottom = spearBandY - 4
+      longPicketXs.push(x)
+      const barTop = longBarTop
+      const barBottom = longBarBottom
       if (useTubeProfile) {
         pushTubeVerticalLine(
           primitives,
@@ -606,6 +639,17 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
           opacity: 0.95,
         }, palette, 1, 1)
       }
+    }
+
+    const collarSpacing = getPicketCollarSpacing(config)
+    if (collarSpacing) {
+      pushPicketCollars(
+        primitives,
+        palette,
+        longPicketXs,
+        longBarTop + (longBarBottom - longBarTop) * 0.5,
+        collarSpacing,
+      )
     }
 
     for (let index = 0; index < lowerBars; index += 1) {
@@ -1039,9 +1083,11 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
   }
 
   const barCount = config.style === 'traditional_victorian' ? clamp(Math.round(config.widthMm / 230), 6, 14) : boardCount
+  const slidingBarXs: number[] = []
   for (let index = 0; index < barCount; index += 1) {
     const x = panelX + boardWidth * (index + 0.5)
     if (config.style === 'traditional_victorian') {
+      slidingBarXs.push(x)
       primitives.push({
         kind: 'line',
         id: `sliding-bar-${index}`,
@@ -1067,6 +1113,38 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
         fillOpacity: 0.95,
       })
     }
+  }
+
+  if (config.style === 'traditional_victorian' && (hasOption(config, 'circles') || hasOption(config, 'bushes'))) {
+    const left = panelX + 20
+    const right = panelX + panelWidth - 20
+    pushCircleScrollBand(
+      primitives,
+      palette,
+      'sliding-top-circle-band',
+      left,
+      right,
+      panelY + panelHeight * 0.22,
+    )
+    pushCircleScrollBand(
+      primitives,
+      palette,
+      'sliding-bottom-circle-band',
+      left,
+      right,
+      panelY + panelHeight * 0.68,
+    )
+  }
+
+  const slidingCollarSpacing = getPicketCollarSpacing(config)
+  if (slidingCollarSpacing && slidingBarXs.length > 0) {
+    pushPicketCollars(
+      primitives,
+      palette,
+      slidingBarXs,
+      panelY + panelHeight * 0.5,
+      slidingCollarSpacing,
+    )
   }
 
   if (hasOption(config, 'middle_bar')) {
@@ -1163,7 +1241,8 @@ function buildSlidingFrame(config: GateConfig, palette: RenderPalette): GateRend
     }
   }
 
-  if (hasOption(config, 'bushes')) {
+  // Circles already draw scroll bands; keep the old bush dots only when bushes is on alone.
+  if (hasOption(config, 'bushes') && !hasOption(config, 'circles')) {
     const bushCount = Math.min(getOptionQuantity(config, 'bushes'), getDecorativeBarCapacity(config))
     const span = panelWidth - 80
     for (let index = 0; index < bushCount; index += 1) {
@@ -1402,6 +1481,17 @@ export function buildGateRenderPlan(
     notes.push('Manual swing: lever handle shown on the leaf.')
   } else {
     notes.push('Manual sliding: pull handle shown on the leading edge.')
+  }
+
+  if (hasOption(config, 'circles') || hasOption(config, 'bushes')) {
+    notes.push('Circle bands drawn on Design CAD (upper + lower, CA-16).')
+  }
+  if (hasOption(config, 'picket_collars')) {
+    notes.push(
+      getPicketCollarSpacing(config) === 2
+        ? 'Picket collars on every 2nd long picket at mid-height (never on dog bars).'
+        : 'Picket collars on every long picket at mid-height (never on dog bars).',
+    )
   }
 
   if (isSliding) {

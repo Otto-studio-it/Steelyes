@@ -1,18 +1,19 @@
 'use client'
 
 import * as Dialog from '@radix-ui/react-dialog'
+import { packHasMotorSplit, resolveSilhouette } from '@steelyes/gate-engine'
 import { ChevronRight, X } from 'lucide-react'
-import Image from 'next/image'
 import { useState } from 'react'
 
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
 import { FinishPicker } from '@/components/configurator/FinishPicker'
 import { GateTypeCardGrid } from '@/components/configurator/GateTypeCardGrid'
 import { StyleComparisonPicker } from '@/components/configurator/StyleComparisonPicker'
+import { RailheadModelPicker } from '@/components/configurator/RailheadChooserSection'
+import { TipologyPicker } from '@/components/configurator/TipologyPicker'
 import { useSheetSwipeDismiss } from '@/hooks/useSheetSwipeDismiss'
 import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
 import { gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
-import { GATE_TYPE_IMAGES } from '@/lib/configurator/presentation'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 /** Quick Path screen 1 — gate look: type hero (progressive disclosure), style, finish, motor. */
@@ -22,15 +23,20 @@ export function QuickGateScreen() {
   const [typeSheetOpen, setTypeSheetOpen] = useState(false)
   const typeSheetSwipe = useSheetSwipeDismiss(() => setTypeSheetOpen(false))
   const fullyConfigurable = getGateTypeAvailability(config.gateType) === 'configure'
-  const heroImage = GATE_TYPE_IMAGES[config.gateType]
+  const motorSplit = packHasMotorSplit(config.gateType)
+  let heroImage = `/2d-masters/${config.gateType}/silhouettes/base.svg`
+  try {
+    heroImage = resolveSilhouette(config).publicPath
+  } catch {
+    // keep pack base
+  }
 
   return (
     <div className="space-y-6">
       <div className="overflow-hidden border border-steel/12 bg-white">
-        <div className="relative h-32 w-full bg-steel/5">
-          {heroImage ? (
-            <Image src={heroImage} alt="" fill className="object-cover" sizes="100vw" aria-hidden />
-          ) : null}
+        <div className="relative h-40 w-full bg-[#F3F2EF]">
+          {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
+          <img src={heroImage} alt="" className="h-full w-full object-contain object-center p-2" />
         </div>
         <div className="flex items-center justify-between gap-3 border-t border-steel/8 px-4 py-3">
           <div className="min-w-0">
@@ -57,6 +63,10 @@ export function QuickGateScreen() {
         </p>
       ) : null}
 
+      <TipologyPicker />
+
+      <RailheadModelPicker showToggle layout="strip" />
+
       <StyleComparisonPicker />
 
       <FinishPicker
@@ -77,9 +87,13 @@ export function QuickGateScreen() {
           onCheckedChange={(motorised) => patchConfig({ motorised })}
           label={config.motorised ? 'Motorised' : 'Manual only'}
           description={
-            config.motorised
-              ? 'Automated opening — no leaf handle. Motor kit confirmed at survey.'
-              : 'Manual operation — leaf handle included on the preview.'
+            motorSplit
+              ? config.motorised
+                ? 'Automated opening. Design CAD drops the leaf handle (CA-01).'
+                : 'Manual operation. Design CAD shows the leaf handle.'
+              : config.motorised
+                ? 'Automated opening. Design CAD drops the pull handle; sliding hardware stays schematic.'
+                : 'Manual operation. Design CAD shows the pull handle on the leading edge.'
           }
           id="quick-motorised"
         />
@@ -113,7 +127,7 @@ export function QuickGateScreen() {
               </Dialog.Close>
             </div>
             <div className="flex-1 overflow-y-auto p-4" style={{ overscrollBehavior: 'contain' }}>
-              <GateTypeCardGrid />
+              <GateTypeCardGrid onTypeCommitted={() => setTypeSheetOpen(false)} />
             </div>
           </Dialog.Content>
         </Dialog.Portal>

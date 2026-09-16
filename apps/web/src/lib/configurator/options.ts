@@ -17,8 +17,8 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'On/off only — Design swaps the matching 2D master.',
-    keys: ['dog_bars', 'circles', 'picket_collars', 'top_railheads'],
+    description: 'On/off — each control swaps the official 2D Design master.',
+    keys: ['dog_bars', 'circles', 'top_railheads'],
   },
   {
     id: 'site',
@@ -39,17 +39,20 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'middle_bar',
     label: 'Middle bar',
-    description: 'Splits the gate visually into two parts.',
+    description:
+      'Priced extra. Official Victorian masters already include a mid rail; this does not swap Design.',
   },
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'On/off. Count is automatic (one per bay). Not drawn on Design (CA-17).',
+    description:
+      'On/off. Count is automatic (one per bay). The catalogue photo appears beside Design so you can see the cap. Not drawn on the pickets.',
   },
   {
     key: 'dog_bars',
     label: 'Dog bars',
-    description: 'On/off. Density is automatic (CA-15). Unavailable on Composite.',
+    description:
+      'On/off. Same control as Gate shape on Choose. Density is automatic (CA-15). Unavailable on Composite.',
   },
   {
     key: 'dog_bar_railheads',
@@ -59,7 +62,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'arched_top',
     label: 'Arched top',
-    description: 'Curved top rail.',
+    description: 'Curved top rail — same control as Gate shape on Choose. Swaps the official 2D master.',
   },
   {
     key: 'aluminium_panels',
@@ -69,13 +72,14 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'circles',
     label: 'Circles',
-    description: 'On/off — upper + lower bands together (Q1). Unavailable on Composite.',
+    description:
+      'On/off — upper + lower bands together (CA-16). Swaps the official 2D master. Unavailable on Composite.',
   },
   {
     key: 'picket_collars',
     label: 'Picket collars',
     description:
-      'On/off — mid-height boss on long pickets, spacing every picket (never on dog bars). Unavailable on Composite.',
+      'On/off — mid-height boss on long pickets (never on dog bars). Swaps the official 2D master. Unavailable on Composite.',
   },
   {
     key: 'bushes',

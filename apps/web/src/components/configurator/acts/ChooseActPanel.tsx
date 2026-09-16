@@ -15,8 +15,9 @@ export function ChooseActPanel() {
   return (
     <div className="space-y-6">
       <p className="text-sm leading-6 text-muted-deep">
-        Start from double swing — the primary production path — then change mechanism only if your opening needs
-        it. Style, finish and motor update the live preview immediately.
+        Start from double swing — the primary production path — then change mechanism and Victorian
+        shape. The Design drawing is the official 2D master: type, shape, circles and collars swap
+        that file immediately. Railhead photos sit beside the drawing so you can see the cap.
       </p>
 
       <QuickGateScreen />

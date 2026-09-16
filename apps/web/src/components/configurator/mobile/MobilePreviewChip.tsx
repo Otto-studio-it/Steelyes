@@ -20,9 +20,8 @@ type MobilePreviewChipProps = {
 }
 
 /**
- * Compact 96px Design-preview chip. Renders the preloaded master SVG thumbnail
- * (no live CAD fallback, no 3D/photo chunk) and opens the full bottom sheet on tap.
- * Fixed height keeps CLS at zero versus the previous 28vh strip.
+ * Compact 96px Design-preview chip. Renders the official 2D master thumbnail
+ * and opens the full bottom sheet on tap.
  */
 export function MobilePreviewChip({
   config,
@@ -32,14 +31,14 @@ export function MobilePreviewChip({
 }: MobilePreviewChipProps) {
   const [open, setOpen] = useState(false)
 
-  const resolved = useMemo(() => {
+  const master = useMemo(() => {
     try {
       return { ok: true as const, value: resolveSilhouette(config) }
     } catch (error) {
       const message =
         error instanceof SilhouetteResolveError
           ? error.message
-          : 'Preloaded design master is unavailable for this configuration.'
+          : 'Design drawing is unavailable.'
       return { ok: false as const, message }
     }
   }, [config])
@@ -55,16 +54,16 @@ export function MobilePreviewChip({
         aria-label="Open full gate preview"
       >
         <span className="flex h-20 w-28 shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-[#F3F2EF]">
-          {resolved.ok ? (
+          {master.ok ? (
             // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
             <img
-              src={resolved.value.publicPath}
+              src={master.value.publicPath}
               alt=""
               className="h-full w-full scale-[1.15] object-contain object-center"
             />
           ) : (
             <span className="px-2 text-center font-mono text-[9px] uppercase tracking-widest text-steel/50">
-              Master unavailable
+              Drawing unavailable
             </span>
           )}
         </span>

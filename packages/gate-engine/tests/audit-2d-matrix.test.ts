@@ -296,6 +296,11 @@ describe('2D matrix audit (report)', () => {
       report.hardFails.filter((r) => r.status === 'resolve_fail' || r.status === 'missing_file'),
     ).toHaveLength(0)
 
+    expect(
+      report.overlayFallbacks,
+      report.overlayFallbacks.map((row) => `${row.gateType}:${row.combo}`).join(', '),
+    ).toEqual([])
+
     // Tipology must never drift (dog_bars+collar must not resolve to base_collar, etc.)
     const drifts = gateSummary.flatMap((g) =>
       (g.issues as Array<{ status: string; combo: string; slug?: string }>).filter(

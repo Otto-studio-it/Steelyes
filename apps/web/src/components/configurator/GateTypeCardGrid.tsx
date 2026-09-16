@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 import { createGateConfig, createGatePreset, GATE_TYPES, type GateType } from '@steelyes/gate-engine'
 
@@ -10,10 +9,13 @@ import {
   getGateTypeAvailability,
 } from '@/lib/configurator/gate-type-availability'
 import { PRIMARY_GATE_TYPE } from '@/lib/configurator/navigation'
-import { GATE_TYPE_IMAGES } from '@/lib/configurator/presentation'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import { BUSINESS } from '@/lib/marketing/business'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
+
+function typeMasterThumb(gateType: GateType): string {
+  return `/2d-masters/${gateType}/silhouettes/base.svg`
+}
 
 function enquireMailto(gateType: GateType): string {
   const subject = encodeURIComponent(`Enquiry — ${gateTypeLabel(gateType)}`)
@@ -23,14 +25,25 @@ function enquireMailto(gateType: GateType): string {
   return `mailto:${BUSINESS.email}?subject=${subject}&body=${body}`
 }
 
-export function GateTypeCardGrid() {
+type GateTypeCardGridProps = {
+  /** Called after a type is committed so parent sheets can close and reveal the drawing. */
+  onTypeCommitted?: () => void
+}
+
+export function GateTypeCardGrid({ onTypeCommitted }: GateTypeCardGridProps) {
   const config = useConfiguratorConfig()
   const setConfig = useConfiguratorStore((state) => state.setConfig)
   const [pendingType, setPendingType] = useState<GateType | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
+  const commitType = (nextType: GateType) => {
+    setConfig(createGateConfig(createGatePreset(nextType)))
+    onTypeCommitted?.()
+  }
+
   const selectType = (nextType: GateType) => {
     if (nextType === config.gateType) {
+      onTypeCommitted?.()
       return
     }
 
@@ -43,7 +56,7 @@ export function GateTypeCardGrid() {
     }
 
     if (nextType === PRIMARY_GATE_TYPE || availability === 'configure') {
-      setConfig(createGateConfig(createGatePreset(nextType)))
+      commitType(nextType)
       return
     }
 
@@ -59,7 +72,7 @@ export function GateTypeCardGrid() {
     if (getGateTypeAvailability(pendingType) === 'enquire') {
       return
     }
-    setConfig(createGateConfig(createGatePreset(pendingType)))
+    commitType(pendingType)
     setPendingType(null)
   }
 
@@ -76,7 +89,7 @@ export function GateTypeCardGrid() {
             const selected = config.gateType === gateType
             const availability = getGateTypeAvailability(gateType)
             const primary = gateType === PRIMARY_GATE_TYPE
-            const imageSrc = GATE_TYPE_IMAGES[gateType]
+            const imageSrc = typeMasterThumb(gateType)
             const badge = primary ? 'Primary' : gateTypeAvailabilityLabel(availability)
 
             return (
@@ -92,14 +105,13 @@ export function GateTypeCardGrid() {
                     : 'border-steel/12 bg-white hover:border-primary/30'
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full bg-steel/5">
+                <div className="relative aspect-[16/10] w-full bg-[#F3F2EF]">
                   {imageSrc ? (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
+                    <img
                       src={imageSrc}
                       alt=""
-                      fill
-                      className="object-contain object-center p-1"
-                      sizes="(min-width: 1280px) 20vw, (min-width: 640px) 40vw, 160px"
+                      className="absolute inset-0 h-full w-full object-contain object-center p-1"
                       aria-hidden
                     />
                   ) : (

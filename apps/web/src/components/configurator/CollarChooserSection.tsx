@@ -2,6 +2,7 @@
 
 import { COLLAR_SPACING_VARIANTS, type CollarSpacingVariant } from '@steelyes/gate-engine'
 
+import { setOptionVariant, updateOption } from '@/lib/configurator/option-actions'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 import { cn } from '@/lib/utils'
 
@@ -15,8 +16,7 @@ const LABELS: Record<CollarSpacingVariant, { title: string; hint: string }> = {
  */
 export function CollarChooserSection() {
   const config = useConfiguratorConfig()
-  const toggleOption = useConfiguratorStore((state) => state.toggleOption)
-  const setOptionVariant = useConfiguratorStore((state) => state.setOptionVariant)
+  const setConfig = useConfiguratorStore((state) => state.setConfig)
 
   if (config.style !== 'traditional_victorian') {
     return null
@@ -28,13 +28,11 @@ export function CollarChooserSection() {
     selected?.variant === 'every_2' ? 'every_2' : 'every_1'
 
   const selectNone = () => {
-    toggleOption('picket_collars', false)
-    setOptionVariant('picket_collars', undefined)
+    setConfig(updateOption(config, 'picket_collars', false))
   }
 
   const selectSpacing = (next: CollarSpacingVariant) => {
-    toggleOption('picket_collars', true)
-    setOptionVariant('picket_collars', next)
+    setConfig(setOptionVariant(updateOption(config, 'picket_collars', true), 'picket_collars', next))
   }
 
   return (
@@ -44,7 +42,7 @@ export function CollarChooserSection() {
           Picket collars
         </h3>
         <p className="mt-1 text-sm leading-6 text-muted-deep">
-          Decorative boss at mid-height on long pickets only — never on dog bars.
+          Decorative boss at mid-height on long pickets only — never on dog bars. This swaps the official 2D drawing immediately.
         </p>
       </div>
 

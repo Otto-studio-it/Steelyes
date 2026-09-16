@@ -2,6 +2,8 @@
 
 import { useMemo } from 'react'
 import {
+  describeDesignPreview,
+  getVictorianTipology,
   resolveCircleOverlays,
   resolveCollarOverlays,
   resolveFinishDefinition,
@@ -11,8 +13,11 @@ import {
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
+import { usePrefetchPackMasters } from '@/lib/configurator/prefetch-pack-masters'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import { useConfiguratorStore } from '@/store/configuratorStore'
+import { DesignRailheadCallout } from '@/components/configurator/DesignRailheadCallout'
+import { selectedRailheadSlug } from '@/lib/configurator/railhead'
 
 type TechnicalMasterPreviewProps = {
   config: GateConfig
@@ -24,9 +29,9 @@ type TechnicalMasterPreviewProps = {
 }
 
 /**
- * Design preview from preloaded 2D masters only (Phase 1–3).
- * Railhead SKUs are chosen in Refine for quote/email — not composited on the drawing.
- * Never invents live CAD. Client mm render in the strip under the image.
+ * Customer Design preview: official 2D masters only (the client-approved visual).
+ * Menu changes swap the matching file immediately.
+ * Selected railhead SKU is shown as a photo beside the drawing, not on the pickets.
  */
 export function TechnicalMasterPreview({
   config,
@@ -36,6 +41,8 @@ export function TechnicalMasterPreview({
   studio = false,
   className = '',
 }: TechnicalMasterPreviewProps) {
+  usePrefetchPackMasters(config.gateType)
+
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
   const finish = resolveFinishDefinition(config)
@@ -51,6 +58,8 @@ export function TechnicalMasterPreview({
       return { ok: false as const, message }
     }
   }, [config])
+
+  const described = useMemo(() => describeDesignPreview(config), [config])
 
   const circleOverlay = useMemo(() => {
     if (!resolved.ok) return { bands: [], notes: [] as string[] }
@@ -68,12 +77,13 @@ export function TechnicalMasterPreview({
     return resolveCollarOverlays(config)
   }, [config, resolved])
 
-  // Handle is baked into official *manual* masters — never composited in UI.
-  // Railheads: model picker only (CA-17). Circles/collars: baked master when available, else overlay.
-
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
   const title = gateTypeLabel(config.gateType)
+  const tipology = getVictorianTipology(config)
+  const circlesOn = config.options.some((option) => option.key === 'circles' && option.enabled)
+  const collarsOn = config.options.some((option) => option.key === 'picket_collars' && option.enabled)
+  const railheadSku = selectedRailheadSlug(config.options)
 
   const shellClass = studio
     ? 'border-steel/10 bg-[#F3F2EF] text-steel'
@@ -86,6 +96,13 @@ export function TechnicalMasterPreview({
   return (
     <div
       className={`${frameClass} ${shellClass} ${pinned && !studio ? 'shadow-[0_16px_40px_rgba(25,20,18,0.22)]' : ''} ${className}`}
+      data-testid="design-master-preview"
+      data-tipology={resolved.ok ? tipology : undefined}
+      data-slug={resolved.ok ? resolved.value.slug : undefined}
+      data-circles={String(circlesOn)}
+      data-collars={String(collarsOn)}
+      data-motorised={String(config.motorised)}
+      data-railhead={railheadSku ?? undefined}
     >
       <div
         className={`flex items-center justify-between border-b border-steel/10 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
@@ -101,6 +118,14 @@ export function TechnicalMasterPreview({
           </h2>
         </div>
         <div className="flex items-center gap-2">
+          {described.channels.find((item) => item.key === 'motorised')?.visual === 'same_drawing' ? (
+            <span
+              className="inline-flex items-center border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
+              data-testid="design-drive-badge"
+            >
+              {config.motorised ? 'Motorised recorded' : 'Manual recorded'}
+            </span>
+          ) : null}
           <div
             className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
             title="Selected finish colour"
@@ -164,33 +189,40 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              <div className={`relative w-full ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-                <img
-                  src={resolved.value.publicPath}
-                  alt={`${title} design master — ${resolved.value.title}`}
-                  className="h-full w-full bg-white object-contain"
-                />
-                {circleOverlay.bands.map((band) => (
-                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+              <div className="flex w-full flex-col items-stretch gap-3 md:flex-row md:items-center">
+                <div className={`relative min-w-0 flex-1 ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
                   <img
-                    key={band.id}
-                    src={band.publicPath}
-                    alt=""
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    key={resolved.value.publicPath}
+                    data-testid="design-master-img"
+                    src={resolved.value.publicPath}
+                    alt={`${title} design master — ${resolved.value.title}`}
+                    decoding="sync"
+                    fetchPriority="high"
+                    className="h-full w-full bg-white object-contain"
                   />
-                ))}
-                {collarOverlay.overlays.map((overlay) => (
-                  // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
-                  <img
-                    key={overlay.id}
-                    src={overlay.publicPath}
-                    alt=""
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 h-full w-full object-contain"
-                  />
-                ))}
+                  {circleOverlay.bands.map((band) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                    <img
+                      key={band.id}
+                      src={band.publicPath}
+                      alt=""
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    />
+                  ))}
+                  {collarOverlay.overlays.map((overlay) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- static public overlay SVG
+                    <img
+                      key={overlay.id}
+                      src={overlay.publicPath}
+                      alt=""
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+                    />
+                  ))}
+                </div>
+                {railheadSku ? <DesignRailheadCallout slug={railheadSku} /> : null}
               </div>
             ) : (
               <div
@@ -201,9 +233,6 @@ export function TechnicalMasterPreview({
                   Design master missing
                 </p>
                 <p className="mt-2 font-mono text-xs leading-5 text-muted">{resolved.message}</p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-muted">
-                  Live CAD is disabled for Design view
-                </p>
               </div>
             )}
           </div>
@@ -226,15 +255,31 @@ export function TechnicalMasterPreview({
               </div>
               <div className="text-right">
                 {resolved.ok ? (
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                  <p
+                    className="font-mono text-[10px] uppercase tracking-widest text-muted"
+                    data-testid="design-master-slug"
+                  >
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
               </div>
             </div>
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
-              Dimensions are client inputs — not baked into the drawing.
+              Official 2D master — type, Victorian shape, circles and collars swap this file
+              immediately. Size is the millimetre strip. Finish is the swatch.
             </p>
+            {described.overlayFallback ? (
+              <p className="mt-2 font-mono text-[10px] leading-4 text-steel" data-testid="design-overlay-fallback">
+                Some decoration is a generic overlay on this pack (missing baked combo). The Victorian
+                shape still matches your selection.
+              </p>
+            ) : null}
+            {railheadSku ? (
+              <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
+                Railhead {railheadSku} is the catalogue photo beside the drawing, so you can see the
+                cap. It is not drawn onto the pickets (safe on arched and sliding masters).
+              </p>
+            ) : null}
           </div>
         </div>
       ) : null}

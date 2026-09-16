@@ -112,8 +112,9 @@ export function OptionsAccordion() {
   return (
     <div className="space-y-4">
       <p className="text-sm leading-6 text-muted-deep">
-        Personalise structure, decoration, and site preferences. Open one group at a time — each change updates the
-        live preview.
+        Personalise structure, decoration, and site preferences. Open one group at a time.
+        Type, Victorian shape, circles and collars swap the official 2D Design drawing immediately.
+        Finish is a swatch; size is the millimetre strip. Railhead photos sit beside the drawing.
       </p>
 
       {OPTION_GROUPS.map((group) => {

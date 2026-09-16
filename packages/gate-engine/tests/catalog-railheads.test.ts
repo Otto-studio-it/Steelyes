@@ -158,3 +158,38 @@ describe('railhead variant catalog', () => {
     expect(optionPricing.missingData).toEqual([])
   })
 })
+
+describe('picket collar spacing variants', () => {
+  it('accepts every_1 and every_2 on picket_collars', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const every1 = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'picket_collars'
+          ? { ...option, enabled: true, quantity: 1, variant: 'every_1' }
+          : option,
+      ),
+    }
+    const every2 = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'picket_collars'
+          ? { ...option, enabled: true, quantity: 1, variant: 'every_2' }
+          : option,
+      ),
+    }
+    const bad = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'picket_collars'
+          ? { ...option, enabled: true, quantity: 1, variant: 'every_3' }
+          : option,
+      ),
+    }
+
+    expect(validateGateConfig(every1).ok).toBe(true)
+    expect(validateGateConfig(every2).ok).toBe(true)
+    expect(collectVariantCatalogIssues(every1)).toEqual([])
+    expect(collectVariantCatalogIssues(bad).map((issue) => issue.code)).toContain('unknown_variant')
+  })
+})

@@ -120,30 +120,26 @@ describe('definitive decorative masters', () => {
     expect(resolved.bakedOptions).toContain('circles')
   })
 
-  it('telescopic falls back to tipology when baked combo missing (overlay path)', () => {
+  it('telescopic bakes base+circles instead of overlay fallback', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
-    // base + circles has no definitive master → tipology base + overlay
     const config = withOptions(base, { circles: true })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('base')
-    expect(resolved.bakedOptions).not.toContain('circles')
-    expect(resolveCircleOverlays(config).bands.length).toBeGreaterThan(0)
+    expect(resolved.slug).toBe('base_circles')
+    expect(resolved.bakedOptions).toContain('circles')
   })
 
-  it('telescopic preserves dog_bars tipology when collar master is missing', () => {
+  it('telescopic bakes dog_bars + collar_1', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
     const config = withOptions(base, {
       dog_bars: true,
       picket_collars: { variant: 'every_1' },
     })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('dog_bars')
-    expect(resolved.bakedOptions).toContain('dog_bars')
-    expect(resolved.bakedOptions).not.toContain('picket_collars')
-    expect(resolveCollarOverlays(config).overlays.length).toBeGreaterThan(0)
+    expect(resolved.slug).toBe('dog_bars_collar_1')
+    expect(resolved.bakedOptions).toEqual(expect.arrayContaining(['dog_bars', 'picket_collars']))
   })
 
-  it('telescopic preserves arched_dog_bars when circles master is missing', () => {
+  it('telescopic bakes arched_dog_bars_circles', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
     const config = withOptions(base, {
       arched_top: true,
@@ -151,9 +147,43 @@ describe('definitive decorative masters', () => {
       circles: true,
     })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('arched_dog_bars')
-    expect(resolved.bakedOptions).toEqual(expect.arrayContaining(['arched_top', 'dog_bars']))
-    expect(resolved.bakedOptions).not.toContain('circles')
+    expect(resolved.slug).toBe('arched_dog_bars_circles')
+    expect(resolved.bakedOptions).toEqual(
+      expect.arrayContaining(['arched_top', 'dog_bars', 'circles']),
+    )
+  })
+
+  it('plain silhouettes match the definitive GATE masters', () => {
+    const here = path.dirname(fileURLToPath(import.meta.url))
+    const docs = path.resolve(here, '../../../docs/frontend/2d-masters')
+    for (const gateType of GATE_TYPES) {
+      const matches: Array<{ slug: string; file: string }> = []
+      const walk = (dir: string) => {
+        if (!fs.existsSync(dir)) return
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          const full = path.join(dir, entry.name)
+          if (entry.isDirectory()) {
+            if (entry.name === '_review') continue
+            walk(full)
+            continue
+          }
+          if (!entry.name.startsWith(`GATE__${gateType}__`) || !entry.name.endsWith('.svg')) continue
+          if (entry.name.includes('DUPLICATE')) continue
+          const slug = entry.name.slice(`GATE__${gateType}__`.length, -'.svg'.length)
+          matches.push({ slug, file: full })
+        }
+      }
+      walk(path.join(docs, gateType, 'definitive'))
+      expect(matches.length, `${gateType} definitive`).toBeGreaterThan(0)
+      for (const { slug, file } of matches) {
+        const sil = path.join(docs, gateType, 'silhouettes', `${slug}.svg`)
+        expect(fs.existsSync(sil), sil).toBe(true)
+        expect(fs.readFileSync(sil)).toEqual(fs.readFileSync(file))
+        expect(fs.readFileSync(publicFile(`/2d-masters/${gateType}/silhouettes/${slug}.svg`))).toEqual(
+          fs.readFileSync(sil),
+        )
+      }
+    }
   })
 
   it('collar every_1 resolves on double_swing base', () => {

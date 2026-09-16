@@ -2,8 +2,12 @@
 
 **Start here for implementation:** [`CATALOG.md`](./CATALOG.md) · [`catalog.json`](./catalog.json) · [`PACK_STRUCTURE.md`](./PACK_STRUCTURE.md)
 
+Runtime Design preview, mismatch inventory, and the plan to stop using this matrix as the only customer renderer: [`../2d-CONFIGURATOR_FIDELITY_AND_MIGRATION_PLAN.md`](../2d-CONFIGURATOR_FIDELITY_AND_MIGRATION_PLAN.md).
+
 Source photos live in `/Volumes/SSDRubb/Steelyes/foto ` (trailing space).  
 Canonical packs live here — **one folder per gate type**.
+
+## Pack layout (every gate)
 
 ## Pack layout (every gate)
 
@@ -18,6 +22,8 @@ Canonical packs live here — **one folder per gate type**.
 ```
 
 ## Status
+
+Definitive packs are ingested (10–34 SVGs per gate, not five). See [`DEFINITIVE_MASTERS_STATUS_2026-08-13.md`](./DEFINITIVE_MASTERS_STATUS_2026-08-13.md). The table below is the original Phase 0 snapshot and is **not** the runtime matrix.
 
 | Gate type | Status |
 |-----------|--------|

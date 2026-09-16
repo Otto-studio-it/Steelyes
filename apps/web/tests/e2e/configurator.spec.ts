@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 import {
   continueWizard,
-  getSwingFrameStroke,
   goToConfiguratorAct,
   waitForConfiguratorReady,
   walkToRefine,
@@ -19,21 +18,50 @@ test.describe('configurator release flow', () => {
     await expect(page.getByText(/Estimated pricing/i).first()).toBeVisible()
   })
 
-  test('updates preview stroke color when finish changes', async ({ page }) => {
+  test('swaps the Design master when Victorian shape changes', async ({ page }) => {
     await waitForConfiguratorReady(page)
 
-    const matteStroke = await getSwingFrameStroke(page)
-    expect(matteStroke).toBe('#1A1A1A')
+    const preview = page.getByTestId('design-master-preview')
+    await expect(preview).toHaveAttribute('data-tipology', 'base')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /\/base\.svg/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
 
-    await page.getByRole('radio', { name: /Bronze/i }).click()
-    await expect(page.getByRole('radio', { name: /Bronze/i })).toHaveAttribute('aria-checked', 'true')
+    await page.getByRole('radio', { name: /^Arched top/i }).click()
+    await expect(page.getByRole('radio', { name: /^Arched top/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(preview).toHaveAttribute('data-tipology', 'arched')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /arched/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/arched/i)
 
-    await expect
-      .poll(async () => getSwingFrameStroke(page), {
-        message: 'Preview stroke should reflect the selected bronze finish',
-      })
-      .toBe('#8B6914')
-    expect(matteStroke).not.toBe(await getSwingFrameStroke(page))
+    await page.getByRole('radio', { name: /^Dog bars/i }).click()
+    await expect(preview).toHaveAttribute('data-tipology', 'dog_bars')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /dog_bars/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/dog bars/i)
+  })
+
+  test('shows the selected finish as a swatch beside the Design master', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    await page.getByRole('radio', { name: /Anthracite/i }).click()
+    await expect(page.getByRole('radio', { name: /Anthracite/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('configurator-preview-pinned').getByText(/Anthracite/i)).toBeVisible()
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /\/base\.svg/)
+  })
+
+  test('sliding drive records motor without swapping the Design master', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    await page.getByRole('button', { name: /^Change$/i }).click()
+    await page.getByRole('radio', { name: /Tracked sliding/i }).click()
+    const preview = page.getByTestId('design-master-preview')
+    await expect(preview).toHaveAttribute('data-motorised', 'true')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /tracked_sliding\/silhouettes\/base\.svg/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
+
+    await page.getByRole('switch', { name: /Motorised/i }).click()
+    await expect(page.getByRole('switch', { name: /Manual only/i })).toHaveAttribute('aria-checked', 'false')
+    await expect(preview).toHaveAttribute('data-motorised', 'false')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /tracked_sliding\/silhouettes\/base\.svg/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
   })
 
   test('walks through all acts to summary', async ({ page }) => {
@@ -45,21 +73,58 @@ test.describe('configurator release flow', () => {
   })
 
   test('railhead chooser stores SKU for summary without Design overlays', async ({ page }) => {
-    await walkToRefine(page)
+    await waitForConfiguratorReady(page)
+
+    await page.getByRole('switch', { name: /Top railheads/i }).click()
+    await expect(page.getByRole('switch', { name: /Top railheads/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-railhead-chip')).toHaveAttribute('data-sku', 'RH32')
+    await expect(page.getByTestId('design-railhead-chip').locator('img')).toHaveAttribute('src', /RH32/)
 
     const chooser = page.getByTestId('railhead-chooser')
     await expect(chooser).toBeVisible()
-    await expect(page.getByRole('heading', { name: /Choose your railheads/i })).toBeVisible()
     await chooser.getByRole('radio', { name: /RH32/i }).click()
     await expect(chooser.getByRole('radio', { name: /RH32/i })).toHaveAttribute('aria-checked', 'true')
 
-    // Design drawing must not composite railhead SVGs on the master (chooser previews are OK).
-    await expect(page.locator('img[src*="/2d-masters/railheads/"][class*="absolute"]')).toHaveCount(0)
+    await continueWizard(page)
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Refine' })).toBeVisible()
+
+    await page.getByRole('button', { name: /^Decoration/i }).click()
+
+    const refineChooser = page.getByTestId('railhead-chooser')
+    await expect(refineChooser).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Railhead model/i })).toBeVisible()
+    await expect(page.getByTestId('design-railhead-chip')).toHaveAttribute('data-sku', 'RH32')
+    await expect(page.getByTestId('design-railhead-chip').locator('img')).toHaveAttribute('src', /RH32/)
+    await expect(page.locator('img[src*="/2d-masters/railheads/silhouettes/"]')).toHaveCount(0)
 
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
     await expect(page.getByText(/^Railheads$/i).first()).toBeVisible()
     await expect(page.getByText(/^RH32$/i).filter({ visible: true }).first()).toBeVisible()
+  })
+
+  test('collar spacing swaps the Design master immediately', async ({ page }) => {
+    await walkToRefine(page)
+
+    const chooser = page.getByTestId('collar-chooser')
+    await expect(chooser).toBeVisible()
+    await chooser.getByRole('radio', { name: /Every picket/i }).click()
+    await expect(chooser.getByRole('radio', { name: /Every picket/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-master-preview')).toHaveAttribute('data-collars', 'true')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /collar/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/collar/i)
+  })
+
+  test('circles swap the Design master immediately', async ({ page }) => {
+    await walkToRefine(page)
+
+    await page.getByRole('button', { name: /^Decoration/i }).click()
+    await page.getByRole('switch', { name: /Circles/i }).click()
+    await expect(page.getByRole('switch', { name: /Circles/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-master-preview')).toHaveAttribute('data-circles', 'true')
+    await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /circles/)
+    await expect(page.getByTestId('design-master-slug')).toContainText(/circles/i)
   })
 
   test('persists site survey request through reload and summary', async ({ page }) => {
@@ -85,11 +150,11 @@ test.describe('configurator release flow', () => {
 
   test('restores draft configuration after reload', async ({ page }) => {
     await waitForConfiguratorReady(page)
-    await page.getByRole('radio', { name: /Pearl white/i }).click()
+    await page.getByRole('radio', { name: /Anthracite/i }).click()
 
     await page.reload()
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
-    await expect(page.getByRole('radio', { name: /Pearl white/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByRole('radio', { name: /Anthracite/i })).toHaveAttribute('aria-checked', 'true')
   })
 
   test('act rail allows jumping back to earlier acts', async ({ page }) => {
@@ -151,7 +216,8 @@ test.describe('configurator mobile quick path', () => {
     const sheet = page.getByRole('dialog')
     await expect(sheet.getByText(/Gate preview/i)).toBeVisible()
     await expect(sheet.getByTestId('configurator-preview-pinned')).toBeVisible()
-    await expect(sheet.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+    await expect(sheet.getByTestId('design-master-preview')).toBeVisible()
+    await expect(sheet.getByTestId('design-master-slug')).toBeVisible()
 
     await sheet.getByRole('button', { name: /Close gate preview/i }).click()
     await expect(page.getByRole('dialog')).toHaveCount(0)
@@ -241,7 +307,8 @@ test.describe('configurator share route', () => {
 
     await expect(page.getByRole('heading', { name: /Gate quote preview/i })).toBeVisible()
     await expect(page.getByText(/Read-only view/i)).toBeVisible()
-    await expect(page.locator('svg[aria-label*="preview" i]').first().locator('rect#swing-frame')).toBeVisible()
+    await expect(page.getByTestId('design-master-preview')).toBeVisible()
+    await expect(page.getByTestId('design-master-slug')).toBeVisible()
     await expect(page.getByRole('link', { name: /Request survey-led quote/i })).toHaveAttribute(
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,
