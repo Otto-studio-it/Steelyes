@@ -28,18 +28,20 @@ const ibmPlexMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.steelyes.co.uk'),
   title: {
-    default: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    default: 'Steelyes | Bespoke Steel Gates London & UK Fabrication',
     template: '%s | Steelyes',
   },
   description:
-    'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK. Survey-led specification, supply and install.',
+    'London steel gate specialists. Steelyes fabricates bespoke driveway gates, electric gates, railings, balconies and security steelwork. Survey-led specification from our Sydenham workshop.',
   keywords: [
+    'steel gates london',
     'bespoke steel gates',
-    'driveway gates',
-    'electric gates uk',
-    'automatic gates',
-    'steel fabrication uk',
-    'made to measure gates',
+    'driveway gates london',
+    'electric gates london',
+    'automatic gates south london',
+    'steel fabrication london',
+    'made to measure gates uk',
+    'steel gate fabricator sydenham',
   ],
   authors: [{ name: 'Steelyes' }],
   creator: 'Steelyes',
@@ -47,15 +49,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_GB',
     siteName: 'Steelyes',
-    title: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    title: 'Steelyes | Bespoke Steel Gates London & UK Fabrication',
     description:
-      'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK. Survey-led specification, supply and install.',
+      'London steel gate specialists. Bespoke driveway gates, electric gates, railings, balconies and security steelwork. Survey-led fabrication from Sydenham.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Steelyes | Bespoke Steel Gates & Fabrication UK',
+    title: 'Steelyes | Bespoke Steel Gates London & UK Fabrication',
     description:
-      'Steelyes fabricates bespoke steel driveway gates, electric gates, railings, balconies and security doors across the UK.',
+      'London steel gate specialists. Bespoke driveway gates, electric gates, railings, balconies and security steelwork.',
   },
   robots: {
     index: true,

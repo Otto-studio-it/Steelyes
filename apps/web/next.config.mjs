@@ -22,6 +22,80 @@ const nextConfig = {
         destination: 'https://www.steelyes.co.uk/:path*',
         permanent: true,
       },
+      // Legacy service URLs → current paths (fix GSC 404 errors)
+      {
+        source: '/services/glass-balustrades',
+        destination: '/services/balconies',
+        permanent: true,
+      },
+      {
+        source: '/services/steel-structures',
+        destination: '/services/structures',
+        permanent: true,
+      },
+      {
+        source: '/services/security-grills',
+        destination: '/services/security',
+        permanent: true,
+      },
+      {
+        source: '/services/platforms',
+        destination: '/services/staircases',
+        permanent: true,
+      },
+      // Legacy legal page URLs
+      {
+        source: '/privacy',
+        destination: '/legal/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/privacy-policy',
+        destination: '/legal/privacy-policy',
+        permanent: true,
+      },
+      {
+        source: '/terms',
+        destination: '/legal/terms',
+        permanent: true,
+      },
+      {
+        source: '/terms-and-conditions',
+        destination: '/legal/terms',
+        permanent: true,
+      },
+      {
+        source: '/cookies',
+        destination: '/legal/cookie-policy',
+        permanent: true,
+      },
+      // Quote/configurator aliases
+      {
+        source: '/quote',
+        destination: '/configurator',
+        permanent: true,
+      },
+      {
+        source: '/design',
+        destination: '/configurator',
+        permanent: true,
+      },
+      {
+        source: '/builder',
+        destination: '/configurator',
+        permanent: true,
+      },
+      // Legacy gate URLs (underscore → hyphen)
+      {
+        source: '/gates/sliding',
+        destination: '/gates/tracked-sliding',
+        permanent: true,
+      },
+      {
+        source: '/gates/cantilever-sliding',
+        destination: '/gates/cantilever',
+        permanent: true,
+      },
     ];
   },
   async headers() {

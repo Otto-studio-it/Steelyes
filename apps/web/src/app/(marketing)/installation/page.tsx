@@ -8,10 +8,11 @@ import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema, faqSchema, howToSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
-  title: 'Gate Installation | Supply & Install Steel Gates UK',
+  title: 'Gate Installation London | Supply & Install Steel Gates UK',
   description:
-    'Steelyes handles the full installation path — site survey, fabrication, electric gate wiring, delivery and fitting across the UK.',
+    'London steel gate installation specialists. Full service from survey to commissioning — site survey, fabrication, electric gate wiring, delivery and fitting across London and the UK.',
   alternates: { canonical: '/installation' },
+  keywords: ['gate installation london', 'electric gate installers london', 'steel gate fitting south london', 'automated gate installation uk'],
 }
 
 const INSTALLATION_STEPS = [

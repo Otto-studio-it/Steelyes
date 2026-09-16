@@ -14,10 +14,18 @@ import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { howToSchema } from '@/lib/marketing/schema'
 
 export const metadata: Metadata = {
-  title: 'Bespoke Steel Gates UK | Made-to-Measure Driveway Gates',
+  title: 'Bespoke Steel Gates London | Made-to-Measure Driveway Gates UK',
   description:
-    'Made-to-measure steel driveway, pedestrian, sliding and automated gates, designed around your entrance and built for long-term strength.',
+    'London steel gate specialists. Made-to-measure driveway, pedestrian, sliding and automated gates. Survey-led fabrication from our Sydenham workshop. Serving London, Surrey & South East England.',
   alternates: { canonical: '/' },
+  keywords: [
+    'steel gates london',
+    'bespoke driveway gates',
+    'electric gates london',
+    'automated gates south london',
+    'steel fabrication sydenham',
+    'made to measure gates uk',
+  ],
 }
 
 const RANGE_LINKS = [
@@ -362,12 +370,14 @@ export default function HomePage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': ['LocalBusiness', 'GeneralContractor'],
+            '@id': `${BUSINESS.website}/#business`,
             name: BUSINESS.legalName,
+            alternateName: 'Steelyes',
             url: BUSINESS.website,
             telephone: BUSINESS.phoneDisplay,
             email: BUSINESS.email,
             description:
-              'Bespoke steel driveway gates, electric gates, railings, balconies and security doors. Survey-led specification, supply and install across the UK.',
+              'London steel gate specialists. Bespoke driveway gates, electric gates, railings, balconies and security steelwork. Survey-led fabrication from our Sydenham workshop.',
             address: {
               '@type': 'PostalAddress',
               streetAddress: BUSINESS.address.line1,
@@ -376,16 +386,29 @@ export default function HomePage() {
               postalCode: BUSINESS.address.postalCode,
               addressCountry: 'GB',
             },
-            // Postcode-level approximation for SE26 5NB (Newlands Park, Sydenham).
             geo: {
               '@type': 'GeoCoordinates',
-              latitude: 51.424679,
-              longitude: -0.051821,
+              latitude: 51.4285,
+              longitude: -0.0485,
             },
             image: `${BUSINESS.website}${OFFICIAL_IMAGES.homepageHero}`,
             logo: `${BUSINESS.website}/apple-icon`,
             sameAs: [...BUSINESS_SAME_AS],
-            areaServed: { '@type': 'Country', name: 'United Kingdom' },
+            areaServed: [
+              { '@type': 'City', name: 'London' },
+              { '@type': 'AdministrativeArea', name: 'South East London' },
+              { '@type': 'AdministrativeArea', name: 'Surrey' },
+              { '@type': 'AdministrativeArea', name: 'Kent' },
+              { '@type': 'Country', name: 'United Kingdom' },
+            ],
+            priceRange: '££££',
+            currenciesAccepted: 'GBP',
+            openingHoursSpecification: {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+              opens: '08:00',
+              closes: '17:00',
+            },
             hasOfferCatalog: {
               '@type': 'OfferCatalog',
               name: 'Steel Fabrication Services',
