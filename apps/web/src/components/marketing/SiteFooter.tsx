@@ -144,19 +144,31 @@ export function SiteFooter() {
             Design a gate online, or share photos and measurements for a direct, survey-led specification.
           </p>
           <ul className="space-y-2 text-sm text-zinc-400">
-            {START_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  data-configurator-placement={link.href === '/configurator' ? 'footer' : undefined}
-                  className={link.tone === 'primary'
-                    ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
-                    : 'inline-flex min-h-[44px] w-full items-center justify-center border border-white/35 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {START_LINKS.map((link) => {
+              const className = link.tone === 'primary'
+                ? 'inline-flex min-h-[44px] w-full items-center justify-center bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+                : 'inline-flex min-h-[44px] w-full items-center justify-center border border-white/35 px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition-colors hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white'
+              if (link.href === '/configurator') {
+                return (
+                  <li key={link.href}>
+                    <a
+                      href="/configurator"
+                      data-configurator-placement="footer"
+                      className={className}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              }
+              return (
+                <li key={link.href}>
+                  <Link href={link.href} className={className}>
+                    {link.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </section>
       </div>

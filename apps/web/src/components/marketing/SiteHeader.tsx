@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 
@@ -64,7 +65,8 @@ function groupIsActive(pathname: string, group: NavGroup) {
   return isActive(pathname, group.href) || group.links.some((link) => isActive(pathname, link.href))
 }
 
-export function SiteHeader({ pathname }: SiteHeaderProps) {
+export function SiteHeader({ pathname: serverPathname }: SiteHeaderProps) {
+  const pathname = usePathname() || serverPathname
   const [isOpen, setIsOpen] = useState(false)
   const [openGroup, setOpenGroup] = useState<string | null>(null)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
@@ -163,19 +165,30 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
             )
           })}
 
-          {PRIMARY_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              data-configurator-placement={link.href === '/configurator' ? 'desktop-primary-nav' : undefined}
-              className={cn(
-                'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
-                isActive(pathname, link.href) && 'text-primary',
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {PRIMARY_LINKS.map((link) => {
+            const className = cn(
+              'inline-flex min-h-[44px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-600 transition-colors duration-100 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary',
+              isActive(pathname, link.href) && 'text-primary',
+            )
+            // force-dynamic + useSearchParams: Next client transitions from the header can abort.
+            if (link.href === '/configurator') {
+              return (
+                <a
+                  key={link.href}
+                  href="/configurator"
+                  data-configurator-placement="desktop-primary-nav"
+                  className={className}
+                >
+                  {link.label}
+                </a>
+              )
+            }
+            return (
+              <Link key={link.href} href={link.href} className={className}>
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -213,14 +226,14 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
             >
               Request a quote
             </Link>
-            <Link
+            <a
               href="/configurator"
               onClick={closeMenu}
               data-configurator-placement="mobile-menu-quick-action"
               className="inline-flex min-h-[52px] w-full items-center justify-center border border-zinc-300 px-5 py-3 font-heading text-sm font-bold uppercase tracking-tight text-steel focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-steel"
             >
               Configure a gate
-            </Link>
+            </a>
           </div>
 
           <ul className="border-t border-zinc-200 px-4 pb-4">
@@ -264,20 +277,33 @@ export function SiteHeader({ pathname }: SiteHeaderProps) {
               )
             })}
 
-            {PRIMARY_LINKS.filter((link) => link.href !== '/configurator').map((link) => (
-              <li key={link.href} className="border-b border-zinc-100">
-                <Link
-                  href={link.href}
-                  onClick={closeMenu}
-                  className={cn(
-                    'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
-                    isActive(pathname, link.href) && 'text-primary',
-                  )}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+            {PRIMARY_LINKS.map((link) => {
+              const className = cn(
+                'flex min-h-[54px] items-center font-heading text-sm font-bold uppercase tracking-tight text-zinc-700',
+                isActive(pathname, link.href) && 'text-primary',
+              )
+              if (link.href === '/configurator') {
+                return (
+                  <li key={link.href} className="border-b border-zinc-100">
+                    <a
+                      href="/configurator"
+                      onClick={closeMenu}
+                      data-configurator-placement="mobile-primary-nav"
+                      className={className}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              }
+              return (
+                <li key={link.href} className="border-b border-zinc-100">
+                  <Link href={link.href} onClick={closeMenu} className={className}>
+                    {link.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
 
           <SocialFollowStrip compact />
