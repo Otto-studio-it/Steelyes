@@ -7,6 +7,7 @@ export default defineConfig({
     include: [
       'src/lib/configurator/ar/**/*.test.ts',
       'src/lib/configurator/configuration-summary.test.ts',
+      'src/lib/configurator/quote-pdf.test.ts',
       'src/lib/email/**/*.test.ts',
     ],
     exclude: ['**/node_modules/**', '**/._*'],

@@ -104,6 +104,14 @@ export function TechnicalMasterPreview({
           </h2>
         </div>
         <div className="flex items-center gap-2">
+          {described.channels.find((item) => item.key === 'motorised')?.visual === 'same_drawing' ? (
+            <span
+              className="inline-flex items-center border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
+              data-testid="design-drive-badge"
+            >
+              {config.motorised ? 'Motorised recorded' : 'Manual recorded'}
+            </span>
+          ) : null}
           <div
             className="inline-flex items-center gap-2 border border-steel/12 bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-muted"
             title="Selected finish colour"

@@ -12,13 +12,13 @@ export const OPTION_GROUPS: {
     id: 'structure',
     label: 'Structure',
     description: 'Shape and layout of the gate frame.',
-    keys: ['middle_bar', 'arched_top', 'aluminium_panels'],
+    keys: ['arched_top', 'aluminium_panels'],
   },
   {
     id: 'decoration',
     label: 'Decoration',
     description: 'On/off only — Design swaps the matching 2D master.',
-    keys: ['dog_bars', 'circles', 'picket_collars', 'top_railheads'],
+    keys: ['dog_bars', 'circles', 'top_railheads'],
   },
   {
     id: 'site',
@@ -40,7 +40,7 @@ export const OPTION_META: OptionMeta[] = [
     key: 'middle_bar',
     label: 'Middle bar',
     description:
-      'Priced extra. Official Victorian masters already include a mid rail, so this toggle does not change the Design drawing.',
+      'Priced extra on the quote. Official Victorian masters already include a mid rail, so Design does not offer this as a visual toggle.',
   },
   {
     key: 'top_railheads',

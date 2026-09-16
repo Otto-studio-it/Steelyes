@@ -61,13 +61,14 @@ describe('victorian tipology', () => {
 })
 
 describe('describeDesignPreview', () => {
-  it('reports overlay fallback for missing telescopic circles master', () => {
-    const config = createGateConfig(createGatePreset('telescopic_sliding'))
-    const withCircles = applyVictorianTipology(config, 'base')
+  it('uses overlay fallback only for collar every_2 (no baked master)', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
     const decorated = {
-      ...withCircles,
-      options: withCircles.options.map((option) =>
-        option.key === 'circles' ? { ...option, enabled: true, quantity: 1 } : option,
+      ...config,
+      options: config.options.map((option) =>
+        option.key === 'picket_collars'
+          ? { ...option, enabled: true, quantity: 1, variant: 'every_2' }
+          : option,
       ),
     }
 
@@ -75,7 +76,9 @@ describe('describeDesignPreview', () => {
     expect(described.ok).toBe(true)
     expect(described.overlayFallback).toBe(true)
     expect(described.resolution?.slug).toBe('base')
-    expect(described.channels.find((item) => item.key === 'circles')?.visual).toBe('drawn_as_overlay')
+    expect(described.channels.find((item) => item.key === 'picket_collars')?.visual).toBe(
+      'drawn_as_overlay',
+    )
   })
 
   it('marks finish as swatch-only and dimensions as strip-only', () => {
@@ -86,6 +89,21 @@ describe('describeDesignPreview', () => {
       'priced_not_drawn',
     )
     expect(described.channels.find((item) => item.key === 'top_railheads')?.visual).toBe('quote_only')
+  })
+
+  it('bakes telescopic circles instead of overlay fallback', () => {
+    const config = createGateConfig(createGatePreset('telescopic_sliding'))
+    const decorated = {
+      ...config,
+      options: config.options.map((option) =>
+        option.key === 'circles' ? { ...option, enabled: true, quantity: 1 } : option,
+      ),
+    }
+
+    const described = describeDesignPreview(decorated)
+    expect(described.overlayFallback).toBe(false)
+    expect(described.resolution?.slug).toBe('base_circles')
+    expect(described.channels.find((item) => item.key === 'circles')?.visual).toBe('drawn_on_master')
   })
 
   it('marks sliding motorised as the same drawing', () => {

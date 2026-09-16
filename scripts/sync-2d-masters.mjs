@@ -11,6 +11,7 @@
  */
 
 import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -187,10 +188,20 @@ function buildIndex() {
   }
 }
 
+function snapshotDir(dir) {
+  if (!fs.existsSync(dir)) return null
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), '2d-masters-'))
+  copyDir(dir, tmp)
+  return tmp
+}
+
 function main() {
   if (!fs.existsSync(sourceRoot)) {
     throw new Error(`Missing source root: ${sourceRoot}`)
   }
+
+  // Railhead photos currently live only under public — keep them across the wipe.
+  const photosSnap = snapshotDir(path.join(publicRoot, 'railheads', 'photos'))
 
   fs.rmSync(publicRoot, { recursive: true, force: true })
   fs.mkdirSync(publicRoot, { recursive: true })
@@ -202,9 +213,25 @@ function main() {
     copyDir(from, to)
   }
 
+  const overlayFrom = path.join(sourceRoot, 'overlays')
+  if (fs.existsSync(overlayFrom)) {
+    copyDir(overlayFrom, path.join(publicRoot, 'overlays'))
+  }
+
   const railFrom = path.join(sourceRoot, 'railheads', 'silhouettes')
   if (fs.existsSync(railFrom)) {
     copyDir(railFrom, path.join(publicRoot, 'railheads', 'silhouettes'))
+  }
+
+  const railPhotosFrom = path.join(sourceRoot, 'railheads', 'photos')
+  if (fs.existsSync(railPhotosFrom)) {
+    copyDir(railPhotosFrom, path.join(publicRoot, 'railheads', 'photos'))
+  } else if (photosSnap) {
+    copyDir(photosSnap, path.join(publicRoot, 'railheads', 'photos'))
+  }
+
+  if (photosSnap) {
+    fs.rmSync(photosSnap, { recursive: true, force: true })
   }
 
   rmAppleDouble(publicRoot)

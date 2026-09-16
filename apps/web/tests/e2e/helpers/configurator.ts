@@ -10,12 +10,10 @@ export async function waitForConfiguratorReady(page: Page) {
   await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
 }
 
-export async function getSwingFrameStroke(page: Page): Promise<string | null> {
-  const previewSvg = page.locator('svg[aria-label*="preview" i]').first()
-  await expect(previewSvg).toBeVisible()
-  const frame = previewSvg.locator('rect#swing-frame')
-  await expect(frame).toBeVisible()
-  return frame.getAttribute('stroke')
+export async function getDesignMasterSlug(page: Page): Promise<string> {
+  const slug = page.getByTestId('design-master-slug')
+  await expect(slug).toBeVisible()
+  return (await slug.textContent()) ?? ''
 }
 
 export async function goToConfiguratorAct(page: Page, actLabel: string) {

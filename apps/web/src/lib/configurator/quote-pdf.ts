@@ -14,6 +14,7 @@ import {
   buildConfigurationSummaryLines,
   formatConfigurationSummaryText,
 } from '@/lib/configurator/configuration-summary'
+import { rasterizeDesignMaster } from '@/lib/configurator/design-master-pdf'
 import { formatLabelText } from '@/lib/configurator/labels'
 
 const PAGE_WIDTH = 595
@@ -196,16 +197,40 @@ export async function buildIndicativeQuotePdf(input: {
 
   page = pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT])
   y = PAGE_HEIGHT - MARGIN
-  drawLine('Technical drawing (schematic)', { bold: true, size: 16, gap: 22 })
+  drawLine('Design drawing', { bold: true, size: 16, gap: 22 })
   drawLine(`${config.widthMm} mm × ${config.heightMm} mm · ${config.gateType.split('_').join(' ')}`, { size: 10, gap: 16 })
 
-  const renderPlan = buildGateRenderPlan(config, { viewMode: 'technical' })
-  drawRenderPlanPreview(page, renderPlan, {
-    x: MARGIN,
-    y: MARGIN + 40,
-    width: PAGE_WIDTH - MARGIN * 2,
-    height: PAGE_HEIGHT - MARGIN * 2 - 80,
-  })
+  try {
+    const master = rasterizeDesignMaster(config)
+    const pngImage = await pdf.embedPng(master.png)
+    const maxWidth = PAGE_WIDTH - MARGIN * 2
+    const maxHeight = PAGE_HEIGHT - MARGIN * 2 - 90
+    const scale = Math.min(maxWidth / pngImage.width, maxHeight / pngImage.height)
+    const drawWidth = pngImage.width * scale
+    const drawHeight = pngImage.height * scale
+    page.drawImage(pngImage, {
+      x: MARGIN + (maxWidth - drawWidth) / 2,
+      y: MARGIN + 28,
+      width: drawWidth,
+      height: drawHeight,
+    })
+    page.drawText(`Official Design master · ${master.slug.replace(/_/g, ' ')}`, {
+      x: MARGIN,
+      y: MARGIN + 10,
+      size: 8,
+      font,
+      color: rgb(0.35, 0.35, 0.35),
+    })
+  } catch {
+    drawLine('Official master unavailable — schematic CAD fallback.', { size: 9, gap: 14 })
+    const renderPlan = buildGateRenderPlan(config, { viewMode: 'technical' })
+    drawRenderPlanPreview(page, renderPlan, {
+      x: MARGIN,
+      y: MARGIN + 40,
+      width: PAGE_WIDTH - MARGIN * 2,
+      height: PAGE_HEIGHT - MARGIN * 2 - 80,
+    })
+  }
 
   return pdf.save()
 }

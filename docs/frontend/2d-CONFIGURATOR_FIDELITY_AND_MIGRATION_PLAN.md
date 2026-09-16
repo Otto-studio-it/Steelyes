@@ -129,11 +129,11 @@ Ordered by customer-visible mismatch, not by file count.
 
 ### P1 — make every visible control either draw or leave the first screen
 
-1. **Fill the 16 missing baked cells** (telescopic first). Generate from existing `export-figma-*-variants` tests + overlay references; do not hand-draw a third language. Re-run `pnpm sync:2d-masters` so index rules stay tipology-safe.
-2. **Mount `CollarChooserSection`** (`every_1` / `every_2`) when collars are on. Engine overlay path already works.
-3. **Stop offering `middle_bar` as a visual toggle** or draw it. Preferred: hide from Design; keep on quote/pricing only, with the copy already added.
-4. **Motor badge** on flat sliding masters (“Manual recorded” / “Motorised recorded”) so the drive toggle has a visible ack without inventing hardware.
-5. **Repair Playwright** to assert master `img[src]` slug changes (arch, dog bars, type) instead of `rect#swing-frame` / Bronze.
+1. ~~**Fill the 16 missing baked cells**~~ (telescopic first). Generated from tipology SVG + overlay references; `pnpm sync:2d-masters` rebuilt the index.
+2. ~~**Mount `CollarChooserSection`**~~ (`every_1` / `every_2`) when collars are on.
+3. ~~**Stop offering `middle_bar` as a visual toggle**~~ — hidden from Design; still priced in the engine/quote.
+4. ~~**Motor badge**~~ on flat sliding masters (“Manual recorded” / “Motorised recorded”).
+5. ~~**Repair Playwright**~~ to assert master `img[src]` slug changes (arch, dog bars, type) instead of `rect#swing-frame` / Bronze.
 
 ### P2 — one drawing from Design to quote
 
@@ -169,7 +169,7 @@ One `GateConfig` continues to drive price, share, PDF, mesh. Preview is a **func
 
 | Asset | Path | Reuse as |
 |-------|------|----------|
-| Definitive SVG packs (188+ silhouettes) | `docs/frontend/2d-masters/{type}/definitive/` + `apps/web/public/2d-masters/` | Golden files / art direction / workshop plate |
+| Definitive SVG packs (204 silhouettes) | `docs/frontend/2d-masters/{type}/silhouettes/` + `apps/web/public/2d-masters/` | Golden files / art direction / workshop plate + quote PDF |
 | Overlay SVGs | `public/2d-masters/overlays/{circles,collar}/` | Temporary until CAD draws circles/collars natively |
 | Railhead SVGs | `public/2d-masters/railheads/` | Quote picker + later CAD finials |
 | Lookup builder | `scripts/lib/silhouette-lookup.mjs` | Keep for QA: “does CAD match this slug?” |
@@ -181,7 +181,10 @@ One `GateConfig` continues to drive price, share, PDF, mesh. Preview is a **func
 
 ### Migration slices (reversible)
 
-**Slice A — honesty + first-screen shape (this PR).** Masters remain primary. Customer can change type and Victorian shape and see it.
+**Slice A — honesty + first-screen shape (shipped).** Masters remain primary. Customer can change type and Victorian shape and see it.
+
+**P1 — matrix + collar + PDF + e2e (this change).**  
+16 missing every_1 cells are baked from tipology SVG + official overlays. Collar chooser is on Refine. Quote PDF embeds the same Design master (PNG via resvg), not a separate CAD elevation. Playwright asserts master slugs, not live-CAD `swing-frame` / Bronze. Sliding packs show a Manual/Motorised recorded badge. Middle bar is quote-only (no Design toggle).
 
 **Slice B — live CAD behind a Design tab, masters remain default.**  
 Mount `serializeGateRenderPlanToSvg(buildGateRenderPlan(config, { viewMode: 'installation' }))` as “Colour fit” (the old Installation tab that Phase 3 still documented but PreviewCanvas removed). Finish, mm, middle bar start working **without** deleting masters. Feature-flag if needed. Compare side by side with the official master.
@@ -215,9 +218,8 @@ Secure here means **the drawing is a pure function of `GateConfig`**, fail-close
 
 ## 8. How to proceed from here
 
-1. Ship and click-test this PR: change mechanism, then Gate shape, confirm the Design slug and drawing swap on desktop and on the mobile chip.
-2. P1 missing cells + collar chooser + e2e rewrite (still masters).
-3. Slice B: bring Installation/live CAD back as an honest second view so finish and size finally move something.
-4. Only then promote live CAD to the default customer drawing (Slice C) and keep every current SVG as the workshop/QA pack.
+1. ~~P1 missing cells + collar chooser + e2e rewrite~~ — done in this change (204 baked silhouettes; overlay fallback only for collar `every_2`).
+2. Slice B: bring Installation/live CAD back as an honest second view so finish and size finally move something.
+3. Only then promote live CAD to the default customer drawing (Slice C) and keep every current SVG as the workshop/QA pack.
 
 Until Slice C, treat any control that does not change `resolveSilhouette().slug` or an overlay as **quote metadata**, and label it that way in the UI.

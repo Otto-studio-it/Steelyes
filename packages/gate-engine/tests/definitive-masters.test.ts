@@ -120,30 +120,26 @@ describe('definitive decorative masters', () => {
     expect(resolved.bakedOptions).toContain('circles')
   })
 
-  it('telescopic falls back to tipology when baked combo missing (overlay path)', () => {
+  it('telescopic bakes base+circles instead of overlay fallback', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
-    // base + circles has no definitive master → tipology base + overlay
     const config = withOptions(base, { circles: true })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('base')
-    expect(resolved.bakedOptions).not.toContain('circles')
-    expect(resolveCircleOverlays(config).bands.length).toBeGreaterThan(0)
+    expect(resolved.slug).toBe('base_circles')
+    expect(resolved.bakedOptions).toContain('circles')
   })
 
-  it('telescopic preserves dog_bars tipology when collar master is missing', () => {
+  it('telescopic bakes dog_bars + collar_1', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
     const config = withOptions(base, {
       dog_bars: true,
       picket_collars: { variant: 'every_1' },
     })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('dog_bars')
-    expect(resolved.bakedOptions).toContain('dog_bars')
-    expect(resolved.bakedOptions).not.toContain('picket_collars')
-    expect(resolveCollarOverlays(config).overlays.length).toBeGreaterThan(0)
+    expect(resolved.slug).toBe('dog_bars_collar_1')
+    expect(resolved.bakedOptions).toEqual(expect.arrayContaining(['dog_bars', 'picket_collars']))
   })
 
-  it('telescopic preserves arched_dog_bars when circles master is missing', () => {
+  it('telescopic bakes arched_dog_bars_circles', () => {
     const base = createGateConfig(createGatePreset('telescopic_sliding'))
     const config = withOptions(base, {
       arched_top: true,
@@ -151,9 +147,10 @@ describe('definitive decorative masters', () => {
       circles: true,
     })
     const resolved = resolveSilhouette(config)
-    expect(resolved.slug).toBe('arched_dog_bars')
-    expect(resolved.bakedOptions).toEqual(expect.arrayContaining(['arched_top', 'dog_bars']))
-    expect(resolved.bakedOptions).not.toContain('circles')
+    expect(resolved.slug).toBe('arched_dog_bars_circles')
+    expect(resolved.bakedOptions).toEqual(
+      expect.arrayContaining(['arched_top', 'dog_bars', 'circles']),
+    )
   })
 
   it('collar every_1 resolves on double_swing base', () => {

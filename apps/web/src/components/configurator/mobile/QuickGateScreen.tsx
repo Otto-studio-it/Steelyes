@@ -88,7 +88,7 @@ export function QuickGateScreen() {
               ? config.motorised
                 ? 'Automated opening. Design swaps the motorised master — no leaf handle on the drawing.'
                 : 'Manual operation. Design swaps the manual master for this mechanism.'
-              : 'Sliding packs use the same 2D drawing for manual and motorised. The quote still records your drive choice.'
+              : 'Sliding packs use the same 2D drawing for manual and motorised. Design shows Manual recorded or Motorised recorded; the quote still stores your drive choice.'
           }
           id="quick-motorised"
         />
