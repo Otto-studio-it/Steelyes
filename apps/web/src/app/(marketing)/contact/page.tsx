@@ -4,6 +4,7 @@ import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurato
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { SocialLinks } from '@/components/marketing/SocialLinks'
 import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
+import { ReviewsWidget } from '@/components/marketing/ReviewsWidget'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
@@ -122,6 +123,13 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <p className="mt-2 font-heading text-xl font-black uppercase">Enquiry response</p>
             <p className="mt-3 text-sm text-muted-deep">{SURVEY_COPY.body}</p>
           </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="border-t border-zinc-200 bg-white py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <ReviewsWidget variant="light" showCTA={true} maxReviews={3} />
         </div>
       </section>
 

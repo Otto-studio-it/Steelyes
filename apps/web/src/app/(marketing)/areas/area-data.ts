@@ -13,6 +13,11 @@ export type AreaSlug =
   | 'surrey'
   | 'kent'
 
+export type FAQ = {
+  question: string
+  answer: string
+}
+
 export type AreaData = {
   slug: AreaSlug
   name: string
@@ -23,6 +28,7 @@ export type AreaData = {
   nearbyAreas: string[]
   localContext: string
   services: string[]
+  faqs: FAQ[]
 }
 
 export const AREA_DATA: Record<AreaSlug, AreaData> = {
@@ -45,6 +51,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Glass balustrades',
       'Security grilles',
     ],
+    faqs: [
+      {
+        question: 'Do you install gates across all South London postcodes?',
+        answer: 'Yes, we cover SE, SW, BR and CR postcodes from our Sydenham workshop. Our team regularly works in Dulwich, Peckham, Brixton, Clapham, Lewisham, Greenwich, and surrounding areas.',
+      },
+      {
+        question: 'How quickly can you survey a South London property?',
+        answer: 'Being local, we can typically arrange surveys within a week for South London addresses. Many bookings can be accommodated within a few days depending on current schedule.',
+      },
+      {
+        question: 'Are there any travel charges for South London installations?',
+        answer: 'There are no additional travel charges for properties within our core South London coverage area. The survey and installation costs are included in your quotation.',
+      },
+    ],
   },
 
   sydenham: {
@@ -65,6 +85,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Driveway gates for sloped entrances',
       'Victorian railings',
       'Side access gates',
+    ],
+    faqs: [
+      {
+        question: 'Where exactly is your Sydenham workshop?',
+        answer: 'We\'re at 106 Newlands Park Road, Sydenham, London SE26 5NB. The workshop is near Sydenham station and easily accessible from Crystal Palace, Forest Hill, and Penge.',
+      },
+      {
+        question: 'Can I visit the workshop to see gate samples?',
+        answer: 'Yes, we welcome visits by appointment. You can see fabrication in progress, material samples, and discuss your project directly with our team.',
+      },
+      {
+        question: 'Do Sydenham projects get faster turnaround?',
+        answer: 'Local projects often benefit from quicker surveys and reduced logistics time. Being neighbours means we can be more flexible with timing and follow-up visits.',
+      },
     ],
   },
 
@@ -87,6 +121,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Security gates',
       'Balcony steelwork',
     ],
+    faqs: [
+      {
+        question: 'Do I need planning permission for gates in Lewisham?',
+        answer: 'Most residential gates don\'t require planning permission under permitted development. However, properties in Blackheath conservation area may need approval. We can advise during the survey.',
+      },
+      {
+        question: 'Can you make gates for terraced houses in Lewisham?',
+        answer: 'Yes, many Lewisham terraces have side access or front garden gates. We design gates to maximise space efficiency for urban properties.',
+      },
+      {
+        question: 'Are you familiar with Lewisham Council requirements?',
+        answer: 'As a local business within the borough, we\'re experienced with Lewisham planning guidelines and conservation area requirements.',
+      },
+    ],
   },
 
   bromley: {
@@ -107,6 +155,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Gate automation systems',
       'Estate railings',
       'Security perimeters',
+    ],
+    faqs: [
+      {
+        question: 'What gate types work best for Bromley\'s larger driveways?',
+        answer: 'Sliding gates are popular in Bromley where there\'s space along the boundary. For driveways over 4m wide, we often recommend cantilever systems that don\'t require a ground track.',
+      },
+      {
+        question: 'Do you cover all Bromley postcodes?',
+        answer: 'Yes, we serve all BR postcodes including Bromley, Beckenham, Chislehurst, Orpington, Petts Wood, Hayes, and surrounding areas.',
+      },
+      {
+        question: 'Can you integrate gates with existing intercom systems?',
+        answer: 'Absolutely. Many Bromley properties already have intercom or video entry. We integrate automation with existing systems or can install new complete solutions.',
+      },
     ],
   },
 
@@ -129,6 +191,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Automated access systems',
       'Railings and balustrades',
     ],
+    faqs: [
+      {
+        question: 'Can you match heritage gate styles in Greenwich conservation areas?',
+        answer: 'Yes, we regularly work in Blackheath and Greenwich conservation areas. We can design gates that meet heritage guidelines while incorporating modern security features.',
+      },
+      {
+        question: 'Do you make gates for riverside developments?',
+        answer: 'Yes, we serve Greenwich Peninsula and riverside properties. Coastal-adjacent locations may benefit from galvanised finishes for additional corrosion resistance.',
+      },
+      {
+        question: 'What\'s the lead time for Greenwich projects?',
+        answer: 'Typical projects take 4-8 weeks from survey to installation. Being close to our Sydenham workshop means surveys can be arranged quickly.',
+      },
+    ],
   },
 
   croydon: {
@@ -150,6 +226,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Front garden railings',
       'Security upgrades',
     ],
+    faqs: [
+      {
+        question: 'Do you cover South Croydon and the CR8 area?',
+        answer: 'Yes, we serve all Croydon postcodes including Purley, Coulsdon, Sanderstead (CR5, CR8), and central Croydon (CR0, CR2).',
+      },
+      {
+        question: 'What security features can gates include?',
+        answer: 'Options include automated locks, intercom/video entry, sensor lighting, and integration with home security systems. We discuss requirements during the survey.',
+      },
+      {
+        question: 'Can you install matching pedestrian and driveway gates?',
+        answer: 'Absolutely. Many Croydon properties benefit from coordinated designs where the pedestrian gate complements the main driveway gates in style and finish.',
+      },
+    ],
   },
 
   surrey: {
@@ -170,6 +260,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Perimeter railings',
       'Bespoke metalwork',
     ],
+    faqs: [
+      {
+        question: 'Is there a travel charge for Surrey properties?',
+        answer: 'Most of Surrey is within our standard coverage area with no additional travel fees. For properties further into the county, any charges are confirmed before booking a survey.',
+      },
+      {
+        question: 'Can you work with estate managers and landscapers?',
+        answer: 'Yes, we regularly coordinate with other contractors on larger Surrey projects. We can work to existing plans or collaborate on integrated entrance designs.',
+      },
+      {
+        question: 'What gate widths can you fabricate for estate entrances?',
+        answer: 'We fabricate gates to any width required. Estate entrances often need 5-6m openings, which we typically serve with sliding or bi-fold mechanisms.',
+      },
+    ],
   },
 
   kent: {
@@ -189,6 +293,20 @@ export const AREA_DATA: Record<AreaSlug, AreaData> = {
       'Automated security systems',
       'Traditional and contemporary designs',
       'Coordination with landscaping',
+    ],
+    faqs: [
+      {
+        question: 'Which parts of Kent do you cover?',
+        answer: 'We serve North and West Kent including Sevenoaks, Tonbridge, Tunbridge Wells, Dartford, Gravesend, and the Medway towns. Contact us for locations further into the county.',
+      },
+      {
+        question: 'Can you handle uneven or rural sites?',
+        answer: 'Yes, rural Kent properties often have challenging access. We engineer solutions for slopes, uneven ground, and long approaches during the survey.',
+      },
+      {
+        question: 'Do you provide gates suitable for farms and estates?',
+        answer: 'Absolutely. We fabricate field gates, five-bar style gates, and estate entrance gates. Designs can be traditional or contemporary depending on the setting.',
+      },
     ],
   },
 }

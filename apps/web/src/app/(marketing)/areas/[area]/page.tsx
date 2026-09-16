@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { ArrowRight, MapPin, Phone } from 'lucide-react'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { FAQSection, FAQSchemaScript } from '@/components/marketing/FAQSection'
 import { BUSINESS } from '@/lib/marketing/business'
 import { breadcrumbSchema } from '@/lib/marketing/schema'
 
@@ -169,6 +170,19 @@ export default function AreaPage({ params }: { params: { area: string } }) {
           </Link>
         </div>
       </section>
+
+      {/* Local FAQ */}
+      <section className="border-t border-zinc-200 bg-canvas py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <FAQSection
+            subtitle={`${area.name} questions`}
+            title={`Steel gates in ${area.name}`}
+            items={area.faqs}
+          />
+        </div>
+      </section>
+
+      <FAQSchemaScript items={area.faqs} />
 
       {/* CTA */}
       <section className="bg-steel py-14 text-white md:py-20">
