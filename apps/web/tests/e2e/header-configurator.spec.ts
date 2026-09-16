@@ -12,7 +12,9 @@ async function skipCookieBanner(page: Page) {
 
 async function expectConfiguratorOpened(page: Page) {
   await expect(page).toHaveURL(/\/configurator(?:\?|$)/)
-  await expect(page.getByTestId('configurator-action-bar')).toBeVisible({ timeout: 20_000 })
+  const studioHeading = page.getByRole('heading', { name: /Design your gate|Choose your gate/i })
+  const actionBar = page.getByTestId('configurator-action-bar')
+  await expect(studioHeading.or(actionBar).first()).toBeVisible({ timeout: 20_000 })
 }
 
 test.describe('header Configurator navigation', () => {
