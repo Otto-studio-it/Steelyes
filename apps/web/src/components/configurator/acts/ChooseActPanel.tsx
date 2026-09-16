@@ -17,7 +17,7 @@ export function ChooseActPanel() {
       <p className="text-sm leading-6 text-muted-deep">
         Start from double swing — the primary production path — then change mechanism and Victorian
         shape. The Design drawing is the official 2D master: type, shape, circles and collars swap
-        that file immediately. Railhead SKUs stay on the quote (CA-17).
+        that file immediately. Railhead photos sit beside the drawing so you can see the cap.
       </p>
 
       <QuickGateScreen />

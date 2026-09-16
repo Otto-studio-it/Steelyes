@@ -16,6 +16,7 @@ import {
 } from '@/lib/configurator/configuration-summary'
 import { rasterizeDesignMaster } from '@/lib/configurator/design-master-pdf'
 import { formatLabelText } from '@/lib/configurator/labels'
+import { selectedRailheadSlug } from '@/lib/configurator/railhead'
 
 const PAGE_WIDTH = 595
 const PAGE_HEIGHT = 842
@@ -203,19 +204,55 @@ export async function buildIndicativeQuotePdf(input: {
   try {
     const master = rasterizeDesignMaster(config)
     const pngImage = await pdf.embedPng(master.png)
+    const railheadSku = selectedRailheadSlug(config.options)
     const maxWidth = PAGE_WIDTH - MARGIN * 2
     const maxHeight = PAGE_HEIGHT - MARGIN * 2 - 90
-    const scale = Math.min(maxWidth / pngImage.width, maxHeight / pngImage.height)
+    const railheadColumn = railheadSku ? 118 : 0
+    const drawingMaxWidth = maxWidth - railheadColumn
+    const scale = Math.min(drawingMaxWidth / pngImage.width, maxHeight / pngImage.height)
     const drawWidth = pngImage.width * scale
     const drawHeight = pngImage.height * scale
     page.drawImage(pngImage, {
-      x: MARGIN + (maxWidth - drawWidth) / 2,
+      x: MARGIN,
       y: MARGIN + 28,
       width: drawWidth,
       height: drawHeight,
     })
+    if (railheadSku) {
+      const columnX = MARGIN + drawingMaxWidth + 8
+      page.drawText('Railhead', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 12,
+        size: 8,
+        font: fontBold,
+        color: rgb(0.2, 0.2, 0.2),
+      })
+      page.drawText(railheadSku, {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 28,
+        size: 11,
+        font: fontBold,
+        color: rgb(0.12, 0.12, 0.12),
+      })
+      page.drawText('Catalogue photo', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 44,
+        size: 8,
+        font,
+        color: rgb(0.35, 0.35, 0.35),
+      })
+      page.drawText('beside Design', {
+        x: columnX,
+        y: MARGIN + 28 + drawHeight - 56,
+        size: 8,
+        font,
+        color: rgb(0.35, 0.35, 0.35),
+      })
+    }
     page.drawText(
-      `Design drawing · official master · ${master.slug.replace(/_/g, ' ')}`,
+      railheadSku
+        ? `Design drawing · official master · ${master.slug.replace(/_/g, ' ')} · railhead ${railheadSku} beside the gate`
+        : `Design drawing · official master · ${master.slug.replace(/_/g, ' ')}`,
       {
         x: MARGIN,
         y: MARGIN + 10,

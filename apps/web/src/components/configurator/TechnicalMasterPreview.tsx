@@ -16,7 +16,8 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { usePrefetchPackMasters } from '@/lib/configurator/prefetch-pack-masters'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import { useConfiguratorStore } from '@/store/configuratorStore'
-import { DesignRailheadCallout, selectedRailheadSlug } from '@/components/configurator/DesignRailheadCallout'
+import { DesignRailheadCallout } from '@/components/configurator/DesignRailheadCallout'
+import { selectedRailheadSlug } from '@/lib/configurator/railhead'
 
 type TechnicalMasterPreviewProps = {
   config: GateConfig
@@ -188,7 +189,7 @@ export function TechnicalMasterPreview({
             }`}
           >
             {resolved.ok ? (
-              <div className="flex w-full items-center gap-3">
+              <div className="flex w-full flex-col items-stretch gap-3 md:flex-row md:items-center">
                 <div className={`relative min-w-0 flex-1 ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
                   <img
@@ -275,8 +276,8 @@ export function TechnicalMasterPreview({
             ) : null}
             {railheadSku ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Selected railhead {railheadSku} is shown beside the drawing. It is not drawn onto the
-                pickets (safe on arched and sliding masters).
+                Railhead {railheadSku} is the catalogue photo beside the drawing, so you can see the
+                cap. It is not drawn onto the pickets (safe on arched and sliding masters).
               </p>
             ) : null}
           </div>

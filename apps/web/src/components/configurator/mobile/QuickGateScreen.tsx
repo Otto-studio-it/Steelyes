@@ -9,6 +9,7 @@ import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch
 import { FinishPicker } from '@/components/configurator/FinishPicker'
 import { GateTypeCardGrid } from '@/components/configurator/GateTypeCardGrid'
 import { StyleComparisonPicker } from '@/components/configurator/StyleComparisonPicker'
+import { RailheadModelPicker } from '@/components/configurator/RailheadChooserSection'
 import { TipologyPicker } from '@/components/configurator/TipologyPicker'
 import { useSheetSwipeDismiss } from '@/hooks/useSheetSwipeDismiss'
 import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
@@ -63,6 +64,8 @@ export function QuickGateScreen() {
       ) : null}
 
       <TipologyPicker />
+
+      <RailheadModelPicker showToggle layout="strip" />
 
       <StyleComparisonPicker />
 

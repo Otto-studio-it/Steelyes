@@ -73,18 +73,27 @@ test.describe('configurator release flow', () => {
   })
 
   test('railhead chooser stores SKU for summary without Design overlays', async ({ page }) => {
-    await walkToRefine(page)
+    await waitForConfiguratorReady(page)
 
-    await page.getByRole('button', { name: /^Decoration/i }).click()
     await page.getByRole('switch', { name: /Top railheads/i }).click()
+    await expect(page.getByRole('switch', { name: /Top railheads/i })).toHaveAttribute('aria-checked', 'true')
+    await expect(page.getByTestId('design-railhead-chip')).toHaveAttribute('data-sku', 'RH32')
+    await expect(page.getByTestId('design-railhead-chip').locator('img')).toHaveAttribute('src', /RH32/)
 
     const chooser = page.getByTestId('railhead-chooser')
     await expect(chooser).toBeVisible()
-    await expect(page.getByRole('heading', { name: /Railhead model/i })).toBeVisible()
     await chooser.getByRole('radio', { name: /RH32/i }).click()
     await expect(chooser.getByRole('radio', { name: /RH32/i })).toHaveAttribute('aria-checked', 'true')
 
-    // Design drawing must not composite railhead SVGs on the master (chooser + side chip photos are OK).
+    await continueWizard(page)
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Refine' })).toBeVisible()
+
+    await page.getByRole('button', { name: /^Decoration/i }).click()
+
+    const refineChooser = page.getByTestId('railhead-chooser')
+    await expect(refineChooser).toBeVisible()
+    await expect(page.getByRole('heading', { name: /Railhead model/i })).toBeVisible()
     await expect(page.getByTestId('design-railhead-chip')).toHaveAttribute('data-sku', 'RH32')
     await expect(page.getByTestId('design-railhead-chip').locator('img')).toHaveAttribute('src', /RH32/)
     await expect(page.locator('img[src*="/2d-masters/railheads/silhouettes/"]')).toHaveCount(0)

@@ -114,7 +114,7 @@ export function OptionsAccordion() {
       <p className="text-sm leading-6 text-muted-deep">
         Personalise structure, decoration, and site preferences. Open one group at a time.
         Type, Victorian shape, circles and collars swap the official 2D Design drawing immediately.
-        Finish is a swatch; size is the millimetre strip. Railhead SKUs stay on the quote (CA-17).
+        Finish is a swatch; size is the millimetre strip. Railhead photos sit beside the drawing.
       </p>
 
       {OPTION_GROUPS.map((group) => {

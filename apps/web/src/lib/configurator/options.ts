@@ -45,7 +45,8 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'top_railheads',
     label: 'Top railheads',
-    description: 'On/off. Count is automatic (one per bay). The selected model photo appears beside Design. Not drawn on the pickets.',
+    description:
+      'On/off. Count is automatic (one per bay). The catalogue photo appears beside Design so you can see the cap. Not drawn on the pickets.',
   },
   {
     key: 'dog_bars',

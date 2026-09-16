@@ -153,30 +153,32 @@ describe('definitive decorative masters', () => {
     )
   })
 
-  it('plain arched silhouettes match the definitive GATE masters', () => {
+  it('plain silhouettes match the definitive GATE masters', () => {
     const here = path.dirname(fileURLToPath(import.meta.url))
     const docs = path.resolve(here, '../../../docs/frontend/2d-masters')
     for (const gateType of GATE_TYPES) {
-      for (const slug of ['arched', 'arched_dog_bars'] as const) {
+      const matches: Array<{ slug: string; file: string }> = []
+      const walk = (dir: string) => {
+        if (!fs.existsSync(dir)) return
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          const full = path.join(dir, entry.name)
+          if (entry.isDirectory()) {
+            if (entry.name === '_review') continue
+            walk(full)
+            continue
+          }
+          if (!entry.name.startsWith(`GATE__${gateType}__`) || !entry.name.endsWith('.svg')) continue
+          if (entry.name.includes('DUPLICATE')) continue
+          const slug = entry.name.slice(`GATE__${gateType}__`.length, -'.svg'.length)
+          matches.push({ slug, file: full })
+        }
+      }
+      walk(path.join(docs, gateType, 'definitive'))
+      expect(matches.length, `${gateType} definitive`).toBeGreaterThan(0)
+      for (const { slug, file } of matches) {
         const sil = path.join(docs, gateType, 'silhouettes', `${slug}.svg`)
         expect(fs.existsSync(sil), sil).toBe(true)
-        const gateName = `GATE__${gateType}__${slug}.svg`
-        const matches: string[] = []
-        const walk = (dir: string) => {
-          if (!fs.existsSync(dir)) return
-          for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-            const full = path.join(dir, entry.name)
-            if (entry.isDirectory()) {
-              if (entry.name === '_review') continue
-              walk(full)
-              continue
-            }
-            if (entry.name === gateName) matches.push(full)
-          }
-        }
-        walk(path.join(docs, gateType, 'definitive'))
-        expect(matches.length, `${gateType}/${slug} definitive`).toBeGreaterThan(0)
-        expect(fs.readFileSync(sil)).toEqual(fs.readFileSync(matches[0]))
+        expect(fs.readFileSync(sil)).toEqual(fs.readFileSync(file))
         expect(fs.readFileSync(publicFile(`/2d-masters/${gateType}/silhouettes/${slug}.svg`))).toEqual(
           fs.readFileSync(sil),
         )

@@ -11,7 +11,7 @@ export function RefineActPanel() {
       <TipologyPicker />
       <OptionsAccordion />
       <CollarChooserSection />
-      {/* Optional SKU picker when railheads are on — Design drawing ignores RH (CA-17). */}
+      {/* SKU picker when railheads are on — photo sits beside Design, not on pickets. */}
       <RailheadModelPicker />
     </div>
   )
