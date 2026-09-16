@@ -40,6 +40,27 @@ test.describe('configurator release flow', () => {
     await expect(page.getByTestId('configurator-preview-pinned').getByText(/Anthracite/i)).toBeVisible()
   })
 
+  test('Colour fit paints the selected finish without replacing the Design master', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    await expect(page.getByTestId('design-master-slug')).toBeVisible()
+    await page.getByRole('tab', { name: /Colour fit/i }).click()
+    await expect(page.getByRole('tab', { name: /Colour fit/i })).toHaveAttribute('aria-selected', 'true')
+
+    const colourFit = page.getByTestId('colour-fit-preview')
+    await expect(colourFit).toBeVisible()
+    const satinHex = await colourFit.getAttribute('data-finish')
+    expect(satinHex).toBeTruthy()
+
+    await page.getByRole('radio', { name: /Anthracite/i }).click()
+    await expect(colourFit).toHaveAttribute('data-finish', '#383E42')
+    expect(satinHex).not.toBe('#383E42')
+
+    await page.getByRole('tab', { name: /^Design$/i }).click()
+    await expect(page.getByTestId('design-master-slug')).toBeVisible()
+    await expect(page.locator('img[src*="/2d-masters/double_swing/silhouettes/"]').first()).toBeVisible()
+  })
+
   test('records sliding drive on the Design badge without swapping the master', async ({ page }) => {
     await waitForConfiguratorReady(page)
 

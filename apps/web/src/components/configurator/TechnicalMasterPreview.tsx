@@ -261,8 +261,8 @@ export function TechnicalMasterPreview({
                   (item.key === 'motorised' && item.visual === 'same_drawing')),
             ) ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Finish is the swatch above. Railheads, middle bar and sliding drive stay on the quote —
-                they do not redraw this master.
+                Finish is the swatch above. Railheads stay on the quote. Middle bar and sliding
+                drive follow Colour fit — they do not redraw this master.
               </p>
             ) : null}
           </div>
