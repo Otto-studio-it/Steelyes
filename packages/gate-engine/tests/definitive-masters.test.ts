@@ -153,6 +153,37 @@ describe('definitive decorative masters', () => {
     )
   })
 
+  it('plain arched silhouettes match the definitive GATE masters', () => {
+    const here = path.dirname(fileURLToPath(import.meta.url))
+    const docs = path.resolve(here, '../../../docs/frontend/2d-masters')
+    for (const gateType of GATE_TYPES) {
+      for (const slug of ['arched', 'arched_dog_bars'] as const) {
+        const sil = path.join(docs, gateType, 'silhouettes', `${slug}.svg`)
+        expect(fs.existsSync(sil), sil).toBe(true)
+        const gateName = `GATE__${gateType}__${slug}.svg`
+        const matches: string[] = []
+        const walk = (dir: string) => {
+          if (!fs.existsSync(dir)) return
+          for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const full = path.join(dir, entry.name)
+            if (entry.isDirectory()) {
+              if (entry.name === '_review') continue
+              walk(full)
+              continue
+            }
+            if (entry.name === gateName) matches.push(full)
+          }
+        }
+        walk(path.join(docs, gateType, 'definitive'))
+        expect(matches.length, `${gateType}/${slug} definitive`).toBeGreaterThan(0)
+        expect(fs.readFileSync(sil)).toEqual(fs.readFileSync(matches[0]))
+        expect(fs.readFileSync(publicFile(`/2d-masters/${gateType}/silhouettes/${slug}.svg`))).toEqual(
+          fs.readFileSync(sil),
+        )
+      }
+    }
+  })
+
   it('collar every_1 resolves on double_swing base', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
     const config = withOptions(base, { picket_collars: { variant: 'every_1' } }, false)
