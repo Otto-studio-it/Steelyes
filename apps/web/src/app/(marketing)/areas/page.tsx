@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { ArrowRight, MapPin } from 'lucide-react'
 
@@ -31,8 +32,18 @@ export default function AreasPage() {
   return (
     <MarketingShell pathname="/areas">
       {/* Hero */}
-      <section className="bg-steel py-14 text-white md:py-20">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <section className="relative overflow-hidden bg-steel py-14 text-white md:py-20">
+        <Image
+          src="/images/backgrounds/london-aerial.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+        <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <div className="flex items-center gap-2 text-primary">
             <MapPin className="h-4 w-4" />
             <span className="font-mono text-xs uppercase tracking-widest">Service coverage</span>
@@ -172,8 +183,17 @@ export default function AreasPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-steel py-14 text-white md:py-20">
-        <div className="mx-auto max-w-7xl px-4 text-center md:px-8">
+      <section className="relative overflow-hidden bg-steel py-14 text-white md:py-20">
+        <Image
+          src="/images/backgrounds/uk-coverage.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="relative mx-auto max-w-7xl px-4 text-center md:px-8">
           <h2 className="font-heading text-3xl font-black uppercase md:text-5xl">
             Ready for a local survey?
           </h2>

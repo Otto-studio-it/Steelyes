@@ -70,8 +70,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-steel py-16 text-white md:py-20">
-        <div className="mx-auto max-w-7xl px-4 md:px-8">
+      <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
+        <Image
+          src="/images/backgrounds/metalwork-sparks.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="mb-10 font-heading text-4xl font-black uppercase md:text-5xl">What defines our craft</h2>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {[
@@ -91,7 +100,7 @@ export default function AboutPage() {
                 'Our work avoids decoration for its own sake. Lines are sharp, proportions are deliberate, finishes are consistent. The result reads as considered rather than assembled.',
               ],
             ].map(([step, title, body]) => (
-              <article key={step} className="border border-white/20 bg-white/5 p-6">
+              <article key={step} className="border border-white/20 bg-white/5 p-6 backdrop-blur-sm">
                 <p className="font-mono text-xs uppercase tracking-widest text-primary-soft">{step}</p>
                 <h3 className="mt-3 font-heading text-2xl font-bold uppercase">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/80">{body}</p>
@@ -125,8 +134,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-steel py-16 text-white md:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 md:px-8 lg:flex-row lg:items-end">
+      <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
+        <Image
+          src="/images/backgrounds/uk-coverage.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+          aria-hidden
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 md:px-8 lg:flex-row lg:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-widest text-primary-container">Start with the site</p>
             <h2 className="mt-3 max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">

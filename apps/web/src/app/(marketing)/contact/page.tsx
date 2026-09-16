@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
@@ -85,11 +86,20 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         />
 
         <div className="space-y-8">
-          <div className="flex aspect-video w-full items-center justify-center border border-zinc-200 bg-steel p-8">
-            <div className="text-center">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Coverage</p>
+          <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden border border-zinc-200 bg-steel p-8">
+            <Image
+              src="/images/backgrounds/uk-map-abstract.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+              aria-hidden
+            />
+            <div className="absolute inset-0 bg-black/55" />
+            <div className="relative text-center">
+              <p className="font-mono text-[10px] uppercase tracking-widest text-white/60">Coverage</p>
               <p className="mt-3 font-heading text-4xl font-black uppercase text-white">{COVERAGE_COPY.headline}</p>
-              <p className="mt-3 font-mono text-xs uppercase tracking-wide text-white/60">{COVERAGE_COPY.body}</p>
+              <p className="mt-3 font-mono text-xs uppercase tracking-wide text-white/80">{COVERAGE_COPY.body}</p>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
