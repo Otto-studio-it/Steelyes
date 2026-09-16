@@ -67,11 +67,11 @@ test.describe('configurator release flow', () => {
     await page.getByRole('button', { name: /^Change$/i }).click()
     await page.getByRole('radio', { name: /Tracked sliding/i }).click()
     await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
-    await expect(page.getByTestId('design-drive-badge')).toContainText(/Manual recorded/i)
-
-    await page.getByRole('switch', { name: /Manual only/i }).click()
-    await expect(page.getByRole('switch', { name: /Motorised/i })).toHaveAttribute('aria-checked', 'true')
     await expect(page.getByTestId('design-drive-badge')).toContainText(/Motorised recorded/i)
+
+    await page.getByRole('switch', { name: /Motorised/i }).click()
+    await expect(page.getByRole('switch', { name: /Manual only/i })).toHaveAttribute('aria-checked', 'false')
+    await expect(page.getByTestId('design-drive-badge')).toContainText(/Manual recorded/i)
     await expect(page.getByTestId('design-master-slug')).toContainText(/base/i)
   })
 
