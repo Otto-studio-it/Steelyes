@@ -112,13 +112,14 @@ export function FinishPicker({
           <p className="text-xs leading-5 text-muted-deep">
             {hexInvalid
               ? 'Enter a full hex code such as #9E000C.'
-              : '+ extra charge — powder coating (quoted separately). Preview updates from the hex.'}
+              : '+ extra charge — powder coating (quoted separately). The swatch on Design updates; the CAD master stays line-art.'}
           </p>
         </div>
       ) : (
         <p className="text-xs leading-5 text-muted-deep">
-          Client palette: black satin / matt / gloss, anthracite RAL 7016, or a custom hex. Finish preview is
-          schematic — final powder coat confirmed at survey.
+          Client palette: black satin / matt / gloss, anthracite RAL 7016, or a custom hex. The
+          Design master stays line-art; the colour swatch on the drawing header tracks your choice.
+          Final powder coat is confirmed at survey.
         </p>
       )}
     </div>

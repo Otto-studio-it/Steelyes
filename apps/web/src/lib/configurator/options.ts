@@ -39,7 +39,8 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'middle_bar',
     label: 'Middle bar',
-    description: 'Splits the gate visually into two parts.',
+    description:
+      'Priced extra. Official Victorian masters already include a mid rail, so this toggle does not change the Design drawing.',
   },
   {
     key: 'top_railheads',
@@ -49,7 +50,8 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'dog_bars',
     label: 'Dog bars',
-    description: 'On/off. Density is automatic (CA-15). Unavailable on Composite.',
+    description:
+      'On/off. Same control as Gate shape on Choose. Density is automatic (CA-15). Unavailable on Composite.',
   },
   {
     key: 'dog_bar_railheads',
@@ -59,7 +61,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'arched_top',
     label: 'Arched top',
-    description: 'Curved top rail.',
+    description: 'Curved top rail — same control as Gate shape on Choose. Swaps the Design master.',
   },
   {
     key: 'aluminium_panels',

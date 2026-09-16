@@ -112,8 +112,9 @@ export function OptionsAccordion() {
   return (
     <div className="space-y-4">
       <p className="text-sm leading-6 text-muted-deep">
-        Personalise structure, decoration, and site preferences. Open one group at a time — each change updates the
-        live preview.
+        Personalise structure, decoration, and site preferences. Open one group at a time.
+        Shape, circles and collars update the Design drawing. Railheads and middle bar are quote
+        fields — they do not redraw the master.
       </p>
 
       {OPTION_GROUPS.map((group) => {

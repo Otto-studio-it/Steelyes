@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import {
+  describeDesignPreview,
   resolveCircleOverlays,
   resolveCollarOverlays,
   resolveFinishDefinition,
@@ -51,6 +52,8 @@ export function TechnicalMasterPreview({
       return { ok: false as const, message }
     }
   }, [config])
+
+  const described = useMemo(() => describeDesignPreview(config), [config])
 
   const circleOverlay = useMemo(() => {
     if (!resolved.ok) return { bands: [], notes: [] as string[] }
@@ -226,7 +229,7 @@ export function TechnicalMasterPreview({
               </div>
               <div className="text-right">
                 {resolved.ok ? (
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted" data-testid="design-master-slug">
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
@@ -235,6 +238,25 @@ export function TechnicalMasterPreview({
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
               Dimensions are client inputs — not baked into the drawing.
             </p>
+            {described.overlayFallback ? (
+              <p className="mt-2 font-mono text-[10px] leading-4 text-steel" data-testid="design-overlay-fallback">
+                Some decoration is a generic overlay on this pack (missing baked combo). The Victorian
+                shape still matches your selection.
+              </p>
+            ) : null}
+            {described.channels.some(
+              (item) =>
+                item.selected &&
+                (item.key === 'middle_bar' ||
+                  item.key === 'top_railheads' ||
+                  item.key === 'dog_bar_railheads' ||
+                  (item.key === 'motorised' && item.visual === 'same_drawing')),
+            ) ? (
+              <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
+                Finish is the swatch above. Railheads, middle bar and sliding drive stay on the quote —
+                they do not redraw this master.
+              </p>
+            ) : null}
           </div>
         </div>
       ) : null}

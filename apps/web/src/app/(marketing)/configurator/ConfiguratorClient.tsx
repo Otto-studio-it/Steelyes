@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 import {
@@ -40,6 +40,8 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
   const setPricingCatalog = useConfiguratorStore((state) => state.setPricingCatalog)
   const setConfig = useConfiguratorStore((state) => state.setConfig)
 
+  const appliedDeepLinkRef = useRef(false)
+
   useEffect(() => {
     const catalog = tenant?.catalog ?? pricingCatalog
     if (catalog) {
@@ -55,6 +57,10 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
 
     const shareToken = searchParams.get('shareToken')?.trim()
     if (shareToken && isValidShareToken(shareToken)) {
+      if (appliedDeepLinkRef.current) {
+        return
+      }
+      appliedDeepLinkRef.current = true
       void loadGateConfigurationByShareToken(shareToken).then((config) => {
         if (!config) {
           return
@@ -66,11 +72,17 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
       return
     }
 
-    // Deep-link from marketing CTAs — only configure/schematic types (never enquire fiction).
+    // Deep-link from marketing CTAs — apply once. Re-running on searchParams
+    // identity changes was resetting the customer's mechanism after they changed it.
     const gateType = parseGateTypeParam(searchParams.get('gate'))
     if (!gateType || getGateTypeAvailability(gateType) === 'enquire') {
       return
     }
+
+    if (appliedDeepLinkRef.current) {
+      return
+    }
+    appliedDeepLinkRef.current = true
 
     setConfig(createGateConfig(createGatePreset(gateType)))
     captureConfiguratorEvent('configuration loaded from gate query', { gate_type: gateType })
