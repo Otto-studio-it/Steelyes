@@ -17,7 +17,7 @@ export const OPTION_GROUPS: {
   {
     id: 'decoration',
     label: 'Decoration',
-    description: 'On/off — Design CAD follows Victorian shape, circles and collars.',
+    description: 'On/off — each control swaps the official 2D Design master.',
     keys: ['dog_bars', 'circles', 'top_railheads'],
   },
   {
@@ -40,7 +40,7 @@ export const OPTION_META: OptionMeta[] = [
     key: 'middle_bar',
     label: 'Middle bar',
     description:
-      'Priced extra. Design CAD draws it. The workshop Victorian master already has a mid rail and does not swap.',
+      'Priced extra. Official Victorian masters already include a mid rail; this does not swap Design.',
   },
   {
     key: 'top_railheads',
@@ -61,7 +61,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'arched_top',
     label: 'Arched top',
-    description: 'Curved top rail — same control as Gate shape on Choose. Design CAD follows it.',
+    description: 'Curved top rail — same control as Gate shape on Choose. Swaps the official 2D master.',
   },
   {
     key: 'aluminium_panels',
@@ -72,13 +72,13 @@ export const OPTION_META: OptionMeta[] = [
     key: 'circles',
     label: 'Circles',
     description:
-      'On/off — upper + lower bands together (CA-16). Drawn on Design CAD. Unavailable on Composite.',
+      'On/off — upper + lower bands together (CA-16). Swaps the official 2D master. Unavailable on Composite.',
   },
   {
     key: 'picket_collars',
     label: 'Picket collars',
     description:
-      'On/off — mid-height boss on long pickets (never on dog bars). Drawn on Design CAD. Unavailable on Composite.',
+      'On/off — mid-height boss on long pickets (never on dog bars). Swaps the official 2D master. Unavailable on Composite.',
   },
   {
     key: 'bushes',

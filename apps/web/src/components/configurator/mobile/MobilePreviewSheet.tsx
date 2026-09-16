@@ -20,7 +20,7 @@ type MobilePreviewSheetProps = {
 
 /**
  * Full-resolution preview as a bottom sheet (85dvh).
- * Live CAD by default; workshop master is the disclosure.
+ * Official 2D master is the Design drawing.
  */
 export function MobilePreviewSheet({
   open,

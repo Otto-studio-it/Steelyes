@@ -2,10 +2,14 @@
 
 import { Maximize2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
+import {
+  resolveSilhouette,
+  SilhouetteResolveError,
+  type GateConfig,
+  type TenantBundle,
+} from '@steelyes/gate-engine'
 
 import { MobilePreviewSheet } from '@/components/configurator/mobile/MobilePreviewSheet'
-import { buildColourFitDrawing } from '@/lib/configurator/colour-fit'
 import { finishLabel, gateTypeLabel } from '@/lib/configurator/labels'
 
 type MobilePreviewChipProps = {
@@ -16,7 +20,7 @@ type MobilePreviewChipProps = {
 }
 
 /**
- * Compact 96px Design-preview chip. Renders the live CAD thumbnail
+ * Compact 96px Design-preview chip. Renders the official 2D master thumbnail
  * and opens the full bottom sheet on tap.
  */
 export function MobilePreviewChip({
@@ -27,11 +31,14 @@ export function MobilePreviewChip({
 }: MobilePreviewChipProps) {
   const [open, setOpen] = useState(false)
 
-  const drawing = useMemo(() => {
+  const master = useMemo(() => {
     try {
-      return { ok: true as const, value: buildColourFitDrawing(config) }
+      return { ok: true as const, value: resolveSilhouette(config) }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Design drawing is unavailable.'
+      const message =
+        error instanceof SilhouetteResolveError
+          ? error.message
+          : 'Design drawing is unavailable.'
       return { ok: false as const, message }
     }
   }, [config])
@@ -47,10 +54,10 @@ export function MobilePreviewChip({
         aria-label="Open full gate preview"
       >
         <span className="flex h-20 w-28 shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-[#F3F2EF]">
-          {drawing.ok ? (
-            // eslint-disable-next-line @next/next/no-img-element -- live CAD SVG as data URI
+          {master.ok ? (
+            // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
             <img
-              src={drawing.value.dataUri}
+              src={master.value.publicPath}
               alt=""
               className="h-full w-full scale-[1.15] object-contain object-center"
             />

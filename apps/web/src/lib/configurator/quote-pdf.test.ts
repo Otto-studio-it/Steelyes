@@ -42,7 +42,7 @@ describe('rasterizeLiveCad', () => {
 })
 
 describe('buildIndicativeQuotePdf', () => {
-  it('embeds live CAD so the quote matches the Design preview', async () => {
+  it('embeds the official design master so the quote matches the Design preview', async () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const pdf = await buildIndicativeQuotePdf({
       config,

@@ -3,6 +3,7 @@
 import { useMemo } from 'react'
 import {
   describeDesignPreview,
+  getVictorianTipology,
   resolveCircleOverlays,
   resolveCollarOverlays,
   resolveFinishDefinition,
@@ -12,6 +13,7 @@ import {
 } from '@steelyes/gate-engine'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
+import { usePrefetchPackMasters } from '@/lib/configurator/prefetch-pack-masters'
 import { gateTypeLabel } from '@/lib/configurator/labels'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
@@ -25,9 +27,8 @@ type TechnicalMasterPreviewProps = {
 }
 
 /**
- * Design preview from preloaded 2D masters only (Phase 1–3).
- * Railhead SKUs are chosen in Refine for quote/email — not composited on the drawing.
- * Never invents live CAD. Client mm render in the strip under the image.
+ * Customer Design preview: official 2D masters only (the client-approved visual).
+ * Menu changes swap the matching file immediately. Railhead SKUs stay quote-only (CA-17).
  */
 export function TechnicalMasterPreview({
   config,
@@ -37,6 +38,8 @@ export function TechnicalMasterPreview({
   studio = false,
   className = '',
 }: TechnicalMasterPreviewProps) {
+  usePrefetchPackMasters(config.gateType)
+
   const previewExpanded = useConfiguratorStore((state) => state.previewExpanded)
   const togglePreviewExpanded = useConfiguratorStore((state) => state.togglePreviewExpanded)
   const finish = resolveFinishDefinition(config)
@@ -71,12 +74,12 @@ export function TechnicalMasterPreview({
     return resolveCollarOverlays(config)
   }, [config, resolved])
 
-  // Handle is baked into official *manual* masters — never composited in UI.
-  // Railheads: model picker only (CA-17). Circles/collars: baked master when available, else overlay.
-
   const isCollapsedPeek = !pinned && collapsible && compact && !previewExpanded
   const showFullBody = pinned || !collapsible || previewExpanded || !compact
   const title = gateTypeLabel(config.gateType)
+  const tipology = getVictorianTipology(config)
+  const circlesOn = config.options.some((option) => option.key === 'circles' && option.enabled)
+  const collarsOn = config.options.some((option) => option.key === 'picket_collars' && option.enabled)
 
   const shellClass = studio
     ? 'border-steel/10 bg-[#F3F2EF] text-steel'
@@ -89,6 +92,12 @@ export function TechnicalMasterPreview({
   return (
     <div
       className={`${frameClass} ${shellClass} ${pinned && !studio ? 'shadow-[0_16px_40px_rgba(25,20,18,0.22)]' : ''} ${className}`}
+      data-testid="design-master-preview"
+      data-tipology={resolved.ok ? tipology : undefined}
+      data-slug={resolved.ok ? resolved.value.slug : undefined}
+      data-circles={String(circlesOn)}
+      data-collars={String(collarsOn)}
+      data-motorised={String(config.motorised)}
     >
       <div
         className={`flex items-center justify-between border-b border-steel/10 px-4 ${pinned ? 'py-2.5' : 'py-3 lg:px-5 lg:py-4'}`}
@@ -178,8 +187,12 @@ export function TechnicalMasterPreview({
               <div className={`relative w-full ${pinned ? 'max-h-[40vh]' : 'max-h-[min(60vh,640px)]'}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
                 <img
+                  key={resolved.value.publicPath}
+                  data-testid="design-master-img"
                   src={resolved.value.publicPath}
                   alt={`${title} design master — ${resolved.value.title}`}
+                  decoding="sync"
+                  fetchPriority="high"
                   className="h-full w-full bg-white object-contain"
                 />
                 {circleOverlay.bands.map((band) => (
@@ -212,9 +225,6 @@ export function TechnicalMasterPreview({
                   Design master missing
                 </p>
                 <p className="mt-2 font-mono text-xs leading-5 text-muted">{resolved.message}</p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-widest text-muted">
-                  Live CAD is disabled for Design view
-                </p>
               </div>
             )}
           </div>
@@ -237,14 +247,18 @@ export function TechnicalMasterPreview({
               </div>
               <div className="text-right">
                 {resolved.ok ? (
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                  <p
+                    className="font-mono text-[10px] uppercase tracking-widest text-muted"
+                    data-testid="design-master-slug"
+                  >
                     Master · {resolved.value.slug.replace(/_/g, ' ')}
                   </p>
                 ) : null}
               </div>
             </div>
             <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
-              Dimensions are client inputs — not baked into the drawing.
+              Official 2D master — type, Victorian shape, circles and collars swap this file
+              immediately. Size is the millimetre strip. Finish is the swatch.
             </p>
             {described.overlayFallback ? (
               <p className="mt-2 font-mono text-[10px] leading-4 text-steel" data-testid="design-overlay-fallback">
@@ -255,14 +269,10 @@ export function TechnicalMasterPreview({
             {described.channels.some(
               (item) =>
                 item.selected &&
-                (item.key === 'middle_bar' ||
-                  item.key === 'top_railheads' ||
-                  item.key === 'dog_bar_railheads' ||
-                  (item.key === 'motorised' && item.visual === 'same_drawing')),
+                (item.key === 'top_railheads' || item.key === 'dog_bar_railheads'),
             ) ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Finish, size, middle bar and drive follow the Design CAD above. This plate keeps the
-                official workshop line-art. Railheads stay on the quote (CA-17).
+                Railhead SKUs stay on the quote (CA-17) and are not composited on this drawing.
               </p>
             ) : null}
           </div>

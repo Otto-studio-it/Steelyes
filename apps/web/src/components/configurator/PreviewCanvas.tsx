@@ -4,8 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { Maximize2, X } from 'lucide-react'
 import { useState } from 'react'
 
-import { ColourFitPreview } from '@/components/configurator/ColourFitPreview'
-import { WorkshopDrawingDisclosure } from '@/components/configurator/WorkshopDrawingDisclosure'
+import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
 
 type PreviewCanvasProps = {
@@ -19,12 +18,12 @@ type PreviewCanvasProps = {
   onDimensionOverlayClick?: () => void
   /** @deprecated Secondary schematic modes removed. */
   showSecondaryModes?: boolean
-  /** @deprecated Colour fit is now the default Design drawing. */
+  /** @deprecated Colour-fit CAD is not the customer Design drawing. */
   allowColourFit?: boolean
 }
 
 /**
- * Customer preview is live CAD (installation). Official masters sit under Workshop drawing.
+ * Customer preview is the official 2D master SVG. Menu changes swap that file immediately.
  */
 export function PreviewCanvas({
   config,
@@ -59,7 +58,14 @@ export function PreviewCanvas({
       </div>
 
       <div className="relative">
-        <ColourFitPreview config={config} compact={previewCompact} />
+        <ConfiguratorPreview
+          config={config}
+          compact={previewCompact}
+          collapsible={false}
+          pinned
+          studio
+          className="rounded-none border-0 shadow-none"
+        />
         {showDimensionOverlay ? (
           <button
             type="button"
@@ -71,8 +77,6 @@ export function PreviewCanvas({
           </button>
         ) : null}
       </div>
-
-      <WorkshopDrawingDisclosure config={config} />
     </div>
   )
 
@@ -99,8 +103,14 @@ export function PreviewCanvas({
               </Dialog.Close>
             </div>
             <div className="flex-1 overflow-auto bg-[#F3F2EF]">
-              <ColourFitPreview config={config} compact={false} />
-              <WorkshopDrawingDisclosure config={config} />
+              <ConfiguratorPreview
+                config={config}
+                compact={false}
+                collapsible={false}
+                pinned
+                studio
+                className="rounded-none border-0 shadow-none"
+              />
             </div>
           </Dialog.Content>
         </Dialog.Portal>

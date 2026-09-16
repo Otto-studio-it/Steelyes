@@ -113,8 +113,8 @@ export function OptionsAccordion() {
     <div className="space-y-4">
       <p className="text-sm leading-6 text-muted-deep">
         Personalise structure, decoration, and site preferences. Open one group at a time.
-        Shape, finish, size, circles, collars, middle bar and drive follow the Design CAD.
-        Railhead SKUs stay on the workshop plate (CA-17).
+        Type, Victorian shape, circles and collars swap the official 2D Design drawing immediately.
+        Finish is a swatch; size is the millimetre strip. Railhead SKUs stay on the quote (CA-17).
       </p>
 
       {OPTION_GROUPS.map((group) => {

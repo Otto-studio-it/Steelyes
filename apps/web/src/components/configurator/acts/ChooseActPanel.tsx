@@ -16,8 +16,8 @@ export function ChooseActPanel() {
     <div className="space-y-6">
       <p className="text-sm leading-6 text-muted-deep">
         Start from double swing — the primary production path — then change mechanism and Victorian
-        shape. The Design drawing is live CAD: type, shape, finish, size, circles, collars and drive
-        follow your selection. Railhead SKUs stay on the workshop plate (CA-17).
+        shape. The Design drawing is the official 2D master: type, shape, circles and collars swap
+        that file immediately. Railhead SKUs stay on the quote (CA-17).
       </p>
 
       <QuickGateScreen />

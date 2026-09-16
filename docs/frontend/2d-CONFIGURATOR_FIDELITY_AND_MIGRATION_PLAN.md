@@ -188,14 +188,14 @@ One `GateConfig` continues to drive price, share, PDF, mesh. Preview is a **func
 
 **Slice B — live CAD behind a Design tab, masters remain default.** Shipped, then inverted in Slice C.
 
-**Slice C — live CAD becomes the customer preview (this change).**  
-Design drawing is `buildGateRenderPlan` installation SVG. Official masters move to a **Workshop drawing** disclosure (slug + SVG). Quote PDF and share use the same live CAD PNG. Circles and collars are drawn on Design CAD (Slice E). Railheads stay on the workshop plate / quote (CA-17). E2e asserts CAD `data-tipology` / `data-finish` / handle / circles / collars, not master `img[src]` as the customer drawing.
+**Client visual lock (this change).**  
+The official 2D master SVGs are the customer Design drawing — that is the art the client approved. Menu changes (`resolveSilhouette` + overlay fallback) swap the matching file immediately. Quote PDF embeds the same master PNG. Live CAD remains in the engine for goldens / schematic, not the customer preview.
 
-**Slice D — masters become golden tests, not runtime.**  
-For each `GateConfig` in `audit-2d-matrix`, render installation CAD without throw, assert circle/collar primitive ids when those options are on, and keep `resolveSilhouette` for the workshop plate. Do not perceptually compare CAD to Figma masters — they are different drawing languages.
+**Slice C — live CAD as customer preview** was tried, then reverted: the parametric CAD is not the client-approved visual.
 
-**Slice E — retire overlay fallbacks.**  
-Once CAD draws circles + collars + arch + dog bars per type, delete generic overlay compositing from `TechnicalMasterPreview`. Keep overlay SVGs in git as reference.
+**Slice D — CAD goldens remain** for engine regression, not the customer drawing.
+
+**Slice E — overlay fallbacks** stay for collar `every_2` until those cells are baked. Do not invent CAD on Design.
 
 ### What not to do
 
@@ -218,9 +218,6 @@ Secure here means **the drawing is a pure function of `GateConfig`**, fail-close
 ## 8. How to proceed from here
 
 1. ~~P1 missing cells + collar chooser + e2e rewrite~~ — done (204 baked silhouettes; overlay fallback only for collar `every_2`).
-2. ~~Slice B: Colour fit live CAD as a second view~~ — done, then inverted.
-3. ~~Slice C: live CAD is the customer Design drawing~~ — done. Workshop plate keeps the official SVG. Quote PDF matches Design CAD.
-4. ~~Slice D: CAD goldens (render without throw + workshop still resolves + circle/collar primitive ids).~~  
-5. ~~Slice E: CAD draws circles + collars natively on Design.~~ Railhead SKUs remain workshop / quote (CA-17). Overlay compositing stays for every_2 workshop plates.
-
-Until railhead SKUs are drawn, treat **railheads** as workshop / quote metadata on Design CAD.
+2. **Customer Design = official 2D masters.** Menu swaps those files immediately. Quote PDF matches Design.
+3. Live CAD stays in the engine (goldens / schematic). It is not the customer drawing.
+4. Railhead SKUs remain quote-only (CA-17). Overlay compositing stays for collar `every_2`.
