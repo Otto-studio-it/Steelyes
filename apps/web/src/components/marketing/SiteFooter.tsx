@@ -27,6 +27,16 @@ const SERVICE_LINKS = [
   { label: 'Security Grills', href: '/services/security' },
 ] as const
 
+const AREA_LINKS = [
+  { label: 'All Areas', href: '/areas' },
+  { label: 'South London', href: '/areas/south-london' },
+  { label: 'Sydenham', href: '/areas/sydenham' },
+  { label: 'Lewisham', href: '/areas/lewisham' },
+  { label: 'Bromley', href: '/areas/bromley' },
+  { label: 'Surrey', href: '/areas/surrey' },
+  { label: 'Kent', href: '/areas/kent' },
+] as const
+
 const START_LINKS = [
   { label: 'Request a quote', href: '/contact', tone: 'primary' },
   { label: 'Open gate configurator', href: '/configurator', tone: 'secondary' },
@@ -49,7 +59,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 export function SiteFooter() {
   return (
     <footer className="bg-steel text-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 text-left md:grid-cols-2 md:px-8 lg:grid-cols-[1.25fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 text-left md:grid-cols-2 md:px-8 lg:grid-cols-[1.25fr_1fr_1fr_1fr_1fr]">
         <section>
           <h2 className="mb-5 font-heading text-3xl font-black uppercase">Steelyes Ltd</h2>
           <p className="max-w-sm text-sm font-light leading-relaxed text-zinc-400">
@@ -92,6 +102,17 @@ export function SiteFooter() {
           <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Services</h3>
           <ul className="space-y-1 text-sm text-zinc-400">
             {SERVICE_LINKS.map((link) => (
+              <li key={link.href}>
+                <FooterLink href={link.href} label={link.label} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="mb-5 font-heading text-sm font-bold uppercase tracking-widest text-primary-container">Areas</h3>
+          <ul className="space-y-1 text-sm text-zinc-400">
+            {AREA_LINKS.map((link) => (
               <li key={link.href}>
                 <FooterLink href={link.href} label={link.label} />
               </li>

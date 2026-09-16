@@ -4,7 +4,19 @@ const BASE_URL = 'https://www.steelyes.co.uk'
 
 // Bump when marketing page content actually changes — not on every build/deploy,
 // which would make every lastmod identical and Google discounts that as a fake signal.
-const CONTENT_LAST_UPDATED = new Date('2026-08-05')
+const CONTENT_LAST_UPDATED = new Date('2026-09-16')
+
+// Area slugs for local SEO pages
+const AREA_SLUGS = [
+  'south-london',
+  'sydenham',
+  'lewisham',
+  'bromley',
+  'greenwich',
+  'croydon',
+  'surrey',
+  'kent',
+] as const
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = CONTENT_LAST_UPDATED
@@ -73,6 +85,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
+    // Area pages for local SEO
+    {
+      url: `${BASE_URL}/areas`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    ...AREA_SLUGS.map((slug) => ({
+      url: `${BASE_URL}/areas/${slug}`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     {
       url: `${BASE_URL}/installation`,
       lastModified: now,
