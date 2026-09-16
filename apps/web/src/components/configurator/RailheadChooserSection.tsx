@@ -40,6 +40,10 @@ export function RailheadModelPicker({
 
   const variants = listRailheadVariantsForOption('top_railheads', config)
   const selectedSlug = selected?.variant
+  const orderedVariants =
+    layout === 'strip' && selectedSlug
+      ? [...variants].sort((a, b) => Number(b.slug === selectedSlug) - Number(a.slug === selectedSlug))
+      : variants
 
   const selectVariant = (slug: string) => {
     const quantity = Math.max(1, getExpectedTopRailheadCount(config.widthMm))
@@ -69,7 +73,7 @@ export function RailheadModelPicker({
         </div>
       )}
 
-      {enabled && variants.length > 0 ? (
+      {enabled && orderedVariants.length > 0 ? (
         <div
           className={
             layout === 'strip'
@@ -79,7 +83,7 @@ export function RailheadModelPicker({
           role="radiogroup"
           aria-label="Railhead style"
         >
-          {variants.map((variant) => {
+          {orderedVariants.map((variant) => {
             const publicPath = railheadPhotoPath(variant.slug)
             const isSelected = selectedSlug === variant.slug
             const price =
