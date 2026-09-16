@@ -72,7 +72,7 @@ export default function AboutPage() {
 
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <Image
-          src="/images/backgrounds/steel-industrial.jpg"
+          src="/images/backgrounds/uk-coverage.jpg"
           alt=""
           fill
           sizes="100vw"
