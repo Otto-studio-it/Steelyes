@@ -43,10 +43,10 @@ const START_LINKS = [
 ] as const
 
 const RESOURCE_LINKS = [
+  { label: 'Customer Reviews', href: '/reviews' },
+  { label: 'Case Studies', href: '/case-study' },
   { label: 'Blog & Guides', href: '/blog' },
   { label: 'Gate Costs Guide', href: '/blog/steel-gate-costs-london-2026' },
-  { label: 'Swing vs Sliding', href: '/blog/swing-vs-sliding-gates' },
-  { label: 'Planning Permission', href: '/blog/planning-permission-driveway-gates' },
 ] as const
 
 const LEGAL_LINKS = [

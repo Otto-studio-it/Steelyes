@@ -5,8 +5,32 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
+import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
 import { GATE_DATA, GATE_SLUGS } from './gate-marketing-data'
 import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
+
+const GATES_FAQ: FAQItem[] = [
+  {
+    question: 'What is the difference between swing and sliding gates?',
+    answer: 'Swing gates open inward or outward like a door, requiring clear space for the arc. Sliding gates move horizontally along a track or cantilever system, ideal when you have limited space in front of the opening but room along the boundary.',
+  },
+  {
+    question: 'Can any gate type be automated?',
+    answer: 'Yes, all our gate types can be automated. The motor system varies by mechanism — swing gates use ram-arm or underground motors, while sliding gates use rack-and-pinion systems. We specify the right motor during survey based on gate weight and usage.',
+  },
+  {
+    question: 'How do I know which gate type suits my driveway?',
+    answer: 'The main factors are: available swing space, side run for sliding, ground slope, and parking position. Our configurator helps you visualise options, but the site survey confirms what will actually work for your entrance.',
+  },
+  {
+    question: 'What is a cantilever gate?',
+    answer: 'A cantilever gate slides without a ground track in the opening. It hangs from a counterbalanced frame and needs approximately 1.5x the opening width for the side run. Ideal for sloped or uneven ground, or where you want to avoid cutting a track into the driveway.',
+  },
+  {
+    question: 'How long does a gate project take?',
+    answer: 'From survey to installation, typical projects take 4-8 weeks depending on complexity and current workload. We confirm lead times in your quotation after the site survey.',
+  },
+]
 
 export const metadata: Metadata = {
   title: 'Bespoke Steel Gates London | Driveway, Electric & Automatic Gates',
@@ -189,6 +213,18 @@ export default function GatesPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="border-t border-zinc-200 bg-canvas py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <FAQSection
+            subtitle="Common questions"
+            title="Gate mechanisms explained"
+            items={GATES_FAQ}
+          />
+        </div>
+      </section>
+
+      <FAQSchemaScript items={GATES_FAQ} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { SocialLinks } from '@/components/marketing/SocialLinks'
+import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
@@ -11,6 +12,29 @@ import { GATE_DATA, resolveGateSlug } from '@/app/(marketing)/gates/gate-marketi
 import { breadcrumbSchema } from '@/lib/marketing/schema'
 
 import { ContactForm } from './ContactForm'
+
+const CONTACT_FAQ: FAQItem[] = [
+  {
+    question: 'How much does a site survey cost?',
+    answer: 'Most residential surveys within London and the South East are free. For larger or complex projects, or locations further afield, there may be a survey fee which is confirmed before booking. Any fee is credited against the final order.',
+  },
+  {
+    question: 'How quickly can you provide a quote?',
+    answer: 'We respond to enquiries within 1 business day with initial guidance. A formal written quotation is provided after the site survey, typically within 3-5 working days of the survey visit.',
+  },
+  {
+    question: 'What information do you need to provide a quote?',
+    answer: 'Helpful information includes: approximate opening width, gate type preference (swing/sliding), whether automation is wanted, any photos of the entrance, and your postcode. The more detail you provide, the more accurate our initial guidance will be.',
+  },
+  {
+    question: 'Do you offer finance or payment plans?',
+    answer: 'We require a deposit on order (typically 50%) with the balance due before installation. We don\'t currently offer formal finance, but can discuss staged payments for larger projects.',
+  },
+  {
+    question: 'What areas do you cover?',
+    answer: 'We cover London, Surrey, Kent, and the wider South East for full supply and installation. For supply-only orders, we deliver nationwide. Coverage and any travel fees are confirmed when you get in touch.',
+  },
+]
 
 export const metadata: Metadata = {
   title: 'Request a Steel Gate Quote London | Contact Steelyes',
@@ -101,6 +125,18 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="border-t border-zinc-200 bg-canvas py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <FAQSection
+            subtitle="Before you get in touch"
+            title="Quote process questions"
+            items={CONTACT_FAQ}
+          />
+        </div>
+      </section>
+
+      <FAQSchemaScript items={CONTACT_FAQ} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

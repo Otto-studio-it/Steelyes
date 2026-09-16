@@ -3,8 +3,32 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema, itemListSchema } from '@/lib/marketing/schema'
+
+const SERVICES_FAQ: FAQItem[] = [
+  {
+    question: 'Do you only make gates?',
+    answer: 'No, we fabricate a range of steel and metalwork including railings, balustrades, balconies, staircases, structural steel, and security grilles. Many projects combine gates with matching railings or other steelwork.',
+  },
+  {
+    question: 'Can you match existing metalwork?',
+    answer: 'Yes, we can fabricate new pieces to match existing gates, railings, or architectural details. We take samples or detailed measurements during survey to ensure consistency in style and finish.',
+  },
+  {
+    question: 'Do you work on commercial projects?',
+    answer: 'Yes, we work with commercial clients, developers, and contractors on projects ranging from office security gates to multi-unit residential railings. Commercial projects follow the same survey-led specification process.',
+  },
+  {
+    question: 'What finishes do you offer?',
+    answer: 'Standard finishes include powder coating in any RAL colour, with black and anthracite grey being most popular. We also offer galvanising for maximum durability, particularly for coastal or exposed locations.',
+  },
+  {
+    question: 'Do you provide structural calculations?',
+    answer: 'For structural steelwork like balconies and staircases, we work with structural engineers where calculations are required. This is confirmed during specification based on your project requirements and building control needs.',
+  },
+]
 
 export const metadata: Metadata = {
   title: 'Steel Fabrication Services London | Gates, Railings, Balconies & Security',
@@ -128,6 +152,17 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="border-t border-zinc-200 bg-canvas py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <FAQSection
+            subtitle="Service questions"
+            title="Fabrication & finishes"
+            items={SERVICES_FAQ}
+          />
+        </div>
+      </section>
+
       <section className="relative overflow-hidden bg-steel py-16 text-white md:py-20">
         <div className="relative mx-auto max-w-7xl px-4 md:px-8">
           <h2 className="max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] md:text-6xl">
@@ -148,6 +183,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <FAQSchemaScript items={SERVICES_FAQ} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
