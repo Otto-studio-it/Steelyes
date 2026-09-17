@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
+import { ConfiguratorLoadingScreen } from '@/components/configurator/ConfiguratorLoadingScreen'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { breadcrumbSchema } from '@/lib/marketing/schema'
@@ -16,13 +17,21 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function ConfiguratorPage() {
+async function ConfiguratorWithCatalog() {
   const pricingCatalog = await fetchPricingCatalog()
 
   return (
+    <Suspense fallback={<ConfiguratorLoadingScreen />}>
+      <ConfiguratorClient pricingCatalog={pricingCatalog} />
+    </Suspense>
+  )
+}
+
+export default function ConfiguratorPage() {
+  return (
     <MarketingShell pathname="/configurator">
-      <Suspense fallback={<div className="mx-auto max-w-7xl px-4 py-12"><div className="h-40 animate-pulse rounded-[24px] border border-steel/10 bg-white/70" aria-hidden /></div>}>
-        <ConfiguratorClient pricingCatalog={pricingCatalog} />
+      <Suspense fallback={<ConfiguratorLoadingScreen />}>
+        <ConfiguratorWithCatalog />
       </Suspense>
 
       <script

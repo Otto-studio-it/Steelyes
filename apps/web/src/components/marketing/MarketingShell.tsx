@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { ConfiguratorOpeningOverlay } from '@/components/marketing/ConfiguratorOpeningOverlay'
 import { MarketingFloatingChrome } from '@/components/marketing/MarketingFloatingChrome'
 import { ScrollProgress } from '@/components/marketing/ScrollProgress'
 import { SiteFooter } from '@/components/marketing/SiteFooter'
@@ -26,6 +27,7 @@ export function MarketingShell({ pathname, children }: MarketingShellProps) {
         </div>
       </section>
       <SiteFooter />
+      <ConfiguratorOpeningOverlay />
       <MarketingFloatingChrome enableQuoteBar={!pathname.startsWith('/configurator')} />
     </div>
   )

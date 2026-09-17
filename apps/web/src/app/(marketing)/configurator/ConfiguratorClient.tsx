@@ -13,6 +13,7 @@ import {
 } from '@steelyes/gate-engine'
 
 import { loadGateConfigurationByShareToken } from '@/app/(marketing)/configurator/actions'
+import { ConfiguratorLoadingScreen } from '@/components/configurator/ConfiguratorLoadingScreen'
 import { TenantBrandingProvider } from '@/components/platform/TenantBrandingProvider'
 import { ConfiguratorShell } from '@/components/configurator/ConfiguratorShell'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
@@ -89,12 +90,7 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
   }, [hydrated, searchParams, setConfig])
 
   if (!hydrated) {
-    return (
-      <div className={`mx-auto max-w-7xl px-4 py-12 sm:px-6 ${embed ? 'py-6' : ''}`}>
-        <div className="h-40 animate-pulse rounded-[24px] border border-steel/10 bg-white/70" aria-hidden />
-        <p className="sr-only">Loading configurator…</p>
-      </div>
-    )
+    return <ConfiguratorLoadingScreen />
   }
 
   const shell = <ConfiguratorShell embed={embed} tenant={tenant} />

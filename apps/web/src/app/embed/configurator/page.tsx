@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
+import { ConfiguratorLoadingScreen } from '@/components/configurator/ConfiguratorLoadingScreen'
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { loadTenantBundle, resolveTenantId } from '@/lib/platform/load-tenant'
 
@@ -13,25 +14,27 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
-export default async function EmbedConfiguratorPage({
+async function EmbedConfiguratorWithCatalog({ tenantQuery }: { tenantQuery?: string }) {
+  const pricingCatalog = await fetchPricingCatalog()
+  const tenantId = resolveTenantId(tenantQuery)
+  const tenant = loadTenantBundle(tenantId)
+
+  return (
+    <Suspense fallback={<ConfiguratorLoadingScreen />}>
+      <ConfiguratorClient pricingCatalog={pricingCatalog} embed tenant={tenant ?? undefined} />
+    </Suspense>
+  )
+}
+
+export default function EmbedConfiguratorPage({
   searchParams,
 }: {
   searchParams?: { tenant?: string }
 }) {
-  const pricingCatalog = await fetchPricingCatalog()
-  const tenantId = resolveTenantId(searchParams?.tenant)
-  const tenant = loadTenantBundle(tenantId)
-
   return (
     <main className="min-h-screen bg-canvas">
-      <Suspense
-        fallback={
-          <div className="mx-auto max-w-7xl px-4 py-12">
-            <div className="h-40 animate-pulse rounded-[24px] border border-steel/10 bg-white/70" aria-hidden />
-          </div>
-        }
-      >
-        <ConfiguratorClient pricingCatalog={pricingCatalog} embed tenant={tenant ?? undefined} />
+      <Suspense fallback={<ConfiguratorLoadingScreen />}>
+        <EmbedConfiguratorWithCatalog tenantQuery={searchParams?.tenant} />
       </Suspense>
     </main>
   )

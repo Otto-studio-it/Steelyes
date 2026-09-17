@@ -45,4 +45,20 @@ test.describe('header Configurator navigation', () => {
     await page.locator('#mobile-navigation').getByRole('link', { name: 'Configure a gate', exact: true }).click()
     await expectConfiguratorOpened(page)
   })
+
+  test('mobile Configurator click shows a loading indicator while the page opens', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await skipCookieBanner(page)
+    await page.goto('/')
+
+    await page.route((url) => url.pathname === '/configurator', async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      await route.continue()
+    })
+
+    await page.getByRole('button', { name: 'Open navigation menu' }).click()
+    await page.locator('#mobile-navigation').getByRole('link', { name: 'Configure a gate', exact: true }).click()
+    await expect(page.getByTestId('configurator-loading')).toBeVisible()
+    await expectConfiguratorOpened(page)
+  })
 })

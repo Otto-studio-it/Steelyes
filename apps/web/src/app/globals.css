@@ -118,6 +118,34 @@
   opacity: 0.9;
 }
 
+@keyframes cfg-loading-bar {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(380%);
+  }
+}
+
+@keyframes cfg-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cfg-loading-bar {
+  animation: cfg-loading-bar 1.15s ease-in-out infinite;
+}
+
+.cfg-loading-ring {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 3px solid rgb(var(--color-steel-rgb) / 0.12);
+  border-top-color: rgb(var(--color-primary-rgb) / 1);
+  animation: cfg-loading-spin 0.8s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cfg-sheet-content[data-state='open'],
   .cfg-sheet-overlay[data-state='open'] {
@@ -137,6 +165,16 @@
   .tap-feedback:active {
     transform: none;
     transition: none;
+  }
+
+  .cfg-loading-bar,
+  .cfg-loading-ring {
+    animation: none;
+  }
+
+  .cfg-loading-bar {
+    width: 100%;
+    transform: none;
   }
 
 }
