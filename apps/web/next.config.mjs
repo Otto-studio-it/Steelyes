@@ -11,6 +11,18 @@ const nextConfig = {
   },
   transpilePackages: ['@steelyes/gate-engine'],
   poweredByHeader: false,
+  // Externalize packages with native binaries to prevent webpack bundling
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = config.externals || []
+      // Prevent webpack from bundling native .node binaries
+      config.externals.push({
+        '@resvg/resvg-js': 'commonjs @resvg/resvg-js',
+        sharp: 'commonjs sharp',
+      })
+    }
+    return config
+  },
   async redirects() {
     return [
       // Canonicalize non-www -> www (sitemap/robots.txt declare www as canonical).

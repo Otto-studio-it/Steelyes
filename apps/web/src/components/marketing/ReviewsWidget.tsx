@@ -93,7 +93,7 @@ export function ReviewsWidget({
           >
             <StarRating rating={review.rating} />
             <p className={`mt-3 line-clamp-3 text-sm font-light leading-relaxed ${isDark ? 'text-white/80' : 'text-muted-deep'}`}>
-              "{review.text}"
+              &ldquo;{review.text}&rdquo;
             </p>
             <div className="mt-4 border-t border-zinc-100/20 pt-3">
               <p className={`font-heading text-sm font-bold ${isDark ? 'text-white' : 'text-steel'}`}>

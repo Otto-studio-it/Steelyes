@@ -211,7 +211,7 @@ export default function ReviewsPage() {
                 Share your experience
               </h2>
               <p className="mt-3 text-sm font-light text-muted-deep">
-                If you're a Steelyes customer, we'd love to hear about your project. 
+                If you&apos;re a Steelyes customer, we&apos;d love to hear about your project. 
                 Leave a review on Google to help others find quality gate fabrication.
               </p>
               <a
