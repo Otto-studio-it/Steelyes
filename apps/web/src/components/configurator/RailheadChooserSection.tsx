@@ -3,6 +3,7 @@
 import {
   getExpectedTopRailheadCount,
   listRailheadVariantsForOption,
+  railheadProductDescription,
 } from '@steelyes/gate-engine'
 
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
@@ -67,8 +68,8 @@ export function RailheadModelPicker({
             Railhead model
           </h3>
           <p className="mt-1 text-sm leading-6 text-muted-deep">
-            Pick the SKU. The photo appears beside the Design drawing so you can see the cap.
-            Count stays automatic. Not drawn onto the pickets.
+            Product photos of the railhead only — not a screenshot of the gate. Size and notes come from
+            the client catalogue. Count stays automatic. Not drawn onto the pickets.
           </p>
         </div>
       )}
@@ -86,6 +87,7 @@ export function RailheadModelPicker({
           {orderedVariants.map((variant) => {
             const publicPath = railheadPhotoPath(variant.slug)
             const isSelected = selectedSlug === variant.slug
+            const copy = railheadProductDescription(variant.slug)
             const price =
               typeof variant.unitPriceGbp === 'number' && variant.unitPriceGbp > 0
                 ? `£${variant.unitPriceGbp.toFixed(2)}`
@@ -109,7 +111,7 @@ export function RailheadModelPicker({
                 {/* eslint-disable-next-line @next/next/no-img-element -- static public railhead photo */}
                 <img
                   src={publicPath}
-                  alt=""
+                  alt={copy.detail}
                   className={cn(
                     'w-full object-contain object-bottom',
                     layout === 'strip' ? 'h-20' : 'h-16',
@@ -118,6 +120,9 @@ export function RailheadModelPicker({
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-steel">
                   {variant.slug}
                 </span>
+                {copy.sizeLabel ? (
+                  <span className="text-[11px] leading-4 text-muted-deep">{copy.sizeLabel}</span>
+                ) : null}
                 {price ? (
                   <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
                     {price} ex VAT

@@ -19,6 +19,7 @@ import { ConfiguratorShell } from '@/components/configurator/ConfiguratorShell'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
 import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
 import { isValidShareToken } from '@/lib/configurator/share-token'
+import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
 function parseGateTypeParam(value: string | null): GateType | null {
@@ -38,6 +39,7 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
   const searchParams = useSearchParams()
   const hydrate = useConfiguratorStore((state) => state.hydrate)
   const hydrated = useConfiguratorStore((state) => state.hydrated)
+  const viewport = useConfiguratorViewport()
   const setPricingCatalog = useConfiguratorStore((state) => state.setPricingCatalog)
   const setConfig = useConfiguratorStore((state) => state.setConfig)
 
@@ -89,7 +91,7 @@ export function ConfiguratorClient({ pricingCatalog, embed = false, tenant }: Co
     captureConfiguratorEvent('configuration loaded from gate query', { gate_type: gateType })
   }, [hydrated, searchParams, setConfig])
 
-  if (!hydrated) {
+  if (!hydrated || !viewport.ready) {
     return <ConfiguratorLoadingScreen />
   }
 

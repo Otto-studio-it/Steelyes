@@ -28,41 +28,53 @@ export type SaveGateConfigurationResult =
 export async function saveGateConfiguration(
   serializedConfig: string,
 ): Promise<SaveGateConfigurationResult> {
-  let config: GateConfig
-
   try {
-    config = deserializeGateConfig(serializedConfig)
-  } catch {
-    return { ok: false, error: 'Invalid configuration payload.' }
-  }
+    let config: GateConfig
 
-  const validation = validateGateConfig(config)
-  if (!validation.ok) {
-    return { ok: false, error: 'Configuration failed validation.' }
-  }
+    try {
+      config = deserializeGateConfig(serializedConfig)
+    } catch {
+      return { ok: false, error: 'Invalid configuration payload.' }
+    }
 
-  const supabase = getServiceRoleClient()
-  const shareToken = createShareToken()
+    const validation = validateGateConfig(config)
+    if (!validation.ok) {
+      const firstIssue = validation.issues[0]
+      return { ok: false, error: firstIssue?.message ?? 'Configuration failed validation.' }
+    }
 
-  const { data, error } = await supabase
-    .from('configurations')
-    .insert({
-      share_token: shareToken,
-      gate_type: mapGateTypeToDb(config.gateType),
-      parameters: configurationPayloadFromConfig(config),
-    })
-    .select('id, share_token')
-    .single()
+    const supabase = getServiceRoleClient()
+    let lastError: unknown = null
 
-  if (error || !data) {
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const shareToken = createShareToken()
+      const { data, error } = await supabase
+        .from('configurations')
+        .insert({
+          share_token: shareToken,
+          gate_type: mapGateTypeToDb(config.gateType),
+          parameters: configurationPayloadFromConfig(config),
+        })
+        .select('id, share_token')
+        .single()
+
+      if (!error && data) {
+        return {
+          ok: true,
+          shareToken: data.share_token,
+          configurationId: data.id,
+        }
+      }
+
+      lastError = error
+      console.error(`Configuration save error (attempt ${attempt + 1}):`, error)
+    }
+
+    console.error('Configuration save failed after retry:', lastError)
+    return { ok: false, error: 'Could not save configuration. Please try again.' }
+  } catch (error) {
     console.error('Configuration save error:', error)
     return { ok: false, error: 'Could not save configuration. Please try again.' }
-  }
-
-  return {
-    ok: true,
-    shareToken: data.share_token,
-    configurationId: data.id,
   }
 }
 

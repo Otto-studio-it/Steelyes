@@ -1,6 +1,6 @@
 {
-  "updated": "2026-08-12",
-  "policy": "Cropped from dciron screenshots; white opaque bg (Q5). Design does not draw these (CA-17).",
+  "updated": "2026-09-19",
+  "policy": "SKU product photos only (cropped, white opaque bg). No OS/configurator screenshots. Design does not draw these (CA-17). Canonical index: docs/frontend/foto-intake/railheads-only/. RH15WO uses RH15W.webp (client code RH15W/O).",
   "count": 61,
   "entries": [
     {

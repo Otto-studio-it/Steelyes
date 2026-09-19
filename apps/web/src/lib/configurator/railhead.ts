@@ -1,3 +1,5 @@
+import { railheadPhotoFileSlug } from '@steelyes/gate-engine'
+
 export function selectedRailheadSlug(
   options: Array<{ key: string; enabled: boolean; variant?: string }>,
 ): string | null {
@@ -7,5 +9,5 @@ export function selectedRailheadSlug(
 }
 
 export function railheadPhotoPath(slug: string): string {
-  return `/2d-masters/railheads/photos/${slug}.webp`
+  return `/2d-masters/railheads/photos/${railheadPhotoFileSlug(slug)}.webp`
 }

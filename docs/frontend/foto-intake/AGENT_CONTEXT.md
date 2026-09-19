@@ -8,6 +8,7 @@ Photo dump totals: {'files': 571, 'photos': 516, 'screenshots': 28, 'models': 14
 ## Railheads (Numbers CSV → catalog)
 - SKUs: 61 · priced EX VAT: 54 · range £0.20–£3.50
 - Files: `docs/frontend/foto-intake/railheads-catalog.json`
+- Product photos only (no screenshots): `docs/frontend/foto-intake/railheads-only/`
 - Status: provisional — wire engine catalog as provisional; totals still need count rule
 
 ## Locked rules

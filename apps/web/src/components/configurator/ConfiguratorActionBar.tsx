@@ -27,6 +27,7 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
   const nextAct = useConfiguratorStore((state) => state.nextAct)
   const prevAct = useConfiguratorStore((state) => state.prevAct)
   const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
+  const quoteSubmitting = useConfiguratorStore((state) => state.quoteSubmitting)
   const actValidationIssues = useConfiguratorActValidationIssues()
   const summaryValidationIssues = useConfiguratorValidationIssues()
   const validationIssues = act.id === 'summary' ? summaryValidationIssues : actValidationIssues
@@ -105,7 +106,7 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
         <button
           type="submit"
           form={CONFIGURATOR_QUOTE_FORM_ID}
-          disabled={quoteSubmitted}
+          disabled={quoteSubmitted || quoteSubmitting}
           className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 bg-primary px-5 font-heading text-sm font-bold uppercase tracking-tight text-white transition hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60 sm:flex-none"
         >
           {quoteSubmitted ? (
@@ -113,6 +114,8 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
               <Check className="h-4 w-4" aria-hidden />
               Request sent
             </>
+          ) : quoteSubmitting ? (
+            'Sending…'
           ) : (
             <>
               Request quote

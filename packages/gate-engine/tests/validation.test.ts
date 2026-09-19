@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   GATE_DIMENSION_LIMITS,
   GLOBAL_DIMENSION_LIMITS,
+  GATE_OPTION_KEYS,
   createGateConfig,
   createGatePreset,
   getDimensionLimits,
@@ -24,7 +25,7 @@ describe('gate-engine validation', () => {
     expect(config.heightMm).toBe(1000)
     expect(config.finish).toBe('black_satin')
     expect(config.fencePanels.quantity).toBe(0)
-    expect(config.options).toHaveLength(9)
+    expect(config.options).toHaveLength(GATE_OPTION_KEYS.length)
   })
 
   it('accepts a valid preset-based config', () => {

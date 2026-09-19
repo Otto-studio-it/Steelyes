@@ -4,8 +4,9 @@ import { LoaderCircle, MessageCircle, PhoneCall } from 'lucide-react'
 import { useState } from 'react'
 
 import { submitConfiguratorQuote, type ContactFormState } from '@/app/actions'
-import { TurnstileWidget } from '@/components/security/TurnstileWidget'
+import { useConfiguratorLeadSecurity } from '@/components/configurator/ConfiguratorLeadSecurity'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
+import { saveConfigurationUserMessage } from '@/lib/configurator/lead-pipeline'
 import { buildQuoteSharePath } from '@/lib/configurator/share-token'
 import { BUSINESS } from '@/lib/marketing/business'
 import { useConfiguratorStore } from '@/store/configuratorStore'
@@ -25,13 +26,14 @@ const LABEL_CLASS = 'block font-mono text-xs uppercase tracking-widest text-mute
 export function ConfiguratorQuoteRequestForm() {
   const ensureSavedConfiguration = useConfiguratorStore((state) => state.ensureSavedConfiguration)
   const markQuoteSubmitted = useConfiguratorStore((state) => state.markQuoteSubmitted)
+  const setQuoteSubmitting = useConfiguratorStore((state) => state.setQuoteSubmitting)
   const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
   const shareToken = useConfiguratorStore((state) => state.shareToken)
+  const { token: turnstileToken, required: turnstileRequired, reset: resetTurnstile } =
+    useConfiguratorLeadSecurity()
 
   const [state, setState] = useState<ContactFormState>({ status: 'idle' })
   const [submitting, setSubmitting] = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState('')
-  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -39,17 +41,22 @@ export function ConfiguratorQuoteRequestForm() {
 
     if (turnstileRequired && !turnstileToken) {
       setState({ status: 'error', message: 'Please complete the security check and try again.' })
+      document.getElementById('cfg-lead-turnstile')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
 
     const formData = new FormData(event.currentTarget)
     setSubmitting(true)
+    setQuoteSubmitting(true)
     setState({ status: 'idle' })
 
     try {
       const saved = await ensureSavedConfiguration()
       if (!saved?.shareToken) {
-        setState({ status: 'error', message: 'Could not save your configuration. Please try again.' })
+        setState({
+          status: 'error',
+          message: saveConfigurationUserMessage(useConfiguratorStore.getState().saveError),
+        })
         return
       }
 
@@ -60,20 +67,28 @@ export function ConfiguratorQuoteRequestForm() {
 
       const result = await submitConfiguratorQuote(formData)
       setState(result)
+      resetTurnstile()
 
       if (result.status === 'success') {
         markQuoteSubmitted()
         captureConfiguratorEvent('configurator quote submitted', { share_token: saved.shareToken })
       }
+    } catch (error) {
+      console.error('Configurator quote submit failed:', error)
+      setState({ status: 'error', message: 'Could not send your request. Please try again or email us directly.' })
+      resetTurnstile()
     } finally {
       setSubmitting(false)
+      setQuoteSubmitting(false)
     }
   }
 
   if (quoteSubmitted || state.status === 'success') {
-    const configUrl = shareToken
-      ? `${typeof window !== 'undefined' ? window.location.origin : ''}${buildQuoteSharePath(shareToken)}`
-      : ''
+    const configUrl =
+      (state.status === 'success' && state.shareUrl) ||
+      (shareToken
+        ? `${typeof window !== 'undefined' ? window.location.origin : ''}${buildQuoteSharePath(shareToken)}`
+        : '')
     const whatsAppText = encodeURIComponent(
       `Hi Steelyes, I've just requested a quote for my gate design.${configUrl ? ` ${configUrl}` : ''}`,
     )
@@ -90,6 +105,13 @@ export function ConfiguratorQuoteRequestForm() {
             ? ' We’ve emailed you a copy of your configuration.'
             : ' If the confirmation email does not arrive, your request is still safely recorded.'}
         </p>
+        {configUrl ? (
+          <p className="mt-3 break-all text-sm">
+            <a href={configUrl} className="text-primary underline-offset-2 hover:underline">
+              {configUrl}
+            </a>
+          </p>
+        ) : null}
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <a
             href={`tel:${BUSINESS.phone}`}
@@ -129,7 +151,7 @@ export function ConfiguratorQuoteRequestForm() {
       <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="sr-only" />
 
       {state.status === 'error' ? (
-        <p role="alert" className="border border-primary/25 bg-primary/5 px-4 py-3 text-sm text-primary">
+        <p role="alert" data-testid="quote-request-error" className="border border-primary/25 bg-primary/5 px-4 py-3 text-sm text-primary">
           {state.message}
         </p>
       ) : null}
@@ -168,8 +190,6 @@ export function ConfiguratorQuoteRequestForm() {
           placeholder="Access notes, timelines, questions… Custom hex is already saved on the design; add RAL name here if you have it."
         />
       </label>
-
-      {turnstileRequired ? <TurnstileWidget onToken={setTurnstileToken} /> : null}
 
       {/* Submitted by the sticky action bar via form={CONFIGURATOR_QUOTE_FORM_ID}. */}
       {submitting ? (

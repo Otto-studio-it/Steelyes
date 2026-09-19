@@ -114,7 +114,9 @@ type ConfiguratorState = {
   saveState: SaveState
   saveError: string | null
   quoteSubmitted: boolean
+  quoteSubmitting: boolean
   markQuoteSubmitted: () => void
+  setQuoteSubmitting: (value: boolean) => void
   hydrate: () => void
   setPricingCatalog: (catalog: PricingCatalog) => void
   setConfig: (config: GateConfig) => void
@@ -145,6 +147,7 @@ function invalidateShareIfConfigChanged(config: GateConfig, get: () => Configura
       saveState: 'idle',
       saveError: null,
       quoteSubmitted: false,
+      quoteSubmitting: false,
     })
     persistShareMeta(null)
   }
@@ -164,9 +167,14 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
   saveState: 'idle',
   saveError: null,
   quoteSubmitted: false,
+  quoteSubmitting: false,
 
   markQuoteSubmitted: () => {
-    set({ quoteSubmitted: true })
+    set({ quoteSubmitted: true, quoteSubmitting: false })
+  },
+
+  setQuoteSubmitting: (quoteSubmitting) => {
+    set({ quoteSubmitting })
   },
 
   hydrate: () => {
@@ -215,6 +223,7 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
       saveState: 'idle',
       saveError: null,
       quoteSubmitted: false,
+      quoteSubmitting: false,
     })
     if (get().hydrated) {
       persistConfig(config)
@@ -315,7 +324,14 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
     set({ saveState: 'saving', saveError: null })
 
-    const result = await saveGateConfiguration(stringifyGateConfig(config))
+    let result: Awaited<ReturnType<typeof saveGateConfiguration>>
+    try {
+      result = await saveGateConfiguration(stringifyGateConfig(config))
+    } catch (error) {
+      console.error('Configuration save threw:', error)
+      set({ saveState: 'error', saveError: 'Could not save configuration. Please try again.' })
+      return null
+    }
 
     if (!result.ok) {
       set({ saveState: 'error', saveError: result.error })

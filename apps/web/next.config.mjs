@@ -11,6 +11,51 @@ const nextConfig = {
   },
   transpilePackages: ['@steelyes/gate-engine'],
   poweredByHeader: false,
+  experimental: {
+    // Native ELF binaries must stay out of the Webpack graph. Coolify/nixpacks
+    // builds on main failed with "Module parse failed" on @resvg .node files.
+    serverComponentsExternalPackages: ['@resvg/resvg-js', 'sharp'],
+    outputFileTracingIncludes: {
+      '/api/**/*': [
+        './node_modules/@resvg/resvg-js/**/*',
+        './node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
+        '../../node_modules/@resvg/resvg-js/**/*',
+        '../../node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
+        './node_modules/sharp/**/*',
+        '../../node_modules/sharp/**/*',
+      ],
+    },
+  },
+  webpack: (config, { isServer }) => {
+    config.module.rules.push({
+      test: /\.node$/,
+      type: 'asset/resource',
+    })
+
+    const externals = ['@resvg/resvg-js', 'sharp']
+    const previous = config.externals
+    config.externals = [
+      ...(Array.isArray(previous) ? previous : previous ? [previous] : []),
+      ({ request }, callback) => {
+        if (
+          typeof request === 'string' &&
+          externals.some((pkg) => request === pkg || request.startsWith(`${pkg}/`))
+        ) {
+          return callback(null, `commonjs ${request}`)
+        }
+        callback()
+      },
+    ]
+
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@resvg/resvg-js': false,
+        sharp: false,
+      }
+    }
+    return config
+  },
   async redirects() {
     return [
       // Canonicalize non-www -> www (sitemap/robots.txt declare www as canonical).

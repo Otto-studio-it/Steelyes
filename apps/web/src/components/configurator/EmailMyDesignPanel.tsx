@@ -4,8 +4,9 @@ import { Check, LoaderCircle, Mail } from 'lucide-react'
 import { useState } from 'react'
 
 import { emailMyDesign, type EmailMyDesignState } from '@/app/actions'
-import { TurnstileWidget } from '@/components/security/TurnstileWidget'
+import { useConfiguratorLeadSecurity } from '@/components/configurator/ConfiguratorLeadSecurity'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
+import { saveConfigurationUserMessage } from '@/lib/configurator/lead-pipeline'
 import { useConfiguratorStore } from '@/store/configuratorStore'
 
 const FIELD_CLASS =
@@ -17,10 +18,10 @@ const FIELD_CLASS =
  */
 export function EmailMyDesignPanel() {
   const ensureSavedConfiguration = useConfiguratorStore((state) => state.ensureSavedConfiguration)
+  const { token: turnstileToken, required: turnstileRequired, reset: resetTurnstile } =
+    useConfiguratorLeadSecurity()
   const [state, setState] = useState<EmailMyDesignState>({ status: 'idle' })
   const [submitting, setSubmitting] = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState('')
-  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -29,6 +30,7 @@ export function EmailMyDesignPanel() {
     const formData = new FormData(event.currentTarget)
     if (turnstileRequired && !turnstileToken) {
       setState({ status: 'error', message: 'Please complete the security check and try again.' })
+      document.getElementById('cfg-lead-turnstile')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
     if (turnstileToken) formData.set('turnstile_token', turnstileToken)
@@ -38,21 +40,31 @@ export function EmailMyDesignPanel() {
     try {
       const saved = await ensureSavedConfiguration()
       if (!saved?.shareToken) {
-        setState({ status: 'error', message: 'Could not save your design. Please try again.' })
+        setState({
+          status: 'error',
+          message: saveConfigurationUserMessage(useConfiguratorStore.getState().saveError),
+        })
         return
       }
 
       formData.set('share_token', saved.shareToken)
       const result = await emailMyDesign(formData)
       setState(result)
+      resetTurnstile()
 
       if (result.status === 'success') {
         captureConfiguratorEvent('design emailed', { share_token: saved.shareToken })
       }
+    } catch (error) {
+      console.error('Email my design submit failed:', error)
+      setState({ status: 'error', message: 'Could not send your design. Please try again.' })
+      resetTurnstile()
     } finally {
       setSubmitting(false)
     }
   }
+
+  const shareUrl = state.status !== 'idle' ? state.shareUrl : undefined
 
   if (state.status === 'success') {
     return (
@@ -64,12 +76,19 @@ export function EmailMyDesignPanel() {
         <p className="mt-1 text-sm leading-6 text-muted-deep">
           Your saved design link is on its way. Open it any time to keep editing or request a quote.
         </p>
+        {shareUrl ? (
+          <p className="mt-2 break-all text-sm">
+            <a href={shareUrl} className="text-primary underline-offset-2 hover:underline">
+              {shareUrl}
+            </a>
+          </p>
+        ) : null}
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-steel/10 bg-paper px-4 py-4">
+    <form onSubmit={handleSubmit} className="border border-steel/10 bg-paper px-4 py-4" data-testid="email-my-design-form">
       <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
         <Mail className="h-3.5 w-3.5" aria-hidden />
         Not ready yet?
@@ -83,6 +102,14 @@ export function EmailMyDesignPanel() {
       {state.status === 'error' ? (
         <p role="alert" className="mt-3 text-sm text-primary">
           {state.message}
+        </p>
+      ) : null}
+
+      {shareUrl ? (
+        <p className="mt-2 break-all text-sm">
+          <a href={shareUrl} className="text-primary underline-offset-2 hover:underline">
+            {shareUrl}
+          </a>
         </p>
       ) : null}
 
@@ -114,7 +141,6 @@ export function EmailMyDesignPanel() {
           )}
         </button>
       </div>
-      {turnstileRequired ? <div className="mt-3"><TurnstileWidget onToken={setTurnstileToken} /></div> : null}
     </form>
   )
 }
