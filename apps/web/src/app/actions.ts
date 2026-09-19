@@ -1,6 +1,13 @@
 'use server'
 
-import type { FinishCode, GateStyle, GateType, SerializedGateConfigV1 } from '@steelyes/gate-engine'
+import type {
+  FinishCode,
+  GateConfig,
+  GateStyle,
+  GateType,
+  PricingResult,
+  SerializedGateConfigV1,
+} from '@steelyes/gate-engine'
 import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
 import { z } from 'zod'
 
@@ -24,6 +31,8 @@ import { dispatchTenantLeadWebhook } from '@/lib/platform/lead-webhook'
 import { loadTenantBundle } from '@/lib/platform/load-tenant'
 import { verifyTurnstile } from '@/lib/security/turnstile'
 import { SITE_SURVEY_FIELD_LABEL, finishLabel, gateTypeLabel, siteSurveyLabel, styleLabel } from '@/lib/configurator/labels'
+import { buildIndicativeQuotePdf, buildQuotePdfFilename } from '@/lib/configurator/quote-pdf'
+import { workshopPdfAttachment, type WorkshopPdfAttachment } from '@/lib/email/workshop-pdf-attachment'
 import { buildQuotePdfPath, buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 import { env } from '@/lib/env'
@@ -69,15 +78,38 @@ type ConfigurationContext = {
   pricingSummary: string
   shareUrl: string
   pdfUrl: string
+  pdfAttachment: WorkshopPdfAttachment | null
 }
 
-async function loadConfigurationContext(shareToken: string): Promise<ConfigurationContext> {
+async function buildWorkshopQuotePdfAttachment(input: {
+  config: GateConfig
+  pricing: PricingResult
+  shareToken: string
+  shareUrl: string
+}): Promise<WorkshopPdfAttachment | null> {
+  try {
+    const pdfBytes = await buildIndicativeQuotePdf(input)
+    return workshopPdfAttachment({
+      filename: buildQuotePdfFilename(input.shareToken),
+      bytes: pdfBytes,
+    })
+  } catch (error) {
+    console.error('Workshop quote PDF build failed:', error)
+    return null
+  }
+}
+
+async function loadConfigurationContext(
+  shareToken: string,
+  options?: { attachPdf?: boolean },
+): Promise<ConfigurationContext> {
   const empty: ConfigurationContext = {
     configurationId: null,
     configurationSummary: '',
     pricingSummary: '',
     shareUrl: shareToken && isValidShareToken(shareToken) ? absoluteSiteUrl(buildQuoteSharePath(shareToken)) : '',
     pdfUrl: shareToken && isValidShareToken(shareToken) ? absoluteSiteUrl(buildQuotePdfPath(shareToken)) : '',
+    pdfAttachment: null,
   }
 
   if (!shareToken || !isValidShareToken(shareToken)) {
@@ -107,6 +139,14 @@ async function loadConfigurationContext(shareToken: string): Promise<Configurati
       const pricing = calculateIndicativeGatePrice(config, pricingCatalog)
       context.configurationSummary = formatConfigurationSummaryText(config, pricing)
       context.pricingSummary = `${pricing.totalLabel} (${pricing.disclaimer})`
+      if (options?.attachPdf) {
+        context.pdfAttachment = await buildWorkshopQuotePdfAttachment({
+          config,
+          pricing,
+          shareToken,
+          shareUrl: context.shareUrl,
+        })
+      }
     } catch {
       const parameters = configurationRow.parameters as {
         gateType?: string
@@ -160,8 +200,8 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     const turnstileVerified = true
 
     const supabase = getServiceRoleClient()
-    const context = await loadConfigurationContext(shareToken)
-    const { configurationId, configurationSummary, pricingSummary, shareUrl, pdfUrl } = context
+    const context = await loadConfigurationContext(shareToken, { attachPdf: true })
+    const { configurationId, configurationSummary, pricingSummary, shareUrl, pdfUrl, pdfAttachment } = context
 
     if (configurationId) {
       const { firstName, lastName } = splitName(name)
@@ -210,6 +250,7 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
       pdfUrl,
       configurationSummary,
       hasConfiguration: Boolean(shareUrl),
+      pdfAttachment,
     })
 
     let customerEmailSent: boolean | undefined
