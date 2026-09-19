@@ -44,28 +44,34 @@ export async function saveGateConfiguration(
     }
 
     const supabase = getServiceRoleClient()
-    const shareToken = createShareToken()
+    let lastError: unknown = null
 
-    const { data, error } = await supabase
-      .from('configurations')
-      .insert({
-        share_token: shareToken,
-        gate_type: mapGateTypeToDb(config.gateType),
-        parameters: configurationPayloadFromConfig(config),
-      })
-      .select('id, share_token')
-      .single()
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      const shareToken = createShareToken()
+      const { data, error } = await supabase
+        .from('configurations')
+        .insert({
+          share_token: shareToken,
+          gate_type: mapGateTypeToDb(config.gateType),
+          parameters: configurationPayloadFromConfig(config),
+        })
+        .select('id, share_token')
+        .single()
 
-    if (error || !data) {
-      console.error('Configuration save error:', error)
-      return { ok: false, error: 'Could not save configuration. Please try again.' }
+      if (!error && data) {
+        return {
+          ok: true,
+          shareToken: data.share_token,
+          configurationId: data.id,
+        }
+      }
+
+      lastError = error
+      console.error(`Configuration save error (attempt ${attempt + 1}):`, error)
     }
 
-    return {
-      ok: true,
-      shareToken: data.share_token,
-      configurationId: data.id,
-    }
+    console.error('Configuration save failed after retry:', lastError)
+    return { ok: false, error: 'Could not save configuration. Please try again.' }
   } catch (error) {
     console.error('Configuration save error:', error)
     return { ok: false, error: 'Could not save configuration. Please try again.' }

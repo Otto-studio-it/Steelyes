@@ -26,6 +26,7 @@ const LABEL_CLASS = 'block font-mono text-xs uppercase tracking-widest text-mute
 export function ConfiguratorQuoteRequestForm() {
   const ensureSavedConfiguration = useConfiguratorStore((state) => state.ensureSavedConfiguration)
   const markQuoteSubmitted = useConfiguratorStore((state) => state.markQuoteSubmitted)
+  const setQuoteSubmitting = useConfiguratorStore((state) => state.setQuoteSubmitting)
   const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
   const shareToken = useConfiguratorStore((state) => state.shareToken)
   const { token: turnstileToken, required: turnstileRequired, reset: resetTurnstile } =
@@ -46,6 +47,7 @@ export function ConfiguratorQuoteRequestForm() {
 
     const formData = new FormData(event.currentTarget)
     setSubmitting(true)
+    setQuoteSubmitting(true)
     setState({ status: 'idle' })
 
     try {
@@ -77,13 +79,16 @@ export function ConfiguratorQuoteRequestForm() {
       resetTurnstile()
     } finally {
       setSubmitting(false)
+      setQuoteSubmitting(false)
     }
   }
 
   if (quoteSubmitted || state.status === 'success') {
-    const configUrl = shareToken
-      ? `${typeof window !== 'undefined' ? window.location.origin : ''}${buildQuoteSharePath(shareToken)}`
-      : ''
+    const configUrl =
+      (state.status === 'success' && state.shareUrl) ||
+      (shareToken
+        ? `${typeof window !== 'undefined' ? window.location.origin : ''}${buildQuoteSharePath(shareToken)}`
+        : '')
     const whatsAppText = encodeURIComponent(
       `Hi Steelyes, I've just requested a quote for my gate design.${configUrl ? ` ${configUrl}` : ''}`,
     )
@@ -100,6 +105,13 @@ export function ConfiguratorQuoteRequestForm() {
             ? ' We’ve emailed you a copy of your configuration.'
             : ' If the confirmation email does not arrive, your request is still safely recorded.'}
         </p>
+        {configUrl ? (
+          <p className="mt-3 break-all text-sm">
+            <a href={configUrl} className="text-primary underline-offset-2 hover:underline">
+              {configUrl}
+            </a>
+          </p>
+        ) : null}
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <a
             href={`tel:${BUSINESS.phone}`}

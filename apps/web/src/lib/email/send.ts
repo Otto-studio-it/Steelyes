@@ -90,24 +90,40 @@ async function sendEmail(options: {
     )
     if (error) {
       console.error(`Resend error (${options.subject}):`, error)
-      if (delivery && supabase) {
-        await supabase.from('email_deliveries').update({ status: 'failed', error_message: error.message }).eq('id', delivery.id)
-      }
+      await markEmailDelivery(supabase, delivery?.id, {
+        status: 'failed',
+        error_message: error.message,
+      })
       return false
     }
-    if (delivery && supabase) {
-      await supabase.from('email_deliveries').update({ status: 'sent', resend_email_id: data?.id ?? null }).eq('id', delivery.id)
-    }
+    await markEmailDelivery(supabase, delivery?.id, {
+      status: 'sent',
+      resend_email_id: data?.id ?? null,
+    })
     return true
   } catch (err) {
     console.error(`Resend threw (${options.subject}):`, err)
-    if (delivery && supabase) {
-      await supabase.from('email_deliveries').update({
-        status: 'failed',
-        error_message: err instanceof Error ? err.message : 'Unknown provider error',
-      }).eq('id', delivery.id)
-    }
+    await markEmailDelivery(supabase, delivery?.id, {
+      status: 'failed',
+      error_message: err instanceof Error ? err.message : 'Unknown provider error',
+    })
     return false
+  }
+}
+
+async function markEmailDelivery(
+  supabase: ReturnType<typeof getServiceRoleClient> | null,
+  deliveryId: string | undefined,
+  patch: { status: string; error_message?: string; resend_email_id?: string | null },
+): Promise<void> {
+  if (!supabase || !deliveryId) return
+  try {
+    const { error } = await supabase.from('email_deliveries').update(patch).eq('id', deliveryId)
+    if (error) {
+      console.error('email_deliveries update failed:', error)
+    }
+  } catch (err) {
+    console.error('email_deliveries update threw:', err)
   }
 }
 
