@@ -1,6 +1,6 @@
 {
   "updated": "2026-09-19",
-  "policy": "SKU product photos only (cropped, white opaque bg). No OS/configurator screenshots. Design does not draw these (CA-17). Canonical index: docs/frontend/foto-intake/railheads-only/. RH15WO uses RH15W.webp (client code RH15W/O).",
+  "policy": "SKU product photos only (cropped, white opaque bg). No OS/configurator screenshots. Design does not draw these (CA-17). Canonical index: docs/frontend/foto-intake/railheads-only/. RH15WO uses RH15W.webp (client code RH15W/O) \u00b7 cleaned by scripts/clean-railhead-photos.py (metal only, white cover).",
   "count": 61,
   "entries": [
     {
