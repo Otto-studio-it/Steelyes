@@ -10,6 +10,7 @@ export default defineConfig({
       'src/lib/configurator/quote-pdf.test.ts',
       'src/lib/configurator/colour-fit.test.ts',
       'src/lib/configurator/lead-pipeline.test.ts',
+      'src/lib/security/**/*.test.ts',
       'src/lib/email/**/*.test.ts',
     ],
     exclude: ['**/node_modules/**', '**/._*'],
