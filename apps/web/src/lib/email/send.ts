@@ -54,16 +54,29 @@ async function sendEmail(options: {
   replyTo?: string
   idempotencyKey?: string
 }): Promise<boolean> {
-  const supabase = getServiceRoleClient()
+  const apiKey = env.RESEND_API_KEY
+  if (!apiKey) {
+    console.error(`Resend skipped (${options.subject}): RESEND_API_KEY is not configured`)
+    return false
+  }
+
   const subject = options.subject.replace(/[\r\n]+/g, ' ').slice(0, 200)
-  const { data: delivery } = await supabase
-    .from('email_deliveries')
-    .insert({ kind: options.kind, recipient: options.to.toLowerCase(), subject })
-    .select('id')
-    .maybeSingle()
+  let supabase: ReturnType<typeof getServiceRoleClient> | null = null
+  let delivery: { id: string } | null = null
+  try {
+    supabase = getServiceRoleClient()
+    const { data } = await supabase
+      .from('email_deliveries')
+      .insert({ kind: options.kind, recipient: options.to.toLowerCase(), subject })
+      .select('id')
+      .maybeSingle()
+    delivery = data
+  } catch (err) {
+    console.error('email_deliveries insert failed:', err)
+  }
 
   try {
-    const resend = new Resend(env.RESEND_API_KEY)
+    const resend = new Resend(apiKey)
     const emailOptions = {
       to: options.to,
       subject,
@@ -77,18 +90,18 @@ async function sendEmail(options: {
     )
     if (error) {
       console.error(`Resend error (${options.subject}):`, error)
-      if (delivery) {
+      if (delivery && supabase) {
         await supabase.from('email_deliveries').update({ status: 'failed', error_message: error.message }).eq('id', delivery.id)
       }
       return false
     }
-    if (delivery) {
+    if (delivery && supabase) {
       await supabase.from('email_deliveries').update({ status: 'sent', resend_email_id: data?.id ?? null }).eq('id', delivery.id)
     }
     return true
   } catch (err) {
     console.error(`Resend threw (${options.subject}):`, err)
-    if (delivery) {
+    if (delivery && supabase) {
       await supabase.from('email_deliveries').update({
         status: 'failed',
         error_message: err instanceof Error ? err.message : 'Unknown provider error',

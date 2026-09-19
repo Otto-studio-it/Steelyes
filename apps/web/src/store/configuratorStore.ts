@@ -315,7 +315,14 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
 
     set({ saveState: 'saving', saveError: null })
 
-    const result = await saveGateConfiguration(stringifyGateConfig(config))
+    let result: Awaited<ReturnType<typeof saveGateConfiguration>>
+    try {
+      result = await saveGateConfiguration(stringifyGateConfig(config))
+    } catch (error) {
+      console.error('Configuration save threw:', error)
+      set({ saveState: 'error', saveError: 'Could not save configuration. Please try again.' })
+      return null
+    }
 
     if (!result.ok) {
       set({ saveState: 'error', saveError: result.error })

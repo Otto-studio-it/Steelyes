@@ -1,0 +1,323 @@
+{
+  "updated": "2026-09-19",
+  "purpose": "Railhead product photos only. Screenshots excluded.",
+  "photo_root": "apps/web/public/2d-masters/railheads/photos",
+  "count": 61,
+  "excluded": [
+    {
+      "file": "RH15WO.webp",
+      "reason": "duplicate leftover of RH15W, not a catalog SKU"
+    },
+    {
+      "file": "Screenshot *",
+      "reason": "configurator/OS screenshots never go in this set"
+    }
+  ],
+  "entries": [
+    {
+      "code": "RH1",
+      "file": "RH1.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH1.webp"
+    },
+    {
+      "code": "RH10",
+      "file": "RH10.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH10.webp"
+    },
+    {
+      "code": "RH100",
+      "file": "RH100.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH100.webp"
+    },
+    {
+      "code": "RH102A",
+      "file": "RH102A.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH102A.webp"
+    },
+    {
+      "code": "RH108",
+      "file": "RH108.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH108.webp"
+    },
+    {
+      "code": "RH109",
+      "file": "RH109.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH109.webp"
+    },
+    {
+      "code": "RH110",
+      "file": "RH110.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH110.webp"
+    },
+    {
+      "code": "RH111",
+      "file": "RH111.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH111.webp"
+    },
+    {
+      "code": "RH112",
+      "file": "RH112.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH112.webp"
+    },
+    {
+      "code": "RH113",
+      "file": "RH113.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH113.webp"
+    },
+    {
+      "code": "RH114",
+      "file": "RH114.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH114.webp"
+    },
+    {
+      "code": "RH122",
+      "file": "RH122.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH122.webp"
+    },
+    {
+      "code": "RH124",
+      "file": "RH124.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH124.webp"
+    },
+    {
+      "code": "RH125",
+      "file": "RH125.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH125.webp"
+    },
+    {
+      "code": "RH126",
+      "file": "RH126.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH126.webp"
+    },
+    {
+      "code": "RH128",
+      "file": "RH128.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH128.webp"
+    },
+    {
+      "code": "RH13",
+      "file": "RH13.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH13.webp"
+    },
+    {
+      "code": "RH130",
+      "file": "RH130.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH130.webp"
+    },
+    {
+      "code": "RH14",
+      "file": "RH14.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH14.webp"
+    },
+    {
+      "code": "RH149",
+      "file": "RH149.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH149.webp"
+    },
+    {
+      "code": "RH151",
+      "file": "RH151.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH151.webp"
+    },
+    {
+      "code": "RH157",
+      "file": "RH157.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH157.webp"
+    },
+    {
+      "code": "RH159",
+      "file": "RH159.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH159.webp"
+    },
+    {
+      "code": "RH15W",
+      "file": "RH15W.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH15W.webp"
+    },
+    {
+      "code": "RH16",
+      "file": "RH16.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH16.webp"
+    },
+    {
+      "code": "RH160",
+      "file": "RH160.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH160.webp"
+    },
+    {
+      "code": "RH17",
+      "file": "RH17.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH17.webp"
+    },
+    {
+      "code": "RH18",
+      "file": "RH18.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH18.webp"
+    },
+    {
+      "code": "RH19",
+      "file": "RH19.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH19.webp"
+    },
+    {
+      "code": "RH2",
+      "file": "RH2.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH2.webp"
+    },
+    {
+      "code": "RH27",
+      "file": "RH27.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH27.webp"
+    },
+    {
+      "code": "RH32",
+      "file": "RH32.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH32.webp"
+    },
+    {
+      "code": "RH36",
+      "file": "RH36.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH36.webp"
+    },
+    {
+      "code": "RH37",
+      "file": "RH37.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH37.webp"
+    },
+    {
+      "code": "RH38",
+      "file": "RH38.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH38.webp"
+    },
+    {
+      "code": "RH39",
+      "file": "RH39.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH39.webp"
+    },
+    {
+      "code": "RH3S",
+      "file": "RH3S.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH3S.webp"
+    },
+    {
+      "code": "RH41",
+      "file": "RH41.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH41.webp"
+    },
+    {
+      "code": "RH42",
+      "file": "RH42.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH42.webp"
+    },
+    {
+      "code": "RH43",
+      "file": "RH43.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH43.webp"
+    },
+    {
+      "code": "RH45",
+      "file": "RH45.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH45.webp"
+    },
+    {
+      "code": "RH47",
+      "file": "RH47.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH47.webp"
+    },
+    {
+      "code": "RH51",
+      "file": "RH51.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH51.webp"
+    },
+    {
+      "code": "RH52",
+      "file": "RH52.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH52.webp"
+    },
+    {
+      "code": "RH55",
+      "file": "RH55.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH55.webp"
+    },
+    {
+      "code": "RH56",
+      "file": "RH56.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH56.webp"
+    },
+    {
+      "code": "RH59",
+      "file": "RH59.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH59.webp"
+    },
+    {
+      "code": "RH6",
+      "file": "RH6.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH6.webp"
+    },
+    {
+      "code": "RH62",
+      "file": "RH62.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH62.webp"
+    },
+    {
+      "code": "RH64",
+      "file": "RH64.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH64.webp"
+    },
+    {
+      "code": "RH6A",
+      "file": "RH6A.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH6A.webp"
+    },
+    {
+      "code": "RH6WB",
+      "file": "RH6WB.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH6WB.webp"
+    },
+    {
+      "code": "RH7",
+      "file": "RH7.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH7.webp"
+    },
+    {
+      "code": "RH70",
+      "file": "RH70.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH70.webp"
+    },
+    {
+      "code": "RH71",
+      "file": "RH71.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH71.webp"
+    },
+    {
+      "code": "RH73",
+      "file": "RH73.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH73.webp"
+    },
+    {
+      "code": "RH75",
+      "file": "RH75.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH75.webp"
+    },
+    {
+      "code": "RH79",
+      "file": "RH79.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH79.webp"
+    },
+    {
+      "code": "RH7NP",
+      "file": "RH7NP.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH7NP.webp"
+    },
+    {
+      "code": "RH81",
+      "file": "RH81.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH81.webp"
+    },
+    {
+      "code": "RH9",
+      "file": "RH9.webp",
+      "path": "apps/web/public/2d-masters/railheads/photos/RH9.webp"
+    }
+  ]
+}

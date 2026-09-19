@@ -8,7 +8,8 @@ const clientSchema = z.object({
 
 const serverSchema = clientSchema.extend({
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'Missing Supabase service role key'),
-  RESEND_API_KEY: z.string().min(1, 'Missing Resend API key'),
+  // Optional so saving a configuration does not crash if mail is misconfigured.
+  RESEND_API_KEY: z.string().optional(),
 })
 
 type ServerEnv = z.infer<typeof serverSchema>

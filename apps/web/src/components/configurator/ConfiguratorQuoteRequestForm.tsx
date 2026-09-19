@@ -4,8 +4,9 @@ import { LoaderCircle, MessageCircle, PhoneCall } from 'lucide-react'
 import { useState } from 'react'
 
 import { submitConfiguratorQuote, type ContactFormState } from '@/app/actions'
-import { TurnstileWidget } from '@/components/security/TurnstileWidget'
+import { useConfiguratorLeadSecurity } from '@/components/configurator/ConfiguratorLeadSecurity'
 import { captureConfiguratorEvent } from '@/lib/analytics/posthog'
+import { saveConfigurationUserMessage } from '@/lib/configurator/lead-pipeline'
 import { buildQuoteSharePath } from '@/lib/configurator/share-token'
 import { BUSINESS } from '@/lib/marketing/business'
 import { useConfiguratorStore } from '@/store/configuratorStore'
@@ -27,11 +28,11 @@ export function ConfiguratorQuoteRequestForm() {
   const markQuoteSubmitted = useConfiguratorStore((state) => state.markQuoteSubmitted)
   const quoteSubmitted = useConfiguratorStore((state) => state.quoteSubmitted)
   const shareToken = useConfiguratorStore((state) => state.shareToken)
+  const { token: turnstileToken, required: turnstileRequired, reset: resetTurnstile } =
+    useConfiguratorLeadSecurity()
 
   const [state, setState] = useState<ContactFormState>({ status: 'idle' })
   const [submitting, setSubmitting] = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState('')
-  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -39,6 +40,7 @@ export function ConfiguratorQuoteRequestForm() {
 
     if (turnstileRequired && !turnstileToken) {
       setState({ status: 'error', message: 'Please complete the security check and try again.' })
+      document.getElementById('cfg-lead-turnstile')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       return
     }
 
@@ -49,7 +51,10 @@ export function ConfiguratorQuoteRequestForm() {
     try {
       const saved = await ensureSavedConfiguration()
       if (!saved?.shareToken) {
-        setState({ status: 'error', message: 'Could not save your configuration. Please try again.' })
+        setState({
+          status: 'error',
+          message: saveConfigurationUserMessage(useConfiguratorStore.getState().saveError),
+        })
         return
       }
 
@@ -60,11 +65,16 @@ export function ConfiguratorQuoteRequestForm() {
 
       const result = await submitConfiguratorQuote(formData)
       setState(result)
+      resetTurnstile()
 
       if (result.status === 'success') {
         markQuoteSubmitted()
         captureConfiguratorEvent('configurator quote submitted', { share_token: saved.shareToken })
       }
+    } catch (error) {
+      console.error('Configurator quote submit failed:', error)
+      setState({ status: 'error', message: 'Could not send your request. Please try again or email us directly.' })
+      resetTurnstile()
     } finally {
       setSubmitting(false)
     }
@@ -168,8 +178,6 @@ export function ConfiguratorQuoteRequestForm() {
           placeholder="Access notes, timelines, questions… Custom hex is already saved on the design; add RAL name here if you have it."
         />
       </label>
-
-      {turnstileRequired ? <TurnstileWidget onToken={setTurnstileToken} /> : null}
 
       {/* Submitted by the sticky action bar via form={CONFIGURATOR_QUOTE_FORM_ID}. */}
       {submitting ? (

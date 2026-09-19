@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 type TurnstileWidgetProps = {
   onToken: (token: string) => void
+  onExpire?: () => void
 }
 
 declare global {
@@ -25,11 +26,16 @@ declare global {
   }
 }
 
-export function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
+export function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const widgetIdRef = useRef<string | null>(null)
+  const onTokenRef = useRef(onToken)
+  const onExpireRef = useRef(onExpire)
   const [ready, setReady] = useState(false)
   const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
+  onTokenRef.current = onToken
+  onExpireRef.current = onExpire
 
   useEffect(() => {
     if (!ready || !siteKey || !containerRef.current || !window.turnstile) {
@@ -38,7 +44,14 @@ export function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
 
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: siteKey,
-      callback: onToken,
+      callback: (token) => onTokenRef.current(token),
+      'expired-callback': () => {
+        onTokenRef.current('')
+        onExpireRef.current?.()
+      },
+      'error-callback': () => {
+        onTokenRef.current('')
+      },
       theme: 'light',
     })
 
@@ -48,7 +61,7 @@ export function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
         widgetIdRef.current = null
       }
     }
-  }, [onToken, ready, siteKey])
+  }, [ready, siteKey])
 
   if (!siteKey) {
     return null

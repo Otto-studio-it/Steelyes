@@ -1,5 +1,6 @@
 'use client'
 
+import { ConfiguratorLeadSecurity } from '@/components/configurator/ConfiguratorLeadSecurity'
 import { ConfiguratorQuoteRequestForm } from '@/components/configurator/ConfiguratorQuoteRequestForm'
 import { EmailMyDesignPanel } from '@/components/configurator/EmailMyDesignPanel'
 import {
@@ -68,9 +69,10 @@ export function QuickQuoteScreen() {
         Add decorative details
       </button>
 
-      <ConfiguratorQuoteRequestForm />
-
-      <EmailMyDesignPanel />
+      <ConfiguratorLeadSecurity>
+        <ConfiguratorQuoteRequestForm />
+        <EmailMyDesignPanel />
+      </ConfiguratorLeadSecurity>
     </div>
   )
 }
