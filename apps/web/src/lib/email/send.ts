@@ -3,6 +3,7 @@ import { Resend } from 'resend'
 import { BUSINESS, PRICING_DISCLAIMER } from '@/lib/marketing/business'
 import { env } from '@/lib/env'
 import { escapeEmailHtml } from '@/lib/email/html'
+import type { WorkshopPdfAttachment } from '@/lib/email/workshop-pdf-attachment'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 
 /**
@@ -53,6 +54,7 @@ async function sendEmail(options: {
   text: string
   replyTo?: string
   idempotencyKey?: string
+  attachments?: WorkshopPdfAttachment[]
 }): Promise<boolean> {
   const apiKey = env.RESEND_API_KEY
   if (!apiKey) {
@@ -83,6 +85,7 @@ async function sendEmail(options: {
       html: options.html,
       text: options.text,
       replyTo: options.replyTo,
+      ...(options.attachments?.length ? { attachments: options.attachments } : {}),
     }
     const { data, error } = await resend.emails.send(
       { from: EMAIL_FROM, ...emailOptions },
@@ -138,6 +141,7 @@ export type WorkshopLeadEmailInput = {
   pdfUrl: string
   configurationSummary: string
   hasConfiguration: boolean
+  pdfAttachment?: WorkshopPdfAttachment | null
 }
 
 function tableRow(label: string, valueHtml: string, shaded: boolean): string {
@@ -164,7 +168,13 @@ export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Prom
     input.hasConfiguration
       ? tableRow(
           'Configuration',
-          `${input.shareUrl}${safe.configurationSummary ? `<br>${safe.configurationSummary}` : ''}${input.pdfUrl ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>` : ''}`,
+          `${input.shareUrl}${safe.configurationSummary ? `<br>${safe.configurationSummary}` : ''}${
+            input.pdfAttachment
+              ? '<br>Prototype PDF attached (design drawing + estimate).'
+              : input.pdfUrl
+                ? `<br><a href="${input.pdfUrl}">Download estimate PDF</a>`
+                : ''
+          }${input.pdfAttachment && input.pdfUrl ? `<br><a href="${input.pdfUrl}">Open PDF online</a>` : ''}`,
           false,
         )
       : '',
@@ -194,11 +204,13 @@ export async function sendWorkshopLeadEmail(input: WorkshopLeadEmailInput): Prom
       `Project type: ${input.projectType || '—'}`,
       `Postcode: ${input.postcode || '—'}`,
       input.hasConfiguration ? `Configuration: ${input.shareUrl}` : '',
+      input.pdfAttachment ? `Prototype PDF attached: ${input.pdfAttachment.filename}` : '',
       input.hasConfiguration && input.pdfUrl ? `PDF: ${input.pdfUrl}` : '',
       `Details: ${input.message || '—'}`,
     ]
       .filter(Boolean)
       .join('\n'),
+    attachments: input.pdfAttachment ? [input.pdfAttachment] : undefined,
   })
 }
 
