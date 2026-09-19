@@ -14,6 +14,13 @@ export {
   isRailheadOptionKey,
   RAILHEAD_OPTION_KEYS,
 } from './types'
+export {
+  railheadCatalogSlug,
+  railheadPhotoFileSlug,
+  railheadProductCard,
+  railheadProductDescription,
+} from './railhead-product'
+export type { RailheadProductCard } from './railhead-product-cards'
 export type {
   RailheadOptionKey,
   RailheadVariantCatalog,

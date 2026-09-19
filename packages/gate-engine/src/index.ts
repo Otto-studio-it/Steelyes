@@ -221,6 +221,10 @@ export {
   isVariantCatalogBlocked,
   listRailheadVariantsForOption,
   railheadCatalogSummary,
+  railheadCatalogSlug,
+  railheadPhotoFileSlug,
+  railheadProductCard,
+  railheadProductDescription,
   resolveRailheadVariantPricing,
 } from './catalog'
 export {
@@ -276,6 +280,7 @@ export type {
 } from './finishes'
 export type {
   RailheadOptionKey,
+  RailheadProductCard,
   RailheadVariantCatalog,
   RailheadVariantDefinition,
   ResolvedVariantPricing,

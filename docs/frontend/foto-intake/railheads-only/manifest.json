@@ -1,323 +1,510 @@
 {
   "updated": "2026-09-19",
-  "purpose": "Railhead product photos only. Screenshots excluded.",
+  "purpose": "Dedicated railhead product photos + client descriptions. No OS/configurator screenshots.",
+  "source_catalog": "docs/frontend/foto-intake/railheads-catalog.json",
   "photo_root": "apps/web/public/2d-masters/railheads/photos",
   "count": 61,
+  "aliases": [
+    {
+      "catalog_slug": "RH15WO",
+      "client_code": "RH15W/O",
+      "photo_file": "RH15W.webp"
+    }
+  ],
   "excluded": [
     {
-      "file": "RH15WO.webp",
-      "reason": "duplicate leftover of RH15W, not a catalog SKU"
-    },
-    {
       "file": "Screenshot *",
-      "reason": "configurator/OS screenshots never go in this set"
+      "reason": "OS/configurator screenshots never go in this set"
     }
   ],
   "entries": [
     {
       "code": "RH1",
-      "file": "RH1.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH1.webp"
+      "client_code": "RH1",
+      "title": "RH1 Railhead 184",
+      "size_mm": "184 × 89 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH1.webp",
+      "public_url": "/2d-masters/railheads/photos/RH1.webp"
     },
     {
       "code": "RH10",
-      "file": "RH10.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH10.webp"
+      "client_code": "RH10",
+      "title": "RH10 Railhead 125 x 48 x 25mm",
+      "size_mm": "125 × 48 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH10.webp",
+      "public_url": "/2d-masters/railheads/photos/RH10.webp"
     },
     {
       "code": "RH100",
-      "file": "RH100.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH100.webp"
+      "client_code": "RH100",
+      "title": "RH100 Railhead 160 × 70",
+      "size_mm": "160 × 70 × 28 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH100.webp",
+      "public_url": "/2d-masters/railheads/photos/RH100.webp"
     },
     {
       "code": "RH102A",
-      "file": "RH102A.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH102A.webp"
+      "client_code": "RH102A",
+      "title": "RH102A Railhead 140 × 70",
+      "size_mm": "140 × 70 × 26 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH102A.webp",
+      "public_url": "/2d-masters/railheads/photos/RH102A.webp"
     },
     {
       "code": "RH108",
-      "file": "RH108.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH108.webp"
+      "client_code": "RH108",
+      "title": "RH108 Railhead 110 x 65 x 20mm",
+      "size_mm": "110 × 65 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH108.webp",
+      "public_url": "/2d-masters/railheads/photos/RH108.webp"
     },
     {
       "code": "RH109",
-      "file": "RH109.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH109.webp"
+      "client_code": "RH109",
+      "title": "RH109 Railhead 160 x 62",
+      "size_mm": "160 × 62 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH109.webp",
+      "public_url": "/2d-masters/railheads/photos/RH109.webp"
     },
     {
       "code": "RH110",
-      "file": "RH110.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH110.webp"
+      "client_code": "RH110",
+      "title": "RH110 Railhead 250 x 102 x 25mm",
+      "size_mm": "250 × 102 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH110.webp",
+      "public_url": "/2d-masters/railheads/photos/RH110.webp"
     },
     {
       "code": "RH111",
-      "file": "RH111.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH111.webp"
+      "client_code": "RH111",
+      "title": "RH111 Railhead 115 x 30",
+      "size_mm": "115 × 30 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH111.webp",
+      "public_url": "/2d-masters/railheads/photos/RH111.webp"
     },
     {
       "code": "RH112",
-      "file": "RH112.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH112.webp"
+      "client_code": "RH112",
+      "title": "RH112 Railhead 124 × 74",
+      "size_mm": "124 × 74 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH112.webp",
+      "public_url": "/2d-masters/railheads/photos/RH112.webp"
     },
     {
       "code": "RH113",
-      "file": "RH113.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH113.webp"
+      "client_code": "RH113",
+      "title": "RH113 Railhead 165 × 85",
+      "size_mm": "165 × 85 × 18 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH113.webp",
+      "public_url": "/2d-masters/railheads/photos/RH113.webp"
     },
     {
       "code": "RH114",
-      "file": "RH114.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH114.webp"
+      "client_code": "RH114",
+      "title": "RH114 Railhead 140 x 65",
+      "size_mm": "140 × 65 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH114.webp",
+      "public_url": "/2d-masters/railheads/photos/RH114.webp"
     },
     {
       "code": "RH122",
-      "file": "RH122.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH122.webp"
+      "client_code": "RH122",
+      "title": "RH122 Railhead 160 x 65 x 16mm",
+      "size_mm": "160 × 65 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH122.webp",
+      "public_url": "/2d-masters/railheads/photos/RH122.webp"
     },
     {
       "code": "RH124",
-      "file": "RH124.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH124.webp"
+      "client_code": "RH124",
+      "title": "RH124 Railhead 205 x 60 x 20mm",
+      "size_mm": "205 × 60 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH124.webp",
+      "public_url": "/2d-masters/railheads/photos/RH124.webp"
     },
     {
       "code": "RH125",
-      "file": "RH125.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH125.webp"
+      "client_code": "RH125",
+      "title": "RH125 Railhead 170 × 60 × 20mm",
+      "size_mm": "170 × 60 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH125.webp",
+      "public_url": "/2d-masters/railheads/photos/RH125.webp"
     },
     {
       "code": "RH126",
-      "file": "RH126.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH126.webp"
+      "client_code": "RH126",
+      "title": "RH126 Railhead 130 x 25",
+      "size_mm": "130 × 25 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH126.webp",
+      "public_url": "/2d-masters/railheads/photos/RH126.webp"
     },
     {
       "code": "RH128",
-      "file": "RH128.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH128.webp"
+      "client_code": "RH128",
+      "title": "RH128 Railhead 180 x 65 x 20mm",
+      "size_mm": "180 × 65 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH128.webp",
+      "public_url": "/2d-masters/railheads/photos/RH128.webp"
     },
     {
       "code": "RH13",
-      "file": "RH13.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH13.webp"
+      "client_code": "RH13",
+      "title": "RH13 Railhead 125 × 40",
+      "size_mm": "125 × 40 × 18 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH13.webp",
+      "public_url": "/2d-masters/railheads/photos/RH13.webp"
     },
     {
       "code": "RH130",
-      "file": "RH130.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH130.webp"
+      "client_code": "RH130",
+      "title": "RH130 Railhead 100 × 44",
+      "size_mm": "100 × 44 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH130.webp",
+      "public_url": "/2d-masters/railheads/photos/RH130.webp"
     },
     {
       "code": "RH14",
-      "file": "RH14.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH14.webp"
+      "client_code": "RH14",
+      "title": "RH14 Railhead 95 x 25 x 12mm",
+      "size_mm": "95 × 25 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH14.webp",
+      "public_url": "/2d-masters/railheads/photos/RH14.webp"
     },
     {
       "code": "RH149",
-      "file": "RH149.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH149.webp"
+      "client_code": "RH149",
+      "title": "RH149 Railhead 130 x 60",
+      "size_mm": "130 × 60 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH149.webp",
+      "public_url": "/2d-masters/railheads/photos/RH149.webp"
     },
     {
       "code": "RH151",
-      "file": "RH151.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH151.webp"
+      "client_code": "RH151",
+      "title": "RH151 Railhead 162 × 36",
+      "size_mm": "162 × 36 × 22 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH151.webp",
+      "public_url": "/2d-masters/railheads/photos/RH151.webp"
     },
     {
       "code": "RH157",
-      "file": "RH157.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH157.webp"
+      "client_code": "RH157",
+      "title": "RH157 Railhead 130mm High",
+      "size_mm": "130 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH157.webp",
+      "public_url": "/2d-masters/railheads/photos/RH157.webp"
     },
     {
       "code": "RH159",
-      "file": "RH159.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH159.webp"
+      "client_code": "RH159",
+      "title": "RH159 Railhead 130mm High",
+      "size_mm": "130 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH159.webp",
+      "public_url": "/2d-masters/railheads/photos/RH159.webp"
     },
     {
-      "code": "RH15W",
-      "file": "RH15W.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH15W.webp"
+      "code": "RH15WO",
+      "client_code": "RH15W/O",
+      "title": "RH15W/O Railhead No Stub",
+      "size_mm": "124 × 26 × 18 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH15W.webp",
+      "public_url": "/2d-masters/railheads/photos/RH15W.webp"
     },
     {
       "code": "RH16",
-      "file": "RH16.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH16.webp"
+      "client_code": "RH16",
+      "title": "RH16 Railhead 157 × 38",
+      "size_mm": "157 × 38 × 30 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH16.webp",
+      "public_url": "/2d-masters/railheads/photos/RH16.webp"
     },
     {
       "code": "RH160",
-      "file": "RH160.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH160.webp"
+      "client_code": "RH160",
+      "title": "RH160 Railhead 160mm High 25 x 25mm Base",
+      "size_mm": "160 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH160.webp",
+      "public_url": "/2d-masters/railheads/photos/RH160.webp"
     },
     {
       "code": "RH17",
-      "file": "RH17.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH17.webp"
+      "client_code": "RH17",
+      "title": "RH17 Railhead 188 x 50",
+      "size_mm": "188 × 50 × 40 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH17.webp",
+      "public_url": "/2d-masters/railheads/photos/RH17.webp"
     },
     {
       "code": "RH18",
-      "file": "RH18.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH18.webp"
+      "client_code": "RH18",
+      "title": "RH18 Railhead 80 x 46 x 20mm",
+      "size_mm": "80 × 46 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH18.webp",
+      "public_url": "/2d-masters/railheads/photos/RH18.webp"
     },
     {
       "code": "RH19",
-      "file": "RH19.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH19.webp"
+      "client_code": "RH19",
+      "title": "RH19 Railhead 120 x 65",
+      "size_mm": "120 × 65 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH19.webp",
+      "public_url": "/2d-masters/railheads/photos/RH19.webp"
     },
     {
       "code": "RH2",
-      "file": "RH2.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH2.webp"
+      "client_code": "RH2",
+      "title": "RH2 Railhead 150 x 70 x 16mm",
+      "size_mm": "150 × 70 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH2.webp",
+      "public_url": "/2d-masters/railheads/photos/RH2.webp"
     },
     {
       "code": "RH27",
-      "file": "RH27.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH27.webp"
+      "client_code": "RH27",
+      "title": "RH27 Railhead 152 x 62",
+      "size_mm": "152 × 62 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH27.webp",
+      "public_url": "/2d-masters/railheads/photos/RH27.webp"
     },
     {
       "code": "RH32",
-      "file": "RH32.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH32.webp"
+      "client_code": "RH32",
+      "title": "RH32 Railhead 136 x 60",
+      "size_mm": "136 × 60 × 14 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH32.webp",
+      "public_url": "/2d-masters/railheads/photos/RH32.webp"
     },
     {
       "code": "RH36",
-      "file": "RH36.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH36.webp"
+      "client_code": "RH36",
+      "title": "RH36 Railhead 150 x 44",
+      "size_mm": "150 × 44 × 33 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH36.webp",
+      "public_url": "/2d-masters/railheads/photos/RH36.webp"
     },
     {
       "code": "RH37",
-      "file": "RH37.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH37.webp"
+      "client_code": "RH37",
+      "title": "RH37 Railhead 120 x 35",
+      "size_mm": "120 × 35 × 30 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH37.webp",
+      "public_url": "/2d-masters/railheads/photos/RH37.webp"
     },
     {
       "code": "RH38",
-      "file": "RH38.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH38.webp"
+      "client_code": "RH38",
+      "title": "RH38 Railhead 165 x 60",
+      "size_mm": "165 × 60 × 24 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH38.webp",
+      "public_url": "/2d-masters/railheads/photos/RH38.webp"
     },
     {
       "code": "RH39",
-      "file": "RH39.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH39.webp"
+      "client_code": "RH39",
+      "title": "RH39 Railhead 185 x 70",
+      "size_mm": "185 × 70 × 27 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH39.webp",
+      "public_url": "/2d-masters/railheads/photos/RH39.webp"
     },
     {
       "code": "RH3S",
-      "file": "RH3S.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH3S.webp"
+      "client_code": "RH3S",
+      "title": "RH3S Railhead 113 x 55",
+      "size_mm": "113 × 55 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH3S.webp",
+      "public_url": "/2d-masters/railheads/photos/RH3S.webp"
     },
     {
       "code": "RH41",
-      "file": "RH41.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH41.webp"
+      "client_code": "RH41",
+      "title": "RH41 Railhead 120 x 60",
+      "size_mm": "120 × 60 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH41.webp",
+      "public_url": "/2d-masters/railheads/photos/RH41.webp"
     },
     {
       "code": "RH42",
-      "file": "RH42.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH42.webp"
+      "client_code": "RH42",
+      "title": "RH42 Railhead 158 x 93",
+      "size_mm": "158 × 93 × 30 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH42.webp",
+      "public_url": "/2d-masters/railheads/photos/RH42.webp"
     },
     {
       "code": "RH43",
-      "file": "RH43.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH43.webp"
+      "client_code": "RH43",
+      "title": "RH43 Railhead 200 x 118",
+      "size_mm": "200 × 118 × 40 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH43.webp",
+      "public_url": "/2d-masters/railheads/photos/RH43.webp"
     },
     {
       "code": "RH45",
-      "file": "RH45.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH45.webp"
+      "client_code": "RH45",
+      "title": "RH45 Railhead 134 x 40 x 25mm",
+      "size_mm": "134 × 40 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH45.webp",
+      "public_url": "/2d-masters/railheads/photos/RH45.webp"
     },
     {
       "code": "RH47",
-      "file": "RH47.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH47.webp"
+      "client_code": "RH47",
+      "title": "RH47 Railhead 162 × 90",
+      "size_mm": "162 × 90 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH47.webp",
+      "public_url": "/2d-masters/railheads/photos/RH47.webp"
     },
     {
       "code": "RH51",
-      "file": "RH51.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH51.webp"
+      "client_code": "RH51",
+      "title": "RH51 Railhead 145 x 48 × 26mm",
+      "size_mm": "145 × 48 × 26 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH51.webp",
+      "public_url": "/2d-masters/railheads/photos/RH51.webp"
     },
     {
       "code": "RH52",
-      "file": "RH52.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH52.webp"
+      "client_code": "RH52",
+      "title": "RH52 Railhead 110 x 55 x 26mm",
+      "size_mm": "110 × 55 × 26 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH52.webp",
+      "public_url": "/2d-masters/railheads/photos/RH52.webp"
     },
     {
       "code": "RH55",
-      "file": "RH55.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH55.webp"
+      "client_code": "RH55",
+      "title": "RH55 Railhead 133 x 72",
+      "size_mm": "133 × 72 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH55.webp",
+      "public_url": "/2d-masters/railheads/photos/RH55.webp"
     },
     {
       "code": "RH56",
-      "file": "RH56.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH56.webp"
+      "client_code": "RH56",
+      "title": "RH56 Railhead 125 x 59",
+      "size_mm": "125 × 59 × 30 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH56.webp",
+      "public_url": "/2d-masters/railheads/photos/RH56.webp"
     },
     {
       "code": "RH59",
-      "file": "RH59.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH59.webp"
+      "client_code": "RH59",
+      "title": "RH59 Railhead 194 x 108",
+      "size_mm": "194 × 108 × 30 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH59.webp",
+      "public_url": "/2d-masters/railheads/photos/RH59.webp"
     },
     {
       "code": "RH6",
-      "file": "RH6.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH6.webp"
+      "client_code": "RH6",
+      "title": "RH6 Railhead 153 x 24 x 24mm",
+      "size_mm": "153 × 24 × 24 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH6.webp",
+      "public_url": "/2d-masters/railheads/photos/RH6.webp"
     },
     {
       "code": "RH62",
-      "file": "RH62.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH62.webp"
+      "client_code": "RH62",
+      "title": "RH62 Railhead 60 x 33 x 24mm",
+      "size_mm": "60 × 33 × 24 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH62.webp",
+      "public_url": "/2d-masters/railheads/photos/RH62.webp"
     },
     {
       "code": "RH64",
-      "file": "RH64.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH64.webp"
+      "client_code": "RH64",
+      "title": "RH64 Railhead 140 × 60",
+      "size_mm": "140 × 60 × 14 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH64.webp",
+      "public_url": "/2d-masters/railheads/photos/RH64.webp"
     },
     {
       "code": "RH6A",
-      "file": "RH6A.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH6A.webp"
+      "client_code": "RH6A",
+      "title": "RH6A Railhead 146 × 40",
+      "size_mm": "146 × 40 × 40 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH6A.webp",
+      "public_url": "/2d-masters/railheads/photos/RH6A.webp"
     },
     {
       "code": "RH6WB",
-      "file": "RH6WB.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH6WB.webp"
+      "client_code": "RH6W/B",
+      "title": "RH6W/B Railhead With Ball",
+      "size_mm": "100 × 20 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH6WB.webp",
+      "public_url": "/2d-masters/railheads/photos/RH6WB.webp"
     },
     {
       "code": "RH7",
-      "file": "RH7.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH7.webp"
+      "client_code": "RH7",
+      "title": "RH7 Railhead 125 x 60 x 12mm",
+      "size_mm": "125 × 60 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH7.webp",
+      "public_url": "/2d-masters/railheads/photos/RH7.webp"
     },
     {
       "code": "RH70",
-      "file": "RH70.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH70.webp"
+      "client_code": "RH70",
+      "title": "RH70 Railhead 180 x 52 x 20mm",
+      "size_mm": "180 × 52 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH70.webp",
+      "public_url": "/2d-masters/railheads/photos/RH70.webp"
     },
     {
       "code": "RH71",
-      "file": "RH71.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH71.webp"
+      "client_code": "RH71",
+      "title": "RH71 Railhead 146 x 67 × 16mm",
+      "size_mm": "146 × 67 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH71.webp",
+      "public_url": "/2d-masters/railheads/photos/RH71.webp"
     },
     {
       "code": "RH73",
-      "file": "RH73.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH73.webp"
+      "client_code": "RH73",
+      "title": "RH73 Railhead 138 x 60",
+      "size_mm": "138 × 60 × 12 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH73.webp",
+      "public_url": "/2d-masters/railheads/photos/RH73.webp"
     },
     {
       "code": "RH75",
-      "file": "RH75.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH75.webp"
+      "client_code": "RH75",
+      "title": "RH75 Railhead 110 x 48 x 18mm",
+      "size_mm": "110 × 48 × 18 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH75.webp",
+      "public_url": "/2d-masters/railheads/photos/RH75.webp"
     },
     {
       "code": "RH79",
-      "file": "RH79.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH79.webp"
+      "client_code": "RH79",
+      "title": "RH79 Railhead 153 x 70 x 16mm",
+      "size_mm": "153 × 70 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH79.webp",
+      "public_url": "/2d-masters/railheads/photos/RH79.webp"
     },
     {
       "code": "RH7NP",
-      "file": "RH7NP.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH7NP.webp"
+      "client_code": "RH7NP",
+      "title": "RH7NP Railhead No Peg 110",
+      "size_mm": "110 × 60 × 20 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH7NP.webp",
+      "public_url": "/2d-masters/railheads/photos/RH7NP.webp"
     },
     {
       "code": "RH81",
-      "file": "RH81.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH81.webp"
+      "client_code": "RH81",
+      "title": "RH81 Railhead 210 x 110",
+      "size_mm": "210 × 110 × 25 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH81.webp",
+      "public_url": "/2d-masters/railheads/photos/RH81.webp"
     },
     {
       "code": "RH9",
-      "file": "RH9.webp",
-      "path": "apps/web/public/2d-masters/railheads/photos/RH9.webp"
+      "client_code": "RH9",
+      "title": "RH9 Railhead 187 × 87 × 16mm",
+      "size_mm": "187 × 87 × 16 mm",
+      "photo": "apps/web/public/2d-masters/railheads/photos/RH9.webp",
+      "public_url": "/2d-masters/railheads/photos/RH9.webp"
     }
   ]
 }
