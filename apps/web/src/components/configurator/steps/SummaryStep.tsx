@@ -1,7 +1,10 @@
 'use client'
 
 import { ConfigurationSummary } from '@/components/configurator/ConfigurationSummary'
-import { ConfiguratorLeadSecurity } from '@/components/configurator/ConfiguratorLeadSecurity'
+import {
+  ConfiguratorLeadSecurity,
+  ConfiguratorLeadTurnstile,
+} from '@/components/configurator/ConfiguratorLeadSecurity'
 import { ConfiguratorQuoteRequestForm } from '@/components/configurator/ConfiguratorQuoteRequestForm'
 import { EmailMyDesignPanel } from '@/components/configurator/EmailMyDesignPanel'
 import { useConfiguratorConfig, useConfiguratorPricing } from '@/store/configuratorStore'
@@ -23,6 +26,7 @@ export function SummaryStep() {
 
       <ConfiguratorLeadSecurity>
         <ConfiguratorQuoteRequestForm />
+        <ConfiguratorLeadTurnstile />
         <EmailMyDesignPanel />
       </ConfiguratorLeadSecurity>
     </div>
