@@ -207,12 +207,17 @@ function DesktopShell({
 export function ConfiguratorShell({ embed = false, tenant }: { embed?: boolean; tenant?: TenantBundle }) {
   const config = useConfiguratorConfig()
   const viewport = useConfiguratorViewport()
-  const isDesktop = viewport.mode === 'desktop'
   const flowMode = useConfiguratorFlowMode()
   const goToAct = useConfiguratorStore((state) => state.goToAct)
   const setQuickStepIndex = useConfiguratorStore((state) => state.setQuickStepIndex)
   const setFlowMode = useConfiguratorStore((state) => state.setFlowMode)
   const { act } = useConfiguratorAct()
+
+  if (!viewport.ready) {
+    return null
+  }
+
+  const isDesktop = viewport.mode === 'desktop'
 
   const showDimensionOverlay = act.id === 'define' || act.id === 'choose'
 

@@ -15,19 +15,42 @@ export function getE2EServiceClient(): DatabaseClient | null {
   return createClient(url, serviceRoleKey)
 }
 
+export async function isSupabaseReachable(): Promise<boolean> {
+  const supabase = getE2EServiceClient()
+  if (!supabase) {
+    return false
+  }
+
+  try {
+    const { error } = await supabase.from('configurations').select('id').limit(1)
+    return !error
+  } catch {
+    return false
+  }
+}
+
 export async function seedSharedConfiguration(shareToken: string): Promise<boolean> {
   const supabase = getE2EServiceClient()
   if (!supabase) {
     return false
   }
 
-  const { error } = await supabase.from('configurations').insert({
-    share_token: shareToken,
-    gate_type: 'double-swing',
-    parameters: buildTestConfigurationPayload(),
-  })
+  try {
+    const { error } = await supabase.from('configurations').insert({
+      share_token: shareToken,
+      gate_type: 'double-swing',
+      parameters: buildTestConfigurationPayload(),
+    })
 
-  return !error
+    if (error) {
+      console.warn('seedSharedConfiguration failed:', error.message)
+    }
+
+    return !error
+  } catch (error) {
+    console.warn('seedSharedConfiguration threw:', error)
+    return false
+  }
 }
 
 export async function deleteSharedConfiguration(shareToken: string): Promise<void> {

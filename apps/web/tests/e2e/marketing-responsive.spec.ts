@@ -1,5 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { mkdir } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 
 const VIEWPORTS = [
   { name: 'mobile', width: 375, height: 812 },
@@ -8,7 +10,7 @@ const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },
 ] as const
 
-const screenshotDir = '/private/tmp/steelyes-responsive-qa'
+const screenshotDir = path.join(tmpdir(), 'steelyes-responsive-qa')
 
 async function revealFullPage(page: Page, viewportHeight: number) {
   const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight)

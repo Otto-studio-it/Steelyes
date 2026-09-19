@@ -139,7 +139,7 @@ export function ConfiguratorQuoteRequestForm() {
       <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="sr-only" />
 
       {state.status === 'error' ? (
-        <p role="alert" className="border border-primary/25 bg-primary/5 px-4 py-3 text-sm text-primary">
+        <p role="alert" data-testid="quote-request-error" className="border border-primary/25 bg-primary/5 px-4 py-3 text-sm text-primary">
           {state.message}
         </p>
       ) : null}

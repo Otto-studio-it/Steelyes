@@ -88,7 +88,7 @@ export function EmailMyDesignPanel() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="border border-steel/10 bg-paper px-4 py-4">
+    <form onSubmit={handleSubmit} className="border border-steel/10 bg-paper px-4 py-4" data-testid="email-my-design-form">
       <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
         <Mail className="h-3.5 w-3.5" aria-hidden />
         Not ready yet?
