@@ -11,6 +11,18 @@ const nextConfig = {
   },
   transpilePackages: ['@steelyes/gate-engine'],
   poweredByHeader: false,
+  experimental: {
+    serverComponentsExternalPackages: ['@resvg/resvg-js'],
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@resvg/resvg-js': false,
+      }
+    }
+    return config
+  },
   async redirects() {
     return [
       // Canonicalize non-www -> www (sitemap/robots.txt declare www as canonical).

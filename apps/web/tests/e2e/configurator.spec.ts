@@ -190,10 +190,10 @@ test.describe('configurator mobile quick path', () => {
     await expect(page.getByRole('heading', { name: /Design your gate/i })).toHaveCount(0)
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toHaveCount(0)
 
-    // 96px chip + compact action bar with a live estimate and Continue.
+    // 96px chip + compact action bar. Amounts stay hidden until the final quote step.
     await expect(page.getByRole('button', { name: /Open full gate preview/i })).toBeVisible()
     await expect(page.getByTestId('configurator-preview-pinned')).toHaveCount(0)
-    await expect(page.getByTestId('configurator-action-bar').getByText(/Live estimate|Survey required|Price on request/i)).toBeVisible()
+    await expect(page.getByTestId('configurator-action-bar').getByText(/Price at final step|Live estimate|Survey required|Price on request/i)).toBeVisible()
     await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toBeVisible()
   })
 

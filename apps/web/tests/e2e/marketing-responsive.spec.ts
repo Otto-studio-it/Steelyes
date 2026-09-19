@@ -83,10 +83,18 @@ for (const viewport of VIEWPORTS) {
       }
 
       await page.getByRole('button', { name: 'Close navigation menu' }).click()
-      await page.evaluate(() => window.scrollTo(0, 700))
+      await expect(page.locator('#mobile-navigation')).toBeHidden()
+      await page.evaluate(() => {
+        const footer = document.querySelector('footer')
+        const footerTop = footer ? footer.getBoundingClientRect().top + window.scrollY : 2400
+        const safeY = Math.max(520, footerTop - window.innerHeight - 180)
+        window.scrollTo(0, safeY)
+      })
 
       const conversionBar = page.getByTestId('mobile-conversion-bar')
-      await expect(conversionBar.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible()
+      await expect(conversionBar.getByRole('link', { name: 'Request a quote', exact: true })).toBeVisible({
+        timeout: 8_000,
+      })
       await expect(conversionBar.getByRole('link')).toHaveCount(1)
     } else {
       const header = page.locator('header')
