@@ -187,7 +187,7 @@ test.describe('configurator mobile quick path', () => {
     await gotoQuickPath(page)
 
     // No full-options studio chrome on the quick path.
-    await expect(page.getByText('Gate configurator')).toHaveCount(0)
+    await expect(page.getByRole('heading', { name: /Design your gate/i })).toHaveCount(0)
     await expect(page.getByRole('heading', { name: /Choose your gate/i })).toHaveCount(0)
 
     // 96px chip + compact action bar with a live estimate and Continue.

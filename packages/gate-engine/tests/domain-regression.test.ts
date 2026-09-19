@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   DEFAULT_GATE_PRESETS,
+  GATE_OPTION_KEYS,
   GATE_TYPES,
   createGateConfig,
   createGatePreset,
@@ -47,9 +48,9 @@ describe('gate-engine domain regression', () => {
 
     expect(normalized.version).toBe(1)
     expect(normalized.gateType).toBe('radius_sliding')
-    expect(normalized.widthMm).toBe(600)
-    expect(normalized.heightMm).toBe(600)
-    expect(normalized.options).toHaveLength(7)
+    expect(normalized.widthMm).toBe(1600)
+    expect(normalized.heightMm).toBe(800)
+    expect(normalized.options).toHaveLength(GATE_OPTION_KEYS.length)
     expect(normalized.fencePanels.quantity).toBe(0)
     expect(normalized.fencePanels.panels).toHaveLength(0)
   })

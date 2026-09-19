@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  GATE_OPTION_KEYS,
   createGateConfig,
   createGatePreset,
   deserializeGateConfig,
@@ -23,7 +24,7 @@ describe('gate-engine serialization', () => {
       finish: 'black_satin',
       siteSurveyRequested: false,
     })
-    expect(serialized.options).toHaveLength(9)
+    expect(serialized.options).toHaveLength(GATE_OPTION_KEYS.length)
   })
 
   it('stringifies and deserializes the config without changing meaning', () => {

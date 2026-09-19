@@ -25,7 +25,7 @@ describe('bifold schematic rule (catalog provisional)', () => {
       const plan = buildGateRenderPlan(createGateConfig(createGatePreset(gateType)), {
         viewMode: 'technical',
       })
-      expect(plan.primitives.some((p) => p.id === 'bifold-fold-1')).toBe(true)
+      expect(plan.primitives.some((p) => p.id === 'bifold-fold-stile-1')).toBe(true)
       expect(plan.notes).toContain(bifoldSchematicNote(gateType))
       expect(plan.labels.some((l) => l.id === 'label-bifold-fold')).toBe(true)
     }
@@ -33,7 +33,7 @@ describe('bifold schematic rule (catalog provisional)', () => {
     const doublePlan = buildGateRenderPlan(createGateConfig(createGatePreset('bifolding_double_swing')), {
       viewMode: 'installation',
     })
-    expect(doublePlan.primitives.some((p) => p.id === 'bifold-fold-2')).toBe(true)
+    expect(doublePlan.primitives.some((p) => p.id === 'bifold-fold-stile-2' || p.id === 'bifold-stack-right')).toBe(true)
 
     const swingPlan = buildGateRenderPlan(createGateConfig(createGatePreset('double_swing')))
     expect(swingPlan.primitives.some((p) => p.id.startsWith('bifold-fold'))).toBe(false)

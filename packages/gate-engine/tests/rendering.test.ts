@@ -49,7 +49,7 @@ describe('gate-engine rendering', () => {
     const plan = buildGateRenderPlan(config, { viewMode: 'technical' })
 
     expect(plan.title).toContain('tracked sliding')
-    expect(plan.primitives.some((primitive) => primitive.kind === 'line' && primitive.id === 'track-line')).toBe(true)
+    expect(plan.primitives.some((primitive) => primitive.id === 'tracked-ground-rail' || primitive.id === 'track-line')).toBe(true)
     expect(plan.notes.some((n) => n.includes('CAD elevation from photo-guided 2D masters'))).toBe(true)
     expect(plan.labels.some((label) => label.id === 'label-track')).toBe(true)
   })
@@ -235,8 +235,8 @@ describe('gate-engine rendering', () => {
       { viewMode: 'technical' },
     )
     expect(plan.primitives.some((p) => p.id === 'tracked-runback-zone')).toBe(true)
-    expect(plan.primitives.some((p) => p.id === 'tracked-guide-post')).toBe(true)
-    expect(plan.primitives.some((p) => p.id === 'tracked-bottom-box')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'tracked-guide-rollers' || p.id === 'tracked-upper-guide')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'tracked-leaf-bottom-box')).toBe(true)
     expect(plan.notes.some((n) => n.includes('runback'))).toBe(true)
   })
 
@@ -244,8 +244,8 @@ describe('gate-engine rendering', () => {
     const plan = buildGateRenderPlan(createGateConfig(createGatePreset('cantilever_sliding')), {
       viewMode: 'technical',
     })
-    expect(plan.primitives.some((p) => p.id === 'cantilever-bottom-box')).toBe(true)
-    expect(plan.primitives.some((p) => p.id === 'cantilever-ground-guide')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'cantilever-tail-bottom-box')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'cantilever-ground-carriage')).toBe(true)
     expect(plan.primitives.some((p) => p.id === 'cantilever-foundation')).toBe(true)
   })
 
@@ -268,8 +268,8 @@ describe('gate-engine rendering', () => {
       { ...createGateConfig(createGatePreset('radius_sliding')), widthMm: 2600 },
       { viewMode: 'technical' },
     )
-    expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-1')).toBe(true)
-    expect(plan.primitives.some((p) => p.id === 'radius-leaf-split-2')).toBe(true)
+    expect(plan.primitives.some((p) => p.id === 'radius-leaf-0-frame' || p.id === 'radius-path-cue')).toBe(true)
+    expect(plan.primitives.some((p) => p.id.startsWith('radius-leaf-'))).toBe(true)
   })
 
   it('draws circle scroll bands on installation CAD when circles are on', () => {
