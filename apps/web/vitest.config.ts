@@ -7,6 +7,7 @@ export default defineConfig({
     include: [
       'src/lib/configurator/ar/**/*.test.ts',
       'src/lib/configurator/configuration-summary.test.ts',
+      'src/lib/configurator/railhead-photos.test.ts',
       'src/lib/configurator/quote-pdf.test.ts',
       'src/lib/configurator/colour-fit.test.ts',
       'src/lib/configurator/lead-pipeline.test.ts',
