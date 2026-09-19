@@ -2,8 +2,10 @@
 
 This is the dedicated railhead pack you asked for:
 
-- **Photo:** one cropped product shot of the railhead itself (not a gate screenshot).
+- **Status:** definitive site photos (signed 2026-09-19).
+- **Photo:** one metal-only product shot of the railhead itself (not a gate or shop screenshot).
 - **Description:** title, size, and flags from the client Numbers/CSV catalogue.
+- **Live paths:** Refine chooser and Design chip use `railheadPhotoPath` → `/2d-masters/railheads/photos/{SKU}.webp`.
 
 | What | Where |
 |---|---|

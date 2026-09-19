@@ -1,6 +1,7 @@
 {
   "updated": "2026-09-19",
-  "purpose": "Dedicated railhead product photos + client descriptions. No OS/configurator screenshots.",
+  "status": "definitive",
+  "purpose": "Definitive site railhead product photos + client descriptions. Chooser and Design chip serve these files. No OS/configurator screenshots.",
   "source_catalog": "docs/frontend/foto-intake/railheads-catalog.json",
   "photo_root": "apps/web/public/2d-masters/railheads/photos",
   "count": 61,

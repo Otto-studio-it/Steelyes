@@ -1,6 +1,6 @@
 {
   "updated": "2026-09-19",
-  "policy": "SKU product photos only (cropped, white opaque bg). No OS/configurator screenshots. Design does not draw these (CA-17). Canonical index: docs/frontend/foto-intake/railheads-only/ \u00b7 cleaned by scripts/clean-railhead-photos.py (metal only, white cover).",
+  "policy": "Definitive site photos (signed 2026-09-19). Metal-only tiles, white opaque bg. Chooser + Design chip load these WebPs. No OS/configurator screenshots. CA-17: not drawn on pickets. Canonical index: docs/frontend/foto-intake/railheads-only/. RH15WO uses RH15W.webp. Cleaned by scripts/clean-railhead-photos.py.",
   "count": 61,
   "entries": [
     {
@@ -308,5 +308,6 @@
       "source": "Rh9.JPG",
       "webp": "/2d-masters/railheads/photos/RH9.webp"
     }
-  ]
+  ],
+  "status": "definitive"
 }
