@@ -243,6 +243,8 @@ test.describe('configurator mobile quick path', () => {
     await expect(sheet.getByTestId('configurator-preview-pinned')).toBeVisible()
     await expect(sheet.getByTestId('design-master-preview')).toBeVisible()
     await expect(sheet.getByTestId('design-master-slug')).toBeVisible()
+    await expect(sheet.getByTestId('view-in-your-space')).toBeVisible()
+    await expect(sheet.getByRole('button', { name: /View in your space/i })).toBeVisible()
 
     await sheet.getByRole('button', { name: /Close gate preview/i }).click()
     await expect(page.getByRole('dialog')).toHaveCount(0)
@@ -310,6 +312,36 @@ test.describe('configurator quick path landscape phone', () => {
   })
 })
 
+test.describe('configurator AR handoff', () => {
+  test('shows View in your space under the desktop Design preview', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    const preview = page.getByTestId('configurator-preview-pinned')
+    const ar = page.getByTestId('view-in-your-space')
+    await expect(preview).toBeVisible()
+    await expect(ar).toBeVisible()
+    await expect(ar.getByRole('button', { name: /View in your space/i })).toBeVisible()
+  })
+
+  test('exports and hosts GLB/USDZ for the desktop handoff panel', async ({ page }) => {
+    await waitForConfiguratorReady(page)
+
+    const posts: string[] = []
+    page.on('request', (request) => {
+      if (request.method() === 'POST' && request.url().includes('/api/ar/models')) {
+        posts.push(request.headers()['x-ar-format'] ?? '')
+      }
+    })
+
+    await page.getByTestId('view-in-your-space').getByRole('button', { name: /View in your space/i }).click()
+    await expect(page.getByTestId('view-in-your-space').getByRole('status')).toBeVisible()
+    await expect(page.getByRole('button', { name: /Copy iPhone link/i })).toBeVisible({ timeout: 90_000 })
+    await expect(page.getByRole('link', { name: /Download GLB/i })).toBeVisible()
+    await expect(page.getByRole('link', { name: /Download USDZ/i })).toBeVisible()
+    expect(posts.sort()).toEqual(['glb', 'usdz'])
+  })
+})
+
 test.describe('configurator share route', () => {
   const shareToken = `e2e-share-${Date.now()}`
 
@@ -336,6 +368,8 @@ test.describe('configurator share route', () => {
     await expect(page.getByText(/Read-only view/i)).toBeVisible()
     await expect(page.getByTestId('design-master-preview')).toBeVisible()
     await expect(page.getByTestId('design-master-slug')).toBeVisible()
+    await expect(page.getByTestId('view-in-your-space')).toBeVisible()
+    await expect(page.getByRole('button', { name: /View in your space/i })).toBeVisible()
     await expect(page.getByRole('link', { name: /Request survey-led quote/i })).toHaveAttribute(
       'href',
       `/contact?shareToken=${encodeURIComponent(shareToken)}`,

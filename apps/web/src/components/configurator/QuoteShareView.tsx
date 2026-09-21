@@ -48,7 +48,7 @@ export function QuoteShareView({
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
-        <PreviewCanvas config={config} />
+        <PreviewCanvas config={config} arPlacement="share" />
 
         <div className="space-y-5">
           <div className="rounded-2xl border border-steel/10 bg-white px-4 py-4">
