@@ -64,7 +64,7 @@ export function MobileQuickActionBar() {
         <div className="min-w-0">
           {priceRevealed ? (
             <>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
                 {formatPricingBarHeadline(pricing)}
               </p>
               <div className="flex items-baseline gap-2">
@@ -75,7 +75,7 @@ export function MobileQuickActionBar() {
               </div>
             </>
           ) : (
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
               Price at final step
             </p>
           )}

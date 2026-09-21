@@ -17,17 +17,24 @@ type MobilePreviewChipProps = {
   tenant?: TenantBundle
   showDimensionOverlay?: boolean
   onDimensionOverlayClick?: () => void
+  /**
+   * `tall` — large live drawing while the customer picks the look (they are choosing between
+   * shapes that differ in small details). `compact` — 96px chip when the screen is needed for
+   * inputs / the keyboard.
+   */
+  size?: 'tall' | 'compact'
 }
 
 /**
- * Compact 96px Design-preview chip. Renders the official 2D master thumbnail
- * and opens the full bottom sheet on tap.
+ * Sticky Design preview for the mobile Quick Path. Renders the official 2D master and opens
+ * the full bottom sheet (fullscreen drawing + AR) on tap.
  */
 export function MobilePreviewChip({
   config,
   tenant,
   showDimensionOverlay = false,
   onDimensionOverlayClick,
+  size = 'compact',
 }: MobilePreviewChipProps) {
   const [open, setOpen] = useState(false)
 
@@ -43,44 +50,61 @@ export function MobilePreviewChip({
     }
   }, [config])
 
-  const summary = `${gateTypeLabel(config.gateType)} · ${config.widthMm} × ${config.heightMm} mm · ${finishLabel(config.finish, config.customFinishHex)}`
+  const dimensions = `${config.widthMm} × ${config.heightMm} mm`
+  const finish = finishLabel(config.finish, config.customFinishHex)
 
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-24 w-full items-center gap-3 border border-white/10 bg-steel p-2 text-left transition hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-        aria-label="Open full gate preview"
+        className={`flex w-full border border-white/10 bg-steel text-left transition hover:border-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 ${
+          size === 'tall' ? 'flex-col gap-2 p-2' : 'h-24 items-center gap-3 p-2'
+        }`}
+        aria-label={`Open full gate preview — ${gateTypeLabel(config.gateType)}, ${dimensions}, ${finish}`}
       >
-        <span className="flex h-20 w-28 shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-[#F3F2EF]">
+        <span
+          className={`relative flex shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-[#F3F2EF] ${
+            size === 'tall' ? 'h-[clamp(128px,21vh,176px)] w-full' : 'h-20 w-28'
+          }`}
+        >
           {master.ok ? (
             // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
             <img
               src={master.value.publicPath}
               alt=""
-              className="h-full w-full scale-[1.15] object-contain object-center"
+              className={`h-full w-full object-contain object-center ${size === 'tall' ? 'p-1' : 'scale-[1.15]'}`}
             />
           ) : (
-            <span className="px-2 text-center font-mono text-[9px] uppercase tracking-widest text-steel/50">
+            <span className="px-2 text-center font-mono text-xs uppercase tracking-wider text-steel/50">
               Drawing unavailable
             </span>
           )}
+          {size === 'tall' ? (
+            <span
+              aria-hidden
+              className="absolute right-2 top-2 inline-flex h-9 w-9 items-center justify-center border border-steel/15 bg-white/90 text-steel"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </span>
+          ) : null}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">
-            Design preview · tap to expand
+          <span className="block font-heading text-sm font-bold uppercase leading-5 tracking-tight text-white">
+            {gateTypeLabel(config.gateType)}
           </span>
-          <span className="mt-0.5 block truncate font-heading text-sm font-bold uppercase tracking-tight text-white">
-            {summary}
+          <span className="mt-0.5 block font-mono text-xs tabular-nums tracking-wide text-white/70">
+            {dimensions} · {finish}
           </span>
         </span>
-        <span
-          aria-hidden
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/15 text-white/80"
-        >
-          <Maximize2 className="h-4 w-4" />
-        </span>
+        {size === 'compact' ? (
+          <span
+            aria-hidden
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/15 text-white/80"
+          >
+            <Maximize2 className="h-4 w-4" />
+          </span>
+        ) : null}
       </button>
 
       <MobilePreviewSheet

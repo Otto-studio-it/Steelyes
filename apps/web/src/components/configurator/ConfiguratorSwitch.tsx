@@ -47,11 +47,11 @@ export function ConfiguratorSwitch({
           onCheckedChange(!checked)
         }}
         className={`relative inline-flex h-12 w-[72px] shrink-0 items-center border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 ${
-          checked ? 'border-primary bg-primary' : 'border-steel/20 bg-white'
+          checked ? 'border-primary bg-primary' : 'border-steel/25 bg-steel/10'
         }`}
       >
         <span
-          className={`inline-block h-9 w-9 transform border border-steel/10 bg-white transition-transform ${
+          className={`inline-block h-9 w-9 transform border border-steel/25 bg-white shadow-sm transition-transform ${
             checked ? 'translate-x-[34px]' : 'translate-x-1'
           }`}
           aria-hidden

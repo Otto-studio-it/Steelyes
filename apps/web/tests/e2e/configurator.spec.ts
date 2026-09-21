@@ -299,6 +299,54 @@ test.describe('configurator quick path small phone (375px)', () => {
 
     await expect(page.getByTestId('configurator-action-bar').getByRole('button', { name: /^Continue$/i })).toBeVisible()
   })
+
+  test('shows selection controls large enough to read on a phone', async ({ page }) => {
+    await gotoQuickPath(page)
+
+    // Live drawing is a real preview, not a thumbnail.
+    const drawing = page.getByRole('button', { name: /Open full gate preview/i }).locator('img')
+    expect((await drawing.boundingBox())!.width).toBeGreaterThan(300)
+    expect((await drawing.boundingBox())!.height).toBeGreaterThanOrEqual(128)
+
+    // Gate shape: large snap cards, the next one peeking in.
+    const shapes = page.getByRole('radiogroup', { name: 'Gate shape' }).getByRole('radio')
+    expect((await shapes.first().boundingBox())!.width).toBeGreaterThan(240)
+    expect((await shapes.nth(1).boundingBox())!.x).toBeLessThan(375)
+
+    // Selecting a later shape scrolls it into view and marks it.
+    await shapes.nth(2).click()
+    await expect(shapes.nth(2)).toHaveAttribute('aria-checked', 'true')
+    await expect(shapes.nth(2)).toBeInViewport({ ratio: 0.9 })
+
+    // Railheads: order is stable when one is chosen (the picked card used to jump to the front).
+    await page.getByRole('switch', { name: /Top railheads/i }).click()
+    const railheads = page.getByRole('radiogroup', { name: 'Railhead style' }).getByRole('radio')
+    const before = await railheads.evaluateAll((cards) => cards.slice(0, 6).map((card) => card.getAttribute('data-sku')))
+    await railheads.nth(3).click()
+    await expect(railheads.nth(3)).toHaveAttribute('aria-checked', 'true')
+    const after = await railheads.evaluateAll((cards) => cards.slice(0, 6).map((card) => card.getAttribute('data-sku')))
+    expect(after).toEqual(before)
+    await expect(page.getByRole('button', { name: /See all \d+ models/i })).toBeVisible()
+
+    // Nothing in the quick path is smaller than 12px.
+    const tiny = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('main *'))
+        .filter((el) => el.childNodes.length > 0 && Array.from(el.childNodes).some((n) => n.nodeType === 3 && n.textContent!.trim()))
+        .filter((el) => !el.closest('[aria-hidden="true"]') && parseFloat(getComputedStyle(el).fontSize) < 12)
+        .map((el) => el.textContent!.trim().slice(0, 30)),
+    )
+    expect(tiny).toEqual([])
+  })
+
+  test('keeps the dimensions button clear of the drawing caption in the preview sheet', async ({ page }) => {
+    await gotoQuickPath(page)
+    await page.getByRole('button', { name: /Open full gate preview/i }).click()
+
+    const sheet = page.getByRole('dialog')
+    const edit = (await sheet.getByRole('button', { name: /Edit dimensions/i }).boundingBox())!
+    const drawing = (await sheet.getByTestId('design-master-preview').boundingBox())!
+    expect(edit.y + edit.height).toBeLessThanOrEqual(drawing.y)
+  })
 })
 
 test.describe('configurator quick path landscape phone', () => {

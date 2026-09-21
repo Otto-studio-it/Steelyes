@@ -265,9 +265,8 @@ export function TechnicalMasterPreview({
                 ) : null}
               </div>
             </div>
-            <p className="mt-2 font-mono text-[10px] leading-4 text-muted">
-              Official 2D master — type, Victorian shape, circles and collars swap this file
-              immediately. Size is the millimetre strip. Finish is the swatch.
+            <p className="mt-2 text-xs leading-5 text-muted">
+              Drawing of your design, not to scale. It stays black and white — your finish is the swatch above.
             </p>
             {described.overlayFallback ? (
               <p className="mt-2 font-mono text-[10px] leading-4 text-steel" data-testid="design-overlay-fallback">

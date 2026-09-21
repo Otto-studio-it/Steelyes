@@ -9,7 +9,7 @@ export function MobileQuickProgress({ step }: { step: number }) {
   return (
     <div className="space-y-2">
       <div className="flex items-baseline justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary">
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
           Step {step + 1} of {QUICK_PATH_STEP_COUNT}
         </p>
         <p className="truncate font-heading text-sm font-bold uppercase tracking-tight text-steel">

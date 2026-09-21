@@ -10,6 +10,7 @@ import { QuickGateScreen } from '@/components/configurator/mobile/QuickGateScree
 import { QuickOpeningScreen } from '@/components/configurator/mobile/QuickOpeningScreen'
 import { QuickQuoteScreen } from '@/components/configurator/mobile/QuickQuoteScreen'
 import type { ConfiguratorActId } from '@/lib/configurator/navigation'
+import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { useConfiguratorConfig, useConfiguratorQuickStep, useConfiguratorStore } from '@/store/configuratorStore'
 import type { TenantBundle } from '@steelyes/gate-engine'
 
@@ -43,6 +44,7 @@ export function ConfiguratorMobileShell({ tenant }: { tenant?: TenantBundle }) {
   const step = useConfiguratorQuickStep()
   const setQuickStepIndex = useConfiguratorStore((state) => state.setQuickStepIndex)
   const customize = CUSTOMIZE_BY_STEP[step]
+  const { isLandscapePhone } = useConfiguratorViewport()
 
   // System / browser back (Android predictive back, iOS swipe-back) steps the
   // Quick Path down instead of leaving the page. Each forward move pushes a
@@ -77,6 +79,7 @@ export function ConfiguratorMobileShell({ tenant }: { tenant?: TenantBundle }) {
           tenant={tenant}
           showDimensionOverlay
           onDimensionOverlayClick={() => setQuickStepIndex(1)}
+          size={step === 0 && !isLandscapePhone ? 'tall' : 'compact'}
         />
       </div>
 

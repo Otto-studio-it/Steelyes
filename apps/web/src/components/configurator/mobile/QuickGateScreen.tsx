@@ -1,7 +1,7 @@
 'use client'
 
 import * as Dialog from '@radix-ui/react-dialog'
-import { packHasMotorSplit, resolveSilhouette } from '@steelyes/gate-engine'
+import { packHasMotorSplit } from '@steelyes/gate-engine'
 import { ChevronRight, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,10 +13,10 @@ import { RailheadModelPicker } from '@/components/configurator/RailheadChooserSe
 import { TipologyPicker } from '@/components/configurator/TipologyPicker'
 import { useSheetSwipeDismiss } from '@/hooks/useSheetSwipeDismiss'
 import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
-import { gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
+import { gateTypeLabel } from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
-/** Quick Path screen 1 — gate look: type hero (progressive disclosure), style, finish, motor. */
+/** Quick Path screen 1 — gate look: mechanism, shape, railheads, style, finish, motor. The sticky preview above is the hero. */
 export function QuickGateScreen() {
   const config = useConfiguratorConfig()
   const patchConfig = useConfiguratorStore((state) => state.patchConfig)
@@ -24,36 +24,24 @@ export function QuickGateScreen() {
   const typeSheetSwipe = useSheetSwipeDismiss(() => setTypeSheetOpen(false))
   const fullyConfigurable = getGateTypeAvailability(config.gateType) === 'configure'
   const motorSplit = packHasMotorSplit(config.gateType)
-  let heroImage = `/2d-masters/${config.gateType}/silhouettes/base.svg`
-  try {
-    heroImage = resolveSilhouette(config).publicPath
-  } catch {
-    // keep pack base
-  }
 
   return (
     <div className="space-y-6">
-      <div className="overflow-hidden border border-steel/12 bg-white">
-        <div className="relative h-40 w-full bg-[#F3F2EF]">
-          {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-          <img src={heroImage} alt="" className="h-full w-full object-contain object-center p-2" />
+      <div className="flex items-center justify-between gap-3 border border-steel/12 bg-white px-4 py-3">
+        <div className="min-w-0">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">How it opens</p>
+          <p className="font-heading text-sm font-bold uppercase leading-5 tracking-tight text-steel">
+            {gateTypeLabel(config.gateType)}
+          </p>
         </div>
-        <div className="flex items-center justify-between gap-3 border-t border-steel/8 px-4 py-3">
-          <div className="min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted">Gate mechanism</p>
-            <p className="truncate font-heading text-sm font-bold uppercase tracking-tight text-steel">
-              {gateTypeLabel(config.gateType)} · {styleLabel(config.style)}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setTypeSheetOpen(true)}
-            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 border border-steel/12 bg-white px-3 font-mono text-xs uppercase tracking-widest text-muted transition hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          >
-            Change
-            <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setTypeSheetOpen(true)}
+          className="inline-flex min-h-[44px] shrink-0 items-center gap-1 border border-steel/12 bg-white px-3 font-mono text-xs uppercase tracking-widest text-muted transition hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        >
+          Change
+          <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+        </button>
       </div>
 
       {!fullyConfigurable ? (
@@ -89,11 +77,11 @@ export function QuickGateScreen() {
           description={
             motorSplit
               ? config.motorised
-                ? 'Automated opening. Design CAD drops the leaf handle (CA-01).'
-                : 'Manual operation. Design CAD shows the leaf handle.'
+                ? 'Opens automatically — no handle on the gate.'
+                : 'Opened by hand — the drawing shows the handle.'
               : config.motorised
-                ? 'Automated opening. Design CAD drops the pull handle; sliding hardware stays schematic.'
-                : 'Manual operation. Design CAD shows the pull handle on the leading edge.'
+                ? 'Opens automatically — no pull handle on the gate.'
+                : 'Opened by hand — the drawing shows the pull handle on the leading edge.'
           }
           id="quick-motorised"
         />
