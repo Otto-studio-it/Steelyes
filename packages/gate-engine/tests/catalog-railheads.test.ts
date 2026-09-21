@@ -150,7 +150,8 @@ describe('railhead variant catalog', () => {
       expect.arrayContaining([
         expect.objectContaining({
           code: 'dog_bar_railheads:spear-dog-bar',
-          amountGbp: 24,
+          // CA-14: 1800 mm → 17 bays × £8 (stored quantity 3 is ignored).
+          amountGbp: 136,
           provisional: false,
         }),
       ]),

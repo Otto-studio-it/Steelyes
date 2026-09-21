@@ -110,8 +110,28 @@ describe('gate-engine pricing', () => {
       'bushes',
       'spirals',
     ])
-    expect(result.items.find((item) => item.code === 'top_railheads')?.amountGbp).toBe(113)
+    // CA-14: 1800 mm → 17 bays × £12.50 — the stored quantity (9) is ignored.
+    expect(result.items.find((item) => item.code === 'top_railheads')?.amountGbp).toBe(213)
     expect(result.items.find((item) => item.code === 'dog_bars')?.amountGbp).toBe(75)
+  })
+
+  it('re-prices railheads when the width changes, whatever quantity was stored (CA-14)', () => {
+    const narrow = setOption(createGateConfig(createGatePreset('double_swing')), 'top_railheads', true, 17)
+    const wide = { ...narrow, widthMm: 5000 }
+    const amount = (config: typeof narrow) =>
+      calculateGateOptionPricing(config).items.find((item) => item.code === 'top_railheads')?.amountGbp
+
+    expect(amount(narrow)).toBe(213) // 17 × £12.50
+    expect(amount(wide)).toBe(613) // 49 × £12.50 — used to stay at 213
+
+    // Tracked sliding goes to 10 m: 99 bays, not the old cap of 40.
+    const tracked = setOption(
+      { ...createGateConfig(createGatePreset('tracked_sliding')), widthMm: 10000 },
+      'top_railheads',
+      true,
+      1,
+    )
+    expect(amount(tracked)).toBe(1238) // 99 × £12.50
   })
 
   it('keeps an indicative total when railheads use the ship mid-band unit price', () => {
@@ -121,8 +141,8 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1900 + 113)
-    expect(result.breakdown.some((item) => item.code === 'top_railheads' && item.amountGbp === 113)).toBe(true)
+    expect(result.totalGbp).toBe(1900 + 213)
+    expect(result.breakdown.some((item) => item.code === 'top_railheads' && item.amountGbp === 213)).toBe(true)
   })
 
   it('keeps the indicative total aligned with the resolved base price when no uplifts apply', () => {
@@ -316,5 +336,21 @@ describe('gate-engine pricing', () => {
     expect(result.status).toBe('survey_required')
     expect(result.issues.map((issue) => issue.code)).toContain('incompatible_option_style')
     expect(result.totalGbp).toBeNull()
+  })
+  it('says when fence panels or a custom RAL are outside the estimate', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const plain = calculateIndicativeGatePrice(base)
+    const extras = calculateIndicativeGatePrice({
+      ...base,
+      finish: 'other_ral',
+      customFinishHex: '#9E000C',
+      fencePanels: { quantity: 2, panels: [{ heightMm: 1000, lengthMm: 950 }, { heightMm: 1000, lengthMm: 950 }] },
+    })
+
+    expect(extras.status).toBe('indicative')
+    expect(extras.totalGbp).toBe(plain.totalGbp)
+    expect(extras.assumptions.some((line) => /Fence panels \(2\) are not included/.test(line))).toBe(true)
+    expect(extras.assumptions.some((line) => /Custom RAL/.test(line))).toBe(true)
+    expect(plain.assumptions.some((line) => /Fence panels|Custom RAL/.test(line))).toBe(false)
   })
 })

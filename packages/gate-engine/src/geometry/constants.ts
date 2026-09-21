@@ -9,7 +9,10 @@ export const VICTORIAN_DOUBLE_SWING_ZONE_RATIOS: VerticalZoneRatios = {
 }
 
 export const DEFAULT_PICKET_SPACING_MM = 100
+/** Leaf frame tube (stiles / rails). */
 export const DEFAULT_TUBE_OUTER_MM = 40
+/** Infill picket tube — lighter than the frame. Schematic until fabrication standards are confirmed. */
+export const DEFAULT_PICKET_OUTER_MM = 20
 export const DEFAULT_TUBE_WALL_MM = 2.5
 
 export const SWING_RAIL_COUNT = 4

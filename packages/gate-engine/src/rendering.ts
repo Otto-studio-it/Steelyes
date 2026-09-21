@@ -322,10 +322,19 @@ function evaluateCubicBezier(
   return [x, y]
 }
 
+/**
+ * Arch control points, mirrored about the frame centre. The right-hand one used to be
+ * FRAME_X + 990 — 30 px past the frame edge — which skewed the arch and made x(t) double back,
+ * so the bisection below returned the wrong top Y for the right-hand pickets and hinges.
+ */
+const ARCH_CONTROL_INSET = 210
+const ARCH_CONTROL_LEFT_X = FRAME_X + ARCH_CONTROL_INSET
+const ARCH_CONTROL_RIGHT_X = FRAME_X + FRAME_WIDTH - ARCH_CONTROL_INSET
+
 function archYOnSwingTop(leftInset: number, rightInset: number, topY: number, x: number): number {
   const p0: [number, number] = [leftInset, topY + 30]
-  const p1: [number, number] = [FRAME_X + 210, topY - 10]
-  const p2: [number, number] = [FRAME_X + 990, topY - 10]
+  const p1: [number, number] = [ARCH_CONTROL_LEFT_X, topY - 10]
+  const p2: [number, number] = [ARCH_CONTROL_RIGHT_X, topY - 10]
   const p3: [number, number] = [rightInset, topY + 30]
 
   let lo = 0
@@ -524,7 +533,7 @@ function buildSwingFrame(config: GateConfig, palette: RenderPalette): GateRender
     primitives.push({
       kind: 'path',
       id: 'arched-top',
-      d: `M ${leftInset} ${topY + 30} C ${FRAME_X + 210} ${topY - 10}, ${FRAME_X + 990} ${topY - 10}, ${rightInset} ${topY + 30}`,
+      d: `M ${leftInset} ${topY + 30} C ${ARCH_CONTROL_LEFT_X} ${topY - 10}, ${ARCH_CONTROL_RIGHT_X} ${topY - 10}, ${rightInset} ${topY + 30}`,
       fill: 'none',
       stroke: palette.accent,
       strokeWidth: scaleVisual(5),

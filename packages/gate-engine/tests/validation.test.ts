@@ -213,4 +213,36 @@ describe('gate-engine validation', () => {
       expect(result.guidance?.[0]?.message).not.toMatch(/cannot exceed/i)
     }
   })
+  it('rounds non-integer dimensions instead of silently swapping in the preset', () => {
+    const config = normalizeGateConfig({ gateType: 'double_swing', widthMm: 3047.6, heightMm: 1799.5 })
+    expect(config.widthMm).toBe(3048)
+    expect(config.heightMm).toBe(1800)
+    // Missing / non-numeric still takes the preset.
+    expect(normalizeGateConfig({ gateType: 'double_swing', widthMm: Number.NaN }).widthMm).toBe(1800)
+  })
+
+  it('rejects invalid posts and motorised values before they reach mesh or pricing', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+
+    const nanPosts = validateGateConfig({ ...base, posts: { ...base.posts, extendAboveGateMm: Number.NaN } })
+    expect(nanPosts.ok).toBe(false)
+    expect(!nanPosts.ok && nanPosts.issues.map((issue) => issue.code)).toContain('invalid_posts')
+
+    const badMaterial = validateGateConfig({ ...base, posts: { ...base.posts, material: 'gold' as never } })
+    expect(!badMaterial.ok && badMaterial.issues.map((issue) => issue.code)).toContain('invalid_posts')
+
+    const badMotor = validateGateConfig({ ...base, motorised: 'yes' as never })
+    expect(!badMotor.ok && badMotor.issues.map((issue) => issue.code)).toContain('invalid_motorised')
+  })
+
+  it('returns issues instead of throwing on structurally broken configs', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+
+    expect(() => validateGateConfig({ ...base, options: null as never })).not.toThrow()
+    expect(validateGateConfig({ ...base, options: null as never }).ok).toBe(false)
+    expect(validateGateConfig({ ...base, fencePanels: null as never }).ok).toBe(false)
+    expect(
+      validateGateConfig({ ...base, fencePanels: { quantity: 1, panels: [null as never] } }).ok,
+    ).toBe(false)
+  })
 })

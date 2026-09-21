@@ -49,8 +49,10 @@ const R = PROVISIONAL_COUNT_RULES
 
 export function getExpectedTopRailheadCount(widthMm: number): number {
   // CA-14: one finial per picket bay. Bay ≈ picket spacing 100 mm (ship default).
+  // Upper bound covers the widest gate (tracked sliding, 10 000 mm → 99 bays); the old cap of 40
+  // under-counted — and under-priced — anything wider than ~4.1 m.
   const bayMm = 100
-  return clamp(Math.max(1, Math.round(widthMm / bayMm) - 1), 4, 40)
+  return clamp(Math.max(1, Math.round(widthMm / bayMm) - 1), 4, 100)
 }
 
 export function getExpectedDogBarRailheadCount(widthMm: number): number {

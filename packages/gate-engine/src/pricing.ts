@@ -1,3 +1,4 @@
+import { getExpectedDogBarRailheadCount, getExpectedTopRailheadCount } from './rules/geometry'
 import {
   DEFAULT_RAILHEAD_VARIANT_CATALOG,
   isRailheadOptionKey,
@@ -410,6 +411,17 @@ function getEnabledQuantity(quantity: number | undefined): number {
   return quantity
 }
 
+/**
+ * CA-14: railhead counts are automatic — one per picket bay, never customer-entered. Price from
+ * the current width, not the quantity stored when the option was switched on (that value goes
+ * stale as soon as the customer changes the width, and older saves carry 1).
+ */
+function getPricedQuantity(option: GateConfig['options'][number], config: GateConfig): number {
+  if (option.key === 'top_railheads') return getExpectedTopRailheadCount(config.widthMm)
+  if (option.key === 'dog_bar_railheads') return getExpectedDogBarRailheadCount(config.widthMm)
+  return getEnabledQuantity(option.quantity)
+}
+
 function computeOptionLineItems(
   config: GateConfig,
   catalog: PricingCatalog,
@@ -424,7 +436,7 @@ function computeOptionLineItems(
     }
 
     const pricing = catalog.optionPrices[option.key]
-    const quantity = getEnabledQuantity(option.quantity)
+    const quantity = getPricedQuantity(option, config)
 
     if (option.key === 'aluminium_panels') {
       if (config.style !== 'composite_boards') {
@@ -596,6 +608,17 @@ export function calculateIndicativeGatePrice(
 
   if (config.fulfilment === 'supply_only') {
     assumptions.push(SUPPLY_ONLY_ASSUMPTION)
+  }
+
+  // Selected but not priced by this catalogue — say so instead of implying the total covers them.
+  if (config.fencePanels.quantity > 0) {
+    assumptions.push(
+      `Fence panels (${config.fencePanels.quantity}) are not included in this estimate — quoted separately.`,
+    )
+  }
+
+  if (config.finish === 'other_ral') {
+    assumptions.push('Custom RAL colour carries an extra powder-coating charge — quoted separately.')
   }
 
   const breakdown: PricingLineItem[] = [baseSelection.lineItem]

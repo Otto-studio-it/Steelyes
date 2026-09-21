@@ -25,7 +25,7 @@ import { collectVariantCatalogIssues } from './catalog/variants'
 import { GLOBAL_DIMENSION_LIMITS, getDimensionLimits } from './dimension-limits'
 import { normalizeFinishHex } from './finishes'
 import { clamp } from './internal/shared'
-import { normalizeGatePosts } from './posts'
+import { MAX_POST_EXTENSION_MM, normalizeGatePosts, POST_CAP_STYLES, POST_MATERIALS } from './posts'
 import { collectCompatibilityIssues } from './rules/compatibility'
 import { collectGeometryIssues, isProvisionalCountGuidance } from './rules/geometry'
 
@@ -93,6 +93,12 @@ function toIntegerOrNull(value: unknown): number | null {
   if (typeof value !== 'number' || !Number.isFinite(value)) return null
   if (!Number.isInteger(value)) return null
   return value
+}
+
+/** Dimensions arrive from unit conversions and sliders — round to the millimetre instead of discarding. */
+function toRoundedMmOrNull(value: unknown): number | null {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return null
+  return Math.round(value)
 }
 
 function normalizeOptionSelection(option: Partial<GateOptionSelection> | undefined): GateOptionSelection | null {
@@ -412,8 +418,10 @@ export function normalizeGateConfig(
   const gateType = isGateType(input.gateType) ? input.gateType : fallbackGateType
   const preset: GatePreset = DEFAULT_GATE_PRESETS[gateType]
 
-  const widthMm = toIntegerOrNull(input.widthMm)
-  const heightMm = toIntegerOrNull(input.heightMm)
+  // A non-integer width (e.g. 3047.6 from inches) used to fall back to the preset — a confident
+  // price for a different gate. Round it; only a missing / non-numeric value takes the preset.
+  const widthMm = toRoundedMmOrNull(input.widthMm)
+  const heightMm = toRoundedMmOrNull(input.heightMm)
 
   const options = Array.isArray(input.options)
     ? input.options.map((option) => normalizeOptionSelection(option as Partial<GateOptionSelection>)).filter(Boolean)
@@ -527,8 +535,48 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
     })
   }
 
+  if (typeof config.motorised !== 'boolean') {
+    issues.push({
+      field: 'motorised',
+      code: 'invalid_motorised',
+      message: 'Motorised must be true or false.',
+    })
+  }
+
+  // Mesh, cut list and pricing read config.posts raw — a NaN extension becomes NaN geometry.
+  const posts = config.posts as Partial<GateConfig['posts']> | null | undefined
+  if (
+    !posts ||
+    typeof posts.enabled !== 'boolean' ||
+    !(POST_MATERIALS as readonly unknown[]).includes(posts.material) ||
+    !(POST_CAP_STYLES as readonly unknown[]).includes(posts.capStyle) ||
+    !Number.isInteger(posts.extendAboveGateMm) ||
+    (posts.extendAboveGateMm as number) < 0 ||
+    (posts.extendAboveGateMm as number) > MAX_POST_EXTENSION_MM
+  ) {
+    issues.push({
+      field: 'posts',
+      code: 'invalid_posts',
+      message: `Posts need a supported material and cap style, and an extension between 0 and ${MAX_POST_EXTENSION_MM}mm.`,
+    })
+  }
+
+  // Structural problems return issues instead of throwing further down.
+  if (!Array.isArray(config.options)) {
+    issues.push({ field: 'options', code: 'invalid_options', message: 'Options must be a list.' })
+    return { ok: false, issues }
+  }
+  if (!config.fencePanels || typeof config.fencePanels !== 'object') {
+    issues.push({ field: 'fencePanels', code: 'invalid_fence_panels', message: 'Fence panels are missing.' })
+    return { ok: false, issues }
+  }
+
   const optionKeys = new Set<string>()
   for (const option of config.options) {
+    if (!option || typeof option !== 'object') {
+      issues.push({ field: 'options', code: 'invalid_option', message: 'Option entry is not valid.' })
+      continue
+    }
     if (!isGateOptionKey(option.key)) {
       issues.push({
         field: `options.${option.key}`,
@@ -597,6 +645,14 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
     })
   } else {
     fencePanels.panels.forEach((panel, index) => {
+      if (!panel || typeof panel !== 'object') {
+        issues.push({
+          field: `fencePanels.panels[${index}]`,
+          code: 'invalid_fence_panel',
+          message: 'Fence panel entry is not valid.',
+        })
+        return
+      }
       if (!Number.isInteger(panel.heightMm) || panel.heightMm <= 0) {
         issues.push({
           field: `fencePanels.panels[${index}].heightMm`,

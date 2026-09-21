@@ -6,6 +6,8 @@ export const POST_CAP_STYLES = ['flat', 'ball', 'pyramid', 'spear'] as const
 
 export type PostCapStyle = (typeof POST_CAP_STYLES)[number]
 
+export const MAX_POST_EXTENSION_MM = 400
+
 export type GatePostsConfig = {
   enabled: boolean
   material: PostMaterial
@@ -73,7 +75,7 @@ export function normalizeGatePosts(input: unknown): GatePostsConfig {
       : DEFAULT_GATE_POSTS.capStyle
   const extend =
     typeof raw.extendAboveGateMm === 'number' && Number.isFinite(raw.extendAboveGateMm)
-      ? Math.min(400, Math.max(0, Math.round(raw.extendAboveGateMm)))
+      ? Math.min(MAX_POST_EXTENSION_MM, Math.max(0, Math.round(raw.extendAboveGateMm)))
       : DEFAULT_GATE_POSTS.extendAboveGateMm
 
   return {

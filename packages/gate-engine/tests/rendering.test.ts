@@ -329,4 +329,25 @@ describe('gate-engine rendering', () => {
     expect(every1.notes.some((n) => n.includes('every long picket'))).toBe(true)
     expect(every2.notes.some((n) => n.includes('every 2nd long picket'))).toBe(true)
   })
+  it('draws the installation-view arch symmetric about the frame centre', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const config = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'arched_top' ? { ...option, enabled: true, quantity: 1 } : option,
+      ),
+    }
+    const plan = buildGateRenderPlan(config, { viewMode: 'installation' })
+    const arch = plan.primitives.find((primitive) => primitive.id === 'arched-top')
+    expect(arch?.kind).toBe('path')
+
+    const [x0, y0, c1x, c1y, c2x, c2y, x3, y3] = (arch as { d: string }).d.match(/-?\d+(\.\d+)?/g)!.map(Number)
+    const centre = (x0! + x3!) / 2
+    expect(c1x! + c2x!).toBeCloseTo(centre * 2, 5)
+    expect(c1y).toBe(c2y)
+    expect(y0).toBe(y3)
+    // Control points stay inside the frame (the right one used to overshoot it).
+    expect(c2x!).toBeLessThan(x3!)
+    expect(c1x!).toBeGreaterThan(x0!)
+  })
 })
