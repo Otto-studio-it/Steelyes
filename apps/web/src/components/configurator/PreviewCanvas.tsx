@@ -5,6 +5,7 @@ import { Maximize2, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { ViewInYourSpace } from '@/components/configurator/ViewInYourSpace'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
 
 type PreviewCanvasProps = {
@@ -83,6 +84,10 @@ export function PreviewCanvas({
   return (
     <div className={className}>
       {canvas}
+
+      <div className="mt-3">
+        <ViewInYourSpace config={config} placement="preview" />
+      </div>
 
       <Dialog.Root open={fullscreenOpen} onOpenChange={setFullscreenOpen}>
         <Dialog.Portal>

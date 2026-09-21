@@ -12,6 +12,7 @@ import {
 import { ConfigurationSummary } from '@/components/configurator/ConfigurationSummary'
 import { ConfiguratorPriceSummary } from '@/components/configurator/ConfiguratorPriceSummary'
 import { PreviewCanvas } from '@/components/configurator/PreviewCanvas'
+import { ViewInYourSpace } from '@/components/configurator/ViewInYourSpace'
 import { useConfiguratorViewport } from '@/hooks/useConfiguratorViewport'
 import { buildContactHandoffPath, buildQuotePdfPath } from '@/lib/configurator/share-token'
 import {
@@ -66,6 +67,8 @@ export function QuoteShareView({
             pricingCopyVariant={pricingCopyVariant}
             pricingCatalog={pricingCatalog}
           />
+
+          <ViewInYourSpace config={config} placement="share" />
 
           <Link
             href={buildContactHandoffPath(shareToken)}
