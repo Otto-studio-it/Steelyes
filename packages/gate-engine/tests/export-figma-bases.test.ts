@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -10,6 +9,7 @@ import {
   serializeGateRenderPlanToSvg,
   type GateType,
 } from '../src/index'
+import { mastersOutputRoot, REPO_MASTERS_ROOT } from './helpers/masters-output'
 
 const TYPES: GateType[] = [
   'double_swing',
@@ -24,8 +24,7 @@ const TYPES: GateType[] = [
 
 describe('export Figma CAD base SVGs', () => {
   it('writes dimension-stripped technical SVGs into docs/frontend/2d-masters', () => {
-    const here = path.dirname(fileURLToPath(import.meta.url))
-    const outRoot = path.resolve(here, '../../../docs/frontend/2d-masters')
+    const outRoot = mastersOutputRoot()
 
     for (const gateType of TYPES) {
       const config = createGateConfig(createGatePreset(gateType))
@@ -69,6 +68,7 @@ describe('export Figma CAD base SVGs', () => {
       }
     }
 
-    expect(fs.existsSync(path.join(outRoot, 'tracked_sliding', 'silhouettes', 'base.svg'))).toBe(true)
+    expect(fs.existsSync(path.join(outRoot, 'tracked_sliding', 'figma-base.svg'))).toBe(true)
+    expect(fs.existsSync(path.join(REPO_MASTERS_ROOT, 'tracked_sliding', 'silhouettes', 'base.svg'))).toBe(true)
   })
 })

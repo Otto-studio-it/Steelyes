@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -11,6 +10,7 @@ import {
   type GateConfig,
   type GateOptionKey,
 } from '../src/index'
+import { mastersOutputRoot, REPO_MASTERS_ROOT } from './helpers/masters-output'
 
 /**
  * Telescopic sliding — photo lock from `foto /telescopic slidings gates`:
@@ -89,9 +89,9 @@ function stripForFigma(plan: ReturnType<typeof buildGateRenderPlan>) {
 
 describe('export Figma telescopic_sliding variant SVGs', () => {
   it('writes the 5 silhouette masters into docs/frontend/2d-masters/telescopic_sliding/silhouettes', () => {
-    const here = path.dirname(fileURLToPath(import.meta.url))
-    const packDir = path.resolve(here, '../../../docs/frontend/2d-masters/telescopic_sliding')
-    const outDir = path.join(packDir, 'silhouettes')
+    const packDir = path.join(REPO_MASTERS_ROOT, 'telescopic_sliding')
+    const outPackDir = path.join(mastersOutputRoot(), 'telescopic_sliding')
+    const outDir = path.join(outPackDir, 'silhouettes')
     fs.mkdirSync(outDir, { recursive: true })
 
     const written: string[] = []
@@ -116,7 +116,7 @@ describe('export Figma telescopic_sliding variant SVGs', () => {
       expect(svg).not.toContain('telescopic-segment-3')
     }
 
-    fs.copyFileSync(path.join(outDir, 'base.svg'), path.join(packDir, 'figma-base.svg'))
+    fs.copyFileSync(path.join(outDir, 'base.svg'), path.join(outPackDir, 'figma-base.svg'))
 
     expect(written).toHaveLength(5)
     expect(fs.existsSync(path.join(packDir, 'manifest.json'))).toBe(true)

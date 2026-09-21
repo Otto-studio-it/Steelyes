@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -12,6 +11,7 @@ import {
   type GateConfig,
   type GateOptionKey,
 } from '../src/index'
+import { mastersOutputRoot, REPO_MASTERS_ROOT } from './helpers/masters-output'
 
 /**
  * Cantilever sliding — 5 silhouettes.
@@ -88,9 +88,9 @@ function stripForFigma(plan: ReturnType<typeof buildGateRenderPlan>, config: Gat
 
 describe('export Figma cantilever_sliding variant SVGs', () => {
   it('writes the 5 silhouette masters into docs/frontend/2d-masters/cantilever_sliding/silhouettes', () => {
-    const here = path.dirname(fileURLToPath(import.meta.url))
-    const packDir = path.resolve(here, '../../../docs/frontend/2d-masters/cantilever_sliding')
-    const outDir = path.join(packDir, 'silhouettes')
+    const packDir = path.join(REPO_MASTERS_ROOT, 'cantilever_sliding')
+    const outPackDir = path.join(mastersOutputRoot(), 'cantilever_sliding')
+    const outDir = path.join(outPackDir, 'silhouettes')
     fs.mkdirSync(outDir, { recursive: true })
 
     const written: string[] = []
@@ -111,7 +111,7 @@ describe('export Figma cantilever_sliding variant SVGs', () => {
       expect(svg).toContain('1333')
     }
 
-    fs.copyFileSync(path.join(outDir, 'composite.svg'), path.join(packDir, 'figma-base.svg'))
+    fs.copyFileSync(path.join(outDir, 'composite.svg'), path.join(outPackDir, 'figma-base.svg'))
 
     expect(written).toHaveLength(5)
     expect(fs.existsSync(path.join(packDir, 'manifest.json'))).toBe(true)

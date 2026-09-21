@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -11,6 +10,7 @@ import {
   type GateConfig,
   type GateOptionKey,
 } from '../src/index'
+import { mastersOutputRoot, REPO_MASTERS_ROOT } from './helpers/masters-output'
 
 /** Double-swing Figma silhouette catalog (dims stay off-canvas). */
 const VARIANTS = [
@@ -64,9 +64,9 @@ function stripForFigma(plan: ReturnType<typeof buildGateRenderPlan>) {
 
 describe('export Figma double_swing variant SVGs', () => {
   it('writes the 5 silhouette masters into docs/frontend/2d-masters/double_swing/silhouettes', () => {
-    const here = path.dirname(fileURLToPath(import.meta.url))
-    const packDir = path.resolve(here, '../../../docs/frontend/2d-masters/double_swing')
-    const outDir = path.join(packDir, 'silhouettes')
+    const packDir = path.join(REPO_MASTERS_ROOT, 'double_swing')
+    const outPackDir = path.join(mastersOutputRoot(), 'double_swing')
+    const outDir = path.join(outPackDir, 'silhouettes')
     fs.mkdirSync(outDir, { recursive: true })
 
     const written: string[] = []
@@ -82,7 +82,7 @@ describe('export Figma double_swing variant SVGs', () => {
     }
 
     // Keep legacy alias in sync with base silhouette
-    fs.copyFileSync(path.join(outDir, 'base.svg'), path.join(packDir, 'figma-base.svg'))
+    fs.copyFileSync(path.join(outDir, 'base.svg'), path.join(outPackDir, 'figma-base.svg'))
 
     expect(written).toHaveLength(5)
     expect(fs.existsSync(path.join(packDir, 'manifest.json'))).toBe(true)
