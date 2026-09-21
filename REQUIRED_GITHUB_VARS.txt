@@ -1,0 +1,87 @@
+# REQUIRED GITHUB ACTIONS VARIABLES
+# Configure at: https://github.com/Otto-studio-it/Steelyes/settings/variables/actions
+
+# ============================================================
+# REQUIRED (workflow will fail without these)
+# ============================================================
+
+NEXT_PUBLIC_SUPABASE_URL=
+# Example: https://abcdefgh.supabase.co
+# Find at: Supabase Dashboard → Project Settings → API → Project URL
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+# Example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# Find at: Supabase Dashboard → Project Settings → API → anon public key
+
+
+# ============================================================
+# RECOMMENDED (app may have issues without this)
+# ============================================================
+
+NEXT_PUBLIC_SITE_URL=https://www.steelyes.co.uk
+# Production site URL (canonical)
+
+
+# ============================================================
+# OPTIONAL (only set if currently used in production)
+# ============================================================
+
+# NEXT_PUBLIC_COOKIEBOT_ID=
+# Find at: Coolify production app → Environment (if set)
+
+# NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+# Find at: Coolify production app → Environment (if set)
+
+# NEXT_PUBLIC_POSTHOG_API_KEY=
+# Find at: Coolify production app → Environment (if set)
+
+# NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW=
+# Find at: Coolify production app → Environment (if set)
+
+
+# ============================================================
+# IMPORTANT NOTES
+# ============================================================
+
+# 1. These are PUBLIC environment variables (NEXT_PUBLIC_*)
+#    - They are exposed in the browser bundle
+#    - Safe to use GitHub Actions Variables (not Secrets)
+#    - Next.js inlines them at build time
+
+# 2. DO NOT add runtime secrets here:
+#    ❌ NEVER add: SUPABASE_SERVICE_ROLE_KEY
+#    ❌ NEVER add: RESEND_API_KEY
+#    ❌ NEVER add: Any other sensitive keys
+#    → These stay in Coolify environment variables ONLY
+
+# 3. How to set in GitHub:
+#    a. Go to repo Settings → Secrets and variables → Actions → Variables tab
+#    b. Click "New repository variable"
+#    c. Name: (copy from left side above, e.g., NEXT_PUBLIC_SUPABASE_URL)
+#    d. Value: (paste your actual value)
+#    e. Click "Add variable"
+#    f. Repeat for each variable
+
+# 4. No secrets needed for GHCR:
+#    - Workflow uses GITHUB_TOKEN (auto-provided)
+#    - No manual token setup required
+
+# 5. After setting these variables:
+#    - Merge PR #35
+#    - Wait for GitHub Actions build to complete
+#    - Follow cutover checklist: docs/phase-e-cutover-checklist.md
+
+# ============================================================
+# WHERE TO FIND VALUES
+# ============================================================
+
+# Supabase values:
+#   → https://supabase.com/dashboard/project/[your-project]/settings/api
+
+# Other NEXT_PUBLIC values (if used):
+#   → Copy from Coolify production app environment variables
+#   → SSH to droplet: docker exec [prod-container] printenv | grep NEXT_PUBLIC
+
+# Questions?
+#   → See docs/github-actions-setup.md
+#   → See docs/PHASE_E_SUMMARY.md
