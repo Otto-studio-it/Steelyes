@@ -138,10 +138,27 @@ export function ViewInYourSpace({
 
   async function copyLink(kind: 'iphone' | 'android', url: string) {
     try {
-      await navigator.clipboard.writeText(url)
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url)
+      } else {
+        throw new Error('clipboard_unavailable')
+      }
       setCopied(kind)
     } catch {
-      setCopied(null)
+      try {
+        const input = document.createElement('textarea')
+        input.value = url
+        input.setAttribute('readonly', '')
+        input.style.position = 'fixed'
+        input.style.left = '-9999px'
+        document.body.appendChild(input)
+        input.select()
+        document.execCommand('copy')
+        document.body.removeChild(input)
+        setCopied(kind)
+      } catch {
+        setCopied(null)
+      }
     }
   }
 
@@ -196,11 +213,14 @@ export function ViewInYourSpace({
               {AR_UI_COPY.expired}
             </p>
           ) : (
-            <p className="text-sm leading-6 text-muted-deep" role="status">
-              {state.handoff.phoneReachable
-                ? formatArExpiryLabel(state.handoff.expiresAt, nowMs)
-                : AR_UI_COPY.privateOrigin}
-            </p>
+            <>
+              <p className="text-sm leading-6 text-muted-deep" role="status">
+                {formatArExpiryLabel(state.handoff.expiresAt, nowMs)}
+              </p>
+              {state.handoff.phoneReachable ? null : (
+                <p className="text-sm leading-6 text-muted-deep">{AR_UI_COPY.privateOrigin}</p>
+              )}
+            </>
           )}
 
           {!expired && platform === 'ios' ? (
