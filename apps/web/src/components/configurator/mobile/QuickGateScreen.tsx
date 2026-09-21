@@ -13,7 +13,7 @@ import { RailheadModelPicker } from '@/components/configurator/RailheadChooserSe
 import { TipologyPicker } from '@/components/configurator/TipologyPicker'
 import { useSheetSwipeDismiss } from '@/hooks/useSheetSwipeDismiss'
 import { getGateTypeAvailability } from '@/lib/configurator/gate-type-availability'
-import { gateTypeLabel } from '@/lib/configurator/labels'
+import { gateTypeLabel, styleLabel } from '@/lib/configurator/labels'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 /** Quick Path screen 1 — gate look: mechanism, shape, railheads, style, finish, motor. The sticky preview above is the hero. */
@@ -30,8 +30,9 @@ export function QuickGateScreen() {
       <div className="flex items-center justify-between gap-3 border border-steel/12 bg-white px-4 py-3">
         <div className="min-w-0">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">How it opens</p>
+          {/* Wraps instead of truncating — the old hero cut this to "DOUBLE SWING · TRADITION…". */}
           <p className="font-heading text-sm font-bold uppercase leading-5 tracking-tight text-steel">
-            {gateTypeLabel(config.gateType)}
+            {gateTypeLabel(config.gateType)} · {styleLabel(config.style)}
           </p>
         </div>
         <button
