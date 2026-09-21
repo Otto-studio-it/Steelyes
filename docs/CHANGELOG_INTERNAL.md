@@ -3,7 +3,7 @@ title: Internal Changelog
 description: Verified implementation log for project work
 owner: Ruben
 status: ACTIVE
-last_updated: 2026-07-28
+last_updated: 2026-09-21
 ---
 
 # Steelyes — Internal Changelog
@@ -11,6 +11,15 @@ last_updated: 2026-07-28
 This is an internal implementation log. It records what changed, how it was verified, and which commit contains the work.
 
 It is not a public product changelog.
+
+---
+
+## 2026-09-21 — Security hardening, test hygiene, AR rebuild (Phases 0–2)
+
+- **Phase 0 (security):** admin = `app_metadata.is_admin` only; anon policies/grants dropped on `configurations` + `quote_requests` (migration `20260921120000_…`, not yet applied); Turnstile fails closed in production (`TURNSTILE_ALLOW_UNVERIFIED=true` is the opt-out); in-memory per-IP / per-recipient rate limits on lead forms, save, quote PDF and AR; CI no longer exposes the service-role key job-wide.
+- **Phase 1 (tests):** exporter tests no longer overwrite `docs/frontend/2d-masters` (temp dir; `WRITE_MASTERS=1` to regenerate); web unit tests now run under `pnpm test` / CI.
+- **Phase 2 (AR):** Victorian leaves are an open perimeter frame — the old solid W×H box hid 36 of 37 pickets in the default double swing. Models are generated server-side from the share token at `/api/ar/gate/{token}.glb|usdz`; the open upload endpoint and tmp-dir store are gone. One mesh + material per role (52 → ≤6). Floor snap now survives USDZ export. iOS link is a `rel="ar"` anchor whose only child is an `<img>`; Android intent targets the Google app for `ar_preferred`; links reset when the design changes; desktop shows a QR to the share page (previously deferred to "Ticket D" — links no longer expire, which was the objection); AR button also on the mobile final step.
+- Verified locally: typecheck, lint, engine 207 tests, web 56 tests, production build; end-to-end AR flow against an in-memory REST stand-in (desktop, spoofed iPhone UA, share page). **Not verified:** real Quick Look / Scene Viewer on devices — needs a public HTTPS deploy.
 
 ---
 

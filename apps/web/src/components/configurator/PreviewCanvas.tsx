@@ -23,6 +23,8 @@ type PreviewCanvasProps = {
   allowColourFit?: boolean
   arPlacement?: 'preview' | 'share'
   arDisabled?: boolean
+  /** Share page only — the design is already saved under this token. */
+  arShareToken?: string
 }
 
 /**
@@ -37,6 +39,7 @@ export function PreviewCanvas({
   onDimensionOverlayClick,
   arPlacement = 'preview',
   arDisabled = false,
+  arShareToken,
 }: PreviewCanvasProps) {
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
 
@@ -89,7 +92,7 @@ export function PreviewCanvas({
     <div className={className}>
       {canvas}
 
-      <ViewInYourSpace config={config} placement={arPlacement} disabled={arDisabled} />
+      <ViewInYourSpace config={config} shareToken={arShareToken} placement={arPlacement} disabled={arDisabled} />
 
       <Dialog.Root open={fullscreenOpen} onOpenChange={setFullscreenOpen}>
         <Dialog.Portal>

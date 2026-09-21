@@ -3,6 +3,7 @@ import { getLeafCount } from '../internal/shared'
 import { getBifoldPanelsPerLeaf, isBifoldGate } from '../rules/bifold'
 import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
+import { LEAF_FRAME_PROFILE_MM, PICKET_TUBE_RADIUS_MM, pushLeafPerimeterFrame } from './leaf-frame'
 import { pushDogBarRailheads, pushTopRailheads } from './railheads'
 import type { GateMeshBox, GateMeshCylinder } from './types'
 
@@ -23,7 +24,8 @@ const BIFOLD_STACK_PACK_W_MM = 14
 
 /** Arch shoulder drop stays inside typed heightMm (CA-08 / Phase 1 envelope). */
 const ARCH_SHOULDER_DROP_MM = 90
-const ARCH_SEGMENT_COUNT = 7
+/** Odd, so one segment is centred on the crest and reaches heightMm exactly. */
+const ARCH_SEGMENT_COUNT = 15
 /** Fraction down from top of leaf (CAD / SVG Y-down), dog rail band. */
 const DOG_RAIL_FROM_TOP = 0.7
 
@@ -143,7 +145,8 @@ function pushArchTopRail(
     depthOffsetMm = 0,
   } = args
   const left = centerX - widthMm / 2
-  const usable = widthMm - 16
+  // Spans between the stiles.
+  const usable = widthMm - LEAF_FRAME_PROFILE_MM * 2
   const segmentWidth = usable / ARCH_SEGMENT_COUNT
 
   for (let i = 0; i < ARCH_SEGMENT_COUNT; i += 1) {
@@ -152,15 +155,17 @@ function pushArchTopRail(
     const tMid = (t0 + t1) / 2
     const leafT = leafArchT(tMid, panelIndex, panelsPerLeaf)
     const topY = archTopYMm(leafT, archSide, leafHeightMm)
-    const segHeight = scaleVisualBoldness(10)
+    // The arch is the leaf's top frame member: same section as the stiles, and it counts
+    // toward the opening envelope (crest = heightMm).
+    const segHeight = LEAF_FRAME_PROFILE_MM
     boxes.push({
       kind: 'box',
       id: `${idPrefix}-arch-seg-${i + 1}`,
-      widthMm: Math.max(6, segmentWidth - 1),
+      widthMm: segmentWidth + 1,
       heightMm: segHeight,
-      depthMm: FRAME_DEPTH_MM * 0.7,
-      positionMm: [left + 8 + segmentWidth * (i + 0.5), topY - segHeight / 2, depthOffsetMm],
-      role: 'rail',
+      depthMm: FRAME_DEPTH_MM * 0.75,
+      positionMm: [left + LEAF_FRAME_PROFILE_MM + segmentWidth * (i + 0.5), topY - segHeight / 2, depthOffsetMm],
+      role: 'frame',
     })
   }
 }
@@ -358,14 +363,17 @@ function pushVictorianPanel(
   }
 
   const leafLeft = centerX - widthMm / 2
+  // Infill is spaced between the stiles, not across the full leaf width.
+  const infillLeft = leafLeft + LEAF_FRAME_PROFILE_MM
+  const infillWidth = Math.max(1, widthMm - LEAF_FRAME_PROFILE_MM * 2)
   const picketBottomY = dogBars
     ? meshYFromTopRatio(DOG_RAIL_FROM_TOP, leafHeightMm) + 4
     : meshYFromTopRatio(rails.spearBand, leafHeightMm)
 
   for (let picketIndex = 0; picketIndex < picketCount; picketIndex += 1) {
     const t = (picketIndex + 0.5) / picketCount
-    const x = leafLeft + widthMm * t
-    const leafT = leafArchT(t, panelIndex, panelsPerLeaf)
+    const x = infillLeft + infillWidth * t
+    const leafT = leafArchT((x - leafLeft) / widthMm, panelIndex, panelsPerLeaf)
     const topY = archedTop
       ? archTopYMm(leafT, archSide, leafHeightMm) - 14
       : meshYFromTopRatio(rails.upperMid + 0.02, leafHeightMm)
@@ -386,7 +394,7 @@ function pushVictorianPanel(
     const dogHeight = Math.max(30, dogTopY - dogBottomY)
     for (let dogIndex = 0; dogIndex < dogBarCount; dogIndex += 1) {
       const t = (dogIndex + 0.5) / dogBarCount
-      const x = leafLeft + widthMm * t
+      const x = infillLeft + infillWidth * t
       cylinders.push({
         kind: 'cylinder',
         id: `${idPrefix}-dog-bar-${dogIndex}`,
@@ -403,7 +411,7 @@ function pushVictorianPanel(
 
     for (let picketIndex = 0; picketIndex < lowerPicketCount; picketIndex += 1) {
       const t = (picketIndex + 0.5) / lowerPicketCount
-      const x = leafLeft + widthMm * t
+      const x = infillLeft + infillWidth * t
       cylinders.push({
         kind: 'cylinder',
         id: `${idPrefix}-picket-lower-${picketIndex}`,
@@ -433,7 +441,8 @@ export function buildSwingProceduralMembers(
   const bifoldActive = isBifoldGate(config.gateType)
   const panelsPerLeaf = bifoldActive ? getBifoldPanelsPerLeaf(config.gateType) : 1
 
-  const tubeRadius = geometry ? geometry.tubeProfile.outer / 2 : scaleVisualBoldness(20) / 2
+  // geometry.tubeProfile is the 40 mm frame tube — pickets are the lighter infill tube.
+  const tubeRadius = PICKET_TUBE_RADIUS_MM
   const leafHeightMm = config.heightMm
   const leafCenterY = leafHeightMm / 2
   const rails = geometry?.rails ?? {
@@ -483,16 +492,34 @@ export function buildSwingProceduralMembers(
           ? `leaf-frame-${leafIndex + 1}-outer`
           : `leaf-frame-${leafIndex + 1}`
 
-      // Outer leaf boxes anchor the clear-opening envelope (width × height exact).
-      boxes.push({
-        kind: 'box',
-        id: frameId,
-        widthMm: panelWidth,
-        heightMm: leafHeightMm,
-        depthMm: FRAME_DEPTH_MM * (isComposite ? 0.55 : 0.75),
-        positionMm: [panelCenterX, leafCenterY, depthOffsetMm],
-        role: isComposite ? 'panel' : 'frame',
-      })
+      // Outer leaf members anchor the clear-opening envelope (width × height exact).
+      // Composite = solid boarded panel; Victorian = open perimeter frame so pickets show.
+      if (isComposite) {
+        boxes.push({
+          kind: 'box',
+          id: frameId,
+          widthMm: panelWidth,
+          heightMm: leafHeightMm,
+          depthMm: FRAME_DEPTH_MM * 0.55,
+          positionMm: [panelCenterX, leafCenterY, depthOffsetMm],
+          role: 'panel',
+        })
+      } else {
+        pushLeafPerimeterFrame(boxes, {
+          id: frameId,
+          centerX: panelCenterX,
+          widthMm: panelWidth,
+          heightMm: leafHeightMm,
+          depthMm: FRAME_DEPTH_MM * 0.75,
+          depthOffsetMm,
+          arch: archedTop
+            ? {
+                leftTopMm: archTopYMm(leafArchT(0, panelIndex, panelsPerLeaf), archSide, leafHeightMm),
+                rightTopMm: archTopYMm(leafArchT(1, panelIndex, panelsPerLeaf), archSide, leafHeightMm),
+              }
+            : undefined,
+        })
+      }
 
       if (isComposite) {
         pushCompositeBoards(boxes, {

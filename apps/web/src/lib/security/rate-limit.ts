@@ -58,8 +58,8 @@ export const RATE_LIMITS = {
   emailRecipient: { name: 'email-to', limit: 3, windowMs: 60 * 60_000 },
   saveConfiguration: { name: 'save-config', limit: 30, windowMs: 10 * 60_000 },
   quotePdf: { name: 'quote-pdf', limit: 20, windowMs: 10 * 60_000 },
-  /** One "View in your space" tap = two uploads (GLB + USDZ). */
-  arUpload: { name: 'ar-upload', limit: 20, windowMs: 10 * 60_000 },
+  /** Viewers send HEAD + GET (+ retries) per open, and each model has two formats. */
+  arModel: { name: 'ar-model', limit: 60, windowMs: 10 * 60_000 },
 } as const satisfies Record<string, RateLimitRule>
 
 export const RATE_LIMIT_MESSAGE = 'Too many requests. Please wait a few minutes and try again.'

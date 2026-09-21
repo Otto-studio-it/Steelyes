@@ -7,6 +7,7 @@ import {
 import { FulfilmentChooser } from '@/components/configurator/FulfilmentChooser'
 import { ConfiguratorQuoteRequestForm } from '@/components/configurator/ConfiguratorQuoteRequestForm'
 import { EmailMyDesignPanel } from '@/components/configurator/EmailMyDesignPanel'
+import { ViewInYourSpace } from '@/components/configurator/ViewInYourSpace'
 import {
   SITE_SURVEY_FIELD_LABEL,
   finishLabel,
@@ -44,6 +45,9 @@ export function QuickQuoteScreen() {
           </li>
         ))}
       </ul>
+
+      {/* AR is a phone feature — surface it here instead of only inside the preview sheet. */}
+      <ViewInYourSpace config={config} className="mt-0" />
 
       <FulfilmentChooser />
 
