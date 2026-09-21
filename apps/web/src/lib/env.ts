@@ -7,7 +7,8 @@ const clientSchema = z.object({
 })
 
 const serverSchema = clientSchema.extend({
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1, 'Missing Supabase service role key').optional(),
+  // Optional during build; required at runtime
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
   // Optional so saving a configuration does not crash if mail is misconfigured.
   RESEND_API_KEY: z.string().optional(),
 })
@@ -22,13 +23,9 @@ function parseEnv(): ServerEnv {
   }
 
   if (typeof window === 'undefined') {
-    // During build (CI=true), runtime secrets are not available and not needed
-    // They will be injected at container runtime by Coolify
-    const isBuild = process.env.CI === 'true' || process.env.NODE_ENV === 'production'
-    
     return serverSchema.parse({
       ...clientVars,
-      SUPABASE_SERVICE_ROLE_KEY: isBuild ? undefined : process.env.SUPABASE_SERVICE_ROLE_KEY,
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
       RESEND_API_KEY: process.env.RESEND_API_KEY,
     })
   }
