@@ -5,6 +5,7 @@ import { Maximize2, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
+import { ViewInYourSpace } from '@/components/configurator/ViewInYourSpace'
 import type { GateConfig, TenantBundle } from '@steelyes/gate-engine'
 
 type PreviewCanvasProps = {
@@ -20,6 +21,8 @@ type PreviewCanvasProps = {
   showSecondaryModes?: boolean
   /** @deprecated Colour-fit CAD is not the customer Design drawing. */
   allowColourFit?: boolean
+  arPlacement?: 'preview' | 'share'
+  arDisabled?: boolean
 }
 
 /**
@@ -32,6 +35,8 @@ export function PreviewCanvas({
   className = '',
   showDimensionOverlay = false,
   onDimensionOverlayClick,
+  arPlacement = 'preview',
+  arDisabled = false,
 }: PreviewCanvasProps) {
   const [fullscreenOpen, setFullscreenOpen] = useState(false)
 
@@ -83,6 +88,8 @@ export function PreviewCanvas({
   return (
     <div className={className}>
       {canvas}
+
+      <ViewInYourSpace config={config} placement={arPlacement} disabled={arDisabled} />
 
       <Dialog.Root open={fullscreenOpen} onOpenChange={setFullscreenOpen}>
         <Dialog.Portal>
