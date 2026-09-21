@@ -85,6 +85,7 @@ function absoluteSiteUrl(path: string): string {
 type ConfigurationContext = {
   configurationId: string | null
   configurationSummary: string
+  workshopConfigurationSummary: string
   pricingSummary: string
   shareUrl: string
   pdfUrl: string
@@ -116,6 +117,7 @@ async function loadConfigurationContext(
   const empty: ConfigurationContext = {
     configurationId: null,
     configurationSummary: '',
+    workshopConfigurationSummary: '',
     pricingSummary: '',
     shareUrl: shareToken && isValidShareToken(shareToken) ? absoluteSiteUrl(buildQuoteSharePath(shareToken)) : '',
     pdfUrl: shareToken && isValidShareToken(shareToken) ? absoluteSiteUrl(buildQuotePdfPath(shareToken)) : '',
@@ -147,7 +149,8 @@ async function loadConfigurationContext(
       const config = deserializeGateConfig(configurationRow.parameters as SerializedGateConfigV1)
       const pricingCatalog = await fetchPricingCatalog()
       const pricing = calculateIndicativeGatePrice(config, pricingCatalog)
-      context.configurationSummary = formatConfigurationSummaryText(config, pricing)
+      context.configurationSummary = formatConfigurationSummaryText(config, pricing, 'customer')
+      context.workshopConfigurationSummary = formatConfigurationSummaryText(config, pricing, 'workshop')
       context.pricingSummary = `${pricing.totalLabel} (${pricing.disclaimer})`
       if (options?.attachPdf) {
         context.pdfAttachment = await buildWorkshopQuotePdfAttachment({
@@ -173,7 +176,7 @@ async function loadConfigurationContext(
           parameters.fulfilment && (FULFILMENT_MODES as readonly string[]).includes(parameters.fulfilment)
             ? fulfilmentLabel(parameters.fulfilment)
             : fulfilmentLabel('supply_and_install')
-        context.configurationSummary = [
+        const fallback = [
           gateTypeLabel(parameters.gateType as GateType),
           styleLabel(parameters.style as GateStyle),
           `${parameters.widthMm} × ${parameters.heightMm} mm`,
@@ -181,6 +184,8 @@ async function loadConfigurationContext(
           `${FULFILMENT_FIELD_LABEL}: ${fulfilment}`,
           `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(parameters.siteSurveyRequested === true)}`,
         ].join(' · ')
+        context.configurationSummary = fallback
+        context.workshopConfigurationSummary = fallback
       }
     }
 
@@ -217,7 +222,15 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
 
     const supabase = getServiceRoleClient()
     const context = await loadConfigurationContext(shareToken, { attachPdf: true })
-    const { configurationId, configurationSummary, pricingSummary, shareUrl, pdfUrl, pdfAttachment } = context
+    const {
+      configurationId,
+      configurationSummary,
+      workshopConfigurationSummary,
+      pricingSummary,
+      shareUrl,
+      pdfUrl,
+      pdfAttachment,
+    } = context
 
     if (configurationId) {
       const { firstName, lastName } = splitName(name)
@@ -246,7 +259,7 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
       phone: phone || null,
       project_type: projectType || null,
       postcode: postcode || null,
-      message: quoteLeadMessage({ message, shareToken, configurationSummary }),
+      message: quoteLeadMessage({ message, shareToken, configurationSummary: workshopConfigurationSummary || configurationSummary }),
       status: 'new',
     })
 
@@ -264,7 +277,7 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
       message,
       shareUrl,
       pdfUrl,
-      configurationSummary,
+      configurationSummary: workshopConfigurationSummary || configurationSummary,
       hasConfiguration: Boolean(shareUrl),
       pdfAttachment,
     })

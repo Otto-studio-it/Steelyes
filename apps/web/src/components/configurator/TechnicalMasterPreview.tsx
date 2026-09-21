@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import {
   describeDesignPreview,
   getVictorianTipology,
+  railheadSeriesLabel,
   resolveCircleOverlays,
   resolveCollarOverlays,
   resolveFinishDefinition,
@@ -276,8 +277,8 @@ export function TechnicalMasterPreview({
             ) : null}
             {railheadSku ? (
               <p className="mt-1 font-mono text-[10px] leading-4 text-muted" data-testid="design-honesty-note">
-                Railhead {railheadSku} is the catalogue photo beside the drawing, so you can see the
-                cap. It is not drawn onto the pickets (safe on arched and sliding masters).
+                {railheadSeriesLabel(railheadSku)} is the catalogue photo beside the drawing, so you can
+                see the cap. It is not drawn onto the pickets (safe on arched and sliding masters).
               </p>
             ) : null}
           </div>

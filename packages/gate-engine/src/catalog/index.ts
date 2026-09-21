@@ -20,6 +20,13 @@ export {
   railheadProductCard,
   railheadProductDescription,
 } from './railhead-product'
+export {
+  listSteelyesRailheadSeries,
+  railheadSeriesIndex,
+  railheadSeriesLabel,
+  railheadWorkshopCode,
+  railheadWorkshopLabel,
+} from './railhead-series'
 export type { RailheadProductCard } from './railhead-product-cards'
 export type {
   RailheadOptionKey,

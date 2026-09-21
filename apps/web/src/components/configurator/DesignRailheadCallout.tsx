@@ -27,7 +27,7 @@ export function DesignRailheadCallout({ slug }: DesignRailheadCalloutProps) {
         alt={copy.detail}
         className="h-36 w-full object-contain object-bottom sm:h-44 lg:h-52"
       />
-      <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel">{slug}</p>
+      <p className="font-heading text-sm font-bold uppercase tracking-tight text-steel">{copy.title}</p>
       {copy.sizeLabel ? (
         <p className="text-center text-xs leading-4 text-muted-deep">{copy.sizeLabel}</p>
       ) : null}

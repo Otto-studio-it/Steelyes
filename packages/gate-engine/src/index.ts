@@ -227,6 +227,11 @@ export {
   railheadPhotoFileSlug,
   railheadProductCard,
   railheadProductDescription,
+  listSteelyesRailheadSeries,
+  railheadSeriesIndex,
+  railheadSeriesLabel,
+  railheadWorkshopCode,
+  railheadWorkshopLabel,
   resolveRailheadVariantPricing,
 } from './catalog'
 export {

@@ -1,4 +1,10 @@
-import { findRailheadVariant, type GateConfig, type PricingResult } from '@steelyes/gate-engine'
+import {
+  findRailheadVariant,
+  railheadSeriesLabel,
+  railheadWorkshopLabel,
+  type GateConfig,
+  type PricingResult,
+} from '@steelyes/gate-engine'
 
 import {
   finishLabel,
@@ -17,23 +23,30 @@ export type ConfigurationSummaryLine = {
   value: string
 }
 
-function railheadsSummaryValue(config: GateConfig): string | null {
+export type ConfigurationSummaryAudience = 'customer' | 'workshop'
+
+function railheadsSummaryValue(
+  config: GateConfig,
+  audience: ConfigurationSummaryAudience = 'customer',
+): string | null {
   const option = config.options.find((item) => item.key === 'top_railheads')
   if (!option?.enabled) {
     return null
   }
 
   if (!option.variant) {
-    return 'selected (SKU TBC)'
+    return audience === 'workshop' ? 'selected (SKU TBC)' : 'selected (series TBC)'
   }
 
   const entry = findRailheadVariant(option.variant)
-  return entry?.slug ?? option.variant
+  const slug = entry?.slug ?? option.variant
+  return audience === 'workshop' ? railheadWorkshopLabel(slug) : railheadSeriesLabel(slug)
 }
 
 export function buildConfigurationSummaryLines(
   config: GateConfig,
   pricing?: PricingResult,
+  audience: ConfigurationSummaryAudience = 'customer',
 ): ConfigurationSummaryLine[] {
   const lines: ConfigurationSummaryLine[] = [
     { label: 'Gate type', value: gateTypeLabel(config.gateType) },
@@ -44,7 +57,7 @@ export function buildConfigurationSummaryLines(
     { label: 'Mounting posts', value: postsSummaryLabel(config) },
   ]
 
-  const railheads = railheadsSummaryValue(config)
+  const railheads = railheadsSummaryValue(config, audience)
   if (railheads) {
     lines.push({ label: 'Railheads', value: railheads })
   }
@@ -72,8 +85,9 @@ export function buildConfigurationSummaryLines(
 export function formatConfigurationSummaryText(
   config: GateConfig,
   pricing?: PricingResult,
+  audience: ConfigurationSummaryAudience = 'customer',
 ): string {
-  return buildConfigurationSummaryLines(config, pricing)
+  return buildConfigurationSummaryLines(config, pricing, audience)
     .map((line) => `${line.label}: ${line.value}`)
     .join(' · ')
 }
@@ -88,7 +102,7 @@ export function formatConfigurationSummaryInline(config: GateConfig): string {
     postsSummaryLabel(config),
   ]
 
-  const railheads = railheadsSummaryValue(config)
+  const railheads = railheadsSummaryValue(config, 'customer')
   if (railheads) {
     parts.push(`Railheads: ${railheads}`)
   }

@@ -11,9 +11,9 @@ describe('railhead product cards', () => {
     expect(railheadPhotoFileSlug('RH32-dog')).toBe('RH32')
   })
 
-  it('surfaces the client size description', () => {
+  it('surfaces the Steelyes series title and client size', () => {
     const copy = railheadProductDescription('RH1')
-    expect(copy.title).toMatch(/RH1/i)
+    expect(copy.title).toBe('Series 01')
     expect(copy.sizeLabel).toMatch(/184/)
   })
 })
