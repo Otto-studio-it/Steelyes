@@ -87,8 +87,10 @@ test.describe('configurator release flow', () => {
 
     const chooser = page.getByTestId('railhead-chooser')
     await expect(chooser).toBeVisible()
-    await chooser.getByRole('radio', { name: /RH32/i }).click()
-    await expect(chooser.getByRole('radio', { name: /RH32/i })).toHaveAttribute('aria-checked', 'true')
+    await chooser.locator('[data-sku="RH32"]').click()
+    await expect(chooser.locator('[data-sku="RH32"]')).toHaveAttribute('aria-checked', 'true')
+    await expect(chooser.locator('[data-sku="RH32"]')).toContainText(/Series \d{2}/)
+    await expect(chooser.getByText(/^RH32$/)).toHaveCount(0)
 
     await continueWizard(page)
     await continueWizard(page)
@@ -106,7 +108,8 @@ test.describe('configurator release flow', () => {
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
     await expect(page.getByText(/^Railheads$/i).first()).toBeVisible()
-    await expect(page.getByText(/^RH32$/i).filter({ visible: true }).first()).toBeVisible()
+    await expect(page.getByText(/^Series \d{2}$/i).filter({ visible: true }).first()).toBeVisible()
+    await expect(page.getByText(/^RH32$/i).filter({ visible: true })).toHaveCount(0)
   })
 
   test('collar spacing swaps the Design master immediately', async ({ page }) => {

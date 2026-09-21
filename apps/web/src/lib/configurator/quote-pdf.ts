@@ -3,6 +3,7 @@ import QRCode from 'qrcode'
 import {
   buildGateRenderPlan,
   calculateIndicativeGatePrice,
+  railheadSeriesLabel,
   type GateConfig,
   type GateRenderPlan,
   type GateRenderPrimitive,
@@ -218,7 +219,8 @@ export async function buildIndicativeQuotePdf(input: {
       width: drawWidth,
       height: drawHeight,
     })
-    if (railheadSku) {
+    const railheadSeries = railheadSku ? railheadSeriesLabel(railheadSku) : null
+    if (railheadSku && railheadSeries) {
       const columnX = MARGIN + drawingMaxWidth + 8
       page.drawText('Railhead', {
         x: columnX,
@@ -227,7 +229,7 @@ export async function buildIndicativeQuotePdf(input: {
         font: fontBold,
         color: rgb(0.2, 0.2, 0.2),
       })
-      page.drawText(railheadSku, {
+      page.drawText(railheadSeries, {
         x: columnX,
         y: MARGIN + 28 + drawHeight - 28,
         size: 11,
@@ -250,8 +252,8 @@ export async function buildIndicativeQuotePdf(input: {
       })
     }
     page.drawText(
-      railheadSku
-        ? `Design drawing · official master · ${master.slug.replace(/_/g, ' ')} · railhead ${railheadSku} beside the gate`
+      railheadSeries
+        ? `Design drawing · official master · ${master.slug.replace(/_/g, ' ')} · railhead ${railheadSeries} beside the gate`
         : `Design drawing · official master · ${master.slug.replace(/_/g, ' ')}`,
       {
         x: MARGIN,

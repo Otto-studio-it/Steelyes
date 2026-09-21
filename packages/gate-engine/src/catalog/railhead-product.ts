@@ -1,3 +1,4 @@
+import { railheadSeriesLabel } from './railhead-series'
 import { RAILHEAD_PRODUCT_CARDS, type RailheadProductCard } from './railhead-product-cards'
 
 const PHOTO_FILE_ALIASES: Record<string, string> = {
@@ -31,9 +32,10 @@ export function railheadProductDescription(slug: string): {
   }
   const extra = card.flags.length > 0 ? ` · ${card.flags.join(', ')}` : ''
   const sizeLabel = card.sizeMm ? `${card.sizeMm}${extra}` : extra ? extra.slice(3) : null
+  const title = railheadSeriesLabel(slug)
   return {
-    title: card.title,
+    title,
     sizeLabel,
-    detail: sizeLabel ? `${card.title} · ${sizeLabel}` : card.title,
+    detail: sizeLabel ? `${title} · ${sizeLabel}` : title,
   }
 }

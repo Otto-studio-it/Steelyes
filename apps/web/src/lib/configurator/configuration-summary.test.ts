@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { createGateConfig, createGatePreset } from '@steelyes/gate-engine'
+import { createGateConfig, createGatePreset, railheadSeriesLabel, railheadWorkshopLabel } from '@steelyes/gate-engine'
 
 import { buildConfigurationSummaryLines } from '@/lib/configurator/configuration-summary'
 import { selectedRailheadSlug } from '@/lib/configurator/railhead'
 
 describe('buildConfigurationSummaryLines', () => {
-  it('includes railhead SKU when top_railheads is selected', () => {
+  it('includes the Steelyes series name when top_railheads is selected', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
     const config = {
       ...base,
@@ -20,11 +20,29 @@ describe('buildConfigurationSummaryLines', () => {
     expect(lines.find((line) => line.label === 'Gate type')?.value).toBeTruthy()
     expect(lines.find((line) => line.label === 'Railheads')).toEqual({
       label: 'Railheads',
-      value: 'RH32',
+      value: railheadSeriesLabel('RH32'),
+    })
+    expect(lines.find((line) => line.label === 'Railheads')?.value).not.toContain('RH32')
+  })
+
+  it('keeps the workshop SKU on workshop summaries', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const config = {
+      ...base,
+      options: base.options.map((option) =>
+        option.key === 'top_railheads'
+          ? { ...option, enabled: true, quantity: 8, variant: 'RH32' }
+          : option,
+      ),
+    }
+
+    expect(buildConfigurationSummaryLines(config, undefined, 'workshop').find((line) => line.label === 'Railheads')).toEqual({
+      label: 'Railheads',
+      value: railheadWorkshopLabel('RH32'),
     })
   })
 
-  it('uses SKU TBC when enabled without a variant', () => {
+  it('uses series TBC when enabled without a variant', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
     const config = {
       ...base,
@@ -37,7 +55,7 @@ describe('buildConfigurationSummaryLines', () => {
 
     expect(buildConfigurationSummaryLines(config).find((line) => line.label === 'Railheads')).toEqual({
       label: 'Railheads',
-      value: 'selected (SKU TBC)',
+      value: 'selected (series TBC)',
     })
   })
 

@@ -4,6 +4,7 @@ import {
   getExpectedTopRailheadCount,
   listRailheadVariantsForOption,
   railheadProductDescription,
+  railheadSeriesLabel,
 } from '@steelyes/gate-engine'
 
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
@@ -68,8 +69,8 @@ export function RailheadModelPicker({
             Railhead model
           </h3>
           <p className="mt-1 text-sm leading-6 text-muted-deep">
-            Product photos of the railhead only — not a screenshot of the gate. Size and notes come from
-            the client catalogue. Count stays automatic. Not drawn onto the pickets.
+            Product photos of the railhead only — not a screenshot of the gate. Names are Steelyes
+            series. Count stays automatic. Not drawn onto the pickets.
           </p>
         </div>
       )}
@@ -88,6 +89,7 @@ export function RailheadModelPicker({
             const publicPath = railheadPhotoPath(variant.slug)
             const isSelected = selectedSlug === variant.slug
             const copy = railheadProductDescription(variant.slug)
+            const series = railheadSeriesLabel(variant.slug)
             const price =
               typeof variant.unitPriceGbp === 'number' && variant.unitPriceGbp > 0
                 ? `£${variant.unitPriceGbp.toFixed(2)}`
@@ -99,6 +101,9 @@ export function RailheadModelPicker({
                 type="button"
                 role="radio"
                 aria-checked={isSelected}
+                aria-label={copy.detail}
+                data-sku={variant.slug}
+                data-series={series}
                 onClick={() => selectVariant(variant.slug)}
                 className={cn(
                   'flex flex-col items-center gap-2 border px-3 py-3 text-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
@@ -118,7 +123,7 @@ export function RailheadModelPicker({
                   )}
                 />
                 <span className="font-mono text-xs font-semibold uppercase tracking-widest text-steel">
-                  {variant.slug}
+                  {series}
                 </span>
                 {copy.sizeLabel ? (
                   <span className="text-[11px] leading-4 text-muted-deep">{copy.sizeLabel}</span>
