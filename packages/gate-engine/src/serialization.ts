@@ -63,8 +63,30 @@ export function stringifyGateConfig(config: GateConfig): string {
   return JSON.stringify(serializeGateConfig(config))
 }
 
+/**
+ * Finish codes retired on 2026-07-24 (real client palette). Designs saved before that still carry
+ * them; without this they fail validation — 404 on the share page, 500 on the quote PDF.
+ * Black maps to its direct successor; the other colours have no successor, so they are kept
+ * exactly as a custom colour with their original hex.
+ */
+const LEGACY_FINISHES: Record<string, { finish: GateConfig['finish']; customFinishHex: string | null }> = {
+  matte_black: { finish: 'black_matt', customFinishHex: null },
+  zinc_grey: { finish: 'other_ral', customFinishHex: '#8A9199' },
+  bronze: { finish: 'other_ral', customFinishHex: '#8B6914' },
+  pearl_white: { finish: 'other_ral', customFinishHex: '#E8E4DD' },
+}
+
+function migrateLegacyFinish<T extends { finish?: unknown; customFinishHex?: unknown }>(raw: T): T {
+  if (!raw || typeof raw !== 'object' || typeof raw.finish !== 'string') return raw
+  const replacement = Object.prototype.hasOwnProperty.call(LEGACY_FINISHES, raw.finish)
+    ? LEGACY_FINISHES[raw.finish]
+    : undefined
+  return replacement ? { ...raw, ...replacement } : raw
+}
+
 export function deserializeGateConfig(serialized: SerializedGateConfig | string): GateConfig {
-  const raw = typeof serialized === 'string' ? (JSON.parse(serialized) as Partial<SerializedGateConfigV1>) : serialized
+  const parsed = typeof serialized === 'string' ? (JSON.parse(serialized) as Partial<SerializedGateConfigV1>) : serialized
+  const raw = migrateLegacyFinish(parsed)
   const shapeValidation = validateGateConfigSerializedInput(raw)
   if (!shapeValidation.ok) {
     const error = new Error('Invalid serialized gate config')

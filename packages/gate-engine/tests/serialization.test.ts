@@ -53,4 +53,16 @@ describe('gate-engine serialization', () => {
 
     expect(() => deserializeGateConfig(invalid as never)).toThrowError('Invalid serialized gate config')
   })
+  it('opens designs saved with retired finish codes', () => {
+    const current = serializeGateConfig(createGateConfig(createGatePreset('double_swing')))
+
+    const black = deserializeGateConfig({ ...current, finish: 'matte_black' as never })
+    expect(black.finish).toBe('black_matt')
+
+    const bronze = deserializeGateConfig({ ...current, finish: 'bronze' as never })
+    expect(bronze.finish).toBe('other_ral')
+    expect(bronze.customFinishHex).toBe('#8B6914')
+
+    expect(() => deserializeGateConfig({ ...current, finish: 'neon_pink' as never })).toThrow()
+  })
 })

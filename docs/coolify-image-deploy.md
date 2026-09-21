@@ -187,7 +187,32 @@ When you push to `main`, GitHub Actions will:
 - `SITE_HOLD_BYPASS_TOKEN` — hold bypass secret (if used)
 - `SITE_HOLD_CONTACT_EMAIL` — hold page contact email (if used)
 
+- `TURNSTILE_ALLOW_UNVERIFIED` — temporary opt-out only; without `TURNSTILE_SECRET_KEY` production forms reject every submission
+- `UNSUBSCRIBE_SECRET` — signs reminder unsubscribe links (falls back to `CRON_SECRET`)
+
+**Build-time (GitHub Actions build args, baked into response headers):**
+- `EMBED_ALLOWED_ORIGINS` — partner origins allowed to iframe `/embed/*` (unset = none)
+
 **These remain in Coolify** and are injected at container runtime (never in the image).
+
+### Scheduled job: abandoned-design reminders
+
+`apps/web/vercel.json` declares a Vercel cron, but production runs on Coolify, so **nothing calls the
+job unless you schedule it**. In Coolify → app → Scheduled Tasks (or any cron on the host):
+
+```bash
+# daily at 09:00
+curl -fsS -H "Authorization: Bearer $CRON_SECRET" https://steelyes.co.uk/api/cron/abandoned-designs
+```
+
+The response reports `{ processed, sent, skipped, failed }`. Requires migration
+`20260921130000_design_captures_reminder_queue.sql`.
+
+### Content-Security-Policy
+
+Shipped as `Content-Security-Policy-Report-Only`. Violations are logged by `/api/csp-report` as
+`[csp-report] {...}` lines in the container log. Once the log is quiet for a week of real traffic,
+rename the header to `Content-Security-Policy` in `apps/web/next.config.mjs`.
 
 ---
 
