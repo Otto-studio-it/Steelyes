@@ -324,6 +324,10 @@ test.describe('configurator AR handoff', () => {
   })
 
   test('builds server-side GLB/USDZ links for the desktop handoff panel', async ({ page, request }) => {
+    // The AR link belongs to a SAVED design, so this needs the database — same guard as the
+    // share-route and live-save suites (CI runners without a reachable Supabase skip it).
+    test.skip(!(await isSupabaseReachable()), 'Supabase is not reachable from this runner')
+
     await waitForConfiguratorReady(page)
 
     const ar = page.getByTestId('view-in-your-space')
