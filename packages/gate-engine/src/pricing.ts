@@ -118,6 +118,8 @@ export type OptionPricingResult = {
 
 const DEFAULT_DISCLAIMER = 'Estimated, subject to survey'
 const SITE_SURVEY_ASSUMPTION = 'Customer requested a site survey; the final quote follows the survey.'
+const SUPPLY_ONLY_ASSUMPTION =
+  'Supply only: estimate is fabrication only. Installation is not included and is not priced here.'
 
 /**
  * Catalogue FROM prices — intake PDF 2026-07-26 (client corrections applied).
@@ -590,6 +592,10 @@ export function calculateIndicativeGatePrice(
 
   if (config.siteSurveyRequested) {
     assumptions.push(SITE_SURVEY_ASSUMPTION)
+  }
+
+  if (config.fulfilment === 'supply_only') {
+    assumptions.push(SUPPLY_ONLY_ASSUMPTION)
   }
 
   const breakdown: PricingLineItem[] = [baseSelection.lineItem]

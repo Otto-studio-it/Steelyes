@@ -3,6 +3,7 @@ import {
   POST_CAP_LABELS,
   POST_MATERIAL_LABELS,
   type FinishCode,
+  type FulfilmentMode,
   type GateConfig,
   type GateStyle,
   type GateType,
@@ -27,6 +28,28 @@ export const SITE_SURVEY_FIELD_LABEL = 'Site survey requested'
 
 export function siteSurveyLabel(requested: boolean): string {
   return requested ? 'Requested' : 'Not requested'
+}
+
+export const FULFILMENT_FIELD_LABEL = 'Supply or install'
+
+export const FULFILMENT_OPTION_COPY: Record<
+  FulfilmentMode,
+  { label: string; description: string }
+> = {
+  supply_and_install: {
+    label: 'Supply and install',
+    description:
+      'Steelyes fabricates and fits on site. Installation cost is confirmed after survey — not added as a figure here.',
+  },
+  supply_only: {
+    label: 'Supply only',
+    description:
+      'Gate delivered ready to fit. You arrange installation. The estimate is fabrication only.',
+  },
+}
+
+export function fulfilmentLabel(mode: FulfilmentMode): string {
+  return FULFILMENT_OPTION_COPY[mode].label
 }
 
 export function postsSummaryLabel(config: GateConfig): string {

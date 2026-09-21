@@ -14,7 +14,7 @@ const STEP_FIELD_PREFIXES: Record<ConfiguratorStepId, string[]> = {
 const ACT_FIELD_PREFIXES: Record<ConfiguratorActId, string[]> = {
   choose: STEP_FIELD_PREFIXES.gate,
   define: [...STEP_FIELD_PREFIXES.dimensions, ...STEP_FIELD_PREFIXES.posts, ...STEP_FIELD_PREFIXES.fence],
-  refine: [...STEP_FIELD_PREFIXES.options, 'siteSurveyRequested'],
+  refine: [...STEP_FIELD_PREFIXES.options, 'siteSurveyRequested', 'fulfilment'],
   summary: [],
 }
 

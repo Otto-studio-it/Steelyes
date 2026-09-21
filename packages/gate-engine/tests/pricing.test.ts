@@ -261,6 +261,22 @@ describe('gate-engine pricing', () => {
     expect(withoutSurvey.siteSurveyRequested).toBe(false)
   })
 
+  it('notes supply-only fulfilment without changing the indicative total', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const supplyOnly = { ...base, fulfilment: 'supply_only' as const }
+
+    const withInstall = calculateIndicativeGatePrice(base)
+    const withoutInstall = calculateIndicativeGatePrice(supplyOnly)
+
+    expect(withoutInstall.totalGbp).toBe(withInstall.totalGbp)
+    expect(withoutInstall.assumptions.some((assumption) => assumption.toLowerCase().includes('supply only'))).toBe(
+      true,
+    )
+    expect(withInstall.assumptions.some((assumption) => assumption.toLowerCase().includes('supply only'))).toBe(
+      false,
+    )
+  })
+
   it('marks a draft with duplicated options as survey required before normalization', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
 

@@ -28,6 +28,7 @@ describe('gate-engine domain regression', () => {
         gateType,
         style: 'traditional_victorian',
         siteSurveyRequested: false,
+        fulfilment: 'supply_and_install',
       })
       expect(deserializeGateConfig(stringifyGateConfig(config))).toEqual(config)
     }
@@ -53,6 +54,7 @@ describe('gate-engine domain regression', () => {
     expect(normalized.options).toHaveLength(GATE_OPTION_KEYS.length)
     expect(normalized.fencePanels.quantity).toBe(0)
     expect(normalized.fencePanels.panels).toHaveLength(0)
+    expect(normalized.fulfilment).toBe('supply_and_install')
   })
 
   it('rejects invalid serialized payloads with readable issues', () => {

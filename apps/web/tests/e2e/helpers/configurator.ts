@@ -81,6 +81,7 @@ export function buildTestConfigurationPayload() {
     motorised: false,
     finish: 'matte_black' as const,
     siteSurveyRequested: false,
+    fulfilment: 'supply_and_install' as const,
     options: DEFAULT_SERIALIZED_OPTIONS.map((option) => ({ ...option })),
     posts: {
       enabled: true,

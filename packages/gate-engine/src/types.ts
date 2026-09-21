@@ -46,6 +46,11 @@ export const FINISH_CODES = [
 
 export type FinishCode = (typeof FINISH_CODES)[number]
 
+/** Workshop fulfilment — install fee is never invented; quote confirms after survey. */
+export const FULFILMENT_MODES = ['supply_and_install', 'supply_only'] as const
+
+export type FulfilmentMode = (typeof FULFILMENT_MODES)[number]
+
 export const GATE_MECHANISMS = GATE_TYPES
 
 export type GateMechanism = GateType
@@ -87,6 +92,7 @@ export type GateConfig = GateDimensions & {
   /** Hex `#RRGGBB` when finish is `other_ral`; ignored otherwise. */
   customFinishHex?: string | null
   siteSurveyRequested: boolean
+  fulfilment: FulfilmentMode
   posts: GatePostsConfig
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
@@ -99,6 +105,7 @@ export type GatePreset = {
   motorised: boolean
   finish: FinishCode
   siteSurveyRequested: boolean
+  fulfilment: FulfilmentMode
   posts: GatePostsConfig
   options: GateOptionSelection[]
   fencePanels: FencePanelInput
@@ -108,6 +115,7 @@ export const DEFAULT_CONFIG_VERSION = 1 as const
 
 export const DEFAULT_FINISH: FinishCode = 'black_satin'
 export const DEFAULT_SITE_SURVEY_REQUESTED = false
+export const DEFAULT_FULFILMENT_MODE: FulfilmentMode = 'supply_and_install'
 
 export const EMPTY_FENCE_PANEL_INPUT: FencePanelInput = {
   quantity: 0,
@@ -135,6 +143,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: false,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -146,6 +155,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: false,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -157,6 +167,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -168,6 +179,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -179,6 +191,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -190,6 +203,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -201,6 +215,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -212,6 +227,7 @@ export const DEFAULT_GATE_PRESETS: Record<GateType, GatePreset> = {
     motorised: true,
     finish: DEFAULT_FINISH,
     siteSurveyRequested: DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: DEFAULT_FULFILMENT_MODE,
     posts: structuredClone(DEFAULT_GATE_POSTS),
     options: structuredClone(DEFAULT_GATE_OPTIONS),
     fencePanels: structuredClone(EMPTY_FENCE_PANEL_INPUT),
@@ -233,6 +249,7 @@ export function createGateConfig(preset: GatePreset): GateConfig {
     finish: preset.finish,
     customFinishHex: null,
     siteSurveyRequested: preset.siteSurveyRequested,
+    fulfilment: preset.fulfilment,
     posts: structuredClone(preset.posts ?? DEFAULT_GATE_POSTS),
     options: structuredClone(preset.options),
     fencePanels: structuredClone(preset.fencePanels),

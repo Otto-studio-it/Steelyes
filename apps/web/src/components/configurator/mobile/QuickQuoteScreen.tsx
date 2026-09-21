@@ -4,6 +4,7 @@ import {
   ConfiguratorLeadSecurity,
   ConfiguratorLeadTurnstile,
 } from '@/components/configurator/ConfiguratorLeadSecurity'
+import { FulfilmentChooser } from '@/components/configurator/FulfilmentChooser'
 import { ConfiguratorQuoteRequestForm } from '@/components/configurator/ConfiguratorQuoteRequestForm'
 import { EmailMyDesignPanel } from '@/components/configurator/EmailMyDesignPanel'
 import {
@@ -43,6 +44,8 @@ export function QuickQuoteScreen() {
           </li>
         ))}
       </ul>
+
+      <FulfilmentChooser />
 
       <label className="flex items-start gap-3 border border-steel/10 bg-paper p-4">
         <input
