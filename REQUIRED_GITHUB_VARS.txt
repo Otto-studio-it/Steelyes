@@ -31,6 +31,8 @@ NEXT_PUBLIC_SITE_URL=https://www.steelyes.co.uk
 
 # NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 # Find at: Coolify production app → Environment (if set)
+# NOTE: production rejects form submissions when the runtime TURNSTILE_SECRET_KEY is missing
+# (fail closed). Set this build-time site key AND the runtime secret in Coolify together.
 
 # NEXT_PUBLIC_POSTHOG_API_KEY=
 # Find at: Coolify production app → Environment (if set)

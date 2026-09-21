@@ -5,6 +5,9 @@
 
 export const AR_MODEL_TTL_SECONDS = 60 * 60
 
+/** Real exports are < 1 MB (≈0.2–0.6 MB); 5 MB leaves headroom without inviting abuse. */
+export const AR_MODEL_MAX_BYTES = 5 * 1024 * 1024
+
 export type ArModelFormat = 'glb' | 'usdz'
 
 /** GLB starts with glTF binary magic "glTF". */
@@ -26,7 +29,7 @@ export function looksLikeUsdz(bytes: Uint8Array): boolean {
 
 export function validateArModelBytes(format: ArModelFormat, bytes: Uint8Array): string | null {
   if (bytes.byteLength < 32) return 'Model file is too small'
-  if (bytes.byteLength > 25 * 1024 * 1024) return 'Model file is too large (max 25 MB)'
+  if (bytes.byteLength > AR_MODEL_MAX_BYTES) return 'Model file is too large (max 5 MB)'
   if (format === 'glb' && !looksLikeGlb(bytes)) return 'Payload is not a valid GLB'
   if (format === 'usdz' && !looksLikeUsdz(bytes)) return 'Payload is not a valid USDZ'
   return null

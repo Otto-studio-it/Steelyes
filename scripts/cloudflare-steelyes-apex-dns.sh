@@ -17,7 +17,8 @@ if [[ -z "$TOKEN" ]]; then
 fi
 
 ZONE_ID="d7ad2184b6477b6b93e77df160d310d0"
-IP="165.232.110.218"
+# Origin IP is not committed: it would let traffic bypass Cloudflare.
+IP="${ORIGIN_IP:?Set ORIGIN_IP to the origin server address}"
 
 upsert_a() {
   local name="$1"

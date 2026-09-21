@@ -2,12 +2,14 @@ import { NextResponse } from 'next/server'
 
 import { putArModel, arModelStoreBackendLabel } from '@/lib/configurator/ar/ar-model-store'
 import {
+  AR_MODEL_MAX_BYTES,
   AR_MODEL_TTL_SECONDS,
   isLocalOrPrivateArUrl,
   validateArModelBytes,
   type ArModelFormat,
 } from '@/lib/configurator/ar/ar-handoff'
 import { env } from '@/lib/env'
+import { checkRateLimit, clientKeyFromHeaders, RATE_LIMIT_MESSAGE, RATE_LIMITS } from '@/lib/security/rate-limit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -33,6 +35,32 @@ function resolvePublicOrigin(request: Request): string {
   return new URL(request.url).origin
 }
 
+async function readBodyCapped(request: Request, maxBytes: number): Promise<Uint8Array | null> {
+  const reader = request.body?.getReader()
+  if (!reader) return new Uint8Array()
+
+  const chunks: Uint8Array[] = []
+  let total = 0
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) break
+    total += value.byteLength
+    if (total > maxBytes) {
+      await reader.cancel()
+      return null
+    }
+    chunks.push(value)
+  }
+
+  const bytes = new Uint8Array(total)
+  let offset = 0
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset)
+    offset += chunk.byteLength
+  }
+  return bytes
+}
+
 /** Upload a client-exported GLB/USDZ and get a short-lived HTTPS URL for native AR. */
 export async function POST(request: Request) {
   const formatHeader = request.headers.get('x-ar-format')
@@ -42,8 +70,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'x-ar-format must be glb or usdz' }, { status: 400 })
   }
 
-  const buffer = await request.arrayBuffer()
-  const bytes = new Uint8Array(buffer)
+  const limit = checkRateLimit(RATE_LIMITS.arUpload, clientKeyFromHeaders(request.headers))
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: RATE_LIMIT_MESSAGE, code: 'rate_limited' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSeconds) } },
+    )
+  }
+
+  // Never buffer more than the cap, whether or not the client declares a Content-Length.
+  const declaredLength = Number(request.headers.get('content-length') ?? 0)
+  if (declaredLength > AR_MODEL_MAX_BYTES) {
+    return NextResponse.json({ error: 'Model file is too large' }, { status: 413 })
+  }
+  const bytes = await readBodyCapped(request, AR_MODEL_MAX_BYTES)
+  if (!bytes) {
+    return NextResponse.json({ error: 'Model file is too large' }, { status: 413 })
+  }
   const validationError = validateArModelBytes(format, bytes)
   if (validationError) {
     return NextResponse.json({ error: validationError }, { status: 400 })

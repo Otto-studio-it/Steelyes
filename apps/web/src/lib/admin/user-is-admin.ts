@@ -1,12 +1,11 @@
 import type { User } from '@supabase/supabase-js'
 
 /**
- * Admin flag: prefer `app_metadata.is_admin` (only service role / dashboard can set).
- * `user_metadata.is_admin` is still accepted for backward compatibility — remove once
- * every admin user has `app_metadata.is_admin` in Supabase Auth (User → raw app metadata).
+ * Admin flag lives in `app_metadata.is_admin` only — that field can be written just by the
+ * service role / Supabase dashboard. `user_metadata` is user-editable (signUp / updateUser
+ * with the public anon key), so it must never grant privileges.
  */
 export function userIsAdmin(user: User | null | undefined): boolean {
   if (!user) return false
-  if (user.app_metadata?.is_admin === true) return true
-  return user.user_metadata?.is_admin === true
+  return user.app_metadata?.is_admin === true
 }

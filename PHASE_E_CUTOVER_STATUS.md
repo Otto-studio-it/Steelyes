@@ -83,7 +83,7 @@ For each variable below, click **"New repository variable"**, enter the name and
 | Variable Name | Value (from uploaded file) | Required |
 |---------------|----------------------------|----------|
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://supabase.steelyes.co.uk` | ✅ Yes |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzg5ODM5MTU4LCJleHAiOjIxMDUxOTkxNTh9.jlzoXnR86INH5FhBSi6BrapkOPhq-O5nyfDM78jtU5g` | ✅ Yes |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `<anon key — copy from Supabase dashboard / Coolify env>` | ✅ Yes |
 | `NEXT_PUBLIC_SITE_URL` | `https://www.steelyes.co.uk` | ✅ Yes |
 
 **Note:** Do NOT add `SUPABASE_SERVICE_ROLE_KEY` to GitHub Actions - this is a runtime secret and stays in Coolify only.

@@ -5,6 +5,7 @@ import {
   validateGateConfig,
   type GateConfig,
 } from '@steelyes/gate-engine'
+import { headers } from 'next/headers'
 
 import {
   configurationPayloadFromConfig,
@@ -12,6 +13,7 @@ import {
 } from '@/lib/configurator/configuration-db'
 import { mapGateTypeToDb } from '@/lib/configurator/db-map'
 import { createShareToken, isValidShareToken } from '@/lib/configurator/share-token'
+import { checkRateLimit, clientKeyFromHeaders, RATE_LIMIT_MESSAGE, RATE_LIMITS } from '@/lib/security/rate-limit'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 
 export type SaveGateConfigurationResult =
@@ -29,6 +31,10 @@ export async function saveGateConfiguration(
   serializedConfig: string,
 ): Promise<SaveGateConfigurationResult> {
   try {
+    if (!checkRateLimit(RATE_LIMITS.saveConfiguration, clientKeyFromHeaders(headers())).ok) {
+      return { ok: false, error: RATE_LIMIT_MESSAGE }
+    }
+
     let config: GateConfig
 
     try {

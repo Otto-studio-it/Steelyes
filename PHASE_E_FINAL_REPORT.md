@@ -152,7 +152,7 @@ Click **"New repository variable"** for each:
 
 2. **Variable 2: NEXT_PUBLIC_SUPABASE_ANON_KEY**
    - **Name:** `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - **Value:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzg5ODM5MTU4LCJleHAiOjIxMDUxOTkxNTh9.jlzoXnR86INH5FhBSi6BrapkOPhq-O5nyfDM78jtU5g`
+   - **Value:** `<anon key — copy from Supabase dashboard / Coolify env>`
    - **Type:** Public (anon key, already exposed in browser)
 
 3. **Variable 3: NEXT_PUBLIC_SITE_URL**
