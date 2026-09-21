@@ -10,13 +10,12 @@ This file is a **read-only map**. Do not invent new AR APIs or a second mesh pat
 |------|------|--------|
 | Mesh plan (mm, fidelity, notes) | `packages/gate-engine/src/mesh/` (`buildGateMeshPlan`) | Swing / sliding / bifold / telescopic / radius. Victorian tubes = `workshop` when cylinders exist. |
 | Railhead mesh | `packages/gate-engine/src/mesh/railheads.ts` | **No-ops.** Catalogue SKUs are quote/email only. 3D does **not** draw finials or placeholder cylinders. |
-| THREE.Group (metres) | `apps/web/src/lib/configurator/ar/build-gate-three-group.ts` | `mm × 0.001`, snap-to-floor for Quick Look / Scene Viewer. |
-| Client export | `apps/web/src/lib/configurator/ar/export-gate-ar-model.ts` | `exportGateArModel(config)` → `{ glbBlob, usdzBlob, glbUrl, usdzUrl, fidelity, notes, revoke }` |
-| Handoff helpers | `apps/web/src/lib/configurator/ar/ar-handoff.ts` | TTL **3600s**, Quick Look `#allowsContentScaling=0`, Scene Viewer `resizable=false`, magic-byte validation, expiry label. |
-| Handoff unit tests | `apps/web/src/lib/configurator/ar/ar-handoff.test.ts` | Vitest — already green. |
-| Ephemeral store | `apps/web/src/lib/configurator/ar/ar-model-store.ts` | Memory + disk under `tmpdir()` / `AR_MODEL_STORE_DIR`. Single-instance Coolify. |
-| POST upload | `apps/web/src/app/api/ar/models/route.ts` | **Not multipart.** Raw `arrayBuffer` body + header `x-ar-format: glb \| usdz`. One format per request. Returns `{ id, format, url, expiresAt, expiresInSeconds, phoneReachable }`. |
-| GET/HEAD/OPTIONS serve | `apps/web/src/app/api/ar/models/[id]/route.ts` | Path `{uuid}.glb` / `{uuid}.usdz`. CORS `*`. **410** + `code: ar_model_expired` when gone. |
+| Three.js scene graph (metres) | `apps/web/src/lib/configurator/ar/build-gate-three-group.ts` | `mm × 0.001`. One merged mesh + one opaque material per role. Returns a wrapper `root`; the floor snap sits on the child group because USDZExporter drops the transform of the object it is given. |
+| Server export | `apps/web/src/lib/configurator/ar/export-gate-ar-model.ts` | `exportGateArModel(config, 'glb' \| 'usdz')` → `{ bytes, fidelity }`. Runs in Node (small `FileReader` shim for GLTFExporter). |
+| Handoff helpers | `apps/web/src/lib/configurator/ar/ar-handoff.ts` | `buildArModelPath` / `parseArModelFile`, Quick Look `#allowsContentScaling=0`, Scene Viewer `resizable=false` (package `com.google.android.googlequicksearchbox` for `ar_preferred`). |
+| Unit tests | `ar-handoff.test.ts`, `export-gate-ar-model.test.ts` | Vitest, run by `pnpm test`. |
+| GET/HEAD/OPTIONS model | `apps/web/src/app/api/ar/gate/[file]/route.ts` | Path `{shareToken}.glb` / `{shareToken}.usdz`. Model is generated server-side from the saved configuration (no client upload, no expiry). CORS `*`, per-IP rate limit, small in-process LRU, exempt from site hold. |
+| Open perimeter leaf frame | `packages/gate-engine/src/mesh/leaf-frame.ts` | Victorian leaves = stiles + bottom + top (or arch segments). Replaced the solid W×H box that hid every picket in 3D / AR. |
 | ADR | `docs/adr/002-configurator-2d-first-on-demand-3d-ar.md` | 2D default; Three.js only on demand. |
 | Older Phase A note | `docs/frontend/2d-masters/PHASE_A_AR_VIEW_IN_SPACE.md` | **Stale in places** (lists `ViewInYourSpace.tsx` as if it exists; says 15 min TTL; QR already rejected). Prefer this inventory + the Cursor brief. |
 

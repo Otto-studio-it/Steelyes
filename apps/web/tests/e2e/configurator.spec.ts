@@ -323,22 +323,29 @@ test.describe('configurator AR handoff', () => {
     await expect(ar.getByRole('button', { name: /View in your space/i })).toBeVisible()
   })
 
-  test('exports and hosts GLB/USDZ for the desktop handoff panel', async ({ page }) => {
+  test('builds server-side GLB/USDZ links for the desktop handoff panel', async ({ page, request }) => {
     await waitForConfiguratorReady(page)
 
-    const posts: string[] = []
-    page.on('request', (request) => {
-      if (request.method() === 'POST' && request.url().includes('/api/ar/models')) {
-        posts.push(request.headers()['x-ar-format'] ?? '')
-      }
-    })
-
-    await page.getByTestId('view-in-your-space').getByRole('button', { name: /View in your space/i }).click()
-    await expect(page.getByTestId('view-in-your-space').getByRole('status')).toBeVisible()
+    const ar = page.getByTestId('view-in-your-space')
+    await ar.getByRole('button', { name: /View in your space/i }).click()
     await expect(page.getByRole('button', { name: /Copy iPhone link/i })).toBeVisible({ timeout: 90_000 })
-    await expect(page.getByRole('link', { name: /Download GLB/i })).toBeVisible()
-    await expect(page.getByRole('link', { name: /Download USDZ/i })).toBeVisible()
-    expect(posts.sort()).toEqual(['glb', 'usdz'])
+    await expect(ar.getByRole('img', { name: /QR code/i })).toBeVisible()
+
+    const glbHref = await page.getByRole('link', { name: /Download GLB/i }).getAttribute('href')
+    const usdzHref = await page.getByRole('link', { name: /Download USDZ/i }).getAttribute('href')
+    expect(glbHref).toMatch(/\/api\/ar\/gate\/[A-Za-z0-9_-]+\.glb$/)
+    expect(usdzHref).toMatch(/\/api\/ar\/gate\/[A-Za-z0-9_-]+\.usdz$/)
+
+    const glb = await request.get(glbHref!)
+    expect(glb.status()).toBe(200)
+    expect(glb.headers()['content-type']).toBe('model/gltf-binary')
+    expect((await glb.body()).subarray(0, 4).toString('latin1')).toBe('glTF')
+
+    const usdz = await request.get(usdzHref!)
+    expect(usdz.status()).toBe(200)
+    expect(usdz.headers()['content-type']).toBe('model/vnd.usdz+zip')
+
+    expect((await request.get('/api/ar/gate/does-not-exist-000.glb')).status()).toBe(404)
   })
 })
 

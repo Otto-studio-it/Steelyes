@@ -17,6 +17,8 @@ const HOLD_HEADERS = {
 function isHoldExemptPath(pathname: string): boolean {
   if (pathname === '/hold' || pathname.startsWith('/hold/')) return true
   if (pathname === '/healthz') return true
+  // Quick Look / Scene Viewer fetch the model without the bypass cookie; the share token is the secret.
+  if (pathname.startsWith('/api/ar/gate/')) return true
   if (pathname === '/robots.txt' || pathname === '/sitemap.xml') return true
   if (pathname.startsWith('/admin')) return true
   if (pathname.startsWith('/_next')) return true

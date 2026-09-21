@@ -14,12 +14,13 @@ import {
 import type { GateConfig } from '../types'
 import { scaleVisualBoldness } from '../visual-scale'
 import { pushDogBarRailheads, pushTopRailheads } from './railheads'
+import { LEAF_FRAME_PROFILE_MM, PICKET_TUBE_RADIUS_MM, pushLeafPerimeterFrame } from './leaf-frame'
 import type { GateMeshBox, GateMeshCylinder } from './types'
 
 const FRAME_DEPTH_MM = scaleVisualBoldness(45)
 const POST_WIDTH_MM = scaleVisualBoldness(90)
 const ARCH_SHOULDER_DROP_MM = 90
-const ARCH_SEGMENT_COUNT = 7
+const ARCH_SEGMENT_COUNT = 15
 const DOG_RAIL_FROM_TOP = 0.7
 
 /** Default Victorian rail ratios (0 = top of opening, 1 = bottom). */
@@ -152,25 +153,24 @@ function pushVictorianSlidingLeaf(
   const picketCount =
     picketCountOverride ?? clamp(Math.round(widthMm / 100), 10, 28)
   const dogBarCount = dogBars ? clamp(Math.round(widthMm / 70), 4, 28) : 0
-  const archSegments = clamp(Math.round(widthMm / 120), 3, ARCH_SEGMENT_COUNT)
+  // Odd count: one segment is centred on the crest and reaches heightMm exactly.
+  const archSegments = clamp(Math.round(widthMm / 80), 5, ARCH_SEGMENT_COUNT) | 1
 
   if (archedTop) {
-    const usable = widthMm - 16
+    // The arch is the leaf's top frame member (same section as the stiles) and counts
+    // toward the opening envelope — crest = heightMm.
+    const usable = widthMm - LEAF_FRAME_PROFILE_MM * 2
     const segmentWidth = usable / archSegments
     for (let i = 0; i < archSegments; i += 1) {
-      const tMid = (i + 0.5) / archSegments
+      const x = left + LEAF_FRAME_PROFILE_MM + segmentWidth * (i + 0.5)
       boxes.push({
         kind: 'box',
         id: `${idPrefix}-arch-seg-${i + 1}`,
-        widthMm: segmentWidth * 0.92,
-        heightMm: scaleVisualBoldness(10),
-        depthMm: FRAME_DEPTH_MM * 0.7,
-        positionMm: [
-          left + 8 + segmentWidth * (i + 0.5),
-          archTopYMm(tMid, heightMm) - 6,
-          depthOffsetMm,
-        ],
-        role: 'rail',
+        widthMm: segmentWidth + 1,
+        heightMm: LEAF_FRAME_PROFILE_MM,
+        depthMm: FRAME_DEPTH_MM * 0.75,
+        positionMm: [x, archTopYMm((x - left) / widthMm, heightMm) - LEAF_FRAME_PROFILE_MM / 2, depthOffsetMm],
+        role: 'frame',
       })
     }
   }
@@ -210,11 +210,15 @@ function pushVictorianSlidingLeaf(
     ? meshYFromTopRatio(DOG_RAIL_FROM_TOP, heightMm) + 4
     : meshYFromTopRatio(SLIDING_RAILS.spearBand, heightMm)
 
+  // Infill is spaced between the stiles, not across the full leaf width.
+  const infillLeft = left + LEAF_FRAME_PROFILE_MM
+  const infillWidth = Math.max(1, widthMm - LEAF_FRAME_PROFILE_MM * 2)
+
   for (let i = 0; i < picketCount; i += 1) {
     const t = (i + 0.5) / picketCount
-    const x = left + widthMm * t
+    const x = infillLeft + infillWidth * t
     const topY = archedTop
-      ? archTopYMm(t, heightMm) - 14
+      ? archTopYMm((x - left) / widthMm, heightMm) - 14
       : meshYFromTopRatio(SLIDING_RAILS.upperMid + 0.02, heightMm)
     const height = Math.max(40, topY - picketBottomY)
     cylinders.push({
@@ -238,7 +242,7 @@ function pushVictorianSlidingLeaf(
         id: `${idPrefix}-dog-bar-${i}`,
         radiusMm: tubeRadius * 0.85,
         heightMm: dogHeight,
-        positionMm: [left + widthMm * t, dogBottomY + dogHeight / 2, depthOffsetMm],
+        positionMm: [infillLeft + infillWidth * t, dogBottomY + dogHeight / 2, depthOffsetMm],
         role: 'bar',
       })
     }
@@ -254,7 +258,7 @@ function pushVictorianSlidingLeaf(
         id: `${idPrefix}-picket-lower-${i}`,
         radiusMm: tubeRadius * 0.92,
         heightMm: lowerHeight,
-        positionMm: [left + widthMm * t, lowerBottomY + lowerHeight / 2, depthOffsetMm],
+        positionMm: [infillLeft + infillWidth * t, lowerBottomY + lowerHeight / 2, depthOffsetMm],
         role: 'bar',
       })
     }
@@ -344,20 +348,33 @@ export function buildTrackedOrCantileverMesh(
   const isComposite = config.style === 'composite_boards'
   const archedTop = hasOption(config, 'arched_top') && !isComposite
   const dogBars = hasOption(config, 'dog_bars') && !isComposite
-  const tubeRadius = scaleVisualBoldness(20) / 2
+  const tubeRadius = PICKET_TUBE_RADIUS_MM
   const boxes: GateMeshBox[] = [...mountingPosts]
   const cylinders: GateMeshCylinder[] = []
 
   // Opening leaf — full clear opening (CA-08 / photo-locked CAD).
-  boxes.push({
-    kind: 'box',
-    id: 'sliding-panel',
-    widthMm: panelWidth,
-    heightMm: panelHeight,
-    depthMm: FRAME_DEPTH_MM * (isComposite ? 0.55 : 0.75),
-    positionMm: [0, panelCenterY, 0],
-    role: isComposite ? 'panel' : 'frame',
-  })
+  // Composite = solid boarded panel; Victorian = open perimeter frame so pickets show.
+  if (isComposite) {
+    boxes.push({
+      kind: 'box',
+      id: 'sliding-panel',
+      widthMm: panelWidth,
+      heightMm: panelHeight,
+      depthMm: FRAME_DEPTH_MM * 0.55,
+      positionMm: [0, panelCenterY, 0],
+      role: 'panel',
+    })
+  } else {
+    pushLeafPerimeterFrame(boxes, {
+      id: 'sliding-panel',
+      centerX: 0,
+      widthMm: panelWidth,
+      heightMm: panelHeight,
+      depthMm: FRAME_DEPTH_MM * 0.75,
+      depthOffsetMm: 0,
+      arch: archedTop ? { leftTopMm: archTopYMm(0, panelHeight), rightTopMm: archTopYMm(1, panelHeight) } : undefined,
+    })
+  }
 
   if (isComposite) {
     pushCompositeLeaf(boxes, {
@@ -518,15 +535,28 @@ function buildTelescopicMesh(
     const depthOffsetMm = index * (FRAME_DEPTH_MM * 0.28)
     const idPrefix = `telescopic-segment-${index + 1}`
 
-    boxes.push({
-      kind: 'box',
-      id: idPrefix,
-      widthMm: segmentWidth,
-      heightMm: panelHeight,
-      depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
-      positionMm: [centerX, panelCenterY, depthOffsetMm],
-      role: isComposite ? 'panel' : 'frame',
-    })
+    // Composite = solid boarded panel; Victorian = open perimeter frame so pickets show.
+    if (isComposite) {
+      boxes.push({
+        kind: 'box',
+        id: idPrefix,
+        widthMm: segmentWidth,
+        heightMm: panelHeight,
+        depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
+        positionMm: [centerX, panelCenterY, depthOffsetMm],
+        role: 'panel',
+      })
+    } else {
+      pushLeafPerimeterFrame(boxes, {
+        id: idPrefix,
+        centerX: centerX,
+        widthMm: segmentWidth,
+        heightMm: panelHeight,
+        depthMm: FRAME_DEPTH_MM * (0.86 - index * 0.05),
+        depthOffsetMm: depthOffsetMm,
+        arch: archedTop ? { leftTopMm: archTopYMm(0, panelHeight), rightTopMm: archTopYMm(1, panelHeight) } : undefined,
+      })
+    }
 
     if (isComposite) {
       pushCompositeLeaf(boxes, {
@@ -660,15 +690,28 @@ function buildRadiusMesh(
     const depthOffsetMm = Math.sin(t * Math.PI * 0.5) * curveAmp
     const idPrefix = `radius-segment-${index + 1}`
 
-    boxes.push({
-      kind: 'box',
-      id: idPrefix,
-      widthMm: leafWidth,
-      heightMm: panelHeight,
-      depthMm: FRAME_DEPTH_MM * (isComposite ? 0.55 : 0.75),
-      positionMm: [centerX, panelCenterY, depthOffsetMm],
-      role: isComposite ? 'panel' : 'frame',
-    })
+    // Composite = solid boarded panel; Victorian = open perimeter frame so pickets show.
+    if (isComposite) {
+      boxes.push({
+        kind: 'box',
+        id: idPrefix,
+        widthMm: leafWidth,
+        heightMm: panelHeight,
+        depthMm: FRAME_DEPTH_MM * 0.55,
+        positionMm: [centerX, panelCenterY, depthOffsetMm],
+        role: 'panel',
+      })
+    } else {
+      pushLeafPerimeterFrame(boxes, {
+        id: idPrefix,
+        centerX: centerX,
+        widthMm: leafWidth,
+        heightMm: panelHeight,
+        depthMm: FRAME_DEPTH_MM * 0.75,
+        depthOffsetMm: depthOffsetMm,
+        arch: archedTop ? { leftTopMm: archTopYMm(0, panelHeight), rightTopMm: archTopYMm(1, panelHeight) } : undefined,
+      })
+    }
 
     if (isComposite) {
       pushCompositeLeaf(boxes, {
