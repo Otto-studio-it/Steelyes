@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test:unit": "vitest run --config vitest.config.ts",
+    "test": "vitest run --config vitest.config.ts",
+    "test:unit": "pnpm test",
     "e2e": "playwright test",
     "test:release-gate": "pnpm --filter @steelyes/gate-engine test && pnpm typecheck && playwright test configurator"
   },

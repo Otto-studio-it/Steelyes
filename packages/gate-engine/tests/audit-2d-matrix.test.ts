@@ -15,6 +15,7 @@ import {
   type GateOptionKey,
   type GateType,
 } from '../src/index'
+import { mastersOutputRoot } from './helpers/masters-output'
 
 const TIP = [
   { id: 'base', opts: {} as Partial<Record<GateOptionKey, true>> },
@@ -262,10 +263,8 @@ describe('2D matrix audit (report)', () => {
       })
     }
 
-    const outPath = path.resolve(
-      path.dirname(fileURLToPath(import.meta.url)),
-      '../../../docs/frontend/2d-masters/AUDIT_2D_MATRIX_2026-08-13.json',
-    )
+    // Temp dir by default; WRITE_MASTERS=1 refreshes the committed report.
+    const outPath = path.join(mastersOutputRoot(), 'AUDIT_2D_MATRIX_2026-08-13.json')
     const report = {
       generatedAt: new Date().toISOString(),
       totalRows: rows.length,

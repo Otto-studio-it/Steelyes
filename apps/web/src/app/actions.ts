@@ -11,6 +11,7 @@ import type {
 } from '@steelyes/gate-engine'
 import { FULFILMENT_MODES } from '@steelyes/gate-engine'
 import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
+import { headers } from 'next/headers'
 import { z } from 'zod'
 
 import { formatConfigurationSummaryText } from '@/lib/configurator/configuration-summary'
@@ -31,6 +32,7 @@ import {
 } from '@/lib/email/send'
 import { dispatchTenantLeadWebhook } from '@/lib/platform/lead-webhook'
 import { loadTenantBundle } from '@/lib/platform/load-tenant'
+import { checkRateLimit, clientKeyFromHeaders, RATE_LIMIT_MESSAGE, RATE_LIMITS } from '@/lib/security/rate-limit'
 import { verifyTurnstile } from '@/lib/security/turnstile'
 import {
   FULFILMENT_FIELD_LABEL,
@@ -214,11 +216,19 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     if (!parsed.success) return { status: 'error', message: 'Please check the details and try again.' }
     const { name, email, phone, projectType, postcode, message, shareToken, source } = parsed.data
 
+    // The confirmation email goes to a visitor-supplied address: throttle per caller and per recipient.
+    if (
+      !checkRateLimit(RATE_LIMITS.quoteSubmit, clientKeyFromHeaders(headers())).ok ||
+      !checkRateLimit(RATE_LIMITS.emailRecipient, email.toLowerCase()).ok
+    ) {
+      return { status: 'error', message: RATE_LIMIT_MESSAGE }
+    }
+
     const turnstile = await verifyTurnstile(parsed.data.turnstileToken)
     if (!turnstile.ok) {
       return { status: 'error', message: turnstileFailureMessage(turnstile.reason) }
     }
-    const turnstileVerified = true
+    const turnstileVerified = turnstile.verified
 
     const supabase = getServiceRoleClient()
     const context = await loadConfigurationContext(shareToken, { attachPdf: true })
@@ -405,6 +415,13 @@ export async function emailMyDesign(formData: FormData): Promise<EmailMyDesignSt
     }
     const email = emailResult.data
 
+    if (
+      !checkRateLimit(RATE_LIMITS.emailDesign, clientKeyFromHeaders(headers())).ok ||
+      !checkRateLimit(RATE_LIMITS.emailRecipient, email.toLowerCase()).ok
+    ) {
+      return { status: 'error', message: RATE_LIMIT_MESSAGE }
+    }
+
     const turnstile = await verifyTurnstile(readField(formData, 'turnstile_token'))
     if (!turnstile.ok) {
       return { status: 'error', message: turnstileFailureMessage(turnstile.reason) }
@@ -415,7 +432,8 @@ export async function emailMyDesign(formData: FormData): Promise<EmailMyDesignSt
     }
 
     const context = await loadConfigurationContext(shareToken)
-    if (!context.shareUrl) {
+    // Require the saved row: a well-formed but unknown token must not turn this into an open mailer.
+    if (!context.shareUrl || !context.configurationId) {
       return { status: 'error', message: 'Could not find your saved design. Please try again.' }
     }
 

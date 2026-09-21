@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -11,6 +10,7 @@ import {
   type GateConfig,
   type GateOptionKey,
 } from '../src/index'
+import { mastersOutputRoot, REPO_MASTERS_ROOT } from './helpers/masters-output'
 
 /**
  * Tracked sliding silhouettes — same option families as swing,
@@ -84,9 +84,9 @@ function stripForFigma(plan: ReturnType<typeof buildGateRenderPlan>) {
 
 describe('export Figma tracked_sliding variant SVGs', () => {
   it('writes the 5 silhouette masters into docs/frontend/2d-masters/tracked_sliding/silhouettes', () => {
-    const here = path.dirname(fileURLToPath(import.meta.url))
-    const packDir = path.resolve(here, '../../../docs/frontend/2d-masters/tracked_sliding')
-    const outDir = path.join(packDir, 'silhouettes')
+    const packDir = path.join(REPO_MASTERS_ROOT, 'tracked_sliding')
+    const outPackDir = path.join(mastersOutputRoot(), 'tracked_sliding')
+    const outDir = path.join(outPackDir, 'silhouettes')
     fs.mkdirSync(outDir, { recursive: true })
 
     const written: string[] = []
@@ -105,7 +105,7 @@ describe('export Figma tracked_sliding variant SVGs', () => {
     }
 
     // Commercial tracked default visual often composite — keep figma-base as composite
-    fs.copyFileSync(path.join(outDir, 'composite.svg'), path.join(packDir, 'figma-base.svg'))
+    fs.copyFileSync(path.join(outDir, 'composite.svg'), path.join(outPackDir, 'figma-base.svg'))
 
     expect(written).toHaveLength(5)
     expect(fs.existsSync(path.join(packDir, 'manifest.json'))).toBe(true)
