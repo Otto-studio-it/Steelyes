@@ -179,7 +179,7 @@ Approval: Ruben ✅
 - **No unauthenticated mutations**: all INSERT/UPDATE/DELETE require either Turnstile + rate limit or admin JWT
 - **Price calculation**: Server-side only, never client-trusted
 - **Audit trail**: Every admin action logged to `admin_audit` table via trigger
-- **Retention**: `quote_requests` auto-purged at 24 months via `pg_cron`
+- **Retention**: target is 24 months for `quote_requests`, `leads`, `design_captures`, `email_deliveries`, `inbound_emails`. `public.purge_expired_personal_data(retention, dry_run)` exists (migration `20260921140000_…`) but is **not scheduled yet** — dry-run, back up, then schedule with `pg_cron` (see the migration header)
 
 ---
 

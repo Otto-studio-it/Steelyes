@@ -55,6 +55,8 @@ async function sendEmail(options: {
   replyTo?: string
   idempotencyKey?: string
   attachments?: WorkshopPdfAttachment[]
+  /** Absolute URL — adds List-Unsubscribe headers so mail clients show a native unsubscribe. */
+  unsubscribeUrl?: string
 }): Promise<boolean> {
   const apiKey = env.RESEND_API_KEY
   if (!apiKey) {
@@ -86,6 +88,14 @@ async function sendEmail(options: {
       text: options.text,
       replyTo: options.replyTo,
       ...(options.attachments?.length ? { attachments: options.attachments } : {}),
+      ...(options.unsubscribeUrl
+        ? {
+            headers: {
+              'List-Unsubscribe': `<${options.unsubscribeUrl}>`,
+              'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+            },
+          }
+        : {}),
     }
     const { data, error } = await resend.emails.send(
       { from: EMAIL_FROM, ...emailOptions },
@@ -375,6 +385,8 @@ export async function sendDesignSaveEmail(input: DesignSaveEmailInput): Promise<
 export type AbandonedReminderEmailInput = {
   email: string
   shareUrl: string
+  /** Absolute one-click unsubscribe URL. */
+  unsubscribeUrl: string
 }
 
 export async function sendAbandonedReminderEmail(
@@ -384,6 +396,7 @@ export async function sendAbandonedReminderEmail(
     kind: 'customer_design_reminder',
     to: input.email,
     replyTo: WORKSHOP_EMAIL,
+    unsubscribeUrl: input.unsubscribeUrl,
     subject: 'Your Steelyes gate design is waiting',
     html: emailShell(
       'Still thinking it over?',
@@ -399,6 +412,10 @@ export async function sendAbandonedReminderEmail(
         Prefer to talk it through? Call <a href="tel:${BUSINESS.phone}">${BUSINESS.phoneDisplay}</a> and we will help
         you get the measurements and options right.
       </p>
+      <p style="${BODY_STYLE}">
+        This is the only reminder we send for this design.
+        <a href="${input.unsubscribeUrl}">Stop reminders</a>.
+      </p>
       `,
     ),
     text: [
@@ -406,6 +423,7 @@ export async function sendAbandonedReminderEmail(
       'You saved a gate design with us recently. It is still here whenever you want to pick it up again — review it, tweak it, or request a survey-led quote in a couple of clicks.',
       `Open your saved design: ${input.shareUrl}`,
       `Prefer to talk it through? Call ${BUSINESS.phoneDisplay} and we will help you get the measurements and options right.`,
+      `This is the only reminder we send for this design. Stop reminders: ${input.unsubscribeUrl}`,
       `${PRICING_DISCLAIMER}\nSteelyes · ${BUSINESS.phoneDisplay} · ${BUSINESS.email}`,
     ]
       .filter(Boolean)

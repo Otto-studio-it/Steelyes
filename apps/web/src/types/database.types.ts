@@ -375,24 +375,30 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          reminder_attempts: number
           reminder_sent_at: string | null
           share_token: string
+          unsubscribed_at: string | null
         }
         Insert: {
           configuration_id?: string | null
           created_at?: string
           email: string
           id?: string
+          reminder_attempts?: number
           reminder_sent_at?: string | null
           share_token: string
+          unsubscribed_at?: string | null
         }
         Update: {
           configuration_id?: string | null
           created_at?: string
           email?: string
           id?: string
+          reminder_attempts?: number
           reminder_sent_at?: string | null
           share_token?: string
+          unsubscribed_at?: string | null
         }
         Relationships: [
           {

@@ -9,8 +9,12 @@ import { gateConfigFromConfigurationRow } from '@/lib/configurator/configuration
 import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
 import { env } from '@/lib/env'
+import { createTtlLru } from '@/lib/server/ttl-lru'
 import { checkRateLimit, clientKeyFromHeaders, RATE_LIMIT_MESSAGE, RATE_LIMITS } from '@/lib/security/rate-limit'
 import { getServiceRoleClient } from '@/lib/supabase/server'
+
+// A saved design never changes; the TTL only bounds how long an admin price edit takes to show.
+const pdfCache = createTtlLru<Uint8Array>({ maxEntries: 40, ttlMs: 5 * 60_000 })
 
 type RouteContext = {
   params: { shareToken: string }
@@ -32,29 +36,35 @@ export async function GET(request: Request, context: RouteContext) {
     return NextResponse.json({ error: 'Invalid share token' }, { status: 400 })
   }
 
-  const supabase = getServiceRoleClient()
-  const { data: row, error } = await supabase
-    .from('configurations')
-    .select('*')
-    .eq('share_token', shareToken)
-    .maybeSingle()
+  let pdfBytes = pdfCache.get(shareToken)
 
-  if (error || !row) {
-    return NextResponse.json({ error: 'Configuration not found' }, { status: 404 })
+  if (!pdfBytes) {
+    try {
+      const supabase = getServiceRoleClient()
+      const { data: row, error } = await supabase
+        .from('configurations')
+        .select('*')
+        .eq('share_token', shareToken)
+        .maybeSingle()
+
+      if (error || !row) {
+        return NextResponse.json({ error: 'Configuration not found' }, { status: 404 })
+      }
+
+      // Throws on rows saved with option / finish codes that no longer exist.
+      const config = gateConfigFromConfigurationRow(row)
+      const pricingCatalog = await fetchPricingCatalog()
+      const pricing = calculateQuotePricing(config, pricingCatalog)
+      const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://steelyes.co.uk'
+      const shareUrl = `${siteUrl}${buildQuoteSharePath(shareToken)}`
+
+      pdfBytes = await buildIndicativeQuotePdf({ config, pricing, shareToken, shareUrl })
+      pdfCache.set(shareToken, pdfBytes)
+    } catch (error) {
+      console.error('Quote PDF build failed:', error)
+      return NextResponse.json({ error: 'Could not build the quote PDF. Please try again.' }, { status: 500 })
+    }
   }
-
-  const config = gateConfigFromConfigurationRow(row)
-  const pricingCatalog = await fetchPricingCatalog()
-  const pricing = calculateQuotePricing(config, pricingCatalog)
-  const siteUrl = env.NEXT_PUBLIC_SITE_URL ?? 'https://steelyes.co.uk'
-  const shareUrl = `${siteUrl}${buildQuoteSharePath(shareToken)}`
-
-  const pdfBytes = await buildIndicativeQuotePdf({
-    config,
-    pricing,
-    shareToken,
-    shareUrl,
-  })
 
   return new NextResponse(Buffer.from(pdfBytes), {
     status: 200,

@@ -23,10 +23,12 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   const payload = await request.text()
-  const resend = new Resend(env.RESEND_API_KEY)
   let event: WebhookEventPayload
 
   try {
+    // Inside the try: the SDK constructor throws without a key, which used to surface as a 500
+    // that Resend retries forever. Verification itself only needs the webhook secret.
+    const resend = new Resend(env.RESEND_API_KEY ?? 're_webhook_verification_only')
     event = resend.webhooks.verify({
       payload,
       headers: {
@@ -45,10 +47,19 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ received: true })
   }
 
+  const occurredAt = new Date(event.created_at)
+  if (Number.isNaN(occurredAt.getTime())) {
+    return NextResponse.json({ received: true })
+  }
+  const occurredAtIso = occurredAt.toISOString()
+
+  // Webhooks arrive out of order: a late `email.sent` must not overwrite `delivered` / `bounced`.
+  // Only apply an event that is newer than the last one recorded.
   const { error } = await getServiceRoleClient()
     .from('email_deliveries')
-    .update({ status, last_event_at: event.created_at })
+    .update({ status, last_event_at: occurredAtIso })
     .eq('resend_email_id', event.data.email_id)
+    .or(`last_event_at.is.null,last_event_at.lte."${occurredAtIso}"`)
 
   if (error) {
     console.error('Resend webhook update error:', error)
