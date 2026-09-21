@@ -1,4 +1,5 @@
 import type { GateRenderLabel, GateRenderPlan, GateRenderPrimitive } from './render-plan'
+import { getCantileverTailRatio } from '../rules/cantilever'
 
 const PLAN_WIDTH = 1200
 const PLAN_HEIGHT = 860
@@ -65,7 +66,8 @@ export function buildPlanViewPlan(input: {
       strokeWidth: 3,
     })
     if (input.gateType === 'cantilever_sliding') {
-      const tailWidth = gateWidth * (input.widthMm === 4000 ? 1 / 3 : 0.28)
+      // CA-05: the tail is a third of the clear opening at every width (it was 0.28 except at exactly 4000 mm).
+      const tailWidth = gateWidth * getCantileverTailRatio(input.widthMm)
       primitives.push({
         kind: 'rect',
         id: 'counterbalance-plan',

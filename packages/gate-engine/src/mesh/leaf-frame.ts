@@ -1,11 +1,12 @@
+import { DEFAULT_PICKET_OUTER_MM, DEFAULT_TUBE_OUTER_MM } from '../geometry/constants'
 import { scaleVisualBoldness } from '../visual-scale'
 import type { GateMeshBox } from './types'
 
 /** Face width of the leaf's perimeter box section (stiles + top / bottom members). */
-export const LEAF_FRAME_PROFILE_MM = scaleVisualBoldness(40)
+export const LEAF_FRAME_PROFILE_MM = scaleVisualBoldness(DEFAULT_TUBE_OUTER_MM)
 
 /** Victorian picket tube radius — shared by swing and sliding leaves. */
-export const PICKET_TUBE_RADIUS_MM = scaleVisualBoldness(20) / 2
+export const PICKET_TUBE_RADIUS_MM = scaleVisualBoldness(DEFAULT_PICKET_OUTER_MM) / 2
 
 export type LeafPerimeterFrameArgs = {
   id: string
