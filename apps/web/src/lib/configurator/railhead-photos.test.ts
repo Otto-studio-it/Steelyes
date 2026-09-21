@@ -13,7 +13,9 @@ describe('definitive railhead catalogue photos', () => {
   const files = new Set(readdirSync(PHOTO_DIR).filter((name) => name.endsWith('.webp')))
 
   it('maps every catalog SKU to a public WebP', () => {
-    const slugs = [...new Set(DEFAULT_RAILHEAD_VARIANT_CATALOG.entries.map((entry) => entry.slug))]
+    const slugs = Array.from(
+      new Set(DEFAULT_RAILHEAD_VARIANT_CATALOG.entries.map((entry) => entry.slug)),
+    )
     expect(slugs.length).toBeGreaterThanOrEqual(60)
     for (const slug of slugs) {
       const file = `${railheadPhotoFileSlug(slug)}.webp`
