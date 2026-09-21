@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createGateConfig, createGatePreset, GATE_TYPES, type GateType } from '@steelyes/gate-engine'
 
 import { GateTypeExplorationDialog } from '@/components/configurator/GateTypeExplorationDialog'
+import { SelectedCheck } from '@/components/configurator/SelectedCheck'
 import {
   gateTypeAvailabilityLabel,
   getGateTypeAvailability,
@@ -81,7 +82,7 @@ export function GateTypeCardGrid({ onTypeCommitted }: GateTypeCardGridProps) {
       <div className="space-y-2">
         <span className="block font-mono text-xs uppercase tracking-widest text-muted">Gate mechanism</span>
         <div
-          className="flex gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 xl:grid-cols-4"
+          className="grid grid-cols-2 gap-3 xl:grid-cols-4"
           role="radiogroup"
           aria-label="Gate type"
         >
@@ -90,7 +91,12 @@ export function GateTypeCardGrid({ onTypeCommitted }: GateTypeCardGridProps) {
             const availability = getGateTypeAvailability(gateType)
             const primary = gateType === PRIMARY_GATE_TYPE
             const imageSrc = typeMasterThumb(gateType)
-            const badge = primary ? 'Primary' : gateTypeAvailabilityLabel(availability)
+            // Every fully configurable type would carry the same "Configure" tag — only badge the exceptions.
+            const badge = primary
+              ? 'Most popular'
+              : availability === 'configure'
+                ? null
+                : gateTypeAvailabilityLabel(availability)
 
             return (
               <button
@@ -99,12 +105,11 @@ export function GateTypeCardGrid({ onTypeCommitted }: GateTypeCardGridProps) {
                 role="radio"
                 aria-checked={selected}
                 onClick={() => selectType(gateType)}
-                className={`flex min-h-[120px] min-w-[160px] shrink-0 flex-col overflow-hidden border text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:min-w-0 ${
-                  selected
-                    ? 'border-primary bg-primary/5 ring-1 ring-primary/20'
-                    : 'border-steel/12 bg-white hover:border-primary/30'
+                className={`relative flex min-h-[120px] min-w-0 flex-col overflow-hidden border-2 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                  selected ? 'border-primary bg-primary/5' : 'border-steel/12 bg-white hover:border-primary/30'
                 }`}
               >
+                {selected ? <SelectedCheck /> : null}
                 <div className="relative aspect-[16/10] w-full bg-[#F3F2EF]">
                   {imageSrc ? (
                     // eslint-disable-next-line @next/next/no-img-element -- static public master SVG
@@ -119,17 +124,19 @@ export function GateTypeCardGrid({ onTypeCommitted }: GateTypeCardGridProps) {
                       {gateTypeLabel(gateType).slice(0, 2)}
                     </div>
                   )}
-                  <span
-                    className={`absolute left-2 top-2 z-10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${
-                      primary
-                        ? 'bg-primary text-white'
-                        : availability === 'enquire'
-                          ? 'bg-steel text-white'
-                          : 'bg-steel/80 text-white'
-                    }`}
-                  >
-                    {badge}
-                  </span>
+                  {badge ? (
+                    <span
+                      className={`absolute left-2 top-2 z-10 px-2 py-0.5 font-mono text-xs uppercase tracking-wider ${
+                        primary
+                          ? 'bg-primary text-white'
+                          : availability === 'enquire'
+                            ? 'bg-steel text-white'
+                            : 'bg-steel/80 text-white'
+                      }`}
+                    >
+                      {badge}
+                    </span>
+                  ) : null}
                   {imageSrc ? (
                     <span
                       className="pointer-events-none absolute bottom-1.5 right-1.5 z-10 rounded-sm bg-steel/55 px-1.5 py-0.5 font-heading text-[8px] font-bold uppercase tracking-[0.14em] text-white/90"

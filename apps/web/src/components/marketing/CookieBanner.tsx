@@ -39,10 +39,10 @@ export function CookieBanner({ onAccepted }: CookieBannerProps) {
       role="dialog"
       aria-label="Cookie notice"
       aria-live="polite"
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-zinc-200 bg-steel px-4 py-4 md:px-8 lg:bottom-6 lg:left-6 lg:right-auto lg:max-w-md lg:border lg:border-zinc-700"
+      className="fixed bottom-[var(--cfg-actionbar-h,0px)] left-0 right-0 z-50 border-t border-zinc-200 bg-steel px-4 py-3 md:px-8 lg:bottom-6 lg:left-6 lg:right-auto lg:max-w-md lg:border lg:border-zinc-700 lg:py-4"
       style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
     >
-      <p className="mb-1 font-mono text-[10px] uppercase tracking-widest text-primary">Cookie notice</p>
+      <p className="mb-1 hidden font-mono text-xs uppercase tracking-widest text-primary lg:block">Cookie notice</p>
       <p className="text-xs leading-relaxed text-zinc-300">
         This site uses strictly necessary cookies only — no analytics, no tracking. A single preference cookie
         records that you have seen this notice.{' '}
@@ -50,7 +50,7 @@ export function CookieBanner({ onAccepted }: CookieBannerProps) {
           Cookie Policy
         </Link>
       </p>
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-3 flex items-center gap-3 lg:mt-4">
         <button
           type="button"
           onClick={accept}
@@ -60,7 +60,7 @@ export function CookieBanner({ onAccepted }: CookieBannerProps) {
         </button>
         <Link
           href="/legal/cookie-policy"
-          className="inline-flex min-h-[44px] items-center font-mono text-[10px] uppercase tracking-widest text-zinc-400 underline underline-offset-2 hover:text-zinc-200"
+          className="hidden min-h-[44px] items-center font-mono text-xs uppercase tracking-widest text-zinc-400 underline underline-offset-2 hover:text-zinc-200 lg:inline-flex"
         >
           Learn more
         </Link>

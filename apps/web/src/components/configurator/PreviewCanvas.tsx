@@ -1,7 +1,7 @@
 'use client'
 
 import * as Dialog from '@radix-ui/react-dialog'
-import { Maximize2, X } from 'lucide-react'
+import { Maximize2, Pencil, X } from 'lucide-react'
 import { useState } from 'react'
 
 import { ConfiguratorPreview } from '@/components/configurator/ConfiguratorPreview'
@@ -53,38 +53,40 @@ export function PreviewCanvas({
     >
       <div className={`flex items-center justify-between gap-2 ${strip ? 'px-3 py-2' : 'px-4 pt-4'}`}>
         <span className="font-mono text-xs uppercase tracking-widest text-steel">Design</span>
-        {strip ? (
-          <button
-            type="button"
-            onClick={() => setFullscreenOpen(true)}
-            className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-steel/15 text-muted transition hover:text-steel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30"
-            aria-label="Open fullscreen preview"
-          >
-            <Maximize2 className="h-4 w-4" aria-hidden />
-          </button>
-        ) : null}
+        <div className="flex items-center gap-2">
+          {/* In the header, not floating over the drawing — it used to cover the caption. */}
+          {showDimensionOverlay ? (
+            <button
+              type="button"
+              onClick={onDimensionOverlayClick}
+              className="inline-flex min-h-[40px] items-center gap-1.5 border border-steel/15 bg-white px-3 font-mono text-xs uppercase tracking-wider text-steel transition hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30"
+              aria-label={`Opening size ${config.widthMm} by ${config.heightMm} millimetres. Edit dimensions.`}
+            >
+              <Pencil className="h-3.5 w-3.5" aria-hidden />
+              {config.widthMm} × {config.heightMm}
+            </button>
+          ) : null}
+          {strip ? (
+            <button
+              type="button"
+              onClick={() => setFullscreenOpen(true)}
+              className="inline-flex min-h-[40px] min-w-[40px] items-center justify-center border border-steel/15 text-muted transition hover:text-steel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/30"
+              aria-label="Open fullscreen preview"
+            >
+              <Maximize2 className="h-4 w-4" aria-hidden />
+            </button>
+          ) : null}
+        </div>
       </div>
 
-      <div className="relative">
-        <ConfiguratorPreview
-          config={config}
-          compact={previewCompact}
-          collapsible={false}
-          pinned
-          studio
-          className="rounded-none border-0 shadow-none"
-        />
-        {showDimensionOverlay ? (
-          <button
-            type="button"
-            onClick={onDimensionOverlayClick}
-            className="absolute bottom-3 left-3 z-10 border border-white/20 bg-steel/90 px-3 py-2 font-mono text-xs uppercase tracking-widest text-white transition hover:border-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-            aria-label={`Opening size ${config.widthMm} by ${config.heightMm} millimetres. Click to edit dimensions.`}
-          >
-            {config.widthMm} × {config.heightMm} mm
-          </button>
-        ) : null}
-      </div>
+      <ConfiguratorPreview
+        config={config}
+        compact={previewCompact}
+        collapsible={false}
+        pinned
+        studio
+        className="rounded-none border-0 shadow-none"
+      />
     </div>
   )
 

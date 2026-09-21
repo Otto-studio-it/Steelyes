@@ -79,7 +79,7 @@ export function buildTestConfigurationPayload() {
     widthMm: 1800,
     heightMm: 1000,
     motorised: false,
-    finish: 'matte_black' as const,
+    finish: 'black_matt' as const,
     siteSurveyRequested: false,
     fulfilment: 'supply_and_install' as const,
     options: DEFAULT_SERIALIZED_OPTIONS.map((option) => ({ ...option })),

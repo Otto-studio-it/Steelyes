@@ -7,6 +7,8 @@ import {
 } from '@steelyes/gate-engine'
 import { useEffect, useId, useState } from 'react'
 
+import { SelectedCheck } from '@/components/configurator/SelectedCheck'
+
 type FinishPickerProps = {
   value: FinishCode
   customHex?: string | null
@@ -35,7 +37,7 @@ export function FinishPicker({
     <div className="space-y-3">
       <span className="block font-mono text-xs uppercase tracking-widest text-muted">Finish</span>
       <div
-        className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5"
+        className="grid grid-cols-3 gap-2 sm:grid-cols-3 lg:grid-cols-5"
         role="radiogroup"
         aria-label="Gate finish"
       >
@@ -57,18 +59,17 @@ export function FinishPicker({
                   setHexDraft('')
                 }
               }}
-              className={`flex min-h-[64px] flex-col items-start justify-between border px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/40 focus-visible:ring-offset-2 ${
-                selected
-                  ? 'border-steel bg-paper ring-1 ring-steel/25'
-                  : 'border-steel/12 bg-white hover:border-steel/35'
+              className={`relative flex min-h-[64px] flex-col items-start justify-between border-2 px-2.5 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-steel/40 focus-visible:ring-offset-2 ${
+                selected ? 'border-primary bg-primary/5' : 'border-steel/12 bg-white hover:border-steel/35'
               }`}
             >
+              {selected ? <SelectedCheck className="right-1.5 top-1.5" /> : null}
               <span
-                className="h-8 w-full border border-steel/10"
+                className="h-14 w-full border border-steel/10 sm:h-10"
                 style={{ backgroundColor: swatch }}
                 aria-hidden
               />
-              <span className="mt-2 font-body text-sm font-medium text-steel">{finish.label}</span>
+              <span className="mt-2 font-body text-sm font-medium leading-5 text-steel">{finish.label}</span>
             </button>
           )
         })}
@@ -112,14 +113,13 @@ export function FinishPicker({
           <p className="text-xs leading-5 text-muted-deep">
             {hexInvalid
               ? 'Enter a full hex code such as #9E000C.'
-              : '+ extra charge — powder coating (quoted separately). The swatch on Design updates; the CAD master stays line-art.'}
+              : 'Custom colours carry an extra powder-coating charge, quoted separately.'}
           </p>
         </div>
       ) : (
         <p className="text-xs leading-5 text-muted-deep">
-          Client palette: black satin / matt / gloss, anthracite RAL 7016, or a custom hex. The
-          Design master stays line-art; the colour swatch on the drawing header tracks your choice.
-          Final powder coat is confirmed at survey.
+          The drawing stays black and white — your colour shows as a swatch in its header. Final
+          powder coat is confirmed at survey.
         </p>
       )}
     </div>

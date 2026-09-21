@@ -8,6 +8,8 @@ import {
   type VictorianTipology,
 } from '@steelyes/gate-engine'
 
+import { SelectedCheck } from '@/components/configurator/SelectedCheck'
+import { useScrollSelectedIntoView } from '@/hooks/useScrollSelectedIntoView'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 const TIPOLOGY_COPY: Record<VictorianTipology, { label: string; description: string }> = {
@@ -44,6 +46,8 @@ function tipologyThumb(config: ReturnType<typeof useConfiguratorConfig>, tipolog
 export function TipologyPicker() {
   const config = useConfiguratorConfig()
   const setConfig = useConfiguratorStore((state) => state.setConfig)
+  const selected = config.style === 'traditional_victorian' ? getVictorianTipology(config) : null
+  const stripRef = useScrollSelectedIntoView<HTMLDivElement>(selected)
 
   if (config.style !== 'traditional_victorian') {
     return (
@@ -54,15 +58,20 @@ export function TipologyPicker() {
     )
   }
 
-  const selected = getVictorianTipology(config)
-
   return (
     <div className="space-y-2">
       <span className="block font-mono text-xs uppercase tracking-widest text-muted">Gate shape</span>
       <p className="text-sm leading-6 text-muted-deep">
-        This is the drawing the customer sees. Each card swaps the official 2D master for this mechanism.
+        Choose the top and lower section. The drawing updates as you pick.
+        <span className="sm:hidden"> Swipe to compare.</span>
       </p>
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4" role="radiogroup" aria-label="Gate shape">
+      {/* Phones: snap strip with large drawings (the shapes differ in small details). ≥sm: grid. */}
+      <div
+        ref={stripRef}
+        className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+        role="radiogroup"
+        aria-label="Gate shape"
+      >
         {VICTORIAN_TIPOLOGIES.map((tipology) => {
           const copy = TIPOLOGY_COPY[tipology]
           const isSelected = selected === tipology
@@ -75,21 +84,20 @@ export function TipologyPicker() {
               role="radio"
               aria-checked={isSelected}
               onClick={() => setConfig(applyVictorianTipology(config, tipology))}
-              className={`overflow-hidden border text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                isSelected
-                  ? 'border-primary bg-primary/5 ring-1 ring-primary/20'
-                  : 'border-steel/12 bg-white hover:border-primary/30'
+              className={`relative w-[74%] shrink-0 snap-start overflow-hidden border-2 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto ${
+                isSelected ? 'border-primary bg-primary/5' : 'border-steel/12 bg-white hover:border-primary/30'
               }`}
             >
-              <div className="relative h-24 w-full bg-[#F3F2EF]">
+              {isSelected ? <SelectedCheck /> : null}
+              <div className="relative h-40 w-full bg-[#F3F2EF] sm:h-28">
                 {/* eslint-disable-next-line @next/next/no-img-element -- static public master SVG */}
-                <img src={thumb} alt="" className="h-full w-full object-contain object-top p-1" />
+                <img src={thumb} alt="" className="h-full w-full object-contain object-center p-1" />
               </div>
-              <div className="border-t border-steel/8 px-3 py-2">
-                <span className="block font-heading text-xs font-bold uppercase tracking-tight text-steel">
+              <div className="border-t border-steel/8 px-3 py-2.5">
+                <span className="block font-heading text-sm font-bold uppercase tracking-tight text-steel sm:text-xs">
                   {copy.label}
                 </span>
-                <span className="mt-0.5 block text-xs text-muted-deep">{copy.description}</span>
+                <span className="mt-0.5 block text-sm text-muted-deep sm:text-xs">{copy.description}</span>
               </div>
             </button>
           )

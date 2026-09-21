@@ -100,8 +100,8 @@ function DesktopIntro() {
         Design your gate.
       </h1>
       <p className="mt-3 max-w-2xl text-base leading-7 text-muted-deep lg:text-lg">
-        Choose any mechanism, then tune size, finish and options. Gate type and Victorian shape swap
-        the official 2D master. Finish is a swatch; millimetres sit under the drawing.
+        Choose how your gate opens, then set its shape, size, finish and options. The drawing
+        updates as you go, with your measurements shown underneath.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center gap-2 border border-steel/12 bg-white/80 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-steel">

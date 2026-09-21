@@ -15,9 +15,8 @@ export function ChooseActPanel() {
   return (
     <div className="space-y-6">
       <p className="text-sm leading-6 text-muted-deep">
-        Start from double swing — the primary production path — then change mechanism and Victorian
-        shape. The Design drawing is the official 2D master: type, shape, circles and collars swap
-        that file immediately. Railhead photos sit beside the drawing so you can see the cap.
+        We start you on a double swing gate — change how it opens and its shape below. The drawing
+        updates straight away, and railhead photos sit beside it so you can see the cap.
       </p>
 
       <QuickGateScreen />
