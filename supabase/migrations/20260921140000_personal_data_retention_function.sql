@@ -26,27 +26,34 @@ SET search_path = public
 AS $$
 DECLARE
   cutoff timestamptz := now() - retention;
+  target record;
+  found bigint;
 BEGIN
   IF retention < interval '6 months' THEN
     RAISE EXCEPTION 'Refusing a retention period under 6 months (got %)', retention;
   END IF;
 
-  RETURN QUERY
-    SELECT 'quote_requests'::text, count(*) FROM public.quote_requests WHERE created_at < cutoff
-    UNION ALL SELECT 'leads', count(*) FROM public.leads WHERE created_at < cutoff
-    UNION ALL SELECT 'design_captures', count(*) FROM public.design_captures WHERE created_at < cutoff
-    UNION ALL SELECT 'email_deliveries', count(*) FROM public.email_deliveries WHERE created_at < cutoff
-    UNION ALL SELECT 'inbound_emails', count(*) FROM public.inbound_emails WHERE received_at < cutoff;
+  -- Not every environment has every table (production has no inbound_emails yet) — skip missing ones.
+  FOR target IN
+    SELECT * FROM (VALUES
+      ('quote_requests', 'created_at'),
+      ('leads', 'created_at'),
+      ('design_captures', 'created_at'),
+      ('email_deliveries', 'created_at'),
+      ('inbound_emails', 'received_at')
+    ) AS t(name, stamp)
+    WHERE to_regclass('public.' || t.name) IS NOT NULL
+  LOOP
+    EXECUTE format('SELECT count(*) FROM public.%I WHERE %I < $1', target.name, target.stamp)
+      INTO found USING cutoff;
+    table_name := target.name;
+    expired_rows := found;
+    RETURN NEXT;
 
-  IF dry_run THEN
-    RETURN;
-  END IF;
-
-  DELETE FROM public.quote_requests WHERE created_at < cutoff;
-  DELETE FROM public.leads WHERE created_at < cutoff;
-  DELETE FROM public.design_captures WHERE created_at < cutoff;
-  DELETE FROM public.email_deliveries WHERE created_at < cutoff;
-  DELETE FROM public.inbound_emails WHERE received_at < cutoff;
+    IF NOT dry_run THEN
+      EXECUTE format('DELETE FROM public.%I WHERE %I < $1', target.name, target.stamp) USING cutoff;
+    END IF;
+  END LOOP;
 END;
 $$;
 
