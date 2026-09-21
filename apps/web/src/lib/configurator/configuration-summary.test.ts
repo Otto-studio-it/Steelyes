@@ -47,6 +47,17 @@ describe('buildConfigurationSummaryLines', () => {
       false,
     )
   })
+
+  it('includes the fulfilment choice', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      fulfilment: 'supply_only' as const,
+    }
+    expect(buildConfigurationSummaryLines(config).find((line) => line.label === 'Supply or install')).toEqual({
+      label: 'Supply or install',
+      value: 'Supply only',
+    })
+  })
 })
 
 describe('selectedRailheadSlug', () => {

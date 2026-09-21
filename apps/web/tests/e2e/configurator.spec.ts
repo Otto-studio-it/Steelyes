@@ -132,6 +132,23 @@ test.describe('configurator release flow', () => {
     await expect(page.getByTestId('design-master-slug')).toContainText(/circles/i)
   })
 
+  test('persists supply-only fulfilment through reload and summary', async ({ page }) => {
+    await walkToRefine(page)
+
+    await page.getByRole('radio', { name: /Supply only/i }).click()
+    await expect(page.getByRole('radio', { name: /Supply only/i })).toHaveAttribute('aria-checked', 'true')
+
+    await page.reload()
+    await expect(page.getByRole('heading', { name: /Choose your gate/i })).toBeVisible()
+    await walkToRefine(page)
+    await expect(page.getByRole('radio', { name: /Supply only/i })).toHaveAttribute('aria-checked', 'true')
+
+    await continueWizard(page)
+    await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
+    await expect(page.getByText(/Supply or install/i).filter({ visible: true }).first()).toBeVisible()
+    await expect(page.getByText(/^Supply only$/i).filter({ visible: true }).first()).toBeVisible()
+  })
+
   test('persists site survey request through reload and summary', async ({ page }) => {
     await walkToRefine(page)
 

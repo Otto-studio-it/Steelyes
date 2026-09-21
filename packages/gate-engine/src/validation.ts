@@ -3,14 +3,17 @@ import {
   DEFAULT_FINISH,
   DEFAULT_GATE_OPTIONS,
   DEFAULT_GATE_PRESETS,
+  DEFAULT_FULFILMENT_MODE,
   DEFAULT_SITE_SURVEY_REQUESTED,
   EMPTY_FENCE_PANEL_INPUT,
   FINISH_CODES,
+  FULFILMENT_MODES,
   GATE_OPTION_KEYS,
   GATE_STYLES,
   GATE_TYPES,
   type FencePanelInput,
   type FinishCode,
+  type FulfilmentMode,
   type GateConfig,
   type GateOptionKey,
   type GateOptionSelection,
@@ -76,6 +79,10 @@ function isGateStyle(value: unknown): value is GateStyle {
 
 function isFinishCode(value: unknown): value is FinishCode {
   return typeof value === 'string' && (FINISH_CODES as readonly string[]).includes(value)
+}
+
+function isFulfilmentMode(value: unknown): value is FulfilmentMode {
+  return typeof value === 'string' && (FULFILMENT_MODES as readonly string[]).includes(value)
 }
 
 function isGateOptionKey(value: unknown): value is GateOptionKey {
@@ -202,6 +209,14 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
         field: 'siteSurveyRequested',
         code: 'invalid_site_survey_requested',
         message: 'Site survey request flag must be a boolean.',
+      })
+    }
+
+    if ('fulfilment' in input && !isFulfilmentMode(input.fulfilment)) {
+      issues.push({
+        field: 'fulfilment',
+        code: 'invalid_fulfilment',
+        message: 'Fulfilment must be supply and install, or supply only.',
       })
     }
 
@@ -432,6 +447,7 @@ export function normalizeGateConfig(
       return normalizeFinishHex(input.customFinishHex)
     })(),
     siteSurveyRequested: typeof input.siteSurveyRequested === 'boolean' ? input.siteSurveyRequested : DEFAULT_SITE_SURVEY_REQUESTED,
+    fulfilment: isFulfilmentMode(input.fulfilment) ? input.fulfilment : DEFAULT_FULFILMENT_MODE,
     posts: normalizeGatePosts(input.posts),
     options: normalizedOptions,
     fencePanels: normalizeFencePanels(input.fencePanels),
@@ -482,6 +498,14 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
       field: 'siteSurveyRequested',
       code: 'invalid_site_survey_requested',
       message: 'Site survey request flag must be a boolean.',
+    })
+  }
+
+  if (!isFulfilmentMode(config.fulfilment)) {
+    issues.push({
+      field: 'fulfilment',
+      code: 'invalid_fulfilment',
+      message: 'Fulfilment must be supply and install, or supply only.',
     })
   }
 

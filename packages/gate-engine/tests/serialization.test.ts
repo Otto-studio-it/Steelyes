@@ -23,6 +23,7 @@ describe('gate-engine serialization', () => {
       motorised: true,
       finish: 'black_satin',
       siteSurveyRequested: false,
+      fulfilment: 'supply_and_install',
     })
     expect(serialized.options).toHaveLength(GATE_OPTION_KEYS.length)
   })
@@ -33,6 +34,13 @@ describe('gate-engine serialization', () => {
     const parsed = deserializeGateConfig(json)
 
     expect(parsed).toEqual(original)
+  })
+
+  it('defaults missing fulfilment on older saved payloads', () => {
+    const serialized = serializeGateConfig(createGateConfig(createGatePreset('double_swing')))
+    const { fulfilment: _omit, ...legacy } = serialized
+
+    expect(deserializeGateConfig(legacy)).toMatchObject({ fulfilment: 'supply_and_install' })
   })
 
   it('rejects serialized payloads with duplicated option keys', () => {

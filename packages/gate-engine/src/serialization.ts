@@ -24,6 +24,7 @@ export type SerializedGateConfigV1 = {
   finish: GateConfig['finish']
   customFinishHex?: string | null
   siteSurveyRequested: boolean
+  fulfilment?: GateConfig['fulfilment']
   posts?: GateConfig['posts']
   options: SerializedGateOptionSelection[]
   fencePanels: SerializedFencePanelInput
@@ -51,6 +52,7 @@ export function serializeGateConfig(config: GateConfig): SerializedGateConfigV1 
     finish: config.finish,
     customFinishHex: config.finish === 'other_ral' ? config.customFinishHex ?? null : null,
     siteSurveyRequested: config.siteSurveyRequested,
+    fulfilment: config.fulfilment,
     posts: structuredClone(config.posts),
     options: config.options.map(normalizeSerializedOption),
     fencePanels: structuredClone(config.fencePanels),
@@ -80,6 +82,7 @@ export function deserializeGateConfig(serialized: SerializedGateConfig | string)
       finish: raw.finish,
       customFinishHex: raw.customFinishHex,
       siteSurveyRequested: raw.siteSurveyRequested,
+      fulfilment: raw.fulfilment,
       posts: raw.posts,
       options: Array.isArray(raw.options) ? raw.options : undefined,
       fencePanels: raw.fencePanels,

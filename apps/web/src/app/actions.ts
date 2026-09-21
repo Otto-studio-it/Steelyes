@@ -2,12 +2,14 @@
 
 import type {
   FinishCode,
+  FulfilmentMode,
   GateConfig,
   GateStyle,
   GateType,
   PricingResult,
   SerializedGateConfigV1,
 } from '@steelyes/gate-engine'
+import { FULFILMENT_MODES } from '@steelyes/gate-engine'
 import { calculateIndicativeGatePrice, deserializeGateConfig } from '@steelyes/gate-engine'
 import { z } from 'zod'
 
@@ -30,7 +32,15 @@ import {
 import { dispatchTenantLeadWebhook } from '@/lib/platform/lead-webhook'
 import { loadTenantBundle } from '@/lib/platform/load-tenant'
 import { verifyTurnstile } from '@/lib/security/turnstile'
-import { SITE_SURVEY_FIELD_LABEL, finishLabel, gateTypeLabel, siteSurveyLabel, styleLabel } from '@/lib/configurator/labels'
+import {
+  FULFILMENT_FIELD_LABEL,
+  SITE_SURVEY_FIELD_LABEL,
+  finishLabel,
+  fulfilmentLabel,
+  gateTypeLabel,
+  siteSurveyLabel,
+  styleLabel,
+} from '@/lib/configurator/labels'
 import { buildIndicativeQuotePdf, buildQuotePdfFilename } from '@/lib/configurator/quote-pdf'
 import { workshopPdfAttachment, type WorkshopPdfAttachment } from '@/lib/email/workshop-pdf-attachment'
 import { buildQuotePdfPath, buildQuoteSharePath, isValidShareToken } from '@/lib/configurator/share-token'
@@ -155,14 +165,20 @@ async function loadConfigurationContext(
         heightMm?: number
         finish?: string
         siteSurveyRequested?: boolean
+        fulfilment?: FulfilmentMode
       }
 
       if (parameters.gateType && parameters.style && parameters.widthMm && parameters.heightMm && parameters.finish) {
+        const fulfilment =
+          parameters.fulfilment && (FULFILMENT_MODES as readonly string[]).includes(parameters.fulfilment)
+            ? fulfilmentLabel(parameters.fulfilment)
+            : fulfilmentLabel('supply_and_install')
         context.configurationSummary = [
           gateTypeLabel(parameters.gateType as GateType),
           styleLabel(parameters.style as GateStyle),
           `${parameters.widthMm} × ${parameters.heightMm} mm`,
           finishLabel(parameters.finish as FinishCode),
+          `${FULFILMENT_FIELD_LABEL}: ${fulfilment}`,
           `${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(parameters.siteSurveyRequested === true)}`,
         ].join(' · ')
       }

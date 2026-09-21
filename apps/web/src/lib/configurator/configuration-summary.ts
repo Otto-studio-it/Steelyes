@@ -5,6 +5,8 @@ import {
   formatPricingHeadline,
   gateTypeLabel,
   postsSummaryLabel,
+  FULFILMENT_FIELD_LABEL,
+  fulfilmentLabel,
   SITE_SURVEY_FIELD_LABEL,
   siteSurveyLabel,
   styleLabel,
@@ -48,6 +50,11 @@ export function buildConfigurationSummaryLines(
   }
 
   lines.push({
+    label: FULFILMENT_FIELD_LABEL,
+    value: fulfilmentLabel(config.fulfilment),
+  })
+
+  lines.push({
     label: SITE_SURVEY_FIELD_LABEL,
     value: siteSurveyLabel(config.siteSurveyRequested),
   })
@@ -86,6 +93,7 @@ export function formatConfigurationSummaryInline(config: GateConfig): string {
     parts.push(`Railheads: ${railheads}`)
   }
 
+  parts.push(`${FULFILMENT_FIELD_LABEL}: ${fulfilmentLabel(config.fulfilment)}`)
   parts.push(`${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(config.siteSurveyRequested)}`)
   return parts.join(' · ')
 }
