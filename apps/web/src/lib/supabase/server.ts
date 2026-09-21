@@ -34,8 +34,13 @@ export async function getServerClient() {
 
 // Use only for admin/internal operations — bypasses RLS entirely.
 export function getServiceRoleClient() {
+  const serviceRoleKey = env.SUPABASE_SERVICE_ROLE_KEY
+  if (!serviceRoleKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is required for service role client')
+  }
+  
   return createClient<Database>(
     env.NEXT_PUBLIC_SUPABASE_URL,
-    env.SUPABASE_SERVICE_ROLE_KEY
+    serviceRoleKey
   )
 }
