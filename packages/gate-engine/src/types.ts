@@ -59,7 +59,14 @@ import type { GatePostsConfig } from './posts'
 import { DEFAULT_GATE_POSTS } from './posts'
 
 export type { GatePostsConfig, PostCapStyle, PostMaterial } from './posts'
-export { DEFAULT_GATE_POSTS, POST_CAP_LABELS, POST_CAP_STYLES, POST_MATERIAL_LABELS, POST_MATERIALS } from './posts'
+export {
+  DEFAULT_GATE_POSTS,
+  POST_CAP_EXTRA_GBP,
+  POST_CAP_LABELS,
+  POST_CAP_STYLES,
+  POST_MATERIAL_LABELS,
+  POST_MATERIALS,
+} from './posts'
 
 export type GateOptionSelection = {
   key: GateOptionKey

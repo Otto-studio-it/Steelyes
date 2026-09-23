@@ -29,8 +29,12 @@ export const TRACKED_RUNBACK_EXTRA_MM = 350
  */
 export const SHIP_RAILHEAD_UNIT_GBP = 12.5
 
-/** Aluminium upgrade (CA-02 + intake note £12.50/panel). */
-export const ALUMINIUM_SETUP_GBP = 250
+/**
+ * Aluminium upgrade. Client 2026-09-23: the configurator always shows £200.
+ * The older £250 setup + per-panel + per-bar formula is not applied.
+ */
+export const ALUMINIUM_FLAT_GBP = 200
+export const ALUMINIUM_SETUP_GBP = ALUMINIUM_FLAT_GBP
 export const ALUMINIUM_PER_PANEL_GBP = 12.5
 export const ALUMINIUM_PER_BAR_GBP = 12
 /** Intake: composite panel face coverage ~139 mm. */
@@ -46,9 +50,8 @@ export function aluminiumPanelCount(widthMm: number): number {
   return Math.max(1, Math.ceil(Math.max(0, widthMm) / ALUMINIUM_PANEL_FACE_MM))
 }
 
-export function aluminiumUpgradeGbp(widthMm: number): number {
-  const panels = aluminiumPanelCount(widthMm)
-  return ALUMINIUM_SETUP_GBP + panels * ALUMINIUM_PER_PANEL_GBP + ALUMINIUM_HORIZONTAL_BARS * ALUMINIUM_PER_BAR_GBP
+export function aluminiumUpgradeGbp(_widthMm: number): number {
+  return ALUMINIUM_FLAT_GBP
 }
 
 export function faceAreaM2(widthMm: number, heightMm: number): number {

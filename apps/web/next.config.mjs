@@ -44,7 +44,7 @@ function buildContentSecurityPolicy(frameAncestors) {
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ''} https://consent.cookiebot.com https://consentcdn.cookiebot.com https://challenges.cloudflare.com`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob: https://imgsct.cookiebot.com",
+    "img-src 'self' data: blob: https://imgsct.cookiebot.com https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
     "font-src 'self' data:",
     `connect-src 'self' ${supabaseOrigin} https://consent.cookiebot.com https://consentcdn.cookiebot.com${dev ? ' ws: wss:' : ''}`.replace(/\s+/g, ' '),
     'frame-src https://challenges.cloudflare.com https://consentcdn.cookiebot.com',
@@ -63,6 +63,12 @@ const nextConfig = {
   optimizeFonts: process.env.CI !== 'true',
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'steelyes-foto.lon1.cdn.digitaloceanspaces.com',
+      },
+    ],
     // Avoid macOS AppleDouble sidecars corrupting Next's generated image cache
     // when the development workspace lives on an external volume.
     unoptimized: process.env.NODE_ENV === 'development',

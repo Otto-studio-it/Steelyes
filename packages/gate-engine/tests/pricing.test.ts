@@ -141,7 +141,7 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1900 + 213)
+    expect(result.totalGbp).toBe(1900 + 213 + 75)
     expect(result.breakdown.some((item) => item.code === 'top_railheads' && item.amountGbp === 213)).toBe(true)
   })
 
@@ -152,8 +152,8 @@ describe('gate-engine pricing', () => {
     expect(result.status).toBe('indicative')
     expect(result.source).toBe('manual')
     expect(result.basePriceGbp).toBe(1900)
-    expect(result.totalGbp).toBe(1900)
-    expect(result.totalLabel).toContain('£1,900')
+    expect(result.totalGbp).toBe(1975)
+    expect(result.totalLabel).toContain('£1,975')
   })
 
   it('adds intake size uplift (+£50/200mm W, +£50/100mm H) above the reference band', () => {
@@ -166,12 +166,13 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    // 100mm width → 1×£50; 100mm height → 1×£50; base £1900
-    expect(result.totalGbp).toBe(2000)
+    // 100mm width → 1×£50; 100mm height → 1×£50; base £1900; default ball cap £75
+    expect(result.totalGbp).toBe(2075)
     expect(result.breakdown.map((item) => item.code)).toEqual([
       'base_manual',
       'size_width',
       'size_height',
+      'post_cap',
     ])
   })
 
@@ -185,8 +186,8 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1900)
-    expect(result.breakdown.map((item) => item.code)).toEqual(['base_manual'])
+    expect(result.totalGbp).toBe(1975)
+    expect(result.breakdown.map((item) => item.code)).toEqual(['base_manual', 'post_cap'])
   })
 
   it.each(GATE_TYPES)(
@@ -203,7 +204,7 @@ describe('gate-engine pricing', () => {
 
       expect(result.status).toBe('indicative')
       expect(result.basePriceGbp).toBe(expectedBase)
-      expect(result.totalGbp).toBe(expectedBase)
+      expect(result.totalGbp).toBe(expectedBase + 75)
       expect(result.breakdown.filter((item) => item.kind === 'size')).toHaveLength(0)
     },
   )
@@ -254,7 +255,7 @@ describe('gate-engine pricing', () => {
     const result = calculateIndicativeGatePrice(config)
 
     expect(result.status).toBe('indicative')
-    expect(result.totalGbp).toBe(1900 + 275 + 75 + 850 + 5 + 11)
+    expect(result.totalGbp).toBe(1900 + 275 + 75 + 850 + 5 + 11 + 75)
     expect(result.breakdown.map((item) => item.code)).toEqual([
       'base_manual',
       'middle_bar',
@@ -262,6 +263,7 @@ describe('gate-engine pricing', () => {
       'arched_top',
       'bushes',
       'spirals',
+      'post_cap',
     ])
   })
 
@@ -349,8 +351,43 @@ describe('gate-engine pricing', () => {
 
     expect(extras.status).toBe('indicative')
     expect(extras.totalGbp).toBe(plain.totalGbp)
-    expect(extras.assumptions.some((line) => /Fence panels \(2\) are not included/.test(line))).toBe(true)
+    expect(extras.assumptions.some((line) => /Railing panels \(2\) are not included/.test(line))).toBe(true)
     expect(extras.assumptions.some((line) => /Custom RAL/.test(line))).toBe(true)
     expect(plain.assumptions.some((line) => /Fence panels|Custom RAL/.test(line))).toBe(false)
+  })
+
+  it('adds £75 once for ball, pyramid or spear and nothing for a flat cap', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const flat = calculateIndicativeGatePrice({
+      ...base,
+      posts: { ...base.posts, enabled: true, capStyle: 'flat' },
+    })
+    const ball = calculateIndicativeGatePrice({
+      ...base,
+      posts: { ...base.posts, enabled: true, capStyle: 'ball' },
+    })
+    const hiddenPosts = calculateIndicativeGatePrice({
+      ...base,
+      posts: { ...base.posts, enabled: false, capStyle: 'spear' },
+    })
+
+    expect(flat.totalGbp).toBe(1900)
+    expect(flat.breakdown.some((item) => item.code === 'post_cap')).toBe(false)
+    expect(ball.totalGbp).toBe(1975)
+    expect(ball.breakdown.find((item) => item.code === 'post_cap')?.amountGbp).toBe(75)
+    expect(hiddenPosts.totalGbp).toBe(1900)
+  })
+
+  it('prices the aluminium upgrade as a flat £200 on composite', () => {
+    const narrow = setOption(
+      { ...createGateConfig(createGatePreset('double_swing')), style: 'composite_boards', widthMm: 1800 },
+      'aluminium_panels',
+      true,
+      1,
+    )
+    const wide = setOption({ ...narrow, widthMm: 4000 }, 'aluminium_panels', true, 1)
+
+    expect(calculateGateOptionPricing(narrow).items.find((item) => item.code === 'aluminium_panels')?.amountGbp).toBe(200)
+    expect(calculateGateOptionPricing(wide).items.find((item) => item.code === 'aluminium_panels')?.amountGbp).toBe(200)
   })
 })

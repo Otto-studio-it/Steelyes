@@ -1,71 +1,87 @@
 /**
  * Client-approved official photography — single source of truth for marketing image paths.
- * Assets live in public/images/official/ (copied from foto/).
+ * Numbered page photos are served from the London Spaces CDN. 01 is the cover.
+ * Balconies, security, structures, about, and the homepage welding hero stay local.
  */
 
 import type { GateType, GateStyle } from '@steelyes/gate-engine'
 
+const MEDIA_CDN = 'https://steelyes-foto.lon1.cdn.digitaloceanspaces.com'
+
+function photoSet(folder: string, files: readonly string[]) {
+  const gallery = files.map((file) => `${MEDIA_CDN}/${folder}/${file}`)
+  return { hero: gallery[0]!, gallery }
+}
+
 const gates = {
-  doubleSwing: {
-    hero: '/images/official/gates/double-swing-hero.webp',
-    gallery: [
-      '/images/official/gates/double-swing-hero.webp',
-      '/images/official/gates/double-swing-2.jpg',
-      '/images/official/gates/double-swing-3.jpg',
-      '/images/official/gates/double-swing-4.jpg',
-    ],
-  },
-  singleSwing: {
-    hero: '/images/official/gates/single-swing-hero.jpg',
-    gallery: [
-      '/images/official/gates/single-swing-hero.jpg',
-      '/images/official/gates/single-swing-2.jpg',
-      '/images/official/gates/single-swing-3.jpg',
-    ],
-  },
-  trackedSliding: {
-    hero: '/images/official/gates/tracked-sliding-hero.jpg',
-    gallery: [
-      '/images/official/gates/tracked-sliding-hero.jpg',
-      '/images/official/gates/tracked-sliding-2.jpg',
-      '/images/official/gates/tracked-sliding-3.jpg',
-    ],
-  },
-  cantilever: {
-    hero: '/images/official/gates/cantilever-hero.jpg',
-    gallery: [
-      '/images/official/gates/cantilever-hero.jpg',
-      '/images/official/gates/cantilever-2.jpg',
-      '/images/official/gates/cantilever-3.jpg',
-    ],
-  },
-  bifoldDouble: {
-    hero: '/images/official/gates/bifold-double-hero.jpg',
-    gallery: [
-      '/images/official/gates/bifold-double-hero.jpg',
-      '/images/official/gates/bifold-double-2.jpg',
-      '/images/official/gates/bifold-double-3.jpg',
-    ],
-  },
-  singleBifold: {
-    hero: '/images/official/gates/single-bifold-hero.png',
-    gallery: ['/images/official/gates/single-bifold-hero.png'],
-  },
-  telescopic: {
-    hero: '/images/official/gates/telescopic-hero.png',
-    gallery: [
-      '/images/official/gates/telescopic-hero.png',
-      '/images/official/gates/telescopic-2.png',
-    ],
-  },
-  radius: {
-    hero: '/images/official/gates/radius-hero.jpg',
-    gallery: [
-      '/images/official/gates/radius-hero.jpg',
-      '/images/official/gates/radius-2.jpg',
-    ],
-  },
-} as const
+  doubleSwing: photoSet('double-swing', [
+    '01.webp',
+    '02.jpg',
+    '03.jpg',
+    '04.jpg',
+    '05.jpg',
+    '06.jpg',
+    '07.jpg',
+    '08.jpg',
+    '09.jpg',
+    '10.jpg',
+  ]),
+  singleSwing: photoSet('single-swing', [
+    '01.jpg',
+    '02.jpg',
+    '03.jpg',
+    '04.jpg',
+    '05.jpg',
+    '06.jpg',
+    '07.jpg',
+  ]),
+  trackedSliding: photoSet('tracked-sliding', [
+    '01.jpg',
+    '02.jpg',
+    '03.jpg',
+    '04.jpg',
+    '05.jpg',
+    '06.jpg',
+    '07.jpg',
+    '08.jpg',
+    '09.jpg',
+  ]),
+  cantilever: photoSet('cantilever', [
+    '01.jpg',
+    '02.jpg',
+    '03.jpg',
+    '04.jpg',
+    '05.jpg',
+    '06.jpg',
+    '07.jpg',
+    '08.jpg',
+  ]),
+  bifoldDouble: photoSet('bifold', ['01.jpg', '02.jpg', '03.jpg']),
+  singleBifold: photoSet('single-bifold', ['01.jpg', '02.jpg']),
+  telescopic: photoSet('telescopic', ['01.png', '02.png']),
+  radius: photoSet('radius', ['01.jpg', '02.jpg', '03.png']),
+}
+
+const staircasePhotos = photoSet('staircases', [
+  '01.jpg',
+  '02.jpg',
+  '03.jpg',
+  '04.jpg',
+  '05.jpg',
+  '06.jpg',
+  '07.jpg',
+])
+
+const railingPhotos = photoSet('railings', [
+  '01.jpg',
+  '02.jpg',
+  '03.jpg',
+  '04.jpg',
+  '05.jpg',
+  '06.jpg',
+  '07.jpg',
+  '08.jpg',
+])
 
 export const OFFICIAL_IMAGES = {
   gates,
@@ -81,12 +97,16 @@ export const OFFICIAL_IMAGES = {
       mixed: '/images/official/services/balcony-mixed.jpg',
     },
     staircases: {
-      primary: '/images/official/services/staircase-1.jpg',
-      secondary: '/images/official/services/staircase-2.jpg',
-      glass: '/images/official/services/staircase-glass.jpg',
+      hero: staircasePhotos.hero,
+      gallery: staircasePhotos.gallery,
+      primary: staircasePhotos.gallery[0]!,
+      secondary: staircasePhotos.gallery[1]!,
+      glass: staircasePhotos.gallery[2]!,
     },
     railings: {
-      garden: '/images/official/services/garden-railing.jpg',
+      hero: railingPhotos.hero,
+      gallery: railingPhotos.gallery,
+      garden: railingPhotos.gallery[0]!,
     },
     structures: {
       hero: '/images/official/services/steel-structure-hero.png',

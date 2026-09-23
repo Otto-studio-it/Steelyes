@@ -42,7 +42,7 @@ export function updateOption(
           ...option,
           enabled: true,
           quantity: 1,
-          variant: option.variant ?? DEFAULT_COLLAR_VARIANT,
+          variant: DEFAULT_COLLAR_VARIANT,
         }
       }
 

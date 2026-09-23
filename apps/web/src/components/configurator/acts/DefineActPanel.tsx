@@ -20,7 +20,7 @@ export function DefineActPanel() {
   return (
     <div className="space-y-6">
       <p className="text-sm leading-6 text-muted-deep">
-        Set the opening size first. Posts and fence panels are optional — open Advanced install only if you need them.
+        Set the opening size first. Posts and railing panels are optional — open Advanced install only if you need them.
       </p>
 
       <section className="space-y-4">
@@ -46,7 +46,7 @@ export function DefineActPanel() {
             <span className="mt-0.5 block text-sm text-muted-deep">
               {hasInstallIssue
                 ? 'Needs your attention before you can continue.'
-                : 'Mounting posts and matching fence panels'}
+                : 'Mounting posts and matching railing panels'}
             </span>
           </span>
           <ChevronDown
@@ -67,7 +67,7 @@ export function DefineActPanel() {
 
             <section className="space-y-4">
               <div className="border-l-4 border-steel/20 pl-4">
-                <h3 className="font-heading text-sm font-bold uppercase tracking-tight text-steel">Fence panels</h3>
+                <h3 className="font-heading text-sm font-bold uppercase tracking-tight text-steel">Railing panels</h3>
                 <p className="mt-1 text-sm text-muted-deep">Optional panel runs alongside the gate.</p>
               </div>
               <FencePanelsStep />

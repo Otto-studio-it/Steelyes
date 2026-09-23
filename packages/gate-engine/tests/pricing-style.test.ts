@@ -73,8 +73,8 @@ describe('gate-engine style-aware pricing', () => {
 
     expect(victorianTotal.status).toBe('indicative')
     expect(compositeTotal.status).toBe('indicative')
-    expect(victorianTotal.totalGbp).toBe(850)
-    expect(compositeTotal.totalGbp).toBe(750)
+    expect(victorianTotal.totalGbp).toBe(925)
+    expect(compositeTotal.totalGbp).toBe(825)
     expect(compositeTotal.assumptions).toContain(
       'Composite boards manual base is GBP 750 (traditional Victorian is GBP 850 for this gate type).',
     )
