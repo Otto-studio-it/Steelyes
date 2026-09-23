@@ -202,6 +202,10 @@ describe('gate-engine pricing', () => {
 
       const result = calculateIndicativeGatePrice(config)
 
+      expect(expectedBase).not.toBeNull()
+      if (expectedBase === null) {
+        throw new Error(`missing base price for ${gateType}`)
+      }
       expect(result.status).toBe('indicative')
       expect(result.basePriceGbp).toBe(expectedBase)
       expect(result.totalGbp).toBe(expectedBase + 75)
