@@ -40,7 +40,7 @@ export const OPTION_META: OptionMeta[] = [
     key: 'middle_bar',
     label: 'Middle bar',
     description:
-      'Priced extra. Official Victorian masters already include a mid rail; this does not swap Design.',
+      'The horizontal middle bar (dog bar) allows a double row of railheads and doubles the vertical bars at the bottom of the gate.',
   },
   {
     key: 'top_railheads',
@@ -67,7 +67,7 @@ export const OPTION_META: OptionMeta[] = [
   {
     key: 'aluminium_panels',
     label: 'Aluminium panels',
-    description: 'Composite only — replace boards with aluminium (£250 + per panel/bar).',
+    description: 'Composite only — replace boards with aluminium (£200).',
   },
   {
     key: 'circles',

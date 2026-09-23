@@ -3,6 +3,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { SectionPhotos } from '@/components/marketing/SectionPhotos'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema, howToSchema, serviceSchema } from '@/lib/marketing/schema'
 
@@ -87,6 +88,8 @@ export default function StaircasesServicePage() {
           </div>
         </article>
       </section>
+
+      <SectionPhotos images={OFFICIAL_IMAGES.services.staircases.gallery} title="Steel staircase" />
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>

@@ -1,9 +1,8 @@
 'use client'
 
-import { EMPTY_FENCE_PANEL_INPUT } from '@steelyes/gate-engine'
+import { EMPTY_FENCE_PANEL_INPUT, FENCE_PANEL_LIMITS } from '@steelyes/gate-engine'
 
 import { ConfiguratorSwitch } from '@/components/configurator/ConfiguratorSwitch'
-import { HEIGHT_PRESETS_MM, WIDTH_PRESETS_MM } from '@/lib/configurator/presentation'
 import { useConfiguratorConfig, useConfiguratorStore } from '@/store/configuratorStore'
 
 export function FencePanelsStep() {
@@ -54,7 +53,7 @@ export function FencePanelsStep() {
         <ConfiguratorSwitch
           checked={enabled}
           onCheckedChange={setEnabled}
-          label="Include fence panels"
+          label="Include railing panels"
           description="Optional run of panels to either side of the gate."
           id="fence-panels-enabled"
         />
@@ -63,7 +62,7 @@ export function FencePanelsStep() {
       {enabled ? (
         <div className="space-y-4">
           <label className="block space-y-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-muted">Panel count</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-muted">Number of railing panels</span>
             <input
               type="number"
               min={1}
@@ -79,32 +78,30 @@ export function FencePanelsStep() {
               <p className="font-heading text-xs font-bold uppercase tracking-tight text-steel">Panel {index + 1}</p>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <label className="space-y-2">
-                  <span className="block font-mono text-xs uppercase tracking-widest text-muted">Height (mm)</span>
-                  <select
-                    className="h-12 w-full border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
+                  <span className="block font-mono text-xs uppercase tracking-widest text-muted">
+                    Height (mm, up to {FENCE_PANEL_LIMITS.maxHeightMm / 1000} m)
+                  </span>
+                  <input
+                    type="number"
+                    min={FENCE_PANEL_LIMITS.minHeightMm}
+                    max={FENCE_PANEL_LIMITS.maxHeightMm}
                     value={panel.heightMm}
                     onChange={(event) => updatePanel(index, { heightMm: Number(event.target.value) })}
-                  >
-                    {HEIGHT_PRESETS_MM.map((value) => (
-                      <option key={value} value={value}>
-                        {value} mm
-                      </option>
-                    ))}
-                  </select>
+                    className="h-12 w-full border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
+                  />
                 </label>
                 <label className="space-y-2">
-                  <span className="block font-mono text-xs uppercase tracking-widest text-muted">Length (mm)</span>
-                  <select
-                    className="h-12 w-full border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
+                  <span className="block font-mono text-xs uppercase tracking-widest text-muted">
+                    Length (mm, up to {FENCE_PANEL_LIMITS.maxLengthMm / 1000} m)
+                  </span>
+                  <input
+                    type="number"
+                    min={FENCE_PANEL_LIMITS.minLengthMm}
+                    max={FENCE_PANEL_LIMITS.maxLengthMm}
                     value={panel.lengthMm}
                     onChange={(event) => updatePanel(index, { lengthMm: Number(event.target.value) })}
-                  >
-                    {WIDTH_PRESETS_MM.map((value) => (
-                      <option key={value} value={value}>
-                        {value} mm
-                      </option>
-                    ))}
-                  </select>
+                    className="h-12 w-full border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
+                  />
                 </label>
               </div>
             </div>

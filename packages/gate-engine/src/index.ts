@@ -8,6 +8,7 @@ export {
   DEFAULT_FULFILMENT_MODE,
   DEFAULT_SITE_SURVEY_REQUESTED,
   FULFILMENT_MODES,
+  POST_CAP_EXTRA_GBP,
   POST_CAP_LABELS,
   POST_CAP_STYLES,
   POST_MATERIAL_LABELS,
@@ -21,6 +22,7 @@ export {
   createGatePreset,
 } from './types'
 export {
+  FENCE_PANEL_LIMITS,
   normalizeGateConfig,
   validateGateConfig,
   validateGateConfigDraftInput,

@@ -17,6 +17,7 @@ import {
   SHIP_RAILHEAD_UNIT_GBP,
   aluminiumUpgradeGbp,
 } from './rules/ship-defaults'
+import { POST_CAP_EXTRA_GBP } from './posts'
 import {
   type GateConfig,
   type GateOptionKey,
@@ -449,7 +450,7 @@ function computeOptionLineItems(
         kind: 'option',
         amountGbp: roundPounds(amount),
         provisional: true,
-        note: 'Ship formula: £250 setup + £12.50/panel (width÷139) + £12×4 bars — confirm panel count with workshop.',
+        note: 'Flat £200 aluminium upgrade. Per-panel and per-bar extras are not added.',
       })
       continue
     }
@@ -613,7 +614,7 @@ export function calculateIndicativeGatePrice(
   // Selected but not priced by this catalogue — say so instead of implying the total covers them.
   if (config.fencePanels.quantity > 0) {
     assumptions.push(
-      `Fence panels (${config.fencePanels.quantity}) are not included in this estimate — quoted separately.`,
+      `Railing panels (${config.fencePanels.quantity}) are not included in this estimate — quoted separately.`,
     )
   }
 
@@ -643,6 +644,17 @@ export function calculateIndicativeGatePrice(
   const optionResult = calculateGateOptionPricing(config, catalog, variantCatalog)
   breakdown.push(...optionResult.items)
   missingData.push(...optionResult.missingData)
+
+  if (config.posts.enabled && config.posts.capStyle !== 'flat') {
+    breakdown.push({
+      code: 'post_cap',
+      label: 'Post cap',
+      kind: 'option',
+      amountGbp: POST_CAP_EXTRA_GBP,
+      provisional: false,
+      note: 'Flat cap is included. Ball, pyramid and spear add £75 once on the quote.',
+    })
+  }
 
   if (baseSelection.amountGbp === null || missingData.length > 0) {
     assumptions.push('Missing confirmed pricing data prevents a final total.')

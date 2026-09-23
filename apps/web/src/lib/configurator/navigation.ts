@@ -21,7 +21,7 @@ export const CONFIGURATOR_STEPS = [
   { id: 'posts', label: 'Mounting posts', shortLabel: 'Posts' },
   { id: 'options', label: 'Options', shortLabel: 'Options' },
   ...(FENCE_PANELS_V1_ENABLED
-    ? [{ id: 'fence' as const, label: 'Fence panels', shortLabel: 'Fence' }]
+    ? [{ id: 'fence' as const, label: 'Railing panels', shortLabel: 'Railings' }]
     : []),
   { id: 'summary', label: 'Summary', shortLabel: 'Summary' },
 ] as const
