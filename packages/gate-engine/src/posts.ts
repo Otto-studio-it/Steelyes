@@ -31,6 +31,9 @@ export const POST_MATERIAL_LABELS: Record<PostMaterial, string> = {
   timber: 'Timber post',
 }
 
+/** Flat cap is included. Every other cap is one £75 line on the quote, not per post. */
+export const POST_CAP_EXTRA_GBP = 75
+
 export const POST_CAP_LABELS: Record<PostCapStyle, string> = {
   flat: 'Flat cap',
   ball: 'Ball finial',

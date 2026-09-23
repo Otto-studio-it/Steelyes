@@ -29,9 +29,18 @@
   iframe.allow = 'clipboard-write'
   container.replaceChildren(iframe)
 
+  var hostOrigin
+  try {
+    hostOrigin = new URL(host).origin
+  } catch (error) {
+    hostOrigin = null
+  }
+
   window.addEventListener('message', function (event) {
+    // Only accept resize messages from our own iframe, on our own origin, within sane bounds.
+    if (event.origin !== hostOrigin || event.source !== iframe.contentWindow) return
     if (event.data && event.data.type === 'steelyes:configurator:resize' && typeof event.data.height === 'number') {
-      iframe.style.height = event.data.height + 'px'
+      iframe.style.height = Math.min(Math.max(event.data.height, 400), 6000) + 'px'
     }
   })
 })()

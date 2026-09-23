@@ -58,7 +58,7 @@ export function PostsStep() {
             </select>
           </label>
 
-          <label className="space-y-2">
+          <label className="space-y-2 sm:col-span-2">
             <span className="block font-mono text-xs uppercase tracking-widest text-muted">Post cap / finial</span>
             <select
               className="h-12 w-full border border-steel/12 bg-white px-4 font-body text-base text-steel outline-none transition focus:border-primary focus-visible:ring-2 focus-visible:ring-primary"
@@ -72,29 +72,10 @@ export function PostsStep() {
               {POST_CAP_STYLES.map((capStyle) => (
                 <option key={capStyle} value={capStyle}>
                   {POST_CAP_LABELS[capStyle]}
+                  {capStyle === 'flat' ? '' : ' (+£75)'}
                 </option>
               ))}
             </select>
-          </label>
-
-          <label className="space-y-2">
-            <span className="block font-mono text-xs uppercase tracking-widest text-muted">
-              Extension above gate ({posts.extendAboveGateMm} mm)
-            </span>
-            <input
-              type="range"
-              min={0}
-              max={300}
-              step={10}
-              value={posts.extendAboveGateMm}
-              onChange={(event) =>
-                patchConfig({
-                  posts: { ...posts, extendAboveGateMm: Number(event.target.value) },
-                })
-              }
-              className="mt-3 h-2 w-full cursor-pointer appearance-none bg-steel/15 accent-primary"
-              aria-label="Extension above gate"
-            />
           </label>
         </div>
       ) : (

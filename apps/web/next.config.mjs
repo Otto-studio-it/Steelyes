@@ -1,3 +1,61 @@
+const BASE_SECURITY_HEADERS = [
+  {
+    key: 'Strict-Transport-Security',
+    value: 'max-age=31536000; includeSubDomains; preload',
+  },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  {
+    key: 'Permissions-Policy',
+    // camera=(self) required for Quick Look / Scene Viewer AR handoff
+    value: 'camera=(self), microphone=(), geolocation=()',
+  },
+];
+
+/**
+ * Partner sites allowed to iframe /embed/*: space- or comma-separated origins in
+ * EMBED_ALLOWED_ORIGINS (e.g. "https://partner.co.uk https://www.partner.co.uk").
+ * Unset = 'self' only, i.e. third-party embedding stays off until a partner is configured.
+ */
+const EMBED_FRAME_ANCESTORS = [
+  "'self'",
+  ...(process.env.EMBED_ALLOWED_ORIGINS ?? '')
+    .split(/[\s,]+/)
+    .filter((origin) => /^https:\/\/[a-z0-9.-]+(:\d+)?$/i.test(origin)),
+].join(' ');
+
+/**
+ * Report-only for now: violations are logged by /api/csp-report without breaking the site.
+ * Next.js inlines bootstrap scripts, so script-src keeps 'unsafe-inline' until nonces are wired;
+ * the policy still pins external script / frame / connect origins and blocks plugins and <base>.
+ * Promote to `Content-Security-Policy` once the report log is quiet.
+ */
+function buildContentSecurityPolicy(frameAncestors) {
+  const supabaseOrigin = (() => {
+    try {
+      return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').origin;
+    } catch {
+      return '';
+    }
+  })();
+  const dev = process.env.NODE_ENV !== 'production';
+
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ''} https://consent.cookiebot.com https://consentcdn.cookiebot.com https://challenges.cloudflare.com`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https://imgsct.cookiebot.com https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
+    "font-src 'self' data:",
+    `connect-src 'self' ${supabaseOrigin} https://consent.cookiebot.com https://consentcdn.cookiebot.com${dev ? ' ws: wss:' : ''}`.replace(/\s+/g, ' '),
+    'frame-src https://challenges.cloudflare.com https://consentcdn.cookiebot.com',
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    `frame-ancestors ${frameAncestors}`,
+    'report-uri /api/csp-report',
+  ].join('; ');
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
@@ -5,6 +63,12 @@ const nextConfig = {
   optimizeFonts: process.env.CI !== 'true',
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'steelyes-foto.lon1.cdn.digitaloceanspaces.com',
+      },
+    ],
     // Avoid macOS AppleDouble sidecars corrupting Next's generated image cache
     // when the development workspace lives on an external volume.
     unoptimized: process.env.NODE_ENV === 'development',
@@ -145,21 +209,23 @@ const nextConfig = {
   },
   async headers() {
     return [
+      // Everything except the partner embed: never framed by other sites.
       {
-        source: '/:path*',
+        source: '/((?!embed/).*)',
         headers: [
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload',
-          },
-          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          ...BASE_SECURITY_HEADERS,
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          {
-            key: 'Permissions-Policy',
-            // camera=(self) required for Quick Look / Scene Viewer AR handoff
-            value: 'camera=(self), microphone=(), geolocation=()',
-          },
+          { key: 'Content-Security-Policy-Report-Only', value: buildContentSecurityPolicy("'self'") },
+        ],
+      },
+      // /embed/* is loaded in an iframe by partner sites (public/embed-snippet.js). X-Frame-Options
+      // cannot express an allowlist, so framing is controlled by an ENFORCED frame-ancestors here.
+      {
+        source: '/embed/:path*',
+        headers: [
+          ...BASE_SECURITY_HEADERS,
+          { key: 'Content-Security-Policy', value: `frame-ancestors ${EMBED_FRAME_ANCESTORS}` },
+          { key: 'Content-Security-Policy-Report-Only', value: buildContentSecurityPolicy(EMBED_FRAME_ANCESTORS) },
         ],
       },
     ];

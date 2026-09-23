@@ -117,8 +117,8 @@ test.describe('configurator release flow', () => {
 
     const chooser = page.getByTestId('collar-chooser')
     await expect(chooser).toBeVisible()
-    await chooser.getByRole('radio', { name: /Every picket/i }).click()
-    await expect(chooser.getByRole('radio', { name: /Every picket/i })).toHaveAttribute('aria-checked', 'true')
+    await chooser.getByRole('switch', { name: /Picket collars/i }).click()
+    await expect(chooser.getByRole('switch', { name: /Picket collars/i })).toHaveAttribute('aria-checked', 'true')
     await expect(page.getByTestId('design-master-preview')).toHaveAttribute('data-collars', 'true')
     await expect(page.getByTestId('design-master-img')).toHaveAttribute('src', /collar/)
     await expect(page.getByTestId('design-master-slug')).toContainText(/collar/i)

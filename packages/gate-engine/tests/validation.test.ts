@@ -57,6 +57,37 @@ describe('gate-engine validation', () => {
     }
   })
 
+  it('accepts a railing panel up to 100 m long and 10 m high', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      fencePanels: {
+        quantity: 1,
+        panels: [{ heightMm: 10_000, lengthMm: 100_000 }],
+      },
+    }
+
+    expect(validateGateConfig(config).ok).toBe(true)
+  })
+
+  it('rejects a railing panel above 100 m long or 10 m high', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      fencePanels: {
+        quantity: 1,
+        panels: [{ heightMm: 10_001, lengthMm: 100_001 }],
+      },
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toEqual(
+        expect.arrayContaining(['invalid_fence_panel_height_range', 'invalid_fence_panel_length_range']),
+      )
+    }
+  })
+
   it('rejects fence panels outside the standard 900mm to 1000mm band', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),

@@ -49,9 +49,18 @@ export type ValidationResult<T> =
       issues: ValidationIssue[]
     }
 
-// Standard fence panels in this configurator slice use a fixed 900–1000 mm length band.
-const MIN_FENCE_PANEL_LENGTH_MM = 900
-const MAX_FENCE_PANEL_LENGTH_MM = 1000
+/** Railing panel envelope. Length up to 100 m; height up to about 10 m (client 2026-09-23). */
+export const FENCE_PANEL_LIMITS = {
+  minLengthMm: 900,
+  maxLengthMm: 100_000,
+  minHeightMm: 1,
+  maxHeightMm: 10_000,
+} as const
+
+const MIN_FENCE_PANEL_LENGTH_MM = FENCE_PANEL_LIMITS.minLengthMm
+const MAX_FENCE_PANEL_LENGTH_MM = FENCE_PANEL_LIMITS.maxLengthMm
+const MIN_FENCE_PANEL_HEIGHT_MM = FENCE_PANEL_LIMITS.minHeightMm
+const MAX_FENCE_PANEL_HEIGHT_MM = FENCE_PANEL_LIMITS.maxHeightMm
 
 /** Options priced as a single flat add-on: quantity above 1 has no meaning. */
 const SINGLE_INSTANCE_OPTION_KEYS: readonly GateOptionKey[] = [
@@ -131,7 +140,7 @@ function normalizeFencePanels(input: unknown): FencePanelInput {
       const lengthMm = toIntegerOrNull(panel.lengthMm)
       if (heightMm === null || lengthMm === null) return null
       return {
-        heightMm: Math.max(heightMm, 0),
+        heightMm: Math.min(MAX_FENCE_PANEL_HEIGHT_MM, Math.max(heightMm, MIN_FENCE_PANEL_HEIGHT_MM)),
         lengthMm: Math.min(MAX_FENCE_PANEL_LENGTH_MM, Math.max(lengthMm, MIN_FENCE_PANEL_LENGTH_MM)),
       }
     })
@@ -353,7 +362,13 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
             issues.push({
               field: `fencePanels.panels[${index}].heightMm`,
               code: 'invalid_fence_panel_height',
-              message: 'Fence panel height must be a positive integer.',
+              message: 'Railing panel height must be a positive integer.',
+            })
+          } else if (heightMm < MIN_FENCE_PANEL_HEIGHT_MM || heightMm > MAX_FENCE_PANEL_HEIGHT_MM) {
+            issues.push({
+              field: `fencePanels.panels[${index}].heightMm`,
+              code: 'invalid_fence_panel_height_range',
+              message: `Railing panel height must be between ${MIN_FENCE_PANEL_HEIGHT_MM}mm and ${MAX_FENCE_PANEL_HEIGHT_MM}mm.`,
             })
           }
           const lengthMm = panel.lengthMm
@@ -367,7 +382,7 @@ function collectGateConfigPayloadIssues(input: unknown, mode: GateConfigPayloadM
             issues.push({
               field: `fencePanels.panels[${index}].lengthMm`,
               code: 'invalid_fence_panel_length_range',
-              message: `Fence panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
+              message: `Railing panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
             })
           }
         })
@@ -657,7 +672,13 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
         issues.push({
           field: `fencePanels.panels[${index}].heightMm`,
           code: 'invalid_fence_panel_height',
-          message: 'Fence panel height must be a positive integer.',
+          message: 'Railing panel height must be a positive integer.',
+        })
+      } else if (panel.heightMm < MIN_FENCE_PANEL_HEIGHT_MM || panel.heightMm > MAX_FENCE_PANEL_HEIGHT_MM) {
+        issues.push({
+          field: `fencePanels.panels[${index}].heightMm`,
+          code: 'invalid_fence_panel_height_range',
+          message: `Railing panel height must be between ${MIN_FENCE_PANEL_HEIGHT_MM}mm and ${MAX_FENCE_PANEL_HEIGHT_MM}mm.`,
         })
       }
       if (!Number.isInteger(panel.lengthMm) || panel.lengthMm <= 0) {
@@ -670,7 +691,7 @@ export function validateGateConfig(config: GateConfig): ValidationResult<GateCon
         issues.push({
           field: `fencePanels.panels[${index}].lengthMm`,
           code: 'invalid_fence_panel_length_range',
-          message: `Fence panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
+          message: `Railing panel length must be between ${MIN_FENCE_PANEL_LENGTH_MM}mm and ${MAX_FENCE_PANEL_LENGTH_MM}mm.`,
         })
       }
     })

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { AR_MODEL_CONTENT_TYPES, parseArModelFile, type ArModelFormat } from '@/lib/configurator/ar/ar-handoff'
 import { exportGateArModel } from '@/lib/configurator/ar/export-gate-ar-model'
 import { gateConfigFromConfigurationRow } from '@/lib/configurator/configuration-db'
+import { createTtlLru } from '@/lib/server/ttl-lru'
 import { checkRateLimit, clientKeyFromHeaders, RATE_LIMIT_MESSAGE, RATE_LIMITS } from '@/lib/security/rate-limit'
 import { getServiceRoleClient } from '@/lib/supabase/server'
 
@@ -25,25 +26,7 @@ const CORS_HEADERS = {
  * A saved configuration never changes, so its model is stable for the life of the process.
  * Viewers issue HEAD + GET (+ retries) back to back — a small LRU absorbs those.
  */
-const MAX_CACHED_MODELS = 60
-const cache = new Map<string, Uint8Array>()
-
-function readCache(key: string): Uint8Array | null {
-  const hit = cache.get(key)
-  if (!hit) return null
-  cache.delete(key)
-  cache.set(key, hit)
-  return hit
-}
-
-function writeCache(key: string, bytes: Uint8Array) {
-  cache.set(key, bytes)
-  while (cache.size > MAX_CACHED_MODELS) {
-    const oldest = cache.keys().next().value
-    if (oldest === undefined) break
-    cache.delete(oldest)
-  }
-}
+const cache = createTtlLru<Uint8Array>({ maxEntries: 60 })
 
 function errorResponse(status: number, error: string, method: 'GET' | 'HEAD', extra?: Record<string, string>) {
   const headers = { ...CORS_HEADERS, ...extra }
@@ -54,7 +37,7 @@ function errorResponse(status: number, error: string, method: 'GET' | 'HEAD', ex
 
 async function loadModel(shareToken: string, format: ArModelFormat): Promise<Uint8Array | null> {
   const key = `${shareToken}.${format}`
-  const cached = readCache(key)
+  const cached = cache.get(key)
   if (cached) return cached
 
   const supabase = getServiceRoleClient()
@@ -67,7 +50,7 @@ async function loadModel(shareToken: string, format: ArModelFormat): Promise<Uin
   if (!row) return null
 
   const { bytes } = await exportGateArModel(gateConfigFromConfigurationRow(row), format)
-  writeCache(key, bytes)
+  cache.set(key, bytes)
   return bytes
 }
 
