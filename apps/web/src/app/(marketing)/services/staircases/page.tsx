@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import type { Metadata } from 'next'
 
