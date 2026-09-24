@@ -1,5 +1,5 @@
 <svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id=" manual base + circles" clip-path="url(#clip0_77_34315)">
+<g id="GATE_(single_swing)_(manual)_(base+circles)" clip-path="url(#clip0_77_32193)">
 <path id="cad-paper" d="M1200 0H0V860H1200V0Z" fill="white"/>
 <path id="cad-ground-bar" d="M1200 698H0V716H1200V698Z" fill="#2A2A2A"/>
 <path id="cad-left-pillar" d="M102 114H46V698H102V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
@@ -382,7 +382,7 @@
 </g>
 </g>
 <defs>
-<clipPath id="clip0_77_34315">
+<clipPath id="clip0_77_32193">
 <rect width="1200" height="860" fill="white"/>
 </clipPath>
 </defs>
