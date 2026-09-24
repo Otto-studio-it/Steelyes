@@ -20,6 +20,13 @@ describe('marketing photos on Spaces', () => {
     })
   })
 
+  it('the all-gates page uses the gates-all folder', () => {
+    const all = OFFICIAL_IMAGES.gates.all
+    expect(all.hero).toBe(`${CDN}/gates-all/01.webp`)
+    expect(all.gallery).toHaveLength(8)
+    expect(all.gallery.every((url) => url.startsWith(`${CDN}/gates-all/`))).toBe(true)
+  })
+
   it('staircases and railings match their folders', () => {
     const stairs = OFFICIAL_IMAGES.services.staircases
     const rails = OFFICIAL_IMAGES.services.railings

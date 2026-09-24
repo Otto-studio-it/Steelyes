@@ -1,11 +1,10 @@
 import type { GateConfig, GateOptionKey, GateStyle } from '@steelyes/gate-engine'
 
-/** Victorian-only decorative options — not available on Composite Boards masters. */
+/** Victorian-only decorative options — not available on Composite Boards masters. Circles are baked on composite. */
 export const COMPOSITE_DISABLED_OPTION_KEYS: GateOptionKey[] = [
   'top_railheads',
   'dog_bars',
   'dog_bar_railheads',
-  'circles',
   'picket_collars',
   'bushes',
   'spirals',
@@ -13,7 +12,7 @@ export const COMPOSITE_DISABLED_OPTION_KEYS: GateOptionKey[] = [
 
 /**
  * Apply gate style and clear options that do not exist for that tipology.
- * Composite masters have no dog bars / circles / collars / railheads.
+ * Composite masters have no dog bars, collars or railheads. Circles stay available.
  */
 export function applyGateStyle(config: GateConfig, style: GateStyle): GateConfig {
   let next: GateConfig = { ...config, style }

@@ -1,5 +1,5 @@
 <svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id=" manual base + collar+ circels" clip-path="url(#clip0_77_33611)">
+<g id="GATE_(single_swing)_(manual)_(base+collar+circles)" clip-path="url(#clip0_131_39586)">
 <path id="cad-paper" d="M1200 0H0V860H1200V0Z" fill="white"/>
 <path id="cad-ground-bar" d="M1200 698H0V716H1200V698Z" fill="#2A2A2A"/>
 <path id="cad-left-pillar" d="M102 114H46V698H102V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
@@ -273,116 +273,181 @@
 <g id="Group 1">
 <path id="leaf-1-top-rail" d="M126 164H1074" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path id="leaf-1-top-rail_2" d="M128 183H1076" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle id="Ellipse 2" cx="129.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 3" cx="148.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 4" cx="167.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 5" cx="185.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 6" cx="204.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 7" cx="222.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 8" cx="241.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 9" cx="260.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 10" cx="278.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 11" cx="297.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 12" cx="315.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 14" cx="334.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 15" cx="353.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 16" cx="372.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 17" cx="391.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 18" cx="410.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 19" cx="429.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 20" cx="448.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 21" cx="466.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 22" cx="485.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 23" cx="503.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 24" cx="522.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 25" cx="540.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 26" cx="559.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 27" cx="578.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 28" cx="597.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 29" cx="616.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 30" cx="635.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 31" cx="654.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 32" cx="673.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 33" cx="692.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 34" cx="711.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 35" cx="730.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 36" cx="749.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 37" cx="768.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 38" cx="787.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 39" cx="806.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 40" cx="825.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 41" cx="844.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 42" cx="862.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 43" cx="881.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 44" cx="900.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 45" cx="919.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 46" cx="938.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 47" cx="956.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 48" cx="975.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 49" cx="994.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 50" cx="1013.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 51" cx="1031.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 52" cx="1049.5" cy="173.5" r="9" stroke="black"/>
-<circle id="Ellipse 53" cx="1068.5" cy="173.5" r="9" stroke="black"/>
+<circle id="Ellipse 2" cx="129.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 3" cx="148.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 4" cx="167.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 5" cx="185.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 6" cx="204.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 7" cx="222.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 8" cx="241.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 9" cx="260.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 10" cx="278.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 11" cx="297.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 12" cx="315.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 14" cx="334.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 15" cx="353.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 16" cx="372.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 17" cx="391.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 18" cx="410.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 19" cx="429.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 20" cx="448.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 21" cx="466.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 22" cx="485.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 23" cx="503.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 24" cx="522.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 25" cx="540.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 26" cx="559.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 27" cx="578.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 28" cx="597.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 29" cx="616.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 30" cx="635.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 31" cx="654.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 32" cx="673.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 33" cx="692.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 34" cx="711.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 35" cx="730.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 36" cx="749.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 37" cx="768.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 38" cx="787.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 39" cx="806.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 40" cx="825.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 41" cx="844.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 42" cx="862.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 43" cx="881.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 44" cx="900.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 45" cx="919.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 46" cx="938.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 47" cx="956.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 48" cx="975.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 49" cx="994.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 50" cx="1013.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 51" cx="1031.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 52" cx="1049.5" cy="173.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 53" cx="1068.5" cy="173.5" r="9" fill="white" stroke="black"/>
 </g>
 <g id="Group 2">
 <path id="leaf-1-top-rail_3" d="M126 401H1074" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path id="leaf-1-top-rail_4" d="M128 420H1076" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle id="Ellipse 2_2" cx="129.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 3_2" cx="148.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 4_2" cx="167.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 5_2" cx="185.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 6_2" cx="204.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 7_2" cx="222.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 8_2" cx="241.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 9_2" cx="260.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 10_2" cx="278.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 11_2" cx="297.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 12_2" cx="315.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 14_2" cx="334.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 15_2" cx="353.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 16_2" cx="372.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 17_2" cx="391.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 18_2" cx="410.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 19_2" cx="429.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 20_2" cx="448.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 21_2" cx="466.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 22_2" cx="485.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 23_2" cx="503.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 24_2" cx="522.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 25_2" cx="540.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 26_2" cx="559.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 27_2" cx="578.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 28_2" cx="597.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 29_2" cx="616.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 30_2" cx="635.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 31_2" cx="654.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 32_2" cx="673.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 33_2" cx="692.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 34_2" cx="711.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 35_2" cx="730.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 36_2" cx="749.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 37_2" cx="768.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 38_2" cx="787.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 39_2" cx="806.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 40_2" cx="825.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 41_2" cx="844.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 42_2" cx="862.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 43_2" cx="881.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 44_2" cx="900.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 45_2" cx="919.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 46_2" cx="938.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 47_2" cx="956.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 48_2" cx="975.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 49_2" cx="994.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 50_2" cx="1013.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 51_2" cx="1031.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 52_2" cx="1049.5" cy="410.5" r="9" stroke="black"/>
-<circle id="Ellipse 53_2" cx="1068.5" cy="410.5" r="9" stroke="black"/>
+<circle id="Ellipse 2_2" cx="129.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 3_2" cx="148.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 4_2" cx="167.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 5_2" cx="185.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 6_2" cx="204.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 7_2" cx="222.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 8_2" cx="241.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 9_2" cx="260.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 10_2" cx="278.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 11_2" cx="297.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 12_2" cx="315.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 14_2" cx="334.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 15_2" cx="353.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 16_2" cx="372.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 17_2" cx="391.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 18_2" cx="410.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 19_2" cx="429.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 20_2" cx="448.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 21_2" cx="466.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 22_2" cx="485.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 23_2" cx="503.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 24_2" cx="522.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 25_2" cx="540.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 26_2" cx="559.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 27_2" cx="578.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 28_2" cx="597.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 29_2" cx="616.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 30_2" cx="635.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 31_2" cx="654.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 32_2" cx="673.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 33_2" cx="692.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 34_2" cx="711.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 35_2" cx="730.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 36_2" cx="749.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 37_2" cx="768.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 38_2" cx="787.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 39_2" cx="806.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 40_2" cx="825.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 41_2" cx="844.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 42_2" cx="862.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 43_2" cx="881.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 44_2" cx="900.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 45_2" cx="919.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 46_2" cx="938.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 47_2" cx="956.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 48_2" cx="975.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 49_2" cx="994.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 50_2" cx="1013.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 51_2" cx="1031.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 52_2" cx="1049.5" cy="410.5" r="9" fill="white" stroke="black"/>
+<circle id="Ellipse 53_2" cx="1068.5" cy="410.5" r="9" fill="white" stroke="black"/>
+</g>
+<g id="Group 4">
+<g id="Group">
+<path id="Vector" d="M182.715 278H171.286V281.5H182.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_2" d="M183.857 281.5H170.143V285.7H183.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_3" d="M185 285.7H169V291.3H185V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_4" d="M183.857 291.3H170.143V295.5H183.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_5" d="M182.715 295.5H171.286V299H182.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_2">
+<path id="Vector_6" d="M288.715 278H277.286V281.5H288.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_7" d="M289.857 281.5H276.143V285.7H289.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_8" d="M291 285.7H275V291.3H291V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_9" d="M289.857 291.3H276.143V295.5H289.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_10" d="M288.715 295.5H277.286V299H288.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_3">
+<path id="Vector_11" d="M394.715 278H383.286V281.5H394.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_12" d="M395.857 281.5H382.143V285.7H395.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_13" d="M397 285.7H381V291.3H397V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_14" d="M395.857 291.3H382.143V295.5H395.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_15" d="M394.715 295.5H383.286V299H394.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_4">
+<path id="Vector_16" d="M500.715 274H489.286V277.5H500.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_17" d="M501.857 277.5H488.143V281.7H501.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_18" d="M503 281.7H487V287.3H503V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_19" d="M501.857 287.3H488.143V291.5H501.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_20" d="M500.715 291.5H489.286V295H500.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_5">
+<path id="Vector_21" d="M603.715 274H592.286V277.5H603.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_22" d="M604.857 277.5H591.143V281.7H604.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_23" d="M606 281.7H590V287.3H606V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_24" d="M604.857 287.3H591.143V291.5H604.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_25" d="M603.715 291.5H592.286V295H603.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_6">
+<path id="Vector_26" d="M709.715 274H698.286V277.5H709.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_27" d="M710.857 277.5H697.143V281.7H710.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_28" d="M712 281.7H696V287.3H712V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_29" d="M710.857 287.3H697.143V291.5H710.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_30" d="M709.715 291.5H698.286V295H709.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_7">
+<path id="Vector_31" d="M813.715 274H802.286V277.5H813.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_32" d="M814.857 277.5H801.143V281.7H814.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_33" d="M816 281.7H800V287.3H816V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_34" d="M814.857 287.3H801.143V291.5H814.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_35" d="M813.715 291.5H802.286V295H813.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_8">
+<path id="Vector_36" d="M919.715 274H908.286V277.5H919.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_37" d="M920.857 277.5H907.143V281.7H920.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_38" d="M922 281.7H906V287.3H922V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_39" d="M920.857 287.3H907.143V291.5H920.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_40" d="M919.715 291.5H908.286V295H919.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
+<g id="Group_9">
+<path id="Vector_41" d="M1024.71 274H1013.29V277.5H1024.71V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_42" d="M1025.86 277.5H1012.14V281.7H1025.86V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_43" d="M1027 281.7H1011V287.3H1027V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_44" d="M1025.86 287.3H1012.14V291.5H1025.86V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_45" d="M1024.71 291.5H1013.29V295H1024.71V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+</g>
 </g>
 </g>
 <defs>
-<clipPath id="clip0_77_33611">
+<clipPath id="clip0_131_39586">
 <rect width="1200" height="860" fill="white"/>
 </clipPath>
 </defs>

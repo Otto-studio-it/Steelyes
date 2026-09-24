@@ -1,7 +1,7 @@
 import { notFound, redirect } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 
+import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 
@@ -94,10 +94,9 @@ export default function GateDetailPage({ params }: { params: { style: string } }
           </div>
 
           <div className="relative aspect-[4/3] overflow-hidden bg-paper">
-            <Image
+            <MarketingPhoto
               src={gate.heroImage}
               alt={`${gate.title} steel gate`}
-              fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
               priority
@@ -157,10 +156,9 @@ export default function GateDetailPage({ params }: { params: { style: string } }
           <div className="grid grid-cols-2 gap-4">
             {gate.detailImages.map((src, n) => (
               <div key={n} className="relative aspect-square overflow-hidden bg-paper">
-                <Image
+                <MarketingPhoto
                   src={src}
                   alt={`${gate.title} gate detail ${n + 1}`}
-                  fill
                   sizes="(max-width: 1024px) 50vw, 25vw"
                   className="object-cover"
                 />

@@ -1,0 +1,10 @@
+Metti in questa cartella, con questi nomi:
+01.jpg
+02.jpg
+03.jpg
+04.jpg
+05.jpg
+video.mp4
+
+01 è la copertina. Va bene anche .png o .webp, il numero resta 01, 02, 03, 04, 05.
+Il video è mp4, senza audio originale.

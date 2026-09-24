@@ -1,9 +1,11 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import { ArrowDown, ArrowRight } from 'lucide-react'
 
+import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
+import { SectionPhotos } from '@/components/marketing/SectionPhotos'
+import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
 import { GATE_DATA, GATE_SLUGS } from './gate-marketing-data'
@@ -129,6 +131,8 @@ export default function GatesPage() {
         </div>
       </section>
 
+      <SectionPhotos images={OFFICIAL_IMAGES.gates.all.gallery} title="Steel gates" />
+
       <section id="gate-mechanisms" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 md:px-8 md:py-16">
         <div className="mb-8 max-w-2xl">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">Opening mechanisms</p>
@@ -145,10 +149,9 @@ export default function GatesPage() {
               <article key={slug} className="group">
                 <Link href={`/gates/${slug}`} className="block">
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-paper">
-                    <Image
+                    <MarketingPhoto
                       src={gate.heroImage}
                       alt={`${gate.title} steel gate`}
-                      fill
                       className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />

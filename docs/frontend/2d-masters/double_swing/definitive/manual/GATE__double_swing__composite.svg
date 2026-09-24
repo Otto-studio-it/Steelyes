@@ -253,7 +253,7 @@
 <path d="M596 150H120V670H596V150Z" stroke="#1A1A1A" stroke-width="2.2"/>
 <path d="M128 162H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M128 658H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<path d="M128 410H588" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M128 410H594" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M143.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M167.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M191.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
@@ -278,7 +278,7 @@
 <path d="M1080 150H604V670H1080V150Z" stroke="#1A1A1A" stroke-width="2.2"/>
 <path d="M612 162H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M612 658H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<path d="M612 410H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
+<path d="M608 410L1072 410" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M627.8 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M651.6 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M675.4 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
@@ -300,7 +300,7 @@
 <path d="M1056.2 164V656" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M1090 206.4H1080V218.4H1090V206.4Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M1090 601.6H1080V613.6H1090V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
-<path d="M607 372H593V428H607V372Z" stroke="#1A1A1A" stroke-width="1.6"/>
+<path d="M607 372H593V428H607V372Z" fill="white" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M600 382V418" stroke="#1A1A1A" stroke-width="1.6" stroke-linecap="square"/>
 </g>
 <defs>

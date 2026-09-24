@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import type { Metadata } from 'next'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
@@ -206,10 +207,9 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-0">
           <Reveal className="relative hidden lg:col-span-5 lg:block lg:pr-12">
             <div className="relative aspect-[3/4] overflow-hidden bg-paper">
-              <Image
+              <MarketingPhoto
                 src={OFFICIAL_IMAGES.gates.trackedSliding.hero}
                 alt="Tracked sliding steel gate installed at a residential frontage"
-                fill
                 sizes="42vw"
                 className="object-cover"
               />
@@ -287,20 +287,18 @@ export default function HomePage() {
 
             <Reveal className="hidden flex-col gap-4 lg:flex" delay={120}>
               <div className="relative aspect-[4/3] overflow-hidden bg-paper">
-                <Image
+                <MarketingPhoto
                   src={OFFICIAL_IMAGES.gates.cantilever.hero}
                   alt="Cantilever sliding steel gate detail"
-                  fill
                   sizes="50vw"
                   className="object-cover"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="relative aspect-square overflow-hidden bg-paper">
-                  <Image
+                  <MarketingPhoto
                     src={OFFICIAL_IMAGES.gates.singleSwing.hero}
                     alt="Single swing steel gate at side access"
-                    fill
                     sizes="25vw"
                     className="object-cover"
                   />

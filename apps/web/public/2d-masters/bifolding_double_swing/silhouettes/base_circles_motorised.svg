@@ -300,101 +300,101 @@
 <path d="M1090 601.6H1080V613.6H1090V601.6Z" stroke="#1A1A1A" stroke-width="1.6"/>
 <path d="M144 682H1056" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M610 514H1074" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle cx="633.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="653.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="674.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="694.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="714.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="734.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="754.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="774.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="794.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="814.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="835.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="856.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="877.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="898.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="919.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="940.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="961.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="981.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="1001.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="1022.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="1043.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="1063.5" cy="503.5" r="10" stroke="black"/>
+<circle cx="633.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="653.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="674.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="694.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="714.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="734.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="754.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="774.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="794.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="814.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="835.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="856.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="877.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="898.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="919.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="940.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="961.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="981.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="1001.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="1022.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="1043.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="1063.5" cy="503.5" r="10" fill="white" stroke="black"/>
 <path d="M614 493H1078" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M608 186H1072" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle cx="631.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="651.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="672.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="692.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="712.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="732.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="752.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="772.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="792.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="812.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="833.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="854.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="875.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="896.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="917.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="938.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="959.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="979.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="999.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="1020.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="1041.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="1061.5" cy="175.5" r="10" stroke="black"/>
+<circle cx="631.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="651.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="672.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="692.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="712.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="732.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="752.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="772.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="792.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="812.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="833.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="854.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="875.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="896.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="917.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="938.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="959.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="979.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="999.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="1020.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="1041.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="1061.5" cy="175.5" r="10" fill="white" stroke="black"/>
 <path d="M612 165H1076" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M126 493H590" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M131 514H590" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle cx="136.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="176.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="156.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="197.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="217.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="237.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="257.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="277.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="297.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="317.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="337.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="358.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="379.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="400.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="421.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="442.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="463.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="484.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="504.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="524.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="545.5" cy="503.5" r="10" stroke="black"/>
-<circle cx="566.5" cy="503.5" r="10" stroke="black"/>
+<circle cx="136.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="176.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="156.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="197.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="217.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="237.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="257.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="277.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="297.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="317.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="337.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="358.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="379.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="400.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="421.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="442.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="463.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="484.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="504.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="524.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="545.5" cy="503.5" r="10" fill="white" stroke="black"/>
+<circle cx="566.5" cy="503.5" r="10" fill="white" stroke="black"/>
 <path d="M126 165H590" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <path d="M131 186H590" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
-<circle cx="136.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="176.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="156.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="197.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="217.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="237.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="257.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="277.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="297.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="317.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="337.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="358.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="379.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="400.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="421.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="442.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="463.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="484.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="504.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="524.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="545.5" cy="175.5" r="10" stroke="black"/>
-<circle cx="566.5" cy="175.5" r="10" stroke="black"/>
+<circle cx="136.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="176.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="156.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="197.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="217.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="237.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="257.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="277.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="297.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="317.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="337.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="358.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="379.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="400.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="421.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="442.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="463.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="484.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="504.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="524.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="545.5" cy="175.5" r="10" fill="white" stroke="black"/>
+<circle cx="566.5" cy="175.5" r="10" fill="white" stroke="black"/>
 </g>
 <defs>
 <clipPath id="clip0_80_11236">

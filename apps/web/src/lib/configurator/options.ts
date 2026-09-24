@@ -73,7 +73,7 @@ export const OPTION_META: OptionMeta[] = [
     key: 'circles',
     label: 'Circles',
     description:
-      'On/off — upper + lower bands together (CA-16). Swaps the official 2D master. Unavailable on Composite.',
+      'On/off — upper + lower bands together (CA-16). Swaps the official 2D master, including on Composite.',
   },
   {
     key: 'picket_collars',

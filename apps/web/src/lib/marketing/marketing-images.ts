@@ -72,6 +72,17 @@ const staircasePhotos = photoSet('staircases', [
   '07.jpg',
 ])
 
+const gatesAllPhotos = photoSet('gates-all', [
+  '01.webp',
+  '02.jpg',
+  '03.jpg',
+  '04.jpg',
+  '05.jpg',
+  '06.jpg',
+  '07.png',
+  '08.jpg',
+])
+
 const railingPhotos = photoSet('railings', [
   '01.jpg',
   '02.jpg',
@@ -84,7 +95,7 @@ const railingPhotos = photoSet('railings', [
 ])
 
 export const OFFICIAL_IMAGES = {
-  gates,
+  gates: { ...gates, all: gatesAllPhotos },
   services: {
     securityGrills: [
       '/images/official/services/security-grills-1.jpg',

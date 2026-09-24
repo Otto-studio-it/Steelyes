@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
@@ -188,10 +188,9 @@ export function GalleryClient() {
               style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
             >
               <div className={`relative w-full ${item.span === 'wide' ? 'aspect-[16/9]' : index % 3 === 0 ? 'aspect-[4/5]' : 'aspect-square'}`}>
-                <Image
+                <MarketingPhoto
                   src={item.src}
                   alt={item.label}
-                  fill
                   sizes={item.span === 'wide' ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
                   className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                 />

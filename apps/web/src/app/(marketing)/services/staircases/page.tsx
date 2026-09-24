@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
+import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
@@ -54,10 +54,9 @@ export default function StaircasesServicePage() {
 
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 pb-16 md:px-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div className="relative aspect-[4/3] overflow-hidden border border-zinc-200 bg-paper lg:order-2 lg:aspect-[4/5]">
-          <Image
+          <MarketingPhoto
             src={OFFICIAL_IMAGES.services.staircases.primary}
             alt="Steel staircase and landing installation in a residential interior"
-            fill
             sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             priority

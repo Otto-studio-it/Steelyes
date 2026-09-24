@@ -104,7 +104,7 @@ export function describeDesignPreview(config: GateConfig): DesignPreviewResponse
       true,
       'drawn_on_master',
       config.style === 'composite_boards'
-        ? 'Composite Boards uses the composite master and hides Victorian decoration.'
+        ? 'Composite Boards uses the composite master. Circles swap that master. Other Victorian decoration stays off.'
         : 'Traditional Victorian uses the Victorian tipology matrix.',
     ),
     channel(

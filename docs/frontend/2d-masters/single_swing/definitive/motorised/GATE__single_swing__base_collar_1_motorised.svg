@@ -1,5 +1,5 @@
 <svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id=" base + collar" clip-path="url(#clip0_77_38681)">
+<g id="GATE_(single_swing)_(automatic)_(base+collars)" clip-path="url(#clip0_77_38681)">
 <path id="cad-paper" d="M1200 0H0V860H1200V0Z" fill="white"/>
 <path id="cad-ground-bar" d="M1200 698H0V716H1200V698Z" fill="#2A2A2A"/>
 <path id="cad-left-pillar" d="M102 114H46V698H102V114Z" fill="white" stroke="#1A1A1A" stroke-width="2"/>
@@ -269,67 +269,67 @@
 <path id="swing-ground-clearance" d="M144 682H1056" stroke="#1A1A1A" stroke-width="1.4" stroke-linecap="square"/>
 <g id="Group 4">
 <g id="Group">
-<path id="Vector" d="M186.715 278H175.286V281.5H186.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_2" d="M187.857 281.5H174.143V285.7H187.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_3" d="M189 285.7H173V291.3H189V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_4" d="M187.857 291.3H174.143V295.5H187.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_5" d="M186.715 295.5H175.286V299H186.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector" d="M183.715 278H172.286V281.5H183.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_2" d="M184.857 281.5H171.143V285.7H184.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_3" d="M186 285.7H170V291.3H186V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_4" d="M184.857 291.3H171.143V295.5H184.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_5" d="M183.715 295.5H172.286V299H183.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_2">
-<path id="Vector_6" d="M292.715 278H281.286V281.5H292.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_7" d="M293.857 281.5H280.143V285.7H293.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_8" d="M295 285.7H279V291.3H295V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_9" d="M293.857 291.3H280.143V295.5H293.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_10" d="M292.715 295.5H281.286V299H292.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_6" d="M289.715 278H278.286V281.5H289.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_7" d="M290.857 281.5H277.143V285.7H290.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_8" d="M292 285.7H276V291.3H292V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_9" d="M290.857 291.3H277.143V295.5H290.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_10" d="M289.715 295.5H278.286V299H289.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_3">
-<path id="Vector_11" d="M398.715 278H387.286V281.5H398.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_12" d="M399.857 281.5H386.143V285.7H399.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_13" d="M401 285.7H385V291.3H401V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_14" d="M399.857 291.3H386.143V295.5H399.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_15" d="M398.715 295.5H387.286V299H398.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_11" d="M395.715 278H384.286V281.5H395.715V278Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_12" d="M396.857 281.5H383.143V285.7H396.857V281.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_13" d="M398 285.7H382V291.3H398V285.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_14" d="M396.857 291.3H383.143V295.5H396.857V291.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_15" d="M395.715 295.5H384.286V299H395.715V295.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_4">
-<path id="Vector_16" d="M504.715 274H493.286V277.5H504.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_17" d="M505.857 277.5H492.143V281.7H505.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_18" d="M507 281.7H491V287.3H507V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_19" d="M505.857 287.3H492.143V291.5H505.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_20" d="M504.715 291.5H493.286V295H504.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_16" d="M501.715 274H490.286V277.5H501.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_17" d="M502.857 277.5H489.143V281.7H502.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_18" d="M504 281.7H488V287.3H504V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_19" d="M502.857 287.3H489.143V291.5H502.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_20" d="M501.715 291.5H490.286V295H501.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_5">
-<path id="Vector_21" d="M607.715 274H596.286V277.5H607.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_22" d="M608.857 277.5H595.143V281.7H608.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_23" d="M610 281.7H594V287.3H610V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_24" d="M608.857 287.3H595.143V291.5H608.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_25" d="M607.715 291.5H596.286V295H607.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_21" d="M604.715 274H593.286V277.5H604.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_22" d="M605.857 277.5H592.143V281.7H605.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_23" d="M607 281.7H591V287.3H607V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_24" d="M605.857 287.3H592.143V291.5H605.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_25" d="M604.715 291.5H593.286V295H604.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_6">
-<path id="Vector_26" d="M713.715 274H702.286V277.5H713.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_27" d="M714.857 277.5H701.143V281.7H714.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_28" d="M716 281.7H700V287.3H716V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_29" d="M714.857 287.3H701.143V291.5H714.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_30" d="M713.715 291.5H702.286V295H713.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_26" d="M710.715 274H699.286V277.5H710.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_27" d="M711.857 277.5H698.143V281.7H711.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_28" d="M713 281.7H697V287.3H713V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_29" d="M711.857 287.3H698.143V291.5H711.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_30" d="M710.715 291.5H699.286V295H710.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_7">
-<path id="Vector_31" d="M817.715 274H806.286V277.5H817.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_32" d="M818.857 277.5H805.143V281.7H818.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_33" d="M820 281.7H804V287.3H820V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_34" d="M818.857 287.3H805.143V291.5H818.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_35" d="M817.715 291.5H806.286V295H817.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_31" d="M814.715 274H803.286V277.5H814.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_32" d="M815.857 277.5H802.143V281.7H815.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_33" d="M817 281.7H801V287.3H817V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_34" d="M815.857 287.3H802.143V291.5H815.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_35" d="M814.715 291.5H803.286V295H814.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_8">
-<path id="Vector_36" d="M923.715 274H912.286V277.5H923.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_37" d="M924.857 277.5H911.143V281.7H924.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_38" d="M926 281.7H910V287.3H926V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_39" d="M924.857 287.3H911.143V291.5H924.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_40" d="M923.715 291.5H912.286V295H923.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_36" d="M920.715 274H909.286V277.5H920.715V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_37" d="M921.857 277.5H908.143V281.7H921.857V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_38" d="M923 281.7H907V287.3H923V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_39" d="M921.857 287.3H908.143V291.5H921.857V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_40" d="M920.715 291.5H909.286V295H920.715V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 <g id="Group_9">
-<path id="Vector_41" d="M1028.71 274H1017.29V277.5H1028.71V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_42" d="M1029.86 277.5H1016.14V281.7H1029.86V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_43" d="M1031 281.7H1015V287.3H1031V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_44" d="M1029.86 287.3H1016.14V291.5H1029.86V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
-<path id="Vector_45" d="M1028.71 291.5H1017.29V295H1028.71V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_41" d="M1025.71 274H1014.29V277.5H1025.71V274Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_42" d="M1026.86 277.5H1013.14V281.7H1026.86V277.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_43" d="M1028 281.7H1012V287.3H1028V281.7Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_44" d="M1026.86 287.3H1013.14V291.5H1026.86V287.3Z" stroke="#1A1A1A" stroke-width="1.3"/>
+<path id="Vector_45" d="M1025.71 291.5H1014.29V295H1025.71V291.5Z" stroke="#1A1A1A" stroke-width="1.3"/>
 </g>
 </g>
 </g>
