@@ -45,6 +45,7 @@ function buildContentSecurityPolicy(frameAncestors) {
     `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ''} https://consent.cookiebot.com https://consentcdn.cookiebot.com https://challenges.cloudflare.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://imgsct.cookiebot.com https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
+    "media-src 'self' https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
     "font-src 'self' data:",
     `connect-src 'self' ${supabaseOrigin} https://consent.cookiebot.com https://consentcdn.cookiebot.com${dev ? ' ws: wss:' : ''}`.replace(/\s+/g, ' '),
     'frame-src https://challenges.cloudflare.com https://consentcdn.cookiebot.com',

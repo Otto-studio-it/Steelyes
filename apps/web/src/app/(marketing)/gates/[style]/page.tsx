@@ -2,6 +2,9 @@ import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 
 import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
+import { SectionPhotos } from '@/components/marketing/SectionPhotos'
+import { SectionVideos } from '@/components/marketing/SectionVideos'
+import { PAGE_VIDEOS } from '@/lib/marketing/page-videos'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 
@@ -139,34 +142,26 @@ export default function GateDetailPage({ params }: { params: { style: string } }
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-          <div>
-            <p className="mb-6 font-mono text-[10px] uppercase tracking-widest text-primary">What you get</p>
-            <ul className="space-y-4">
-              {gate.features.map((feature) => (
-                <li key={feature} className="flex items-start gap-3">
-                  <span className="mt-1 block h-2 w-2 shrink-0 bg-primary" aria-hidden />
-                  <span className="font-mono text-sm">{feature}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            {gate.detailImages.map((src, n) => (
-              <div key={n} className="relative aspect-square overflow-hidden bg-paper">
-                <MarketingPhoto
-                  src={src}
-                  alt={`${gate.title} gate detail ${n + 1}`}
-                  sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+      <section className="mx-auto max-w-7xl px-4 py-12 md:px-8">
+        <p className="mb-6 font-mono text-[10px] uppercase tracking-widest text-primary">What you get</p>
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {gate.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-3">
+              <span className="mt-1 block h-2 w-2 shrink-0 bg-primary" aria-hidden />
+              <span className="font-mono text-sm">{feature}</span>
+            </li>
+          ))}
+        </ul>
       </section>
+
+      <SectionPhotos
+        images={gate.detailImages.filter((src) => src !== gate.heroImage)}
+        title={gate.title}
+      />
+      <SectionVideos
+        clips={PAGE_VIDEOS[resolved]?.clips ?? []}
+        music={PAGE_VIDEOS[resolved]?.music ?? ''}
+      />
 
       <section className="border-t border-zinc-200 bg-canvas py-10">
         <div className="mx-auto max-w-7xl px-4 md:px-8">

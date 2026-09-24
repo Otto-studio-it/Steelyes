@@ -15,8 +15,8 @@ function photoSet(folder: string, files: readonly string[]) {
 
 const gates = {
   doubleSwing: photoSet('double-swing', [
-    '01.webp',
-    '02.jpg',
+    '01.jpg',
+    '02.webp',
     '03.jpg',
     '04.jpg',
     '05.jpg',
@@ -73,7 +73,7 @@ const staircasePhotos = photoSet('staircases', [
 ])
 
 const gatesAllPhotos = photoSet('gates-all', [
-  '01.webp',
+  '01.jpg',
   '02.jpg',
   '03.jpg',
   '04.jpg',

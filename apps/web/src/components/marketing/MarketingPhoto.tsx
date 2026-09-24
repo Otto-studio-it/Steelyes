@@ -22,10 +22,18 @@ export function MarketingPhoto({ src, alt, sizes, priority, className }: Marketi
           role="status"
           aria-live="polite"
         >
-          <span className="absolute inset-0 animate-pulse bg-zinc-200/80" aria-hidden />
-          <span className="relative font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-            {state === 'error' ? 'Photo unavailable' : 'Loading'}
-          </span>
+          <span className="absolute inset-0 bg-zinc-200/80" aria-hidden />
+          {state === 'error' ? (
+            <span className="relative font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+              Photo unavailable
+            </span>
+          ) : (
+            <span
+              className="relative h-9 w-9 animate-spin rounded-full border-2 border-zinc-300 border-t-steel"
+              aria-hidden
+            />
+          )}
+          <span className="sr-only">{state === 'error' ? 'Photo unavailable' : 'Loading photo'}</span>
         </div>
       ) : null}
       {state !== 'error' ? (
