@@ -18,6 +18,25 @@
         {
           "when": {
             "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ],
+            "motorised": true
+          },
+          "slug": "composite_circles_motorised"
+        },
+        {
+          "when": {
+            "style": "composite_boards",
             "motorised": true
           },
           "slug": "composite_motorised"
@@ -897,12 +916,51 @@
             "dog_bars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles_motorised": {
+          "slug": "composite_circles_motorised",
+          "title": "Composite Circles (Motorised)",
+          "publicPath": "/2d-masters/double_swing/silhouettes/composite_circles_motorised.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/double_swing/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "single_swing": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ],
+            "motorised": true
+          },
+          "slug": "composite_circles_motorised"
+        },
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards",
@@ -1785,12 +1843,41 @@
             "dog_bars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/single_swing/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
+        },
+        "composite_circles_motorised": {
+          "slug": "composite_circles_motorised",
+          "title": "Composite Circles (Motorised)",
+          "publicPath": "/2d-masters/single_swing/silhouettes/composite_circles_motorised.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "tracked_sliding": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards"
@@ -2216,12 +2303,31 @@
             "picket_collars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/tracked_sliding/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "cantilever_sliding": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards"
@@ -2647,12 +2753,41 @@
             "picket_collars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/cantilever_sliding/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "bifolding_double_swing": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ],
+            "motorised": true
+          },
+          "slug": "composite_circles_motorised"
+        },
         {
           "when": {
             "style": "composite_boards",
@@ -3535,12 +3670,51 @@
             "dog_bars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles_motorised": {
+          "slug": "composite_circles_motorised",
+          "title": "Composite Circles (Motorised)",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/composite_circles_motorised.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/bifolding_double_swing/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "single_bifolding": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ],
+            "motorised": true
+          },
+          "slug": "composite_circles_motorised"
+        },
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards",
@@ -4423,12 +4597,41 @@
             "dog_bars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
+        },
+        "composite_circles_motorised": {
+          "slug": "composite_circles_motorised",
+          "title": "Composite Circles (Motorised)",
+          "publicPath": "/2d-masters/single_bifolding/silhouettes/composite_circles_motorised.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "telescopic_sliding": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards"
@@ -4854,12 +5057,31 @@
             "picket_collars"
           ],
           "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/telescopic_sliding/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
+          ],
+          "includesMotorKit": false
         }
       }
     },
     "radius_sliding": {
       "status": "ready",
       "rules": [
+        {
+          "when": {
+            "style": "composite_boards",
+            "options": [
+              "circles"
+            ]
+          },
+          "slug": "composite_circles"
+        },
         {
           "when": {
             "style": "composite_boards"
@@ -5283,6 +5505,16 @@
           "options": [
             "dog_bars",
             "picket_collars"
+          ],
+          "includesMotorKit": false
+        },
+        "composite_circles": {
+          "slug": "composite_circles",
+          "title": "Composite Circles",
+          "publicPath": "/2d-masters/radius_sliding/silhouettes/composite_circles.svg",
+          "style": "composite_boards",
+          "options": [
+            "circles"
           ],
           "includesMotorKit": false
         }

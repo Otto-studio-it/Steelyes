@@ -11,7 +11,6 @@ const PROVISIONAL_VICTORIAN_OPTION_KEYS: GateOptionKey[] = [
   'top_railheads',
   'dog_bars',
   'dog_bar_railheads',
-  'circles',
   'picket_collars',
   'bushes',
   'spirals',
