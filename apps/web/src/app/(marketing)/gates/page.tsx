@@ -5,6 +5,8 @@ import { ArrowDown, ArrowRight } from 'lucide-react'
 import { MarketingPhoto } from '@/components/marketing/MarketingPhoto'
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { SectionPhotos } from '@/components/marketing/SectionPhotos'
+import { SectionVideos } from '@/components/marketing/SectionVideos'
+import { PAGE_VIDEOS } from '@/lib/marketing/page-videos'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { PricingDisclaimer } from '@/components/marketing/PricingDisclaimer'
 import { FAQSection, FAQSchemaScript, type FAQItem } from '@/components/marketing/FAQSection'
@@ -131,7 +133,11 @@ export default function GatesPage() {
         </div>
       </section>
 
-      <SectionPhotos images={OFFICIAL_IMAGES.gates.all.gallery} title="Steel gates" />
+      <SectionPhotos
+        images={OFFICIAL_IMAGES.gates.all.gallery.filter((src) => src !== OFFICIAL_IMAGES.gates.all.hero)}
+        title="Steel gates"
+      />
+      <SectionVideos clips={PAGE_VIDEOS['gates-all'].clips} music={PAGE_VIDEOS['gates-all'].music} />
 
       <section id="gate-mechanisms" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 md:px-8 md:py-16">
         <div className="mb-8 max-w-2xl">

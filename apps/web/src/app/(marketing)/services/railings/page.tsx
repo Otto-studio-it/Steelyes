@@ -5,6 +5,8 @@ import type { Metadata } from 'next'
 
 import { MarketingShell } from '@/components/marketing/MarketingShell'
 import { SectionPhotos } from '@/components/marketing/SectionPhotos'
+import { SectionVideos } from '@/components/marketing/SectionVideos'
+import { PAGE_VIDEOS } from '@/lib/marketing/page-videos'
 import { OFFICIAL_IMAGES } from '@/lib/marketing/marketing-images'
 import { breadcrumbSchema, howToSchema, serviceSchema } from '@/lib/marketing/schema'
 
@@ -89,7 +91,13 @@ export default function RailingsServicePage() {
         </article>
       </section>
 
-      <SectionPhotos images={OFFICIAL_IMAGES.services.railings.gallery} title="Glass balustrade" />
+      <SectionPhotos
+        images={OFFICIAL_IMAGES.services.railings.gallery.filter(
+          (src) => src !== OFFICIAL_IMAGES.services.railings.garden,
+        )}
+        title="Glass balustrade"
+      />
+      <SectionVideos clips={PAGE_VIDEOS.railings.clips} music={PAGE_VIDEOS.railings.music} />
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>

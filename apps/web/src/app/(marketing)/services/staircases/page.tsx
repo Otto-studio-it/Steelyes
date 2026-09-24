@@ -88,7 +88,12 @@ export default function StaircasesServicePage() {
         </article>
       </section>
 
-      <SectionPhotos images={OFFICIAL_IMAGES.services.staircases.gallery} title="Steel staircase" />
+      <SectionPhotos
+        images={OFFICIAL_IMAGES.services.staircases.gallery.filter(
+          (src) => src !== OFFICIAL_IMAGES.services.staircases.primary,
+        )}
+        title="Steel staircase"
+      />
 
       <section className="mx-auto max-w-7xl px-4 pb-16 md:px-8 md:pb-20">
         <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">Capabilities</p>
