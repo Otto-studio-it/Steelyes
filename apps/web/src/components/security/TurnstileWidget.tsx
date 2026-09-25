@@ -73,6 +73,7 @@ export function TurnstileWidget({ onToken, onExpire }: TurnstileWidgetProps) {
         src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
         strategy="afterInteractive"
         onLoad={() => setReady(true)}
+        data-cookieconsent="ignore"
       />
       <div ref={containerRef} className="min-h-[65px]" data-testid="turnstile-widget" />
     </>

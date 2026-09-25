@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useCallback } from 'react'
 
 import { SocialLinks } from '@/components/marketing/SocialLinks'
 import {
@@ -65,6 +68,17 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 }
 
 export function SiteFooter() {
+  const handleCookieSettings = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window !== 'undefined') {
+      const cookiebot = (window as { Cookiebot?: { renew?: () => void } }).Cookiebot
+      if (cookiebot?.renew) {
+        e.preventDefault()
+        cookiebot.renew()
+      }
+    }
+    // Otherwise, let the link navigate to /legal/cookie-policy
+  }, [])
+
   return (
     <footer className="bg-steel text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 text-left md:grid-cols-2 md:px-8 lg:grid-cols-6">
@@ -188,6 +202,15 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href="/legal/cookie-policy"
+                  onClick={handleCookieSettings}
+                  className="inline-flex min-h-[44px] items-center transition-colors hover:text-white"
+                >
+                  Cookie Settings
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
