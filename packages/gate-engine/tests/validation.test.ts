@@ -149,7 +149,7 @@ describe('gate-engine validation', () => {
     }
   })
 
-  it('rejects circles on composite boards', () => {
+  it('accepts circles on composite boards (explicit enable required, not auto-enabled)', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),
       style: 'composite_boards' as const,
@@ -165,30 +165,14 @@ describe('gate-engine validation', () => {
 
     const result = validateGateConfig(config)
 
-    expect(result.ok).toBe(false)
-    if (!result.ok) {
-      expect(result.issues.map((issue) => issue.code)).toContain('incompatible_option_style')
-      expect(result.issues.find((issue) => issue.field === 'options.circles')).toBeDefined()
-    }
+    expect(result.ok).toBe(true)
   })
 
-  it('accepts circles on traditional victorian style', () => {
-    const config = {
-      ...createGateConfig(createGatePreset('double_swing')),
-      style: 'traditional_victorian' as const,
-      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
-        option.key === 'circles'
-          ? {
-              ...option,
-              enabled: true,
-            }
-          : option,
-      ),
-    }
-
-    const result = validateGateConfig(config)
-
-    expect(result.ok).toBe(true)
+  it('has circles disabled by default on all gate configs', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const circlesOption = config.options.find((option) => option.key === 'circles')
+    
+    expect(circlesOption?.enabled).toBe(false)
   })
 
   it('rejects dog bar railheads when dog bars are disabled', () => {

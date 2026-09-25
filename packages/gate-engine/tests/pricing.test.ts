@@ -411,4 +411,33 @@ describe('gate-engine pricing', () => {
     expect(calculateGateOptionPricing(narrow).items.find((item) => item.code === 'aluminium_panels')?.amountGbp).toBe(200)
     expect(calculateGateOptionPricing(wide).items.find((item) => item.code === 'aluminium_panels')?.amountGbp).toBe(200)
   })
+
+  it('prices circles on composite at £275 when explicitly enabled', () => {
+    const baseComposite = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+    }
+    
+    const withoutCircles = calculateIndicativeGatePrice(baseComposite)
+    const withCircles = calculateIndicativeGatePrice(
+      setOption(baseComposite, 'circles', true, 1)
+    )
+
+    expect(withoutCircles.breakdown.some((item) => item.code === 'circles')).toBe(false)
+    expect(withCircles.breakdown.find((item) => item.code === 'circles')?.amountGbp).toBe(275)
+    expect(withCircles.totalGbp).toBe((withoutCircles.totalGbp ?? 0) + 275)
+  })
+
+  it('has circles disabled by default on composite configs', () => {
+    const composite = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+    }
+    
+    const circlesOption = composite.options.find((option) => option.key === 'circles')
+    expect(circlesOption?.enabled).toBe(false)
+    
+    const pricing = calculateIndicativeGatePrice(composite)
+    expect(pricing.breakdown.some((item) => item.code === 'circles')).toBe(false)
+  })
 })
