@@ -252,7 +252,7 @@ export const DEFAULT_PRICING_CATALOG: PricingCatalog = {
       kind: 'flat',
       flatGbp: 95,
       provisional: true,
-      note: 'Q2–Q4: collar/boss on long pickets only (every 1 or 2). Mid-height. £ TBD — provisional flat.',
+      note: 'Q2–Q4: collar/boss on long pickets only. Mid-height. £ TBD — provisional flat.',
     },
     bushes: {
       kind: 'per_unit',
@@ -450,7 +450,7 @@ function computeOptionLineItems(
         kind: 'option',
         amountGbp: roundPounds(amount),
         provisional: true,
-        note: 'Flat £200 aluminium upgrade. Per-panel and per-bar extras are not added.',
+        note: 'Flat £200 aluminium upgrade.',
       })
       continue
     }
@@ -645,7 +645,7 @@ export function calculateIndicativeGatePrice(
   breakdown.push(...optionResult.items)
   missingData.push(...optionResult.missingData)
 
-  if (config.posts.enabled && config.posts.capStyle !== 'flat') {
+  if (config.posts.enabled && config.posts.material !== 'none' && config.posts.capStyle !== 'flat') {
     breakdown.push({
       code: 'post_cap',
       label: 'Post cap',

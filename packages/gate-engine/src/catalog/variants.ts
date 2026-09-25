@@ -76,13 +76,13 @@ export function collectVariantCatalogIssues(
       continue
     }
 
-    // Collar spacing is a first-class Design CAD variant (every picket vs every 2nd).
+    // Collar spacing: only 'every_1' supported. Old 'every_2' configs are gracefully mapped at runtime.
     if (option.key === 'picket_collars') {
-      if (option.variant !== 'every_1' && option.variant !== 'every_2') {
+      if (option.variant !== 'every_1') {
         issues.push({
           field: 'options.picket_collars.variant',
           code: 'unknown_variant',
-          message: 'Picket collar spacing must be every picket or every 2nd picket.',
+          message: `Picket collar variant must be 'every_1' (every picket). Old 'every_2' is mapped gracefully.`,
         })
       }
       continue

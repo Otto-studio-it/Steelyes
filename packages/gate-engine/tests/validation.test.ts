@@ -149,6 +149,32 @@ describe('gate-engine validation', () => {
     }
   })
 
+  it('accepts circles on composite boards (explicit enable required, not auto-enabled)', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
+        option.key === 'circles'
+          ? {
+              ...option,
+              enabled: true,
+            }
+          : option,
+      ),
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(true)
+  })
+
+  it('has circles disabled by default on all gate configs', () => {
+    const config = createGateConfig(createGatePreset('double_swing'))
+    const circlesOption = config.options.find((option) => option.key === 'circles')
+    
+    expect(circlesOption?.enabled).toBe(false)
+  })
+
   it('rejects dog bar railheads when dog bars are disabled', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const result = validateGateConfig({

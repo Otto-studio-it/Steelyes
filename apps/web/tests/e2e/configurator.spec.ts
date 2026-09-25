@@ -107,7 +107,7 @@ test.describe('configurator release flow', () => {
 
     await continueWizard(page)
     await expect(page.getByRole('heading', { name: 'Summary' })).toBeVisible()
-    await expect(page.getByText(/^Railheads$/i).first()).toBeVisible()
+    await expect(page.getByText(/^Top railheads$/i).first()).toBeVisible()
     await expect(page.getByText(/^Series \d{2}$/i).filter({ visible: true }).first()).toBeVisible()
     await expect(page.getByText(/^RH32$/i).filter({ visible: true })).toHaveCount(0)
   })

@@ -30,13 +30,10 @@ export const TRACKED_RUNBACK_EXTRA_MM = 350
 export const SHIP_RAILHEAD_UNIT_GBP = 12.5
 
 /**
- * Aluminium upgrade. Client 2026-09-23: the configurator always shows £200.
- * The older £250 setup + per-panel + per-bar formula is not applied.
+ * Aluminium upgrade. Client 2026-09-23: the configurator always shows £200 flat.
  */
 export const ALUMINIUM_FLAT_GBP = 200
 export const ALUMINIUM_SETUP_GBP = ALUMINIUM_FLAT_GBP
-export const ALUMINIUM_PER_PANEL_GBP = 12.5
-export const ALUMINIUM_PER_BAR_GBP = 12
 /** Intake: composite panel face coverage ~139 mm. */
 export const ALUMINIUM_PANEL_FACE_MM = 139
 /** Ship invention: count horizontal bars as Victorian rail count. */

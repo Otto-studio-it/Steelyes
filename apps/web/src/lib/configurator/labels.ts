@@ -56,7 +56,7 @@ export function postsSummaryLabel(config: GateConfig): string {
   if (!config.posts.enabled || config.posts.material === 'none') {
     return 'No mounting posts'
   }
-  return `${POST_MATERIAL_LABELS[config.posts.material]} · ${POST_CAP_LABELS[config.posts.capStyle]} · +${config.posts.extendAboveGateMm} mm`
+  return `${POST_MATERIAL_LABELS[config.posts.material]} · ${POST_CAP_LABELS[config.posts.capStyle]}`
 }
 
 export function finishLabel(finish: FinishCode, customFinishHex?: string | null): string {

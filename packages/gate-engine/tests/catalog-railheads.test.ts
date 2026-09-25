@@ -161,21 +161,13 @@ describe('railhead variant catalog', () => {
 })
 
 describe('picket collar spacing variants', () => {
-  it('accepts every_1 and every_2 on picket_collars', () => {
+  it('accepts every_1 on picket_collars (every_2 is gracefully mapped)', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
     const every1 = {
       ...base,
       options: base.options.map((option) =>
         option.key === 'picket_collars'
           ? { ...option, enabled: true, quantity: 1, variant: 'every_1' }
-          : option,
-      ),
-    }
-    const every2 = {
-      ...base,
-      options: base.options.map((option) =>
-        option.key === 'picket_collars'
-          ? { ...option, enabled: true, quantity: 1, variant: 'every_2' }
           : option,
       ),
     }
@@ -189,7 +181,6 @@ describe('picket collar spacing variants', () => {
     }
 
     expect(validateGateConfig(every1).ok).toBe(true)
-    expect(validateGateConfig(every2).ok).toBe(true)
     expect(collectVariantCatalogIssues(every1)).toEqual([])
     expect(collectVariantCatalogIssues(bad).map((issue) => issue.code)).toContain('unknown_variant')
   })

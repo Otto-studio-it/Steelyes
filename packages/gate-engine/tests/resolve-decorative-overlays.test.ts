@@ -37,11 +37,13 @@ describe('decorative overlays', () => {
     expect(plan.bands[0]?.publicPath).toContain('bands_combined_arched.svg')
   })
 
-  it('collar defaults to every_1 and supports every_2', () => {
+  it('collar always uses every_1 spacing (every_2 gracefully mapped)', () => {
     expect(resolveCollarOverlays(base).overlays).toHaveLength(0)
     const every1 = resolveCollarOverlays(enable(base, 'picket_collars'))
     expect(every1.overlays[0]?.id).toBe('every_1')
-    const every2 = resolveCollarOverlays(enable(base, 'picket_collars', 'every_2'))
-    expect(every2.overlays[0]?.id).toBe('every_2')
+    expect(every1.overlays[0]?.spacing).toBe(1)
+    const oldEvery2 = resolveCollarOverlays(enable(base, 'picket_collars', 'every_2'))
+    expect(oldEvery2.overlays[0]?.id).toBe('every_1')
+    expect(oldEvery2.overlays[0]?.spacing).toBe(1)
   })
 })

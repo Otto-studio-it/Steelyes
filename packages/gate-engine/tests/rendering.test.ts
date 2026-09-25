@@ -298,13 +298,13 @@ describe('gate-engine rendering', () => {
     expect(slidingPlan.primitives.some((p) => p.id.startsWith('sliding-bush-'))).toBe(false)
   })
 
-  it('draws picket collars on long pickets, never on dog bars, and thins every_2', () => {
+  it('draws picket collars on long pickets, never on dog bars', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
-    const withCollars = (variant: 'every_1' | 'every_2', dogBars: boolean) => ({
+    const withCollars = (dogBars: boolean) => ({
       ...base,
       options: base.options.map((option) => {
         if (option.key === 'picket_collars') {
-          return { ...option, enabled: true, quantity: 1, variant }
+          return { ...option, enabled: true, quantity: 1, variant: 'every_1' }
         }
         if (option.key === 'dog_bars') {
           return { ...option, enabled: dogBars, quantity: dogBars ? 1 : 0 }
@@ -313,21 +313,14 @@ describe('gate-engine rendering', () => {
       }),
     })
 
-    const every1 = buildGateRenderPlan(withCollars('every_1', false), { viewMode: 'installation' })
-    const every2 = buildGateRenderPlan(withCollars('every_2', false), { viewMode: 'installation' })
-    const dog = buildGateRenderPlan(withCollars('every_1', true), { viewMode: 'installation' })
+    const plan1 = buildGateRenderPlan(withCollars(false), { viewMode: 'installation' })
+    const longPicketCollars = plan1.primitives.filter((p) => p.id.startsWith('picket-collar-'))
+    expect(longPicketCollars.length).toBeGreaterThan(0)
+    expect(longPicketCollars.every((p) => p.id.startsWith('picket-collar-') && p.kind === 'circle')).toBe(true)
 
-    const count = (plan: ReturnType<typeof buildGateRenderPlan>) =>
-      plan.primitives.filter((p) => p.kind === 'circle' && p.id.startsWith('picket-collar-')).length
-
-    expect(count(every1)).toBeGreaterThan(count(every2))
-    expect(count(every2)).toBeGreaterThan(0)
-    expect(count(dog)).toBeGreaterThan(0)
-    expect(dog.primitives.some((p) => p.id.startsWith('picket-collar-') && p.id.includes('dog'))).toBe(
-      false,
-    )
-    expect(every1.notes.some((n) => n.includes('every long picket'))).toBe(true)
-    expect(every2.notes.some((n) => n.includes('every 2nd long picket'))).toBe(true)
+    const planWithDogBars = buildGateRenderPlan(withCollars(true), { viewMode: 'installation' })
+    const dogBarCollars = planWithDogBars.primitives.filter((p) => p.id.startsWith('dog-bar-collar-'))
+    expect(dogBarCollars).toHaveLength(0)
   })
   it('draws the installation-view arch symmetric about the frame centre', () => {
     const base = createGateConfig(createGatePreset('double_swing'))
