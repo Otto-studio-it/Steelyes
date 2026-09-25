@@ -66,6 +66,36 @@ describe('buildConfigurationSummaryLines', () => {
     )
   })
 
+  it('does not include post extension in the mounting posts summary', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      posts: {
+        enabled: true,
+        material: 'steel' as const,
+        capStyle: 'ball' as const,
+        extendAboveGateMm: 120,
+      },
+    }
+    const postsLine = buildConfigurationSummaryLines(config).find((line) => line.label === 'Mounting posts')
+    expect(postsLine?.value).toBe('Steel post (powder coated) · Ball finial')
+    expect(postsLine?.value).not.toContain('120')
+    expect(postsLine?.value).not.toContain('mm')
+  })
+
+  it('shows "No mounting posts" when material is none', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      posts: {
+        enabled: true,
+        material: 'none' as const,
+        capStyle: 'ball' as const,
+        extendAboveGateMm: 120,
+      },
+    }
+    const postsLine = buildConfigurationSummaryLines(config).find((line) => line.label === 'Mounting posts')
+    expect(postsLine?.value).toBe('No mounting posts')
+  })
+
   it('includes the fulfilment choice', () => {
     const config = {
       ...createGateConfig(createGatePreset('double_swing')),

@@ -149,6 +149,48 @@ describe('gate-engine validation', () => {
     }
   })
 
+  it('rejects circles on composite boards', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'composite_boards' as const,
+      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
+        option.key === 'circles'
+          ? {
+              ...option,
+              enabled: true,
+            }
+          : option,
+      ),
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.issues.map((issue) => issue.code)).toContain('incompatible_option_style')
+      expect(result.issues.find((issue) => issue.field === 'options.circles')).toBeDefined()
+    }
+  })
+
+  it('accepts circles on traditional victorian style', () => {
+    const config = {
+      ...createGateConfig(createGatePreset('double_swing')),
+      style: 'traditional_victorian' as const,
+      options: createGateConfig(createGatePreset('double_swing')).options.map((option) =>
+        option.key === 'circles'
+          ? {
+              ...option,
+              enabled: true,
+            }
+          : option,
+      ),
+    }
+
+    const result = validateGateConfig(config)
+
+    expect(result.ok).toBe(true)
+  })
+
   it('rejects dog bar railheads when dog bars are disabled', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const result = validateGateConfig({

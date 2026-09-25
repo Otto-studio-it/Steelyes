@@ -645,7 +645,7 @@ export function calculateIndicativeGatePrice(
   breakdown.push(...optionResult.items)
   missingData.push(...optionResult.missingData)
 
-  if (config.posts.enabled && config.posts.capStyle !== 'flat') {
+  if (config.posts.enabled && config.posts.material !== 'none' && config.posts.capStyle !== 'flat') {
     breakdown.push({
       code: 'post_cap',
       label: 'Post cap',

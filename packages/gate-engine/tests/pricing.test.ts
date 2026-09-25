@@ -382,6 +382,23 @@ describe('gate-engine pricing', () => {
     expect(hiddenPosts.totalGbp).toBe(1900)
   })
 
+  it('charges no cap fee when posts material is "none" (opening only)', () => {
+    const base = createGateConfig(createGatePreset('double_swing'))
+    const noPosts = calculateIndicativeGatePrice({
+      ...base,
+      posts: { enabled: true, material: 'none', capStyle: 'ball', extendAboveGateMm: 120 },
+    })
+    const noPostsWithSpear = calculateIndicativeGatePrice({
+      ...base,
+      posts: { enabled: true, material: 'none', capStyle: 'spear', extendAboveGateMm: 0 },
+    })
+
+    expect(noPosts.totalGbp).toBe(1900)
+    expect(noPosts.breakdown.some((item) => item.code === 'post_cap')).toBe(false)
+    expect(noPostsWithSpear.totalGbp).toBe(1900)
+    expect(noPostsWithSpear.breakdown.some((item) => item.code === 'post_cap')).toBe(false)
+  })
+
   it('prices the aluminium upgrade as a flat £200 on composite', () => {
     const narrow = setOption(
       { ...createGateConfig(createGatePreset('double_swing')), style: 'composite_boards', widthMm: 1800 },
