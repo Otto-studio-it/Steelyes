@@ -14,6 +14,7 @@ const GATE_LINKS = [
   { label: 'Tracked Sliding', href: '/gates/tracked-sliding' },
   { label: 'Cantilever', href: '/gates/cantilever' },
   { label: 'Bifold', href: '/gates/bifold' },
+  { label: 'Single Bifold', href: '/gates/single-bifold' },
   { label: 'Telescopic', href: '/gates/telescopic' },
   { label: 'Radius', href: '/gates/radius' },
 ] as const

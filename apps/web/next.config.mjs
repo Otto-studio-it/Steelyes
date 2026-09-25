@@ -118,6 +118,14 @@ const nextConfig = {
         ...config.resolve.alias,
         '@resvg/resvg-js': false,
         sharp: false,
+        // Prevent vm browserify polyfill from being bundled (uses eval, breaks CSP).
+        // Server-only code (API routes, server actions) should not leak to client.
+        vm: false,
+        'vm-browserify': false,
+      }
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        vm: false,
       }
     }
     return config
