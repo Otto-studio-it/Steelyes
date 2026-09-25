@@ -63,7 +63,8 @@ const nextConfig = {
   // Disable font optimization during CI build to avoid network-related crashes
   optimizeFonts: process.env.CI !== 'true',
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
       {
         protocol: 'https',

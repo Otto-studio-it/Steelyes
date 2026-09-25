@@ -192,6 +192,7 @@ export function GalleryClient() {
                   src={item.src}
                   alt={item.label}
                   sizes={item.span === 'wide' ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+                  priority={index === 0}
                   className="object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
                 />
               </div>
