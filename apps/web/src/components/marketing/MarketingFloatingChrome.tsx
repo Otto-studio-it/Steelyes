@@ -48,7 +48,7 @@ export function MarketingFloatingChrome({ enableQuoteBar }: MarketingFloatingChr
       return
     }
 
-    // Cookiebot enabled: show fallback until Cookiebot loads
+    // Cookiebot enabled: wait for it to load, only show fallback after timeout
     const checkCookiebot = () => {
       if (window.Cookiebot && typeof window.Cookiebot.consented !== 'undefined') {
         setCookiebotActive(true)
@@ -64,12 +64,7 @@ export function MarketingFloatingChrome({ enableQuoteBar }: MarketingFloatingChr
       return
     }
 
-    // Show fallback while waiting
-    try {
-      setCookieVisible(!localStorage.getItem(COOKIE_KEY))
-    } catch {
-      setCookieVisible(false)
-    }
+    // Don't show fallback yet - wait for timeout
     setReady(true)
 
     // Listen for Cookiebot load events
@@ -82,11 +77,18 @@ export function MarketingFloatingChrome({ enableQuoteBar }: MarketingFloatingChr
     window.CookiebotOnLoad = onLoad
     window.CookiebotOnDialogInit = onLoad
 
-    // Timeout: if Cookiebot doesn't load, keep fallback visible
+    // Timeout: if Cookiebot doesn't load, show fallback
     const timeout = setTimeout(() => {
       if (!checkCookiebot()) {
-        // Cookiebot failed to load, keep fallback banner
-        console.warn('Cookiebot did not load within timeout')
+        // Cookiebot failed to load, show fallback banner
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Cookiebot did not load within timeout, showing fallback')
+        }
+        try {
+          setCookieVisible(!localStorage.getItem(COOKIE_KEY))
+        } catch {
+          setCookieVisible(false)
+        }
       }
     }, COOKIEBOT_TIMEOUT_MS)
 
