@@ -60,15 +60,15 @@ export function MobileQuickActionBar() {
         paddingBottom: 'max(0.625rem, env(safe-area-inset-bottom))',
       }}
     >
-      <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 pt-2.5">
-        <div className="min-w-0">
+      <div className="mx-auto flex max-w-2xl items-center gap-3 pt-2.5">
+        <div className="flex-1 min-w-0">
           {priceRevealed ? (
             <>
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
                 {formatPricingBarHeadline(pricing)}
               </p>
               <div className="flex items-baseline gap-2">
-                <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
+                <p className="font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
                   {formatPricingBarAmount(pricing)}
                 </p>
                 <PriceDeltaChip label={priceDeltaFlash} />
@@ -81,7 +81,7 @@ export function MobileQuickActionBar() {
           )}
         </div>
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex flex-shrink-0 items-center gap-3">
           {!isFirst ? (
             <button
               type="button"

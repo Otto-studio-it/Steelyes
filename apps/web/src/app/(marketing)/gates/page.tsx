@@ -58,6 +58,16 @@ function badgeFor(availability: (typeof GATE_DATA)[keyof typeof GATE_DATA]['avai
 export default function GatesPage() {
   return (
     <MarketingShell pathname="/gates">
+      <section className="relative aspect-[16/9] w-full overflow-hidden bg-paper md:aspect-[21/9]">
+        <MarketingPhoto
+          src={OFFICIAL_IMAGES.gates.all.hero}
+          alt="Bespoke steel gates"
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
+      </section>
+
       <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-16">
         <div className="mb-10">
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">Gate mechanisms</p>

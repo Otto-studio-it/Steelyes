@@ -57,12 +57,12 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
   }, [isFloating])
 
   const pricingBlock = (
-    <div className="min-w-0">
+    <div className="flex-1 min-w-0">
       <p className="font-mono text-xs uppercase tracking-widest text-muted">
         {formatPricingDisplayHeadline(pricing, copyVariant)}
       </p>
       <div className="flex items-baseline gap-2">
-        <p className="truncate font-heading text-xl font-black uppercase tracking-tight text-steel tabular-nums">
+        <p className="font-heading text-xl font-black uppercase tracking-tight text-steel tabular-nums">
           {formatPricingDisplayAmount(pricing, copyVariant)}
         </p>
         <PriceDeltaChip label={priceDeltaFlash} />
@@ -71,12 +71,12 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
   )
 
   const compactPricingBlock = (
-    <div className="min-w-0">
+    <div className="flex-1 min-w-0">
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
         {formatPricingDisplayHeadline(pricing, 'mobile')}
       </p>
       <div className="flex items-baseline gap-2">
-        <p className="truncate font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
+        <p className="font-heading text-lg font-black uppercase tracking-tight text-steel tabular-nums">
           {formatPricingDisplayAmount(pricing, 'mobile')}
         </p>
         <PriceDeltaChip label={priceDeltaFlash} />
@@ -166,10 +166,10 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
           paddingBottom: 'max(0.625rem, env(safe-area-inset-bottom))',
         }}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 pt-2.5">
-          {compactPricingBlock}
-          <div className="shrink-0">{actions}</div>
-        </div>
+      <div className="mx-auto flex max-w-7xl items-center gap-3 pt-2.5">
+        {compactPricingBlock}
+        <div className="flex-shrink-0">{actions}</div>
+      </div>
       </div>
     )
   }
@@ -185,10 +185,10 @@ export function ConfiguratorActionBar({ className = '', variant = 'fixed' }: Con
         paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))',
       }}
     >
-      <div className="mx-auto max-w-7xl pt-3">
-        {pricingBlock}
-        <div className="mt-3">{actions}</div>
-      </div>
+    <div className="mx-auto flex max-w-7xl flex-col pt-3">
+      {pricingBlock}
+      <div className="mt-3">{actions}</div>
+    </div>
     </div>
   )
 }
