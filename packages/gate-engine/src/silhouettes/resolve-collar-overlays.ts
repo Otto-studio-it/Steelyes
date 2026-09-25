@@ -1,10 +1,10 @@
 import type { GateConfig, GateOptionKey } from '../types'
 
 export type CollarOverlay = {
-  id: 'every_1' | 'every_2'
+  id: 'every_1'
   publicPath: string
   title: string
-  spacing: 1 | 2
+  spacing: 1
 }
 
 export type CollarOverlayPlan = {
@@ -14,11 +14,10 @@ export type CollarOverlayPlan = {
 
 export const COLLAR_OVERLAY_PATHS = {
   every_1: '/2d-masters/overlays/collar/row_every_1.svg',
-  every_2: '/2d-masters/overlays/collar/row_every_2.svg',
   unit: '/2d-masters/overlays/collar/boss_stepped.svg',
 } as const
 
-export const COLLAR_SPACING_VARIANTS = ['every_1', 'every_2'] as const
+export const COLLAR_SPACING_VARIANTS = ['every_1'] as const
 export type CollarSpacingVariant = (typeof COLLAR_SPACING_VARIANTS)[number]
 
 function optionOn(
@@ -37,7 +36,7 @@ function optionVariant(
 
 /**
  * Q2–Q4 locked 2026-08-12: collar/boss on long pickets only, mid-height (~50%),
- * spacing every 1 or every 2 bars — never on dog bars.
+ * spacing every picket — never on dog bars. Old 'every_2' mode is gracefully mapped to every_1.
  */
 export function resolveCollarOverlays(
   config: Pick<GateConfig, 'options'>,
@@ -49,22 +48,17 @@ export function resolveCollarOverlays(
   }
 
   const raw = optionVariant(config, 'picket_collars')
-  const spacing: CollarSpacingVariant =
-    raw === 'every_2' ? 'every_2' : 'every_1'
+  const spacing: CollarSpacingVariant = 'every_1'
 
-  notes.push(
-    spacing === 'every_1'
-      ? 'Collars on every long picket at mid-height (never on dog bars).'
-      : 'Collars on every 2nd long picket at mid-height (never on dog bars).',
-  )
+  notes.push('Collars on every long picket at mid-height (never on dog bars).')
 
   return {
     overlays: [
       {
         id: spacing,
         publicPath: COLLAR_OVERLAY_PATHS[spacing],
-        title: spacing === 'every_1' ? 'Collar every picket' : 'Collar every 2nd picket',
-        spacing: spacing === 'every_1' ? 1 : 2,
+        title: 'Collar every picket',
+        spacing: 1,
       },
     ],
     notes,

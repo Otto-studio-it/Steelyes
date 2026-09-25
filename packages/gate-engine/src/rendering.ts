@@ -257,10 +257,10 @@ function pushCircleScrollBand(
   }
 }
 
-function getPicketCollarSpacing(config: GateConfig): 0 | 1 | 2 {
+function getPicketCollarSpacing(config: GateConfig): 0 | 1 {
   const option = config.options.find((item) => item.key === 'picket_collars' && item.enabled)
   if (!option) return 0
-  return option.variant === 'every_2' ? 2 : 1
+  return 1
 }
 
 /** Q2–Q4: boss on long pickets only at mid-height — never on dog bars. */
@@ -269,7 +269,7 @@ function pushPicketCollars(
   palette: RenderPalette,
   xs: number[],
   y: number,
-  spacing: 1 | 2,
+  spacing: 1,
 ): void {
   xs.forEach((x, index) => {
     if (index % spacing !== 0) return
@@ -1496,11 +1496,7 @@ export function buildGateRenderPlan(
     notes.push('Circle bands drawn on Design CAD (upper + lower, CA-16).')
   }
   if (hasOption(config, 'picket_collars')) {
-    notes.push(
-      getPicketCollarSpacing(config) === 2
-        ? 'Picket collars on every 2nd long picket at mid-height (never on dog bars).'
-        : 'Picket collars on every long picket at mid-height (never on dog bars).',
-    )
+    notes.push('Picket collars on every long picket at mid-height (never on dog bars).')
   }
 
   if (isSliding) {

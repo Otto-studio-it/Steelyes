@@ -6,6 +6,7 @@ import {
   createGatePreset,
   describeDesignPreview,
   getVictorianTipology,
+  resolveCollarOverlays,
   resolveSilhouette,
 } from '../src/index'
 
@@ -61,7 +62,7 @@ describe('victorian tipology', () => {
 })
 
 describe('describeDesignPreview', () => {
-  it('uses overlay fallback only for collar every_2 (no baked master)', () => {
+  it('gracefully maps old every_2 collar configs to every_1', () => {
     const config = createGateConfig(createGatePreset('double_swing'))
     const decorated = {
       ...config,
@@ -74,11 +75,8 @@ describe('describeDesignPreview', () => {
 
     const described = describeDesignPreview(decorated)
     expect(described.ok).toBe(true)
-    expect(described.overlayFallback).toBe(true)
-    expect(described.resolution?.slug).toBe('base')
-    expect(described.channels.find((item) => item.key === 'picket_collars')?.visual).toBe(
-      'drawn_as_overlay',
-    )
+    const overlays = resolveCollarOverlays(decorated)
+    expect(overlays.overlays[0]?.id).toBe('every_1')
   })
 
   it('marks finish as swatch-only and dimensions as strip-only', () => {

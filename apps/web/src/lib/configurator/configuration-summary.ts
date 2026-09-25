@@ -3,12 +3,15 @@ import {
   railheadSeriesLabel,
   railheadWorkshopLabel,
   type GateConfig,
+  type GateOptionKey,
   type PricingResult,
 } from '@steelyes/gate-engine'
 
 import {
   finishLabel,
+  formatLabelText,
   formatPricingHeadline,
+  formatPricingValueLabel,
   gateTypeLabel,
   postsSummaryLabel,
   FULFILMENT_FIELD_LABEL,
@@ -24,6 +27,19 @@ export type ConfigurationSummaryLine = {
 }
 
 export type ConfigurationSummaryAudience = 'customer' | 'workshop'
+
+const OPTION_DISPLAY_LABELS: Record<GateOptionKey, string> = {
+  middle_bar: 'Middle bar',
+  top_railheads: 'Top railheads',
+  dog_bars: 'Dog bars',
+  dog_bar_railheads: 'Dog bar railheads',
+  arched_top: 'Arched top',
+  circles: 'Circles',
+  picket_collars: 'Picket collars',
+  bushes: 'Bushes',
+  spirals: 'Spirals',
+  aluminium_panels: 'Aluminium panel upgrade',
+}
 
 function railheadsSummaryValue(
   config: GateConfig,
@@ -43,6 +59,29 @@ function railheadsSummaryValue(
   return audience === 'workshop' ? railheadWorkshopLabel(slug) : railheadSeriesLabel(slug)
 }
 
+function formatOptionValue(
+  key: GateOptionKey,
+  config: GateConfig,
+  pricing: PricingResult | undefined,
+  audience: ConfigurationSummaryAudience,
+): string {
+  if (key === 'top_railheads') {
+    const railheadsValue = railheadsSummaryValue(config, audience)
+    if (!railheadsValue) return 'Selected'
+    return railheadsValue
+  }
+
+  const pricingItem = pricing?.breakdown.find((item) =>
+    item.code === key || item.code.startsWith(`${key}:`)
+  )
+
+  if (pricingItem?.amountGbp && pricingItem.amountGbp > 0) {
+    return `Selected · ${formatPricingValueLabel(pricingItem)}`
+  }
+
+  return 'Selected'
+}
+
 export function buildConfigurationSummaryLines(
   config: GateConfig,
   pricing?: PricingResult,
@@ -57,9 +96,33 @@ export function buildConfigurationSummaryLines(
     { label: 'Mounting posts', value: postsSummaryLabel(config) },
   ]
 
-  const railheads = railheadsSummaryValue(config, audience)
-  if (railheads) {
-    lines.push({ label: 'Railheads', value: railheads })
+  for (const option of config.options) {
+    if (option.enabled) {
+      const label = OPTION_DISPLAY_LABELS[option.key] || formatLabelText(option.key)
+      const value = formatOptionValue(option.key, config, pricing, audience)
+      lines.push({ label, value })
+    }
+  }
+
+  const postCapItem = pricing?.breakdown.find((item) => item.code === 'post_cap')
+  if (postCapItem) {
+    const capValue = postCapItem.amountGbp && postCapItem.amountGbp > 0
+      ? `${formatPricingValueLabel(postCapItem)}`
+      : 'Included'
+    lines.push({ label: 'Post cap', value: capValue })
+  }
+
+  if (config.fencePanels.quantity > 0) {
+    lines.push({
+      label: 'Railing panels',
+      value: `${config.fencePanels.quantity} panel${config.fencePanels.quantity > 1 ? 's' : ''} (quoted separately)`,
+    })
+    config.fencePanels.panels.forEach((panel, index) => {
+      lines.push({
+        label: `Panel ${index + 1}`,
+        value: `${panel.lengthMm} mm × ${panel.heightMm} mm`,
+      })
+    })
   }
 
   lines.push({
@@ -92,22 +155,7 @@ export function formatConfigurationSummaryText(
     .join(' · ')
 }
 
-export function formatConfigurationSummaryInline(config: GateConfig): string {
-  const parts = [
-    gateTypeLabel(config.gateType),
-    styleLabel(config.style),
-    `${config.widthMm} × ${config.heightMm} mm`,
-    finishLabel(config.finish, config.customFinishHex),
-    config.motorised ? 'Motorised' : 'Manual',
-    postsSummaryLabel(config),
-  ]
-
-  const railheads = railheadsSummaryValue(config, 'customer')
-  if (railheads) {
-    parts.push(`Railheads: ${railheads}`)
-  }
-
-  parts.push(`${FULFILMENT_FIELD_LABEL}: ${fulfilmentLabel(config.fulfilment)}`)
-  parts.push(`${SITE_SURVEY_FIELD_LABEL}: ${siteSurveyLabel(config.siteSurveyRequested)}`)
-  return parts.join(' · ')
+export function formatConfigurationSummaryInline(config: GateConfig, pricing?: PricingResult): string {
+  const lines = buildConfigurationSummaryLines(config, pricing, 'customer')
+  return lines.map((line) => `${line.label}: ${line.value}`).join(' · ')
 }

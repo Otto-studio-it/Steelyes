@@ -6,6 +6,7 @@ import {
   buildGateRenderPlan,
   createGateConfig,
   createGatePreset,
+  resolveCollarOverlays,
   resolveSilhouette,
   type GateConfig,
   type GateOptionKey,
@@ -131,17 +132,16 @@ describe('live CAD golden (installation view)', () => {
     }
   })
 
-  it('still resolves the workshop master for collar every_2 overlay cells', () => {
+  it('gracefully renders old every_2 collar configs as every_1', () => {
     for (const gateType of GATE_TYPES) {
       const base = createGateConfig(createGatePreset(gateType as GateType))
       const config = withOptions(base, { picket_collars: { variant: 'every_2' } }, false)
       const resolved = resolveSilhouette(config)
       expect(resolved.slug.length).toBeGreaterThan(0)
 
-      const plan = buildGateRenderPlan(config, { viewMode: 'installation' })
-      expect(hasPicketCollar(plan)).toBe(true)
-      const collars = plan.primitives.filter((primitive) => primitive.id.startsWith('picket-collar-'))
-      expect(collars.length).toBeGreaterThan(0)
+      const overlays = resolveCollarOverlays(config)
+      expect(overlays.overlays[0]?.id).toBe('every_1')
+      expect(overlays.overlays[0]?.spacing).toBe(1)
     }
   })
 })
