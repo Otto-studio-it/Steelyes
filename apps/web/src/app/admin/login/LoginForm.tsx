@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { TurnstileFormWidget } from '@/components/security/TurnstileFormWidget'
 import { loginAdmin } from '../auth-actions'
 
 function SubmitButton() {
@@ -93,6 +94,8 @@ export function LoginForm() {
         {state.error ? (
           <p className="font-mono text-xs text-[#ba1a1a]">{state.error}</p>
         ) : null}
+
+        <TurnstileFormWidget />
 
         <SubmitButton />
       </form>

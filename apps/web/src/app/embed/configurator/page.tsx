@@ -26,15 +26,16 @@ async function EmbedConfiguratorWithCatalog({ tenantQuery }: { tenantQuery?: str
   )
 }
 
-export default function EmbedConfiguratorPage({
+export default async function EmbedConfiguratorPage({
   searchParams,
 }: {
-  searchParams?: { tenant?: string }
+  searchParams?: Promise<{ tenant?: string }>
 }) {
+  const params = searchParams ? await searchParams : {}
   return (
     <main className="min-h-screen bg-canvas">
       <Suspense fallback={<ConfiguratorLoadingScreen />}>
-        <EmbedConfiguratorWithCatalog tenantQuery={searchParams?.tenant} />
+        <EmbedConfiguratorWithCatalog tenantQuery={params?.tenant} />
       </Suspense>
     </main>
   )

@@ -13,8 +13,9 @@ export function generateStaticParams() {
   return BLOG_POST_SLUGS.map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const post = BLOG_POSTS[params.slug as BlogPostSlug]
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = BLOG_POSTS[slug as BlogPostSlug]
   if (!post) return {}
 
   return {
@@ -39,8 +40,9 @@ function formatDate(dateString: string): string {
   })
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = BLOG_POSTS[params.slug as BlogPostSlug]
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = BLOG_POSTS[slug as BlogPostSlug]
   if (!post) notFound()
 
   const category = BLOG_CATEGORIES[post.category]

@@ -21,12 +21,31 @@ export async function loginAdmin(
 ): Promise<AdminAuthState> {
   const rawEmail = formData.get('email')
   const rawPassword = formData.get('password')
+  const rawTurnstileToken = formData.get('cf-turnstile-response')
   const email = typeof rawEmail === 'string' ? rawEmail.trim() : ''
   const password = typeof rawPassword === 'string' ? rawPassword : ''
+  const turnstileToken = typeof rawTurnstileToken === 'string' ? rawTurnstileToken : null
   const redirectTo = normalizeRedirectTo(formData.get('redirectTo'))
 
   if (!email || !password) {
     return { error: 'Inserisci email e password.' }
+  }
+
+  // Validate Turnstile token
+  const { verifyTurnstile } = await import('@/lib/security/turnstile')
+  const turnstileResult = await verifyTurnstile(turnstileToken)
+  if (!turnstileResult.ok) {
+    return { error: 'Verifica di sicurezza fallita. Riprova.' }
+  }
+
+  // Check rate limit (5 attempts per email per 15 minutes)
+  const { checkRateLimit } = await import('@/lib/security/rate-limit')
+  const limit = checkRateLimit(
+    { name: 'admin-login', limit: 5, windowMs: 15 * 60_000 },
+    email.toLowerCase()
+  )
+  if (!limit.ok) {
+    return { error: `Troppi tentativi. Riprova tra ${limit.retryAfterSeconds} secondi.` }
   }
 
   const supabase = await getServerClient()

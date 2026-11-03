@@ -17,11 +17,11 @@ import { getServiceRoleClient } from '@/lib/supabase/server'
 const pdfCache = createTtlLru<Uint8Array>({ maxEntries: 40, ttlMs: 5 * 60_000 })
 
 type RouteContext = {
-  params: { shareToken: string }
+  params: Promise<{ shareToken: string }>
 }
 
 export async function GET(request: Request, context: RouteContext) {
-  const { shareToken } = context.params
+  const { shareToken } = await context.params
 
   // Every hit rasterises the design and builds a PDF — throttle before touching the DB.
   const limit = checkRateLimit(RATE_LIMITS.quotePdf, clientKeyFromHeaders(request.headers))

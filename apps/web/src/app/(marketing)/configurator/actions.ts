@@ -31,7 +31,8 @@ export async function saveGateConfiguration(
   serializedConfig: string,
 ): Promise<SaveGateConfigurationResult> {
   try {
-    if (!checkRateLimit(RATE_LIMITS.saveConfiguration, clientKeyFromHeaders(headers())).ok) {
+    const headersList = await headers()
+    if (!checkRateLimit(RATE_LIMITS.saveConfiguration, clientKeyFromHeaders(headersList)).ok) {
       return { ok: false, error: RATE_LIMIT_MESSAGE }
     }
 

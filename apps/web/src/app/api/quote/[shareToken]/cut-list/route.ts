@@ -9,7 +9,7 @@ import { buildWorkshopCutListPdf } from '@/lib/configurator/workshop-pdf'
 
 export async function GET(
   request: Request,
-  context: { params: { shareToken: string } },
+  context: { params: Promise<{ shareToken: string }> },
 ): Promise<NextResponse> {
   // Fabrication documents are workshop-internal: admin session required.
   const denied = await requireAdmin()
@@ -17,7 +17,7 @@ export async function GET(
     return NextResponse.json({ error: denied.error }, { status: 403 })
   }
 
-  const { shareToken } = context.params
+  const { shareToken } = await context.params
 
   if (!isValidShareToken(shareToken)) {
     return NextResponse.json({ error: 'Invalid share token' }, { status: 400 })

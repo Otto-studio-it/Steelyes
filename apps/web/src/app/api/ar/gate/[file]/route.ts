@@ -11,7 +11,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 type RouteContext = {
-  params: { file: string }
+  params: Promise<{ file: string }>
 }
 
 /** Quick Look / Scene Viewer fetch from outside the page origin. */
@@ -55,7 +55,8 @@ async function loadModel(shareToken: string, format: ArModelFormat): Promise<Uin
 }
 
 async function handle(request: Request, context: RouteContext, method: 'GET' | 'HEAD') {
-  const parsed = parseArModelFile(context.params.file)
+  const params = await context.params
+  const parsed = parseArModelFile(params.file)
   if (!parsed) return errorResponse(404, 'Not found', method)
 
   const limit = checkRateLimit(RATE_LIMITS.arModel, clientKeyFromHeaders(request.headers))

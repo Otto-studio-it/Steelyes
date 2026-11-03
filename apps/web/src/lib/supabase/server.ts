@@ -8,7 +8,7 @@ type CookieToSet = { name: string; value: string; options: CookieOptions }
 
 // Use for public-facing Server Components — respects RLS via anon key + session cookies.
 export async function getServerClient() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   return createServerClient<Database>(
     env.NEXT_PUBLIC_SUPABASE_URL,

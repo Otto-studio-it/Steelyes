@@ -13,8 +13,9 @@ export function generateStaticParams() {
   return CASE_STUDY_SLUGS.map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const study = CASE_STUDIES[params.slug as CaseStudySlug]
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const study = CASE_STUDIES[slug as CaseStudySlug]
   if (!study) return {}
 
   return {
@@ -35,8 +36,9 @@ function formatDate(dateString: string): string {
   return date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const study = CASE_STUDIES[params.slug as CaseStudySlug]
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const study = CASE_STUDIES[slug as CaseStudySlug]
   if (!study) notFound()
 
   return (

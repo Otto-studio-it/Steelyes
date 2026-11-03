@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-type Props = { params: { token: string } }
+type Props = { params: Promise<{ token: string }> }
 
 export default async function IntakePage({ params }: Props) {
-  const token = params.token
+  const { token } = await params
   if (!token || token.length < 16) notFound()
 
   const session = await getIntakeSessionByToken(token)

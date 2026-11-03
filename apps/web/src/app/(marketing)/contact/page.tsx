@@ -47,15 +47,16 @@ export const metadata: Metadata = {
 }
 
 type ContactPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     shareToken?: string
     gate?: string
-  }
+  }>
 }
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const shareToken = searchParams?.shareToken?.trim()
-  const gateSlug = searchParams?.gate ? resolveGateSlug(searchParams.gate) : null
+  const params = searchParams ? await searchParams : {}
+  const shareToken = params?.shareToken?.trim()
+  const gateSlug = params?.gate ? resolveGateSlug(params.gate) : null
   const gateInterest = gateSlug ? GATE_DATA[gateSlug] : null
   const attachedConfig =
     shareToken && isValidShareToken(shareToken)
