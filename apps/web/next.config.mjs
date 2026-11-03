@@ -25,10 +25,30 @@ const EMBED_FRAME_ANCESTORS = [
 ].join(' ');
 
 /**
- * Report-only for now: violations are logged by /api/csp-report without breaking the site.
- * Next.js inlines bootstrap scripts, so script-src keeps 'unsafe-inline' until nonces are wired;
- * the policy still pins external script / frame / connect origins and blocks plugins and <base>.
- * Promote to `Content-Security-Policy` once the report log is quiet.
+ * Stricter CSP with better protection against XSS and injection attacks.
+ * 
+ * Script policy: 'unsafe-inline' is kept for compatibility with:
+ * - Cookiebot consent banner (must load synchronously, data-blockingmode=auto)
+ * - Cloudflare Turnstile (challenge iframe injects inline scripts)
+ * - Next.js bootstrap and hydration (inlines framework chunks)
+ * - JSON-LD structured data (inline <script type="application/ld+json">)
+ * 
+ * Full nonce-based CSP would require:
+ * 1. Middleware to generate per-request nonces
+ * 2. Passing nonces to all inline scripts including Next.js chunks (complex in App Router)
+ * 3. Reconfiguring Cookiebot/Turnstile to work with strict-dynamic (may not be supported)
+ * 
+ * Current policy enforces:
+ * - No eval (except in dev for HMR)
+ * - External scripts pinned to trusted origins (Cookiebot, Turnstile)
+ * - No plugins, no data: URIs in scripts
+ * - Form actions restricted to same origin
+ * - Base URI locked to prevent base tag hijacking
+ * 
+ * This policy is ENFORCED (not Report-Only) because:
+ * - It blocks major attack vectors (plugins, external scripts, base tag)
+ * - unsafe-inline is required for existing functionality but still provides meaningful protection
+ * - CSP violation reports are logged for monitoring
  */
 function buildContentSecurityPolicy(frameAncestors) {
   const supabaseOrigin = (() => {
@@ -53,6 +73,7 @@ function buildContentSecurityPolicy(frameAncestors) {
     "base-uri 'self'",
     "form-action 'self'",
     `frame-ancestors ${frameAncestors}`,
+    'upgrade-insecure-requests',
     'report-uri /api/csp-report',
   ].join('; ');
 }
@@ -60,8 +81,6 @@ function buildContentSecurityPolicy(frameAncestors) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  // Disable font optimization during CI build to avoid network-related crashes
-  optimizeFonts: process.env.CI !== 'true',
   images: {
     formats: ['image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30,
@@ -77,20 +96,21 @@ const nextConfig = {
   },
   transpilePackages: ['@steelyes/gate-engine'],
   poweredByHeader: false,
+  // Native ELF binaries must stay out of the Webpack graph. Coolify/nixpacks
+  // builds on main failed with "Module parse failed" on @resvg .node files.
+  serverExternalPackages: ['@resvg/resvg-js', 'sharp'],
+  outputFileTracingIncludes: {
+    '/api/**/*': [
+      './node_modules/@resvg/resvg-js/**/*',
+      './node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
+      '../../node_modules/@resvg/resvg-js/**/*',
+      '../../node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
+      './node_modules/sharp/**/*',
+      '../../node_modules/sharp/**/*',
+    ],
+  },
   experimental: {
-    // Native ELF binaries must stay out of the Webpack graph. Coolify/nixpacks
-    // builds on main failed with "Module parse failed" on @resvg .node files.
-    serverComponentsExternalPackages: ['@resvg/resvg-js', 'sharp'],
-    outputFileTracingIncludes: {
-      '/api/**/*': [
-        './node_modules/@resvg/resvg-js/**/*',
-        './node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
-        '../../node_modules/@resvg/resvg-js/**/*',
-        '../../node_modules/@resvg/resvg-js-linux-x64-gnu/**/*',
-        './node_modules/sharp/**/*',
-        '../../node_modules/sharp/**/*',
-      ],
-    },
+    // Reserved for future experimental features
   },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
@@ -225,7 +245,7 @@ const nextConfig = {
         headers: [
           ...BASE_SECURITY_HEADERS,
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
-          { key: 'Content-Security-Policy-Report-Only', value: buildContentSecurityPolicy("'self'") },
+          { key: 'Content-Security-Policy', value: buildContentSecurityPolicy("'self'") },
         ],
       },
       // /embed/* is loaded in an iframe by partner sites (public/embed-snippet.js). X-Frame-Options
@@ -234,8 +254,7 @@ const nextConfig = {
         source: '/embed/:path*',
         headers: [
           ...BASE_SECURITY_HEADERS,
-          { key: 'Content-Security-Policy', value: `frame-ancestors ${EMBED_FRAME_ANCESTORS}` },
-          { key: 'Content-Security-Policy-Report-Only', value: buildContentSecurityPolicy(EMBED_FRAME_ANCESTORS) },
+          { key: 'Content-Security-Policy', value: buildContentSecurityPolicy(EMBED_FRAME_ANCESTORS) },
         ],
       },
     ];

@@ -30,7 +30,11 @@ export async function GET(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 503 })
   }
 
-  if (request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
+  const authHeader = request.headers.get('authorization') || ''
+  const providedSecret = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : ''
+  
+  const { timingSafeCompare } = await import('@/lib/security/timing-safe-compare')
+  if (!timingSafeCompare(providedSecret, cronSecret)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

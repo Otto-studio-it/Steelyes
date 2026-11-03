@@ -26,7 +26,11 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: 'INBOX_INGEST_SECRET not configured' }, { status: 503 })
   }
 
-  if (request.headers.get('authorization') !== `Bearer ${ingestSecret}`) {
+  const authHeader = request.headers.get('authorization') || ''
+  const providedSecret = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : ''
+  
+  const { timingSafeCompare } = await import('@/lib/security/timing-safe-compare')
+  if (!timingSafeCompare(providedSecret, ingestSecret)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

@@ -8,9 +8,9 @@ import { fetchPricingCatalog } from '@/lib/configurator/pricing-catalog-server'
 import { isValidShareToken } from '@/lib/configurator/share-token'
 
 type QuoteSharePageProps = {
-  params: {
+  params: Promise<{
     shareToken: string
-  }
+  }>
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -25,7 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function QuoteSharePage({ params }: QuoteSharePageProps) {
-  const shareToken = decodeURIComponent(params.shareToken)
+  const { shareToken: rawShareToken } = await params
+  const shareToken = decodeURIComponent(rawShareToken)
 
   if (!isValidShareToken(shareToken)) {
     notFound()

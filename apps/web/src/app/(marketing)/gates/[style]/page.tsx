@@ -20,8 +20,9 @@ export function generateStaticParams() {
   return GATE_SLUGS.map((style) => ({ style }))
 }
 
-export function generateMetadata({ params }: { params: { style: string } }) {
-  const resolved = resolveGateSlug(params.style)
+export async function generateMetadata({ params }: { params: Promise<{ style: string }> }) {
+  const { style } = await params
+  const resolved = resolveGateSlug(style)
   const gate = resolved ? GATE_DATA[resolved] : null
   if (!gate) return {}
   return {
@@ -43,11 +44,12 @@ function availabilityLabel(availability: (typeof GATE_DATA)[GateSlug]['availabil
   }
 }
 
-export default function GateDetailPage({ params }: { params: { style: string } }) {
-  const resolved = resolveGateSlug(params.style)
+export default async function GateDetailPage({ params }: { params: Promise<{ style: string }> }) {
+  const { style } = await params
+  const resolved = resolveGateSlug(style)
   if (!resolved) notFound()
 
-  if (params.style !== resolved) {
+  if (style !== resolved) {
     redirect(`/gates/${resolved}`)
   }
 

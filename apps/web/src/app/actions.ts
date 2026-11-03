@@ -217,8 +217,9 @@ async function processQuoteSubmission(input: QuoteSubmissionInput): Promise<Cont
     const { name, email, phone, projectType, postcode, message, shareToken, source } = parsed.data
 
     // The confirmation email goes to a visitor-supplied address: throttle per caller and per recipient.
+    const headersList = await headers()
     if (
-      !checkRateLimit(RATE_LIMITS.quoteSubmit, clientKeyFromHeaders(headers())).ok ||
+      !checkRateLimit(RATE_LIMITS.quoteSubmit, clientKeyFromHeaders(headersList)).ok ||
       !checkRateLimit(RATE_LIMITS.emailRecipient, email.toLowerCase()).ok
     ) {
       return { status: 'error', message: RATE_LIMIT_MESSAGE }
@@ -415,8 +416,9 @@ export async function emailMyDesign(formData: FormData): Promise<EmailMyDesignSt
     }
     const email = emailResult.data
 
+    const headersList = await headers()
     if (
-      !checkRateLimit(RATE_LIMITS.emailDesign, clientKeyFromHeaders(headers())).ok ||
+      !checkRateLimit(RATE_LIMITS.emailDesign, clientKeyFromHeaders(headersList)).ok ||
       !checkRateLimit(RATE_LIMITS.emailRecipient, email.toLowerCase()).ok
     ) {
       return { status: 'error', message: RATE_LIMIT_MESSAGE }
