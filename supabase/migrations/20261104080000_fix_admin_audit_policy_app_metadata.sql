@@ -21,8 +21,8 @@ CREATE POLICY "admin_audit_admin_select"
   TO authenticated
   USING ((auth.jwt() -> 'app_metadata' ->> 'is_admin')::boolean = true);
 
--- Ensure authenticated role has SELECT grant (service_role grant already exists from 20260501000002_grants.sql)
-GRANT SELECT ON public.admin_audit TO authenticated;
+-- No SELECT grant to authenticated: the app reads admin_audit only server-side with the
+-- service role, so the policy is defence in depth if a grant is ever added later.
 
 -- Notify PostgREST to reload schema cache
 NOTIFY pgrst, 'reload schema';

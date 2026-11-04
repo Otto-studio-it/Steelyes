@@ -142,19 +142,10 @@ const nextConfig = {
         // Server-only code (API routes, server actions) should not leak to client.
         vm: false,
         'vm-browserify': false,
-        // Prevent function-bind and is-generator-function from being bundled client-side.
-        // function-bind uses Function() constructor in its fallback implementation (CSP violation).
-        // Modern browsers natively support Function.prototype.bind, so polyfills are unnecessary.
-        // is-generator-function depends on generator-function which may indirectly cause CSP issues.
-        // These are Node.js polyfill utilities that should never reach the browser.
-        'function-bind': false,
-        'is-generator-function': false,
       }
       config.resolve.fallback = {
         ...config.resolve.fallback,
         vm: false,
-        'function-bind': false,
-        'is-generator-function': false,
       }
     }
     return config

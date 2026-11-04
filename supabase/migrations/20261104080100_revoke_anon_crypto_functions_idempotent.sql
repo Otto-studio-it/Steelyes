@@ -38,8 +38,9 @@ BEGIN
   LOOP
     BEGIN
       -- Revoke from PUBLIC (includes anon) if not already revoked
-      EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC', func_rec.func_sig);
-      RAISE NOTICE 'Revoked EXECUTE on % from PUBLIC', func_rec.func_sig;
+      EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC, anon, authenticated', func_rec.func_sig);
+      EXECUTE format('GRANT EXECUTE ON FUNCTION %s TO service_role', func_rec.func_sig);
+      RAISE NOTICE 'Revoked EXECUTE on % from PUBLIC/anon/authenticated', func_rec.func_sig;
     EXCEPTION WHEN OTHERS THEN
       -- Already revoked or other error, continue
       RAISE NOTICE 'Could not revoke % from PUBLIC: %', func_rec.func_sig, SQLERRM;
@@ -61,22 +62,23 @@ BEGIN
       AND p.proname LIKE 'uuid_%'
   LOOP
     BEGIN
-      EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC', func_rec.func_sig);
-      RAISE NOTICE 'Revoked EXECUTE on % from PUBLIC', func_rec.func_sig;
+      EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC, anon, authenticated', func_rec.func_sig);
+      EXECUTE format('GRANT EXECUTE ON FUNCTION %s TO service_role', func_rec.func_sig);
+      RAISE NOTICE 'Revoked EXECUTE on % from PUBLIC/anon/authenticated', func_rec.func_sig;
     EXCEPTION WHEN OTHERS THEN
       RAISE NOTICE 'Could not revoke % from PUBLIC: %', func_rec.func_sig, SQLERRM;
     END;
   END LOOP;
 
-  -- Note: gen_random_uuid() from pg_catalog (core PG 13+) remains accessible.
-  -- Table defaults using gen_random_uuid() continue to work for anon inserts
-  -- because they execute server-side with the definer's privileges, not the caller's.
+  -- Note: gen_random_uuid() from pg_catalog (core PG 13+) is untouched. Column defaults run
+  -- with the caller's privileges, so this is safe only because no default or function uses
+  -- the revoked functions (checked on prod 2026-11-04).
 END $$;
 
 -- Notify PostgREST to reload schema cache
 NOTIFY pgrst, 'reload schema';
 
 -- ROLLBACK SQL (to restore PUBLIC execute grants if needed):
--- GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO PUBLIC;
--- GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA extensions TO PUBLIC;
+-- re-run the two loops above with: GRANT EXECUTE ON FUNCTION <sig> TO PUBLIC;
+-- (do NOT grant ALL FUNCTIONS IN SCHEMA public, that would also open app functions)
 -- NOTIFY pgrst, 'reload schema';
