@@ -69,14 +69,15 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 
 export function SiteFooter() {
   const handleCookieSettings = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
     if (typeof window !== 'undefined') {
-      const cookiebot = (window as { Cookiebot?: { renew?: () => void } }).Cookiebot
-      if (cookiebot?.renew) {
-        e.preventDefault()
-        cookiebot.renew()
+      try {
+        localStorage.removeItem('sy_cookie_consent')
+        window.location.reload()
+      } catch {
+        // localStorage blocked
       }
     }
-    // Otherwise, let the link navigate to /legal/cookie-policy
   }, [])
 
   return (

@@ -21,7 +21,7 @@ Before the workflow can run successfully, configure these in the GitHub reposito
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://abc123.supabase.co` | ✅ Yes | Public Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJhbGc...` | ✅ Yes | Public anon key (safe to embed) |
 | `NEXT_PUBLIC_SITE_URL` | `https://www.steelyes.co.uk` | ⚠️ Recommended | Canonical site URL |
-| `NEXT_PUBLIC_COOKIEBOT_ID` | `abc123...` | ❌ Optional | Cookiebot CMP domain group ID |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | `AW-123456789` | ❌ Optional | Google Ads conversion ID (only loads with marketing consent) |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | `0x4AAA...` | ❌ Optional | Cloudflare Turnstile site key |
 | `NEXT_PUBLIC_POSTHOG_API_KEY` | `phc_...` | ❌ Optional | PostHog analytics key |
 | `NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW` | `true` | ❌ Optional | Enable 3D preview feature flag |

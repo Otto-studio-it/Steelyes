@@ -14,7 +14,7 @@ Share this sheet with Marius at launch. Everything below is intentional, not a b
 
 - Public inbox: **info@steelyes.co.uk** (site enquiries, quote notifications, invoices to this mailbox).
 - Company no. **13415956** · VAT **392 1130 22** · workshop address and phone as shown in the footer.
-- Cookie consent: **Cookiebot** (Usercentrics) when `NEXT_PUBLIC_COOKIEBOT_ID` is set. No PostHog / GA.
+- Cookie consent: **Custom UK PECR/ICO-compliant consent system** with Google Consent Mode v2. Google Ads loaded only when `NEXT_PUBLIC_GOOGLE_ADS_ID` is set AND user consents to marketing. No PostHog / GA.
 - Legal pages (privacy, cookies, terms) are live without draft banners; lawyer review remains recommended.
 
 ## Pricing

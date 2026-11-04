@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { CookiebotScript } from '@/components/consent/Cookiebot';
+import { GoogleConsentModeScript } from '@/components/consent/GoogleConsent';
 import { organizationSchema } from '@/lib/marketing/schema';
 
 const barlowCondensed = localFont({
@@ -78,8 +78,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <head>
-        {/* Cookiebot: first script in HEAD (required by Cookiebot install guide) */}
-        <CookiebotScript />
+        {/* Google Consent Mode v2: must load before any Google tags */}
+        <GoogleConsentModeScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}

@@ -83,7 +83,7 @@
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase Dashboard | ✅ Yes | Project Settings → API → Project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Dashboard | ✅ Yes | Project Settings → API → anon public key |
 | `NEXT_PUBLIC_SITE_URL` | Production domain | ⚠️ Recommended | `https://www.steelyes.co.uk` |
-| `NEXT_PUBLIC_COOKIEBOT_ID` | Cookiebot account | ❌ Optional | Coolify prod env (if set) |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads account | ❌ Optional | Coolify prod env (if set) |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare | ❌ Optional | Coolify prod env (if set) |
 | `NEXT_PUBLIC_POSTHOG_API_KEY` | PostHog | ❌ Optional | Coolify prod env (if set) |
 | `NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW` | Feature flag | ❌ Optional | Coolify prod env (if set) |
