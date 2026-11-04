@@ -1,9 +1,15 @@
-import { randomBytes } from 'crypto'
-
 const SHARE_TOKEN_PATTERN = /^[A-Za-z0-9_-]{8,50}$/
 
+// Uses Web Crypto (available in browsers and Node 18+) instead of Node's `crypto` module:
+// this file is imported by client components, and `import 'crypto'` made webpack bundle
+// crypto-browserify + util polyfills, which call Function() and violate the CSP.
 export function createShareToken(): string {
-  return randomBytes(9).toString('base64url')
+  const bytes = new Uint8Array(9)
+  globalThis.crypto.getRandomValues(bytes)
+  let binary = ''
+  for (const b of bytes) binary += String.fromCharCode(b)
+  // 9 bytes -> 12 base64 chars, no padding; same format as Buffer#toString('base64url').
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_')
 }
 
 export function isValidShareToken(value: string): boolean {
