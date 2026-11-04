@@ -20,11 +20,7 @@ function gtag(...args: unknown[]) {
 }
 
 export function GoogleConsentModeScript() {
-  return (
-    <script
-      id="google-consent-default"
-      dangerouslySetInnerHTML={{
-        __html: `
+  const scriptContent = `
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('consent', 'default', {
@@ -34,8 +30,12 @@ gtag('consent', 'default', {
   'analytics_storage': 'denied',
   'wait_for_update': 500
 });
-        `.trim(),
-      }}
+  `.trim()
+
+  return (
+    <script
+      id="google-consent-default"
+      dangerouslySetInnerHTML={{ __html: scriptContent }}
     />
   )
 }

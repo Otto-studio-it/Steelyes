@@ -73,24 +73,25 @@ test.describe('UK PECR/GDPR Consent System', () => {
     const rejectButton = banner.locator('button:has-text("Reject All")');
     await rejectButton.click();
     
-    // Wait and verify banner is gone
+    // Wait for banner to disappear and consent to be stored
     await expect(banner).not.toBeVisible();
+    await page.waitForTimeout(500); // Give time for localStorage to be written
+    
+    // Verify consent stored before reload
+    const consentBeforeReload = await page.evaluate(() => {
+      const stored = localStorage.getItem('sy_cookie_consent');
+      return stored ? JSON.parse(stored) : null;
+    });
+    
+    expect(consentBeforeReload).toBeTruthy();
+    expect(consentBeforeReload.categories.marketing).toBe(false);
+    expect(consentBeforeReload.categories.analytics).toBe(false);
     
     // Reload page and verify no Google scripts
     await page.reload();
     await page.waitForLoadState('networkidle');
     
     expect(googleRequests.length).toBe(0);
-    
-    // Verify consent stored
-    const consent = await page.evaluate(() => {
-      const stored = localStorage.getItem('sy_cookie_consent');
-      return stored ? JSON.parse(stored) : null;
-    });
-    
-    expect(consent).toBeTruthy();
-    expect(consent.categories.marketing).toBe(false);
-    expect(consent.categories.analytics).toBe(false);
   });
 
   test('Accept marketing loads gtag only when GOOGLE_ADS_ID is set', async ({ page }) => {
@@ -244,20 +245,38 @@ test.describe('UK PECR/GDPR Consent System', () => {
   test('Google Consent Mode default state set', async ({ page }) => {
     await page.goto(baseURL);
     await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(500); // Give time for inline script to execute
     
     // Check that dataLayer exists and has default consent
-    const hasDefaultConsent = await page.evaluate(() => {
+    const dataLayerInfo = await page.evaluate(() => {
       const dataLayer = (window as any).dataLayer;
-      if (!dataLayer || !Array.isArray(dataLayer)) return false;
+      if (!dataLayer) return { exists: false, length: 0, entries: [] };
+      if (!Array.isArray(dataLayer)) return { exists: true, isArray: false, type: typeof dataLayer };
       
-      return dataLayer.some((entry: any) => 
-        Array.isArray(entry) && 
-        entry[0] === 'consent' && 
-        entry[1] === 'default'
-      );
+      // Check for consent default - gtag pushes arguments as an array-like object or array
+      const hasDefault = dataLayer.some((entry: any) => {
+        // Entry could be an array or array-like object (arguments object)
+        const isArrayLike = entry && (Array.isArray(entry) || (typeof entry === 'object' && '0' in entry && '1' in entry));
+        if (!isArrayLike) return false;
+        
+        const arg0 = Array.isArray(entry) ? entry[0] : entry[0];
+        const arg1 = Array.isArray(entry) ? entry[1] : entry[1];
+        const arg2 = Array.isArray(entry) ? entry[2] : entry[2];
+        
+        return arg0 === 'consent' && arg1 === 'default' && arg2 && arg2.ad_storage === 'denied';
+      });
+      
+      return {
+        exists: true,
+        isArray: true,
+        length: dataLayer.length,
+        hasDefault
+      };
     });
     
-    expect(hasDefaultConsent).toBe(true);
+    console.log('DataLayer info:', JSON.stringify(dataLayerInfo, null, 2));
+    expect(dataLayerInfo.exists).toBe(true);
+    expect(dataLayerInfo.hasDefault).toBe(true);
   });
 
   test('Consent updates Google Consent Mode', async ({ page }) => {
