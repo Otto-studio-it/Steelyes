@@ -36,10 +36,10 @@ export default function PrivacyPolicyPage() {
           <p>
             Email: <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">{BUSINESS.email}</a><br />
             Phone: {BUSINESS.phoneDisplay}<br />
-            Privacy contact: <a href="mailto:[PRIVACY-EMAIL]" className="text-primary hover:underline">[PRIVACY-EMAIL]</a>
+            Privacy contact: <a href="mailto:info@steelyes.co.uk" className="text-primary hover:underline">info@steelyes.co.uk</a>
           </p>
           <p>
-            ICO Registration Number: <strong>[ICO-REGISTRATION-NUMBER]</strong>
+            ICO Registration Number: <strong>(to be provided)</strong>
           </p>
 
           <h2>2. Personal data we collect</h2>
@@ -97,8 +97,8 @@ export default function PrivacyPolicyPage() {
           <ul>
             <li><strong>Supabase Inc.</strong> (US) — database hosting for enquiries and admin authentication. Data stored in EU region. Appropriate safeguards in place (Standard Contractual Clauses).</li>
             <li><strong>Cloudflare, Inc.</strong> (US) — CDN, DNS, DDoS protection, and bot management (Turnstile). Minimal personal data processed. <a href="https://www.cloudflare.com/en-gb/privacypolicy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy policy</a></li>
-            <li><strong>DigitalOcean LLC</strong> (US) — cloud storage for uploaded images. Data stored in EU region (London). <a href="https://www.digitalocean.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy policy</a></li>
-            <li><strong>[EMAIL-PROVIDER]</strong> — transactional email delivery (enquiry notifications)</li>
+            <li><strong>DigitalOcean LLC</strong> (US) — application hosting and cloud storage for uploaded images. Data stored in EU region (London). <a href="https://www.digitalocean.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy policy</a></li>
+            <li><strong>Resend Inc.</strong> (US) — transactional email delivery for enquiry notifications. <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy policy</a></li>
             <li><strong>Google Ireland Limited</strong> — only if you consent to marketing cookies and we have configured Google Ads. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy policy</a></li>
           </ul>
           <p>
@@ -141,7 +141,7 @@ export default function PrivacyPolicyPage() {
           </ul>
           <p>
             To exercise any of these rights, contact us at{' '}
-            <a href="mailto:[PRIVACY-EMAIL]" className="text-primary hover:underline">[PRIVACY-EMAIL]</a> or{' '}
+            <a href="mailto:info@steelyes.co.uk" className="text-primary hover:underline">info@steelyes.co.uk</a> or{' '}
             <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">{BUSINESS.email}</a>.
           </p>
           <p>
@@ -215,7 +215,7 @@ export default function PrivacyPolicyPage() {
             If you have any questions about this Privacy Policy or our data practices, please contact us:
           </p>
           <p>
-            Email: <a href="mailto:[PRIVACY-EMAIL]" className="text-primary hover:underline">[PRIVACY-EMAIL]</a> or{' '}
+            Email: <a href="mailto:info@steelyes.co.uk" className="text-primary hover:underline">info@steelyes.co.uk</a> or{' '}
             <a href={`mailto:${BUSINESS.email}`} className="text-primary hover:underline">{BUSINESS.email}</a><br />
             Post: {BUSINESS.legalName}, {BUSINESS.address.line1}, {BUSINESS.address.locality}, {BUSINESS.address.region} {BUSINESS.address.postalCode}
           </p>
