@@ -113,9 +113,8 @@ test.describe('CSP Verification & E2E Flow', () => {
     expect(violations.length).toBe(0);
   });
 
-  test('Cookiebot script loads - zero CSP violations', async ({ page }) => {
+  test('Google Consent Mode script - zero CSP violations', async ({ page }) => {
     const violations: string[] = [];
-    const scriptLoads: string[] = [];
     
     page.on('console', (msg) => {
       if (msg.type() === 'error' && msg.text().includes('Content Security Policy')) {
@@ -123,23 +122,17 @@ test.describe('CSP Verification & E2E Flow', () => {
       }
     });
 
-    page.on('request', (request) => {
-      const url = request.url();
-      if (url.includes('cookiebot.com') || url.includes('consentcdn.cookiebot.com')) {
-        scriptLoads.push(url);
-      }
-    });
-
     await page.goto(baseURL);
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
 
-    console.log(`Cookiebot script loads: ${scriptLoads.length}`);
-    scriptLoads.forEach(s => console.log(`  - ${s}`));
+    // Check that Google Consent Mode default is set
+    const hasConsentMode = await page.evaluate(() => {
+      return Boolean((window as any).dataLayer);
+    });
     
-    // In test environment without proper Cookiebot ID, script may not load
-    // But CSP should not block it
-    console.log(`CSP violations with Cookiebot: ${violations.length}`);
+    console.log(`Google Consent Mode dataLayer initialized: ${hasConsentMode}`);
+    console.log(`CSP violations: ${violations.length}`);
     expect(violations.length).toBe(0);
   });
 
@@ -212,7 +205,12 @@ test.describe('CSP Verification & E2E Flow', () => {
     expect(csp).toContain("upgrade-insecure-requests");
     
     // Verify trusted script sources
-    expect(csp).toContain('https://consent.cookiebot.com');
     expect(csp).toContain('https://challenges.cloudflare.com');
+    
+    // Google domains only included when GOOGLE_ADS_ID is set
+    const hasGoogleAdsId = Boolean(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID);
+    if (hasGoogleAdsId) {
+      expect(csp).toContain('https://www.googletagmanager.com');
+    }
   });
 });

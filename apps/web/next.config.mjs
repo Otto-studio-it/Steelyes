@@ -28,19 +28,19 @@ const EMBED_FRAME_ANCESTORS = [
  * Stricter CSP with better protection against XSS and injection attacks.
  * 
  * Script policy: 'unsafe-inline' is kept for compatibility with:
- * - Cookiebot consent banner (must load synchronously, data-blockingmode=auto)
  * - Cloudflare Turnstile (challenge iframe injects inline scripts)
  * - Next.js bootstrap and hydration (inlines framework chunks)
  * - JSON-LD structured data (inline <script type="application/ld+json">)
+ * - Google Consent Mode default state (inline script in <head>)
  * 
  * Full nonce-based CSP would require:
  * 1. Middleware to generate per-request nonces
  * 2. Passing nonces to all inline scripts including Next.js chunks (complex in App Router)
- * 3. Reconfiguring Cookiebot/Turnstile to work with strict-dynamic (may not be supported)
+ * 3. Reconfiguring Turnstile to work with strict-dynamic (may not be supported)
  * 
  * Current policy enforces:
  * - No eval (except in dev for HMR)
- * - External scripts pinned to trusted origins (Cookiebot, Turnstile)
+ * - External scripts pinned to trusted origins (Turnstile, Google when enabled)
  * - No plugins, no data: URIs in scripts
  * - Form actions restricted to same origin
  * - Base URI locked to prevent base tag hijacking
@@ -59,16 +59,44 @@ function buildContentSecurityPolicy(frameAncestors) {
     }
   })();
   const dev = process.env.NODE_ENV !== 'production';
+  const googleAdsEnabled = Boolean(process.env.NEXT_PUBLIC_GOOGLE_ADS_ID?.trim());
+
+  const scriptSources = [
+    "'self'",
+    "'unsafe-inline'",
+    dev ? "'unsafe-eval'" : '',
+    'https://challenges.cloudflare.com',
+    googleAdsEnabled ? 'https://www.googletagmanager.com' : '',
+  ].filter(Boolean).join(' ');
+
+  const connectSources = [
+    "'self'",
+    supabaseOrigin,
+    googleAdsEnabled ? 'https://www.google-analytics.com' : '',
+    googleAdsEnabled ? 'https://analytics.google.com' : '',
+    googleAdsEnabled ? 'https://www.googletagmanager.com' : '',
+    dev ? 'ws: wss:' : '',
+  ].filter(Boolean).join(' ').replace(/\s+/g, ' ');
+
+  const imgSources = [
+    "'self'",
+    'data:',
+    'blob:',
+    'https://steelyes-foto.lon1.cdn.digitaloceanspaces.com',
+    googleAdsEnabled ? 'https://www.google.com' : '',
+    googleAdsEnabled ? 'https://www.google.co.uk' : '',
+    googleAdsEnabled ? 'https://googleads.g.doubleclick.net' : '',
+  ].filter(Boolean).join(' ');
 
   return [
     "default-src 'self'",
-    `script-src 'self' 'unsafe-inline'${dev ? " 'unsafe-eval'" : ''} https://consent.cookiebot.com https://consentcdn.cookiebot.com https://challenges.cloudflare.com`,
+    `script-src ${scriptSources}`,
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob: https://consent.cookiebot.com https://consentcdn.cookiebot.com https://imgsct.cookiebot.com https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
+    `img-src ${imgSources}`,
     "media-src 'self' https://steelyes-foto.lon1.cdn.digitaloceanspaces.com",
     "font-src 'self' data:",
-    `connect-src 'self' ${supabaseOrigin} https://consent.cookiebot.com https://consentcdn.cookiebot.com${dev ? ' ws: wss:' : ''}`.replace(/\s+/g, ' '),
-    'frame-src https://challenges.cloudflare.com https://consentcdn.cookiebot.com',
+    `connect-src ${connectSources}`,
+    'frame-src https://challenges.cloudflare.com',
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

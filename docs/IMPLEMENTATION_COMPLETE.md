@@ -33,7 +33,7 @@ Successfully implemented Phase E for Steelyes: moving Docker/Nixpacks builds fro
   - `NEXT_PUBLIC_SUPABASE_URL` ✅ Required
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` ✅ Required
   - `NEXT_PUBLIC_SITE_URL` ⚠️ Recommended
-  - `NEXT_PUBLIC_COOKIEBOT_ID` ❌ Optional
+  - `NEXT_PUBLIC_GOOGLE_ADS_ID` ❌ Optional
   - `NEXT_PUBLIC_TURNSTILE_SITE_KEY` ❌ Optional
   - `NEXT_PUBLIC_POSTHOG_API_KEY` ❌ Optional
   - `NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW` ❌ Optional
@@ -93,7 +93,7 @@ NEXT_PUBLIC_SITE_URL              = https://www.steelyes.co.uk
 
 **Optional (if currently used in production):**
 ```
-NEXT_PUBLIC_COOKIEBOT_ID          = (from Coolify prod env, if set)
+NEXT_PUBLIC_GOOGLE_ADS_ID         = (from Coolify prod env, if set)
 NEXT_PUBLIC_TURNSTILE_SITE_KEY    = (from Coolify prod env, if set)
 NEXT_PUBLIC_POSTHOG_API_KEY       = (from Coolify prod env, if set)
 NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW = (from Coolify prod env, if set)

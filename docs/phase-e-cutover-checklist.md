@@ -10,7 +10,7 @@ Quick reference for Coolify ops agent performing the Phase E cutover.
   - [ ] `NEXT_PUBLIC_SUPABASE_URL`
   - [ ] `NEXT_PUBLIC_SUPABASE_ANON_KEY`
   - [ ] `NEXT_PUBLIC_SITE_URL` (recommended)
-  - [ ] Optional: `NEXT_PUBLIC_COOKIEBOT_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, etc.
+  - [ ] Optional: `NEXT_PUBLIC_GOOGLE_ADS_ID`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, etc.
   
 - [ ] **First Actions Build Succeeded**
   - [ ] Go to `https://github.com/Otto-studio-it/Steelyes/actions`

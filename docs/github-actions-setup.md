@@ -13,7 +13,7 @@ These must be set as **Repository Variables** (or **Organization Variables** if 
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project settings | ✅ **Required** | `https://abcdefgh.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase project API settings | ✅ **Required** | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` |
 | `NEXT_PUBLIC_SITE_URL` | Production site URL | ⚠️ **Recommended** | `https://www.steelyes.co.uk` |
-| `NEXT_PUBLIC_COOKIEBOT_ID` | Cookiebot account | ❌ Optional | `a1b2c3d4-e5f6-...` |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads account | ❌ Optional | `AW-123456789` |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile | ❌ Optional | `0x4AAAAAAA...` |
 | `NEXT_PUBLIC_POSTHOG_API_KEY` | PostHog project settings | ❌ Optional | `phc_abc123...` |
 | `NEXT_PUBLIC_CONFIGURATOR_3D_PREVIEW` | Feature flag | ❌ Optional | `true` |

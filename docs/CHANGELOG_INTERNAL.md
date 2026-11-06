@@ -49,7 +49,7 @@ It is not a public product changelog.
 - Public/workshop email → `info@steelyes.co.uk`; Resend from aligned
 - Removed legal draft banners; privacy/cookies/terms updated (Coolify + Cloudflare + Cookiebot)
 - PostHog client/server stubbed no-op; removed from root layout
-- Cookiebot script gated on `NEXT_PUBLIC_COOKIEBOT_ID` (fallback necessary-cookie banner)
+- Custom UK PECR/ICO-compliant consent system with Google Consent Mode v2 (replaced Cookiebot)
 - Desktop AR: copy phone links (no QR)
 - Client sheet: `docs/frontend/GO_LIVE_LIMITATIONS.md`
 

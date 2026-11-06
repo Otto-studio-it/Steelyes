@@ -26,7 +26,7 @@ NEXT_PUBLIC_SITE_URL=https://www.steelyes.co.uk
 # OPTIONAL (only set if currently used in production)
 # ============================================================
 
-# NEXT_PUBLIC_COOKIEBOT_ID=
+# NEXT_PUBLIC_GOOGLE_ADS_ID=
 # Find at: Coolify production app → Environment (if set)
 
 # NEXT_PUBLIC_TURNSTILE_SITE_KEY=
